@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="mt-5 text-muted text-center">
-                                Don't have an account? <a href="<?php echo base_url(); ?>masterfile/dashboard">Proceed Dashboard</a>
+                                Don't have an account? <a href="<?php echo base_url(); ?>masterfile/home">Proceed Dashboard</a>
                             </div>
                         </div>
                     </div>

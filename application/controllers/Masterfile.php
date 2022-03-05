@@ -33,11 +33,41 @@ class Masterfile extends CI_Controller {
         $this->load->view('masterfile/login');
     }
 
+    public function home()
+    {
+        $this->load->view('template/header');
+        // $this->load->view('template/navbar');
+        $this->load->view('masterfile/home');
+        $this->load->view('template/footer');
+    }
+
     public function dashboard()
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('masterfile/dashboard');
+        $this->load->view('template/footer');
+    }
+
+    public function customer_list()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('masterfile/customer_list');
+        $this->load->view('template/footer');
+    }
+    public function supplier_list()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('masterfile/supplier_list');
+        $this->load->view('template/footer');
+    }
+    public function user_list()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('masterfile/user_list');
         $this->load->view('template/footer');
     }
     
