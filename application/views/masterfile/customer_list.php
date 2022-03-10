@@ -1,1204 +1,441 @@
-<section class="section">
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">                        
-                        <div class="row">
-                            <div class="col-6">
-                                <h4>Customer List</h4>
-                            </div>
-                            <div class="col-6">
-                                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#basicModal">
-                                    <span class="fas fa-plus"></span> Add
-                                </button>
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">                        
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4>Customer List</h4>
+                                </div>
+                                <div class="col-6">
+                                    <a href="<?php echo base_url(); ?>masterfile/customer_add" type="button" class="btn btn-primary pull-right">
+                                        <span class="fas fa-plus"></span> Add
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th width="1%" align="center">
-                                            <center><span class="fas fa-bars"></span></center>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Participant Name</th>
+                                            <th>Short Name</th>
+                                            <th>Category</th>
+                                            <th width="1%" align="center">
+                                                <center><span class="fas fa-bars"></span></center>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Stephine Severino</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Henne Tanan</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td align="center">
+                                                <div class="btn-group mb-0">
+                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                        Option
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jason Flor</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jonah Benares</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr><tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Glenn Toledo</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td align="center">
-                                            <div class="btn-group mb-0">
-                                                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                    Option
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a>
-                                                    <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                    <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

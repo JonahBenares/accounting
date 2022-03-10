@@ -44,6 +44,16 @@ $('#save-stage').DataTable({
   "scrollX": true,
   stateSave: true
 });
+
+$('#save-stage-fix').DataTable({
+  "scrollX": true,
+  stateSave: true,
+  fixedColumns:   {
+      left: 1,
+      right: 1
+  }
+});
+
 $('#tableExport').DataTable({
   dom: 'Bfrtip',
   buttons: [

@@ -213,7 +213,7 @@
             </li>
             <li class="menu-header">Sales</li>
             <li class="dropdown">
-                <a href="<?php echo base_url(); ?>masterfile/dashboard" class="nav-link">
+                <a href="<?php echo base_url(); ?>sales/upload_sales" class="nav-link">
                     <i data-feather="upload"></i>
                     <span>Upload WESM Transaction</span>
                 </a>
@@ -226,7 +226,7 @@
             </li>
             <li class="menu-header">Purchases</li>
             <li class="dropdown">
-                <a href="<?php echo base_url(); ?>masterfile/dashboard" class="nav-link">
+                <a href="<?php echo base_url(); ?>purchases/upload_purchases" class="nav-link">
                     <i data-feather="upload"></i>
                     <span>Upload WESM Transaction</span>
                 </a>

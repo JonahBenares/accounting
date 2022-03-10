@@ -639,7 +639,7 @@
 .form-control.creditcard.jcb{background-image:url("../img/cards/jcb.png")}
 .form-control.creditcard.mastercard{background-image:url("../img/cards/mastercard.png")}
 .form-control.creditcard.visa{background-image:url("../img/cards/visa.png")}
-.form-group{margin-bottom:25px}
+.form-group{margin-bottom:20px}
 .form-group .control-label,.form-group>label{font-weight:600;color:#34395e;font-size:12px;letter-spacing:0.5px}
 .form-group.floating-addon{position:relative}
 .form-group.floating-addon .input-group-prepend{position:absolute;top:0;left:0;height:100%;z-index:5}
