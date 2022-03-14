@@ -35,5 +35,29 @@ class Sales extends CI_Controller {
         $this->load->view('sales/upload_sales');
         $this->load->view('template/footer');
     }
+
+    public function collection_list()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/collection_list');
+        $this->load->view('template/footer');
+    }
+
+    public function print_OR()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/print_OR');
+        $this->load->view('template/footer');
+    }
+
+    public function print_BS()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/print_BS');
+        $this->load->view('template/footer');
+    }
     
 }

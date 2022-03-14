@@ -86,7 +86,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -109,7 +109,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -132,7 +132,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -155,7 +155,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -178,7 +178,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -201,7 +201,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -224,7 +224,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -247,7 +247,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -270,7 +270,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -293,7 +293,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -316,7 +316,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -339,7 +339,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -362,7 +362,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -385,7 +385,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -408,7 +408,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -431,7 +431,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -454,7 +454,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -477,7 +477,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -500,7 +500,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -523,7 +523,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="" class="btn btn-success btn-sm">
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>

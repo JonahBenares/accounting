@@ -35,5 +35,13 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/upload_purchases');
         $this->load->view('template/footer');
     }
+
+    public function print_BS()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('purchases/print_BS');
+        $this->load->view('template/footer');
+    }
     
 }

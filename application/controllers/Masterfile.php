@@ -70,6 +70,14 @@ class Masterfile extends CI_Controller {
         $this->load->view('masterfile/customer_update');
         $this->load->view('template/footer');
     }
+    public function customer_view()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('masterfile/customer_view');
+        $this->load->view('template/footer');
+    }
+
 
 
 

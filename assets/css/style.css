@@ -2203,3 +2203,47 @@ a:hover {color: #0056b3;text-decoration: none;}
 .pull-left{
 	float: left;
 }
+
+page[size="BS"] {
+  background: white;
+  width: 19.7cm;
+  height: 17.1cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+@media print {
+  body, page[size="BS"] {
+    margin: 0;
+    box-shadow: 0;
+  }
+}
+
+.page-BS{
+    font-size: 13px;
+}
+
+page[size="OR"] {
+  background: white;
+  width: 20cm;
+  height: 11cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+@media print {
+  body, page[size="OR"] {
+    margin: 0;
+    box-shadow: 0;
+  }
+}
+
+.page-OR{
+    font-size: 13px;
+}
+
+.bor-btm{
+	border-bottom: 1px solid #dee2e6;
+}
