@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -7,60 +7,48 @@
                     <div class="card">
                         <form>
                             <div class="card-header">
-                                <h4>Upload WESM Transaction - Purchases</h4>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <h4>Payment</h4>
+                                    </div>
+                                    <!-- <div class="col-lg-6 col-md-6">
+                                        <div class="input-group">
+                                            <select class="custom-select" id="inputGroupSelect04">
+                                                <option selected="">Choose Participant</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary m-0" type="button" style="border-radius: 0 .25rem .25rem 0;">Search</button>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Reference Number</label>
-                                            <input type="date" class="form-control">
-                                        </div>
+                                    <div class="col-lg-10 offset-lg-1">
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="20%">
+                                                    <input placeholder="Month From" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start">
+                                                </td>
+                                                <td width="20%">
+                                                    <input placeholder="Month To" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>-- Select Participant --</option>
+                                                    </select>
+                                                </td>
+                                                <td><button class="btn btn-primary">Filter</button></td>
+                                            </tr>
+                                        </table>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Billing Period (From)</label>
-                                            <input type="date" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Due Date</label>
-                                            <input type="date" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Billing Period (To)</label>
-                                            <input type="date" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label><br></label>
-                                            <button class="btn btn-block btn-primary" onclick="proceed_btn()">Proceed</button>
-                                        </div>
-                                    </div>
-                                </div>                                
-                                <div id="upload">
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
-                                            <div class="form-group mb-0">
-                                                <div class="input-group mb-0">
-                                                    <input type="file" class="form-control" placeholder="" aria-label="">
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-primary" onclick="upload_btn()"  type="button">Upload</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
                                 </div>
-                                <div id="table-wesm" >
-                                    <hr>
-                                    <table class="table-bordered table table-hover " id="save-stage-fix" style="width:200%;">
+                                <hr>
+                                <table class="table-bordered table table-hover " id="save-stage-fix" style="width:200%;">
                                         <thead>
                                             <tr>
                                                 <th width="1%" align="center">
@@ -86,7 +74,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -109,7 +97,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -132,7 +120,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -155,7 +143,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -178,7 +166,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -201,7 +189,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -224,7 +212,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -247,7 +235,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -270,7 +258,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -293,7 +281,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -316,7 +304,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -339,7 +327,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -362,7 +350,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -385,7 +373,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -408,7 +396,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -431,7 +419,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -454,7 +442,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -477,7 +465,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -500,7 +488,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -523,7 +511,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
@@ -545,7 +533,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
                             </div>
                         </form>
                     </div>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Purchases extends CI_Controller {
+class Reports extends CI_Controller {
 
     function __construct(){
         parent::__construct();
@@ -28,43 +28,69 @@ class Purchases extends CI_Controller {
         }
     } 
 
-    public function upload_purchases()
+    public function sales_summary()
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/upload_purchases');
+        $this->load->view('reports/sales_summary');
         $this->load->view('template/footer');
     }
 
-    public function print_BS()
+    public function purchases_summary()
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/print_BS');
+        $this->load->view('reports/purchases_summary');
         $this->load->view('template/footer');
     }
 
-    public function payment_list()
+
+    public function ewt_summary()
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/payment_list');
+        $this->load->view('reports/ewt_summary');
+        $this->load->view('template/footer');
+    }
+
+    public function cwht_summary()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/cwht_summary');
+        $this->load->view('template/footer');
+    }
+
+    public function sales_ledger()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/sales_ledger');
+        $this->load->view('template/footer');
+    }
+
+    public function purchases_ledger()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/purchases_ledger');
+        $this->load->view('template/footer');
+    }
+
+    public function cs_ledger()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/cs_ledger');
+        $this->load->view('template/footer');
+    }
+
+    public function ss_ledger()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/ss_ledger');
         $this->load->view('template/footer');
     }
     
-    public function add_payment()
-    {
-        $this->load->view('template/header');
-        $this->load->view('purchases/add_payment');
-        $this->load->view('template/footer');
-    }
-
-    public function print_2307()
-    {
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $this->load->view('purchases/print_2307');
-        $this->load->view('template/footer');
-    }
-
 }

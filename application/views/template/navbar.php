@@ -232,7 +232,7 @@
                 </a>
             </li>
             <li class="dropdown">
-                <a href="<?php echo base_url(); ?>masterfile/dashboard" class="nav-link">
+                <a href="<?php echo base_url(); ?>purchases/payment_list" class="nav-link">
                     <i data-feather="dollar-sign"></i>
                     <span>Payment</span>
                 </a>

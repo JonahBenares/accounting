@@ -11,7 +11,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <h4>Collection</h4>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
+                                    <!-- <div class="col-lg-6 col-md-6">
                                         <div class="input-group">
                                             <select class="custom-select" id="inputGroupSelect04">
                                                 <option selected="">Choose Participant</option>
@@ -23,10 +23,31 @@
                                                 <button class="btn btn-primary m-0" type="button" style="border-radius: 0 .25rem .25rem 0;">Search</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-10 offset-lg-1">
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="20%">
+                                                    <input placeholder="Month From" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start">
+                                                </td>
+                                                <td width="20%">
+                                                    <input placeholder="Month To" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>-- Select Participant --</option>
+                                                    </select>
+                                                </td>
+                                                <td><button class="btn btn-primary">Filter</button></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
                                 <table class="table-bordered table table-hover " id="save-stage" style="width:100%;">
                                     <thead>
                                         <tr>
