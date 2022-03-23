@@ -2247,3 +2247,13 @@ page[size="OR"] {
 .bor-btm{
 	border-bottom: 1px solid #dee2e6;
 }
+
+.td-yellow{
+	background: #fffca5;
+}
+.td-head{
+	background: #f1f1f1;
+}
+.td-30{
+	height: 30px!important;
+}

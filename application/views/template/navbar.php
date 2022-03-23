@@ -255,26 +255,27 @@
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>BIR</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="basic-form.html">Sales Summary</a></li>
-                    <li><a class="nav-link" href="forms-advanced-form.html">Purchases Summary</a></li>
-                    <li><a class="nav-link" href="forms-editor.html">Expanded Withholding Tax Summary</a></li>
-                    <li><a class="nav-link" href="forms-validation.html">Creditable Withholding Tax Summary</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_summary">Sales Summary</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_summary">Purchases Summary</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/ewt_summary">Expanded Withholding Tax Summary</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/cwht_summary">Creditable Withholding Tax Summary</a></li>
                 </ul>
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Ledger</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="basic-form.html">Sales Ledger</a></li>
-                    <li><a class="nav-link" href="forms-advanced-form.html">Advanced Form</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_ledger">Sales Ledger</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_ledger">Purchases Ledger</a></li>
                 </ul>
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Subsidiary Ledger</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="basic-form.html">Per Customer</a></li>
-                    <li><a class="nav-link" href="forms-advanced-form.html">Per Supplier</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/cs_ledger">Customer Subsidiary Ledger</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/ss_ledger">Supplier Subsidiary Ledger</a></li>
                 </ul>
             </li>
+            <br><br>
         </ul>
     </aside>
 </div>
