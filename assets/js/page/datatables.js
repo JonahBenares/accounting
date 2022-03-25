@@ -45,15 +45,14 @@ $('#save-stage').DataTable({
   stateSave: true
 });
 
-$('#save-stage-fix').DataTable({
-  "scrollX": true,
-  stateSave: true,
-  fixedColumns:   {
-      left: 1,
-      right: 1
-  }
-});
-
+var table = $('#example').DataTable( {
+    scrollX:        true,
+    scrollCollapse: true,
+    fixedColumns:   {
+        left: 0,
+        right: 1
+    }
+  } );
 $('#tableExport').DataTable({
   dom: 'Bfrtip',
   buttons: [

@@ -1,181 +1,178 @@
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
+  
+<style type="text/css">
+    
+    page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+    }
+    page[size="A4"] {  
+        width: 21cm;
+        height: 29.7cm; 
+    }
+    page[size="Long"] {
+        background: white;
+        width: 8.5in;
+        height: 13in; 
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+    }
+    page[size="A4"][layout="landscape"] {
+        width: 29.7cm;
+        height: 21cm;  
+    }
+    page[size="A3"] {
+        width: 29.7cm;
+        height: 42cm;
+    }
+    page[size="A3"][layout="landscape"] {
+        width: 42cm;
+        height: 29.7cm;  
+    }
+    page[size="A5"] {
+        width: 14.8cm;
+        height: 21cm;
+    }
+    page[size="A5"][layout="landscape"] {
+        width: 21cm;
+        height: 14.8cm;  
+    }
+    .paper-long {
+        background: white;
+        width: 8.5in;
+        height: 13in; 
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+    }
+    .period_from{
+        left: 464px; 
+        top: 175px;
+        position: absolute;
+        letter-spacing: 0.799em;
+    }
+    .period_to{
+        left: 807px; 
+        top: 175px;
+        position: absolute;
+        letter-spacing: 0.66em;
+    }
+    .payee{
+        left: 307px; 
+        top: 259px;
+        position: absolute;
+        font-size: 12px;
+    }
+    .address1{
+        left: 307px; 
+        top: 298px;
+        position: absolute;
+        font-size: 12px;
+    }
+    @media print {
+        /*body{
+            background: #fff;
+        }*/
+        body,section,page {
+            margin: 0;
+            box-shadow: 0;
+            padding: 0;
+        }
+        .main-sidebar ,.sidebar-style-2, .settingPanelToggle{
+            display: none;
+        }
+        
+        .paper-long {
+            background: white;
+            width: 100%;
+            height: 100%; 
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+        }
+        #printbutton, #br, #br1{display: none}
+        .main-content {
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 0px;
+            width: 100%;
+            position: relative;
+        }
+        .period_from{
+            left: 250px; 
+            top: 165px;
+            position: absolute;
+            letter-spacing: 0.799em;
+            font-size: 20px!important;
+        }
+        .period_to{
+            left: 680px; 
+            top: 165px;
+            position: absolute;
+            letter-spacing: 0.69em;
+            font-size: 20px!important;
+        }
+        .payee{
+            left:40px; 
+            top: 270px;
+            position: absolute;
+            font-size: 14px;
+        }
+        .address1{
+            left: 40px; 
+            top: 320px;
+            position: absolute;
+            font-size: 14px;
+        }
+        
+    }
+    
+</style>  
 <div class="main-content">
     <section class="section">
         <div class="section-body">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
-                    <center>
-                        <button class="btn btn-primary btn-md">Print</button>
-                    </center>
-                    <br>
-                    <page size="A4">
-                        Under Construction
-                        <!-- <table class="page-BS table-borddered" width="100%">
-                            <tr>
-                                <td width="5%"><br></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="20" align="center">                        
-                                    <h3 class="mb-0" style="font-family: arial;font-stretch: condensed;font-size: 30px;font-weight: 700;">CENTRAL NEGROS POWER RELIABILTY, INC.</h3>
-                                    <div style="font-size: 12px;margin-bottom: 10px;">
-                                        #88 ELOISA Q'S BLDG., COR. RIZAL-MABINI STS., BRGY. 22, BACOLOD CITY <br>
-                                        <b>VAT Reg. TIN: 008-691-287-00002</b><br>
-                                        TEL. NO. (034) 435-1932
-                                        <br>
-                                    </div>  
-                                    <b style="font-family: times new roman;font-size: 16px;">BILLING STATEMENT</b>
-                                    <br>
-                                    <br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Billed to:</td>
-                                <td colspan="13" class="bor-btm pl-2">LA UNION ELECTRIC COOPERATIVE, INC.</td>
-                                <td></td>
-                                <td>Date:</td>
-                                <td colspan="3" class="bor-btm  pl-2">22-12-22</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Business Style:</td>
-                                <td colspan="8" class="bor-btm pl-2"></td>
-                                <td>TIN</td>
-                                <td colspan="3" class="bor-btm pl-2"></td>
-                            </tr>
-                            <tr>
-                                <td>Address:</td>
-                                <td colspan="13" class="bor-btm pl-2">LA UNION ELECTRIC COOPERATIVE, INC.</td>
-                            </tr>
-                            <tr>
-                                <td colspan="20">
-                                    <br>
-                                    <table width="100%" class="table-bordered">
-                                        <tr>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15" align="center"><b>PARTICULARS</b></td>
-                                            <td colspan="5" align="center"><b>AMOUNT</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15" align="right" class="pr-2">
-                                                <b>TOTAL AMOUNT DUE</b>
-                                            </td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4"><b>AMOUNT IN WORDS:</b></td>
-                                <td colspan="16" class="bor-btm"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="14"></td>
-                                <td colspan="6"><br></td>
-                            </tr>
-                            <tr>
-                                <td colspan="14"></td>
-                                <td colspan="6">Certified Correct:</td>
-                            </tr>
-                            <tr>
-                                <td colspan="14"></td>
-                                <td colspan="5" class="bor-btm"><br></td>
-                                <td colspan="1"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="14"></td>
-                                <td colspan="5" align="center">Authorized Signature</td>
-                                <td colspan="1"></td>
-                            </tr>
-                        </table> -->
-                    </page>
-                </div>
+                    <div class="" id="printbutton">
+                        <center>
+                            <a href="#" class="btn btn-warning ">Back</a>
+                            <!-- <a href="#" class="btn btn-success " onclick=" window.print();">Print</a> -->
+                            <a href="#" class="btn btn-success " onclick="printDiv('printableArea')">Print</a>
+                        </center>
+                        <br>
+                    </div>
+                    <div class="paper-long"  id="printableArea" >
+                        <img class="img2307" src="<?php echo base_url(); ?>assets/img/form2307.jpg" style="width: 100%;">
+                        <label class="period_from ">20022002</label>
+                        <label class="period_to">20022002</label>
+                        <label class="payee">MESTRE, ERIC, VILLAVICENCIO (ANE ELECTRONIC AND AIRCONDITIONING TECHNOLOGY)</label>
+                        <label class="address1">TRIVI BLDG., 8 SAN SEBASTIAN AVE., BRGY. 14, BACOLOD CITY</label>
+                    </div>
 
+                    <script type="text/javascript">
+                        function printDiv(divName) {
+                        var printContents = document.getElementById(divName).innerHTML;
+                        var originalContents = document.body.innerHTML;
+
+                        document.body.innerHTML = printContents;
+
+                        window.print();
+
+                        document.body.innerHTML = originalContents;
+                    }
+                    </script>
+                    <div class="mb-5"><br></div>
+                </div>  
             </div>
         </div>
     </section>
 </div>
 
 
-                
-                                       
-         

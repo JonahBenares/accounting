@@ -66,5 +66,13 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/print_2307');
         $this->load->view('template/footer');
     }
+    public function print_2307sample()
+    {   
+        $this->load->view('purchases/print_2307sample');
+    }
+    public function print_2307test()
+    {   
+        $this->load->view('purchases/print_2307test');
+    }
 
 }

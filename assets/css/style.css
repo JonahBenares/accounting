@@ -2203,23 +2203,15 @@ a:hover {color: #0056b3;text-decoration: none;}
 .pull-left{
 	float: left;
 }
-
-page[size="A4"] {
+page[size="Long"] {
   background: white;
-  width: 21cm;
-  height: 29.7cm; 
+  width: 8.5in;
+  height: 13in; 
   display: block;
   margin: 0 auto;
   margin-bottom: 0.5cm;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
 }
-@media print {
-  body, page[size="A4"] {
-    margin: 0;
-    box-shadow: 0;
-  }
-}
-
 page[size="BS"] {
   background: white;
   width: 19.7cm;
@@ -2229,17 +2221,27 @@ page[size="BS"] {
   margin-bottom: 0.5cm;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
 }
-@media print {
-  body, page[size="BS"] {
-    margin: 0;
-    box-shadow: 0;
-  }
+page[size="A4"] {
+  background: white;
+  width: 21cm;
+  height: 29.7cm; 
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
 }
-
+page[size="BS"] {
+  background: white;
+  width: 19.7cm;
+  height: 17.1cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
 .page-BS{
     font-size: 13px;
 }
-
 page[size="OR"] {
   background: white;
   width: 20cm;
@@ -2249,13 +2251,16 @@ page[size="OR"] {
   margin-bottom: 0.5cm;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
 }
-@media print {
-  body, page[size="OR"] {
+/*@media print {
+  body, page {
     margin: 0;
     box-shadow: 0;
   }
-}
-
+  .img2307{
+  	width: 1000000px;
+  	position: fixed;
+  }
+}*/
 .page-OR{
     font-size: 13px;
 }
@@ -2273,3 +2278,4 @@ page[size="OR"] {
 .td-30{
 	height: 30px!important;
 }
+

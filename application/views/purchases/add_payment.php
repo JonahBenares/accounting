@@ -1,7 +1,7 @@
 <div class="card">
     <form>
         <div class="card-header">
-            <h4>Add Customer</h4>
+            <h4>Add Payment Details</h4>
         </div>
         <div class="card-body">
             <div class="row">
@@ -54,7 +54,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <button class="btn btn-primary mr-1 btn-block" value="Save" onclick="parent.window.opener.location='<?php echo base_url(); ?>purchases/print_2307'; window.close();">Save</button>
+                    <button class="btn btn-primary mr-1 btn-block" value="Save" onclick="parent.window.opener.location='<?php echo base_url(); ?>purchases/print_2307'; window.close();">Save and Print</button>
                 </div>
             </div>
         </div>
