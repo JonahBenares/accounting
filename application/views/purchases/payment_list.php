@@ -42,13 +42,13 @@
                                                         <option>-- Select Participant --</option>
                                                     </select>
                                                 </td>
-                                                <td><button class="btn btn-primary">Filter</button></td>
+                                                <td><button class="btn btn-primary" type="button" onclick="payment_filter()">Filter</button></td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                                 <hr>
-                                <table class="table-bordered table table-hover " id="example" style="width:200%;">
+                                <table class="table-bordered table table-hover" id="payment-list" style="width:200%; display: none;">
                                     <thead>
                                         <tr>
                                             <th>Trading Participant Name</th>
