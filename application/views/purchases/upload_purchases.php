@@ -104,7 +104,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -128,7 +128,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -152,7 +152,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -176,7 +176,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -200,7 +200,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -224,7 +224,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -248,7 +248,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -272,7 +272,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -296,7 +296,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -320,7 +320,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -344,7 +344,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -368,7 +368,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -392,7 +392,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -416,7 +416,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -440,7 +440,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -464,7 +464,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -488,7 +488,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -512,7 +512,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -536,7 +536,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -560,7 +560,7 @@
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks">(0)</a>
+                                                    <a id="clicks"></a>
                                                 </td>
                                             </tr>
                                         </tbody>

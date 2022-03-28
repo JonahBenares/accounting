@@ -70,10 +70,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -84,10 +85,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -98,10 +100,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -112,10 +115,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -126,10 +130,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -140,10 +145,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -154,10 +160,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -168,10 +175,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -182,10 +190,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -196,10 +205,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -210,10 +220,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -224,10 +235,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -238,10 +250,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -252,10 +265,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -266,10 +280,11 @@
                                             <td align="right">999,999.00</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                    <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                         <span class="m-0 fas fa-print"></span>
                                                     </a>
                                                 </div>
+                                                <a id="clicks"></a>
                                             </td>
                                         </tr>
 
