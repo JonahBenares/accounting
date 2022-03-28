@@ -63,12 +63,60 @@
         position: absolute;
         font-size: 12px;
     }
+    .payor{
+        left: 307px; 
+        top: 417px;
+        position: absolute;
+        font-size: 12px;
+    }
+    .tin1{
+        left: 541px;
+        top: 222px;
+        position: absolute;
+        letter-spacing: 0.86em;
+    }
+    .tin2{
+        left: 541px;
+        top: 382px;
+        position: absolute;
+        letter-spacing: 0.86em;
+    }
+    .last1{
+        margin-left:5px ;
+        letter-spacing: 1em;
+    }
     .address1{
         left: 307px; 
         top: 298px;
         position: absolute;
         font-size: 12px;
     }
+    .address2{
+        left: 307px; 
+        top: 337px;
+        position: absolute;
+        font-size: 12px;
+    }
+    .address3{
+        left: 307px; 
+        top: 457px;
+        position: absolute;
+        font-size: 12px;
+    }
+    .zip1{
+        left: 991px; 
+        top: 296px;
+        position: absolute;
+        letter-spacing: 0.53em;
+    }
+    .zip2{
+        left: 991px; 
+        top: 457px;
+        position: absolute;
+        letter-spacing: 0.53em;
+    }
+    
+    
     @media print {
         body,page {
             margin: 0;
@@ -139,8 +187,25 @@
         <img class="img2307" src="<?php echo base_url(); ?>assets/img/form2307.jpg" style="width: 100%;">
         <label class="period_from ">20022002</label>
         <label class="period_to">20022002</label>
+        <div class="tin1">
+           <label class="">112</label> 
+           <label class="">112</label> 
+           <label class="">112</label> 
+           <label class="last1">0000</label> 
+        </div>
         <label class="payee">MESTRE, ERIC, VILLAVICENCIO (ANE ELECTRONIC AND AIRCONDITIONING TECHNOLOGY)</label>
         <label class="address1">TRIVI BLDG., 8 SAN SEBASTIAN AVE., BRGY. 14, BACOLOD CITY</label>
+        <label class="zip1">6100</label>
+        <label class="address2">X</label>
+        <div class="tin2">
+           <label class="">112</label> 
+           <label class="">112</label> 
+           <label class="">112</label> 
+           <label class="last1">0000</label> 
+        </div>
+        <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
+        <label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label>
+        <label class="zip2">6100</label>
     </page>
 </div>
 
