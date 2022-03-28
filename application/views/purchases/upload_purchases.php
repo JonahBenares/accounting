@@ -60,511 +60,513 @@
                                 </div>
                                 <div id="table-wesm" style="display: none;">
                                     <hr>
-                                    <table class="table-bordered table table-hover " id="example" style="width:200%;">
-                                        <thead>
-                                            <tr>
-                                                <th>Trading Participant Name</th>
-                                                <th>Facility Type </th>
-                                                <th>WHT Agent Tag</th>
-                                                <th>Non Vatable Tag</th>
-                                                <th>Zero-rated Tag</th>
-                                                <th>Vatable Sales</th>
-                                                <th>Zero Rated Sales</th>
-                                                <th>Zero Rated EcoZones Sales</th>
-                                                <th>Vat On Sales</th>
-                                                <th>Vatable Purchses</th>
-                                                <th>Zero Rated Purchaseses</th>
-                                                <th>Zero Rated EcoZones Purchases </th>
-                                                <th>Vat On Purchases</th>
-                                                <th>EWT</th>
-                                                <th width="1%" align="center" style="background:rgb(245 245 245)">
-                                                    <center><span class="fas fa-bars"></span></center>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks">(0)</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Trading Participant Name</th>
+                                                    <th>Facility Type </th>
+                                                    <th>WHT Agent Tag</th>
+                                                    <th>Non Vatable Tag</th>
+                                                    <th>Zero-rated Tag</th>
+                                                    <th>Vatable Sales</th>
+                                                    <th>Zero Rated Sales</th>
+                                                    <th>Zero Rated EcoZones Sales</th>
+                                                    <th>Vat On Sales</th>
+                                                    <th>Vatable Purchses</th>
+                                                    <th>Zero Rated Purchaseses</th>
+                                                    <th>Zero Rated EcoZones Purchases </th>
+                                                    <th>Vat On Purchases</th>
+                                                    <th>EWT</th>
+                                                    <th width="1%" align="center" style="background:rgb(245 245 245)">
+                                                        <center><span class="fas fa-bars"></span></center>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks">(0)</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </form>

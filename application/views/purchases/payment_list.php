@@ -48,491 +48,493 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <table class="table-bordered table table-hover" id="payment-list" style="width:200%; display: none;">
-                                    <thead>
-                                        <tr>
-                                            <th>Trading Participant Name</th>
-                                            <th>Facility Type </th>
-                                            <th>WHT Agent Tag</th>
-                                            <th>Non Vatable Tag</th>
-                                            <th>Zero-rated Tag</th>
-                                            <th>Vatable Sales</th>
-                                            <th>Zero Rated Sales</th>
-                                            <th>Zero Rated EcoZones Sales</th>
-                                            <th>Vat On Sales</th>
-                                            <th>Vatable Purchses</th>
-                                            <th>Zero Rated Purchaseses</th>
-                                            <th>Zero Rated EcoZones Purchases </th>
-                                            <th>Vat On Purchases</th>
-                                            <th>EWT</th>
-                                            <th width="1%" align="center" style="background:rgb(245 245 245)">
-                                                <center><span class="fas fa-bars"></span></center>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
-                                                        <span class="m-0 fas fa-indent"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive" id="payment-list" style="display: none;">
+                                    <table class="table-bordered table table-hover" id="table-1" style="width:200%; ">
+                                        <thead>
+                                            <tr>
+                                                <th>Trading Participant Name</th>
+                                                <th>Facility Type </th>
+                                                <th>WHT Agent Tag</th>
+                                                <th>Non Vatable Tag</th>
+                                                <th>Zero-rated Tag</th>
+                                                <th>Vatable Sales</th>
+                                                <th>Zero Rated Sales</th>
+                                                <th>Zero Rated EcoZones Sales</th>
+                                                <th>Vat On Sales</th>
+                                                <th>Vatable Purchses</th>
+                                                <th>Zero Rated Purchaseses</th>
+                                                <th>Zero Rated EcoZones Purchases </th>
+                                                <th>Vat On Purchases</th>
+                                                <th>EWT</th>
+                                                <th width="1%" align="center" style="background:rgb(245 245 245)">
+                                                    <center><span class="fas fa-bars"></span></center>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td>Edinburgh</td>
+                                                <td align="center" style="background: #fff;">
+                                                    <div class="btn-group mb-0">
+                                                        <a style="color:#fff" onclick="add_payment('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Payment Details">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </form>
                     </div>

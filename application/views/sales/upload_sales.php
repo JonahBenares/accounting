@@ -58,9 +58,9 @@
                                     </div>
                                     <br>
                                 </div>
-                                <div id="table-wesm" style="display:none">
+                                <div class="table-responsive"  id="table-wesm" style="display:none">
                                     <hr>
-                                    <table class="table-bordered table table-hover " id="example" style="width:200%;">
+                                    <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
                                         <thead>
                                             <tr>                                                
                                                 <th>Trading Participant Name</th>
