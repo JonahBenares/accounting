@@ -52,23 +52,18 @@
                                     <table class="table-bordered table table-hover " id="table-1" style="width:100%; ">
                                         <thead>
                                             <tr>
+                                                <th align="center">
+                                                    <center><span class="fas fa-bars"></span></center>
+                                                </th>
                                                 <th width="10%">Date</th>
                                                 <th width="20%">Reference Number</th>
                                                 <th width="15%">Billing period</th>
                                                 <th width="15%">Vatable Sales</th>
                                                 <th width="15%">Total Amount Due</th>
-                                                <th width="1%" align="center">
-                                                    <center><span class="fas fa-bars"></span></center>
-                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -77,13 +72,13 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -92,13 +87,13 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -107,13 +102,13 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -122,13 +117,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -137,13 +133,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -152,13 +149,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -167,13 +165,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -182,13 +181,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -197,13 +197,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -212,13 +213,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -227,13 +229,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -242,13 +245,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -257,13 +261,14 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
@@ -272,22 +277,77 @@
                                                     </div>
                                                     <a id="clicks"></a>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
                                                 <td>10-22-99</td>
                                                 <td>Edinburgh</td>
                                                 <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
+                                                    <a id="clicks"></a>
                                                 </td>
+                                                <td>11-11-58</td>
+                                                <td>REF-255566225-88858</td>
+                                                <td>10-22-99</td>
+                                                <td>Edinburgh</td>
+                                                <td align="right">999,999.00</td>
                                             </tr>
-
+                                            
+                                            <tr>
+                                                <td align="center">
+                                                    <div class="btn-group mb-0">
+                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                            <span class="m-0 fas fa-print"></span>
+                                                        </a>
+                                                    </div>
+                                                    <a id="clicks"></a>
+                                                </td>
+                                                <td>11-11-58</td>
+                                                <td>REF-255566225-88858</td>
+                                                <td>10-22-99</td>
+                                                <td>Edinburgh</td>
+                                                <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td align="center">
+                                                    <div class="btn-group mb-0">
+                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                            <span class="m-0 fas fa-print"></span>
+                                                        </a>
+                                                    </div>
+                                                    <a id="clicks"></a>
+                                                </td>
+                                                <td>11-11-58</td>
+                                                <td>REF-255566225-88858</td>
+                                                <td>10-22-99</td>
+                                                <td>Edinburgh</td>
+                                                <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td align="center">
+                                                    <div class="btn-group mb-0">
+                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
+                                                            <span class="m-0 fas fa-print"></span>
+                                                        </a>
+                                                    </div>
+                                                    <a id="clicks"></a>
+                                                </td>
+                                                <td>11-11-58</td>
+                                                <td>REF-255566225-88858</td>
+                                                <td>10-22-99</td>
+                                                <td>Edinburgh</td>
+                                                <td align="right">999,999.00</td>
+                                            </tr>
+                                            
 
                                         </tbody>
                                     </table>

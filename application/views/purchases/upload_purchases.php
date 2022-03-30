@@ -64,6 +64,9 @@
                                         <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
                                             <thead>
                                                 <tr>
+                                                    <th width="1%" align="center" style="background:rgb(245 245 245)">
+                                                        <center><span class="fas fa-bars"></span></center>
+                                                    </th>
                                                     <th>Trading Participant Name</th>
                                                     <th>Facility Type </th>
                                                     <th>WHT Agent Tag</th>
@@ -78,27 +81,11 @@
                                                     <th>Zero Rated EcoZones Purchases </th>
                                                     <th>Vat On Purchases</th>
                                                     <th>EWT</th>
-                                                    <th width="1%" align="center" style="background:rgb(245 245 245)">
-                                                        <center><span class="fas fa-bars"></span></center>
-                                                    </th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
                                                             <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
@@ -107,462 +94,571 @@
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicks"></a>
                                                     </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                </tr><tr>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks"></a>
+                                                    </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks"></a>
+                                                    </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks"></a>
+                                                    </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background: #fff;">
+                                                        <div class="btn-group mb-0">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicks"></a>
+                                                    </td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>System Architect</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
+                                                    <td>Edinburgh</td>
                                                 </tr>
                                             </tbody>
                                         </table>

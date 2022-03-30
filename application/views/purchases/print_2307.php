@@ -15,6 +15,7 @@
     }
     page[size="Long"] {
         background: white;
+        position: absolute;
         width: 8.5in;
         height: 13in; 
         display: block;
@@ -44,6 +45,7 @@
     }
     .paper-long {
         background: white;
+        position: absolute;
         width: 8.5in;
         height: 13in; 
         display: block;
@@ -90,6 +92,7 @@
         
         .paper-long {
             background: white;
+            position: absolute;
             width: 100%;
             height: 100%; 
             display: block;
