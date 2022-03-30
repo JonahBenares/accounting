@@ -101,11 +101,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -125,11 +125,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -149,11 +149,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -173,11 +173,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -197,11 +197,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -221,11 +221,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -245,11 +245,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -269,11 +269,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -293,11 +293,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -317,11 +317,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -341,11 +341,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -365,11 +365,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -389,11 +389,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -413,11 +413,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -437,11 +437,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -461,11 +461,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -485,11 +485,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -509,11 +509,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -533,11 +533,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -557,11 +557,11 @@
                                                     <td>Edinburgh</td>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicks">(0)</a>
+                                                        <a id="clicks"></a>
                                                     </td>
                                                 </tr>
                                             </tbody>
