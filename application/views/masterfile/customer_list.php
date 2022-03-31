@@ -32,8 +32,8 @@
                                     <tbody>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -51,8 +51,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -70,8 +70,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -89,8 +89,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -108,8 +108,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -127,8 +127,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -146,8 +146,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -165,8 +165,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -184,8 +184,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -203,8 +203,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -222,8 +222,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -241,8 +241,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -260,8 +260,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -279,8 +279,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -298,8 +298,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -317,8 +317,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -336,8 +336,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -355,8 +355,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -374,8 +374,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -393,8 +393,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -412,8 +412,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -431,8 +431,8 @@
                                         </tr>
                                         <tr >
                                             <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
+                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
