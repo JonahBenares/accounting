@@ -30,8 +30,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -44,12 +44,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -62,12 +63,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -80,12 +82,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -98,12 +101,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -116,12 +120,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -134,12 +139,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -152,12 +158,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -170,12 +177,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -188,12 +196,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -206,12 +215,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -224,12 +234,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -242,12 +253,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -260,12 +272,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -278,12 +291,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -296,12 +310,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -314,12 +329,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -332,12 +348,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -350,12 +367,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -368,12 +386,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -386,12 +405,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -404,12 +424,13 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        <tr >
+                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td align="center">
@@ -422,6 +443,7 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -442,20 +464,43 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Customer</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Sub Company</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Customer</label>
+                    <label>Company</label>
                     <input type="text" class="form-control">
                 </div>
             </div>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-primary">Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="company_list" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Main Company Name Here</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table-bordered table-hover" width="100%">
+                    <tr>
+                        <td>&nbsp; Sample</td>
+                        <td width="1%">
+                            <button class="btn btn-xs "> <span class="far fa-times-circle"></span></button>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

@@ -1,4 +1,3 @@
-<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -7,59 +6,47 @@
                     <div class="card">
                         <form>
                             <div class="card-header">
-                                <h4>Upload WESM Transaction - Sales</h4>
+                                <h4>WESM Transaction - Sales</h4>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Reference Number</label>
-                                            <input type="date" class="form-control">
-                                        </div>
+                                    <div class="col-lg-10 offset-lg-1">
+                                        <table class="table-borderded" width="100%">
+                                            <tr>
+                                                <td width="40%">
+                                                    <input placeholder="Reference Number" class="form-control" type="text" >
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>-- Select Participant --</option>
+                                                    </select>
+                                                </td>
+                                                <td><button class="btn btn-primary btn-block">Filter</button></td>
+                                            </tr>
+                                        </table>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Billing Period (From)</label>
-                                            <input type="date" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Due Date</label>
-                                            <input type="date" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Billing Period (To)</label>
-                                            <input type="date" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label><br></label>
-                                            <button class="btn btn-block btn-primary" type="button" onclick="proceed_btn()">Proceed</button>
-                                        </div>
-                                    </div>
-                                </div>                                
-                                <div id="upload" style="display:none">
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
-                                            <div class="form-group mb-0">
-                                                <div class="input-group mb-0">
-                                                    <input type="file" class="form-control" placeholder="" aria-label="">
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-primary" id="proceed_sales" onclick="upload_btn()"  type="button">Upload</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
                                 </div>
-                                <div class="table-responsive"  id="table-wesm" style="display:none">
-                                    <hr>
+                                <hr>
+                                <table class="table-bsordered" width="100%">
+                                    <tr>
+                                        <td width="15%">Reference Number</td>
+                                        <td>: REF299889-999787-0000</td>
+                                        <td width="15%">Billing Period (From)</td>
+                                        <td>: March 08, 1998</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>: July 16, 1990</td>
+                                        <td>Billing Period (To)</td>
+                                        <td>: June 08, 2099</td>
+                                    </tr>                                    
+                                    <tr>
+                                        <td>Due Date</td>
+                                        <td>: March 08, 3004</td>
+                                    </tr>
+                                </table>
+                                <br>
+                                <div class="table-responsive">
                                     <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
                                         <thead>
                                             <tr>    
@@ -87,8 +74,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -112,8 +99,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -137,8 +124,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -162,8 +149,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -187,8 +174,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -212,8 +199,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -237,8 +224,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -262,8 +249,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -287,8 +274,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -312,8 +299,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -337,8 +324,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -362,8 +349,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -387,8 +374,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -412,8 +399,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -437,8 +424,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -462,8 +449,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -487,8 +474,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -512,8 +499,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -537,8 +524,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -562,8 +549,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -587,8 +574,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
+                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
+                                                            <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>

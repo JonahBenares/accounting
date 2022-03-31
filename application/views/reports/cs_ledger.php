@@ -16,15 +16,20 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-6 offset-lg-3">
+                                <div class="col-lg-10 offset-lg-1">
                                     <table width="100%">
                                         <tr>
+                                            <td>
+                                                <select class="form-control">
+                                                    <option>-- Select Participant --</option>
+                                                </select>
+                                            </td>
                                             <td>
                                                 <select class="form-control">
                                                     <option>-- Select Year --</option>
                                                 </select>
                                             </td>
-                                            <td><button class="btn btn-primary">Filter</button></td>
+                                            <td width="1%"><button class="btn btn-primary">Filter</button></td>
                                         </tr>
                                     </table>
                                 </div>

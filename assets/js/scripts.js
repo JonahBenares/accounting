@@ -707,3 +707,17 @@ $(function () {
   // sticky header default set to true
   $("#sticky_header_setting").prop("checked", true);
 });
+
+
+$('#company_list').modal({
+      keyboarnd: true,
+      backdrop: "static",
+      show:false,
+
+  }).on('show.bs.modal', function(){
+        var getIdFromRow = $(this).data('orderid');
+      //make your ajax call populate items or what even you need
+      $(this).find('#orderDetails').html($('<b> Order Id selected: ' + getIdFromRow  + '</b>'))
+  });
+
+  

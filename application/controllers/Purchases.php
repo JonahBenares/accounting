@@ -59,12 +59,17 @@ class Purchases extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function print_2307()
+    public function purchases_wesm()
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/print_2307');
+        $this->load->view('purchases/purchases_wesm');
         $this->load->view('template/footer');
+    }
+    
+    public function print_2307()
+    {
+        $this->load->view('purchases/print_2307');
     }
     public function print_2307sample()
     {   

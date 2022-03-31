@@ -224,6 +224,12 @@
                     <span>Collection</span>
                 </a>
             </li>
+            <li class="dropdown">
+                <a href="<?php echo base_url(); ?>sales/sales_wesm" class="nav-link">
+                    <i data-feather="upload"></i>
+                    <span>WESM Transaction</span>
+                </a>
+            </li>
             <li class="menu-header">Purchases</li>
             <li class="dropdown">
                 <a href="<?php echo base_url(); ?>purchases/upload_purchases" class="nav-link">
@@ -235,6 +241,12 @@
                 <a href="<?php echo base_url(); ?>purchases/payment_list" class="nav-link">
                     <i data-feather="dollar-sign"></i>
                     <span>Payment</span>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="<?php echo base_url(); ?>purchases/purchases_wesm" class="nav-link">
+                    <i data-feather="upload"></i>
+                    <span>WESM Transaction</span>
                 </a>
             </li>
             <!-- <li class="dropdown">

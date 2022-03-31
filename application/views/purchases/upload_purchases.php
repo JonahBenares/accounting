@@ -81,14 +81,14 @@
                                                     <th>Zero Rated EcoZones Purchases </th>
                                                     <th>Vat On Purchases</th>
                                                     <th>EWT</th>
-                                                    
+                                                    <th>Total Amount</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -104,6 +104,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -112,7 +113,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -128,6 +129,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -136,7 +138,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -152,6 +154,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -160,7 +163,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -176,6 +179,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -184,7 +188,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -200,6 +204,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -208,7 +213,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -224,6 +229,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -232,7 +238,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -248,6 +254,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -256,7 +263,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -272,6 +279,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -280,7 +288,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -296,6 +304,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -304,7 +313,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -320,6 +329,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -328,7 +338,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -344,6 +354,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -352,7 +363,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -368,6 +379,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -376,7 +388,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -392,6 +404,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -400,7 +413,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -416,6 +429,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -424,7 +438,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -440,6 +454,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -448,7 +463,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -464,6 +479,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -472,7 +488,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -488,6 +504,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -496,7 +513,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -512,6 +529,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -520,7 +538,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -536,6 +554,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -544,7 +563,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -560,6 +579,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -567,7 +587,7 @@
                                                 </tr><tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -583,6 +603,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -591,7 +612,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -607,6 +628,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -615,7 +637,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -631,6 +653,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
@@ -639,7 +662,7 @@
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
                                                         <div class="btn-group mb-0">
-                                                            <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <a href="<?php echo base_url(); ?>purchases/print_2307" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
@@ -655,6 +678,7 @@
                                                     <td>Edinburgh</td>
                                                     <td>Tiger Nixon</td>
                                                     <td>System Architect</td>
+                                                    <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>
                                                     <td>Edinburgh</td>

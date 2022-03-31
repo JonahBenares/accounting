@@ -59,5 +59,20 @@ class Sales extends CI_Controller {
         $this->load->view('sales/print_BS');
         $this->load->view('template/footer');
     }
+
+    public function sales_wesm()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/sales_wesm');
+        $this->load->view('template/footer');
+    }
+
+    public function add_details()
+    {
+        $this->load->view('template/header');
+        $this->load->view('sales/add_details');
+        $this->load->view('template/footer');
+    }
     
 }

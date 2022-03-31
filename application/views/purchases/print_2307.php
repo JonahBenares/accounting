@@ -1,181 +1,73 @@
-<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
-  
-<style type="text/css">
-    
-    page {
-        background: white;
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 0.5cm;
-        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-    }
-    page[size="A4"] {  
-        width: 21cm;
-        height: 29.7cm; 
-    }
-    page[size="Long"] {
-        background: white;
-        position: absolute;
-        width: 8.5in;
-        height: 13in; 
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 0.5cm;
-        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-    }
-    page[size="A4"][layout="landscape"] {
-        width: 29.7cm;
-        height: 21cm;  
-    }
-    page[size="A3"] {
-        width: 29.7cm;
-        height: 42cm;
-    }
-    page[size="A3"][layout="landscape"] {
-        width: 42cm;
-        height: 29.7cm;  
-    }
-    page[size="A5"] {
-        width: 14.8cm;
-        height: 21cm;
-    }
-    page[size="A5"][layout="landscape"] {
-        width: 21cm;
-        height: 14.8cm;  
-    }
-    .paper-long {
-        background: white;
-        position: absolute;
-        width: 8.5in;
-        height: 13in; 
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 0.5cm;
-        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-    }
-    .period_from{
-        left: 464px; 
-        top: 175px;
-        position: absolute;
-        letter-spacing: 0.799em;
-    }
-    .period_to{
-        left: 807px; 
-        top: 175px;
-        position: absolute;
-        letter-spacing: 0.66em;
-    }
-    .payee{
-        left: 307px; 
-        top: 259px;
-        position: absolute;
-        font-size: 12px;
-    }
-    .address1{
-        left: 307px; 
-        top: 298px;
-        position: absolute;
-        font-size: 12px;
-    }
-    @media print {
-        /*body{
-            background: #fff;
-        }*/
-        body,section,page {
-            margin: 0;
-            box-shadow: 0;
-            padding: 0;
-        }
-        .main-sidebar ,.sidebar-style-2, .settingPanelToggle{
-            display: none;
-        }
-        
-        .paper-long {
-            background: white;
-            position: absolute;
-            width: 100%;
-            height: 100%; 
-            display: block;
-            margin: 0 auto;
-            margin-bottom: 0.5cm;
-            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-        }
-        #printbutton, #br, #br1{display: none}
-        .main-content {
-            padding-left: 0px;
-            padding-right: 0px;
-            padding-top: 0px;
-            width: 100%;
-            position: relative;
-        }
-        .period_from{
-            left: 250px; 
-            top: 165px;
-            position: absolute;
-            letter-spacing: 0.799em;
-            font-size: 20px!important;
-        }
-        .period_to{
-            left: 680px; 
-            top: 165px;
-            position: absolute;
-            letter-spacing: 0.69em;
-            font-size: 20px!important;
-        }
-        .payee{
-            left:40px; 
-            top: 270px;
-            position: absolute;
-            font-size: 14px;
-        }
-        .address1{
-            left: 40px; 
-            top: 320px;
-            position: absolute;
-            font-size: 14px;
-        }
-        
-    }
-    
-</style>  
-<div class="main-content">
-    <section class="section">
-        <div class="section-body">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-sm-6">
-                    <div class="" id="printbutton">
-                        <center>
-                            <a href="#" class="btn btn-warning ">Back</a>
-                            <!-- <a href="#" class="btn btn-success " onclick=" window.print();">Print</a> -->
-                            <a href="#" class="btn btn-success " onclick="printDiv('printableArea')">Print</a>
-                        </center>
-                        <br>
-                    </div>
-                    <div class="paper-long"  id="printableArea" >
-                        <img class="img2307" src="<?php echo base_url(); ?>assets/img/form2307.jpg" style="width: 100%;">
-                        <label class="period_from ">20022002</label>
-                        <label class="period_to">20022002</label>
-                        <label class="payee">MESTRE, ERIC, VILLAVICENCIO (ANE ELECTRONIC AND AIRCONDITIONING TECHNOLOGY)</label>
-                        <label class="address1">TRIVI BLDG., 8 SAN SEBASTIAN AVE., BRGY. 14, BACOLOD CITY</label>
-                    </div>
-
-                    <script type="text/javascript">
-                        function printDiv(divName) {
-                        var printContents = document.getElementById(divName).innerHTML;
-                        var originalContents = document.body.innerHTML;
-
-                        document.body.innerHTML = printContents;
-
-                        window.print();
-
-                        document.body.innerHTML = originalContents;
-                    }
-                    </script>
-                    <div class="mb-5"><br></div>
-                </div>  
-            </div>
-        </div>
-    </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Otika - Admin Dashboard Template</title>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print2307-style.css">
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/favicon.ico' />
+</head>
+<div class="" id="printbutton">
+    <center>
+        <button class="btn btn-warning " onclick="history.back()">Back</button>
+        <button class="btn btn-success " onclick="printDiv('printableArea')">Print</button>
+    </center>
+    <br>
 </div>
+<br>
+<br>
+<center>
+<div style="padding-bottom:90px;">
+    <page size="Long" id="printableArea" >
+        <img class="img2307" src="<?php echo base_url(); ?>assets/img/form2307.jpg" style="width: 100%;">
+        <label class="period_from ">20022002</label>
+        <label class="period_to">20022002</label>
+        <div class="tin1">
+           <label class="">112</label> 
+           <label class="">112</label> 
+           <label class="">112</label> 
+           <label class="last1">0000</label> 
+        </div>
+        <label class="payee">NATIONAL IRRIGATION ADMINISTRATION MAGAT RIVER INTEGRATED IRRIGATION SYSTEM</label>
+        <label class="address1">28th Floor The Orient Square, Don Francisco Ortigas Jr. Road, Ortigas Center, San Antonio 1605 City of Pasig NCR, Second District Philippines</label>
+        <label class="zip1">6100</label>
+        <label class="address2">X</label>
+        <div class="tin2">
+           <label class="">112</label> 
+           <label class="">112</label> 
+           <label class="">112</label> 
+           <label class="last1">0000</label> 
+        </div>
+        <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
+        <label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label>
+        <label class="zip2">6100</label>
+        <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of goods other than those covered by other rates of withholding tax</label>
+        <label class="row1-col2">WC158</label>
+        <label class="row1-col3">9.6700</label>
+        <label class="row1-col4">9.6700</label>
+        <label class="row1-col5">9.6700</label>
+        <label class="row1-col6">3,225.67</label>
+        <label class="row1-col7">9.6700 <span class="hey">&nbsp;&nbsp;</span></label>
 
+        <label class="row2-col3">9.6700</label>
+        <label class="row2-col4">9.6700</label>
+        <label class="row2-col5">9.6700</label>
+        <label class="row2-col6">9.6700</label>
+        <label class="row2-col7">9.6700 <span>&nbsp;&nbsp;</span></label>
+    </page>
+</div>
+</center>
 
+</html>
+<script type="text/javascript">
+    function printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
+</script>
