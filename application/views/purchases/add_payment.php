@@ -1,3 +1,4 @@
+<script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <div class="card">
     <form>
         <div class="card-header">
@@ -50,11 +51,61 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6 offset-lg-3 offset-md-3 offset-sm-3">
+                    <center>
+                        
+                        <div class="custom-control custom-radio custom-control-inline mr-3" >
+                            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" onclick="checkRadio()">
+                            <label class="custom-control-label" for="customRadioInline2" >Check</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline" >
+                            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" onclick="cashRadio()">
+                            <label class="custom-control-label" for="customRadioInline1">Cash</label>
+                        </div>
+                    </center>
+                </div>
+            </div>
+            <div id="checkID" style="display:none">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label>Check No</label>
+                            <input type="text" class="form-control" name="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>CV No</label>
+                            <input type="text" class="form-control" name="">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Check Date</label>
+                            <input type="date" class="form-control" name="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cashID" style="display:none">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label>PCV</label>
+                            <input type="text" class="form-control" name="">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <button class="btn btn-primary mr-1 btn-block" value="Save" onclick = "window.open('<?php echo base_url(); ?>purchases/print_2307', '_blank'); window.close();">Save and Print</button>
+                    <button class="btn btn-primary mr-1 btn-block" value="Save" onclick = "window.close();">Save</button>
                 </div>
             </div>
         </div>

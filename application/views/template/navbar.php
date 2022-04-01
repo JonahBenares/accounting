@@ -226,7 +226,7 @@
             </li>
             <li class="dropdown">
                 <a href="<?php echo base_url(); ?>sales/sales_wesm" class="nav-link">
-                    <i data-feather="upload"></i>
+                    <i data-feather="list"></i>
                     <span>WESM Transaction</span>
                 </a>
             </li>
@@ -245,7 +245,7 @@
             </li>
             <li class="dropdown">
                 <a href="<?php echo base_url(); ?>purchases/purchases_wesm" class="nav-link">
-                    <i data-feather="upload"></i>
+                    <i data-feather="list"></i>
                     <span>WESM Transaction</span>
                 </a>
             </li>

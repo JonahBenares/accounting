@@ -87,11 +87,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>')"  class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -112,11 +112,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -137,11 +137,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -162,11 +162,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -187,11 +187,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -212,11 +212,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -237,11 +237,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -262,11 +262,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -287,11 +287,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -312,11 +312,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -337,11 +337,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -362,11 +362,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -387,11 +387,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -412,11 +412,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -437,11 +437,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -462,11 +462,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -487,11 +487,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -512,11 +512,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -537,11 +537,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -562,11 +562,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>
@@ -587,11 +587,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details('<?php echo base_url(); ?>')" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td>Tiger Nixon</td>
                                                 <td>System Architect</td>

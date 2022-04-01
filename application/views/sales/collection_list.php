@@ -66,11 +66,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -81,11 +81,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -96,11 +96,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -111,27 +111,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -143,11 +127,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -159,11 +143,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -175,11 +159,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -191,11 +175,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -207,11 +191,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -223,11 +207,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -239,11 +223,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -255,11 +239,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -271,11 +255,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -287,11 +271,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -303,11 +287,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -319,11 +303,11 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>
@@ -335,11 +319,27 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR" class="btn btn-success btn-sm" target="_blank" onClick="onClick()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Official Receipt">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksOR"></a>
+                                                </td>
+                                                <td>11-11-58</td>
+                                                <td>REF-255566225-88858</td>
+                                                <td>10-22-99</td>
+                                                <td>Edinburgh</td>
+                                                <td align="right">999,999.00</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td align="center">
+                                                    <div class="btn-group mb-0">
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                    <a id="clicksOR"></a>
                                                 </td>
                                                 <td>11-11-58</td>
                                                 <td>REF-255566225-88858</td>

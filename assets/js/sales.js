@@ -1,5 +1,17 @@
-function add_details(baseurl) {
-    window.open(baseurl+"sales/add_details/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+var clicksBS = 0;
+function add_details_BS(baseurl) {
+    window.open(baseurl+"sales/add_details_BS/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+    clicksBS += 1;
+	document.getElementById("clicksBS").innerHTML = '('+clicksBS+')';
+}
+function add_details_wesm(baseurl) {
+    window.open(baseurl+"sales/add_details_wesm/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+}
+var clicksOR = 0;
+function add_details_OR(baseurl) {
+    window.open(baseurl+"sales/add_details_OR/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+    clicksOR += 1;
+	document.getElementById("clicksOR").innerHTML = '('+clicksOR+')';
 }
 function proceed_btn() {
 	var x = document.getElementById("upload");
@@ -28,9 +40,7 @@ function collection_filter() {
 	}
 }
 
- var clicks = 0;
 
-    function onClick() {
-    clicks += 1;
-    document.getElementById("clicks").innerHTML = '('+clicks+')';
-};
+ //    function onClick() {
+	    
+	// };

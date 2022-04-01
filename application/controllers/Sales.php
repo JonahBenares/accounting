@@ -68,10 +68,24 @@ class Sales extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function add_details()
+    public function add_details_BS()
     {
         $this->load->view('template/header');
-        $this->load->view('sales/add_details');
+        $this->load->view('sales/add_details_BS');
+        $this->load->view('template/footer');
+    }
+
+    public function add_details_OR()
+    {
+        $this->load->view('template/header');
+        $this->load->view('sales/add_details_OR');
+        $this->load->view('template/footer');
+    }
+
+    public function add_details_wesm()
+    {
+        $this->load->view('template/header');
+        $this->load->view('sales/add_details_wesm');
         $this->load->view('template/footer');
     }
     

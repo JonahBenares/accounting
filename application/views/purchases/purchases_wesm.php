@@ -1,3 +1,4 @@
+<script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -75,8 +76,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -100,8 +101,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -125,8 +126,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -150,8 +151,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -175,8 +176,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -200,8 +201,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -225,8 +226,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -250,8 +251,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -275,8 +276,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -300,8 +301,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -325,8 +326,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -350,8 +351,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -375,8 +376,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -400,8 +401,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -425,8 +426,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -450,8 +451,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -475,8 +476,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -500,8 +501,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -525,8 +526,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -550,8 +551,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -574,8 +575,8 @@
                                             </tr><tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -599,8 +600,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -624,8 +625,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -649,8 +650,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307sample" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" onClick="click()" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a onclick="add_details_wesm('<?php echo base_url(); ?>')" style="color:#fff" target="_blank" onClick="onClick()" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>

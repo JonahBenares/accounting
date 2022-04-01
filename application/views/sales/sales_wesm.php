@@ -1,3 +1,4 @@
+<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -74,8 +75,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -99,8 +100,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -124,8 +125,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -149,8 +150,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -174,8 +175,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -199,8 +200,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -224,8 +225,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -249,8 +250,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -274,8 +275,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -299,8 +300,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -324,8 +325,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -349,8 +350,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -374,8 +375,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -399,8 +400,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -424,8 +425,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -449,8 +450,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -474,8 +475,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -499,8 +500,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -524,8 +525,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -549,8 +550,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
@@ -574,8 +575,8 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_BS" target="_blank" onClick="onClick()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Billing Statement">
-                                                            <span class="m-0 fas fa-print"></span>
+                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                            <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicks"></a>
