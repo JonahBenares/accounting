@@ -80,7 +80,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <button class="btn btn-primary mr-1 btn-block" value="Save" onclick = "window.open('<?php echo base_url(); ?>sales/print_OR', '_blank'); window.close();">Save and Print </button>
+                    <button class="btn btn-primary mr-1 btn-block" value="Save" onclick = "window.open('<?php echo base_url(); ?>sales/print_OR', '_blank'); window.close();">Save and Print OR </button>
                 </div>
             </div>
         </div>

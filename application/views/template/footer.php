@@ -97,7 +97,7 @@
         <script src="<?php echo base_url(); ?>assets/bundles/jquery-ui/jquery-ui.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/page/datatables-col.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/page/datatables.js"></script>
-        <script src="<?php echo base_url(); ?>assets/bundles/apexcharts/apexcharts.min.js"></script>
+   <!--      <script src="<?php echo base_url(); ?>assets/bundles/apexcharts/apexcharts.min.js"></script> -->
         <script src="<?php echo base_url(); ?>assets/js/page/index.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/custom.js"></script>

@@ -71,7 +71,7 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                         <center>
                                             <label>Witholding Tax Agent</label>
                                             <div class="form-group mb-2">
@@ -82,8 +82,6 @@
                                                         <label> YES</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="withhold">
                                                     <div class="state p-warning">
@@ -94,7 +92,7 @@
                                             </div>
                                         </center>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                         <center>
                                             <label>VAT zero-rated</label>
                                             <div class="form-group mb-2">
@@ -105,8 +103,6 @@
                                                         <label> YES</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="vat">
                                                     <div class="state p-warning">
@@ -117,7 +113,7 @@
                                             </div>
                                         </center>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                         <center>
                                             <label>Income tax holiday</label>
                                             <div class="form-group mb-2">
@@ -128,33 +124,8 @@
                                                         <label> YES</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="income">
-                                                    <div class="state p-warning">
-                                                        <i class="icon material-icons">done</i>
-                                                        <label> NO</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </center>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <center>
-                                        <label>Documents submitted</label>
-                                            <div class="form-group mb-2">
-                                                <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="docu">
-                                                    <div class="state p-warning">
-                                                        <i class="icon material-icons">done</i>
-                                                        <label> YES</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="docu">
                                                     <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
                                                         <label> NO</label>
@@ -178,6 +149,20 @@
                                         <div class="form-group">
                                             <label>Address</label>
                                             <input type="text" class="form-control">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Billing ID</label>
+                                                    <input type="text" class="form-control" name="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Settlement ID</label>
+                                                    <input type="text" class="form-control" name="">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -207,6 +192,10 @@
                                             <label>Contact Person's Email Address</label>
                                             <input type="email" class="form-control">
                                         </div>
+                                        <div class="form-group">
+                                            <label>Documents Submitted</label>
+                                            <input type="text" class="form-control" name="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -225,3 +214,28 @@
         </div>
     </section>
 </div>
+
+
+<!-- <div class="col-lg-3 col-md-3 col-sm-3">
+    <center>
+    <label>Documents submitted</label>
+        <div class="form-group mb-2">
+            <div class="pretty p-icon p-curve p-jelly">
+                <input type="radio" name="docu">
+                <div class="state p-warning">
+                    <i class="icon material-icons">done</i>
+                    <label> YES</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="pretty p-icon p-curve p-jelly">
+                <input type="radio" name="docu">
+                <div class="state p-warning">
+                    <i class="icon material-icons">done</i>
+                    <label> NO</label>
+                </div>
+            </div>
+        </div>
+    </center>
+</div> -->

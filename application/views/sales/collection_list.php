@@ -28,21 +28,26 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-10 offset-lg-1">
+                                    <div class="col-lg-12">
                                         <table width="100%">
                                             <tr>
-                                                <td width="20%">
-                                                    <input placeholder="Month From" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start">
+                                                <td width="5%"></td>
+                                                <td width="15%">
+                                                    <input placeholder="Month From" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start" style="width:200px">
                                                 </td>
-                                                <td width="20%">
-                                                    <input placeholder="Month To" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start">
+                                                <td width="15%">
+                                                    <input placeholder="Month To" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start" style="width:200px">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="" placeholder="Reference Number">
                                                 </td>
                                                 <td>
                                                     <select class="form-control">
                                                         <option>-- Select Participant --</option>
                                                     </select>
                                                 </td>
-                                                <td><button class="btn btn-primary" type="button" onclick="collection_filter()">Filter</button></td>
+                                                <td width="1%"><button class="btn btn-primary" type="button" onclick="collection_filter()">Filter</button></td>
+                                                <td width="5%"></td>
                                             </tr>
                                         </table>
                                     </div>

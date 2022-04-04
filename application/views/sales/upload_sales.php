@@ -87,7 +87,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>')"  class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -112,7 +112,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -137,7 +137,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -162,7 +162,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -187,7 +187,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -212,7 +212,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -237,7 +237,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -262,7 +262,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -287,7 +287,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -312,7 +312,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -337,7 +337,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -362,7 +362,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -387,7 +387,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -412,7 +412,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -437,7 +437,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -462,7 +462,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -487,7 +487,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -512,7 +512,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -537,7 +537,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -562,7 +562,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
@@ -587,7 +587,7 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>

@@ -9,8 +9,9 @@
 </head>
 <div class="" id="printbutton">
     <center>
-        <button class="btn btn-warning " onclick="history.back()">Back</button>
+        <button class="btn btn-warning " onclick="document.location='upload_purchases'">Back</button>
         <button class="btn btn-success " onclick="printDiv('printableArea')">Print</button>
+        <button class="btn btn-primary " onclick="saveDiv('printableArea','Title')">Save as PDF</button>
     </center>
     <br>
 </div>
@@ -18,6 +19,7 @@
 <br>
 <center>
 <div style="padding-bottom:90px;">
+    <div id="contentPDF">
     <page size="Long" id="printableArea" >
         <img class="img2307" src="<?php echo base_url(); ?>assets/img/form2307.jpg" style="width: 100%;">
         <label class="period_from ">20022002</label>
@@ -55,19 +57,29 @@
         <label class="row2-col6">9.6700</label>
         <label class="row2-col7">9.6700 <span>&nbsp;&nbsp;</span></label>
     </page>
+    </div>
 </div>
 </center>
 
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js"></script>
 <script type="text/javascript">
     function printDiv(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
-    var originalContents = document.body.innerHTML;
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
 
-    document.body.innerHTML = printContents;
+        document.body.innerHTML = printContents;
 
-    window.print();
+        window.print();
 
-    document.body.innerHTML = originalContents;
-}
+        document.body.innerHTML = originalContents;
+    }
+
+    var doc = new jsPDF();
+
+    function saveDiv(divId, title) {
+        doc.fromHTML(`<html><head><title>${title}</title></head><body>` + document.getElementById(divId).innerHTML + `</body></html>`);
+        doc.save('FORM_2307.pdf');
+    }
+
 </script>
