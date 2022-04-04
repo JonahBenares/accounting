@@ -33,7 +33,7 @@
                                                         <option>-- Select Participant --</option>
                                                     </select>
                                                 </td>
-                                                <td width="1%"><button class="btn btn-primary" type="button" onclick="collection_filter()">Filter</button></td>
+                                                <td width="1%"><button class="btn btn-primary" type="button" onclick="payment_filter()">Filter</button></td>
                                                 <td width="5%"></td>
                                             </tr>
                                         </table>

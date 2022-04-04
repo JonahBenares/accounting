@@ -684,7 +684,7 @@
             <div class="theme-setting-options">
               <label class="m-b-0">
                 <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                  id="mini_sidebar_setting">
+                  id="">
                 <span class="custom-switch-indicator"></span>
                 <span class="control-label p-l-10">Mini Sidebar</span>
               </label>
@@ -694,7 +694,7 @@
             <div class="theme-setting-options">
               <label class="m-b-0">
                 <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                  id="sticky_header_setting">
+                  id="">
                 <span class="custom-switch-indicator"></span>
                 <span class="control-label p-l-10">Sticky Header</span>
               </label>
