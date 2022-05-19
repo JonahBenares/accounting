@@ -207,7 +207,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/customer_list">Customer</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/supplier_list">Supplier</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/supplier_list">Supplier</a></li> -->
                     <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/user_list">Users</a></li>
                 </ul>
             </li>

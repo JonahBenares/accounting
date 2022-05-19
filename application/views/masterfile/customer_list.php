@@ -10,9 +10,14 @@
                                     <h4>Customer List</h4>
                                 </div>
                                 <div class="col-6">
-                                    <a href="<?php echo base_url(); ?>masterfile/customer_add" type="button" class="btn btn-primary pull-right">
-                                        <span class="fas fa-plus"></span> Add
-                                    </a>
+                                    <div class="form-group pull-right">
+                                        <a href="<?php echo base_url(); ?>masterfile/customer_add" type="button" class="btn btn-primary">
+                                            <span class="fas fa-plus"></span> Add
+                                        </a>
+                                        <button type="button" class="btn btn-warning " data-target="#bulk_upload" data-toggle="modal">
+                                            <span class="fas fa-upload"></span> Bulk Upload
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -483,24 +488,23 @@
     </div>
 </div>
 
-<div class="modal fade" id="company_list" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="bulk_upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Main Company Name Here</h5>
+                <h5 class="modal-title" id="">Bulk Upload</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table-bordered table-hover" width="100%">
-                    <tr>
-                        <td>&nbsp; Sample</td>
-                        <td width="1%">
-                            <button class="btn btn-xs "> <span class="far fa-times-circle"></span></button>
-                        </td>
-                    </tr>
-                </table>
+                <div class="form-group">
+                    <label>Add File:</label>
+                    <input type="file" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-primary">Upload</button>
             </div>
         </div>
     </div>
