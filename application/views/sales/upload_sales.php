@@ -1,54 +1,74 @@
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
+<?php
+
+if(!empty($sales_id)){
+    $readonly = 'readonly';
+} else {
+    $readonly='';
+}
+?>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                        <form>
+                     
                             <div class="card-header">
                                 <h4>Upload WESM Transaction - Sales</h4>
                             </div>
                             <div class="card-body">
+                                   <form  id='saleshead'>
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label>Date</label>
-                                            <input type="date" class="form-control">
+                                            <input type="date" class="form-control" name='transaction_date' id="transaction_date" value="<?php echo (!empty($sales_id) ? $transaction_date : ''); ?>" required <?php echo $readonly; ?> >
                                         </div>
                                         <div class="form-group">
                                             <label>Reference Number</label>
-                                            <input type="date" class="form-control">
+                                            <input type="text" class="form-control" name="reference_number" id="reference_number"  value="<?php echo (!empty($sales_id) ? $reference_number : ''); ?>" required <?php echo $readonly; ?>>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label>Billing Period (From)</label>
-                                            <input type="date" class="form-control">
+                                            <input type="date" class="form-control" name='billing_from' id="billing_from" value="<?php echo (!empty($sales_id) ? $billing_from : ''); ?>" required <?php echo $readonly; ?>>
                                         </div>
                                         <div class="form-group">
                                             <label>Due Date</label>
-                                            <input type="date" class="form-control">
+                                            <input type="date" class="form-control" name='due_date' id="due_date" value="<?php echo (!empty($sales_id) ? $due_date : ''); ?>" required <?php echo $readonly; ?>>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label>Billing Period (To)</label>
-                                            <input type="date" class="form-control">
+                                            <input type="date" class="form-control" name='billing_to' id="billing_to" value="<?php echo (!empty($sales_id) ? $billing_to : ''); ?>" required <?php echo $readonly; ?>>
                                         </div>
                                         <div class="form-group">
                                             <label><br></label>
-                                            <button class="btn btn-block btn-primary" type="button" onclick="proceed_btn()">Proceed</button>
+                                            <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
+                                            <?php if(empty($sales_id)){ ?>
+                                                <input type='button' class="btn btn-block btn-primary" id='save_head_button' type="button" onclick="proceed_btn()" value="Proceed">
+                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancel_sales()" value="Cancel Transaction" style='display: none;'>
+                                             <?php } else { ?>
+                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancel_sales()" value="Cancel Transaction">
+                                            <?php } ?>
                                         </div>
                                     </div>
-                                </div>                                
-                                <div id="upload" style="display:none">
+                                </div>
+
+                                </form>   
+                                <form >  
+                                         
+                                <div id="upload" <?php echo (empty($sales_id) ? 'style="display:none"' : ''); ?>>
                                     <hr>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
                                             <div class="form-group mb-0">
                                                 <div class="input-group mb-0">
-                                                    <input type="file" class="form-control" placeholder="" aria-label="">
+                                                    <input type="file" class="form-control" placeholder="" id="WESM_sales">
+
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary" id="proceed_sales" onclick="upload_btn()"  type="button">Upload</button>
                                                     </div>
@@ -58,6 +78,8 @@
                                     </div>
                                     <br>
                                 </div>
+                                <input type='hidden' name='sales_id' id='sales_id'  value="<?php echo (!empty($sales_id) ? $sales_id : ''); ?>">
+                            </form>
                                 <div class="table-responsive"  id="table-wesm" style="display:none">
                                     <hr>
                                     <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
@@ -613,7 +635,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </form>
+                       
                     </div>
                 </div>
 
