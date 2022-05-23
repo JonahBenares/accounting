@@ -53,29 +53,272 @@ class Masterfile extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('masterfile/customer_list');
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $this->load->view('masterfile/customer_list',$data);
         $this->load->view('template/footer');
     }
     public function customer_add()
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('masterfile/customer_add');
+        $data['status'] = $this->super_model->custom_query("SELECT DISTINCT status FROM participant WHERE status!=''");
+        $data['region'] = $this->super_model->custom_query("SELECT DISTINCT region FROM participant WHERE region!=''");
+        $this->load->view('masterfile/customer_add',$data);
         $this->load->view('template/footer');
     }
+
+    public function save_customer(){
+         $data=array(
+            "participant_name"=>$this->input->post('participant_name'),
+            "billing_id"=>$this->input->post('billing_id'),
+            "region"=>$this->input->post('region'),
+            "category"=>$this->input->post('category'),
+            "membership"=>$this->input->post('membership'),
+            "registered_address"=>$this->input->post('registered_address'),
+            "settlement_id"=>$this->input->post('settlement_id'),
+            "resource"=>$this->input->post('resource'),
+            "tin"=>$this->input->post('tin'),
+            "effective_date"=>$this->input->post('effective_date'),
+            "participant_email"=>$this->input->post('participant_email'),
+            "wht_agent"=>$this->input->post('wht_agent'),
+            "vat_zerorated"=>$this->input->post('vat_zerorated'),
+            "income_tax_holiday"=>$this->input->post('income_tax_holiday'),
+            "contact_person"=>$this->input->post('contact_person'),
+            "contact_position"=>$this->input->post('contact_position'),
+            "office_address"=>$this->input->post('office_address'),
+            "status"=>$this->input->post('status'),
+            "mobile"=>$this->input->post('mobile'),
+            "landline"=>$this->input->post('landline'),
+            "contact_email"=>$this->input->post('contact_email'),
+            "documents_submitted"=>$this->input->post('documents_submitted'),
+            "create_date"=>date("Y-m-d H:i:s"),
+            //"user_id"=>$_SESSION['user_id'],
+        );
+     
+
+       $participant_id= $this->super_model->insert_return_id("participant", $data);
+
+        echo $participant_id;
+    }
+
     public function customer_update()
     {
+        $data['id']=$this->uri->segment(3);
+        $id=$this->uri->segment(3);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('masterfile/customer_update');
+        $data['status'] = $this->super_model->custom_query("SELECT DISTINCT status FROM participant WHERE status!=''");
+        $data['region'] = $this->super_model->custom_query("SELECT DISTINCT region FROM participant WHERE region!=''");
+        $row=$this->super_model->count_rows("participant");
+
+        if($row!=0){
+            foreach($this->super_model->select_row_where('participant', 'participant_id', $id) AS $part){
+                $data['details'][] = array(
+                    'participant_name'=>$part->participant_name,
+                    'billing_id'=>$part->billing_id,
+                    'registered_address'=>$part->registered_address,
+                    'settlement_id'=>$part->settlement_id,
+                    'region'=>$part->region,
+                    'resource'=>$part->resource,
+                    'category'=>$part->category,
+                    'tin'=>$part->tin,
+                    'effective_date'=>$part->effective_date,
+                    'membership'=>$part->membership,
+                    'participant_email'=>$part->participant_email,
+                    'wht_agent'=>$part->wht_agent,
+                    'vat_zerorated'=>$part->vat_zerorated,
+                    'income_tax_holiday'=>$part->income_tax_holiday,
+                    'documents_submitted'=>$part->documents_submitted,
+                    'contact_person'=>$part->contact_person,
+                    'contact_position'=>$part->contact_position,
+                    'contact_email'=>$part->contact_email,
+                    'office_address'=>$part->office_address,
+                    'status'=>$part->status,
+                    'mobile'=>$part->mobile,
+                    'landline'=>$part->landline,
+                );
+            }
+        }else{
+            $data['details'] = array();
+        }
+        $this->load->view('masterfile/customer_update',$data);
         $this->load->view('template/footer');
     }
-    public function customer_view()
-    {
+
+    public function edit_customer(){
+        $participant_id=$this->input->post('id');
+         $data=array(
+            "participant_name"=>$this->input->post('participant_name'),
+            "billing_id"=>$this->input->post('billing_id'),
+            "region"=>$this->input->post('region'),
+            "category"=>$this->input->post('category'),
+            "membership"=>$this->input->post('membership'),
+            "registered_address"=>$this->input->post('registered_address'),
+            "settlement_id"=>$this->input->post('settlement_id'),
+            "resource"=>$this->input->post('resource'),
+            "tin"=>$this->input->post('tin'),
+            "effective_date"=>$this->input->post('effective_date'),
+            "participant_email"=>$this->input->post('participant_email'),
+            "wht_agent"=>$this->input->post('wht_agent'),
+            "vat_zerorated"=>$this->input->post('vat_zerorated'),
+            "income_tax_holiday"=>$this->input->post('income_tax_holiday'),
+            "contact_person"=>$this->input->post('contact_person'),
+            "contact_position"=>$this->input->post('contact_position'),
+            "office_address"=>$this->input->post('office_address'),
+            "status"=>$this->input->post('status'),
+            "mobile"=>$this->input->post('mobile'),
+            "landline"=>$this->input->post('landline'),
+            "contact_email"=>$this->input->post('contact_email'),
+            "documents_submitted"=>$this->input->post('documents_submitted'),
+            //"user_id"=>$_SESSION['user_id'],
+        );
+     
+
+       if($this->super_model->update_where("participant", $data, "participant_id", $participant_id)){
+
+        echo $participant_id;
+        }
+    }
+
+
+
+        public function customer_view(){
+        $data['id']=$this->uri->segment(3);
+        $id=$this->uri->segment(3);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('masterfile/customer_view');
-        $this->load->view('template/footer');
+        $row=$this->super_model->count_rows("participant");
+
+        if($row!=0){
+            foreach($this->super_model->select_row_where('participant', 'participant_id', $id) AS $part){
+                $data['details'][] = array(
+                    'participant_name'=>$part->participant_name,
+                    'billing_id'=>$part->billing_id,
+                    'registered_address'=>$part->registered_address,
+                    'settlement_id'=>$part->settlement_id,
+                    'region'=>$part->region,
+                    'resource'=>$part->resource,
+                    'category'=>$part->category,
+                    'tin'=>$part->tin,
+                    'effective_date'=>$part->effective_date,
+                    'membership'=>$part->membership,
+                    'participant_email'=>$part->participant_email,
+                    'wht_agent'=>$part->wht_agent,
+                    'vat_zerorated'=>$part->vat_zerorated,
+                    'income_tax_holiday'=>$part->income_tax_holiday,
+                    'documents_submitted'=>$part->documents_submitted,
+                    'contact_person'=>$part->contact_person,
+                    'contact_position'=>$part->contact_position,
+                    'contact_email'=>$part->contact_email,
+                    'office_address'=>$part->office_address,
+                    'status'=>$part->status,
+                    'mobile'=>$part->mobile,
+                    'landline'=>$part->landline,
+                );
+            }
+        }else{
+            $data['details'] = array();
+        }
+        $this->load->view('masterfile/customer_view', $data);
+        $this->load->view('template/footer');;
+    }
+
+    public function customer_delete(){
+        $id=$this->uri->segment(3);
+        if($this->super_model->delete_where('participant', 'participant_id', $id)){
+            echo "<script>alert('Succesfully Deleted'); 
+                window.location ='".base_url()."masterfile/customer_list'; </script>";
+        }
+    }
+
+        public function upload_customer(){
+         $dest= realpath(APPPATH . '../uploads/excel/');
+         $error_ext=0;
+        if(!empty($_FILES['excelfile_customer']['name'])){
+             $exc= basename($_FILES['excelfile_customer']['name']);
+             $exc=explode('.',$exc);
+             $ext1=$exc[1];
+            if($ext1=='php' || $ext1!='xlsx'){
+                $error_ext++;
+            } 
+            else {
+                 $filename1='Customers.'.$ext1;
+                if(move_uploaded_file($_FILES["excelfile_customer"]['tmp_name'], $dest.'/'.$filename1)){
+                    $this->readExcel_customer();
+                }   
+            }
+        }
+    }
+
+    public function readExcel_customer(){
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $inputFileName =realpath(APPPATH.'../uploads/excel/Customers.xlsx');
+        try {
+            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+            $objPHPExcel = $objReader->load($inputFileName);
+        } catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+
+        for($x=2;$x<=$highestRow;$x++){
+            $head_rows = $this->super_model->count_rows("participant");
+        if($head_rows==0){
+            $participant_id=1;
+        } else {
+            $maxid=$this->super_model->get_max("participant", "participant_id");
+            $participant_id=$maxid+1;
+        }
+            $settlement_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getValue());
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getValue());
+            $participant_name = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getValue());
+            $registered_address = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getValue());
+            $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getValue());
+            $category = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getValue());
+            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getValue());
+            $vat_zerorated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getValue());
+            $income_tax_holiday = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getValue());
+            $documents_submitted = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getValue());
+            $contact_person = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getValue());
+            $contact_position = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getValue());
+            $office_address = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getValue());
+            $landline = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getValue());
+            $mobile = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getValue());
+            $contact_email = trim($objPHPExcel->getActiveSheet()->getCell('P'.$x)->getValue());
+            $region = trim($objPHPExcel->getActiveSheet()->getCell('Q'.$x)->getValue());
+            $status = trim($objPHPExcel->getActiveSheet()->getCell('R'.$x)->getValue());
+
+
+            $data_customer = array(
+                'participant_id'=>$participant_id,
+                'settlement_id'=>$settlement_id,
+                'billing_id'=>$billing_id,
+                'participant_name'=>$participant_name,
+                'registered_address'=>$registered_address,
+                'tin'=>$tin,
+                'category'=>$category,
+                'wht_agent'=>$wht_agent,
+                'vat_zerorated'=>$vat_zerorated,
+                'income_tax_holiday'=>$income_tax_holiday,
+                'documents_submitted'=>$documents_submitted,
+                'contact_person'=>$contact_person,
+                'contact_position'=>$contact_position,
+                'office_address'=>$office_address,
+                'landline'=>$landline,
+                'mobile'=>$mobile,
+                'contact_email'=>$contact_email,
+                'region'=>$region,
+                'status'=>$status,
+                'date_imported'=>date('Y-m-d H:i:s'),
+                //'imported_by'=>$_SESSION['user_id'],
+            );
+           $this->super_model->insert_into("participant", $data_customer);
+        }
+
+        echo "<script>alert('Successfully Uploaded!'); window.location = 'customer_list';</script>";
     }
 
 

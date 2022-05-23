@@ -14,6 +14,9 @@
                                         <a href="<?php echo base_url(); ?>masterfile/customer_add" type="button" class="btn btn-primary">
                                             <span class="fas fa-plus"></span> Add
                                         </a>
+                                        <!-- <a href="<?php echo base_url(); ?>masterfile/customer_add" type="button" class="btn btn-warning ">
+                                            <span class="fas fa-plus"></span> Add
+                                        </a> -->
                                         <button type="button" class="btn btn-warning " data-target="#bulk_upload" data-toggle="modal">
                                             <span class="fas fa-upload"></span> Bulk Upload
                                         </button>
@@ -27,7 +30,7 @@
                                     <thead>
                                         <tr>
                                             <th>Participant Name</th>
-                                            <th>Short Name</th>
+                                            <th>Settlement ID</th>
                                             <th>Category</th>
                                             <th width="1%" align="center">
                                                 <center><span class="fas fa-bars"></span></center>
@@ -35,10 +38,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php 
+                                        if(!empty($participant)){
+                                        foreach($participant AS $p){ ?>
                                         <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
+                                            <td data-toggle="modal" data-target="#company_list"><?php echo $p->participant_name;?></td>
+                                            <td data-toggle="modal" data-target="#company_list"><?php echo $p->settlement_id;?></td>
+                                            <td data-toggle="modal" data-target="#company_list"><?php echo $p->category;?></td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -46,413 +52,19 @@
                                                         Option
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view/<?php echo $p->participant_id;?>"><span class="fas fa-eye mr-2"></span>View</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update/<?php echo $p->participant_id;?>"><span class="far fa-edit mr-2"></span>Update</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete/<?php echo $p->participant_id;?>" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash mr-2"></span>Delete</a>
                                                         <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list">Tiger Nixon</td>
-                                            <td data-toggle="modal" data-target="#company_list">System Architect</td>
-                                            <td data-toggle="modal" data-target="#company_list">Edinburgh</td>
-                                            <td align="center">
-                                                <div class="btn-group mb-0">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        Option
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#basicModal"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <?php } } else { ?>
+                                    <tr>
+                                        <td align="center" colspan='9'><center>No Data Available.</center></td>
+                                    </tr>
+                                    <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -497,15 +109,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form method='POST' action="<?php echo base_url();?>masterfile/upload_customer" enctype="multipart/form-data" target='_blank'>
             <div class="modal-body">
                 <div class="form-group">
                     <label>Add File:</label>
-                    <input type="file" class="form-control">
+                   <input type="file" name="excelfile_customer" class="form-control">
                 </div>
             </div>
             <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-primary">Upload</button>
+                <!-- <button type="button" class="btn btn-primary">Upload</button> -->
+                <input type="submit" class="btn btn-primary" value='Upload'>
             </div>
+             </form>
         </div>
     </div>
 </div>
