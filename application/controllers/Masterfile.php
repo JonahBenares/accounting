@@ -93,7 +93,17 @@ class Masterfile extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        /*$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");*/
+        foreach($this->super_model->select_all_order_by("participant","participant_name","ASC") AS $part){
+            $data['participant'][] = array(
+                'participant_id'=>$part->participant_id,
+                'participant_name'=>$part->participant_name,
+                'settlement_id'=>$part->settlement_id,
+                'category'=>$part->category,
+            );
+        }
+        //$data['sub_participant']=$this->super_model->select_all_order_by("subparticipant","sub_participant","ASC");
+        //$data['sub_participant'] = $this->super_model->select_row_where('subparticipant', 'sub_participant','participant_id', $part->participant_id);
         $this->load->view('masterfile/customer_list',$data);
         $this->load->view('template/footer');
     }
@@ -106,6 +116,25 @@ class Masterfile extends CI_Controller {
         $this->load->view('masterfile/customer_add',$data);
         $this->load->view('template/footer');
     }
+
+    public function insert_sub(){
+        $participant_id = count($this->input->post('participant_id'));
+        $count_sub_participant = count($this->input->post('sub_participant'));
+            for($z=0; $z<$count_sub_participant;$z++){
+                $sub_participant='';
+                if($this->input->post('sub_participant['.$z.']')!=''){
+                    $sub_participant = $this->input->post('sub_participant['.$z.']');
+                }
+
+                $data_sub = array(
+                    'participant_id'=>$participant_id,
+                    'sub_participant'=>$sub_participant,
+                );
+                $this->super_model->insert_into("subparticipant", $data_sub);
+            }
+
+            echo "<script>alert('Successfully Saved!'); window.location ='".base_url()."Masterfile/customer_list'; </script>";
+        }
 
     public function save_customer(){
          $data=array(
