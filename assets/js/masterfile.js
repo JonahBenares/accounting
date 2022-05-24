@@ -47,7 +47,6 @@ function UpdateCustomer(){
            
     }
 }
-
 function confirmationDelete(anchor){
      var conf = confirm('Are you sure you want to delete this record?');
      if(conf)
