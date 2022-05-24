@@ -80,7 +80,7 @@ class Sales extends CI_Controller {
             "billing_from"=>$billingf,
             "billing_to"=>$billingt,
             "due_date"=>$due,
-            "user_id"=>1,
+            "user_id"=>$_SESSION['user_id'],
             "create_date"=>date("Y-m-d H:i:s")
         );
         $sales_id = $this->super_model->insert_return_id("sales_transaction_head",$data);
@@ -222,30 +222,35 @@ class Sales extends CI_Controller {
         $query=substr($sql,0,-3);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query") AS $d){
-            $data['details'][]=array(
-                'sales_detail_id'=>$d->sales_detail_id,
-                'sales_id'=>$d->sales_id,
-                'short_name'=>$d->short_name,
-                'billing_id'=>$d->billing_id,
-                'company_name'=>$d->company_name,
-                'facility_type'=>$d->facility_type,
-                'wht_agent'=>$d->wht_agent,
-                'ith_tag'=>$d->ith_tag,
-                'non_vatable'=>$d->non_vatable,
-                'zero_rated'=>$d->zero_rated,
-                'vatable_sales'=>$d->vatable_sales,
-                'vat_on_sales'=>$d->vat_on_sales,
-                'zero_rated_sales'=>$d->zero_rated_sales,
-                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
-                'ewt'=>$d->ewt,
-                'total_amount'=>$d->total_amount,
-                'reference_number'=>$d->reference_number,
-                'transaction_date'=>$d->transaction_date,
-                'billing_from'=>$d->billing_from,
-                'billing_to'=>$d->billing_to,
-                'due_date'=>$d->due_date,
-            );
+        $row_count=$this->super_model->count_custom("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query");
+        if($row_count!=0){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query") AS $d){
+                $data['details'][]=array(
+                    'sales_detail_id'=>$d->sales_detail_id,
+                    'sales_id'=>$d->sales_id,
+                    'short_name'=>$d->short_name,
+                    'billing_id'=>$d->billing_id,
+                    'company_name'=>$d->company_name,
+                    'facility_type'=>$d->facility_type,
+                    'wht_agent'=>$d->wht_agent,
+                    'ith_tag'=>$d->ith_tag,
+                    'non_vatable'=>$d->non_vatable,
+                    'zero_rated'=>$d->zero_rated,
+                    'vatable_sales'=>$d->vatable_sales,
+                    'vat_on_sales'=>$d->vat_on_sales,
+                    'zero_rated_sales'=>$d->zero_rated_sales,
+                    'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                    'ewt'=>$d->ewt,
+                    'total_amount'=>$d->total_amount,
+                    'reference_number'=>$d->reference_number,
+                    'transaction_date'=>$d->transaction_date,
+                    'billing_from'=>$d->billing_from,
+                    'billing_to'=>$d->billing_to,
+                    'due_date'=>$d->due_date,
+                );
+            }
+        }else{
+            $data['details']=array();
         }
         $this->load->view('sales/sales_wesm',$data);
         $this->load->view('template/footer');

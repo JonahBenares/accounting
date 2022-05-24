@@ -39,8 +39,8 @@
                                 <table class="table-bsordered" width="100%">
                                     <?php 
                                         foreach($details AS $d){ 
-                                            $ref_no=$d['reference_number'];
-                                            $trasaction_date=$d['transaction_date'];
+                                            $reference_number=$d['reference_number'];
+                                            $transaction_date=date("F d,Y",strtotime($d['transaction_date']));
                                             $billing_from=date("F d,Y",strtotime($d['billing_from']));
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
                                             $due_date=date("F d,Y",strtotime($d['due_date']));
@@ -49,19 +49,19 @@
                                     ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
-                                        <td>: <?php echo $ref_no; ?></td>
+                                        <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
                                         <td width="15%">Billing Period (From)</td>
-                                        <td>: <?php echo $billing_from; ?></td>
+                                        <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
                                     </tr>
                                     <tr>
                                         <td>Date</td>
-                                        <td>: <?php echo $trasaction_date; ?></td>
+                                        <td>: <?php echo (!empty($transaction_date)) ? $transaction_date : ''; ?></td>
                                         <td>Billing Period (To)</td>
-                                        <td>: <?php echo $billing_to; ?></td>
+                                        <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
                                     </tr>                                    
                                     <tr>
                                         <td>Due Date</td>
-                                        <td>: <?php echo $due_date; ?></td>
+                                        <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
                                     </tr>
                                 </table>
                                 <br>
