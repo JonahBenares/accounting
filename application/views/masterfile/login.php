@@ -12,6 +12,16 @@
         <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/favicon.ico' />
     </head>
     <body>
+                <?php
+            $error_msg= $this->session->flashdata('error_msg');  
+        ?>
+        <?php 
+            if($error_msg){
+        ?>
+            <div class="alert alert-danger alert-shake">
+                <center><?php echo $error_msg; ?></center>                    
+            </div>
+        <?php } ?>
         <div class="loader"></div>
         <div id="app">
             <section class="section">
@@ -23,10 +33,10 @@
                                     <h4>Login</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" action="#" class="needs-validation" novalidate="">
+                                     <form method = "POST" action="<?php echo base_url(); ?>index.php/masterfile/login_process">
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
+                                            <input id="email" type="text" class="form-control" name="username" tabindex="1" required autofocus>
                                             <div class="invalid-feedback">
                                             Please fill in your email
                                             </div>
@@ -59,9 +69,9 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="mt-5 text-muted text-center">
+                            <!-- <div class="mt-5 text-muted text-center">
                                 Don't have an account? <a href="<?php echo base_url(); ?>masterfile/home">Proceed Dashboard</a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

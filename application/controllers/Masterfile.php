@@ -33,6 +33,46 @@ class Masterfile extends CI_Controller {
         $this->load->view('masterfile/login');
     }
 
+    public function login_process(){
+        $username=$this->input->post('username');
+        $password=$this->input->post('password');
+        $count=$this->super_model->login_user($username,$password);
+        if($count>0){   
+            $password1 =md5($this->input->post('password'));
+            $fetch=$this->super_model->select_custom_where("users", "username = '$username' AND (password = '$password' OR password = '$password1')");
+            foreach($fetch AS $d){
+                $userid = $d->user_id;
+                //$usertype = $d->usertype_id;
+                $username = $d->username;
+                $fullname = $d->fullname;
+            }
+            $newdata = array(
+               'user_id'=> $userid,
+               //'usertype'=> $usertype,
+               'username'=> $username,
+               'fullname'=> $fullname,
+               'logged_in'=> TRUE
+            );
+            $this->session->set_userdata($newdata);
+            redirect(base_url().'index.php/masterfile/dashboard/');
+        }
+        else{
+            $this->session->set_flashdata('error_msg', 'Username And Password Do not Exist!');
+            //$this->load->view('template/header_login');
+            $this->load->view('masterfile/login');
+            $this->load->view('template/footer');       
+        }
+    }
+
+    public function user_logout(){
+        $this->session->sess_destroy();
+        $this->load->view('template/header');
+        $this->load->view('masterfile/login');
+        $this->load->view('template/footer');
+        echo "<script>alert('You have successfully logged out.'); 
+        window.location ='".base_url()."index.php/masterfile/index'; </script>";
+    }
+
     public function home()
     {
         $this->load->view('template/header');
@@ -92,7 +132,7 @@ class Masterfile extends CI_Controller {
             "contact_email"=>$this->input->post('contact_email'),
             "documents_submitted"=>$this->input->post('documents_submitted'),
             "create_date"=>date("Y-m-d H:i:s"),
-            //"user_id"=>$_SESSION['user_id'],
+            "user_id"=>$_SESSION['user_id'],
         );
      
 
@@ -170,7 +210,7 @@ class Masterfile extends CI_Controller {
             "landline"=>$this->input->post('landline'),
             "contact_email"=>$this->input->post('contact_email'),
             "documents_submitted"=>$this->input->post('documents_submitted'),
-            //"user_id"=>$_SESSION['user_id'],
+            "user_id"=>$_SESSION['user_id'],
         );
      
 
@@ -313,7 +353,7 @@ class Masterfile extends CI_Controller {
                 'region'=>$region,
                 'status'=>$status,
                 'date_imported'=>date('Y-m-d H:i:s'),
-                //'imported_by'=>$_SESSION['user_id'],
+                'imported_by'=>$_SESSION['user_id'],
             );
            $this->super_model->insert_into("participant", $data_customer);
         }

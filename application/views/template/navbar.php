@@ -169,7 +169,7 @@
                 <span class="d-sm-none d-lg-inline-block"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
-                <div class="dropdown-title">Hello Sarah Smith</div>
+                <div class="dropdown-title">Hello <?php echo $_SESSION['fullname'];?></div>
                 <a href="profile.html" class="dropdown-item has-icon"> 
                     <i class="far fa-user"></i> Profile
                 </a>
@@ -180,7 +180,7 @@
                     <i class="fas fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="auth-login.html" class="dropdown-item has-icon text-danger"> 
+                <a href="<?php echo base_url(); ?>index.php/masterfile/user_logout" class="dropdown-item has-icon text-danger"> 
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
