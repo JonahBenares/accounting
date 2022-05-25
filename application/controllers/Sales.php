@@ -60,13 +60,13 @@ class Sales extends CI_Controller {
                         'ewt'=>$d->ewt,
                         'serial_no'=>$d->serial_no,
                         'total_amount'=>$d->total_amount,
-                        //'print_counter'=>$d->print_counter
+                        'print_counter'=>$d->print_counter
                     );
                 }
             }
         }
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $this->load->view('sales/upload_sales',$data);
         $this->load->view('template/footer');
     }
