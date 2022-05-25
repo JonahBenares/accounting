@@ -93,11 +93,11 @@
                                             <tr>
                                                 <td align="center" style="background: #fff;">
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>')" class="btn btn-success btn-sm">
+                                                        <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id'];?>')" class="btn btn-success btn-sm">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicks"></a>
+                                                    <a id="clicksBS"></a>
                                                 </td>
                                                 <td><?php echo $s['company_name'];?></td>
                                                 <td><?php echo $s['facility_type'];?></td>
