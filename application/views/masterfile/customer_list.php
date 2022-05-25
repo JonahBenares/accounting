@@ -57,7 +57,7 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view/<?php echo $p['participant_id'];?>"><span class="fas fa-eye mr-2"></span>View</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update/<?php echo $p['participant_id'];?>"><span class="far fa-edit mr-2"></span>Update</a>
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete/<?php echo $p['participant_id'];?>" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" id="getId" data-toggle="modal" data-target="#basicModal" data-id="<?php echo $p['participant_id']; ?>"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
+                                                        <a class="dropdown-item" href="javascript:void(0)" onclick="subparticipant('<?php echo base_url(); ?>','<?php echo $p['participant_id']; ?>')"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -78,64 +78,6 @@
     </section>
 </div>
 
-
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">Sub Participant</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-<!--                 <div class="modal-body">
-                <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
-                    <thead>
-                        <tr>
-                            <th>Sub Participant</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        if(!empty($sub_participant)){
-                        foreach($sub_participant AS $sp){ ?>
-                        <tr >
-                            <td data-toggle="modal"><?php echo $sp->sub_participant;?></td>
-                        </tr>
-                        <?php } } else { ?>
-                    <tr>
-                        <td align="center" colspan='9'><center>No Data Available.</center></td>
-                    </tr>
-                    <?php } ?>
-                    </tbody>
-                </table>
-            </div> -->
-            <form method="POST" action = "<?php echo base_url();?>index.php/masterfile/insert_sub">
-            <div class="modal-body">
-                <div class="form-group addSub">
-            <label>Add Sub Participant </label>
-            <table class="m-b-10 append" width="100%">
-            <tr>
-                <td width="90%"><input type="" class="form-control " name="sub_participant[]" id="sub_participant" required="required"></td>
-                <td>
-                    <div class="btn-group addmoresub">
-                        <button type="button" id="btnsub" class="btn btn-sm btn-primary addSub"><span class="fa fa-plus"></span></button>
-                        <!-- <button class="btn btn-sm btn-danger"><span class="fa fa-times"></span></button> -->
-                    </div>
-                </td>
-            </tr>
-            </table>
-            </div>
-            </div>
-            <input type='hidden' name='participant_id' id='participant_id' >
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="bulk_upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -161,29 +103,3 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-
-$(document).on("click", "#getId", function () {
-     var participant_id = $(this).attr("data-id");
-     $("#participant_id").val(participant_id);
-
-});
-    var  z = 1;
-        $("body").on("click", ".addSub", function() {
-            z++;
-            var $append = $(this).parents('.append');
-            var nextHtml = $append.clone().find("input").val("").end();
-            nextHtml.attr('id', 'append' + z);
-            var hasRmBtn = $('.remSub', nextHtml).length > 0;
-            if (!hasRmBtn) {
-                var rm = "<button class='btn-danger btn-sm btn-fill remSub' style='color:white'><span class='fa fa-times'></span></button>"
-                $('.addmoresub', nextHtml).append(rm);
-            }
-            $append.after(nextHtml); 
-
-        });
-
-        $("body").on("click", ".remSub", function() {
-            $(this).parents('.append').remove();
-        });
-</script>

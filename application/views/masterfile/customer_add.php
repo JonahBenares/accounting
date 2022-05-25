@@ -208,7 +208,7 @@
                                     <div class="col-lg-6 offset-lg-3">
                                         <!-- <input class="btn btn-primary mr-1 btn-block" value="Save" type="button"> -->
                                         <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                        <input type='button' id="saveCustomer" class="btn btn-primary mr-1 btn-block" value='Save Customer' onclick='saveCustomer()'>
+                                        <input type='button' id="saveCustomer" class="btn btn-primary mr-1 btn-block" value='Save Customer' onclick='saveCustomers()'>
                                     </div>
                                 </div>
                             </div>
