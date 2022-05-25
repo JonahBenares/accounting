@@ -280,6 +280,7 @@ class Sales extends CI_Controller {
     {
 
          $ones = array( 
+            0 => "zero", 
             1 => "one", 
             2 => "two", 
             3 => "three", 
@@ -365,15 +366,24 @@ class Sales extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
-
-            echo $p->total_amount;
             $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
             $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
             $data['company_name']=$p->company_name;
-
-
-            $data['amount_words']=strtoupper($this->convertNumber($p->total_amount));
-
+            $data['billing_from']=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
+            $data['billing_to']=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
+            $ewt=str_replace("-", '', $p->ewt);
+            $ewt_exp=explode(".", $ewt);
+            $data['ewt_peso']=$ewt_exp[0];
+            $data['ewt_cents']=$ewt_exp[1];
+            $zero_rated_ecozones_exp=explode(".", $p->zero_rated_ecozones);
+            $data['zero_rated_ecozones_peso']=$zero_rated_ecozones_exp[0];
+            $data['zero_rated_ecozones_cents']=$zero_rated_ecozones_exp[1];
+            $total=$p->zero_rated_ecozones - $ewt;
+            $data['total_amount']=$total;
+            $data['amount_words']=strtoupper($this->convertNumber($total));
+            $total_exp=explode(".", $total);
+            $data['total_peso']=$total_exp[0];
+            $data['total_cents']=$total_exp[1];
         }
         $this->load->view('sales/print_BS',$data);
         $this->load->view('template/footer');

@@ -94,6 +94,7 @@ class Masterfile extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $rows = $this->super_model->count_rows("participant");
+        $data['participant']=array();
         if($rows!=0){
             foreach($this->super_model->select_all_order_by("participant","participant_name","ASC") AS $part){
             $data['participant'][] = array(
@@ -103,11 +104,9 @@ class Masterfile extends CI_Controller {
                 'category'=>$part->category,
             ); 
                 
-                }
-            } else {
-
-            $data['participant']=array();
             }
+        }
+        
         $this->load->view('masterfile/customer_list',$data);
         $this->load->view('template/footer');
     }

@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
+                                <table class="table table-striped table-hover" id="save-stage"  style="width:100%;">
                                     <thead>
                                         <tr>
                                             <th>Participant Name</th>
@@ -36,17 +36,18 @@
                                             <th>Category</th>
                                             <th width="1%" align="center">
                                                 <center><span class="fas fa-bars"></span></center>
-                                            </th>
+                                            </th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
+
                                         if(!empty($participant)){
                                         foreach($participant AS $p){ ?>
-                                        <tr >
-                                            <td data-toggle="modal" data-target="#company_list"><?php echo $p['participant_name'];?></td>
-                                            <td data-toggle="modal" data-target="#company_list"><?php echo $p['settlement_id'];?></td>
-                                            <td data-toggle="modal" data-target="#company_list"><?php echo $p['category'];?></td>
+                                        <tr>
+                                            <td><?php echo $p['participant_name'];?></td>
+                                            <td><?php echo $p['settlement_id'];?></td>
+                                            <td><?php echo $p['category'];?></td>
                                             <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
@@ -60,13 +61,11 @@
                                                         <a class="dropdown-item" href="javascript:void(0)" onclick="subparticipant('<?php echo base_url(); ?>','<?php echo $p['participant_id']; ?>')"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
                                                 </div>
-                                            </td>
+                                            </td>  
                                         </tr>
-                                        <?php } } else { ?>
-                                    <tr>
-                                        <td align="center" colspan='9'><center>No Data Available.</center></td>
-                                    </tr>
-                                    <?php } ?>
+                                        <?php } 
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
