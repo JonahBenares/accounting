@@ -81,7 +81,7 @@ async function upload_btn() {
 	        	$("#table-wesm").hide(); 
 	        },
 	        success: function(output){
-	        	console.log(output);
+	        	
 	        	$("#alt").hide(); 
 	        	$("#table-wesm").show(); 
 	        	location.reload();
@@ -175,24 +175,6 @@ function saveBS(){
 
 function filterSales(){
 	var ref_no= document.getElementById("ref_no").value;
-	var participant= document.getElementById("participant").value;
-
-	if(ref_no!=''){
-		var ref=ref_no;
-	}else{
-		var ref='null';
-	}
-
-	if(participant!=''){
-		var par=participant;
-	}else{
-		var par='null';
-	}
 	var loc= document.getElementById("baseurl").value;
-	window.location=loc+'sales/sales_wesm/'+ref+'/'+par;          
+	window.location=loc+'sales/sales_wesm/'+ref_no;          
 }
-
-
- //    function onClick() {
-	    
-	// };

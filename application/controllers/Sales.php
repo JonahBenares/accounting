@@ -96,25 +96,34 @@ class Sales extends CI_Controller {
             $exc= basename($_FILES['doc']['name']);
             $exc=explode('.',$exc);
             $ext1=$exc[1];
+
+
             if($ext1=='php' || $ext1!='xlsx'){
                 $error_ext++;
             } 
+
             else {
                 $filename1='wesm_sales.'.$ext1;
+                //echo $filename1;
                 if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
                      $this->readExcel_inv($sales_id);
-                }        
+                } 
             }
         }
     }
 
     public function readExcel_inv($sales_id){
+
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
+
         $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales.xlsx');
-        try {
+
+       try {
             $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
             $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        
+   
             $objPHPExcel = $objReader->load($inputFileName);
         } 
         catch(Exception $e) {
@@ -122,11 +131,17 @@ class Sales extends CI_Controller {
         }
         $objPHPExcel->setActiveSheetIndex(2);
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
-        for($x=3;$x<=$highestRow;$x++){
-            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+       
+        for($x=3;$x<$highestRow;$x++){
+          
+            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+          
+          
             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+         
             $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
-            $company_name = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+
+            $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
             $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
             $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
             $ith = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
@@ -138,7 +153,7 @@ class Sales extends CI_Controller {
             $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
             $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
             $total_amount = $objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue();
-            if (strpos($itemno, 'Note:') === false) {
+         
                 $data_sales = array(
                     'sales_id'=>$sales_id,
                     'short_name'=>$shortname,
@@ -157,9 +172,9 @@ class Sales extends CI_Controller {
                     'total_amount'=>$total_amount,
                 );
                 $this->super_model->insert_into("sales_transaction_details", $data_sales);
-            }
-            echo $sales_id;
         }
+            echo $sales_id;
+      
     }
 
     public function cancel_sales(){
@@ -206,11 +221,11 @@ class Sales extends CI_Controller {
 
     public function sales_wesm(){
         $ref_no=$this->uri->segment(3);
-        $participant=$this->uri->segment(4);
-        $data['participant']=$participant;
+        //$participant=$this->uri->segment(4);
+        //$data['participant']=$participant;
         $data['ref_no']=$ref_no;
-        $data['participants']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        $sql="";
+        //$data['participants']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        /*$sql="";
         if($ref_no!='null'){
             $sql.= " AND sh.reference_number LIKE '%$ref_no%' AND";
         }
@@ -220,12 +235,12 @@ class Sales extends CI_Controller {
         }else if($ref_no!='null' && $participant!='null'){
             $sql.= " sd.billing_id = '$participant' AND";
         }
-        $query=substr($sql,0,-3);
+        $query=substr($sql,0,-3);*/
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $row_count=$this->super_model->count_custom("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query");
-        if($row_count!=0){
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query") AS $d){
+        /*$row_count=$this->super_model->count_custom("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query");
+        if($row_count!=0){*/
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_detail_id,
                     'sales_id'=>$d->sales_id,
@@ -247,12 +262,12 @@ class Sales extends CI_Controller {
                     'transaction_date'=>$d->transaction_date,
                     'billing_from'=>$d->billing_from,
                     'billing_to'=>$d->billing_to,
-                    'due_date'=>$d->due_date,
+                    'due_date'=>$d->due_date
                 );
             }
-        }else{
+        /*}else{
             $data['details']=array();
-        }
+        }*/
         $this->load->view('sales/sales_wesm',$data);
         $this->load->view('template/footer');
     }
@@ -275,7 +290,7 @@ class Sales extends CI_Controller {
         echo $sales_detail_id;
     }
 
-    public function convertNumber($number)
+/*    public function convertNumber($number)
     {
         list($integer,$fraction) = explode(".", (string) $number);
 
@@ -1312,16 +1327,17 @@ class Sales extends CI_Controller {
         }
 
     }
-
+*/
     public function print_BS(){
         $sales_detail_id = $this->uri->segment(3);
         $this->load->view('template/header');
-       // $this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
             $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
             $data['company_name']=$p->company_name;
-            $data['amount_words']=strtoupper($this->convertNumber($p->total_amount));
+            //$data['amount_words']=strtoupper($this->convertNumber($p->total_amount));
+            $data['amount_words']='';
         }
         $this->load->view('sales/print_BS',$data);
         $this->load->view('template/footer');
