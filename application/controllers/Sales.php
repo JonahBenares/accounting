@@ -58,7 +58,9 @@ class Sales extends CI_Controller {
                         'zero_rated_sales'=>$d->zero_rated_sales,
                         'zero_rated_ecozones'=>$d->zero_rated_ecozones,
                         'ewt'=>$d->ewt,
+                        'serial_no'=>$d->serial_no,
                         'total_amount'=>$d->total_amount,
+                        'print_counter'=>$d->print_counter
                     );
                 }
             }
@@ -67,6 +69,18 @@ class Sales extends CI_Controller {
         $this->load->view('template/navbar');
         $this->load->view('sales/upload_sales',$data);
         $this->load->view('template/footer');
+    }
+
+    public function count_print(){
+        $sales_detail_id=$this->input->post('sales_details_id');
+        foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $d){
+            $new_count = $d->print_counter + 1;
+            $data_head = array(
+                'print_counter'=>$new_count
+            );
+            $this->super_model->update_where("sales_transaction_details",$data_head, "sales_detail_id", $sales_detail_id);
+            echo $new_count;
+        }
     }
 
     public function add_sales_head(){
@@ -192,17 +206,6 @@ class Sales extends CI_Controller {
         echo $sales_id;
     }
 
-    /*public function load_sales_data(){
-        $sales_id=$this->input->post('sales_id');
-        $base_url=$this->input->post('baseurl');
-        $count_item = $this->super_model->count_rows_where("sales_transaction_details","sales_id",$sales_id);
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details WHERE sales_id='$sales_id'") AS $app){
-            echo '<tr id="load_data'.$count_item.'"><td align="center" style="background: #fff;"><div class="btn-group mb-0"><a style="color:#fff" onclick="add_details_BS('.$base_url.','.$app->sales_id.')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details"><span class="m-0 fas fa-indent"></span></a></div><a id="clicksBS"></a></td><td>'.$app->company_name.'</td><td>'.$app->facility_type.'</td><td>'.$app->wht_agent.'</td><td>'.$app->non_vatable.'</td><td>'.$app->zero_rated.'</td><td>'.$app->vatable_sales.'</td><td>'.$app->zero_rated_sales.'</td><td>'.$app->zero_rated_ecozones.'</td><td>'.$app->vat_on_sales.'</td><td>'.$app->ewt.'</td><td>0</td></tr>';
-            $count_item++;
-        }
-    }*/
-
-
     public function collection_list()
     {
         $this->load->view('template/header');
@@ -221,53 +224,36 @@ class Sales extends CI_Controller {
 
     public function sales_wesm(){
         $ref_no=$this->uri->segment(3);
-        //$participant=$this->uri->segment(4);
-        //$data['participant']=$participant;
         $data['ref_no']=$ref_no;
-        //$data['participants']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        /*$sql="";
-        if($ref_no!='null'){
-            $sql.= " AND sh.reference_number LIKE '%$ref_no%' AND";
-        }
-
-        if($participant!='null' && $ref_no=='null'){
-            $sql.= " AND sd.billing_id = '$participant' AND";
-        }else if($ref_no!='null' && $participant!='null'){
-            $sql.= " sd.billing_id = '$participant' AND";
-        }
-        $query=substr($sql,0,-3);*/
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        /*$row_count=$this->super_model->count_custom("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query");
-        if($row_count!=0){*/
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
-                $data['details'][]=array(
-                    'sales_detail_id'=>$d->sales_detail_id,
-                    'sales_id'=>$d->sales_id,
-                    'short_name'=>$d->short_name,
-                    'billing_id'=>$d->billing_id,
-                    'company_name'=>$d->company_name,
-                    'facility_type'=>$d->facility_type,
-                    'wht_agent'=>$d->wht_agent,
-                    'ith_tag'=>$d->ith_tag,
-                    'non_vatable'=>$d->non_vatable,
-                    'zero_rated'=>$d->zero_rated,
-                    'vatable_sales'=>$d->vatable_sales,
-                    'vat_on_sales'=>$d->vat_on_sales,
-                    'zero_rated_sales'=>$d->zero_rated_sales,
-                    'zero_rated_ecozones'=>$d->zero_rated_ecozones,
-                    'ewt'=>$d->ewt,
-                    'total_amount'=>$d->total_amount,
-                    'reference_number'=>$d->reference_number,
-                    'transaction_date'=>$d->transaction_date,
-                    'billing_from'=>$d->billing_from,
-                    'billing_to'=>$d->billing_to,
-                    'due_date'=>$d->due_date
-                );
-            }
-        /*}else{
-            $data['details']=array();
-        }*/
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
+            $data['details'][]=array(
+                'sales_detail_id'=>$d->sales_detail_id,
+                'sales_id'=>$d->sales_id,
+                'short_name'=>$d->short_name,
+                'billing_id'=>$d->billing_id,
+                'company_name'=>$d->company_name,
+                'facility_type'=>$d->facility_type,
+                'wht_agent'=>$d->wht_agent,
+                'ith_tag'=>$d->ith_tag,
+                'non_vatable'=>$d->non_vatable,
+                'zero_rated'=>$d->zero_rated,
+                'vatable_sales'=>$d->vatable_sales,
+                'vat_on_sales'=>$d->vat_on_sales,
+                'zero_rated_sales'=>$d->zero_rated_sales,
+                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                'ewt'=>$d->ewt,
+                'serial_no'=>$d->serial_no,
+                'total_amount'=>$d->total_amount,
+                'reference_number'=>$d->reference_number,
+                'transaction_date'=>$d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'due_date'=>$d->due_date,
+                'print_counter'=>$d->print_counter
+            );
+        }
         $this->load->view('sales/sales_wesm',$data);
         $this->load->view('template/footer');
     }

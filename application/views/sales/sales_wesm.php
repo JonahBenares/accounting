@@ -35,7 +35,7 @@
                                     </div>
                                 </form>
                                 <hr>
-                               <?php if(!empty($details)){ ?>
+                               <?php if(!empty($details) && !empty($ref_no)){ ?>
                                 <table class="table-bsordered" width="100%">
                                     <?php 
                                         foreach($details AS $d){ 
@@ -66,15 +66,21 @@
                                 </table>
                                 <br>
                                 <div class="table-responsive">
+                                    <hr>
                                     <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
                                         <thead>
                                             <tr>    
                                                 <th width="1%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>                                            
+                                                <th>Item No</th>
+                                                <th>Serial No.</th>
+                                                <th>STL ID / TPShort Name</th>
+                                                <th>Billing ID</th>
                                                 <th>Trading Participant Name</th>
                                                 <th>Facility Type </th>
                                                 <th>WHT Agent Tag</th>
+                                                <th>ITH Tag</th>
                                                 <th>Non Vatable Tag</th>
                                                 <th>Zero-rated Tag</th>
                                                 <th>Vatable Sales</th>
@@ -87,21 +93,40 @@
                                         </thead>
                                         <tbody>
                                             <?php 
+                                                $x=1;
                                                 if(!empty($details)){
                                                 foreach($details AS $s){ 
                                             ?>
                                             <tr>
                                                 <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id'];?>')" class="btn btn-success btn-sm">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
+                                                    <?php 
+                                                        if($s['serial_no']=='' && $s['print_counter']==0){
+                                                    ?>
+                                                        <div class="btn-group mb-0">
+                                                            <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
+                                                                <span class="m-0 fas fa-indent"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicksBS"><?php echo "(".$s['print_counter'].")"; ?></a>
+                                                    <?php 
+                                                        }else{
+                                                    ?>
+                                                        <div class="btn-group mb-0">
+                                                            <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/<?php echo $s['sales_detail_id']; ?>" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
+                                                                <span class="m-0 fas fa-indent"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicksBS"><?php echo "(".$s['print_counter'].")"; ?></a>
+                                                    <?php } ?>
                                                 </td>
+                                                <td><center><?php echo $x;?></center></td>
+                                                <td><?php echo $s['serial_no'];?></td>
+                                                <td><?php echo $s['short_name'];?></td>
+                                                <td><?php echo $s['billing_id'];?></td>
                                                 <td><?php echo $s['company_name'];?></td>
                                                 <td><?php echo $s['facility_type'];?></td>
                                                 <td><?php echo $s['wht_agent'];?></td>
+                                                <td><?php echo $s['ith_tag'];?></td>
                                                 <td><?php echo $s['non_vatable'];?></td>
                                                 <td><?php echo $s['zero_rated'];?></td>
                                                 <td><?php echo $s['vatable_sales'];?></td>
@@ -111,12 +136,12 @@
                                                 <td><?php echo $s['ewt'];?></td>
                                                 <td><?php echo $s['total_amount'];?></td>
                                             </tr>
-                                            <?php } } ?>
+                                            <?php $x++; } } ?>
                                         </tbody>
                                     </table>
                                 </div>
                                 <?php }else{ ?>
-                                    <div><center><b>Data Not Found!</b></center></div>
+                                    <div><center><b>No Available Data...</b></center></div>
                                 <?php } ?>
                             </div>
                        <!--  </form> -->
