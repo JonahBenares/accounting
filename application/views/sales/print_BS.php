@@ -48,20 +48,20 @@
                             </tr>
                             <tr>
                                 <td>Billed to:</td>
-                                <td colspan="13" class="bor-btm pl-2">LA UNION ELECTRIC COOPERATIVE, INC.</td>
+                                <td colspan="13" class="bor-btm pl-2"><?php echo $company_name; ?></td>
                                 <td></td>
                                 <td>Date:</td>
-                                <td colspan="3" class="bor-btm  pl-2">22-12-22</td>
+                                <td colspan="3" class="bor-btm  pl-2"><?php echo date("F d,Y");?></td>
                             </tr>
                             <tr>
                                 <td colspan="2">Business Style:</td>
                                 <td colspan="8" class="bor-btm pl-2"></td>
                                 <td>TIN</td>
-                                <td colspan="3" class="bor-btm pl-2"></td>
+                                <td colspan="3" class="bor-btm pl-2"><?php echo $tin; ?></td>
                             </tr>
                             <tr>
                                 <td>Address:</td>
-                                <td colspan="13" class="bor-btm pl-2">LA UNION ELECTRIC COOPERATIVE, INC.</td>
+                                <td colspan="13" class="bor-btm pl-2"><?php echo $address;?></td>
                             </tr>
                             <tr>
                                 <td colspan="20">
@@ -145,7 +145,7 @@
                             </tr>
                             <tr>
                                 <td colspan="4"><b>AMOUNT IN WORDS:</b></td>
-                                <td colspan="16" class="bor-btm"></td>
+                                <td colspan="16" class="bor-btm"><?php echo $amount_words; ?></td>
                             </tr>
                             <tr>
                                 <td colspan="14"></td>

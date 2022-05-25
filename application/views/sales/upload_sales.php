@@ -50,37 +50,38 @@ if(!empty($sales_id)){
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
                                             <?php if(empty($sales_id)){ ?>
                                                 <input type='button' class="btn btn-block btn-primary" id='save_head_button' type="button" onclick="proceed_btn()" value="Proceed">
-                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancel_sales()" value="Cancel Transaction" style='display: none;'>
+                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancelSales()" value="Cancel Transaction" style='display: none;'>
                                              <?php } else { ?>
-                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancel_sales()" value="Cancel Transaction">
+                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancelSales()" value="Cancel Transaction">
                                             <?php } ?>
                                         </div>
                                     </div>
                                 </div>
 
                                 </form>   
-                                <form >  
-                                         
-                                <div id="upload" <?php echo (empty($sales_id) ? 'style="display:none"' : ''); ?>>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
-                                            <div class="form-group mb-0">
-                                                <div class="input-group mb-0">
-                                                    <input type="file" class="form-control" placeholder="" id="WESM_sales">
+                                <form method="POST" id="upload_wesm">        
+                                    <div id="upload" <?php echo (empty($sales_id) ? 'style="display:none"' : ''); ?>>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
+                                                    <div class="form-group mb-0">
+                                                        <div class="input-group mb-0">
+                                                            <input type="file" class="form-control" placeholder="" id="WESM_sales">
 
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-primary" id="proceed_sales" onclick="upload_btn()"  type="button">Upload</button>
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-primary" id="proceed_sales" onclick="upload_btn()"  type="button">Upload</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
                                             </div>
                                         </div>
+                                        <br>
                                     </div>
-                                    <br>
-                                </div>
-                                <input type='hidden' name='sales_id' id='sales_id'  value="<?php echo (!empty($sales_id) ? $sales_id : ''); ?>">
-                            </form>
-                                <div class="table-responsive"  id="table-wesm" style="display:none">
+                                    <input type='hidden' name='sales_id' id='sales_id'  value="<?php echo (!empty($sales_id) ? $sales_id : ''); ?>">
+                                </form>
+                                <center><span id="alt"></span></center>
+                                <?php if(!empty($details)){ ?>
+                                <div class="table-responsive"  id="table-wesm">
                                     <hr>
                                     <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
                                         <thead>
@@ -97,552 +98,55 @@ if(!empty($sales_id)){
                                                 <th>Zero Rated Sales</th>
                                                 <th>Zero Rated EcoZones Sales</th>
                                                 <th>Vat On Sales</th>
-                                                <th>Vatable Purchses</th>
-                                                <th>Zero Rated Purchaseses</th>
-                                                <th>Zero Rated EcoZones Purchases </th>
-                                                <th>Vat On Purchases</th>
                                                 <th>EWT</th>
                                                 <th>Total Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php 
+                                                foreach($details AS $d){ 
+                                                    if(!empty($d['sales_id'])){ 
+                                            ?>
                                             <tr>
+                                                
                                                 <td align="center" style="background: #fff;">
+                                                    <?php if($saved==1){ ?>
                                                     <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
+                                                        <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                     <a id="clicksBS"></a>
+                                                    <?php } ?>
                                                 </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
+                                                <td><?php echo $d['company_name'];?></td>
+                                                <td><?php echo $d['facility_type'];?></td>
+                                                <td><?php echo $d['wht_agent'];?></td>
+                                                <td><?php echo $d['non_vatable'];?></td>
+                                                <td><?php echo $d['zero_rated'];?></td>
+                                                <td><?php echo $d['vatable_sales'];?></td>
+                                                <td><?php echo $d['zero_rated_sales'];?></td>
+                                                <td><?php echo $d['zero_rated_ecozones'];?></td>
+                                                <td><?php echo $d['vat_on_sales'];?></td>
+                                                <td><?php echo $d['ewt'];?></td>
+                                                <td><?php echo $d['total_amount'];?></td>
                                             </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff"  onclick="add_details_BS('<?php echo base_url(); ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                </td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                                <td>Edinburgh</td>
-                                            </tr>
+                                            <?php } } ?>
                                         </tbody>
                                     </table>
                                 </div>
+                                <?php } ?>
                             </div>
-                       
+                            <?php if(!empty($details)){ if($saved==0){ ?>
+                            <div id='alt' style="font-weight:bold"></div>
+                            <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save">
+                            <?php } } ?>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 
 
                 
