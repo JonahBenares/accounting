@@ -94,7 +94,7 @@
                                             <td colspan="5" align="center"><b>AMOUNT</b></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="15"><br></td>
+                                            <td colspan="15" align="center"><?php echo "Billing Charges for ".date("M d,Y",strtotime($billing_from))." to ".date("M d,Y",strtotime($billing_to))?></td>
                                             <td colspan="4"></td>
                                             <td colspan="1"></td>
                                         </tr>
@@ -104,14 +104,14 @@
                                             <td colspan="1"></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
+                                            <td colspan="15" align="right">Zero Rated Ecozones Sales</td>
+                                            <td colspan="4" align="center"><?php echo "₱ ".$zero_rated_ecozones_peso; ?></td>
+                                            <td colspan="1"><?php echo $zero_rated_ecozones_cents; ?></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
+                                            <td colspan="15" align="right">EWT</td>
+                                            <td colspan="4" align="center"><?php echo "₱ ".$ewt_peso; ?></td>
+                                            <td colspan="1"><?php echo $ewt_cents; ?></td>
                                         </tr>
                                         <tr>
                                             <td colspan="15"><br></td>
@@ -137,15 +137,15 @@
                                             <td colspan="15" align="right" class="pr-2">
                                                 <b>TOTAL AMOUNT DUE</b>
                                             </td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
+                                            <td colspan="4" align="center"><?php echo "₱ ".$total_peso; ?></td>
+                                            <td colspan="1"><?php echo $total_cents; ?></td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="4"><b>AMOUNT IN WORDS:</b></td>
-                                <td colspan="16" class="bor-btm"><?php echo $amount_words; ?></td>
+                                <td colspan="16" class="bor-btm"><?php echo ($total_amount!=0) ? $amount_words : ''; ?></td>
                             </tr>
                             <tr>
                                 <td colspan="14"></td>
