@@ -93,20 +93,50 @@ class Masterfile extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        /*$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");*/
-        foreach($this->super_model->select_all_order_by("participant","participant_name","ASC") AS $part){
+        $data['sub_participant']=$this->super_model->select_custom_where("participant","participant_name","ASC");
+        $rows = $this->super_model->count_rows("participant");
+        if($rows!=0){
+            foreach($this->super_model->select_all_order_by("participant","participant_name","ASC") AS $part){
+                $sub_participant = $this->super_model->select_sum_where("subparticipant", "sub_participant", "participant_id='$part->participant_id'");
             $data['participant'][] = array(
                 'participant_id'=>$part->participant_id,
                 'participant_name'=>$part->participant_name,
                 'settlement_id'=>$part->settlement_id,
                 'category'=>$part->category,
-            );
-        }
-        //$data['sub_participant']=$this->super_model->select_all_order_by("subparticipant","sub_participant","ASC");
-        //$data['sub_participant'] = $this->super_model->select_row_where('subparticipant', 'sub_participant','participant_id', $part->participant_id);
+                'sub_participant'=>$sub_participant,
+            ); 
+                
+                }
+            } else {
+
+            $data['participant']=array();
+            }
         $this->load->view('masterfile/customer_list',$data);
         $this->load->view('template/footer');
     }
+
+    public function add_sub_participant(){
+        $id=$this->uri->segment(3);
+        $data['id']=$id;
+        $data['sub_participant'] = $this->super_model->select_custom_where("participant", "participant_id != '$id'");
+        $rows = $this->super_model->count_rows("subparticipant");
+        if($rows!=0){
+            foreach($this->super_model->select_custom_where("subparticipant", "participant_id = '$id'") AS $sub){
+            $data['subparticipant'][] = array(
+                'participant_name'=>$this->super_model->select_column_where("participant","participant_name","participant_id", $sub->sub_participant),
+                'participant_id'=>$id,
+            ); 
+                
+                }
+            } else {
+
+            $data['subparticipant']=array();
+            }
+        $this->load->view('template/header');
+        $this->load->view('masterfile/add_sub_participant',$data);
+        $this->load->view('template/footer');
+    }
+
     public function customer_add()
     {
         $this->load->view('template/header');
@@ -118,7 +148,7 @@ class Masterfile extends CI_Controller {
     }
 
     public function insert_sub(){
-        $participant_id = count($this->input->post('participant_id'));
+        $participant_id = $this->input->post('participant_id');
         $count_sub_participant = count($this->input->post('sub_participant'));
             for($z=0; $z<$count_sub_participant;$z++){
                 $sub_participant='';
@@ -133,7 +163,7 @@ class Masterfile extends CI_Controller {
                 $this->super_model->insert_into("subparticipant", $data_sub);
             }
 
-            echo "<script>alert('Successfully Saved!'); window.location ='".base_url()."Masterfile/customer_list'; </script>";
+            echo "<script>alert('Successfully Saved!'); window.opener.location ='".base_url()."Masterfile/customer_list';window.close(); </script>";
         }
 
     public function save_customer(){
