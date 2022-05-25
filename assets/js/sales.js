@@ -1,9 +1,30 @@
-var clicksBS = 0;
-function add_details_BS(baseurl,sales_id) {
-    window.open(baseurl+"sales/add_details_BS/"+sales_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
-    clicksBS += 1;
-	document.getElementById("clicksBS").innerHTML = '('+clicksBS+')';
+//var clicksBS = 0;
+function add_details_BS(baseurl,sales_details_id) {
+	var redirect = baseurl+"sales/count_print";
+	$.ajax({
+		data: "sales_details_id="+sales_details_id,
+		type: "POST",
+		url: redirect,
+		success: function(output){
+			window.open(baseurl+"sales/add_details_BS/"+sales_details_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+		}
+	});
+    /*clicksBS += 1;
+	document.getElementById("clicksBS").innerHTML = '('+clicksBS+')';*/
 }
+
+function countPrint(baseurl,sales_details_id){
+	var redirect = baseurl+"sales/count_print";
+	$.ajax({
+		data: "sales_details_id="+sales_details_id,
+		type: "POST",
+		url: redirect,
+		success: function(output){
+
+		}
+	});
+}
+
 function add_details_wesm(baseurl) {
     window.open(baseurl+"sales/add_details_wesm/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
@@ -81,27 +102,8 @@ async function upload_btn() {
 	        	$("#table-wesm").hide(); 
 	        },
 	        success: function(output){
-	        	
 	        	$("#alt").hide(); 
-	        	$("#table-wesm").show(); 
 	        	location.reload();
-				/*var x = document.getElementById("table-wesm");
-				if (x.style.display === "none") {
-					x.style.display = "block";
-				} else {
-					x.style.display = "none";
-				}*/
-
-				/*$.ajax({
-					type:"POST",
-					url:redirect1,
-					data:'sales_id='+sales_id+"&baseurl="+loc,
-					success: function(data){
-						document.getElementById("proceed_sales").disabled = false;
-						document.getElementById("cancel").disabled = false;
-						$("#append_data").append(data);
-					}
-				});*/
 			}
 		});
 	}

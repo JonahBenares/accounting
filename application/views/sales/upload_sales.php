@@ -89,6 +89,7 @@ if(!empty($sales_id)){
                                                 <th width="1%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>                                            
+                                                <th>Serial No.</th>
                                                 <th>Trading Participant Name</th>
                                                 <th>Facility Type </th>
                                                 <th>WHT Agent Tag</th>
@@ -110,15 +111,31 @@ if(!empty($sales_id)){
                                             <tr>
                                                 
                                                 <td align="center" style="background: #fff;">
-                                                    <?php if($saved==1){ ?>
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"></a>
-                                                    <?php } ?>
+                                                    <?php 
+                                                        if($saved==1){ 
+                                                            if($d['serial_no']=='' && $s['print_counter']==0){
+                                                    ?>
+                                                        <div class="btn-group mb-0">
+                                                            <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
+                                                                <span class="m-0 fas fa-indent"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
+                                                    <?php 
+                                                        }else{
+                                                    ?>
+                                                        <div class="btn-group mb-0">
+                                                            <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/<?php echo $d['sales_detail_id']; ?>" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
+                                                                <span class="m-0 fas fa-indent"></span>
+                                                            </a>
+                                                        </div>
+                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
+                                                    <?php       
+                                                            } 
+                                                        }
+                                                    ?>
                                                 </td>
+                                                <td><?php echo $d['serial_no'];?></td>
                                                 <td><?php echo $d['company_name'];?></td>
                                                 <td><?php echo $d['facility_type'];?></td>
                                                 <td><?php echo $d['wht_agent'];?></td>
