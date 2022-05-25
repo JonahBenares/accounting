@@ -1,4 +1,4 @@
-function saveCustomer(){
+function saveCustomers(){
     var data = $("#CustomerHead").serialize();
 
     var loc= document.getElementById("baseurl").value;
@@ -51,4 +51,8 @@ function confirmationDelete(anchor){
      var conf = confirm('Are you sure you want to delete this record?');
      if(conf)
      window.location=anchor.attr("href");
+}
+
+function subparticipant(baseurl, id) {
+        window.open(baseurl+"index.php/masterfile/add_sub_participant/"+id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=25,width=500,height=500");
 }
