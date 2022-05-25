@@ -36,9 +36,11 @@
             <tr>
                 <td width="90%">
                     <select class="form-control" name="sub_participant[]" id="sub_participant">
-                        <?php foreach($sub_participant as $sp) { ?>
+                        <option value='' selected></option>
+                        <?php foreach($sub_participant as $sp) {
+                        if ($sp->participant_id != $id) { ?>
                             <option value='<?php echo $sp->participant_id; ?>'><?php echo $sp->participant_name; ?></option>
-                        <?php } ?>
+                        <?php } }?>
                     </select>
                 </td>
                 <td>
