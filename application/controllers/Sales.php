@@ -221,11 +221,11 @@ class Sales extends CI_Controller {
 
     public function sales_wesm(){
         $ref_no=$this->uri->segment(3);
-        $participant=$this->uri->segment(4);
-        $data['participant']=$participant;
+        //$participant=$this->uri->segment(4);
+        //$data['participant']=$participant;
         $data['ref_no']=$ref_no;
-        $data['participants']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        $sql="";
+        //$data['participants']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        /*$sql="";
         if($ref_no!='null'){
             $sql.= " AND sh.reference_number LIKE '%$ref_no%' AND";
         }
@@ -235,12 +235,12 @@ class Sales extends CI_Controller {
         }else if($ref_no!='null' && $participant!='null'){
             $sql.= " sd.billing_id = '$participant' AND";
         }
-        $query=substr($sql,0,-3);
+        $query=substr($sql,0,-3);*/
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $row_count=$this->super_model->count_custom("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query");
-        if($row_count!=0){
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query") AS $d){
+        /*$row_count=$this->super_model->count_custom("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' $query");
+        if($row_count!=0){*/
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_detail_id,
                     'sales_id'=>$d->sales_id,
@@ -262,12 +262,12 @@ class Sales extends CI_Controller {
                     'transaction_date'=>$d->transaction_date,
                     'billing_from'=>$d->billing_from,
                     'billing_to'=>$d->billing_to,
-                    'due_date'=>$d->due_date,
+                    'due_date'=>$d->due_date
                 );
             }
-        }else{
+        /*}else{
             $data['details']=array();
-        }
+        }*/
         $this->load->view('sales/sales_wesm',$data);
         $this->load->view('template/footer');
     }

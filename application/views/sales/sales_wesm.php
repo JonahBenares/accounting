@@ -14,10 +14,10 @@
                                         <div class="col-lg-10 offset-lg-1">
                                             <table class="table-borderded" width="100%">
                                                 <tr>
-                                                    <td width="40%">
+                                                    <td>
                                                         <input placeholder="Reference Number" name="ref_no" id="ref_no" class="form-control" type="text" >
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <select class="form-control" name="participant" id="participant">
                                                             <option value=''>-- Select Participant --</option>
                                                             <?php 
@@ -26,7 +26,7 @@
                                                             <option value="<?php echo $p->billing_id; ?>"><?php echo $p->billing_id." - ".$p->participant_name; ?></option>
                                                             <?php } ?>
                                                         </select>
-                                                    </td>
+                                                    </td> -->
                                                     <td><button type="button" onclick="filterSales();" class="btn btn-primary btn-block">Filter</button></td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                 </tr>
@@ -35,7 +35,7 @@
                                     </div>
                                 </form>
                                 <hr>
-                               <?php if(!empty($ref_no) || !empty($participant)){ ?>
+                               <?php if(!empty($details)){ ?>
                                 <table class="table-bsordered" width="100%">
                                     <?php 
                                         foreach($details AS $d){ 
@@ -115,6 +115,8 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <?php }else{ ?>
+                                    <div><center><b>Data Not Found!</b></center></div>
                                 <?php } ?>
                             </div>
                        <!--  </form> -->
