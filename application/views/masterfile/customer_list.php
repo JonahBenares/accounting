@@ -28,14 +28,13 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover"  style="width:100%;">
+                                <table class="table table-striped table-hover" id="save-stage"  style="width:100%;">
                                     <thead>
                                         <tr>
                                             <th>Participant Name</th>
                                             <th>Settlement ID</th>
                                             <th>Category</th>
-                                       
-                                             <th width="1%" align="center">
+                                            <th width="1%" align="center">
                                                 <center><span class="fas fa-bars"></span></center>
                                             </th> 
                                         </tr>
@@ -44,18 +43,12 @@
                                         <?php 
 
                                         if(!empty($participant)){
-                                           
-                                        foreach($participant AS $p){ 
-
-                                           // echo $p['participant_id'];
-                                    ?>
+                                        foreach($participant AS $p){ ?>
                                         <tr>
                                             <td><?php echo $p['participant_name'];?></td>
-                                             <td><?php echo $p['settlement_id'];?></td>
+                                            <td><?php echo $p['settlement_id'];?></td>
                                             <td><?php echo $p['category'];?></td>
-                                        
- 
-                                             <td align="center">
+                                            <td align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
@@ -71,8 +64,8 @@
                                             </td>  
                                         </tr>
                                         <?php } 
-                                    }
-                                    ?>
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
