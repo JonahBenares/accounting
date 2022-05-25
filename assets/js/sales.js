@@ -84,7 +84,7 @@ async function upload_btn() {
 	        	console.log(output);
 	        	$("#alt").hide(); 
 	        	$("#table-wesm").show(); 
-	        	//location.reload();
+	        	location.reload();
 				/*var x = document.getElementById("table-wesm");
 				if (x.style.display === "none") {
 					x.style.display = "block";

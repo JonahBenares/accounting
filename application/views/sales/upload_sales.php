@@ -80,6 +80,7 @@ if(!empty($sales_id)){
                                     <input type='hidden' name='sales_id' id='sales_id'  value="<?php echo (!empty($sales_id) ? $sales_id : ''); ?>">
                                 </form>
                                 <center><span id="alt"></span></center>
+                                <?php if(!empty($details)){ ?>
                                 <div class="table-responsive"  id="table-wesm">
                                     <hr>
                                     <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
@@ -103,7 +104,6 @@ if(!empty($sales_id)){
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                if(!empty($details)){
                                                 foreach($details AS $d){ 
                                                     if(!empty($d['sales_id'])){ 
                                             ?>
@@ -131,10 +131,11 @@ if(!empty($sales_id)){
                                                 <td><?php echo $d['ewt'];?></td>
                                                 <td><?php echo $d['total_amount'];?></td>
                                             </tr>
-                                            <?php } } } ?>
+                                            <?php } } ?>
                                         </tbody>
                                     </table>
                                 </div>
+                                <?php } ?>
                             </div>
                             <?php if(!empty($details)){ if($saved==0){ ?>
                             <div id='alt' style="font-weight:bold"></div>
