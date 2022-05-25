@@ -93,17 +93,14 @@ class Masterfile extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['sub_participant']=$this->super_model->select_custom_where("participant","participant_name","ASC");
         $rows = $this->super_model->count_rows("participant");
         if($rows!=0){
             foreach($this->super_model->select_all_order_by("participant","participant_name","ASC") AS $part){
-                $sub_participant = $this->super_model->select_sum_where("subparticipant", "sub_participant", "participant_id='$part->participant_id'");
             $data['participant'][] = array(
                 'participant_id'=>$part->participant_id,
                 'participant_name'=>$part->participant_name,
                 'settlement_id'=>$part->settlement_id,
                 'category'=>$part->category,
-                'sub_participant'=>$sub_participant,
             ); 
                 
                 }
