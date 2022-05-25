@@ -1165,7 +1165,7 @@ class Sales extends CI_Controller {
 
         return $output;
     }
-*/
+
     public function convertGroup($index)
     {
         switch ($index)
@@ -1327,16 +1327,17 @@ class Sales extends CI_Controller {
         }
 
     }
-
+*/
     public function print_BS(){
         $sales_detail_id = $this->uri->segment(3);
         $this->load->view('template/header');
-       // $this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
             $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
             $data['company_name']=$p->company_name;
-            $data['amount_words']=strtoupper($this->convertNumber($p->total_amount));
+            //$data['amount_words']=strtoupper($this->convertNumber($p->total_amount));
+            $data['amount_words']='';
         }
         $this->load->view('sales/print_BS',$data);
         $this->load->view('template/footer');
