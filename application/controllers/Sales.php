@@ -96,25 +96,34 @@ class Sales extends CI_Controller {
             $exc= basename($_FILES['doc']['name']);
             $exc=explode('.',$exc);
             $ext1=$exc[1];
+
+
             if($ext1=='php' || $ext1!='xlsx'){
                 $error_ext++;
             } 
+
             else {
                 $filename1='wesm_sales.'.$ext1;
+                //echo $filename1;
                 if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
                      $this->readExcel_inv($sales_id);
-                }        
+                } 
             }
         }
     }
 
     public function readExcel_inv($sales_id){
+
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
+
         $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales.xlsx');
-        try {
+
+       try {
             $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
             $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        
+   
             $objPHPExcel = $objReader->load($inputFileName);
         } 
         catch(Exception $e) {
@@ -122,11 +131,17 @@ class Sales extends CI_Controller {
         }
         $objPHPExcel->setActiveSheetIndex(2);
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
-        for($x=3;$x<=$highestRow;$x++){
-            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+       
+        for($x=3;$x<$highestRow;$x++){
+          
+            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+          
+          
             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+         
             $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
-            $company_name = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+
+            $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
             $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
             $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
             $ith = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
@@ -138,7 +153,7 @@ class Sales extends CI_Controller {
             $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
             $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
             $total_amount = $objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue();
-            if (strpos($itemno, 'Note:') === false) {
+         
                 $data_sales = array(
                     'sales_id'=>$sales_id,
                     'short_name'=>$shortname,
@@ -157,9 +172,9 @@ class Sales extends CI_Controller {
                     'total_amount'=>$total_amount,
                 );
                 $this->super_model->insert_into("sales_transaction_details", $data_sales);
-            }
-            echo $sales_id;
         }
+            echo $sales_id;
+      
     }
 
     public function cancel_sales(){
@@ -275,7 +290,7 @@ class Sales extends CI_Controller {
         echo $sales_detail_id;
     }
 
-    public function convertNumber($number)
+/*    public function convertNumber($number)
     {
         list($integer,$fraction) = explode(".", (string) $number);
 
@@ -1150,7 +1165,7 @@ class Sales extends CI_Controller {
 
         return $output;
     }
-
+*/
     public function convertGroup($index)
     {
         switch ($index)

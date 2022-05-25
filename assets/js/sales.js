@@ -81,7 +81,7 @@ async function upload_btn() {
 	        	$("#table-wesm").hide(); 
 	        },
 	        success: function(output){
-	        	console.log(output);
+	        	
 	        	$("#alt").hide(); 
 	        	$("#table-wesm").show(); 
 	        	location.reload();
