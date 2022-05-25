@@ -73,10 +73,14 @@
                                                 <th width="1%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>                                            
+                                                <th>Item No</th>
                                                 <th>Serial No.</th>
+                                                <th>STL ID / TPShort Name</th>
+                                                <th>Billing ID</th>
                                                 <th>Trading Participant Name</th>
                                                 <th>Facility Type </th>
                                                 <th>WHT Agent Tag</th>
+                                                <th>ITH Tag</th>
                                                 <th>Non Vatable Tag</th>
                                                 <th>Zero-rated Tag</th>
                                                 <th>Vatable Sales</th>
@@ -89,6 +93,7 @@
                                         </thead>
                                         <tbody>
                                             <?php 
+                                                $x=1;
                                                 if(!empty($details)){
                                                 foreach($details AS $s){ 
                                             ?>
@@ -114,10 +119,14 @@
                                                         <a id="clicksBS"><?php echo "(".$s['print_counter'].")"; ?></a>
                                                     <?php } ?>
                                                 </td>
+                                                <td><center><?php echo $x;?></center></td>
                                                 <td><?php echo $s['serial_no'];?></td>
+                                                <td><?php echo $s['short_name'];?></td>
+                                                <td><?php echo $s['billing_id'];?></td>
                                                 <td><?php echo $s['company_name'];?></td>
                                                 <td><?php echo $s['facility_type'];?></td>
                                                 <td><?php echo $s['wht_agent'];?></td>
+                                                <td><?php echo $s['ith_tag'];?></td>
                                                 <td><?php echo $s['non_vatable'];?></td>
                                                 <td><?php echo $s['zero_rated'];?></td>
                                                 <td><?php echo $s['vatable_sales'];?></td>
@@ -127,7 +136,7 @@
                                                 <td><?php echo $s['ewt'];?></td>
                                                 <td><?php echo $s['total_amount'];?></td>
                                             </tr>
-                                            <?php } } ?>
+                                            <?php $x++; } } ?>
                                         </tbody>
                                     </table>
                                 </div>
