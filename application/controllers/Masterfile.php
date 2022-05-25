@@ -93,7 +93,6 @@ class Masterfile extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['sub_participant']=$this->super_model->select_custom_where("participant","participant_name","ASC");
         $rows = $this->super_model->count_rows("participant");
         if($rows!=0){
             foreach($this->super_model->select_all_order_by("participant","participant_name","ASC") AS $part){
