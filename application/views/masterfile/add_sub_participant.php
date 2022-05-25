@@ -38,9 +38,9 @@
                     <select class="form-control" name="sub_participant[]" id="sub_participant">
                         <option value='' selected></option>
                         <?php foreach($sub_participant as $sp) {
-                        if ($sp->participant_id != $id) { ?>
+                        //if ($sp->participant_id != $id) { ?>
                             <option value='<?php echo $sp->participant_id; ?>'><?php echo $sp->participant_name; ?></option>
-                        <?php } }?>
+                        <?php } //}?>
                     </select>
                 </td>
                 <td>
