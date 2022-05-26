@@ -340,11 +340,78 @@ class Sales extends CI_Controller {
 
    $implode_to_Rupees = implode('', array_reverse($string));
 
-   $get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " 
+   /*$get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " 
 
-   " . $change_words[$amount_after_decimal % 10]) . ' centavos' : '';
+   " . $change_words[$amount_after_decimal % 10]) . ' centavos' : '';*/
 
-   return ($implode_to_Rupees ? $implode_to_Rupees . 'pesos ' : '') . $get_paise;
+            $ones = array( 
+            0 => "zero", 
+            1 => "one", 
+            2 => "two", 
+            3 => "three", 
+            4 => "four", 
+            5 => "five", 
+            6 => "six", 
+            7 => "seven", 
+            8 => "eight", 
+            9 => "nine", 
+            10 => "ten", 
+            11 => "eleven", 
+            12 => "twelve", 
+            13 => "thirteen", 
+            14 => "fourteen", 
+            15 => "fifteen", 
+            16 => "sixteen", 
+            17 => "seventeen", 
+            18 => "eighteen", 
+            19 => "nineteen" 
+            ); 
+            $tens = array( 
+            1 => "ten",
+            2 => "twenty", 
+            3 => "thirty", 
+            4 => "forty", 
+            5 => "fifty", 
+            6 => "sixty", 
+            7 => "seventy", 
+            8 => "eighty", 
+            9 => "ninety" 
+            ); 
+            $hundreds = array( 
+            "hundred", 
+            "thousand", 
+            "million", 
+            "billion", 
+            "trillion", 
+            "quadrillion" 
+            );
+
+    if($amount_after_decimal > 0){
+    $Dn = floor($amount_after_decimal / 10);
+    /* Tens (deca) */
+    $n = $amount_after_decimal % 10;
+            /* Ones */
+                
+                if ($Dn || $n) {
+        if (!empty($res)) {
+            $res .= " And ";
+        }
+        if ($Dn < 2) {
+            $res .= $ones[$Dn * 10 + $n];
+        } else {
+            $res .= $tens[$Dn];
+            if ($n) {
+                $res .= "-" . $ones[$n];
+            }
+        }
+                    $res .= " centavos";
+    }
+            
+            }
+
+   $get_peso = ($amount == 1) ? 'peso ' : 'pesos ';
+
+   return ($implode_to_Rupees ? $implode_to_Rupees .''.$get_peso : '') .'And '. $res;
 
 
 
@@ -414,12 +481,15 @@ class Sales extends CI_Controller {
             } 
             if($decnum > 0){ 
             $rettxt .= " and "; 
+            if($decnum == 1){ 
+            $rettxt .= $ones[$decnum] . " centavos";
             if($decnum < 20){ 
             $rettxt .= $ones[$decnum] . " centavos"; 
             }elseif($decnum < 100){ 
             $rettxt .= $tens[substr($decnum,0,1)]; 
             $rettxt .= " ".$ones[substr($decnum,1,1)] . " centavos";  
             } 
+            }
             } 
 
             if (strpos($rettxt, 'centavos') !== false) {
@@ -437,6 +507,7 @@ class Sales extends CI_Controller {
     }
 
     public function print_invoice(){
+        error_reporting(0);
         $sales_detail_id = $this->uri->segment(3);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -448,12 +519,24 @@ class Sales extends CI_Controller {
             $data['billing_to']=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
             $ewt=str_replace("-", '', $p->ewt);
             $ewt_exp=explode(".", $ewt);
+            $vatable_sales = explode(".",$p->vatable_sales);
+            $data['vat_sales_peso'] = $vatable_sales[0];
+            $data['vat_sales_cents'] = $vatable_sales[1];
+
+            $zero_rated_sales = explode(".",$p->zero_rated_sales);
+            $data['zero_rated_peso'] = $zero_rated_sales[0];
+            $data['zero_rated_cents'] = $zero_rated_sales[1];
+
+            $vat_on_sales = explode(".",$p->vat_on_sales);
+            $data['vat_peso'] = $vat_on_sales[0];
+            $data['vat_cents'] = $vat_on_sales[1];
+
             $data['ewt_peso']=$ewt_exp[0];
             $data['ewt_cents']=$ewt_exp[1];
             $zero_rated_ecozones_exp=explode(".", $p->zero_rated_ecozones);
             $data['zero_rated_ecozones_peso']=$zero_rated_ecozones_exp[0];
             $data['zero_rated_ecozones_cents']=$zero_rated_ecozones_exp[1];
-            $total=$p->zero_rated_ecozones - $ewt;
+            $total= ($p->vatable_sales + $p->vat_on_sales + $p->zero_rated_ecozones + $p->zero_rated_sales) - $p->ewt;
             $data['total_amount']=$total;
             $data['amount_words']=strtoupper($this->convertNumber($total));
             $total_exp=explode(".", $total);
