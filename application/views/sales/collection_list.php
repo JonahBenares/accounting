@@ -46,9 +46,32 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <?php if(!empty($ref_no)){ 
-
-                                   ?>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table width="100%" class="table-borsdered">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p class="m-0">Reference Number: </p>
+                                                    <h5>Ref1092-92982-2012</h5>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="15%">Billing Period:</td>
+                                                <td>June 23, 2010 - June 23, 2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Transaction Date:</td>
+                                                <td>June 23, 2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Due Date:</td>
+                                                <td>June 23, 2022</td>
+                                            </tr>
+                                        </table>                                        
+                                    </div>
+                                </div>
+                                <?php if(!empty($ref_no)){ ?>
+                                
                                 <div id="collection-list">
                                     <table class="table-bordered table table-hover " id="table-1" style="width:100%; ">
                                         <thead>
