@@ -432,6 +432,11 @@ class Sales extends CI_Controller {
     }
 
     public function print_BS(){
+        $this->load->view('template/print_head');
+        $this->load->view('sales/print_BS');
+    }
+
+    public function print_invoice(){
         $sales_detail_id = $this->uri->segment(3);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -455,7 +460,7 @@ class Sales extends CI_Controller {
             $data['total_peso']=$total_exp[0];
             $data['total_cents']=$total_exp[1];
         }
-        $this->load->view('sales/print_BS',$data);
+        $this->load->view('sales/print_invoice',$data);
         $this->load->view('template/footer');
     }
 
