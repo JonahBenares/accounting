@@ -279,7 +279,7 @@ class Sales extends CI_Controller {
     public function convertNumber(float $amount)
     {
 
-<<<<<<< HEAD
+
            $amount_after_decimal = round($amount - ($num = floor($amount)), 2) * 100;
 
    // Check if there is any number after decimal
@@ -348,11 +348,9 @@ class Sales extends CI_Controller {
 
 
 
-     /*    $ones = array( 
-=======
+
          $ones = array( 
             0 => "zero", 
->>>>>>> b13fe761e093f843c5cd25dce7ec00c19a714a7b
             1 => "one", 
             2 => "two", 
             3 => "three", 
@@ -430,7 +428,7 @@ class Sales extends CI_Controller {
                 $rettxt = $rettxt." PESOS ONLY";
             }
 
-            return $rettxt; */
+            return $rettxt; 
     }
 
     public function print_BS(){
