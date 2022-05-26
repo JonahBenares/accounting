@@ -343,11 +343,78 @@ class Sales extends CI_Controller {
 
    $implode_to_Rupees = implode('', array_reverse($string));
 
-   $get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " 
+   /*$get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " 
 
-   " . $change_words[$amount_after_decimal % 10]) . ' centavos' : '';
+   " . $change_words[$amount_after_decimal % 10]) . ' centavos' : '';*/
 
-   return ($implode_to_Rupees ? $implode_to_Rupees . 'pesos ' : '') . $get_paise;
+            $ones = array( 
+            0 => "zero", 
+            1 => "one", 
+            2 => "two", 
+            3 => "three", 
+            4 => "four", 
+            5 => "five", 
+            6 => "six", 
+            7 => "seven", 
+            8 => "eight", 
+            9 => "nine", 
+            10 => "ten", 
+            11 => "eleven", 
+            12 => "twelve", 
+            13 => "thirteen", 
+            14 => "fourteen", 
+            15 => "fifteen", 
+            16 => "sixteen", 
+            17 => "seventeen", 
+            18 => "eighteen", 
+            19 => "nineteen" 
+            ); 
+            $tens = array( 
+            1 => "ten",
+            2 => "twenty", 
+            3 => "thirty", 
+            4 => "forty", 
+            5 => "fifty", 
+            6 => "sixty", 
+            7 => "seventy", 
+            8 => "eighty", 
+            9 => "ninety" 
+            ); 
+            $hundreds = array( 
+            "hundred", 
+            "thousand", 
+            "million", 
+            "billion", 
+            "trillion", 
+            "quadrillion" 
+            );
+
+    if($amount_after_decimal > 0){
+    $Dn = floor($amount_after_decimal / 10);
+    /* Tens (deca) */
+    $n = $amount_after_decimal % 10;
+            /* Ones */
+                
+                if ($Dn || $n) {
+        if (!empty($res)) {
+            $res .= " And ";
+        }
+        if ($Dn < 2) {
+            $res .= $ones[$Dn * 10 + $n];
+        } else {
+            $res .= $tens[$Dn];
+            if ($n) {
+                $res .= "-" . $ones[$n];
+            }
+        }
+                    $res .= " centavos";
+    }
+            
+            }
+
+   $get_peso = ($amount == 1) ? 'peso ' : 'pesos ';
+
+   return ($implode_to_Rupees ? $implode_to_Rupees .''.$get_peso : '') .'And '. $res;
 
 
 
@@ -417,12 +484,15 @@ class Sales extends CI_Controller {
             } 
             if($decnum > 0){ 
             $rettxt .= " and "; 
+            if($decnum == 1){ 
+            $rettxt .= $ones[$decnum] . " centavos";
             if($decnum < 20){ 
             $rettxt .= $ones[$decnum] . " centavos"; 
             }elseif($decnum < 100){ 
             $rettxt .= $tens[substr($decnum,0,1)]; 
             $rettxt .= " ".$ones[substr($decnum,1,1)] . " centavos";  
             } 
+            }
             } 
 
             if (strpos($rettxt, 'centavos') !== false) {
@@ -435,6 +505,12 @@ class Sales extends CI_Controller {
     }
 
     public function print_BS(){
+        $this->load->view('template/print_head');
+        $this->load->view('sales/print_BS');
+    }
+
+    public function print_invoice(){
+        error_reporting(0);
         $sales_detail_id = $this->uri->segment(3);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -470,7 +546,7 @@ class Sales extends CI_Controller {
             $data['total_peso']=$total_exp[0];
             $data['total_cents']=$total_exp[1];
         }
-        $this->load->view('sales/print_BS',$data);
+        $this->load->view('sales/print_invoice',$data);
         $this->load->view('template/footer');
     }
 

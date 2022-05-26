@@ -1,201 +1,639 @@
-
-<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
-<div class="main-content">
-    <section class="section">
-        <div class="section-body">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-sm-6">
-                    <center>
-                        <button class="btn btn-primary btn-md">Print</button>
-                    </center>
-                    <br>
-                    <page size="BS">
-                        <table class="page-BS table-borddered" width="100%">
-                            <tr>
-                                <td width="5%"><br></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                                <td width="5%"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="20" align="center">                        
-                                    <h3 class="mb-0" style="font-family: arial;font-stretch: condensed;font-size: 30px;font-weight: 700;">CENTRAL NEGROS POWER RELIABILTY, INC.</h3>
-                                    <div style="font-size: 12px;margin-bottom: 10px;">
-                                        #88 ELOISA Q'S BLDG., COR. RIZAL-MABINI STS., BRGY. 22, BACOLOD CITY <br>
-                                        <b>VAT Reg. TIN: 008-691-287-00002</b><br>
-                                        TEL. NO. (034) 435-1932
-                                        <br>
-                                    </div>  
-                                    <b style="font-family: times new roman;font-size: 16px;">BILLING STATEMENT</b>
-                                    <br>
-                                    <br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Billed to:</td>
-                                <td colspan="13" class="bor-btm pl-2"><?php echo $company_name; ?></td>
-                                <td></td>
-                                <td>Date:</td>
-                                <td colspan="3" class="bor-btm  pl-2"><?php echo date("F d,Y");?></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Business Style:</td>
-                                <td colspan="8" class="bor-btm pl-2"></td>
-                                <td>TIN</td>
-                                <td colspan="3" class="bor-btm pl-2"><?php echo $tin; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Address:</td>
-                                <td colspan="13" class="bor-btm pl-2"><?php echo $address;?></td>
-                            </tr>
-                            <tr>
-                                <td colspan="20">
-                                    <br>
-                                    <table width="100%" class="table-bordered">
-                                        <tr>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                            <td style="padding: 0px;" width="5%"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15" align="center"><b>PARTICULARS</b></td>
-                                            <td colspan="5" align="center"><b>AMOUNT</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15" align="center"><?php echo "Billing Charges for ".date("M d,Y",strtotime($billing_from))." to ".date("M d,Y",strtotime($billing_to))?></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="15" align="right">Vatable Sales</td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$vat_sales_peso; ?></td>
-                                            <td colspan="1"><?php echo $vat_sales_cents; ?></td>
-                                        </tr>
-
-                                        <?php if($zero_rated_peso!=0) { ?>
-                                         <tr>
-                                            <td colspan="15" align="right">Zero Rated</td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$zero_rated_peso; ?></td>
-                                            <td colspan="1"><?php echo $zero_rated_cents; ?></td>
-                                        </tr>
-                                        <?php } ?>
-                                        <?php if($zero_rated_ecozones_peso!=0) { ?>
-                                        <tr>
-                                            <td colspan="15" align="right">Zero Rated Ecozones Sales</td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$zero_rated_ecozones_peso; ?></td>
-                                            <td colspan="1"><?php echo $zero_rated_ecozones_cents; ?></td>
-                                        </tr>
-                                        <?php } 
-                                        if($vat_peso!=0) { ?>
-                                         <tr>
-                                            <td colspan="15" align="right">VAT</td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$vat_peso; ?></td>
-                                            <td colspan="1"><?php echo $vat_cents; ?></td>
-                                        </tr>
-                                        <?php }
-                                        if($ewt_peso!=0) { ?>
-                                        <tr>
-                                            <td colspan="15" align="right">EWT</td>
-                                            <td colspan="4" align="center"><?php echo "₱ (".$ewt_peso.")"; ?></td>
-                                            <td colspan="1"><?php echo "(".$ewt_cents.")"; ?></td>
-                                        </tr>
-                                        <?php } ?>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15"><br></td>
-                                            <td colspan="4"></td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="15" align="right" class="pr-2">
-                                                <b>TOTAL AMOUNT DUE</b>
-                                            </td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$total_peso; ?></td>
-                                            <td colspan="1"><?php echo $total_cents; ?></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4"><b>AMOUNT IN WORDS:</b></td>
-                                <td colspan="16" class="bor-btm"><?php echo ($total_amount!=0) ? $amount_words : ''; ?></td>
-                            </tr>
-                            <tr>
-                                <td colspan="14"></td>
-                                <td colspan="6"><br></td>
-                            </tr>
-                            <tr>
-                                <td colspan="14"></td>
-                                <td colspan="6">Certified Correct:</td>
-                            </tr>
-                            <tr>
-                                <td colspan="14"></td>
-                                <td colspan="5" class="bor-btm"><br></td>
-                                <td colspan="1"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="14"></td>
-                                <td colspan="5" align="center">Authorized Signature</td>
-                                <td colspan="1"></td>
-                            </tr>
-                        </table>
-                    </page>
-                </div>
-
-            </div>
-        </div>
-    </section>
+<script>
+    function goBack() {
+      window.history.back();
+    }
+</script>
+<div class="animated fadeInDown" style="margin-top:10px" id="printbutton">
+    <center>
+        <a onclick="goBack()" class="btn btn-warning text-white btn-w100 btn-round">Back</a>
+        <a href="#" class="btn btn-success btn-w100 btn-round" onclick="window.print()">Print</a>
+        <a href='<?php echo base_url(); ?>sales/print_invoice/1' class="btn btn-primary btn-w100 btn-round">Invoice</a> 
+        <!-- <button class="btn btn-danger btn-fill"onclick="printDiv('printableArea')" style="margin-bottom:5px;width:80px;"></span> Print</button><br> -->
+    </center>
+    <br>
 </div>
+<page size="A4">
+    <div style="padding:30px">
+        <table width="100%" class="table-bor table-borsdered" style="border-collapse: collapse;">
+            <tr>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+            </tr>
+            <tr>
+                <td colspan="1"></td>
+                <td colspan="4">
+                    <img class="logo-print" src="<?php echo base_url().LOGO;?>">   
+                </td>
+                <td colspan="10" align="center" style="padding-left:10px">
+                    <h3 style="margin:0px;margin-top:5px;font-size: 15px"><?php echo COMPANY_NAME;?></h3>
+                    <?php echo ADDRESS;?> <br>
+                    <?php echo TELFAX;?> <br>
+                    <?php echo ADDRESS_2;?> <br>
+                </td>
+                <td colspan="5"></td>           
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <hr style="margin-top: 0.4rem;margin-bottom: 1rem;border: 0;border-top: 1px solid #000">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20" align="center"> 
+                    <h3 style="margin:0px">BILLING STATEMENT</h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Customer:</td>
+                <td colspan="9" class="bor-btm">1590 Energy Corporation</td>
+                <td></td>
+                <td colspan="3">Invoice No.:</td>
+                <td colspan="5" class="bor-btm">514</td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
+                <td colspan="9" rowspan="2" style="vertical-align:top" class="bor-btm">
+                    907-908 Ayala Life FGU Ctr. Cebu Business Park Luz Cebu City, Cebu City (Capital) Philippines 6000
+                </td>
+                <td></td>
+                <td colspan="3">Statement Date:</td>
+                <td colspan="5" class="bor-btm">18/04/2022</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">Billing Period:</td>
+                <td colspan="5" class="bor-btm">Feb 26 - March 25, 2022</td>
+            </tr>
+            <tr>
+                <td colspan="2">TIN:</td>
+                <td colspan="6" class="bor-btm">007-833-205-000</td>
+                <td colspan="4"></td>
+                <td colspan="3">Due Date:</td>
+                <td colspan="5" class="bor-btm">25/04/2022</td>
+            </tr>
+            <tr>
+                <td colspan="2">STL ID:</td>
+                <td colspan="6" class="bor-btm">1590EC</td>
+                <td colspan="4"></td>
+                <td colspan="3">Reference:</td>
+                <td colspan="5" class="bor-btm">TS-WF-189F-0000089</td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20" style="padding:5px">
+                    <table width="100%"> 
+                        <tr class="table-bor">
+                            <td align="center" width="15%">ITEMS</td>
+                            <td align="center" width="13%"></td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="13%"></td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="13%"></td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="13%">1590EC_SS</td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="13%">1590EC</td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="15%">TOTAL</td>
+                        </tr>
+                        <tr>
+                            <td>Vatable Sales</td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">1,202.20</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">1,202.20</td>
+                        </tr>
+                        <tr>
+                            <td>Zero-Rated Sales</td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                        </tr>
+                        <tr>
+                            <td>Total Sales</td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">1,202.20</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">1,202.20</td>
+                        </tr>
+                        <tr>
+                            <td colspan="12"><br></td>
+                        </tr>
+                        <tr>
+                            <td>12% VAT on Sales</td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">144.26</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">144.26</td>
+                        </tr>
+                        <tr>
+                            <td>EWT</td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">(24.04)</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">(24.04)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="12"><br></td>
+                        </tr>
+                        <tr>
+                            <td><b>Net Amount Due</b></td>
+                            <td class="bor-btm2" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right">1,322.42</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right"><b>1,322.42</b></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <hr style="margin-top: 0.4rem;margin-bottom: 1rem;border: 0;border-top: 1px solid #000">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <hr style="margin-top: 0.4rem;margin-bottom: 0.4rem;border: 0;border-top: 1px solid #000">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <b>Note:</b><br>
+                    1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
+                    <br>
+                    <br
 
+                    2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <hr style="margin-top: 0.4rem;margin-bottom: 0.4rem;border: 0;border-top: 1px solid #000">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20" style="padding:5px">
+                    <table width="100%">
+                        <tr>
+                            <td></td>
+                            <td colspan="5"><b>Checked by:</b></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7"><br></td>
+                        </tr>
+                        <tr>
+                            <td width="1%"></td>
+                            <td class="bor-btm" align="center" width="32%">JEOMAR DELOS SANTOS</td>
+                            <td width="1%"></td>
+                            <td class="bor-btm" align="center" width="32%">CRISTY CESAR</td>
+                            <td width="1%"></td>
+                            <td class="bor-btm" align="center" width="32%">ZYNDYRYN PASTERA</td>
+                            <td width="1%"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="center">EMG Supervisor</td>
+                            <td></td>
+                            <td align="center">Accounting</td>
+                            <td></td>
+                            <td align="center">Finance</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20" style="padding:5px">
+                    <table width="100%">
+                        <tr>
+                            <td width="1%"></td>
+                            <td width="32%"><b>Prepared by:</b></td>
+                            <td width="1%"></td>
+                            <td width="32%"></td>
+                            <td width="1%"></td>
+                            <td width="32%"><b>Noted by:</b></td>
+                            <td width="1%"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7"><br></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="center" class="bor-btm">CELINA TIGNERO</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td align="center" class="bor-btm">MILA ARANA</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="center">Billing</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td align="center">General Manager</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</page>
+<page size="A4">
+    <div style="padding:30px">
+        <table width="100%" class="table-bor table-borsdered" style="border-collapse: collapse;">
+            <tr>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+            </tr>
+            <tr>
+                <td colspan="1"></td>
+                <td colspan="4">
+                    <img class="logo-print" src="<?php echo base_url().LOGO;?>">   
+                </td>
+                <td colspan="10" align="center" style="padding-left:10px">
+                    <h3 style="margin:0px;margin-top:5px;font-size: 15px"><?php echo COMPANY_NAME;?></h3>
+                    <?php echo ADDRESS;?> <br>
+                    <?php echo TELFAX;?> <br>
+                    <?php echo ADDRESS_2;?> <br>
+                </td>
+                <td colspan="5"></td>           
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <hr style="margin-top: 0.4rem;margin-bottom: 1rem;border: 0;border-top: 1px solid #000">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20" align="center"> 
+                    <h3 style="margin:0px">BILLING STATEMENT</h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Customer:</td>
+                <td colspan="9" class="bor-btm">1590 Energy Corporation</td>
+                <td></td>
+                <td colspan="3">Invoice No.:</td>
+                <td colspan="5" class="bor-btm">514</td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
+                <td colspan="9" rowspan="2" style="vertical-align:top" class="bor-btm">
+                    907-908 Ayala Life FGU Ctr. Cebu Business Park Luz Cebu City, Cebu City (Capital) Philippines 6000
+                </td>
+                <td></td>
+                <td colspan="3">Statement Date:</td>
+                <td colspan="5" class="bor-btm">18/04/2022</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">Billing Period:</td>
+                <td colspan="5" class="bor-btm">Feb 26 - March 25, 2022</td>
+            </tr>
+            <tr>
+                <td colspan="2">TIN:</td>
+                <td colspan="6" class="bor-btm">007-833-205-000</td>
+                <td colspan="4"></td>
+                <td colspan="3">Due Date:</td>
+                <td colspan="5" class="bor-btm">25/04/2022</td>
+            </tr>
+            <tr>
+                <td colspan="2">STL ID:</td>
+                <td colspan="6" class="bor-btm">1590EC</td>
+                <td colspan="4"></td>
+                <td colspan="3">Reference:</td>
+                <td colspan="5" class="bor-btm">TS-WF-189F-0000089</td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20" style="padding:5px">
+                    <table width="100%"> 
+                        <tr class="table-bor">
+                            <td align="center" width="15%">ITEMS</td>
+                            <td align="center" width="13%"></td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="13%"></td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="13%"></td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="13%">1590EC_SS</td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="13%">1590EC</td>
+                            <td align="center" width="1%"></td>
+                            <td align="center" width="15%">TOTAL</td>
+                        </tr>
+                        <tr>
+                            <td>Vatable Sales</td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">1,202.20</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">1,202.20</td>
+                        </tr>
+                        <tr>
+                            <td>Zero-Rated Sales</td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                        </tr>
+                        <tr>
+                            <td>Total Sales</td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">1,202.20</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">1,202.20</td>
+                        </tr>
+                        <tr>
+                            <td colspan="12"><br></td>
+                        </tr>
+                        <tr>
+                            <td>12% VAT on Sales</td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">144.26</td>
+                            <td></td>
+                            <td align="right">-</td>
+                            <td></td>
+                            <td align="right">144.26</td>
+                        </tr>
+                        <tr>
+                            <td>EWT</td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">(24.04)</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm" align="right">(24.04)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="12"><br></td>
+                        </tr>
+                        <tr>
+                            <td><b>Net Amount Due</b></td>
+                            <td class="bor-btm2" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right">1,322.42</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right">-</td>
+                            <td></td>
+                            <td class="bor-btm2" align="right"><b>1,322.42</b></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <hr style="margin-top: 0.4rem;margin-bottom: 1rem;border: 0;border-top: 1px solid #000">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <hr style="margin-top: 0.4rem;margin-bottom: 0.4rem;border: 0;border-top: 1px solid #000">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <b>Note:</b><br>
+                    1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
+                    <br>
+                    <br>
 
-                
-                                       
-         
+                    2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20">
+                    <hr style="margin-top: 0.4rem;margin-bottom: 0.4rem;border: 0;border-top: 1px solid #000">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20" style="padding:5px">
+                    <table width="100%">
+                        <tr>
+                            <td></td>
+                            <td colspan="5"><b>Checked by:</b></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7"><br></td>
+                        </tr>
+                        <tr>
+                            <td width="1%"></td>
+                            <td class="bor-btm" align="center" width="32%">JEOMAR DELOS SANTOS</td>
+                            <td width="1%"></td>
+                            <td class="bor-btm" align="center" width="32%">CRISTY CESAR</td>
+                            <td width="1%"></td>
+                            <td class="bor-btm" align="center" width="32%">ZYNDYRYN PASTERA</td>
+                            <td width="1%"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="center">EMG Supervisor</td>
+                            <td></td>
+                            <td align="center">Accounting</td>
+                            <td></td>
+                            <td align="center">Finance</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"><br></td>
+            </tr>
+            <tr>
+                <td colspan="20" style="padding:5px">
+                    <table width="100%">
+                        <tr>
+                            <td width="1%"></td>
+                            <td width="32%"><b>Prepared by:</b></td>
+                            <td width="1%"></td>
+                            <td width="32%"></td>
+                            <td width="1%"></td>
+                            <td width="32%"><b>Noted by:</b></td>
+                            <td width="1%"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7"><br></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="center" class="bor-btm">CELINA TIGNERO</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td align="center" class="bor-btm">MILA ARANA</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="center">Billing</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td align="center">General Manager</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</page>
+
+<!-- <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+<script src="assets/js/demo.js"></script>  -->
+   
+
+</html>
