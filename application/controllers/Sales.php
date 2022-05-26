@@ -344,7 +344,9 @@ class Sales extends CI_Controller {
 
    " . $change_words[$amount_after_decimal % 10]) . ' centavos' : '';
 
-   return ($implode_to_Rupees ? $implode_to_Rupees . 'pesos ' : '') . $get_paise;
+   $get_peso = ($amount == 1) ? 'peso ' : 'pesos ';
+
+   return ($implode_to_Rupees ? $implode_to_Rupees .''.$get_peso : '') . $get_paise;
 
 
 
@@ -414,12 +416,15 @@ class Sales extends CI_Controller {
             } 
             if($decnum > 0){ 
             $rettxt .= " and "; 
+            if($decnum == 1){ 
+            $rettxt .= $ones[$decnum] . " centavos";
             if($decnum < 20){ 
             $rettxt .= $ones[$decnum] . " centavos"; 
             }elseif($decnum < 100){ 
             $rettxt .= $tens[substr($decnum,0,1)]; 
             $rettxt .= " ".$ones[substr($decnum,1,1)] . " centavos";  
             } 
+            }
             } 
 
             if (strpos($rettxt, 'centavos') !== false) {
