@@ -432,6 +432,7 @@ class Sales extends CI_Controller {
     }
 
     public function print_BS(){
+        error_reporting(0);
         $sales_detail_id = $this->uri->segment(3);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
