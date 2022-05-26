@@ -88,11 +88,15 @@ if(!empty($sales_id)){
                                             <tr>    
                                                 <th width="1%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
-                                                </th>                                            
+                                                </th>    
+                                                <th>Item No</th>                                        
                                                 <th>Serial No.</th>
+                                                <th>STL ID / TPShort Name</th>
+                                                <th>Billing ID</th>
                                                 <th>Trading Participant Name</th>
                                                 <th>Facility Type </th>
                                                 <th>WHT Agent Tag</th>
+                                                <th>ITH Tag</th>
                                                 <th>Non Vatable Tag</th>
                                                 <th>Zero-rated Tag</th>
                                                 <th>Vatable Sales</th>
@@ -105,6 +109,7 @@ if(!empty($sales_id)){
                                         </thead>
                                         <tbody>
                                             <?php 
+                                            $x=1;
                                                 foreach($details AS $d){ 
                                                     if(!empty($d['sales_id'])){ 
                                             ?>
@@ -113,7 +118,7 @@ if(!empty($sales_id)){
                                                 <td align="center" style="background: #fff;">
                                                     <?php 
                                                         if($saved==1){ 
-                                                            if($d['serial_no']=='' && $s['print_counter']==0){
+                                                            if($d['serial_no']=='' && $d['print_counter']==0){
                                                     ?>
                                                         <div class="btn-group mb-0">
                                                             <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
@@ -135,10 +140,14 @@ if(!empty($sales_id)){
                                                         }
                                                     ?>
                                                 </td>
+                                                <td><center><?php echo $x;?></center></td>
                                                 <td><?php echo $d['serial_no'];?></td>
+                                                <td><?php echo $d['short_name'];?></td>
+                                                <td><?php echo $d['billing_id'];?></td>
                                                 <td><?php echo $d['company_name'];?></td>
                                                 <td><?php echo $d['facility_type'];?></td>
                                                 <td><?php echo $d['wht_agent'];?></td>
+                                                <td><?php echo $d['ith_tag'];?></td>
                                                 <td><?php echo $d['non_vatable'];?></td>
                                                 <td><?php echo $d['zero_rated'];?></td>
                                                 <td><?php echo $d['vatable_sales'];?></td>
@@ -148,7 +157,7 @@ if(!empty($sales_id)){
                                                 <td><?php echo $d['ewt'];?></td>
                                                 <td><?php echo $d['total_amount'];?></td>
                                             </tr>
-                                            <?php } } ?>
+                                            <?php $x++; } } ?>
                                         </tbody>
                                     </table>
                                 </div>
