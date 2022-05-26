@@ -208,9 +208,12 @@ class Sales extends CI_Controller {
 
     public function collection_list()
     {
+        $ref_no=$this->uri->segment(3);
+        $data['ref_no'] = $ref_no;
+        $data['sales'] = $this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('sales/collection_list');
+        $this->load->view('sales/collection_list', $data);
         $this->load->view('template/footer');
     }
 
@@ -568,8 +571,12 @@ class Sales extends CI_Controller {
 
     public function add_details_OR()
     {
+        $sales_id = $this->uri->segment(3);
+        $sales_detail_id = $this->uri->segment(4);
+        $data['sales_id']=$sales_id;
+        $data['sales_detail_id']=$sales_detail_id;
         $this->load->view('template/header');
-        $this->load->view('sales/add_details_OR');
+        $this->load->view('sales/add_details_OR',$data);
         $this->load->view('template/footer');
     }
 
