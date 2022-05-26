@@ -7,7 +7,7 @@
     <center>
         <a onclick="goBack()" class="btn btn-warning text-white btn-w100 btn-round">Back</a>
         <a href="#" class="btn btn-success btn-w100 btn-round" onclick="window.print()">Print</a>
-        <a href='<?php echo base_url(); ?>sales/print_invoice/1' class="btn btn-primary btn-w100 btn-round">Invoice</a> 
+        <a href='<?php echo base_url(); ?>sales/print_invoice/<?php echo $sales_detail_id ?>' class="btn btn-primary btn-w100 btn-round">Invoice</a> 
         <!-- <button class="btn btn-danger btn-fill"onclick="printDiv('printableArea')" style="margin-bottom:5px;width:80px;"></span> Print</button><br> -->
     </center>
     <br>
@@ -62,7 +62,7 @@
             </tr>
             <tr>
                 <td colspan="2">Customer:</td>
-                <td colspan="9" class="bor-btm">1590 Energy Corporation</td>
+                <td colspan="9" class="bor-btm"><?php echo $company_name; ?></td>
                 <td></td>
                 <td colspan="3">Invoice No.:</td>
                 <td colspan="5" class="bor-btm">514</td>
@@ -70,30 +70,30 @@
             <tr>
                 <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
                 <td colspan="9" rowspan="2" style="vertical-align:top" class="bor-btm">
-                    907-908 Ayala Life FGU Ctr. Cebu Business Park Luz Cebu City, Cebu City (Capital) Philippines 6000
+                    <?php echo $address;?>
                 </td>
                 <td></td>
                 <td colspan="3">Statement Date:</td>
-                <td colspan="5" class="bor-btm">18/04/2022</td>
+                <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="3">Billing Period:</td>
-                <td colspan="5" class="bor-btm">Feb 26 - March 25, 2022</td>
+                <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($billing_from))." to ".date("M d,Y",strtotime($billing_to));?></td>
             </tr>
             <tr>
                 <td colspan="2">TIN:</td>
-                <td colspan="6" class="bor-btm">007-833-205-000</td>
+                <td colspan="6" class="bor-btm"><?php echo $tin; ?></td>
                 <td colspan="4"></td>
                 <td colspan="3">Due Date:</td>
-                <td colspan="5" class="bor-btm">25/04/2022</td>
+                <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($due_date));?></td>
             </tr>
             <tr>
                 <td colspan="2">STL ID:</td>
-                <td colspan="6" class="bor-btm">1590EC</td>
+                <td colspan="6" class="bor-btm"><?php echo $settlement; ?></td>
                 <td colspan="4"></td>
                 <td colspan="3">Reference:</td>
-                <td colspan="5" class="bor-btm">TS-WF-189F-0000089</td>
+                <td colspan="5" class="bor-btm"><?php echo $reference_number; ?></td>
             </tr>
             <tr>
                 <td colspan="20">

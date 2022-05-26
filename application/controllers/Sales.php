@@ -502,8 +502,27 @@ class Sales extends CI_Controller {
     }
 
     public function print_BS(){
+        $sales_detail_id = $this->uri->segment(3);
+        $data['sales_detail_id']=$sales_detail_id;
+        foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
+            $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+            $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+            $data['company_name']=$p->company_name;
+            $data['settlement']=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+            $data['billing_from']=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
+            $data['billing_to']=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
+            $data['due_date']=$this->super_model->select_column_where("sales_transaction_head","due_date","sales_id",$p->sales_id);
+            $data['reference_number']=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$p->sales_id);
+            $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+            foreach($this->super_model->select_row_where("subparticipant","participant_id",$participant_id) AS $p){
+                $data['sub'][]=array(
+                    
+                );
+            }
+        }
+        $this->load->view('sales/print_BS',$data);
         $this->load->view('template/print_head');
-        $this->load->view('sales/print_BS');
+        
     }
 
     public function print_invoice(){
