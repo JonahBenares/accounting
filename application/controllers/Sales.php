@@ -443,12 +443,24 @@ class Sales extends CI_Controller {
             $data['billing_to']=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
             $ewt=str_replace("-", '', $p->ewt);
             $ewt_exp=explode(".", $ewt);
+            $vatable_sales = explode(".",$p->vatable_sales);
+            $data['vat_sales_peso'] = $vatable_sales[0];
+            $data['vat_sales_cents'] = $vatable_sales[1];
+
+            $zero_rated_sales = explode(".",$p->zero_rated_sales);
+            $data['zero_rated_peso'] = $zero_rated_sales[0];
+            $data['zero_rated_cents'] = $zero_rated_sales[1];
+
+            $vat_on_sales = explode(".",$p->vat_on_sales);
+            $data['vat_peso'] = $vat_on_sales[0];
+            $data['vat_cents'] = $vat_on_sales[1];
+
             $data['ewt_peso']=$ewt_exp[0];
             $data['ewt_cents']=$ewt_exp[1];
             $zero_rated_ecozones_exp=explode(".", $p->zero_rated_ecozones);
             $data['zero_rated_ecozones_peso']=$zero_rated_ecozones_exp[0];
             $data['zero_rated_ecozones_cents']=$zero_rated_ecozones_exp[1];
-            $total=$p->zero_rated_ecozones - $ewt;
+            $total= ($p->vatable_sales + $p->vat_on_sales + $p->zero_rated_ecozones + $p->zero_rated_sales) - $p->ewt;
             $data['total_amount']=$total;
             $data['amount_words']=strtoupper($this->convertNumber($total));
             $total_exp=explode(".", $total);
