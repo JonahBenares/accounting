@@ -32,331 +32,62 @@
                                         <table width="100%">
                                             <tr>
                                                 <td width="5%"></td>
-                                                <td width="15%">
-                                                    <input placeholder="Month From" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start" style="width:200px">
-                                                </td>
-                                                <td width="15%">
-                                                    <input placeholder="Month To" class="form-control"  onfocus="(this.type='month')" type="text" id="start" name="start" style="width:200px">
-                                                </td>
+                                                
                                                 <td>
-                                                    <input type="text" class="form-control" name="" placeholder="Reference Number">
+                                                    <input type="text" class="form-control" name="ref_number" id="ref_number" placeholder="Reference Number">
                                                 </td>
-                                                <td>
-                                                    <select class="form-control">
-                                                        <option>-- Select Participant --</option>
-                                                    </select>
-                                                </td>
-                                                <td width="1%"><button class="btn btn-primary" type="button" onclick="collection_filter()">Filter</button></td>
+                                                
+                                                <td width="1%">
+                                                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
+                                                    <input type='button' class="btn btn-primary"  onclick="collection_filter()" value="Filter"></td>
                                                 <td width="5%"></td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                                 <hr>
-                                <div id="collection-list" style="display:none;">
+                                <?php if(!empty($ref_no)){ 
+
+                                   ?>
+                                <div id="collection-list">
                                     <table class="table-bordered table table-hover " id="table-1" style="width:100%; ">
                                         <thead>
                                             <tr>
-                                                <th align="center">
+                                                <th width="5%" align="center">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
-                                                <th width="10%">Date</th>
-                                                <th width="20%">Reference Number</th>
-                                                <th width="15%">Billing period</th>
-                                                <th width="15%">Vatable Sales</th>
+                                                <th width="20%">Company Name</th>
+                                                <th width="15%">Billing ID</th>
+                                                <th width="15%">Short Name</th>
+                                                <th width="10%">Vatable Sales</th>
                                                 <th width="15%">Total Amount Due</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksOR"></a>
-                                                </td>
-                                                <td>11-11-58</td>
-                                                <td>REF-255566225-88858</td>
-                                                <td>10-22-99</td>
-                                                <td>Edinburgh</td>
-                                                <td align="right">999,999.00</td>
-                                            </tr>
-                                            
+                                            <?php
 
+                                             foreach($sales AS $s){ 
+                                                $total= ($s->vatable_sales + $s->vat_on_sales + $s->zero_rated_ecozones + $s->zero_rated_sales) - $s->ewt; ?>
+                                            <tr>
+                                                <td align="center">
+                                                    <div class="btn-group mb-0">
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>', '<?php echo $s->sales_id; ?>','<?php echo $s->sales_detail_id; ?>')" style="color:#fff">
+                                                            <span class="m-0 fas fa-indent"></span>
+                                                        </a>
+                                                    </div>
+                                                    <a id="clicksOR"></a>
+                                                </td>
+                                                <td><?php echo $s->company_name; ?></td>
+                                                <td><?php echo $s->billing_id; ?></td>
+                                                <td><?php echo $s->short_name; ?></td>
+                                                <td><?php echo number_format($s->vatable_sales,2); ?></td>
+                                                <td align="right"><?php echo number_format($total,2); ?></td>
+                                            </tr>
+                                        <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
+                            <?php } ?>
                             </div>
                         </form>
                     </div>

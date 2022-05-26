@@ -29,8 +29,8 @@ function add_details_wesm(baseurl) {
     window.open(baseurl+"sales/add_details_wesm/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
 var clicksOR = 0;
-function add_details_OR(baseurl) {
-    window.open(baseurl+"sales/add_details_OR/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+function add_details_OR(baseurl, sales_id, sales_details_id){
+    window.open(baseurl+"sales/add_details_OR/"+sales_id+"/"+sales_details_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
     clicksOR += 1;
 	document.getElementById("clicksOR").innerHTML = '('+clicksOR+')';
 }
@@ -148,12 +148,10 @@ function saveAll(){
 }
 
 function collection_filter() {
-	var x = document.getElementById("collection-list");
-		if (x.style.display === "none") {
-			x.style.display = "block";
-	} else {
-		x.style.display = "none";
-	}
+	 var ref_number = document.getElementById("ref_number").value; 
+	  var loc= document.getElementById("baseurl").value;
+	  window.location=loc+'sales/collection_list/'+ref_number;
+
 }
 
 function saveBS(){
