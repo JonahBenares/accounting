@@ -25,6 +25,37 @@ function countPrint(baseurl,sales_details_id){
 	});
 }
 
+function collection_process(){
+	var data = $("#collectiondetails").serialize();
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/save_collection";
+
+    var conf = confirm('Are you sure you want to process collection?');
+    console.log(data);
+    if(conf){
+		$.ajax({
+			data: data,
+			type: "POST",
+			url: redirect,
+			success: function(output){
+				//alert(output);
+			    window.opener.location=loc+'sales/print_OR/'+output;
+			    window.close();
+			}
+		});
+    }
+}
+
+  function isNumberKey(evt)
+   {
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode != 46 && charCode > 31 
+        && (charCode < 48 || charCode > 57))
+         return false;
+
+      return true;
+   }
+
 function add_details_wesm(baseurl) {
     window.open(baseurl+"sales/add_details_wesm/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
