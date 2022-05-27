@@ -212,7 +212,7 @@ class Sales extends CI_Controller {
     {
         $ref_no=$this->uri->segment(3);
         $data['ref_no'] = $ref_no;
-        $data['sales'] = $this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0'");
+        $data['sales'] = $this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0' AND balance!='0'");
 
         $data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
         $this->load->view('template/header');
@@ -658,6 +658,8 @@ class Sales extends CI_Controller {
         $sales_detail_id = $this->uri->segment(4);
         $data['sales_id']=$sales_id;
         $data['sales_detail_id']=$sales_detail_id;
+
+        $data['amount_due'] = $this->super_model->select_column_where("sales_transaction_details", "balance", "sales_detail_id", $sales_detail_id);
         $this->load->view('template/header');
         $this->load->view('sales/add_details_OR',$data);
         $this->load->view('template/footer');

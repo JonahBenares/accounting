@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <p>Total Amount Due: <b>29,9100.00</b></p>
+                    <p>Total Amount Due: <b><?php echo number_format($amount_due,2); ?></b></p>
                 </div>
             </div>
             <div class="row">
