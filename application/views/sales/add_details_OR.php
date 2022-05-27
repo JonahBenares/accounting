@@ -5,6 +5,11 @@
         </div>
         <div class="card-body">
             <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <p>Total Amount Due: <b>29,9100.00</b></p>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Date Collected</label>
