@@ -166,7 +166,7 @@ class Sales extends CI_Controller {
             $zero_rated_ecozone = $objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue();
             $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
             $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
-            $total_amount = $objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue();
+            $total_amount = ($vatable_sales + $zero_rated + $zero_rated_sales + $vat_on_sales) - $ewt;
          
                 $data_sales = array(
                     'sales_id'=>$sales_id,
@@ -184,6 +184,7 @@ class Sales extends CI_Controller {
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
+                    'balance'=>$total_amount
                 );
                 $this->super_model->insert_into("sales_transaction_details", $data_sales);
         }
