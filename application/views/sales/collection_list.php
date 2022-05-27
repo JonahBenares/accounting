@@ -50,20 +50,14 @@
                                     <div class="col-lg-12">
                                         <table width="100%" class="table-borsdered">
                                             <tr>
-                                                <td colspan="2">
-                                                    <p class="m-0">Reference Number: </p>
-                                                    <h5>Ref1092-92982-2012</h5>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="15%">Billing Period:</td>
-                                                <td>June 23, 2010 - June 23, 2022</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Transaction Date:</td>
+                                                <td width="13%">Reference Number:</td>
+                                                <td><b>Ref1092-92982-2012</b></td>
+                                                <td width="13%">Transaction Date:</td>
                                                 <td>June 23, 2022</td>
                                             </tr>
                                             <tr>
+                                                <td>Billing Period:</td>
+                                                <td>June 23, 2010 - June 23, 2022</td>
                                                 <td>Due Date:</td>
                                                 <td>June 23, 2022</td>
                                             </tr>
