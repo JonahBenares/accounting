@@ -1,8 +1,10 @@
+<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <div class="card">
-    <form>
+    <form id='collectiondetails'>
         <div class="card-header">
             <h4>Add Details</h4>
         </div>
+       
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -22,36 +24,30 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" class="form-control" name="amount" id="amount">
+                        <input type="text" class="form-control" name="amount" id="amount" onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="form-group">
-                        <label>Vatable Sales</label>
-                        <input type="text" style="text-align:right" class="form-control" name="vat_sales" id="vat_sales">
+                        <label>Zero Rated</label>
+                        <input type="text" style="text-align:right" class="form-control" name="zero_rated" id="zero_rated" onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
-                        <label>Zero Rated Sales</label>
-                        <input type="text" style="text-align:right" class="form-control" name="zero_rated_sales" id="zero_rated_sales">
+                        <label>VAT</label>
+                        <input type="text" style="text-align:right" class="form-control" name="vat" id="vat" onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="form-group">
-                        <label>Zero Rated EcoZones Sales</label>
-                        <input type="text" style="text-align:right" class="form-control" name="zero_rated_ecozone" id="zero_rated_ecozone">
+                        <label>Zero Rated EcoZones</label>
+                        <input type="text" style="text-align:right" class="form-control" name="zero_rated_ecozone" id="zero_rated_ecozone" onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <label>Vat On Sales</label>
-                        <input type="text" style="text-align:right" class="form-control" name="vat" id="vat">
-                    </div>
-                 
-                </div>
+              
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>EWT</label>
-                        <input type="text" style="text-align:right" class="form-control" name="ewt" id="ewt">
+                        <input type="text" style="text-align:right" class="form-control" name="ewt" id="ewt" onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
            
@@ -61,7 +57,8 @@
                 <div class="col-lg-6 offset-lg-3">
                     <input type='hidden' name='sales_id' id='sales_id' value="<?php echo $sales_id; ?>">
                     <input type='hidden' name='sales_detail_id' id='sales_detail_id' value="<?php echo $sales_detail_id; ?>">
-                    <button class="btn btn-primary mr-1 btn-block" value="Save" onclick = "window.open('<?php echo base_url(); ?>sales/print_OR', '_blank'); window.close();">Save and Print OR </button>
+                    <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
+                    <input type='button' class='btn btn-primary mr-1 btn-block' onclick='collection_process()'  value="Save and Print OR">
                 </div>
             </div>
         </div>
