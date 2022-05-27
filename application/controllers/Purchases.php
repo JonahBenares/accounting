@@ -28,19 +28,458 @@ class Purchases extends CI_Controller {
         }
     } 
 
-    public function upload_purchases()
-    {
+    public function upload_purchases(){
+        $purchase_id=$this->uri->segment(3);
+        $data['purchase_id'] = $purchase_id;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/upload_purchases');
+        if(!empty($purchase_id)){
+            foreach($this->super_model->select_row_where("purchase_transaction_head", "purchase_id",$purchase_id) AS $h){
+                $data['transaction_date']=$h->transaction_date;
+                $data['billing_from']=$h->billing_from;
+                $data['billing_to']=$h->billing_to;
+                $data['reference_number']=$h->reference_number;
+                $data['due_date']=$h->due_date;
+                $data['saved']=$h->saved;
+                foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_id",$h->purchase_id) AS $d){
+                    $data['details'][]=array(
+                        'purchase_detail_id'=>$d->purchase_detail_id,
+                        'purchase_id'=>$d->purchase_id,
+                        'short_name'=>$d->short_name,
+                        'billing_id'=>$d->billing_id,
+                        'billing_statement_series'=>$d->billing_statement_series,
+                        'facility_type'=>$d->facility_type,
+                        'wht_agent'=>$d->wht_agent,
+                        'ith_tag'=>$d->ith_tag,
+                        'non_vatable'=>$d->non_vatable,
+                        'zero_rated'=>$d->zero_rated,
+                        'vatables_purchases'=>$d->vatables_purchases,
+                        'vat_on_purchases'=>$d->vat_on_purchases,
+                        'zero_rated_purchases'=>$d->zero_rated_purchases,
+                        'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                        'ewt'=>$d->ewt,
+                        'serial_no'=>$d->serial_no,
+                        'total_amount'=>$d->total_amount,
+                        'print_counter'=>$d->print_counter
+                    );
+                }
+            }
+        }
+        $this->load->view('purchases/upload_purchases',$data);
         $this->load->view('template/footer');
     }
 
-    public function print_BS()
+    public function count_print(){
+        $purchase_detail_id=$this->input->post('purchase_details_id');
+        foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_detail_id",$purchase_detail_id) AS $d){
+            $new_count = $d->print_counter + 1;
+            $data_head = array(
+                'print_counter'=>$new_count
+            );
+            $this->super_model->update_where("purchase_transaction_details",$data_head, "purchase_detail_id", $purchase_detail_id);
+            echo $new_count;
+        }
+    }
+
+    public function add_purchase_head(){
+        $tdate=date("Y-m-d", strtotime($this->input->post('transaction_date')));
+        $billingf=date("Y-m-d", strtotime($this->input->post('billing_from')));
+        $billingt=date("Y-m-d", strtotime($this->input->post('billing_to')));
+        $due=date("Y-m-d", strtotime($this->input->post('due_date')));
+        $data=array(
+            "reference_number"=>$this->input->post('reference_number'),
+            "transaction_date"=>$tdate,
+            "billing_from"=>$billingf,
+            "billing_to"=>$billingt,
+            "due_date"=>$due,
+            "user_id"=>$_SESSION['user_id'],
+            "create_date"=>date("Y-m-d H:i:s")
+        );
+        $purchase_id = $this->super_model->insert_return_id("purchase_transaction_head",$data);
+        echo $purchase_id;
+    }
+
+    public function cancel_purchase(){
+        $purchase_id = $this->input->post('purchase_id');
+        $this->super_model->delete_where("purchase_transaction_details", "purchase_id", $purchase_id);
+        $this->super_model->delete_where("purchase_transaction_head", "purchase_id", $purchase_id);
+    }
+
+     public function save_all(){
+        $purchase_id = $this->input->post('purchase_id');
+        $data_head = array(
+            'saved'=>1
+        );
+        $this->super_model->update_where("purchase_transaction_head",$data_head, "purchase_id", $purchase_id);
+        echo $purchase_id;
+    }
+
+    public function upload_purchase_process(){
+        $purchase_id = $this->input->post('purchase_id');
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $error_ext=0;
+        if(!empty($_FILES['doc']['name'])){
+            $exc= basename($_FILES['doc']['name']);
+            $exc=explode('.',$exc);
+            $ext1=$exc[1];
+            if($ext1=='php' || $ext1!='xlsx'){
+                $error_ext++;
+            }else {
+                $filename1='wesm_purchases.'.$ext1;
+                if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
+                     $this->readExcel_inv($purchase_id);
+                } 
+            }
+        }
+    }
+
+    public function readExcel_inv($purchase_id){
+
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+
+        $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases.xlsx');
+
+       try {
+            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        
+   
+            $objPHPExcel = $objReader->load($inputFileName);
+        } 
+        catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+        $objPHPExcel->setActiveSheetIndex(2);
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+       
+        for($x=3;$x<$highestRow;$x++){
+            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+            $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+            $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+            $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+            $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+            $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+            $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue(),'()');
+            $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue(),'()');
+            $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+            $vat_on_purchases = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
+            $ewt = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
+            $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');;
+            //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
+         
+                $data_purchase = array(
+                    'purchase_id'=>$purchase_id,
+                    'short_name'=>$shortname,
+                    'billing_id'=>$billing_id,
+                    'facility_type'=>$fac_type,
+                    'wht_agent'=>$wht_agent,
+                    'ith_tag'=>$ith,
+                    'non_vatable'=>$non_vatable,
+                    'zero_rated'=>$zero_rated,
+                    'vatables_purchases'=>$vatables_purchases,
+                    'vat_on_purchases'=>$vat_on_purchases,
+                    'zero_rated_purchases'=>$zero_rated_purchases,
+                    'zero_rated_ecozones'=>$zero_rated_ecozone,
+                    'ewt'=>$ewt,
+                    'total_amount'=>$total_amount,
+                    'balance'=>$total_amount
+                );
+                $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
+        }
+            echo $purchase_id;
+      
+    }
+
+    public function convertNumber(float $amount)
     {
+
+
+           $amount_after_decimal = round($amount - ($num = floor($amount)), 2) * 100;
+
+   // Check if there is any number after decimal
+
+   $amt_hundred = null;
+
+   $count_length = strlen($num);
+
+   $x = 0;
+
+   $string = array();
+
+   $change_words = array(0 => '', 1 => 'One', 2 => 'Two',
+
+     3 => 'Three', 4 => 'Four', 5 => 'Five', 6 => 'Six',
+
+     7 => 'Seven', 8 => 'Eight', 9 => 'Nine',
+
+     10 => 'Ten', 11 => 'Eleven', 12 => 'Twelve',
+
+     13 => 'Thirteen', 14 => 'Fourteen', 15 => 'Fifteen',
+
+     16 => 'Sixteen', 17 => 'Seventeen', 18 => 'Eighteen',
+
+     19 => 'Nineteen', 20 => 'Twenty', 30 => 'Thirty',
+
+     40 => 'Forty', 50 => 'Fifty', 60 => 'Sixty',
+
+     70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety');
+
+  $here_digits = array('', 'Hundred','Thousand','Lakh', 'Crore');
+
+  while( $x < $count_length ) {
+
+       $get_divider = ($x == 2) ? 10 : 100;
+
+       $amount = floor($num % $get_divider);
+
+       $num = floor($num / $get_divider);
+
+       $x += $get_divider == 10 ? 1 : 2;
+
+       if ($amount) {
+
+         $add_plural = (($counter = count($string)) && $amount > 9) ? 's' : null;
+
+         $amt_hundred = ($counter == 1 && $string[0]) ? ' and ' : null;
+
+         $string [] = ($amount < 21) ? $change_words[$amount].' '. $here_digits[$counter]. $add_plural.' 
+
+         '.$amt_hundred:$change_words[floor($amount / 10) * 10].' '.$change_words[$amount % 10]. ' 
+
+         '.$here_digits[$counter].$add_plural.' '.$amt_hundred;
+
+         }else $string[] = null;
+
+       }
+
+   $implode_to_Rupees = implode('', array_reverse($string));
+
+   /*$get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " 
+
+   " . $change_words[$amount_after_decimal % 10]) . ' centavos' : '';*/
+
+            $ones = array( 
+            0 => "zero", 
+            1 => "one", 
+            2 => "two", 
+            3 => "three", 
+            4 => "four", 
+            5 => "five", 
+            6 => "six", 
+            7 => "seven", 
+            8 => "eight", 
+            9 => "nine", 
+            10 => "ten", 
+            11 => "eleven", 
+            12 => "twelve", 
+            13 => "thirteen", 
+            14 => "fourteen", 
+            15 => "fifteen", 
+            16 => "sixteen", 
+            17 => "seventeen", 
+            18 => "eighteen", 
+            19 => "nineteen" 
+            ); 
+            $tens = array( 
+            1 => "ten",
+            2 => "twenty", 
+            3 => "thirty", 
+            4 => "forty", 
+            5 => "fifty", 
+            6 => "sixty", 
+            7 => "seventy", 
+            8 => "eighty", 
+            9 => "ninety" 
+            ); 
+            $hundreds = array( 
+            "hundred", 
+            "thousand", 
+            "million", 
+            "billion", 
+            "trillion", 
+            "quadrillion" 
+            );
+
+    if($amount_after_decimal > 0){
+    $Dn = floor($amount_after_decimal / 10);
+    /* Tens (deca) */
+    $n = $amount_after_decimal % 10;
+            /* Ones */
+                
+                if ($Dn || $n) {
+        if (!empty($res)) {
+            $res .= " And ";
+        }
+        if ($Dn < 2) {
+            $res .= $ones[$Dn * 10 + $n];
+        } else {
+            $res .= $tens[$Dn];
+            if ($n) {
+                $res .= "-" . $ones[$n];
+            }
+        }
+                    $res .= " centavos";
+    }
+            
+            }
+
+   $get_peso = ($amount == 1) ? 'peso ' : 'pesos ';
+
+   return ($implode_to_Rupees ? $implode_to_Rupees .''.$get_peso : '') .'And '. $res;
+
+
+
+
+         $ones = array( 
+            0 => "zero", 
+            1 => "one", 
+            2 => "two", 
+            3 => "three", 
+            4 => "four", 
+            5 => "five", 
+            6 => "six", 
+            7 => "seven", 
+            8 => "eight", 
+            9 => "nine", 
+            10 => "ten", 
+            11 => "eleven", 
+            12 => "twelve", 
+            13 => "thirteen", 
+            14 => "fourteen", 
+            15 => "fifteen", 
+            16 => "sixteen", 
+            17 => "seventeen", 
+            18 => "eighteen", 
+            19 => "nineteen" 
+            ); 
+            $tens = array( 
+            1 => "ten",
+            2 => "twenty", 
+            3 => "thirty", 
+            4 => "forty", 
+            5 => "fifty", 
+            6 => "sixty", 
+            7 => "seventy", 
+            8 => "eighty", 
+            9 => "ninety" 
+            ); 
+            $hundreds = array( 
+            "hundred", 
+            "thousand", 
+            "million", 
+            "billion", 
+            "trillion", 
+            "quadrillion" 
+            ); //limit t quadrillion 
+            $num = number_format($num,2,".",","); 
+            $num_arr = explode(".",$num); 
+            $wholenum = $num_arr[0]; 
+            $decnum = $num_arr[1]; 
+            $whole_arr = array_reverse(explode(",",$wholenum)); 
+            krsort($whole_arr); 
+            $rettxt = ""; 
+            foreach($whole_arr as $key => $i){ 
+            if($i < 20){ 
+            $rettxt .= $ones[$i]; 
+            }elseif($i < 100){ 
+            $rettxt .= $tens[substr($i,0,1)]; 
+            $rettxt .= " ".$ones[substr($i,1,1)]; 
+            }else{ 
+            $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]; 
+            $rettxt .= " ".$tens[substr($i,1,1)] ; 
+            $rettxt .= " ".$ones[substr($i,2,1)]; 
+            } 
+            if($key > 0){ 
+            $rettxt .= " ".$hundreds[$key]. " "; 
+            } 
+            } 
+            if($decnum > 0){ 
+            $rettxt .= " and "; 
+            if($decnum == 1){ 
+            $rettxt .= $ones[$decnum] . " centavos";
+            if($decnum < 20){ 
+            $rettxt .= $ones[$decnum] . " centavos"; 
+            }elseif($decnum < 100){ 
+            $rettxt .= $tens[substr($decnum,0,1)]; 
+            $rettxt .= " ".$ones[substr($decnum,1,1)] . " centavos";  
+            } 
+            }
+            } 
+
+            if (strpos($rettxt, 'centavos') !== false) {
+                $rettxt=$rettxt;
+            } else {
+                $rettxt = $rettxt." PESOS ONLY";
+            }
+
+            return $rettxt; 
+    }
+
+    public function print_BS(){
+        $purchase_detail_id = $this->uri->segment(3);
+        $data['purchase_detail_id']=$purchase_detail_id;
+        foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_detail_id",$purchase_detail_id) AS $p){
+            $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+            $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+            $data['settlement']=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+            $data['company_name']=$this->super_model->select_column_where("participant","participant_name","billing_id",$p->billing_id);
+            $data['billing_from']=$this->super_model->select_column_where("purchase_transaction_head","billing_from","purchase_id",$p->purchase_id);
+            $data['billing_to']=$this->super_model->select_column_where("purchase_transaction_head","billing_to","purchase_id",$p->purchase_id);
+            $data['due_date']=$this->super_model->select_column_where("purchase_transaction_head","due_date","purchase_id",$p->purchase_id);
+            $data['reference_number']=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
+            $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+            foreach($this->super_model->select_row_where("subparticipant","participant_id",$participant_id) AS $p){
+                $data['sub'][]=array(
+                    
+                );
+            }
+        }
+        $this->load->view('purchases/print_BS',$data);
+        $this->load->view('template/print_head');
+        
+    }
+
+    public function print_invoice(){
+        error_reporting(0);
+        $purchase_detail_id = $this->uri->segment(3);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/print_BS');
+        foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_detail_id",$purchase_detail_id) AS $p){
+            $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+            $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+            $data['billing_from']=$this->super_model->select_column_where("purchase_transaction_head","billing_from","purchase_id",$p->purchase_id);
+            $data['company_name']=$this->super_model->select_column_where("participant","participant_name","billing_id",$p->billing_id);
+            $data['billing_to']=$this->super_model->select_column_where("purchase_transaction_head","billing_to","purchase_id",$p->purchase_id);
+            $ewt=str_replace("-", '', $p->ewt);
+            $ewt_exp=explode(".", $ewt);
+            $vatables_purchases = explode(".",$p->vatables_purchases);
+            $data['vat_purchase_peso'] = $vatables_purchases[0];
+            $data['vat_purchase_cents'] = $vatables_purchases[1];
+
+            $zero_rated_purchases = explode(".",$p->zero_rated_purchases);
+            $data['zero_rated_peso'] = $zero_rated_purchases[0];
+            $data['zero_rated_cents'] = $zero_rated_purchases[1];
+
+            $vat_on_purchases = explode(".",$p->vat_on_purchases);
+            $data['vat_peso'] = $vat_on_purchases[0];
+            $data['vat_cents'] = $vat_on_purchases[1];
+
+            $data['ewt_peso']=$ewt_exp[0];
+            $data['ewt_cents']=$ewt_exp[1];
+            $zero_rated_ecozones_exp=explode(".", $p->zero_rated_ecozones);
+            $data['zero_rated_ecozones_peso']=$zero_rated_ecozones_exp[0];
+            $data['zero_rated_ecozones_cents']=$zero_rated_ecozones_exp[1];
+            $total= ($p->vatables_purchases + $p->vat_on_purchases + $p->zero_rated_ecozones + $p->zero_rated_purchases) - $p->ewt;
+            $data['total_amount']=$total;
+            $data['amount_words']=strtoupper($this->convertNumber($total));
+            $total_exp=explode(".", $total);
+            $data['total_peso']=$total_exp[0];
+            $data['total_cents']=$total_exp[1];
+        }
+        $this->load->view('purchases/print_invoice',$data);
         $this->load->view('template/footer');
     }
 
@@ -59,19 +498,59 @@ class Purchases extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function purchases_wesm()
-    {
+    public function purchases_wesm(){
+        $ref_no=$this->uri->segment(3);
+        $data['ref_no']=$ref_no;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/purchases_wesm');
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
+            $data['details'][]=array(
+                'purchase_detail_id'=>$d->purchase_detail_id,
+                'purchase_id'=>$d->purchase_id,
+                'short_name'=>$d->short_name,
+                'billing_id'=>$d->billing_id,
+                'facility_type'=>$d->facility_type,
+                'wht_agent'=>$d->wht_agent,
+                'ith_tag'=>$d->ith_tag,
+                'non_vatable'=>$d->non_vatable,
+                'zero_rated'=>$d->zero_rated,
+                'vatables_purchases'=>$d->vatables_purchases,
+                'vat_on_purchases'=>$d->vat_on_purchases,
+                'zero_rated_purchases'=>$d->zero_rated_purchases,
+                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                'ewt'=>$d->ewt,
+                'serial_no'=>$d->serial_no,
+                'total_amount'=>$d->total_amount,
+                'reference_number'=>$d->reference_number,
+                'transaction_date'=>$d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'due_date'=>$d->due_date,
+                'print_counter'=>$d->print_counter
+            );
+        }
+        $this->load->view('purchases/purchases_wesm',$data);
         $this->load->view('template/footer');
     }
     public function add_details_wesm()
     {
+        $purchase_detail_id = $this->uri->segment(3);
+        $data['purchase_detail_id']=$purchase_detail_id;
         $this->load->view('template/header');
-        $this->load->view('sales/add_details_wesm');
+        $this->load->view('purchases/add_details_wesm',$data);
         $this->load->view('template/footer');
     }
+
+    public function save_serialno(){
+        $purchase_detail_id = $this->input->post('purchase_detail_id');
+        $serial_no = $this->input->post('serial_no');
+        $data_head = array(
+            'serial_no'=>$serial_no
+        );
+        $this->super_model->update_where("purchase_transaction_details",$data_head, "purchase_detail_id", $purchase_detail_id);
+        echo $purchase_detail_id;
+    }
+
     public function print_2307()
     {
         $this->load->view('purchases/print_2307');
