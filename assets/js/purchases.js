@@ -3,15 +3,15 @@ function add_payment(baseurl) {
 }
 
 function add_details_wesm(baseurl,purchase_details_id) {
-    var redirect = baseurl+"purchases/count_print";
+    /*var redirect = baseurl+"purchases/count_print";
     $.ajax({
         data: "purchase_details_id="+purchase_details_id,
         type: "POST",
         url: redirect,
-        success: function(output){
+        success: function(output){*/
             window.open(baseurl+"purchases/add_details_wesm/"+purchase_details_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
-        }
-    });
+        /*}
+    });*/
 }
 
 function countPrint(baseurl,purchase_details_id){
@@ -147,6 +147,7 @@ function saveBS(){
             type: "POST",
             url: redirect,
             success: function(output){
+                countPrint(loc,purchase_detail_id);
                 window.opener.location=loc+'purchases/print_BS/'+output;
                 window.close();
             }

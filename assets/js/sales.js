@@ -1,14 +1,14 @@
 //var clicksBS = 0;
 function add_details_BS(baseurl,sales_details_id) {
-	var redirect = baseurl+"sales/count_print";
+	/*var redirect = baseurl+"sales/count_print";
 	$.ajax({
 		data: "sales_details_id="+sales_details_id,
 		type: "POST",
 		url: redirect,
-		success: function(output){
+		success: function(output){*/
 			window.open(baseurl+"sales/add_details_BS/"+sales_details_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
-		}
-	});
+		/*}
+	});*/
     /*clicksBS += 1;
 	document.getElementById("clicksBS").innerHTML = '('+clicksBS+')';*/
 }
@@ -197,6 +197,7 @@ function saveBS(){
 			type: "POST",
 			url: redirect,
 			success: function(output){
+				countPrint(loc,sales_detail_id);
 			    window.opener.location=loc+'sales/print_BS/'+output;
 			    window.close();
 			}
