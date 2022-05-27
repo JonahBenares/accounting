@@ -147,9 +147,13 @@ function saveBS(){
             type: "POST",
             url: redirect,
             success: function(output){
-                countPrint(loc,purchase_detail_id);
-                window.opener.location=loc+'purchases/print_BS/'+output;
-                window.close();
+                if(serial_no!=''){
+                    countPrint(loc,purchase_detail_id);
+                    window.opener.location=loc+'purchases/print_BS/'+output;
+                    window.close();
+                }else{
+                    alert("Please encode serial number!");
+                }
             }
         });
     }

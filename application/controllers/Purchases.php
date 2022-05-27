@@ -185,7 +185,7 @@ class Purchases extends CI_Controller {
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
-                    'balance'=>$total_amount
+                    //'balance'=>$total_amount
                 );
                 $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
         }

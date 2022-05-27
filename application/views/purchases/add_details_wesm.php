@@ -15,7 +15,7 @@
                 <div class="col-lg-8 col-md-8 col-sm-8 offset-lg-2 offset-md-2 offset-sm-2">
                     <div class="form-group">
                         <label>Series Number</label>
-                        <input type="text" id="serial_no" name="serial_no" class="form-control">
+                        <input type="text" id="serial_no" name="serial_no" class="form-control" required="">
                     </div>
                 </div>
             </div>
