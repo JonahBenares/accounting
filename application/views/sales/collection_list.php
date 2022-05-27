@@ -95,7 +95,7 @@
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicksOR"></a>
+                                                  <!--   <a id="clicksOR"></a> -->
                                                 </td>
                                                 <td><?php echo $s->company_name; ?></td>
                                                 <td><?php echo $s->billing_id; ?></td>
