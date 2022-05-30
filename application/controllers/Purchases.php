@@ -554,12 +554,12 @@ class Purchases extends CI_Controller {
         echo $purchase_detail_id;
     }
 
-<<<<<<< HEAD
+
     public function print_2307()
     {
         $purchase_id = $this->uri->segment(3);
         $purchase_detail_id = $this->uri->segment(4);
-
+        $data['purchase_detail_id']=$purchase_detail_id;
         $billing_id=$this->super_model->select_column_where("purchase_transaction_details", "billing_id", "purchase_detail_id", $purchase_detail_id);
 
         $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
@@ -625,13 +625,11 @@ class Purchases extends CI_Controller {
 
         $data['period_from'] = $period_from;
         $data['period_to'] = $period_to;
-      
-=======
-    public function print_2307(){
-        $data['purchase_detail_id']=$this->uri->segment(3);
->>>>>>> 7f2d780f4a5f8f9efca6cad182485837e1244812
+
+ 
         $this->load->view('purchases/print_2307',$data);
     }
+
     public function print_2307sample()
     {   
         $this->load->view('purchases/print_2307sample');
