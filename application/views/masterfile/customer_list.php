@@ -32,6 +32,7 @@
                                     <thead>
                                         <tr>
                                             <th>Participant Name</th>
+                                            <th>Billing ID</th>
                                             <th>Settlement ID</th>
                                             <th>Category</th>
                                             <th width="1%" align="center">
@@ -46,6 +47,7 @@
                                         foreach($participant AS $p){ ?>
                                         <tr>
                                             <td><?php echo $p['participant_name'];?></td>
+                                            <td><?php echo $p['billing_id'];?></td>
                                             <td><?php echo $p['settlement_id'];?></td>
                                             <td><?php echo $p['category'];?></td>
                                             <td align="center">

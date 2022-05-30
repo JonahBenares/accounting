@@ -87,25 +87,14 @@
                                             ?>
                                             <tr>
                                                 <td align="center" style="background: #fff;">
-                                                    <?php 
-                                                            if($d['serial_no']=='' && $d['print_counter']==0){
-                                                    ?>
+                                                 
                                                         <div class="btn-group mb-0">
-                                                            <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>','<?php echo $d['purchase_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span>
+                                                             <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                                <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
                                                         <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
-                                                    <?php 
-                                                        }else{
-                                                    ?>
-                                                        <div class="btn-group mb-0">
-                                                            <a style="color:#fff" href="<?php echo base_url(); ?>purchases/print_BS/<?php echo $d['purchase_detail_id'];?>" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $d['purchase_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span>
-                                                            </a>
-                                                        </div>
-                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
-                                                    <?php } ?>
+                                                 
                                                 </td>
                                                 <td><?php echo $x; ?></td>
                                                 <td><?php echo $d['serial_no'];?></td>

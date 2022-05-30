@@ -189,7 +189,7 @@ class Sales extends CI_Controller {
                 );
                 $this->super_model->insert_into("sales_transaction_details", $data_sales);
         }
-            echo $sales_id;
+            //echo $sales_id;
       
     }
 
