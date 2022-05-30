@@ -590,6 +590,14 @@ class Sales extends CI_Controller {
     public function print_BS(){
         $sales_detail_id = $this->uri->segment(3);
         $data['sales_detail_id']=$sales_detail_id;
+        $data['address']='';
+        $data['tin']='';
+        $data['company_name']='';
+        $data['settlement']='';
+        $data['billing_from']='';
+        $data['billing_to']='';
+        $data['due_date']='';
+        $data['reference_number']='';
         foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
             $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
@@ -601,6 +609,14 @@ class Sales extends CI_Controller {
             $data['reference_number']=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$p->sales_id);
             $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
             $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
+            $data['sub'][]=array(
+                "sub_participant"=>$p->billing_id,
+                "vatable_sales"=>$p->vatable_sales,
+                "zero_rated_sales"=>$p->zero_rated_sales,
+                "total_amount"=>$p->total_amount,
+                "vat_on_sales"=>$p->vat_on_sales,
+                "ewt"=>$p->ewt,
+            );
             if($count_sub >=1 || $count_sub>=5){
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
@@ -617,12 +633,20 @@ class Sales extends CI_Controller {
                         "total_amount"=>$total_amount,
                         "vat_on_sales"=>$vat_on_sales,
                         "ewt"=>$ewt,
-                        "count_sub"=>$count_sub
                     );
                 }
             }
 
+
             if($count_sub>=6){
+                $data['sub_second'][]=array(
+                    "sub_participant"=>$p->billing_id,
+                    "vatable_sales"=>$p->vatable_sales,
+                    "zero_rated_sales"=>$p->zero_rated_sales,
+                    "total_amount"=>$p->total_amount,
+                    "vat_on_sales"=>$p->vat_on_sales,
+                    "ewt"=>$p->ewt,
+                );
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
@@ -638,7 +662,6 @@ class Sales extends CI_Controller {
                         "total_amount"=>$total_amount,
                         "vat_on_sales"=>$vat_on_sales,
                         "ewt"=>$ewt,
-                        "count_sub"=>$count_sub
                     );
                 }
             }
