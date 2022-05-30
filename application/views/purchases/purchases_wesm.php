@@ -58,7 +58,7 @@
                                     <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
                                         <thead>
                                             <tr>
-                                                <th width="1%" align="center" style="background:rgb(245 245 245)">
+                                                <th width="5%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
                                                 <th>Item No.</th>
@@ -90,10 +90,10 @@
                                                  
                                                         <div class="btn-group mb-0">
                                                              <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                                <span class="m-0 fas fa-print"></span>
+                                                                <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
+                                                        <a /a>
                                                  
                                                 </td>
                                                 <td><?php echo $x; ?></td>

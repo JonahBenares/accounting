@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-respsonsive">
                                 <table class="table table-striped table-hover" id="save-stage"  style="width:100%;">
                                     <thead>
                                         <tr>

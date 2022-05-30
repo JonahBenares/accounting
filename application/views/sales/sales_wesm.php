@@ -70,7 +70,7 @@
                                     <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
                                         <thead>
                                             <tr>    
-                                                <th width="1%" align="center" style="background:rgb(245 245 245)">
+                                                <th width="5%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>                                            
                                                 <th>Item No</th>
@@ -104,19 +104,17 @@
                                                     ?>
                                                         <div class="btn-group mb-0">
                                                             <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span>
+                                                                <span class="m-0 fas fa-indent"></span><span class="badge badge-transparent" id="clicksBS"><?php echo $s['print_counter']; ?></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicksBS"><?php echo "(".$s['print_counter'].")"; ?></a>
                                                     <?php 
                                                         }else{
                                                     ?>
                                                         <div class="btn-group mb-0">
                                                             <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/<?php echo $s['sales_detail_id']; ?>" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span>
+                                                                <span class="m-0 fas fa-indent"></span><span class="badge badge-transparent" id="clicksBS"><?php echo $s['print_counter']; ?></span>
                                                             </a>
-                                                        </div>
-                                                        <a id="clicksBS"><?php echo "(".$s['print_counter'].")"; ?></a>
+                                                        </div>+
                                                     <?php } ?>
                                                 </td>
                                                 <td><center><?php echo $x;?></center></td>
