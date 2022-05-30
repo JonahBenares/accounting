@@ -47,7 +47,6 @@ class Purchases extends CI_Controller {
                         'purchase_id'=>$d->purchase_id,
                         'short_name'=>$d->short_name,
                         'billing_id'=>$d->billing_id,
-                        'billing_statement_series'=>$d->billing_statement_series,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
                         'ith_tag'=>$d->ith_tag,
