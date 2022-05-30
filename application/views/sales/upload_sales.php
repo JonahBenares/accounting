@@ -82,10 +82,10 @@ if(!empty($sales_id)){
                                 <?php if(!empty($details)){ ?>
                                 <div class="table-responsive"  id="table-wesm">
                                     <hr>
-                                    <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
+                                    <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
                                         <thead>
                                             <tr>    
-                                                <th width="1%" align="center" style="background:rgb(245 245 245)">
+                                                <th width="5%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>    
                                                 <th>Item No</th>                                        
@@ -121,19 +121,17 @@ if(!empty($sales_id)){
                                                     ?>
                                                         <div class="btn-group mb-0">
                                                             <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span>
+                                                                <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
                                                     <?php 
                                                         }else{
                                                     ?>
                                                         <div class="btn-group mb-0">
                                                             <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/<?php echo $d['sales_detail_id']; ?>" target="_blank" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span>
+                                                                <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
                                                     <?php       
                                                             } 
                                                         }

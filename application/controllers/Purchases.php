@@ -64,7 +64,7 @@ class Purchases extends CI_Controller {
                 }
             }
         }
-        echo $purchase_id;
+        // echo $purchase_id;
         $this->load->view('purchases/upload_purchases',$data);
         $this->load->view('template/footer');
     }
