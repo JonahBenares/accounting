@@ -1,3 +1,5 @@
+<script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
 <div class="" id="printbutton">
     <center>
         <button class="btn btn-warning " onclick="document.location='upload_purchases'">Back</button>
-        <button class="btn btn-success " onclick="printDiv('printableArea')">Print</button>
+        <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
         <button class="btn btn-primary " onclick="saveDiv('printableArea','Title')">Save as PDF</button>
     </center>
     <br>
@@ -61,7 +63,8 @@
     </div>
 </div>
 </center>
-
+<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
+<input type="hidden" name="purchase_detail_id" id="purchase_detail_id" value="<?php echo $purchase_detail_id; ?>">
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js"></script>
 <script type="text/javascript">
@@ -82,5 +85,4 @@
         doc.fromHTML(`<html><head><title>${title}</title></head><body>` + document.getElementById(divId).innerHTML + `</body></html>`);
         doc.save('FORM_2307.pdf');
     }
-
 </script>

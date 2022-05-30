@@ -600,10 +600,47 @@ class Sales extends CI_Controller {
             $data['due_date']=$this->super_model->select_column_where("sales_transaction_head","due_date","sales_id",$p->sales_id);
             $data['reference_number']=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$p->sales_id);
             $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
-            foreach($this->super_model->select_row_where("subparticipant","participant_id",$participant_id) AS $p){
-                $data['sub'][]=array(
-                    
-                );
+            $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
+            if($count_sub >=1 || $count_sub>=5){
+                foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
+                    $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                    $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                    $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","billing_id",$billing_id);
+                    $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","billing_id",$billing_id);
+                    $total_amount=$this->super_model->select_column_where("sales_transaction_details","total_amount","billing_id",$billing_id);
+                    $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","billing_id",$billing_id);
+                    $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","billing_id",$billing_id);
+                    $data['sub'][]=array(
+                        "sub_participant"=>$subparticipant,
+                        "vatable_sales"=>$vatable_sales,
+                        "zero_rated_sales"=>$zero_rated_sales,
+                        "total_amount"=>$total_amount,
+                        "vat_on_sales"=>$vat_on_sales,
+                        "ewt"=>$ewt,
+                        "count_sub"=>$count_sub
+                    );
+                }
+            }
+
+            if($count_sub>=6){
+                foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
+                    $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                    $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                    $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","billing_id",$billing_id);
+                    $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","billing_id",$billing_id);
+                    $total_amount=$this->super_model->select_column_where("sales_transaction_details","total_amount","billing_id",$billing_id);
+                    $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","billing_id",$billing_id);
+                    $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","billing_id",$billing_id);
+                    $data['sub_second'][]=array(
+                        "sub_participant"=>$subparticipant,
+                        "vatable_sales"=>$vatable_sales,
+                        "zero_rated_sales"=>$zero_rated_sales,
+                        "total_amount"=>$total_amount,
+                        "vat_on_sales"=>$vat_on_sales,
+                        "ewt"=>$ewt,
+                        "count_sub"=>$count_sub
+                    );
+                }
             }
         }
         $this->load->view('sales/print_BS',$data);
