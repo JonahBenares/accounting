@@ -554,9 +554,9 @@ class Purchases extends CI_Controller {
         echo $purchase_detail_id;
     }
 
-    public function print_2307()
-    {
-        $this->load->view('purchases/print_2307');
+    public function print_2307(){
+        $data['purchase_detail_id']=$this->uri->segment(3);
+        $this->load->view('purchases/print_2307',$data);
     }
     public function print_2307sample()
     {   
