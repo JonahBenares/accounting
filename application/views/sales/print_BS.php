@@ -103,6 +103,7 @@
             <tr>
                 <td colspan="20" style="padding:5px">
                     <table width="100%"> 
+                        <?php if(!empty($sub)){ ?>
                         <tr class="table-bor">
                             <td align="center" width="15%">ITEMS</td>
                             <!-- <td align="center" width="13%"></td>
@@ -218,6 +219,11 @@
                             ?>
                             <td class="bor-btm2" align="right"><b><?php echo number_format($overall_total,2);?></b></td> 
                         </tr>
+                        <?php }else{ ?>
+                        <tr>
+                            <td align="center">No Available Data...</td>
+                        </tr>
+                        <?php }?>
                     </table>
                 </td>
             </tr>
@@ -239,7 +245,7 @@
                     <b>Note:</b><br>
                     1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
                     <br>
-                    <br
+                    <br>
 
                     2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
                 </td>
@@ -332,6 +338,7 @@
         </table>
     </div>
 </page>
+<?php if(!empty($sub_second)){ ?>
 <page size="A4">
     <div style="padding:30px">
         <table width="100%" class="table-bor table-borsdered" style="border-collapse: collapse;">
@@ -437,7 +444,7 @@
                             <td align="center" width="1%"></td> -->
                             <?php 
                                 $x=1;
-                                foreach($sub AS $s){ 
+                                foreach($sub_second AS $s){ 
                                     if($x >= 6){
                                     $vatable_arraysum_second[]=$s['vatable_sales'];
                                     $zerorated_arraysum_second[]=$s['zero_rated_sales'];
@@ -455,7 +462,7 @@
                             <td>Vatable Sales</td>
                             <?php 
                                 $x=1; 
-                                foreach($sub AS $s){ 
+                                foreach($sub_second AS $s){ 
                                     if($x >= 6){
                             ?>
                             <td align="right"><?php echo number_format($s['vatable_sales'],2);?></td>
@@ -474,7 +481,7 @@
                             <td>Zero-Rated Sales</td>
                             <?php 
                                 $x=1;
-                                foreach($sub AS $s){
+                                foreach($sub_second AS $s){
                                     if($x >= 6){ 
                             ?>
                             <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated_sales'],2);?></td>
@@ -486,7 +493,7 @@
                             <td>Total Sales</td>
                             <?php 
                                 $x=1; 
-                                foreach($sub AS $s){ 
+                                foreach($sub_second AS $s){ 
                                     if($x >= 6){ 
                             ?>
                             <td align="right"><?php echo number_format($s['total_amount'],2);?></td>
@@ -501,7 +508,7 @@
                             <td>12% VAT on Sales</td>
                             <?php 
                                 $x=1;
-                                foreach($sub AS $s){ 
+                                foreach($sub_second AS $s){ 
                                      if($x >= 6){ 
                             ?>
                             <td align="right"><?php echo number_format($s['vat_on_sales'],2);?></td>
@@ -513,7 +520,7 @@
                             <td>EWT</td>
                             <?php 
                                 $x=1;
-                                foreach($sub AS $s){ 
+                                foreach($sub_second AS $s){ 
                                      if($x >= 6){ 
                             ?>
                             <td class="bor-btm" align="right"><?php echo number_format($s['ewt'],2);?></td>
@@ -528,7 +535,7 @@
                             <td><b>Net Amount Due</b></td>
                             <?php 
                                 $x=1;
-                                foreach($sub AS $s){ 
+                                foreach($sub_second AS $s){ 
                                      if($x >= 6){ 
                             ?>
                             <td class="bor-btm2" align="right">-</td>
@@ -653,7 +660,7 @@
         </table>
     </div>
 </page>
-
+<?php } ?>
 <!-- <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
 <script src="assets/js/demo.js"></script>  -->
