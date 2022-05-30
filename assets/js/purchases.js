@@ -91,6 +91,7 @@ async function upload_btn() {
             },
             success: function(output){
                 $("#alt").hide(); 
+              
                 location.reload();
             }
         });
