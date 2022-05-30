@@ -65,7 +65,7 @@
                 <td colspan="9" class="bor-btm"><?php echo $company_name; ?></td>
                 <td></td>
                 <td colspan="3">Invoice No.:</td>
-                <td colspan="5" class="bor-btm">514</td>
+                <td colspan="5" class="bor-btm"></td>
             </tr>
             <tr>
                 <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
@@ -105,7 +105,7 @@
                     <table width="100%"> 
                         <tr class="table-bor">
                             <td align="center" width="15%">ITEMS</td>
-                            <td align="center" width="13%"></td>
+                            <!-- <td align="center" width="13%"></td>
                             <td align="center" width="1%"></td>
                             <td align="center" width="13%"></td>
                             <td align="center" width="1%"></td>
@@ -114,98 +114,85 @@
                             <td align="center" width="13%">1590EC_SS</td>
                             <td align="center" width="1%"></td>
                             <td align="center" width="13%">1590EC</td>
-                            <td align="center" width="1%"></td>
+                            <td align="center" width="1%"></td> -->
+                            <?php 
+                                $x=1;
+                                foreach($sub AS $s){ 
+                                    $vatable_arraysum[]=$s['vatable_sales'];
+                                    $zerorated_arraysum[]=$s['zero_rated_sales'];
+                                    $total_arraysum[]=$s['total_amount'];
+                                    $vat_arraysum[]=$s['vat_on_sales'];
+                                    $ewt_arraysum[]=$s['ewt'];
+                                    if($x <=5){
+                            ?>
+                                <td align="center" width="13%"><?php echo $s['sub_participant'];?></td>
+                                <td align="center" width="1%"></td>
+                            <?php } $x++; } ?>
                             <td align="center" width="15%">TOTAL</td>
                         </tr>
                         <tr>
                             <td>Vatable Sales</td>
-                            <td align="right">-</td>
+                            <?php foreach($sub AS $s){ ?>
+                            <td align="right"><?php echo number_format($s['vatable_sales'],2);?></td>
                             <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">1,202.20</td>
-                            <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">1,202.20</td>
+                            <?php } ?>
+                            <?php 
+                                $vatable=array_sum($vatable_arraysum);
+                                $zero=array_sum($zerorated_arraysum);
+                                $total=array_sum($total_arraysum);
+                                $vat=array_sum($vat_arraysum);
+                                $ewt=array_sum($ewt_arraysum);
+                            ?>
+                            <td align="right"><?php echo number_format(array_sum($vatable_arraysum),2);?></td> 
                         </tr>
                         <tr>
                             <td>Zero-Rated Sales</td>
-                            <td class="bor-btm" align="right">-</td>
+                            <?php foreach($sub AS $s){ ?>
+                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated_sales'],2);?></td>
                             <td></td>
-                            <td class="bor-btm" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm" align="right">-</td>
+                            <?php } ?>
+                            <td class="bor-btm" align="right"><?php echo number_format(array_sum($zerorated_arraysum),2);?></td>
                         </tr>
                         <tr>
                             <td>Total Sales</td>
-                            <td align="right">-</td>
+                            <?php foreach($sub AS $s){ ?>
+                            <td align="right"><?php echo number_format($s['total_amount'],2);?></td>
                             <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">1,202.20</td>
-                            <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">1,202.20</td>
+                            <?php } ?>
+                            <td align="right"><?php echo number_format(array_sum($total_arraysum),2);?></td> 
                         </tr>
                         <tr>
                             <td colspan="12"><br></td>
                         </tr>
                         <tr>
                             <td>12% VAT on Sales</td>
-                            <td align="right">-</td>
+                            <?php foreach($sub AS $s){ ?>
+                            <td align="right"><?php echo number_format($s['vat_on_sales'],2);?></td>
                             <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">144.26</td>
-                            <td></td>
-                            <td align="right">-</td>
-                            <td></td>
-                            <td align="right">144.26</td>
+                            <?php } ?>
+                            <td align="right"><?php echo number_format(array_sum($vat_arraysum),2);?></td> 
                         </tr>
                         <tr>
                             <td>EWT</td>
-                            <td class="bor-btm" align="right">-</td>
+                            <?php foreach($sub AS $s){ ?>
+                            <td class="bor-btm" align="right"><?php echo number_format($s['ewt'],2);?></td>
                             <td></td>
-                            <td class="bor-btm" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm" align="right">(24.04)</td>
-                            <td></td>
-                            <td class="bor-btm" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm" align="right">(24.04)</td>
+                            <?php } ?>
+                            <td class="bor-btm" align="right"><?php echo number_format(array_sum($ewt_arraysum),2);?></td> 
                         </tr>
                         <tr>
                             <td colspan="12"><br></td>
                         </tr>
                         <tr>
                             <td><b>Net Amount Due</b></td>
+                            <?php foreach($sub AS $s){ ?>
                             <td class="bor-btm2" align="right">-</td>
                             <td></td>
-                            <td class="bor-btm2" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm2" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm2" align="right">1,322.42</td>
-                            <td></td>
-                            <td class="bor-btm2" align="right">-</td>
-                            <td></td>
-                            <td class="bor-btm2" align="right"><b>1,322.42</b></td>
+                            <?php } ?>
+                            <?php 
+                                $overall_total=($vatable+$zero+$total+$vat)-$ewt;
+                            ?>
+                            <td class="bor-btm2" align="right"><b><?php echo number_format($overall_total,2);?></b></td> 
                         </tr>
                     </table>
                 </td>
@@ -414,16 +401,19 @@
                     <table width="100%"> 
                         <tr class="table-bor">
                             <td align="center" width="15%">ITEMS</td>
-                            <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%">1590EC_SS</td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%">1590EC</td>
-                            <td align="center" width="1%"></td>
+                            <?php 
+                                $x=1;
+                                foreach($sub AS $s){ 
+                                    $vatable_arraysum[]=$s['vatable_sales'];
+                                    $zerorated_arraysum[]=$s['zero_rated_sales'];
+                                    $total_arraysum[]=$s['total_amount'];
+                                    $vat_arraysum[]=$s['vat_on_sales'];
+                                    $ewt_arraysum[]=$s['ewt'];
+                                    if($x <=6){
+                            ?>
+                                <td align="center" width="13%"><?php echo $s['sub_participant'];?></td>
+                                <td align="center" width="1%"></td>
+                            <?php } $x++; } ?>
                             <td align="center" width="15%">TOTAL</td>
                         </tr>
                         <tr>
