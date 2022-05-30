@@ -64,6 +64,7 @@ class Purchases extends CI_Controller {
                 }
             }
         }
+        echo $purchase_id;
         $this->load->view('purchases/upload_purchases',$data);
         $this->load->view('template/footer');
     }
@@ -151,7 +152,7 @@ class Purchases extends CI_Controller {
         }
         $objPHPExcel->setActiveSheetIndex(2);
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
-       
+         $highestRow = $highestRow-1;
         for($x=3;$x<$highestRow;$x++){
             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
@@ -162,11 +163,14 @@ class Purchases extends CI_Controller {
             $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
             $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
             $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue(),'()');
+            $vatables_purchases = trim($vatables_purchases,"-");
             $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue(),'()');
             $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
             $vat_on_purchases = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
+             $vat_on_purchases = trim($vat_on_purchases,"-");
             $ewt = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
-            $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');;
+            $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getOldCalculatedValue(),'()');
+            $total_amount = trim($total_amount,"-");
             //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
          
                 $data_purchase = array(
@@ -188,7 +192,7 @@ class Purchases extends CI_Controller {
                 );
                 $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
         }
-            echo $purchase_id;
+           
       
     }
 

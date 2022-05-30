@@ -110,13 +110,13 @@
                                                 ?>
                                                 <tr>
                                                     <td align="center" style="background: #fff;">
-                                                        <!-- <div class="btn-group mb-0">
+                                                       <div class="btn-group mb-0">
                                                             <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_detail_id']; ?>" target="_blank" onClick="countPrint('<?php echo base_url(); ?>','<?php echo $d['purchase_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                                 <span class="m-0 fas fa-print"></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a> -->
-                                                        <?php 
+                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
+                                                      <!--   <?php 
                                                             if($saved==1){ 
                                                                 if($d['serial_no']=='' && $d['print_counter']==0){
                                                         ?>
@@ -138,7 +138,7 @@
                                                         <?php       
                                                                 } 
                                                             }
-                                                        ?>
+                                                        ?> -->
                                                     </td>
                                                     <td><?php echo $x; ?></td>
                                                     <td><?php echo $d['serial_no'];?></td>
