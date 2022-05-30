@@ -100,6 +100,7 @@ class Masterfile extends CI_Controller {
             $data['participant'][] = array(
                 'participant_id'=>$part->participant_id,
                 'participant_name'=>$part->participant_name,
+                'billing_id'=>$part->billing_id,
                 'settlement_id'=>$part->settlement_id,
                 'category'=>$part->category,
             ); 
