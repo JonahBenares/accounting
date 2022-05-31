@@ -13,7 +13,8 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    
+                    <label>Total Amount Due</label>
+                    <input type="text" name="amount_due" id="amount_due" class="form-control" value="<?php echo number_format($amount_due,2); ?>" readonly>
                 </div>
             </div>
             <div class="row">

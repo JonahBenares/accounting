@@ -543,6 +543,7 @@ class Purchases extends CI_Controller {
                 $mode_name='Zero-Rated Purchase';
             }
             $data['mode_name']=$mode_name;
+            $data['amount_due']=$p->total_amount;
             /*$data['payment'][]=array(
                 "vat_on_purchases"=>$p->vat_on_purchases,
                 "company_name"=>$company_name,
