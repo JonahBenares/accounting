@@ -39,21 +39,21 @@
                     
                     <div class="form-group">
                         <label>Amount of Purchase</label>
-                        <input type="number" style="text-align:right" name="purchase_amount" onkeyup='calculatePayment()' id="purchase_amount" placeholder="00.00" class="form-control">
+                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="purchase_amount" onkeyup='calculatePayment()' id="purchase_amount" placeholder="00.00" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Amount for VAT on Purchases</label>
-                        <input type="number" style="text-align:right" name="vat" id="vat" onkeyup='calculatePayment()' placeholder="00.00" class="form-control">
+                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="vat" id="vat" onkeyup='calculatePayment()' placeholder="00.00" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>EWT amount </label>
-                        <input type="number" style="text-align:right" name="ewt" id="ewt" onkeyup='calculatePayment()' placeholder="00.00" class="form-control">
+                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="ewt" id="ewt" onkeyup='calculatePayment()' placeholder="00.00" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Total amount </label>
-                        <input type="number" style="text-align:right" name="total_amount" id="total_amount" placeholder="00.00" class="form-control" readonly>
+                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="total_amount" id="total_amount" placeholder="00.00" class="form-control" readonly>
                     </div>
                 </div>
             </div>
