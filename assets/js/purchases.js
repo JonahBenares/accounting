@@ -1,5 +1,5 @@
-function add_payment(baseurl) {
-    window.open(baseurl+"purchases/add_payment/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+function add_payment(baseurl,purchase_id,purchase_detail_id) {
+    window.open(baseurl+"purchases/add_payment/"+purchase_id+'/'+purchase_detail_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
 
 function add_details_wesm(baseurl,purchase_details_id) {
@@ -168,12 +168,34 @@ function filterPurchase(){
 
 
 function payment_filter() {
-	var x = document.getElementById("payment-list");
-		if (x.style.display === "none") {
-			x.style.display = "block";
-	} else {
-		x.style.display = "none";
-	}
+	var ref_no= document.getElementById("reference_number").value;
+    var loc= document.getElementById("baseurl").value;
+    window.location=loc+'purchases/payment_list/'+ref_no; 
+}
+
+function savePayment(){
+    var data = $("#paymentdata").serialize();
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"purchases/save_payment";
+    var conf = confirm('Are you sure you want to save this payment?');
+    if(conf){
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: redirect,
+            success: function(output){
+                window.opener.location=loc+'purchases/payment_list/'+output;
+                window.close();
+            }
+        });
+    }
+}
+
+function calculatePayment(){
+    var purchase_amount = document.getElementById("purchase_amount").value;
+    var total_calculation = document.getElementById("total_calculation").value;
+    var total = parseFloat(purchase_amount) + parseFloat(total_calculation);
+    document.getElementById("total_amount").value  = parseFloat(total);
 }
 
  var clicks = 0;

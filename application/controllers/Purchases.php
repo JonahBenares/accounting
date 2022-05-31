@@ -486,19 +486,118 @@ class Purchases extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function payment_list()
-    {
+    public function payment_list(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/payment_list');
+        $ref_no=$this->uri->segment(3);
+        $data['ref_no']=$ref_no;
+        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
+            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$d->purchase_detail_id);
+            $data['details'][]=array(
+                'purchase_detail_id'=>$d->purchase_detail_id,
+                'purchase_id'=>$d->purchase_id,
+                'company_name'=>$company_name,
+                'payment_amount'=>$payment_amount,
+                'short_name'=>$d->short_name,
+                'billing_id'=>$d->billing_id,
+                'facility_type'=>$d->facility_type,
+                'wht_agent'=>$d->wht_agent,
+                'ith_tag'=>$d->ith_tag,
+                'non_vatable'=>$d->non_vatable,
+                'zero_rated'=>$d->zero_rated,
+                'vatables_purchases'=>$d->vatables_purchases,
+                'vat_on_purchases'=>$d->vat_on_purchases,
+                'zero_rated_purchases'=>$d->zero_rated_purchases,
+                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                'ewt'=>$d->ewt,
+                'serial_no'=>$d->serial_no,
+                'total_amount'=>$d->total_amount,
+                'reference_number'=>$d->reference_number,
+                'transaction_date'=>$d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'due_date'=>$d->due_date,
+                'print_counter'=>$d->print_counter
+            );
+        }
+        $this->load->view('purchases/payment_list',$data);
         $this->load->view('template/footer');
     }
     
-    public function add_payment()
-    {
+    public function add_payment(){
+        $purchase_id=$this->uri->segment(3);
+        $purchase_detail_id=$this->uri->segment(4);
+        $data['purchase_id']=$purchase_id;
+        $data['purchase_detail_id']=$purchase_detail_id;
         $this->load->view('template/header');
-        $this->load->view('purchases/add_payment');
+        foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_detail_id='$purchase_detail_id' AND purchase_id='$purchase_id'") AS $p){
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$p->billing_id);
+            if($p->vatables_purchases!=0){
+                $mode_name='Vatable Purchase';
+                $mode_amount=$p->vatables_purchases;
+            }else if($p->zero_rated!=0){
+                $mode_name='Zero-Rated Purchase';
+                $mode_amount=$p->zero_rated;
+            }else if($p->zero_rated_ecozones!=0){
+                $mode_name='Zero-Rated Purchase';
+                $mode_amount=$p->zero_rated_ecozones;
+            }
+            $total_amount=($mode_amount+$p->vat_on_purchases) - $p->ewt;
+            $data['payment'][]=array(
+                "vat_on_purchases"=>$p->vat_on_purchases,
+                "company_name"=>$company_name,
+                "ewt"=>$p->ewt,
+                "mode_name"=>$mode_name,
+                "mode_amount"=>$mode_amount,
+                "total_amount"=>$total_amount,
+            );
+        }
+        $this->load->view('purchases/add_payment',$data);
         $this->load->view('template/footer');
+    }
+
+    public function save_payment(){
+        $purchase_id=$this->input->post('purchase_id');
+        $purchase_detail_id=$this->input->post('purchase_detail_id');
+        $payment_date=$this->input->post('payment_date');
+        $particulars=$this->input->post('particulars');
+        $purchase_mode=$this->input->post('purchase_mode');
+        $mode_exp = explode('~', $purchase_mode);
+        $mode_name=$mode_exp[0];
+        $mode_amount=$mode_exp[1];
+        $purchase_amount=$this->input->post('purchase_amount');
+        $vat=$this->input->post('vat');
+        $ewt=$this->input->post('ewt');
+        $total_amount=$this->input->post('total_amount');
+        $payment_mode=$this->input->post('customRadioInline1');
+        $check_no=$this->input->post('check_no');
+        $cv_no=$this->input->post('cv_no');
+        $check_date=$this->input->post('check_date');
+        $pcv=$this->input->post('pcv');
+        $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$purchase_id);
+        $data_insert=array(
+            'purchase_id'=>$purchase_id,
+            'purchase_detail_id'=>$purchase_detail_id,
+            'payment_date'=>$payment_date,
+            'particulars'=>$particulars,
+            'purchase_mode'=>$mode_name,
+            'mode_amount'=>$mode_amount,
+            'purchase_amount'=>$purchase_amount,
+            'vat'=>$vat,
+            'ewt'=>$ewt,
+            'total_amount'=>$total_amount,
+            'payment_mode'=>$payment_mode,
+            'pcv'=>$pcv,
+            'check_no'=>$check_no,
+            'cv_no'=>$cv_no,
+            'check_date'=>$check_date,
+            'create_date'=>date("Y-m-d h:i:s"),
+            'user_id'=>$_SESSION['user_id'],
+        );
+        $this->super_model->insert_into("payment", $data_insert);
+        echo $reference_number;
     }
 
     public function purchases_wesm(){
