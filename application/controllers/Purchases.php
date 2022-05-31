@@ -538,22 +538,16 @@ class Purchases extends CI_Controller {
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$p->billing_id);
             if($p->vatables_purchases!=0){
                 $mode_name='Vatable Purchase';
-                $mode_amount=$p->vatables_purchases;
             }else if($p->zero_rated!=0){
                 $mode_name='Zero-Rated Purchase';
-                $mode_amount=$p->zero_rated;
             }else if($p->zero_rated_ecozones!=0){
                 $mode_name='Zero-Rated Purchase';
-                $mode_amount=$p->zero_rated_ecozones;
             }
-            $total_amount=($mode_amount+$p->vat_on_purchases) - $p->ewt;
             $data['payment'][]=array(
                 "vat_on_purchases"=>$p->vat_on_purchases,
                 "company_name"=>$company_name,
                 "ewt"=>$p->ewt,
                 "mode_name"=>$mode_name,
-                "mode_amount"=>$mode_amount,
-                "total_amount"=>$total_amount,
             );
         }
         $this->load->view('purchases/add_payment',$data);
@@ -566,9 +560,6 @@ class Purchases extends CI_Controller {
         $payment_date=$this->input->post('payment_date');
         $particulars=$this->input->post('particulars');
         $purchase_mode=$this->input->post('purchase_mode');
-        $mode_exp = explode('~', $purchase_mode);
-        $mode_name=$mode_exp[0];
-        $mode_amount=$mode_exp[1];
         $purchase_amount=$this->input->post('purchase_amount');
         $vat=$this->input->post('vat');
         $ewt=$this->input->post('ewt');
@@ -584,8 +575,7 @@ class Purchases extends CI_Controller {
             'purchase_detail_id'=>$purchase_detail_id,
             'payment_date'=>$payment_date,
             'particulars'=>$particulars,
-            'purchase_mode'=>$mode_name,
-            'mode_amount'=>$mode_amount,
+            'purchase_mode'=>$purchase_mode,
             'purchase_amount'=>$purchase_amount,
             'vat'=>$vat,
             'ewt'=>$ewt,

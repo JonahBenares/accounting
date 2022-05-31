@@ -29,7 +29,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Mode</label>
-                        <input type="text" class="form-control" name="purchase_mode" id="purchase_mode" value="<?php echo $p['mode_name']." ~ ".$p['mode_amount']; ?>" readonly>
+                        <input type="text" class="form-control" name="purchase_mode" id="purchase_mode" value="<?php echo $p['mode_name']; ?>" readonly>
                         <!-- <select class="form-control" name="payment_mode" id="payment_mode">
                             <option>Vatable Purchase</option>
                             <option>Zero-Rated Purchase</option>
@@ -39,7 +39,7 @@
                     
                     <div class="form-group">
                         <label>Amount of Purchase</label>
-                        <input type="number" style="text-align:right" name="purchase_amount" id="purchase_amount" placeholder="00.00" class="form-control">
+                        <input type="number" style="text-align:right" name="purchase_amount" onkeyup='calculatePayment()' id="purchase_amount" placeholder="00.00" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="form-group">
                         <label>Total amount </label>
-                        <input type="number" style="text-align:right" name="total_amount" id="total_amount" placeholder="00.00" class="form-control" value="<?php echo $p['total_amount']; ?>" readonly>
+                        <input type="number" style="text-align:right" name="total_amount" id="total_amount" placeholder="00.00" class="form-control" readonly>
                     </div>
                 </div>
             </div>

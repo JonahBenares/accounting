@@ -191,12 +191,13 @@ function savePayment(){
     }
 }
 
-/*function calculatePayment(){
+function calculatePayment(){
     var purchase_amount = document.getElementById("purchase_amount").value;
-    var total_calculation = document.getElementById("total_calculation").value;
-    var total = parseFloat(purchase_amount) + parseFloat(total_calculation);
+    var vat = document.getElementById("vat").value;
+    var ewt = document.getElementById("ewt").value;
+    var total = (parseFloat(purchase_amount) + parseFloat(vat)) - ewt;
     document.getElementById("total_amount").value  = parseFloat(total);
-}*/
+}
 
  var clicks = 0;
 
