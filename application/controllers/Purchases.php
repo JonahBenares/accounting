@@ -540,7 +540,7 @@ class Purchases extends CI_Controller {
             }else if($p->zero_rated!=0){
                 $mode_name='Zero-Rated Purchase';
             }else if($p->zero_rated_ecozones!=0){
-                $mode_name='Zero-Rated Purchase';
+                $mode_name='Zero-Rated Ecozones Purchase';
             }
             $data['mode_name']=$mode_name;
             $data['amount_due']=$p->total_amount;
