@@ -77,14 +77,14 @@
                                 <br>
                                 <div class="table-responsive">
                                     <hr>
-                                    <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
+                                    <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
                                         <thead>
                                             <tr>    
                                                 <th width="5%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>                                            
                                                 <th>Item No</th>
-                                                <th>Serial No.</th>
+                                                <th>Series No.</th>
                                                 <th>STL ID / TPShort Name</th>
                                                 <th>Billing ID</th>
                                                 <th>Trading Participant Name</th>

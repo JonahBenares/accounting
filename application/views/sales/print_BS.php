@@ -65,7 +65,7 @@
                 <td colspan="9" class="bor-btm"><?php echo $company_name; ?></td>
                 <td></td>
                 <td colspan="3">Invoice No.:</td>
-                <td colspan="5" class="bor-btm"></td>
+                <td colspan="5" class="bor-btm"> <?php echo $serial_no;?></td>
             </tr>
             <tr>
                 <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
