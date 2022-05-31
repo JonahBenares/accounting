@@ -4,7 +4,6 @@
         <div class="card-header">
             <h4>Add Payment Details</h4>
         </div>
-        <?php foreach($payment AS $p){ ?>
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -21,7 +20,7 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="form-group">
                         <label>Particulars</label>
-                        <textarea class="form-control" name="particulars" id="particulars" rows="2" readonly><?php echo $p['company_name'];?></textarea>
+                        <textarea class="form-control" name="particulars" id="particulars" rows="2"></textarea>
                     </div>
                 </div>
             </div>
@@ -29,7 +28,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Mode</label>
-                        <input type="text" class="form-control" name="purchase_mode" id="purchase_mode" value="<?php echo $p['mode_name']; ?>" readonly>
+                        <input type="text" class="form-control" name="purchase_mode" id="purchase_mode" value="<?php echo $mode_name; ?>">
                         <!-- <select class="form-control" name="payment_mode" id="payment_mode">
                             <option>Vatable Purchase</option>
                             <option>Zero-Rated Purchase</option>
@@ -45,11 +44,11 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Amount for VAT on Purchases</label>
-                        <input type="number" style="text-align:right" name="vat" id="vat" placeholder="00.00" class="form-control" value="<?php echo $p['vat_on_purchases'];?>" readonly>
+                        <input type="number" style="text-align:right" name="vat" id="vat" onkeyup='calculatePayment()' placeholder="00.00" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>EWT amount </label>
-                        <input type="number" style="text-align:right" name="ewt" id="ewt" placeholder="00.00" class="form-control" value="<?php echo $p['ewt'];?>" readonly>
+                        <input type="number" style="text-align:right" name="ewt" id="ewt" onkeyup='calculatePayment()' placeholder="00.00" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Total amount </label>
@@ -108,7 +107,6 @@
                 </div>
             </div>
         </div>
-        <?php } ?>
         <div class="card-footer">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
