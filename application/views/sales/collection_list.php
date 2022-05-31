@@ -46,31 +46,28 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <?php if(!empty($ref_no)){ ?>
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        <?php foreach($sales_head AS $sh){ ?>
                                         <table width="100%" class="table-borsdered">
                                             <tr>
-                                                <td colspan="2">
-                                                    <p class="m-0">Reference Number: </p>
-                                                    <h5>Ref1092-92982-2012</h5>
-                                                </td>
+                                                <td width="13%">Reference Number:</td>
+                                                <td><b><?php echo $sh->reference_number; ?></b></td>
+                                                <td width="13%">Transaction Date:</td>
+                                                <td><?php echo date("F j, Y", strtotime($sh->transaction_date)); ?></td>
                                             </tr>
                                             <tr>
-                                                <td width="15%">Billing Period:</td>
-                                                <td>June 23, 2010 - June 23, 2022</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Transaction Date:</td>
-                                                <td>June 23, 2022</td>
-                                            </tr>
-                                            <tr>
+                                                <td>Billing Period:</td>
+                                                <td><?php echo date("F j, Y", strtotime($sh->billing_from)); ?> - <?php echo date("F j, Y", strtotime($sh->billing_to)); ?></td>
                                                 <td>Due Date:</td>
-                                                <td>June 23, 2022</td>
+                                                <td><?php echo date("F j, Y", strtotime($sh->due_date)); ?></td>
                                             </tr>
-                                        </table>                                        
+                                        </table>   
+                                        <?php } ?>                                     
                                     </div>
                                 </div>
-                                <?php if(!empty($ref_no)){ ?>
+                                
                                 
                                 <div id="collection-list">
                                     <table class="table-bordered table table-hover " id="table-1" style="width:100%; ">
@@ -90,7 +87,7 @@
                                             <?php
 
                                              foreach($sales AS $s){ 
-                                                $total= ($s->vatable_sales + $s->vat_on_sales + $s->zero_rated_ecozones + $s->zero_rated_sales) - $s->ewt; ?>
+                                                ?>
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
@@ -98,13 +95,13 @@
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                    <a id="clicksOR"></a>
+                                                  <!--   <a id="clicksOR"></a> -->
                                                 </td>
                                                 <td><?php echo $s->company_name; ?></td>
                                                 <td><?php echo $s->billing_id; ?></td>
                                                 <td><?php echo $s->short_name; ?></td>
                                                 <td><?php echo number_format($s->vatable_sales,2); ?></td>
-                                                <td align="right"><?php echo number_format($total,2); ?></td>
+                                                <td align="right"><?php echo number_format($s->balance,2); ?></td>
                                             </tr>
                                         <?php } ?>
                                         </tbody>

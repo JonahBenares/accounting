@@ -18,46 +18,45 @@ if(!empty($sales_id)){
                                 <h4>Upload WESM Transaction - Sales</h4>
                             </div>
                             <div class="card-body">
-                                   <form  id='saleshead'>
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <input type="date" class="form-control" name='transaction_date' id="transaction_date" value="<?php echo (!empty($sales_id) ? $transaction_date : ''); ?>" required <?php echo $readonly; ?> >
+                                <form  id='saleshead'>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <div class="form-group">
+                                                <label>Date</label>
+                                                <input type="date" class="form-control" name='transaction_date' id="transaction_date" value="<?php echo (!empty($sales_id) ? $transaction_date : ''); ?>" required <?php echo $readonly; ?> >
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Reference Number</label>
+                                                <input type="text" class="form-control" name="reference_number" id="reference_number"  value="<?php echo (!empty($sales_id) ? $reference_number : ''); ?>" required <?php echo $readonly; ?>>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Reference Number</label>
-                                            <input type="text" class="form-control" name="reference_number" id="reference_number"  value="<?php echo (!empty($sales_id) ? $reference_number : ''); ?>" required <?php echo $readonly; ?>>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <div class="form-group">
+                                                <label>Billing Period (From)</label>
+                                                <input type="date" class="form-control" name='billing_from' id="billing_from" value="<?php echo (!empty($sales_id) ? $billing_from : ''); ?>" required <?php echo $readonly; ?>>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Due Date</label>
+                                                <input type="date" class="form-control" name='due_date' id="due_date" value="<?php echo (!empty($sales_id) ? $due_date : ''); ?>" required <?php echo $readonly; ?>>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <div class="form-group">
+                                                <label>Billing Period (To)</label>
+                                                <input type="date" class="form-control" name='billing_to' id="billing_to" value="<?php echo (!empty($sales_id) ? $billing_to : ''); ?>" required <?php echo $readonly; ?>>
+                                            </div>
+                                            <div class="form-group">
+                                                <label><br></label>
+                                                <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
+                                                <?php if(empty($sales_id)){ ?>
+                                                    <input type='button' class="btn btn-block btn-primary" id='save_head_button' type="button" onclick="proceed_btn()" value="Proceed">
+                                                     <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancelSales()" value="Cancel Transaction" style='display: none;'>
+                                                 <?php } else { ?>
+                                                     <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancelSales()" value="Cancel Transaction">
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Billing Period (From)</label>
-                                            <input type="date" class="form-control" name='billing_from' id="billing_from" value="<?php echo (!empty($sales_id) ? $billing_from : ''); ?>" required <?php echo $readonly; ?>>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Due Date</label>
-                                            <input type="date" class="form-control" name='due_date' id="due_date" value="<?php echo (!empty($sales_id) ? $due_date : ''); ?>" required <?php echo $readonly; ?>>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label>Billing Period (To)</label>
-                                            <input type="date" class="form-control" name='billing_to' id="billing_to" value="<?php echo (!empty($sales_id) ? $billing_to : ''); ?>" required <?php echo $readonly; ?>>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><br></label>
-                                            <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                            <?php if(empty($sales_id)){ ?>
-                                                <input type='button' class="btn btn-block btn-primary" id='save_head_button' type="button" onclick="proceed_btn()" value="Proceed">
-                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancelSales()" value="Cancel Transaction" style='display: none;'>
-                                             <?php } else { ?>
-                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancelSales()" value="Cancel Transaction">
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 </form>   
                                 <form method="POST" id="upload_wesm">        
                                     <div id="upload" <?php echo (empty($sales_id) ? 'style="display:none"' : ''); ?>>
@@ -83,10 +82,10 @@ if(!empty($sales_id)){
                                 <?php if(!empty($details)){ ?>
                                 <div class="table-responsive"  id="table-wesm">
                                     <hr>
-                                    <table class="table-bordered table table-hover " id="table-1" style="width:200%;">
+                                    <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
                                         <thead>
                                             <tr>    
-                                                <th width="1%" align="center" style="background:rgb(245 245 245)">
+                                                <th width="5%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>    
                                                 <th>Item No</th>                                        
@@ -122,19 +121,17 @@ if(!empty($sales_id)){
                                                     ?>
                                                         <div class="btn-group mb-0">
                                                             <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span>
+                                                                <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
                                                     <?php 
                                                         }else{
                                                     ?>
                                                         <div class="btn-group mb-0">
-                                                            <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span>
+                                                            <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/<?php echo $d['sales_detail_id']; ?>" target="_blank" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $d['sales_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
+                                                                <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                             </a>
                                                         </div>
-                                                        <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
                                                     <?php       
                                                             } 
                                                         }
