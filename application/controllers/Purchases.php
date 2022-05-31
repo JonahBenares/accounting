@@ -568,6 +568,7 @@ class Purchases extends CI_Controller {
         $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
         $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
+        $data['zip']=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $billing_id);
         $billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
 
         $month= date("n",strtotime($billing_to));
