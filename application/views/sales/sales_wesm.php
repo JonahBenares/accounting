@@ -14,8 +14,18 @@
                                         <div class="col-lg-10 offset-lg-1">
                                             <table class="table-borderded" width="100%">
                                                 <tr>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input placeholder="Reference Number" name="ref_no" id="ref_no" class="form-control" type="text" >
+                                                    </td> -->
+                                                    <td>
+                                                        <select class="form-control" name="ref_no" id="ref_no">
+                                                            <option value=''>-- Select Reference No --</option>
+                                                            <?php 
+                                                                foreach($reference AS $r){
+                                                            ?>
+                                                            <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                            <?php } ?>
+                                                        </select>
                                                     </td>
                                                     <!-- <td>
                                                         <select class="form-control" name="participant" id="participant">
