@@ -18,7 +18,7 @@
                                                     <input placeholder="Reference Number" name="ref_no" id="ref_no" class="form-control" type="text" >
                                                 </td> -->
                                                     <td>
-                                                        <select class="form-control" name="ref_no" id="ref_no">
+                                                        <select class="form-control select2" name="ref_no" id="ref_no">
                                                             <option value=''>-- Select Reference No --</option>
                                                             <?php 
                                                                 foreach($reference AS $r){
@@ -27,7 +27,7 @@
                                                             <?php } ?>
                                                         </select>
                                                     </td>
-                                                <td><button type="button" onclick="filterPurchase();" class="btn btn-primary btn-block">Filter</button></td>
+                                                <td  width="1%"><button type="button" onclick="filterPurchase();" class="btn btn-primary btn-block">Filter</button></td>
                                                 <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                             </tr>
                                         </table>

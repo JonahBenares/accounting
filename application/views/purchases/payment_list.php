@@ -20,7 +20,7 @@
                                             <tr>
                                                 <td width="5%"></td>
                                                 <td>
-                                                    <select class="form-control" name="reference_number" id="reference_number">
+                                                    <select class="form-control select2" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Reference Number --</option>
                                                         <?php foreach($head AS $r){ ?>
                                                             <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>

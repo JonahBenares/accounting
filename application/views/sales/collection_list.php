@@ -37,7 +37,7 @@
                                                     <input type="text" class="form-control" name="ref_number" id="ref_number" placeholder="Reference Number">
                                                 </td> -->
                                                     <td>
-                                                        <select class="form-control" name="ref_number" id="ref_number">
+                                                        <select class="form-control select2" name="ref_number" id="ref_number">
                                                             <option value=''>-- Select Reference No --</option>
                                                             <?php 
                                                                 foreach($reference AS $r){
