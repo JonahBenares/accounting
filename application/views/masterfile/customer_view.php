@@ -216,6 +216,10 @@
                                             <label>Address</label>
                                             <input type="text" class="form-control" value="<?php echo $det['office_address'];?>" readonly="">
                                         </div>
+                                        <div class="form-group">
+                                            <label>Zip Code</label>
+                                            <input type="text" class="form-control" value="<?php echo $det['zip_code'];?>" readonly="">
+                                        </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">

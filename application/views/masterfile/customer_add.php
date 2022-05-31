@@ -153,6 +153,10 @@
                                             <label>Address</label>
                                             <input type="text"  name="office_address" id="office_address" class="form-control">
                                         </div>
+                                        <div class="form-group">
+                                            <label>Zip code</label>
+                                            <input type="text"  name="zip_code" id="zip_code" class="form-control">
+                                        </div>
                                         <!-- <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
