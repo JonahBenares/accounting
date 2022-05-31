@@ -200,6 +200,8 @@ function calculatePayment(){
         var total = parseFloat(vat);
     }else if(purchase_amount!=0 && vat==0 && ewt==0){
         var total = parseFloat(purchase_amount);
+    }else if(purchase_amount!=0 && vat==0 && ewt!=0){
+        var total = parseFloat(purchase_amount)-parseFloat(ewt);
     }else if(ewt!=0 && vat!=0 && purchase_amount==0){
         var total = parseFloat(vat)-parseFloat(ewt);
     }else if(purchase_amount!=0 && vat!=0 && ewt==0){
