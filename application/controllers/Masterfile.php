@@ -189,6 +189,7 @@ class Masterfile extends CI_Controller {
             "landline"=>$this->input->post('landline'),
             "contact_email"=>$this->input->post('contact_email'),
             "documents_submitted"=>$this->input->post('documents_submitted'),
+            "zip_code"=>$this->input->post('zip_code'),
             "create_date"=>date("Y-m-d H:i:s"),
             "user_id"=>$_SESSION['user_id'],
         );
@@ -234,6 +235,7 @@ class Masterfile extends CI_Controller {
                     'status'=>$part->status,
                     'mobile'=>$part->mobile,
                     'landline'=>$part->landline,
+                    'zip_code'=>$part->zip_code,
                 );
             }
         }else{
@@ -268,6 +270,7 @@ class Masterfile extends CI_Controller {
             "landline"=>$this->input->post('landline'),
             "contact_email"=>$this->input->post('contact_email'),
             "documents_submitted"=>$this->input->post('documents_submitted'),
+            "zip_code"=>$this->input->post('zip_code'),
             "user_id"=>$_SESSION['user_id'],
         );
      
@@ -312,6 +315,7 @@ class Masterfile extends CI_Controller {
                     'status'=>$part->status,
                     'mobile'=>$part->mobile,
                     'landline'=>$part->landline,
+                    'zip_code'=>$part->zip_code,
                 );
             }
         }else{

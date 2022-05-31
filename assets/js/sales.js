@@ -26,6 +26,16 @@ function countPrint(baseurl,sales_details_id){
 }
 
 function collection_process(){
+	var date_collected = document.getElementById("date_collected").value;
+  	var series_number = document.getElementById("series_number").value;
+  	var amount = document.getElementById("amount").value;
+  	if(date_collected==""){
+      	alert('Date Collected must not be empty!');
+  	}  else if (series_number==""){
+      	alert('Series Number must not be empty!');
+  	}  else if (amount==""){
+      	alert('Amount must not be empty!');
+  	}  else {
 	var data = $("#collectiondetails").serialize();
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"sales/save_collection";
@@ -44,6 +54,7 @@ function collection_process(){
 			}
 		});
     }
+	}
 }
 
   function isNumberKey(evt)
