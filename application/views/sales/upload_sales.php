@@ -89,7 +89,7 @@ if(!empty($sales_id)){
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>    
                                                 <th>Item No</th>                                        
-                                                <th>Serial No.</th>
+                                                <th>Series No.</th>
                                                 <th>STL ID / TPShort Name</th>
                                                 <th>Billing ID</th>
                                                 <th>Trading Participant Name</th>
