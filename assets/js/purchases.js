@@ -191,12 +191,12 @@ function savePayment(){
     }
 }
 
-function calculatePayment(){
+/*function calculatePayment(){
     var purchase_amount = document.getElementById("purchase_amount").value;
     var total_calculation = document.getElementById("total_calculation").value;
     var total = parseFloat(purchase_amount) + parseFloat(total_calculation);
     document.getElementById("total_amount").value  = parseFloat(total);
-}
+}*/
 
  var clicks = 0;
 

@@ -39,7 +39,7 @@
                     
                     <div class="form-group">
                         <label>Amount of Purchase</label>
-                        <input type="number" style="text-align:right" onkeyup="calculatePayment()" name="purchase_amount" id="purchase_amount" placeholder="00.00" class="form-control">
+                        <input type="number" style="text-align:right" name="purchase_amount" id="purchase_amount" placeholder="00.00" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -53,8 +53,7 @@
                     </div>
                     <div class="form-group">
                         <label>Total amount </label>
-                        <input type="number" style="text-align:right" name="total_amount" id="total_amount" placeholder="00.00" class="form-control" readonly>
-                        <input type="hidden" name="total_calculation" id="total_calculation" value="<?php echo $p['total_amount']; ?>">
+                        <input type="number" style="text-align:right" name="total_amount" id="total_amount" placeholder="00.00" class="form-control" value="<?php echo $p['total_amount']; ?>" readonly>
                     </div>
                 </div>
             </div>
