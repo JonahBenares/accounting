@@ -33,9 +33,19 @@
                                             <tr>
                                                 <td width="5%"></td>
                                                 
-                                                <td>
+                                                <!-- <td>
                                                     <input type="text" class="form-control" name="ref_number" id="ref_number" placeholder="Reference Number">
-                                                </td>
+                                                </td> -->
+                                                    <td>
+                                                        <select class="form-control" name="ref_number" id="ref_number">
+                                                            <option value=''>-- Select Reference No --</option>
+                                                            <?php 
+                                                                foreach($reference AS $r){
+                                                            ?>
+                                                            <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </td>
                                                 
                                                 <td width="1%">
                                                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
