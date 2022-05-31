@@ -165,9 +165,11 @@ class Purchases extends CI_Controller {
             $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue(),'()');
             $vatables_purchases = trim($vatables_purchases,"-");
             $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue(),'()');
+             $zero_rated_purchases = trim($zero_rated_purchases,"-");
             $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+             $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
             $vat_on_purchases = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
-             $vat_on_purchases = trim($vat_on_purchases,"-");
+            $vat_on_purchases = trim($vat_on_purchases,"-");
             $ewt = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
             $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getOldCalculatedValue(),'()');
             $total_amount = trim($total_amount,"-");
@@ -566,6 +568,7 @@ class Purchases extends CI_Controller {
         $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
         $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
+        $data['zip']=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $billing_id);
         $billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
 
         $month= date("n",strtotime($billing_to));
@@ -584,7 +587,7 @@ class Purchases extends CI_Controller {
         if($zero_rated != 0){
             $amount=$zero_rated;
         }
-        if($zero_rated != 0){
+        if($zero_rated_ecozone != 0){
             $amount=$zero_rated_ecozone;
         }
 

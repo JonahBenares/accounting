@@ -35,7 +35,7 @@
         </div>
         <label class="payee"><?php echo $name; ?></label>
         <label class="address1"><?php echo $address; ?></label>
-        <label class="zip1"></label>
+        <label class="zip1"><?php echo $zip; ?></label>
         <label class="address2"></label>
         <div class="tin2">
            <label class="">008</label> 
