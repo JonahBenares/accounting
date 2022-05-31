@@ -101,5 +101,10 @@
         <script src="<?php echo base_url(); ?>assets/js/page/index.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/custom.js"></script>
+        <link href="<?php echo base_url(); ?>assets/css/select2.min.css" rel="stylesheet" />
+        <script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
+        <script>
+            $('.select2').select2();
+        </script>
     </body>
 </html>
