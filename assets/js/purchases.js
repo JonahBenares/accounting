@@ -209,7 +209,7 @@ function calculatePayment(){
     }else if(purchase_amount!=0 && vat!=0 && ewt!=0){
         var total = (parseFloat(purchase_amount) + parseFloat(vat)) - ewt;
     }
-    document.getElementById("total_amount").value  = parseFloat(total);
+    document.getElementById("total_amount").value  = parseFloat(total).toFixed(2);
 }
 
 function isNumberKey(txt, evt){
