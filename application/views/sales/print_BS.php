@@ -122,7 +122,7 @@
                                 foreach($sub AS $s){ 
                                     if($x <= 5){
                                     $vatable_arraysum[]=$s['vatable_sales'];
-                                    $zerorated_arraysum[]=$s['zero_rated'];
+                                    $zerorated_arraysum[]=$s['zero_rated_sales'];
                                     $total_arraysum[]=$s['total_amount'];
                                     $vat_arraysum[]=$s['vat_on_sales'];
                                     $ewt_arraysum[]=$s['ewt'];
@@ -156,9 +156,13 @@
                             <?php 
                                 $x=1;
                                 foreach($sub AS $s){
+
+                                    $zero_rated = $s['zero_rated_sales'];
                                     if($x <= 5){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated'],2);?></td>
+
+                            <td class="bor-btm" align="right"><?php echo number_format($zero_rated,2);?></td>
+
                             <td></td>
                             <?php } $x++; } ?>
                             <td class="bor-btm" align="right"><?php echo number_format(array_sum($zerorated_arraysum),2);?></td>
@@ -394,7 +398,9 @@
                 <td colspan="9" class="bor-btm"><?php echo $company_name; ?></td>
                 <td></td>
                 <td colspan="3">Invoice No.:</td>
-                <td colspan="5" class="bor-btm"> <?php echo $serial_no;?></td>
+
+                <td colspan="5" class="bor-btm"><?php echo $serial_no;?></td>
+
             </tr>
             <tr>
                 <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
@@ -403,14 +409,16 @@
                 </td>
                 <td></td>
                 <td colspan="3">Statement Date:</td>
+
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td>
+
             </tr>
             <tr>
                 <td></td>
                 <td colspan="3">Billing Period:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($billing_from))." to ".date("M d,Y",strtotime($billing_to));?></td>
             </tr>
-            <tr>
+           <tr>
                 <td colspan="2">TIN:</td>
                 <td colspan="6" class="bor-btm"><?php echo $tin; ?></td>
                 <td colspan="4"></td>
@@ -449,7 +457,7 @@
                                 foreach($sub_second AS $s){ 
                                     if($x >= 6){
                                     $vatable_arraysum_second[]=$s['vatable_sales'];
-                                    $zerorated_arraysum_second[]=$s['zero_rated'];
+                                    $zerorated_arraysum_second[]=$s['zero_rated_sales'];
                                     $total_arraysum_second[]=$s['total_amount'];
                                     $vat_arraysum_second[]=$s['vat_on_sales'];
                                     $ewt_arraysum_second[]=$s['ewt'];
@@ -486,7 +494,7 @@
                                 foreach($sub_second AS $s){
                                     if($x >= 6){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated'],2);?></td>
+                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated_sales'],2);?></td>
                             <td></td>
                             <?php } $x++; } ?>
                             <td class="bor-btm" align="right"><?php echo number_format(array_sum($zerorated_arraysum_second),2);?></td>
