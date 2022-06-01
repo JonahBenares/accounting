@@ -500,7 +500,7 @@
                             <td align="right"><?php echo number_format($s['total_amount'],2);?></td>
                             <td></td>
                             <?php } $x++; } ?>
-                             
+                            <td align="right"><?php echo number_format(array_sum($total_arraysum_second),2);?></td> 
                         </tr>
                         <tr>
                             <td colspan="12"><br></td>
