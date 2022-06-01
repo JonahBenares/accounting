@@ -46,6 +46,7 @@
                     <h3 style="margin:0px;margin-top:5px;font-size: 15px"><?php echo COMPANY_NAME;?></h3>
                     <?php echo ADDRESS;?> <br>
                     <?php echo TELFAX;?> <br>
+                    <?php echo TIN;?> <br>
                     <?php echo ADDRESS_2;?> <br>
                 </td>
                 <td colspan="5"></td>           
