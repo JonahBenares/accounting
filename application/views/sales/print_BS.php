@@ -121,7 +121,7 @@
                                 foreach($sub AS $s){ 
                                     if($x <= 5){
                                     $vatable_arraysum[]=$s['vatable_sales'];
-                                    $zerorated_arraysum[]=$s['zero_rated_sales'];
+                                    $zerorated_arraysum[]=$s['zero_rated'];
                                     $total_arraysum[]=$s['total_amount'];
                                     $vat_arraysum[]=$s['vat_on_sales'];
                                     $ewt_arraysum[]=$s['ewt'];
@@ -157,7 +157,7 @@
                                 foreach($sub AS $s){
                                     if($x <= 5){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated_sales'],2);?></td>
+                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated'],2);?></td>
                             <td></td>
                             <?php } $x++; } ?>
                             <td class="bor-btm" align="right"><?php echo number_format(array_sum($zerorated_arraysum),2);?></td>
@@ -215,7 +215,8 @@
                             <td></td>
                             <?php } $x++; } ?>
                             <?php 
-                                $overall_total=($vatable+$zero+$total+$vat)-$ewt;
+                                //$overall_total=($vatable+$zero+$total+$vat)-$ewt;
+                                $overall_total=($total+$vat)-$ewt;
                             ?>
                             <td class="bor-btm2" align="right"><b><?php echo number_format($overall_total,2);?></b></td> 
                         </tr>
@@ -447,7 +448,7 @@
                                 foreach($sub_second AS $s){ 
                                     if($x >= 6){
                                     $vatable_arraysum_second[]=$s['vatable_sales'];
-                                    $zerorated_arraysum_second[]=$s['zero_rated_sales'];
+                                    $zerorated_arraysum_second[]=$s['zero_rated'];
                                     $total_arraysum_second[]=$s['total_amount'];
                                     $vat_arraysum_second[]=$s['vat_on_sales'];
                                     $ewt_arraysum_second[]=$s['ewt'];
@@ -484,7 +485,7 @@
                                 foreach($sub_second AS $s){
                                     if($x >= 6){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated_sales'],2);?></td>
+                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated'],2);?></td>
                             <td></td>
                             <?php } $x++; } ?>
                             <td class="bor-btm" align="right"><?php echo number_format(array_sum($zerorated_arraysum_second),2);?></td>
@@ -542,7 +543,8 @@
                             <td></td>
                             <?php } $x++; } ?>
                             <?php 
-                                $overall_total2=($vatable2+$zero2+$total2+$vat2)-$ewt2;
+                                //$overall_total2=($vatable2+$zero2+$total2+$vat2)-$ewt2;
+                                $overall_total2=($total2+$vat2)-$ewt2;
                             ?>
                             <td class="bor-btm2" align="right"><b><?php echo number_format($overall_total2,2);?></b></td> 
                         </tr>

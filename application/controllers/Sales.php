@@ -612,6 +612,7 @@ class Sales extends CI_Controller {
             $data['reference_number']=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$p->sales_id);
             $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
             $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
+            $zero_rated= $p->vat_on_sales - $p->ewt;
             $data['sub'][]=array(
                 "sub_participant"=>$p->billing_id,
                 "vatable_sales"=>$p->vatable_sales,
@@ -619,6 +620,7 @@ class Sales extends CI_Controller {
                 "total_amount"=>$p->total_amount,
                 "vat_on_sales"=>$p->vat_on_sales,
                 "ewt"=>$p->ewt,
+                "zero_rated"=>$zero_rated,
             );
             if($count_sub >=1 || $count_sub>=5){
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
@@ -626,9 +628,11 @@ class Sales extends CI_Controller {
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                     $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","billing_id",$billing_id);
                     $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","billing_id",$billing_id);
+                    $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","billing_id",$billing_id);
                     $total_amount=$this->super_model->select_column_where("sales_transaction_details","total_amount","billing_id",$billing_id);
                     $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","billing_id",$billing_id);
                     $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","billing_id",$billing_id);
+                    $zero_rated= $vat_on_sales - $ewt;
                     $data['sub'][]=array(
                         "sub_participant"=>$subparticipant,
                         "vatable_sales"=>$vatable_sales,
@@ -636,6 +640,7 @@ class Sales extends CI_Controller {
                         "total_amount"=>$total_amount,
                         "vat_on_sales"=>$vat_on_sales,
                         "ewt"=>$ewt,
+                        "zero_rated"=>$zero_rated,
                     );
                 }
             }
@@ -655,9 +660,11 @@ class Sales extends CI_Controller {
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                     $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","billing_id",$billing_id);
                     $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","billing_id",$billing_id);
+                    $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","billing_id",$billing_id);
                     $total_amount=$this->super_model->select_column_where("sales_transaction_details","total_amount","billing_id",$billing_id);
                     $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","billing_id",$billing_id);
                     $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","billing_id",$billing_id);
+                    $zero_rated= $vat_on_sales - $ewt;
                     $data['sub_second'][]=array(
                         "sub_participant"=>$subparticipant,
                         "vatable_sales"=>$vatable_sales,
@@ -665,6 +672,7 @@ class Sales extends CI_Controller {
                         "total_amount"=>$total_amount,
                         "vat_on_sales"=>$vat_on_sales,
                         "ewt"=>$ewt,
+                        "zero_rated"=>$zero_rated,
                     );
                 }
             }
