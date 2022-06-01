@@ -61,7 +61,7 @@
                                         <tbody>
                                             <?php 
                                                 foreach($details AS $d){ 
-                                                    if($d['payment_amount']==0 && $d['print_counter']!=0){
+                                                    if($d['payment_amount']==0){
                                             ?>
                                             <tr>
                                                 <td align="center" style="background: #fff;">
