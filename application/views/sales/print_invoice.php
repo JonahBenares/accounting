@@ -101,35 +101,35 @@
 
                                         <tr>
                                             <td colspan="15" align="right">Vatable Sales</td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$vat_sales_peso; ?></td>
+                                            <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_sales_peso,0); ?></td>
                                             <td colspan="1"><?php echo $vat_sales_cents; ?></td>
                                         </tr>
 
                                         <?php if($zero_rated_peso!=0) { ?>
                                          <tr>
                                             <td colspan="15" align="right">Zero Rated</td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$zero_rated_peso; ?></td>
+                                            <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_peso,0); ?></td>
                                             <td colspan="1"><?php echo $zero_rated_cents; ?></td>
                                         </tr>
                                         <?php } ?>
                                         <?php if($zero_rated_ecozones_peso!=0) { ?>
                                         <tr>
                                             <td colspan="15" align="right">Zero Rated Ecozones Sales</td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$zero_rated_ecozones_peso; ?></td>
+                                            <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_ecozones_peso,0); ?></td>
                                             <td colspan="1"><?php echo $zero_rated_ecozones_cents; ?></td>
                                         </tr>
                                         <?php } 
                                         if($vat_peso!=0) { ?>
                                          <tr>
                                             <td colspan="15" align="right">VAT</td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$vat_peso; ?></td>
+                                            <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_peso,0); ?></td>
                                             <td colspan="1"><?php echo $vat_cents; ?></td>
                                         </tr>
                                         <?php }
                                         if($ewt_peso!=0) { ?>
                                         <tr>
                                             <td colspan="15" align="right">EWT</td>
-                                            <td colspan="4" align="center"><?php echo "₱ (".$ewt_peso.")"; ?></td>
+                                            <td colspan="4" align="center"><?php echo "₱ (".number_format($ewt_peso,0).")"; ?></td>
                                             <td colspan="1"><?php echo "(".$ewt_cents.")"; ?></td>
                                         </tr>
                                         <?php } ?>
@@ -157,7 +157,7 @@
                                             <td colspan="15" align="right" class="pr-2">
                                                 <b>TOTAL AMOUNT DUE</b>
                                             </td>
-                                            <td colspan="4" align="center"><?php echo "₱ ".$total_peso; ?></td>
+                                            <td colspan="4" align="center"><?php echo "₱ ".number_format($total_peso,0); ?></td>
                                             <td colspan="1"><?php echo $total_cents; ?></td>
                                         </tr>
                                     </table>
