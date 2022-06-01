@@ -177,13 +177,17 @@ function savePayment(){
     var data = $("#paymentdata").serialize();
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"purchases/save_payment";
+   
     var conf = confirm('Are you sure you want to save this payment?');
+
     if(conf){
+
         $.ajax({
             data: data,
             type: "POST",
             url: redirect,
             success: function(output){
+                
                 window.opener.location=loc+'purchases/payment_list/'+output;
                 window.close();
             }

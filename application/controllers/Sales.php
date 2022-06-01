@@ -626,6 +626,7 @@ class Sales extends CI_Controller {
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                     $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","billing_id",$billing_id);
                     $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","billing_id",$billing_id);
+                    $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","billing_id",$billing_id);
                     $total_amount=$this->super_model->select_column_where("sales_transaction_details","total_amount","billing_id",$billing_id);
                     $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","billing_id",$billing_id);
                     $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","billing_id",$billing_id);
@@ -633,6 +634,7 @@ class Sales extends CI_Controller {
                         "sub_participant"=>$subparticipant,
                         "vatable_sales"=>$vatable_sales,
                         "zero_rated_sales"=>$zero_rated_sales,
+                        "zero_rated_ecozones"=>$zero_rated_ecozones,
                         "total_amount"=>$total_amount,
                         "vat_on_sales"=>$vat_on_sales,
                         "ewt"=>$ewt,
