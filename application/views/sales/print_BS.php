@@ -46,6 +46,7 @@
                     <h3 style="margin:0px;margin-top:5px;font-size: 15px"><?php echo COMPANY_NAME;?></h3>
                     <?php echo ADDRESS;?> <br>
                     <?php echo TELFAX;?> <br>
+                    <?php echo TIN;?> <br>
                     <?php echo ADDRESS_2;?> <br>
                 </td>
                 <td colspan="5"></td>           
@@ -155,9 +156,13 @@
                             <?php 
                                 $x=1;
                                 foreach($sub AS $s){
+
+                                    $zero_rated = $s['zero_rated_sales'];
                                     if($x <= 5){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['zero_rated_sales'],2);?></td>
+
+                            <td class="bor-btm" align="right"><?php echo number_format($zero_rated,2);?></td>
+
                             <td></td>
                             <?php } $x++; } ?>
                             <td class="bor-btm" align="right"><?php echo number_format(array_sum($zerorated_arraysum),2);?></td>
@@ -215,7 +220,8 @@
                             <td></td>
                             <?php } $x++; } ?>
                             <?php 
-                                $overall_total=($vatable+$zero+$total+$vat)-$ewt;
+                                //$overall_total=($vatable+$zero+$total+$vat)-$ewt;
+                                $overall_total=($total+$vat)-$ewt;
                             ?>
                             <td class="bor-btm2" align="right"><b><?php echo number_format($overall_total,2);?></b></td> 
                         </tr>
@@ -382,45 +388,49 @@
                     <hr style="margin-top: 0.4rem;margin-bottom: 1rem;border: 0;border-top: 1px solid #000">
                 </td>
             </tr>
-            <tr>
+           <tr>
                 <td colspan="20" align="center"> 
                     <h3 style="margin:0px">BILLING STATEMENT</h3>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">Customer:</td>
-                <td colspan="9" class="bor-btm">1590 Energy Corporation</td>
+                <td colspan="9" class="bor-btm"><?php echo $company_name; ?></td>
                 <td></td>
                 <td colspan="3">Invoice No.:</td>
-                <td colspan="5" class="bor-btm">514</td>
+
+                <td colspan="5" class="bor-btm"><?php echo $serial_no;?></td>
+
             </tr>
             <tr>
                 <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
                 <td colspan="9" rowspan="2" style="vertical-align:top" class="bor-btm">
-                    907-908 Ayala Life FGU Ctr. Cebu Business Park Luz Cebu City, Cebu City (Capital) Philippines 6000
+                    <?php echo $address;?>
                 </td>
                 <td></td>
                 <td colspan="3">Statement Date:</td>
-                <td colspan="5" class="bor-btm">18/04/2022</td>
+
+                <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td>
+
             </tr>
             <tr>
                 <td></td>
                 <td colspan="3">Billing Period:</td>
-                <td colspan="5" class="bor-btm">Feb 26 - March 25, 2022</td>
+                <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($billing_from))." to ".date("M d,Y",strtotime($billing_to));?></td>
             </tr>
-            <tr>
+           <tr>
                 <td colspan="2">TIN:</td>
-                <td colspan="6" class="bor-btm">007-833-205-000</td>
+                <td colspan="6" class="bor-btm"><?php echo $tin; ?></td>
                 <td colspan="4"></td>
                 <td colspan="3">Due Date:</td>
-                <td colspan="5" class="bor-btm">25/04/2022</td>
+                <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($due_date));?></td>
             </tr>
             <tr>
                 <td colspan="2">STL ID:</td>
-                <td colspan="6" class="bor-btm">1590EC</td>
+                <td colspan="6" class="bor-btm"><?php echo $settlement; ?></td>
                 <td colspan="4"></td>
                 <td colspan="3">Reference:</td>
-                <td colspan="5" class="bor-btm">TS-WF-189F-0000089</td>
+                <td colspan="5" class="bor-btm"><?php echo $reference_number; ?></td>
             </tr>
             <tr>
                 <td colspan="20">
@@ -499,7 +509,7 @@
                             <td align="right"><?php echo number_format($s['total_amount'],2);?></td>
                             <td></td>
                             <?php } $x++; } ?>
-                             
+                            <td align="right"><?php echo number_format(array_sum($total_arraysum_second),2);?></td> 
                         </tr>
                         <tr>
                             <td colspan="12"><br></td>
@@ -542,7 +552,8 @@
                             <td></td>
                             <?php } $x++; } ?>
                             <?php 
-                                $overall_total2=($vatable2+$zero2+$total2+$vat2)-$ewt2;
+                                //$overall_total2=($vatable2+$zero2+$total2+$vat2)-$ewt2;
+                                $overall_total2=($total2+$vat2)-$ewt2;
                             ?>
                             <td class="bor-btm2" align="right"><b><?php echo number_format($overall_total2,2);?></b></td> 
                         </tr>

@@ -556,7 +556,9 @@ class Purchases extends CI_Controller {
     }
 
     public function save_payment(){
-        $purchase_id=$this->input->post('purchase_id');
+
+       
+       $purchase_id=$this->input->post('purchase_id');
         $purchase_detail_id=$this->input->post('purchase_detail_id');
         $payment_date=$this->input->post('payment_date');
         $particulars=$this->input->post('particulars');
@@ -565,9 +567,11 @@ class Purchases extends CI_Controller {
         $vat=$this->input->post('vat');
         $ewt=$this->input->post('ewt');
         $total_amount=$this->input->post('total_amount');
+
         $payment_mode=$this->input->post('customRadioInline1');
         $check_no=$this->input->post('check_no');
         $cv_no=$this->input->post('cv_no');
+       
         $check_date=$this->input->post('check_date');
         $pcv=$this->input->post('pcv');
         $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$purchase_id);
@@ -589,6 +593,8 @@ class Purchases extends CI_Controller {
             'create_date'=>date("Y-m-d h:i:s"),
             'user_id'=>$_SESSION['user_id'],
         );
+
+     
         $this->super_model->insert_into("payment", $data_insert);
         echo $reference_number;
     }
