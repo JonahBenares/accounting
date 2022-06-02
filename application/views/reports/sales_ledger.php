@@ -25,14 +25,10 @@
                                                 </select>
                                             </td>
                                             <td width="20%">
-                                                <select class="form-control">
-                                                    <option>-- Select Month --</option>
-                                                </select>
+                                                <input placeholder="Date From" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
                                             <td width="20%">
-                                                <select class="form-control">
-                                                    <option>-- Select Year --</option>
-                                                </select>
+                                                <input placeholder="Date To" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
                                             <td width="10%"><button class="btn btn-primary btn-block">Filter</button></td>
                                         </tr>

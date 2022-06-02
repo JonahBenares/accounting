@@ -24,10 +24,11 @@
                                                     <option>-- Select Participant --</option>
                                                 </select>
                                             </td>
-                                            <td>
-                                                <select class="form-control">
-                                                    <option>-- Select Year --</option>
-                                                </select>
+                                            <td width="20%">
+                                                <input placeholder="Date From" class="form-control" type="text" onfocus="(this.type='date')" id="date">
+                                            </td>
+                                            <td width="20%">
+                                                <input placeholder="Date To" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
                                             <td width="1%"><button class="btn btn-primary">Filter</button></td>
                                         </tr>
