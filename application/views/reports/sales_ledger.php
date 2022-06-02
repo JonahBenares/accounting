@@ -16,20 +16,25 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-6 offset-lg-3">
+                                <div class="col-lg-10 offset-lg-1">
                                     <table width="100%">
                                         <tr>
-                                            <td width="40%">
+                                            <td width="50%">
+                                                <select class="form-control">
+                                                    <option>-- Select Transaction No --</option>
+                                                </select>
+                                            </td>
+                                            <td width="20%">
                                                 <select class="form-control">
                                                     <option>-- Select Month --</option>
                                                 </select>
                                             </td>
-                                            <td width="40%">
+                                            <td width="20%">
                                                 <select class="form-control">
                                                     <option>-- Select Year --</option>
                                                 </select>
                                             </td>
-                                            <td><button class="btn btn-primary">Filter</button></td>
+                                            <td width="10%"><button class="btn btn-primary btn-block">Filter</button></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -40,19 +45,24 @@
                                 <thead>
                                     <tr>
                                         <td class="td-30 td-head">Date</td>
+                                        <td class="td-30 td-head">Participant Name</td>
                                         <td class="td-30 td-head">Description</td> 
-                                        <td class="td-30 td-head"></td>  
+                                        <td class="td-30 td-head">Billing</td>  
+                                        <td class="td-30 td-head">Collection</td>  
                                         <td class="td-30 td-head">Vatable Sales</td> 
                                         <td class="td-30 td-head">Zero-Rated Sales</td>    
                                         <td class="td-30 td-head">Output Vat</td>
-                                        <td class="td-30 td-head">Total</td>
+                                        <td class="td-30 td-head">Balance</td>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>                                        
                                         <td class="td-30">14/03/2022</td>
+                                        <td class="td-30">CENPRI</td>
                                         <td class="td-30">Jan26-feb25, 2022</td>
                                         <td class="td-30">Billing</td>
+                                        <td class="td-30">Collection</td>
                                         <td class="td-30" align="right">50,000</td>
                                         <td class="td-30" align="right"> </td>
                                         <td class="td-30" align="right">6,000.00</td>
@@ -60,15 +70,17 @@
                                     </tr>
                                     <tr>                                        
                                         <td class="td-30">14/03/2022</td>
+                                        <td class="td-30">CENPRI</td>
                                         <td class="td-30">Jan26-feb25, 2022</td>
                                         <td class="td-30">Billing</td>
+                                        <td class="td-30">Collection</td>
                                         <td class="td-30" align="right">50,000</td>
                                         <td class="td-30" align="right"> </td>
                                         <td class="td-30" align="right">6,000.00</td>
                                         <td class="td-30" align="right"> 56,000.00 </td>
                                     </tr>
-                                     <tr>
-                                        <td class="td-30 td-yellow" colspan="3">Total</td>
+                                    <tr>
+                                        <td class="td-30 td-yellow" colspan="5">Total</td>
                                         <td class="td-30 td-yellow" align="right">50,000</td>
                                         <td class="td-30 td-yellow" align="right"> </td>
                                         <td class="td-30 td-yellow" align="right">6,000.00</td>
