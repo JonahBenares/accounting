@@ -1,3 +1,5 @@
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/reports.js"></script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -19,20 +21,32 @@
                                 <div class="col-lg-10 offset-lg-1">
                                     <table width="100%">
                                         <tr>
-                                            <td width="45%">
-                                                <input placeholder="Reference Number" class="form-control" type="text" id="">
+                                            <td width="15%">
+                                                <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
-                                            <td width="45%">
-                                                <select class="form-control">
-                                                    <option>-- Select Participant --</option>
+                                            <td width="15%">
+                                                <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
+                                            </td>
+                                            <td width="30%">
+                                                <input placeholder="Reference Number" class="form-control" type="text" id="ref_no" name="ref_no">
+                                            </td>
+                                            <td width="30%">
+                                                <select class="form-control" id="participant_id" name="participant_id">
+                                                    <option value="">-Choose Participant-</option>
+                                                    <?php foreach($participant AS $p){ ?>
+                                                        <option value="<?php echo $p->participant_id; ?>"><?php echo $p->participant_name; ?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </td>
-                                            <td><button class="btn btn-primary">Filter</button></td>
+                                            <td width="1%">
+                                                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
+                                                    <input type='button' class="btn btn-primary"  onclick="filter_sales()" value="Filter"></td>
+                                            <td width="5%"></td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
-                            
+                             <?php if(!empty($ref_no) || !empty($participant_id)){ ?>
                             <hr class="m-bs-0">
                             <table class="table-borsdered" width="100%">
                                 <tr>
@@ -56,255 +70,28 @@
                                         <td>Description</td>     
                                         <td>Vatable Sales</td>   
                                         <td>Zero-Rated Sales</td>    
-                                        <td>Output Vat </td> 
+                                        <td>Vat on sales </td> 
                                         <td>Withholding Tax</td>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php if(!empty($sales)){
+                                        foreach($sales AS $s) {?>
                                     <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
+                                        <td><?php echo $s['transaction_date']; ?></td>
+                                        <td><?php echo $s['tin']; ?></td>
+                                        <td><?php echo $s['participant_name']; ?></td>
+                                        <td><?php echo $s['address']; ?></td>
+                                        <td><?php echo $s['billing_from']." - ".$s['billing_from']; ?></td>
+                                        <td><?php echo $s['vatable_sales']; ?></td>
+                                        <td><?php echo $s['zero_rated_sales']; ?></td>
+                                        <td><?php echo $s['vat_on_sales']; ?></td>
+                                        <td><?php echo $s['wht_agent']; ?></td>
                                     </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
-                                    <tr>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                        <td>sample</td>
-                                    </tr>
+                                    <?php } }?>
                                 </tbody>
                             </table>
+                           <?php } ?>
                         </div>
                     </div>
                 </div>
