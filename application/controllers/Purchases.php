@@ -739,4 +739,10 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/print_2307test');
     }
 
+    public function pay_all(){
+        $this->load->view('template/header');
+        $this->load->view('purchases/pay_all');
+        $this->load->view('template/footer');
+    }
+
 }

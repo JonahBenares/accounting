@@ -38,6 +38,12 @@
                                 </div>
                                 <hr>
                                 <?php if(!empty($details) && !empty($ref_no)){ ?>
+                                <div class="row">
+                                    <div class="col-lg-4 offset-lg-4">
+                                        <a style="color:#fff" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>')">Pay All</a>
+                                    </div>
+                                </div>   
+                                <br> 
                                 <div class="table-responsive" id="payment-list">
                                     <table class="table-bordered table table-hover" id="table-1" style="width:200%; ">
                                         <thead>
