@@ -967,9 +967,9 @@
 .breadcrumb .breadcrumb-item i{margin-right:5px}
 .accordion{display:inline-block;width:100%;margin-bottom:10px}
 .accordion .accordion-header,.accordion .accordion-body{padding:10px 15px}
-.accordion .accordion-header{background-color:#f9f9f9;border-radius:3px;cursor:pointer;transition:all 0.5s}
+.accordion .accordion-header{border-radius:3px;cursor:pointer;transition:all 0.5s}/*background-color:#f9f9f9;*/
 .accordion .accordion-header h4{line-height:1;margin:0;font-size:14px;font-weight:700}
-.accordion .accordion-header:hover{background-color:#f2f2f2}
+/*.accordion .accordion-header:hover{background-color:#f2f2f2}*/
 .accordion .accordion-header[aria-expanded="true"]{box-shadow:0 2px 6px #acb5f6;background-color:#6777ef;color:#fff}
 .accordion .accordion-body{line-height:24px}
 .popover{box-shadow:0 4px 25px 0 rgba(0,0,0,0.1);border-color:transparent}
@@ -2280,4 +2280,7 @@ page[size="OR"] {
 }
 .font-blue{
 	color: blue;
+}
+.td-vertical{
+	vertical-align: top!important;
 }
