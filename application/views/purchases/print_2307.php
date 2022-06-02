@@ -17,8 +17,6 @@
     </center>
     <br>
 </div>
-<br>
-<br>
 <center>
 <div style="padding-bottom:90px;">
     <div id="contentPDF">

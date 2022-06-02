@@ -684,8 +684,8 @@ class Sales extends CI_Controller {
                 }
             }
         }
-        $this->load->view('sales/print_BS',$data);
         $this->load->view('template/print_head');
+        $this->load->view('sales/print_BS',$data);
         
     }
 

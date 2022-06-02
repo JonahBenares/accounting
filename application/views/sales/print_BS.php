@@ -3,18 +3,19 @@
       window.history.back();
     }
 </script>
-<div class="animated fadeInDown" style="margin-top:10px" id="printbutton">
+<div style="margin-top:10px" id="printbutton">
     <center>
-        <a onclick="goBack()" class="btn btn-warning text-white btn-w100 btn-round">Back</a>
-        <a href="#" class="btn btn-success btn-w100 btn-round" onclick="window.print()">Print</a>
-        <a href='<?php echo base_url(); ?>sales/print_invoice/<?php echo $sales_detail_id ?>' class="btn btn-primary btn-w100 btn-round">Invoice</a> 
+        <button onclick="goBack()" class="btn btn-warning ">Back</button>
+        <button href="#" class="btn btn-success " onclick="window.print()">Print</button>
+        <a href='<?php echo base_url(); ?>sales/print_invoice/<?php echo $sales_detail_id ?>' class="btn btn-primary button">Invoice</a> 
         <!-- <button class="btn btn-danger btn-fill"onclick="printDiv('printableArea')" style="margin-bottom:5px;width:80px;"></span> Print</button><br> -->
+        <br>
+        <br>
     </center>
-    <br>
 </div>
 <page size="A4">
     <div style="padding:30px">
-        <table width="100%" class="table-bor table-borsdered" style="border-collapse: collapse;">
+        <table width="100%" class="table-bor table-bordsered" style="border-collapse: collapse;">
             <tr>
                 <td width="5%"></td>
                 <td width="5%"></td>
@@ -42,14 +43,14 @@
                 <td colspan="4">
                     <img class="logo-print" src="<?php echo base_url().LOGO;?>">   
                 </td>
-                <td colspan="10" align="center" style="padding-left:10px">
+                <td colspan="11" align="center" style="padding-left:10px">
                     <h3 style="margin:0px;margin-top:5px;font-size: 15px"><?php echo COMPANY_NAME;?></h3>
                     <?php echo ADDRESS;?> <br>
                     <?php echo TELFAX;?> <br>
                     <?php echo TIN;?> <br>
                     <?php echo ADDRESS_2;?> <br>
                 </td>
-                <td colspan="5"></td>           
+                <td colspan="4"></td>           
             </tr>
             <tr>
                 <td colspan="20">
@@ -268,9 +269,50 @@
                 <td colspan="20"><br></td>
             </tr>
             <tr>
-                <td colspan="20"><br></td>
+                <td colspan="20"><br><br><br></td>
             </tr>
             <tr>
+                <td colspan="20">
+                    <table width="100%">
+                        <tr>
+                            <td colspan="2" style="background:#e5e5e5; border-right:5px solid #fff"><b>Prepared by:</b></td>
+                            <td colspan="6" style="background:#e5e5e5; border-right:5px solid #fff"><b>Checked by:</b></td>
+                            <td colspan="2" style="background:#e5e5e5;"><b>Noted by:</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="20"><br><br></td>
+                        </tr>
+                        <tr>
+                            <td width="19" align="center" class="bor-btm font-10">CELINA TIGNERO</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="bor-btm font-10">JEOMAR DELOS SANTOS</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="bor-btm font-10">CRISTY CESAR</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="bor-btm font-10">ZYNDYRYN PASTERA</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="bor-btm font-10">MILA ARANA</td>
+                            <td width="1%"></td>
+                        </tr>
+                        <tr>
+                            <td width="19" align="center" class="font-11">Billing</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="font-11">EMG Supervisor</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="font-11">Accounting</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="font-11">Finance</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="font-11">General Manager</td>
+                            <td width="1%"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"><br><br><br></td>
+            </tr>
+            <!-- <tr>
                 <td colspan="20" style="padding:5px">
                     <table width="100%">
                         <tr>
@@ -340,7 +382,7 @@
                         </tr>
                     </table>
                 </td>
-            </tr>
+            </tr> -->
         </table>
     </div>
 </page>
@@ -375,13 +417,14 @@
                 <td colspan="4">
                     <img class="logo-print" src="<?php echo base_url().LOGO;?>">   
                 </td>
-                <td colspan="10" align="center" style="padding-left:10px">
+                <td colspan="11" align="center" style="padding-left:10px">
                     <h3 style="margin:0px;margin-top:5px;font-size: 15px"><?php echo COMPANY_NAME;?></h3>
                     <?php echo ADDRESS;?> <br>
                     <?php echo TELFAX;?> <br>
+                    <?php echo TIN;?> <br>
                     <?php echo ADDRESS_2;?> <br>
                 </td>
-                <td colspan="5"></td>           
+                <td colspan="4"></td>           
             </tr>
             <tr>
                 <td colspan="20">
@@ -595,9 +638,50 @@
                 <td colspan="20"><br></td>
             </tr>
             <tr>
-                <td colspan="20"><br></td>
+                <td colspan="20"><br><br><br></td>
             </tr>
             <tr>
+                <td colspan="20">
+                    <table width="100%">
+                        <tr>
+                            <td colspan="2" style="background:#e5e5e5; border-right:5px solid #fff"><b>Prepared by:</b></td>
+                            <td colspan="6" style="background:#e5e5e5; border-right:5px solid #fff"><b>Checked by:</b></td>
+                            <td colspan="2" style="background:#e5e5e5;"><b>Noted by:</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="20"><br><br></td>
+                        </tr>
+                        <tr>
+                            <td width="19" align="center" class="bor-btm font-10">CELINA TIGNERO</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="bor-btm font-10">JEOMAR DELOS SANTOS</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="bor-btm font-10">CRISTY CESAR</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="bor-btm font-10">ZYNDYRYN PASTERA</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="bor-btm font-10">MILA ARANA</td>
+                            <td width="1%"></td>
+                        </tr>
+                        <tr>
+                            <td width="19" align="center" class="font-11">Billing</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="font-11">EMG Supervisor</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="font-11">Accounting</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="font-11">Finance</td>
+                            <td width="1%"></td>
+                            <td width="19" align="center" class="font-11">General Manager</td>
+                            <td width="1%"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"><br><br><br></td>
+            </tr>
+            <!-- <tr>
                 <td colspan="20" style="padding:5px">
                     <table width="100%">
                         <tr>
@@ -667,7 +751,8 @@
                         </tr>
                     </table>
                 </td>
-            </tr>
+            </tr> -->
+
         </table>
     </div>
 </page>
