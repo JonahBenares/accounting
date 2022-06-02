@@ -2278,4 +2278,6 @@ page[size="OR"] {
 .td-30{
 	height: 30px!important;
 }
-
+.font-blue{
+	color: blue;
+}

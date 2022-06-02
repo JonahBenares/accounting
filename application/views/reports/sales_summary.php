@@ -19,13 +19,10 @@
                                 <div class="col-lg-10 offset-lg-1">
                                     <table width="100%">
                                         <tr>
-                                            <td width="20%">
-                                                <input placeholder="Date From" class="form-control" type="text" onfocus="(this.type='date')" id="date">
+                                            <td width="45%">
+                                                <input placeholder="Reference Number" class="form-control" type="text" id="">
                                             </td>
-                                            <td width="20%">
-                                                <input placeholder="Date To" class="form-control" type="text" onfocus="(this.type='date')" id="date">
-                                            </td>
-                                            <td>
+                                            <td width="45%">
                                                 <select class="form-control">
                                                     <option>-- Select Participant --</option>
                                                 </select>
@@ -36,6 +33,18 @@
                                 </div>
                             </div>
                             
+                            <hr class="m-bs-0">
+                            <table class="table-borsdered" width="100%">
+                                <tr>
+                                    <td width="10%"></td>
+                                    <td width="10%">Total Amount</td>
+                                    <td class="font-blue">:&nbsp;<b>19928.00</b></td>
+                                    <td width="10%">Total Collected</td>
+                                    <td class="font-blue">:&nbsp;<b>19928.00</b></td>
+                                    <td width="10%">Balance</td>
+                                    <td class="font-blue">:&nbsp;<b>19928.00</b></td>
+                                </tr>
+                            </table>
                             <hr>
                             <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
                                 <thead>

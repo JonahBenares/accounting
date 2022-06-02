@@ -86,7 +86,6 @@
                                                 <center><span class="fas fa-bars"></span></center>
                                             </th>
                                             <th>Item No.</th>
-                                            <th>Serial No.</th>
                                             <th>STL ID / TPShort Name</th>
                                             <th>Billing ID</th>
                                             <th>Facility Type </th>
@@ -143,7 +142,7 @@
                                                 ?> -->
                                             </td>
                                             <td><?php echo $x; ?></td>
-                                            <td><?php echo $d['serial_no'];?></td>
+                                            <!-- <td><?php echo $d['serial_no'];?></td> -->
                                             <td><?php echo $d['short_name'];?></td>
                                             <td><?php echo $d['billing_id']; ?></td>
                                             <td><?php echo $d['facility_type']; ?></td>
