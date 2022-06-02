@@ -1,6 +1,9 @@
 function add_payment(baseurl,purchase_id,purchase_detail_id) {
     window.open(baseurl+"purchases/add_payment/"+purchase_id+'/'+purchase_detail_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
+function pay_all(baseurl) {
+    window.open(baseurl+"purchases/pay_all/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+}
 
 function add_details_wesm(baseurl,purchase_details_id) {
     /*var redirect = baseurl+"purchases/count_print";

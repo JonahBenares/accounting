@@ -28,9 +28,10 @@
                         </div>
                         <div class="card-body">
                             <div class="table-respsonsive">
-                                <table class="table table-striped table-hover" id="save-stage"  style="width:100%;">
+                                <table class="table table-hover" id="save-stage"  style="width:100%;">
                                     <thead>
                                         <tr>
+                                            <!-- <th></th> -->
                                             <th>Participant Name</th>
                                             <th>Billing ID</th>
                                             <th>Settlement ID</th>
@@ -42,15 +43,40 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-
+                                        $x = 1;
                                         if(!empty($participant)){
                                         foreach($participant AS $p){ ?>
                                         <tr>
-                                            <td><?php echo $p['participant_name'];?></td>
-                                            <td><?php echo $p['billing_id'];?></td>
-                                            <td><?php echo $p['settlement_id'];?></td>
-                                            <td><?php echo $p['category'];?></td>
-                                            <td align="center">
+                                            <!-- <td>
+                                                <?php echo $x; ?>
+                                            </td> -->
+                                            <td class="td-vertical">
+                                                <div id="accordion">
+                                                    <div class="accordion mb-0">
+                                                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-<?php echo $x; ?>">
+                                                            <h4><?php echo $p['participant_name'];?></h4>
+                                                        </div>
+                                                        <div class="accordion-body collapse" id="panel-body-<?php echo $x; ?>" data-parent="#accordion">
+                                                            <table class="" width="100%">
+                                                                <tr>
+                                                                    <td class="p-0">Sub Company 1</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="p-0">Sub Company 2</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="p-0">Sub Company 3</td>
+                                                                </tr>
+                                                            </table>
+                                                            <hr class="mb-0">
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </td>
+                                            <td class="td-vertical"><?php echo $p['billing_id'];?> </td>
+                                            <td class="td-vertical"><?php echo $p['settlement_id'];?></td>
+                                            <td class="td-vertical"><?php echo $p['category'];?></td>
+                                            <td class="td-vertical" align="center">
                                                 <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
@@ -65,8 +91,12 @@
                                                 </div>
                                             </td>  
                                         </tr>
-                                        <?php } 
+                                        <?php 
+                                         $x++;
+                                        } 
+
                                         }
+
                                         ?>
                                     </tbody>
                                 </table>
