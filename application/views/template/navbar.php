@@ -225,6 +225,12 @@
                 </a>
             </li>
             <li class="dropdown">
+                <a href="<?php echo base_url(); ?>sales/collected_list" class="nav-link">
+                    <i data-feather="layers"></i>
+                    <span>Collected</span>
+                </a>
+            </li>
+            <li class="dropdown">
                 <a href="<?php echo base_url(); ?>sales/sales_wesm" class="nav-link">
                     <i data-feather="list"></i>
                     <span>WESM Transaction</span>
@@ -241,6 +247,12 @@
                 <a href="<?php echo base_url(); ?>purchases/payment_list" class="nav-link">
                     <i data-feather="dollar-sign"></i>
                     <span>Payment</span>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="<?php echo base_url(); ?>purchases/paid_list" class="nav-link">
+                    <i data-feather="dollar-sign"></i>
+                    <span>Paid</span>
                 </a>
             </li>
             <li class="dropdown">

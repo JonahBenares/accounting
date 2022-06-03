@@ -222,6 +222,41 @@ class Sales extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function collected_list(){
+        $ref_no=$this->uri->segment(3);
+        $data['ref_no'] = $ref_no;
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['sales'] = $this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.date_collected,cd.sales_id,cd.sales_details_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,std.company_name,std.short_name,std.billing_id FROM collection_details cd INNER JOIN sales_transaction_head sh ON cd.sales_id=sh.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sh.saved='1' AND sh.reference_number='$ref_no'");
+        $data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/collected_list', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function update_seriesno(){
+        $ref_no=$this->input->post('ref_no');
+        $collection_id=$this->input->post('collection_id');
+        $new_series=$this->input->post('series_number');
+        $old_series=$this->input->post('old_series_no');
+        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id'") AS $check){
+            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!=''");
+            if($count==0){
+                $old_series_insert = $old_series;
+            }else{
+                $old_series_insert = $old_series.", ".$check->old_series_no;
+            }
+        }
+
+        $data_update = array(
+            'series_number'=>$new_series,
+            'old_series_no'=>$old_series_insert,
+        );
+
+        $this->super_model->update_where("collection_details", $data_update, "collection_id", $collection_id);
+        echo $ref_no;
+    }
+
     public function save_collection(){
 
          if(empty($this->input->post('vat'))){

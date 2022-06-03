@@ -196,6 +196,27 @@ function collection_filter() {
 
 }
 
+function collected_filter() {
+	 var ref_number = document.getElementById("ref_number").value; 
+	  var loc= document.getElementById("baseurl").value;
+	  window.location=loc+'sales/collected_list/'+ref_number;
+
+}
+
+function saveSeries(){
+	var data = $("#update").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/update_seriesno";
+    $.ajax({
+        data: data,
+        type: "POST",
+        url: redirect,
+        success: function(output){
+        	window.location=loc+'sales/collected_list/'+output;  
+        }
+    });  
+}
+
 function saveBS(){
     var sales_detail_id = document.getElementById("sales_detail_id").value; 
     var serial_no = document.getElementById("serial_no").value; 
@@ -227,3 +248,12 @@ function filterSales(){
 	var loc= document.getElementById("baseurl").value;
 	window.location=loc+'sales/sales_wesm/'+ref_no;          
 }
+
+$(document).on("click", "#seriesupdate", function () {
+	 var collection_id = $(this).attr("data-id");
+	 var series_number = $(this).attr("data-name");
+	 $("#collection_id").val(collection_id);
+	 $("#series_number").val(series_number);
+	 $("#old_series_no").val(series_number);
+
+});

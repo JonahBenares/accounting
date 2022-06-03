@@ -149,7 +149,7 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(4);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->select_all_order_by("purchase_transaction_head","reference_number","ASC");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql="";
         if($ref_no!='null' && $participant=='null'){
@@ -196,7 +196,7 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(4);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->select_all_order_by("sales_transaction_head","reference_number","ASC");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql="";
         if($ref_no!='null' && $participant=='null'){
@@ -214,7 +214,7 @@ class Reports extends CI_Controller {
         }else {
             $sql.= "";
         }
-        
+
         $query=substr($sql,0,-3);
         $data['total']=0;
         foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $s){
