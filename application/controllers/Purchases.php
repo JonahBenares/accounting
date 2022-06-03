@@ -527,6 +527,48 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/payment_list',$data);
         $this->load->view('template/footer');
     }
+
+    public function paid_list(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $ref_no=$this->uri->segment(3);
+        $data['ref_no']=$ref_no;
+        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        foreach($this->super_model->custom_query("SELECT * FROM payment p INNER JOIN purchase_transaction_details pd ON p.purchase_detail_id=pd.purchase_detail_id INNER JOIN purchase_transaction_head ph ON p.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
+            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$d->purchase_detail_id);
+            $data['details'][]=array(
+                'purchase_detail_id'=>$d->purchase_detail_id,
+                'purchase_id'=>$d->purchase_id,
+                'payment_date'=>$d->payment_date,
+                'company_name'=>$d->particulars,
+                'purchase_mode'=>$d->purchase_mode,
+                'purchase_amount'=>$d->purchase_amount,
+                'vat'=>$d->vat,
+                'ewt'=>$d->ewt,
+                'total_amount'=>$d->total_amount,
+                'payment_mode'=>$d->payment_mode,
+                'facility_type'=>$d->facility_type,
+                'wht_agent'=>$d->wht_agent,
+                'ith_tag'=>$d->ith_tag,
+                'non_vatable'=>$d->non_vatable,
+                'zero_rated'=>$d->zero_rated,
+                'vatables_purchases'=>$d->vatables_purchases,
+                'vat_on_purchases'=>$d->vat_on_purchases,
+                'zero_rated_purchases'=>$d->zero_rated_purchases,
+                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                'serial_no'=>$d->serial_no,
+                'reference_number'=>$d->reference_number,
+                'transaction_date'=>$d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'due_date'=>$d->due_date,
+                'print_counter'=>$d->print_counter
+            );
+        }
+        $this->load->view('purchases/paid_list',$data);
+        $this->load->view('template/footer');
+    }
     
     public function add_payment(){
         $purchase_id=$this->uri->segment(3);
