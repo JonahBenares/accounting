@@ -144,19 +144,97 @@ class Reports extends CI_Controller {
     }
 
 
-    public function ewt_summary()
-    {
+    public function ewt_summary(){
+        $ref_no=$this->uri->segment(3);
+        $participant=$this->uri->segment(4);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/ewt_summary');
+        $data['reference_no']=$this->super_model->select_all_order_by("purchase_transaction_head","reference_number","ASC");
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $sql="";
+        if($ref_no!='null' && $participant=='null'){
+           $sql.= " AND pth.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $participant!='null'){
+            $sql.= " AND pth.reference_number = '$ref_no' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($participant!='null' && $ref_no=='null'){
+            $sql.= " AND ptd.billing_id = '$participant' AND";
+        }else if($participant!='null' && $ref_no!='null'){
+            $sql.= " ptd.billing_id = '$participant' AND";
+        }else {
+            $sql.= "";
+        }
+
+        $query=substr($sql,0,-3);
+        $data['total']=0;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE saved='1' AND ewt!='0' $query") AS $s){
+            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
+            $total_amount[]=$s->total_amount;
+            $data['total']=array_sum($total_amount);
+            $data['purchase'][]=array(
+                'transaction_date'=>$s->transaction_date,
+                'tin'=>$tin,
+                'participant_name'=>$company_name,
+                'address'=>$registered_address,
+                'wht_agent'=>$s->wht_agent,
+                'billing_from'=>$s->billing_from,
+                'billing_to'=>$s->billing_to,
+            );
+
+        }
+        $this->load->view('reports/ewt_summary',$data);
         $this->load->view('template/footer');
     }
 
-    public function cwht_summary()
-    {
+    public function cwht_summary(){
+        $ref_no=$this->uri->segment(3);
+        $participant=$this->uri->segment(4);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/cwht_summary');
+        $data['reference_no']=$this->super_model->select_all_order_by("sales_transaction_head","reference_number","ASC");
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $sql="";
+        if($ref_no!='null' && $participant=='null'){
+           $sql.= " AND sth.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $participant!='null'){
+            $sql.= " AND sth.reference_number = '$ref_no' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($participant!='null' && $ref_no=='null'){
+            $sql.= " AND std.billing_id = '$participant' AND";
+        }else if($participant!='null' && $ref_no!='null'){
+            $sql.= " std.billing_id = '$participant' AND";
+        }else {
+            $sql.= "";
+        }
+        
+        $query=substr($sql,0,-3);
+        $data['total']=0;
+        foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $s){
+            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
+            $total_amount[]=$s->total;
+            $data['total']=array_sum($total_amount);
+            $data['sales'][]=array(
+                'transaction_date'=>$s->date_collected,
+                'tin'=>$tin,
+                'participant_name'=>$company_name,
+                'address'=>$registered_address,
+                'wht_agent'=>$s->wht_agent,
+                'billing_from'=>$s->billing_from,
+                'billing_to'=>$s->billing_to,
+            );
+
+        }
+        $this->load->view('reports/cwht_summary',$data);
         $this->load->view('template/footer');
     }
 
