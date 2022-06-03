@@ -217,7 +217,7 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-3);
         $data['total']=0;
-        foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $s){
+        foreach($this->super_model->custom_query("SELECT cd.ewt,cd.date_collected,std.billing_id,sth.billing_from,sth.billing_to FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
