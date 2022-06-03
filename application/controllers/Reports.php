@@ -174,14 +174,14 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
-            $total_amount[]=$s->total_amount;
+            $total_amount[]=$s->ewt;
             $data['total']=array_sum($total_amount);
             $data['purchase'][]=array(
                 'transaction_date'=>$s->transaction_date,
                 'tin'=>$tin,
                 'participant_name'=>$company_name,
                 'address'=>$registered_address,
-                'wht_agent'=>$s->wht_agent,
+                'ewt'=>$s->ewt,
                 'billing_from'=>$s->billing_from,
                 'billing_to'=>$s->billing_to,
             );
@@ -221,14 +221,14 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
-            $total_amount[]=$s->total;
+            $total_amount[]=$s->ewt;
             $data['total']=array_sum($total_amount);
             $data['sales'][]=array(
                 'transaction_date'=>$s->date_collected,
                 'tin'=>$tin,
                 'participant_name'=>$company_name,
                 'address'=>$registered_address,
-                'wht_agent'=>$s->wht_agent,
+                'ewt'=>$s->ewt,
                 'billing_from'=>$s->billing_from,
                 'billing_to'=>$s->billing_to,
             );

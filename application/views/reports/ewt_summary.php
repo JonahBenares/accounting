@@ -73,7 +73,7 @@
                                         <td><?php echo $pu['participant_name'];?></td>
                                         <td><?php echo $pu['address'];?></td>
                                         <td><?php echo date("F d,Y",strtotime($pu['billing_from']))." - ".date("F d,Y",strtotime($pu['billing_to']));?></td>
-                                        <td align="center"><?php echo $pu['wht_agent'];?></td>
+                                        <td align="center"><?php echo number_format($pu['ewt'],2);?></td>
                                     </tr>
                                     <?php } } ?>
                                 </tbody>
