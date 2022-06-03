@@ -67,7 +67,7 @@
                                         <tbody>
                                             <?php 
                                                 foreach($details AS $d){ 
-                                                    if($d['payment_amount']==0){
+                                                    if($d['total_amount']!=$d['total_pay']){
                                             ?>
                                             <tr>
                                                 <td align="center" style="background: #fff;">

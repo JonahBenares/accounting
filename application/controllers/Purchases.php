@@ -497,11 +497,13 @@ class Purchases extends CI_Controller {
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
             $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$d->purchase_detail_id);
+            $total_pay=$this->super_model->select_column_where("payment","total_amount","purchase_detail_id",$d->purchase_detail_id);
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
                 'company_name'=>$company_name,
                 'payment_amount'=>$payment_amount,
+                'total_pay'=>$total_pay,
                 'short_name'=>$d->short_name,
                 'billing_id'=>$d->billing_id,
                 'facility_type'=>$d->facility_type,
