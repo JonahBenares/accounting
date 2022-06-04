@@ -105,3 +105,31 @@ function filter_purchases() {
       window.location=loc+'reports/purchases_summary/'+ref+'/'+part+'/'+from+'/'+to;
 
 }
+
+function filter_purchasesledger() {
+     var ref_no = document.getElementById("ref_no").value; 
+     var from = document.getElementById("from").value; 
+     var to = document.getElementById("to").value; 
+
+    if(ref_no!=''){
+        ref=ref_no;
+    }else{
+        ref='null';
+    }
+
+    if(from!=''){
+        from=from;
+    }else{
+        from='null';
+    }
+
+    if(to!=''){
+        to=to;
+    }else{
+        to='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/purchases_ledger/'+ref+'/'+from+'/'+to;
+
+}

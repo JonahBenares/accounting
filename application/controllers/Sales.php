@@ -213,7 +213,42 @@ class Sales extends CI_Controller {
         $ref_no=$this->uri->segment(3);
         $data['ref_no'] = $ref_no;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
-        $data['sales'] = $this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0' AND balance!='0'");
+        /*$data['sales'] = $this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0' AND balance!='0'");*/
+
+        foreach($this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0' AND balance!='0'") AS $p){
+            $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+            $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
+            $data['sales'][]=array(
+                "company_name"=>$p->company_name,
+                "sales_id"=>$p->sales_id,
+                "sales_detail_id"=>$p->sales_detail_id,
+                "billing_id"=>$p->billing_id,
+                "short_name"=>$p->short_name,
+                "vatable_sales"=>$p->vatable_sales,
+                "balance"=>$p->balance,
+                );
+        if($count_sub >1){
+                foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
+                    $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                    $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                    $company_name=$this->super_model->select_column_custom_where("sales_transaction_details","company_name","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                    $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                    $sales_id=$this->super_model->select_column_custom_where("sales_transaction_details","sales_id","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                    $sales_detail_id=$this->super_model->select_column_custom_where("sales_transaction_details","sales_detail_id","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                    $short_name=$this->super_model->select_column_custom_where("sales_transaction_details","short_name","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                    $balance=$this->super_model->select_column_custom_where("sales_transaction_details","balance","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                    $data['sales'][]=array(
+                        "company_name"=>$company_name,
+                        "billing_id"=>$billing_id,
+                        "sales_id"=>$sales_id,
+                        "sales_detail_id"=>$sales_detail_id,
+                        "short_name"=>$short_name,
+                        "vatable_sales"=>$vatable_sales,
+                        "balance"=>$balance,
+                    );
+                }
+            }
+        }
 
         $data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
         $this->load->view('template/header');

@@ -293,9 +293,61 @@ class Reports extends CI_Controller {
 
     public function purchases_ledger()
     {
+        $ref_no=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $data['ref_no'] = $ref_no;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/purchases_ledger');
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $sql="";
+        if($ref_no!='null'){
+           $sql.= " AND pth.reference_number = '$ref_no' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($from!='null' && $to=='null'){
+            $sql.= " AND pth.billing_from BETWEEN '$from' AND '$to' AND";
+        }else if($from!='null' && $to!='null'){
+            $sql.= " pth.billing_from BETWEEN '$from' AND '$to' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($to!='null' && $from=='null'){
+            $sql.= " AND pth.billing_to BETWEEN '$from' AND '$to' AND";
+        }else if($to!='null' && $from!='null'){
+            $sql.= " pth.billing_to BETWEEN '$from' AND '$to' AND";
+        }else {
+            $sql.= "";
+        }
+
+        $query=substr($sql,0,-3);
+        $data['head']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE saved='1' $query") AS $head){
+            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
+            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$head->purchase_detail_id);
+            $total_amount[]=$head->total_amount;
+            $total_paid[]=$payment_amount;
+            $total_balance[]=$head->total_amount - $payment_amount;
+            $data['purchases'][] = array( 
+            'transaction_date'=>$head->transaction_date,
+            'tin'=>$tin,
+            'participant_name'=>$company_name,
+            'address'=>$registered_address,
+            'vatable_purchases'=>$head->vatables_purchases,
+            'zero_rated_purchases'=>$head->zero_rated_purchases,
+            'wht_agent'=>$head->wht_agent,
+            'vat_on_purchases'=>$head->vat_on_purchases,
+            'billing_from'=>$head->billing_from,
+            'billing_to'=>$head->billing_to,
+            'ewt'=>$head->ewt,
+            );
+        }
+        $this->load->view('reports/purchases_ledger',$data);
         $this->load->view('template/footer');
     }
 
