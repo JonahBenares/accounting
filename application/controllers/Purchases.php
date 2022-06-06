@@ -190,6 +190,7 @@ class Purchases extends CI_Controller {
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
+                    'balance'=>$total_amount
                     //'balance'=>$total_amount
                 );
                 $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
@@ -493,17 +494,15 @@ class Purchases extends CI_Controller {
         $this->load->view('template/navbar');
         $ref_no=$this->uri->segment(3);
         $data['ref_no']=$ref_no;
+        $data['purchase_id'] =$this->super_model->select_column_where("purchase_transaction_head","purchase_id","reference_number",$ref_no);
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
-            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$d->purchase_detail_id);
-            $total_pay=$this->super_model->select_column_where("payment","total_amount","purchase_detail_id",$d->purchase_detail_id);
+        
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
                 'company_name'=>$company_name,
-                'payment_amount'=>$payment_amount,
-                'total_pay'=>$total_pay,
                 'short_name'=>$d->short_name,
                 'billing_id'=>$d->billing_id,
                 'facility_type'=>$d->facility_type,
@@ -518,6 +517,7 @@ class Purchases extends CI_Controller {
                 'ewt'=>$d->ewt,
                 'serial_no'=>$d->serial_no,
                 'total_amount'=>$d->total_amount,
+                'balance'=>$d->balance,
                 'reference_number'=>$d->reference_number,
                 'transaction_date'=>$d->transaction_date,
                 'billing_from'=>$d->billing_from,
@@ -621,13 +621,11 @@ class Purchases extends CI_Controller {
         $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$purchase_id);
         $data_insert=array(
             'purchase_id'=>$purchase_id,
-            'purchase_detail_id'=>$purchase_detail_id,
             'payment_date'=>$payment_date,
             'particulars'=>$particulars,
-            'purchase_mode'=>$purchase_mode,
-            'purchase_amount'=>$purchase_amount,
-            'vat'=>$vat,
-            'ewt'=>$ewt,
+            'total_purchase'=>$purchase_amount,
+            'total_vat'=>$vat,
+            'total_ewt'=>$ewt,
             'total_amount'=>$total_amount,
             'payment_mode'=>$payment_mode,
             'pcv'=>$pcv,
@@ -637,9 +635,111 @@ class Purchases extends CI_Controller {
             'create_date'=>date("Y-m-d h:i:s"),
             'user_id'=>$_SESSION['user_id'],
         );
+        $payment_id = $this->super_model->insert_return_id("payment_head", $data_insert);
 
-     
-        $this->super_model->insert_into("payment", $data_insert);
+
+        $data_details = array(
+            'payment_id'=>$payment_id,
+            'purchase_details_id'=>$purchase_detail_id,
+            'purchase_mode'=>$purchase_mode,
+            'purchase_amount'=>$purchase_amount,
+            'vat'=>$vat,
+            'ewt'=>$ewt,
+            'total_amount'=>$total_amount,
+
+        );
+
+        $this->super_model->insert_into("payment_details", $data_details);
+
+        $balance = $this->super_model->select_column_where("purchase_transaction_details", "balance", "purchase_detail_id", $purchase_detail_id);
+        $new_balance = $balance - $total_amount;
+        $update=array(
+            'balance'=>$new_balance
+        );
+
+        $this->super_model->update_where("purchase_transaction_details", $update, "purchase_detail_id", $purchase_detail_id);
+        echo $reference_number;
+    }
+
+    public function save_payment_all(){
+
+       
+       $purchase_id=$this->input->post('purchase_id');
+
+        $payment_date=$this->input->post('payment_date');
+        $particulars=$this->input->post('particulars');
+        $total_vatable_purchase=$this->input->post('total_vatable_purchase');
+        $total_vat=$this->input->post('total_vat');
+        $total_ewt=$this->input->post('total_ewt');
+        $total_amount=$this->input->post('total_amount');
+
+        $payment_mode=$this->input->post('customRadioInline1');
+        $check_no=$this->input->post('check_no');
+        $cv_no=$this->input->post('cv_no');
+       
+        $check_date=$this->input->post('check_date');
+        $pcv=$this->input->post('pcv');
+        $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$purchase_id);
+        $data_insert=array(
+            'purchase_id'=>$purchase_id,
+            'payment_date'=>$payment_date,
+            'particulars'=>$particulars,
+            'total_purchase'=>$total_vatable_purchase,
+            'total_vat'=>$total_vat,
+            'total_ewt'=>$total_ewt,
+            'total_amount'=>$total_amount,
+            'payment_mode'=>$payment_mode,
+            'pcv'=>$pcv,
+            'check_no'=>$check_no,
+            'cv_no'=>$cv_no,
+            'check_date'=>$check_date,
+            'create_date'=>date("Y-m-d h:i:s"),
+            'user_id'=>$_SESSION['user_id'],
+        );
+        $payment_id = $this->super_model->insert_return_id("payment_head", $data_insert);
+        
+        
+        foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id= '$purchase_id' AND balance != '0'") AS $det ){
+
+
+            //echo "hi";
+            if($det->vatables_purchases!=0){
+                $mode= "Vatable Purchase";
+                $amount = $det->vatables_purchases;
+            } else if($det->zero_rated_purchases!=0){
+                $mode = "Zero Rated Purchase";
+                $amount = $det->zero_rated_purchases;
+            } else if($det->zero_rated_ecozones!=0){
+                $mode = "Zero Rated Ecozones";
+                $amount = $det->zero_rated_ecozones;
+            }
+            //echo $mode . " " . $amount;
+
+            $data_details = array(
+                'payment_id'=>$payment_id,
+                'purchase_details_id'=>$det->purchase_detail_id,
+                'purchase_mode'=>$mode,
+                'purchase_amount'=>$amount,
+                'vat'=>$det->vat_on_purchases,
+                'ewt'=>$det->ewt,
+                'total_amount'=>$det->balance,
+
+            );
+           
+
+            $this->super_model->insert_into("payment_details", $data_details);
+
+            
+            $new_balance = $det->balance - $det->total_amount;
+            $update=array(
+                'balance'=>$new_balance
+            );
+
+            $this->super_model->update_where("purchase_transaction_details", $update, "purchase_detail_id", $det->purchase_detail_id);
+
+        }
+        
+      
         echo $reference_number;
     }
 
@@ -784,8 +884,20 @@ class Purchases extends CI_Controller {
     }
 
     public function pay_all(){
+
+        $purchase_id = $this->uri->segment(3);
+        $data['purchase_id'] = $purchase_id;
+        $data['total_amount']= $this->super_model->select_sum("purchase_transaction_details", "balance", "purchase_id", $purchase_id);
+        $total_purchase= $this->super_model->select_sum("purchase_transaction_details", "vatables_purchases", "purchase_id", $purchase_id);
+        $zero_rated= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_purchases", "purchase_id", $purchase_id);
+        $ecozone= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_ecozones", "purchase_id", $purchase_id);
+
+        $data['total_vatable_purchase'] = $total_purchase + $zero_rated + $ecozone;
+        $data['total_vat']= $this->super_model->select_sum("purchase_transaction_details", "vat_on_purchases", "purchase_id", $purchase_id);
+        $data['total_ewt']= $this->super_model->select_sum("purchase_transaction_details", "ewt", "purchase_id", $purchase_id);
+
         $this->load->view('template/header');
-        $this->load->view('purchases/pay_all');
+        $this->load->view('purchases/pay_all',$data);
         $this->load->view('template/footer');
     }
 

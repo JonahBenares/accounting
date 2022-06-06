@@ -1,7 +1,7 @@
  <!-- <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <div class="card">
-    <form method="POST" id="paymentdata">
+    <form method="POST" id="paymentdataall">
         <div class="card-header">
             <h4>Add Payment Details</h4>
         </div>
@@ -14,8 +14,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <label>Total Amount Due</label>
-                    <input type="text" name="amount_due" id="amount_due" class="form-control" value="" readonly>
+                   
                 </div>
             </div>
             <div class="row">
@@ -26,38 +25,19 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+              <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <label>Mode</label>
-                        <input type="text" class="form-control" name="purchase_mode" id="purchase_mode" value="">
-                        <!-- <select class="form-control" name="payment_mode" id="payment_mode">
-                            <option>Vatable Purchase</option>
-                            <option>Zero-Rated Purchase</option>
-                            <option>Zero-Rated Ecozones Purchase</option>
-                        </select> -->
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Amount of Purchase</label>
-                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="purchase_amount" onkeyup='calculatePayment()' id="purchase_amount" placeholder="00.00" class="form-control">
-                    </div>
+                     <label>Total Amount Due</label>
+                    <input type="text"  class="form-control" value="<?php echo number_format($total_amount,2); ?>" readonly>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
-                        <label>Amount for VAT on Purchases</label>
-                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="vat" id="vat" onkeyup='calculatePayment()' placeholder="00.00" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>EWT amount </label>
-                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="ewt" id="ewt" onkeyup='calculatePayment()' placeholder="00.00" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Total amount </label>
-                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="total_amount" id="total_amount" placeholder="00.00" class="form-control" readonly>
+                        <label>Total Payment Amount </label>
+                        <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="payment_amount" id="payment_amount" placeholder="00.00" class="form-control">
                     </div>
                 </div>
             </div>
+
             <hr>
             <div class="row">
                 <div class="col-sm-6 col-md-6 col-lg-6 offset-lg-3 offset-md-3 offset-sm-3">
@@ -112,7 +92,13 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <button class="btn btn-primary mr-1 btn-block" value="Save" id="save_payment" onclick = "savePayment()">Save</button>
+                    <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
+                    <input type="hidden" id="total_amount" name="total_amount" value="<?php echo $total_amount; ?>">
+                    <input type="hidden" id="purchase_id" name="purchase_id" value="<?php echo $purchase_id; ?>">
+                    <input type="hidden" id="total_vatable_purchase" name="total_vatable_purchase" value="<?php echo $total_vatable_purchase; ?>">
+                    <input type="hidden" id="total_vat" name="total_vat" value="<?php echo $total_vat; ?>">
+                    <input type="hidden" id="total_ewt" name="total_ewt" value="<?php echo $total_ewt; ?>">
+                    <button class="btn btn-primary mr-1 btn-block" value="Save" id="save_payment" onclick = "savePaymentAll()">Save</button>
                 </div>
             </div>
         </div>
