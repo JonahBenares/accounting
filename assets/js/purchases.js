@@ -176,6 +176,12 @@ function payment_filter() {
     window.location=loc+'purchases/payment_list/'+ref_no; 
 }
 
+function paid_filter() {
+    var ref_no= document.getElementById("reference_number").value;
+    var loc= document.getElementById("baseurl").value;
+    window.location=loc+'purchases/paid_list/'+ref_no; 
+}
+
 function savePayment(){
     var data = $("#paymentdata").serialize();
     var loc= document.getElementById("baseurl").value;

@@ -101,17 +101,17 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>', '<?php echo $s->sales_id; ?>','<?php echo $s->sales_detail_id; ?>')" style="color:#fff">
+                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>', '<?php echo $s['sales_id']; ?>','<?php echo $s['sales_detail_id']; ?>')" style="color:#fff">
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
                                                   <!--   <a id="clicksOR"></a> -->
                                                 </td>
-                                                <td><?php echo $s->company_name; ?></td>
-                                                <td><?php echo $s->billing_id; ?></td>
-                                                <td><?php echo $s->short_name; ?></td>
-                                                <td><?php echo number_format($s->vatable_sales,2); ?></td>
-                                                <td align="right"><?php echo number_format($s->balance,2); ?></td>
+                                                <td><?php echo $s['company_name']; ?></td>
+                                                <td><?php echo $s['billing_id']; ?></td>
+                                                <td><?php echo $s['short_name']; ?></td>
+                                                <td><?php echo number_format($s['vatable_sales'],2); ?></td>
+                                                <td align="right"><?php echo number_format($s['balance'],2); ?></td>
                                             </tr>
                                         <?php } ?>
                                         </tbody>
