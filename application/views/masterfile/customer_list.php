@@ -58,15 +58,20 @@
                                                         </div>
                                                         <div class="accordion-body collapse" id="panel-body-<?php echo $x; ?>" data-parent="#accordion">
                                                             <table class="" width="100%">
+                                                                <?php 
+                                                                    foreach($sub_participant AS $s){ 
+                                                                        if($p['participant_id']==$s['participant_id']){
+                                                                ?>
                                                                 <tr>
-                                                                    <td class="p-0">Sub Company 1</td>
+                                                                    <td class="p-0"><?php echo $s['subparticipant_name']; ?></td>
                                                                 </tr>
-                                                                <tr>
+                                                                <?php } } ?>
+                                                                <!-- <tr>
                                                                     <td class="p-0">Sub Company 2</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="p-0">Sub Company 3</td>
-                                                                </tr>
+                                                                </tr> -->
                                                             </table>
                                                             <hr class="mb-0">
                                                         </div>
