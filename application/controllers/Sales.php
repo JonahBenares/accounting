@@ -211,11 +211,24 @@ class Sales extends CI_Controller {
     public function collection_list()
     {
         $ref_no=$this->uri->segment(3);
+        $participant=$this->uri->segment(4);
         $data['ref_no'] = $ref_no;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         /*$data['sales'] = $this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0' AND balance!='0'");*/
 
-        foreach($this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0' AND balance!='0'") AS $p){
+        $sql="";
+        if($ref_no!='null' && $participant=='null'){
+           $sql.= " AND sh.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $participant!='null'){
+            $sql.= " AND sh.reference_number = '$ref_no' AND sd.billing_id = '$participant' AND";
+        }else if($ref_no=='null' && $participant!='null'){
+            $sql.= " AND sd.billing_id = '$participant' AND";
+        }else {
+            $sql.= "";
+        }
+        $query=substr($sql,0,-3);
+        foreach($this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND print_counter != '0' AND balance!='0' $query") AS $p){
             $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
             $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
             $data['sales'][]=array(
@@ -226,8 +239,8 @@ class Sales extends CI_Controller {
                 "short_name"=>$p->short_name,
                 "vatable_sales"=>$p->vatable_sales,
                 "balance"=>$p->balance,
-                );
-        if($count_sub >1){
+            );
+            if($count_sub >1){
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);

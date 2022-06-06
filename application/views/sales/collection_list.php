@@ -33,8 +33,13 @@
                                             <tr>
                                                 <td width="5%"></td>
                                                 <td width="45%">
-                                                    <select class="form-control select2s" name="reference_number" id="reference_number">
+                                                    <select class="form-control select2" name="participant" id="participant">
                                                         <option value="">-- Select Participant --</option>
+                                                        <?php 
+                                                            foreach($participant AS $p){
+                                                        ?>
+                                                        <option value="<?php echo $p->billing_id; ?>"><?php echo $p->billing_id." - ".$p->participant_name; ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </td>
                                                 <td width="44%">
@@ -95,9 +100,9 @@
                                         </thead>
                                         <tbody>
                                             <?php
-
-                                             foreach($sales AS $s){ 
-                                                ?>
+                                                if(!empty($sales)){
+                                                    foreach($sales AS $s){ 
+                                            ?>
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
@@ -113,7 +118,7 @@
                                                 <td><?php echo number_format($s['vatable_sales'],2); ?></td>
                                                 <td align="right"><?php echo number_format($s['balance'],2); ?></td>
                                             </tr>
-                                        <?php } ?>
+                                        <?php } } ?>
                                         </tbody>
                                     </table>
                                 </div>

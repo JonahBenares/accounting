@@ -45,12 +45,14 @@ class Masterfile extends CI_Controller {
                 //$usertype = $d->usertype_id;
                 $username = $d->username;
                 $fullname = $d->fullname;
+                $department = $d->department;
             }
             $newdata = array(
                'user_id'=> $userid,
                //'usertype'=> $usertype,
                'username'=> $username,
                'fullname'=> $fullname,
+               'department'=> $department,
                'logged_in'=> TRUE
             );
             $this->session->set_userdata($newdata);
