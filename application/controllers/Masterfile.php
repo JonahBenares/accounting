@@ -97,14 +97,21 @@ class Masterfile extends CI_Controller {
         $data['participant']=array();
         if($rows!=0){
             foreach($this->super_model->select_all_order_by("participant","participant_name","ASC") AS $part){
-            $data['participant'][] = array(
-                'participant_id'=>$part->participant_id,
-                'participant_name'=>$part->participant_name,
-                'billing_id'=>$part->billing_id,
-                'settlement_id'=>$part->settlement_id,
-                'category'=>$part->category,
-            ); 
+                $data['participant'][] = array(
+                    'participant_id'=>$part->participant_id,
+                    'participant_name'=>$part->participant_name,
+                    'billing_id'=>$part->billing_id,
+                    'settlement_id'=>$part->settlement_id,
+                    'category'=>$part->category,
+                ); 
                 
+                foreach($this->super_model->select_custom_where("subparticipant","participant_id='$part->participant_id'") AS $s){
+                    $subparticipant_name=$this->super_model->select_column_where("participant","participant_name","participant_id",$s->sub_participant);
+                    $data['sub_participant'][]=array(
+                        "participant_id"=>$s->participant_id,
+                        "subparticipant_name"=>$subparticipant_name,
+                    );
+                }
             }
         }
         

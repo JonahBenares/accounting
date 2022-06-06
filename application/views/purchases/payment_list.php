@@ -40,7 +40,7 @@
                                 <?php if(!empty($details) && !empty($ref_no)){ ?>
                                 <div class="row">
                                     <div class="col-lg-4 offset-lg-4">
-                                        <a style="color:#fff" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>')">Pay All</a>
+                                        <a style="color:#fff" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>', '<?php echo $purchase_id; ?>')">Pay All</a>
                                     </div>
                                 </div>   
                                 <br> 
@@ -67,8 +67,7 @@
                                         <tbody>
                                             <?php 
                                                 foreach($details AS $d){ 
-                                                    //if($d['total_amount']!=$d['total_pay']){
-                                                    if($d['payment_amount']==0){
+                                                 if($d['balance']!=0){   
                                             ?>
                                             <tr>
                                                 <td align="center" style="background: #fff;">

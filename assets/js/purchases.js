@@ -1,8 +1,8 @@
 function add_payment(baseurl,purchase_id,purchase_detail_id) {
     window.open(baseurl+"purchases/add_payment/"+purchase_id+'/'+purchase_detail_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
-function pay_all(baseurl) {
-    window.open(baseurl+"purchases/pay_all/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+function pay_all(baseurl, id) {
+    window.open(baseurl+"purchases/pay_all/"+id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
 
 function add_details_wesm(baseurl,purchase_details_id) {
@@ -186,23 +186,53 @@ function savePayment(){
     var data = $("#paymentdata").serialize();
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"purchases/save_payment";
-   
+  
     var conf = confirm('Are you sure you want to save this payment?');
 
     if(conf){
 
-        $.ajax({
-            data: data,
-            type: "POST",
-            url: redirect,
-            success: function(output){
-                
-                window.opener.location=loc+'purchases/payment_list/'+output;
-                window.close();
-            }
-        });
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: redirect,
+                success: function(output){
+                    
+                    window.opener.location=loc+'purchases/payment_list/'+output;
+                    window.close();
+                }
+            });
+        
     }
 }
+
+
+function savePaymentAll(){
+    var data = $("#paymentdataall").serialize();
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"purchases/save_payment_all";
+    var total_amount= parseFloat(document.getElementById("total_amount").value);
+    var payment_amount= parseFloat(document.getElementById("payment_amount").value);
+    var conf = confirm('Are you sure you want to save this payment?');
+
+    if(conf){
+
+        if(total_amount!=payment_amount){
+            alert("Payment amount is not equal to total amount.");
+        } else {
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: redirect,
+                success: function(output){
+                   /* alert(output);*/
+                    window.opener.location=loc+'purchases/payment_list/'+output;
+                    window.close();
+                }
+            });
+        }
+    }
+}
+
 
 function calculatePayment(){
     var purchase_amount = document.getElementById("purchase_amount").value;
