@@ -1,5 +1,23 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/masterfile.js"></script>
+<style type="text/css">
+    #buttons_here{
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    function main_button() {
+        var x = document.getElementById("buttons_here");
+        // var y = document.getElementsByClassName("btn-cuz");
+        // alert();
+        if (x.style.display === "none") {
+            alert("pota");
+        }
+        // } else {
+        //     y.style.display = "none";
+        // }
+    }
+</script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -58,15 +76,20 @@
                                                         </div>
                                                         <div class="accordion-body collapse" id="panel-body-<?php echo $x; ?>" data-parent="#accordion">
                                                             <table class="" width="100%">
+                                                                <?php 
+                                                                    foreach($sub_participant AS $s){ 
+                                                                        if($p['participant_id']==$s['participant_id']){
+                                                                ?>
                                                                 <tr>
-                                                                    <td class="p-0">Sub Company 1</td>
+                                                                    <td class="p-0"><?php echo $s['subparticipant_name']; ?></td>
                                                                 </tr>
-                                                                <tr>
+                                                                <?php } } ?>
+                                                                <!-- <tr>
                                                                     <td class="p-0">Sub Company 2</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="p-0">Sub Company 3</td>
-                                                                </tr>
+                                                                </tr> -->
                                                             </table>
                                                             <hr class="mb-0">
                                                         </div>
@@ -77,7 +100,18 @@
                                             <td class="td-vertical"><?php echo $p['settlement_id'];?></td>
                                             <td class="td-vertical"><?php echo $p['category'];?></td>
                                             <td class="td-vertical" align="center">
-                                                <div class="btn-group mb-0">
+                                                <button class="btn btn-sm btn-primary" onclick="main_button()"><span class="fas fa-bars m-0"></span></button>
+                                                <div class="btn-group" id="buttons_here">
+                                                    <a href="" class="btn btn-sm btn-primary">1</a>
+                                                    <a href="" class="btn btn-sm btn-primary">2</a>
+                                                    <a href="" class="btn btn-sm btn-primary">3</a>
+                                                    <a href="" class="btn btn-sm btn-primary">4</a>
+                                                </div>
+
+
+
+
+                                                <!-- <div class="btn-group mb-0">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
                                                         Option
@@ -88,7 +122,7 @@
                                                         <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete/<?php echo $p['participant_id'];?>" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash mr-2"></span>Delete</a>
                                                         <a class="dropdown-item" href="javascript:void(0)" onclick="subparticipant('<?php echo base_url(); ?>','<?php echo $p['participant_id']; ?>')"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </td>  
                                         </tr>
                                         <?php 
@@ -134,3 +168,4 @@
         </div>
     </div>
 </div>
+

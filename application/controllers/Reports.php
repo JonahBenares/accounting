@@ -247,20 +247,23 @@ class Reports extends CI_Controller {
         if($ref_no!='null' && $participant=='null'){
            $sql.= " AND sth.reference_number = '$ref_no' AND";
         }else if($ref_no!='null' && $participant!='null'){
-            $sql.= " AND sth.reference_number = '$ref_no' AND";
+            $sql.= " AND sth.reference_number = '$ref_no' AND std.billing_id = '$participant' AND";
+        }else if($ref_no=='null' && $participant!='null'){
+            $sql.= " AND std.billing_id = '$participant' AND";
         }else {
             $sql.= "";
         }
 
-        if($participant!='null' && $ref_no=='null'){
+        /*if($participant!='null' && $ref_no=='null'){
             $sql.= " AND std.billing_id = '$participant' AND";
         }else if($participant!='null' && $ref_no!='null'){
             $sql.= " std.billing_id = '$participant' AND";
         }else {
             $sql.= "";
-        }
+        }*/
 
         $query=substr($sql,0,-3);
+        //echo $query;
         $data['total']=0;
         foreach($this->super_model->custom_query("SELECT cd.ewt,cd.date_collected,std.billing_id,sth.billing_from,sth.billing_to FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
@@ -283,11 +286,83 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function sales_ledger()
-    {
+    public function sales_ledger(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/sales_ledger');
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $ref_no=$this->uri->segment(3);
+        $date_from=$this->uri->segment(4);
+        $date_to=$this->uri->segment(5);
+        $sql='';
+        if($ref_no!='null' && $date_from=='null' && $date_to=='null'){
+            $sql.= " AND sth.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $date_from!='null' && $date_to!='null'){
+            $sql.= " AND sth.reference_number = '$ref_no' AND sth.transaction_date BETWEEN '$date_from' AND '$date_to' AND";
+        }else if($ref_no=='null' && $date_from!='null' && $date_to!='null'){
+            $sql.= " AND sth.transaction_date BETWEEN '$date_from' AND '$date_to'AND";
+        }else {
+            $sql.= "";
+        }
+
+        $query=substr($sql,0,-3);
+        //echo $query;
+        $data['bill']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
+            $sales_id=$this->super_model->select_column_where("collection_details","sales_id",'sales_details_id',$b->sales_detail_id);
+            if($b->sales_id==$sales_id){
+                $total_solver=$b->vatable_sales + $b->zero_rated_sales + $b->vat_on_sales;
+                $total_b[]=$total_solver;
+                $data['bill'][]=array(
+                    "date"=>$b->transaction_date,
+                    "company_name"=>$b->company_name,
+                    "billing_from"=>$b->billing_from,
+                    "billing_to"=>$b->billing_to,
+                    "method"=>'Bill',
+                    "vatable_sales"=>$b->vatable_sales,
+                    "zero_rated_sales"=>$b->zero_rated_sales,
+                    "vat_on_sales"=>$b->vat_on_sales,
+                    "total"=>$total_solver,
+                    "vatable_total"=>'',
+                    "zerorated_total"=>'',
+                    "vat_total"=>'',
+                    "total_sum"=>'',
+                );
+            }
+
+            foreach($this->super_model->select_custom_where("collection_details","sales_id='$b->sales_id' AND sales_details_id='$b->sales_detail_id'") AS $c){
+                if($b->sales_id == $c->sales_id){
+                    $company_name=$this->super_model->select_column_where("sales_transaction_details","company_name","sales_detail_id",$c->sales_details_id);
+                    $sum_amount=$this->super_model->select_sum_where("collection_details","amount","sales_details_id='$b->sales_detail_id'");
+                    $sum_zerorated=$this->super_model->select_sum_where("collection_details","zero_rated","sales_details_id='$b->sales_detail_id'");
+                    $sum_vat=$this->super_model->select_sum_where("collection_details","vat","sales_details_id='$b->sales_detail_id'");
+                    $sum_total=$this->super_model->select_sum_where("collection_details","total","sales_details_id='$b->sales_detail_id'");
+                    $vatable_total=$b->vatable_sales-$sum_amount;
+                    $zerorated_total=$b->zero_rated_sales-$sum_zerorated;
+                    $vat_total=$b->vat_on_sales-$sum_vat;
+                    $total_solve=$c->amount + $c->zero_rated + $c->vat;
+                    $total_c[]=$total_solve;
+                    $total=array_sum($total_b)-array_sum($total_c);
+                    
+                    //$total=$b->total_amount-$sum_total;
+                    $data['bill'][]=array(
+                        "date"=>$c->date_collected,
+                        "company_name"=>$company_name,
+                        "billing_from"=>'',
+                        "billing_to"=>'',
+                        "method"=>'Collect',
+                        "vatable_sales"=>$c->amount,
+                        "zero_rated_sales"=>$c->zero_rated,
+                        "vat_on_sales"=>$c->vat,
+                        "total"=>$total_solve,
+                        "vatable_total"=>$vatable_total,
+                        "zerorated_total"=>$zerorated_total,
+                        "vat_total"=>$vat_total,
+                        "total_sum"=>$total,
+                    );
+                }
+            }
+        }
+        $this->load->view('reports/sales_ledger',$data);
         $this->load->view('template/footer');
     }
 
