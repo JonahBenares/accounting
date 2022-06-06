@@ -9,7 +9,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
-                                        <h4>Payment</h4>
+                                        <h4>Paid</h4>
                                     </div>
                                 </div>
                             </div>
@@ -19,7 +19,12 @@
                                         <table width="100%">
                                             <tr>
                                                 <td width="5%"></td>
-                                                <td>
+                                                <td width="45%">
+                                                    <select class="form-control select2" name="reference_number" id="reference_number">
+                                                        <option value="">-- Select Participant --</option>
+                                                    </select>
+                                                </td>
+                                                <td width="44%">
                                                     <select class="form-control select2" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Reference Number --</option>
                                                         <?php foreach($head AS $r){ ?>
@@ -29,7 +34,7 @@
                                                 </td>
                                                 <td width="1%">
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
-                                                    <button class="btn btn-primary" type="button" onclick="paid_filter()">Filter</button>
+                                                    <button class="btn btn-primary btn-block" type="button" onclick="paid_filter()">Filter</button>
                                                 </td>
                                                 <td width="5%"></td>
                                             </tr>

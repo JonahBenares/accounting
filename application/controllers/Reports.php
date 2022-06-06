@@ -31,55 +31,77 @@ class Reports extends CI_Controller {
     public function sales_summary()
     {
         $ref_no=$this->uri->segment(3);
-        $participant_id=$this->uri->segment(4);
+        $participant=$this->uri->segment(4);
         $from=$this->uri->segment(5);
         $to=$this->uri->segment(6);
         $data['ref_no'] = $ref_no;
-        $data['participant_id'] = $participant_id;
+        $data['participant'] = $participant;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         //$participant_name=$this->super_model->select_column_where("participant","participant_name","partcipant_id",$partcipant_id);
-        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","participant_name","ASC");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql="";
-        if($ref_no!=''){
-           $sql.= " sh.reference_number = '$ref_no' AND";
+        if($ref_no!='null' && $participant=='null'){
+           $sql.= " AND sth.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $participant!='null'){
+            $sql.= " AND sth.reference_number = '$ref_no' AND";
         }else {
-            $sql.= "NULL";
+            $sql.= "";
         }
 
-        if($participant_id!='null'){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","participant_id",$participant_id);
-            $sql.= " sd.company_name = '$participant_name' AND";
+        if($participant!='null' && $ref_no=='null'){
+            $sql.= " AND std.billing_id = '$participant' AND";
+        }else if($participant!='null' && $ref_no!='null'){
+            $sql.= " std.billing_id = '$participant' AND";
         }else {
-            $sql.= "NULL";
+            $sql.= "";
         }
 
-        if($from!='null' && $to!='null'){
-           $sql.= " sh.billing_from BETWEEN '$from' AND '$to' AND";
+        if($from!='null' && $to=='null'){
+            $sql.= " AND sth.billing_from BETWEEN '$from' AND '$to' AND";
+        }else if($from!='null' && $to!='null'){
+            $sql.= " sth.billing_from BETWEEN '$from' AND '$to' AND";
         }else {
-            $sql.= "NULL";
+            $sql.= "";
         }
 
-        if($from!='null' && $to!='null'){
-           $sql.= " sh.billing_to BETWEEN '$from' AND '$to' AND";
+        if($to!='null' && $from=='null'){
+            $sql.= " AND sth.billing_to BETWEEN '$from' AND '$to' AND";
+        }else if($to!='null' && $from!='null'){
+            $sql.= " sth.billing_to BETWEEN '$from' AND '$to' AND";
         }else {
-            $sql.= "NULL";
+            $sql.= "";
         }
 
         $query=substr($sql,0,-3);
+        $data['total_amount']=0;
+        $data['total_collection']=0;
+        $data['total_balance']=0;
         $data['head']=array();
-        foreach($this->super_model->custom_query("SELECT DISTINCT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id INNER JOIN participant p ON p.billing_id = sd.billing_id WHERE sh.reference_number LIKE '%$ref_no%' OR sd.company_name = '$participant_name' AND ".$query." ORDER BY sh.transaction_date ASC") AS $head){
+        foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' $query") AS $head){
+            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
+            $collected=$this->super_model->select_column_where("collection_details","total","sales_details_id",$head->sales_details_id);
+            $total_amount[]=$head->total_amount;
+            $total_collection[]=$collected;
+            $total_balance[]=$head->total_amount - $collected;
+            $data['total_amount']=array_sum($total_amount);
+            $data['total_collection']=array_sum($total_collection);
+            $data['total_balance']=array_sum($total_balance);
             $data['sales'][] = array( 
             'transaction_date'=>$head->transaction_date,
-            'tin'=>$head->tin,
-            'participant_name'=>$head->participant_name,
-            'address'=>$head->registered_address,
+            'tin'=>$tin,
+            'participant_name'=>$company_name,
+            'address'=>$registered_address,
             'vatable_sales'=>$head->vatable_sales,
             'zero_rated_sales'=>$head->zero_rated_sales,
             'wht_agent'=>$head->wht_agent,
             'vat_on_sales'=>$head->vat_on_sales,
             'billing_from'=>$head->billing_from,
             'billing_to'=>$head->billing_to,
+            'ewt'=>$head->ewt,
         );
         }
         $this->load->view('reports/sales_summary',$data);
@@ -91,52 +113,75 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $ref_no=$this->uri->segment(3);
-        $participant_id=$this->uri->segment(4);
+        $participant=$this->uri->segment(4);
         $from=$this->uri->segment(5);
         $to=$this->uri->segment(6);
         $data['ref_no'] = $ref_no;
-        $data['participant_id'] = $participant_id;
+        $data['participant'] = $participant;
         $this->load->view('template/header');
-        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","participant_name","ASC");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql="";
-        if($ref_no!=''){
-           $sql.= " ph.reference_number = '$ref_no' AND";
+        if($ref_no!='null' && $participant=='null'){
+           $sql.= " AND pth.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $participant!='null'){
+            $sql.= " AND pth.reference_number = '$ref_no' AND";
         }else {
-            $sql.= "NULL";
+            $sql.= "";
         }
 
-        if($participant_id!='null'){
-            $sql.= " p.participant_id = '$participant_id' AND";
+        if($participant!='null' && $ref_no=='null'){
+            $sql.= " AND ptd.billing_id = '$participant' AND";
+        }else if($participant!='null' && $ref_no!='null'){
+            $sql.= " ptd.billing_id = '$participant' AND";
         }else {
-            $sql.= "NULL";
+            $sql.= "";
         }
 
-        if($from!='null' && $to!='null'){
-           $sql.= " sh.billing_from BETWEEN '$from' AND '$to' AND";
+        if($from!='null' && $to=='null'){
+            $sql.= " AND pth.billing_from BETWEEN '$from' AND '$to' AND";
+        }else if($from!='null' && $to!='null'){
+            $sql.= " pth.billing_from BETWEEN '$from' AND '$to' AND";
         }else {
-            $sql.= "NULL";
+            $sql.= "";
         }
 
-        if($from!='null' && $to!='null'){
-           $sql.= " sh.billing_to BETWEEN '$from' AND '$to' AND";
+        if($to!='null' && $from=='null'){
+            $sql.= " AND pth.billing_to BETWEEN '$from' AND '$to' AND";
+        }else if($to!='null' && $from!='null'){
+            $sql.= " pth.billing_to BETWEEN '$from' AND '$to' AND";
         }else {
-            $sql.= "NULL";
+            $sql.= "";
         }
 
         $query=substr($sql,0,-3);
+        $data['total_amount']=0;
+        $data['total_paid']=0;
+        $data['total_balance']=0;
         $data['head']=array();
-        foreach($this->super_model->custom_query("SELECT DISTINCT * FROM purchase_transaction_head ph INNER JOIN purchase_transaction_details pd ON ph.purchase_id = pd.purchase_id INNER JOIN participant p ON p.billing_id = pd.billing_id WHERE ph.reference_number LIKE '%$ref_no%' AND ".$query." ORDER BY ph.transaction_date ASC") AS $head){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE saved='1' $query") AS $head){
+            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
+            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$head->purchase_detail_id);
+            $total_amount[]=$head->total_amount;
+            $total_paid[]=$payment_amount;
+            $total_balance[]=$head->total_amount - $payment_amount;
+            $data['total_amount']=array_sum($total_amount);
+            $data['total_paid']=array_sum($total_paid);
+            $data['total_balance']=array_sum($total_balance);
             $data['purchases'][] = array( 
             'transaction_date'=>$head->transaction_date,
-            'tin'=>$head->tin,
-            'participant_name'=>$head->participant_name,
-            'address'=>$head->registered_address,
+            'tin'=>$tin,
+            'participant_name'=>$company_name,
+            'address'=>$registered_address,
             'vatable_purchases'=>$head->vatables_purchases,
             'zero_rated_purchases'=>$head->zero_rated_purchases,
             'wht_agent'=>$head->wht_agent,
             'vat_on_purchases'=>$head->vat_on_purchases,
             'billing_from'=>$head->billing_from,
             'billing_to'=>$head->billing_to,
+            'ewt'=>$head->ewt,
             );
         }
         $this->load->view('reports/purchases_summary',$data);
@@ -323,9 +368,61 @@ class Reports extends CI_Controller {
 
     public function purchases_ledger()
     {
+        $ref_no=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $data['ref_no'] = $ref_no;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/purchases_ledger');
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $sql="";
+        if($ref_no!='null'){
+           $sql.= " AND pth.reference_number = '$ref_no' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($from!='null' && $to=='null'){
+            $sql.= " AND pth.billing_from BETWEEN '$from' AND '$to' AND";
+        }else if($from!='null' && $to!='null'){
+            $sql.= " pth.billing_from BETWEEN '$from' AND '$to' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($to!='null' && $from=='null'){
+            $sql.= " AND pth.billing_to BETWEEN '$from' AND '$to' AND";
+        }else if($to!='null' && $from!='null'){
+            $sql.= " pth.billing_to BETWEEN '$from' AND '$to' AND";
+        }else {
+            $sql.= "";
+        }
+
+        $query=substr($sql,0,-3);
+        $data['head']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE saved='1' $query") AS $head){
+            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
+            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$head->purchase_detail_id);
+            $total_amount[]=$head->total_amount;
+            $total_paid[]=$payment_amount;
+            $total_balance[]=$head->total_amount - $payment_amount;
+            $data['purchases'][] = array( 
+            'transaction_date'=>$head->transaction_date,
+            'tin'=>$tin,
+            'participant_name'=>$company_name,
+            'address'=>$registered_address,
+            'vatable_purchases'=>$head->vatables_purchases,
+            'zero_rated_purchases'=>$head->zero_rated_purchases,
+            'wht_agent'=>$head->wht_agent,
+            'vat_on_purchases'=>$head->vat_on_purchases,
+            'billing_from'=>$head->billing_from,
+            'billing_to'=>$head->billing_to,
+            'ewt'=>$head->ewt,
+            );
+        }
+        $this->load->view('reports/purchases_ledger',$data);
         $this->load->view('template/footer');
     }
 
