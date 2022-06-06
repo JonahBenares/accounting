@@ -63,7 +63,7 @@
                                             <tr>
                                                 <td width="5%"></td>
                                                 <td width="45%">
-                                                    <select class="form-control select2" name="reference_number" id="reference_number">
+                                                    <select class="form-control select2s" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Participant --</option>
                                                     </select>
                                                 </td>

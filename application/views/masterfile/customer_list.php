@@ -5,18 +5,15 @@
         display: none;
     }
 </style>
-<script type="text/javascript">
-    function main_button() {
-        var x = document.getElementById("buttons_here");
-        // var y = document.getElementsByClassName("btn-cuz");
-        // alert();
-        if (x.style.display === "none") {
-            alert("pota");
-        }
-        // } else {
-        //     y.style.display = "none";
-        // }
-    }
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
 </script>
 <div class="main-content">
     <section class="section">
@@ -95,6 +92,14 @@
                                             <td class="td-vertical"><?php echo $p['settlement_id'];?></td>
                                             <td class="td-vertical"><?php echo $p['category'];?></td>
                                             <td class="td-vertical" align="center">
+
+                                                <button onclick="myFunction()">Try it</button>
+
+                                                <div id="myDIV">
+                                                This is my DIV element.
+                                                </div>
+
+                                                
                                                 <button class="btn btn-sm btn-primary" onclick="main_button()"><span class="fas fa-bars m-0"></span></button>
                                                 <div class="btn-group" id="buttons_here">
                                                     <a href="" class="btn btn-sm btn-primary">1</a>
