@@ -1,20 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/masterfile.js"></script>
-<style type="text/css">
-    #buttons_here{
-        display: none;
-    }
-</style>
-<script>
-function myFunction() {
-  var x = document.getElementById("myDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-</script>
+
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -97,37 +83,18 @@ function myFunction() {
                                             <td class="td-vertical"><?php echo $p['settlement_id'];?></td>
                                             <td class="td-vertical"><?php echo $p['category'];?></td>
                                             <td class="td-vertical" align="center">
-
-                                                <button onclick="myFunction()">Try it</button>
-
-                                                <div id="myDIV">
-                                                This is my DIV element.
-                                                </div>
-
-                                                
-                                                <button class="btn btn-sm btn-primary" onclick="main_button()"><span class="fas fa-bars m-0"></span></button>
-                                                <div class="btn-group" id="buttons_here">
-                                                    <a href="" class="btn btn-sm btn-primary">1</a>
-                                                    <a href="" class="btn btn-sm btn-primary">2</a>
-                                                    <a href="" class="btn btn-sm btn-primary">3</a>
-                                                    <a href="" class="btn btn-sm btn-primary">4</a>
-                                                </div>
-
-
-
-
-                                                <!-- <div class="btn-group mb-0">
+                                                <div class="btn-group mb-0 dropleft">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
-                                                        Option
+                                                        <span class="fas fa-bars">
                                                     </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_view/<?php echo $p['participant_id'];?>"><span class="fas fa-eye mr-2"></span>View</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_update/<?php echo $p['participant_id'];?>"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="<?php echo base_url(); ?>masterfile/customer_delete/<?php echo $p['participant_id'];?>" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash mr-2"></span>Delete</a>
-                                                        <a class="dropdown-item" href="javascript:void(0)" onclick="subparticipant('<?php echo base_url(); ?>','<?php echo $p['participant_id']; ?>')"><span class="fas fa-building mr-2"></span>Add Sub Company</a>
+                                                    <div class="dropdown-menu dropleft p-0" style="width:0px!important;text-align:center;margin-right: 10px;box-shadow: 0 0 0 rgba(0,0,0,0)!important;">
+                                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="View" href="<?php echo base_url(); ?>masterfile/customer_view/<?php echo $p['participant_id'];?>"><span class="fas fa-eye m-0"></span></a>
+                                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Update" href="<?php echo base_url(); ?>masterfile/customer_update/<?php echo $p['participant_id'];?>"><span class="far fa-edit m-0"></span></a>
+                                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Delete" href="<?php echo base_url(); ?>masterfile/customer_delete/<?php echo $p['participant_id'];?>" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash m-0"></span></a>
+                                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Sub Company" href="javascript:void(0)" onclick="subparticipant('<?php echo base_url(); ?>','<?php echo $p['participant_id']; ?>')"><span class="fas fa-building m-0"></span></a>
                                                     </div>
-                                                </div> -->
+                                                </div> 
                                             </td>  
                                         </tr>
                                         <?php 
@@ -137,6 +104,7 @@ function myFunction() {
                                         }
 
                                         ?>
+
                                     </tbody>
                                 </table>
                             </div>
