@@ -272,9 +272,23 @@ class Sales extends CI_Controller {
 
     public function collected_list(){
         $ref_no=$this->uri->segment(3);
+        $participant=$this->uri->segment(4);
         $data['ref_no'] = $ref_no;
+        $data['participant'] = $participant;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
-        $data['sales'] = $this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.date_collected,cd.sales_id,cd.sales_details_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,std.company_name,std.short_name,std.billing_id FROM collection_details cd INNER JOIN sales_transaction_head sh ON cd.sales_id=sh.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sh.saved='1' AND sh.reference_number='$ref_no'");
+        $data['participant_list']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $sql="";
+        if($ref_no!='null' && $participant=='null'){
+           $sql.= " AND sh.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $participant!='null'){
+            $sql.= " AND sh.reference_number = '$ref_no' AND std.billing_id = '$participant' AND";
+        }else if($ref_no=='null' && $participant!='null'){
+            $sql.= " AND std.billing_id = '$participant' AND";
+        }else {
+            $sql.= "";
+        }
+        $query=substr($sql,0,-3);
+        $data['sales'] = $this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.date_collected,cd.sales_id,cd.sales_details_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,std.company_name,std.short_name,std.billing_id FROM collection_details cd INNER JOIN sales_transaction_head sh ON cd.sales_id=sh.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sh.saved='1' $query");
         $data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
