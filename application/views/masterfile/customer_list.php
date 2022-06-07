@@ -74,13 +74,14 @@ function myFunction() {
                                                         <div class="accordion-body collapse" id="panel-body-<?php echo $x; ?>" data-parent="#accordion">
                                                             <table class="" width="100%">
                                                                 <?php 
+                                                                    if(!empty($sub_participant)){
                                                                     foreach($sub_participant AS $s){ 
                                                                         if($p['participant_id']==$s['participant_id']){
                                                                 ?>
                                                                 <tr>
                                                                     <td class="p-0"><?php echo $s['subparticipant_name']; ?></td>
                                                                 </tr>
-                                                                <?php } } ?>
+                                                                <?php } } } ?>
                                                                 <!-- <tr>
                                                                     <td class="p-0">Sub Company 2</td>
                                                                 </tr>
