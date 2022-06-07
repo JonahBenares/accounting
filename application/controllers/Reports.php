@@ -288,7 +288,7 @@ class Reports extends CI_Controller {
 
     public function sales_ledger(){
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $ref_no=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
