@@ -297,9 +297,9 @@ class Reports extends CI_Controller {
         if($ref_no!='null' && $date_from=='null' && $date_to=='null'){
             $sql.= " AND sth.reference_number = '$ref_no' AND";
         }else if($ref_no!='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND sth.reference_number = '$ref_no' AND sth.transaction_date BETWEEN '$date_from' AND '$date_to' AND";
+            $sql.= " AND sth.reference_number = '$ref_no' AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
         }else if($ref_no=='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND sth.transaction_date BETWEEN '$date_from' AND '$date_to'AND";
+            $sql.= " AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
         }else {
             $sql.= "";
         }
