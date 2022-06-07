@@ -399,28 +399,65 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-3);
-        $data['head']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE saved='1' $query") AS $head){
-            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
-            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
-            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
-            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$head->purchase_detail_id);
-            $total_amount[]=$head->total_amount;
-            $total_paid[]=$payment_amount;
-            $total_balance[]=$head->total_amount - $payment_amount;
-            $data['purchases'][] = array( 
-            'transaction_date'=>$head->transaction_date,
-            'tin'=>$tin,
-            'participant_name'=>$company_name,
-            'address'=>$registered_address,
-            'vatable_purchases'=>$head->vatables_purchases,
-            'zero_rated_purchases'=>$head->zero_rated_purchases,
-            'wht_agent'=>$head->wht_agent,
-            'vat_on_purchases'=>$head->vat_on_purchases,
-            'billing_from'=>$head->billing_from,
-            'billing_to'=>$head->billing_to,
-            'ewt'=>$head->ewt,
-            );
+        $data['bill']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE saved='1' $query") AS $b){
+            $purchase_id=$this->super_model->select_column_where("payment_head","purchase_id",'purchase_id',$b->purchase_id);
+            if($b->purchase_id==$purchase_id){
+                $total_solver=$b->vatables_purchases + $b->zero_rated_purchases + $b->vat_on_purchases;
+                $total_b[]=$total_solver;
+                $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$b->billing_id);
+                $data['bill'][]=array(
+                    "date"=>$b->transaction_date,
+                    "company_name"=>$company_name,
+                    "billing_from"=>$b->billing_from,
+                    "billing_to"=>$b->billing_to,
+                    "method"=>'Bill',
+                    "vatables_purchases"=>$b->vatables_purchases,
+                    "zero_rated_purchases"=>$b->zero_rated_purchases,
+                    "vat_on_purchases"=>$b->vat_on_purchases,
+                    "total"=>$total_solver,
+                    "vatable_total"=>'',
+                    "zerorated_total"=>'',
+                    "vat_total"=>'',
+                    "total_sum"=>'',
+                );
+            }
+
+            foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){
+                if($b->purchase_id == $c->purchase_id){
+                    $billing_id = $this->super_model->select_column_where("purchase_transaction_details","billing_id","purchase_detail_id",$c->purchase_detail_id);
+                    $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$billing_id);
+                    $sum_amount=$this->super_model->select_sum_where("payment_details","purchase_amount","purchase_detail_id='$c->purchase_detail_id'");
+                    $zero_rated_purchases=$this->super_model->select_column_where("purchase_transaction_details","zero_rated_purchases","purchase_detail_id",$c->purchase_detail_id);
+                    $zerorated_total=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_detail_id='$c->purchase_detail_id'");
+                    $sum_vat=$this->super_model->select_sum_where("payment_details","vat","purchase_detail_id='$c->purchase_detail_id'");
+                    $sum_total=$this->super_model->select_sum_where("payment_details","total_amount","purchase_detail_id='$c->purchase_detail_id'");
+                    $vatable_total=$b->vatables_purchases-$sum_amount;
+                    //$zerorated_total=$b->zero_rated_purchases-$sum_zerorated;
+                    $zerorated_total=$zero_rated_purchases-$zerorated_total;
+                    $vat_total=$b->vat_on_purchases-$sum_vat;
+                    $total_solve=$c->purchase_amount + $zero_rated_purchases + $c->vat;
+                    $total_c[]=$total_solve;
+                    $total=array_sum($total_b)-array_sum($total_c);
+                    
+                    //$total=$b->total_amount-$sum_total;
+                    $data['bill'][]=array(
+                        "date"=>$c->payment_date,
+                        "company_name"=>$company_name,
+                        "billing_from"=>'',
+                        "billing_to"=>'',
+                        "method"=>'Pay',
+                        "vatables_purchases"=>$c->purchase_amount,
+                        "zero_rated_purchases"=>$zero_rated_purchases,
+                        "vat_on_purchases"=>$c->vat,
+                        "total"=>$total_solve,
+                        "vatable_total"=>$vatable_total,
+                        "zerorated_total"=>$zerorated_total,
+                        "vat_total"=>$vat_total,
+                        "total_sum"=>$total,
+                    );
+                }
+            }
         }
         $this->load->view('reports/purchases_ledger',$data);
         $this->load->view('template/footer');

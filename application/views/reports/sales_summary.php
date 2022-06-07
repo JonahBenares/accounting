@@ -87,7 +87,7 @@
                                         <td><?php echo $s['tin']; ?></td>
                                         <td><?php echo $s['participant_name']; ?></td>
                                         <td><?php echo $s['address']; ?></td>
-                                        <td><?php echo $s['billing_from']." - ".$s['billing_from']; ?></td>
+                                        <td><?php echo date("F d,Y",strtotime($s['billing_from']))." - ".date("F d,Y",strtotime($s['billing_to']));?></td>
                                         <td><?php echo number_format($s['vatable_sales'],2); ?></td>
                                         <td><?php echo number_format($s['zero_rated_sales'],2); ?></td>
                                         <td><?php echo number_format($s['vat_on_sales'],2); ?></td>
