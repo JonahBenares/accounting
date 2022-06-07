@@ -20,8 +20,11 @@
                                             <tr>
                                                 <td width="5%"></td>
                                                 <td width="45%">
-                                                    <select class="form-control select2" name="reference_number" id="reference_number">
+                                                    <select class="form-control select2" name="participant" id="participant">
                                                         <option value="">-- Select Participant --</option>
+                                                        <?php foreach($participant AS $p){ ?>
+                                                            <option value="<?php echo $p->billing_id; ?>"><?php echo $p->billing_id." - ".$p->participant_name; ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </td>
                                                 <td width="44%">

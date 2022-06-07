@@ -288,7 +288,7 @@ class Reports extends CI_Controller {
 
     public function sales_ledger(){
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        //$this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $ref_no=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
@@ -310,8 +310,8 @@ class Reports extends CI_Controller {
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
             $sales_id=$this->super_model->select_column_where("collection_details","sales_id",'sales_details_id',$b->sales_detail_id);
             if($b->sales_id==$sales_id){
-                $total_solver=$b->vatable_sales + $b->zero_rated_sales + $b->vat_on_sales;
-                $total_b[]=$total_solver;
+                //$total_solver=$b->vatable_sales + $b->zero_rated_sales + $b->vat_on_sales;
+                //$total_b[]=$total_solver;
                 $data['bill'][]=array(
                     "date"=>$b->transaction_date,
                     "company_name"=>$b->company_name,
@@ -321,7 +321,8 @@ class Reports extends CI_Controller {
                     "vatable_sales"=>$b->vatable_sales,
                     "zero_rated_sales"=>$b->zero_rated_sales,
                     "vat_on_sales"=>$b->vat_on_sales,
-                    "total"=>$total_solver,
+                    "balance"=>$b->balance,
+                    //"total"=>$total_solver,
                     "vatable_total"=>'',
                     "zerorated_total"=>'',
                     "vat_total"=>'',
@@ -339,11 +340,13 @@ class Reports extends CI_Controller {
                     $vatable_total=$b->vatable_sales-$sum_amount;
                     $zerorated_total=$b->zero_rated_sales-$sum_zerorated;
                     $vat_total=$b->vat_on_sales-$sum_vat;
-                    $total_solve=$c->amount + $c->zero_rated + $c->vat;
-                    $total_c[]=$total_solve;
-                    $total=array_sum($total_b)-array_sum($total_c);
-                    
+                    //$total_solve=$c->amount + $c->zero_rated + $c->vat;
+                    //$total_c[]=$total_solve;
+                    //$total=array_sum($total_b)-array_sum($total_c);
+                    //$total=array_sum($total_b)-array_sum($total_c);
                     //$total=$b->total_amount-$sum_total;
+                    $total_b[]=$b->balance;
+                    $total_bal=array_sum($total_b);
                     $data['bill'][]=array(
                         "date"=>$c->date_collected,
                         "company_name"=>$company_name,
@@ -353,11 +356,12 @@ class Reports extends CI_Controller {
                         "vatable_sales"=>$c->amount,
                         "zero_rated_sales"=>$c->zero_rated,
                         "vat_on_sales"=>$c->vat,
-                        "total"=>$total_solve,
+                        //"total"=>$total_solve,
+                        "balance"=>"",
                         "vatable_total"=>$vatable_total,
                         "zerorated_total"=>$zerorated_total,
                         "vat_total"=>$vat_total,
-                        "total_sum"=>$total,
+                        "total_sum"=>$total_bal,
                     );
                 }
             }
