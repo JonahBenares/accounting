@@ -368,32 +368,19 @@ class Reports extends CI_Controller {
 
     public function purchases_ledger()
     {
-        $ref_no=$this->uri->segment(3);
-        $from=$this->uri->segment(4);
-        $to=$this->uri->segment(5);
-        $data['ref_no'] = $ref_no;
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+       $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
-        $sql="";
-        if($ref_no!='null'){
-           $sql.= " AND pth.reference_number = '$ref_no' AND";
-        }else {
-            $sql.= "";
-        }
-
-        if($from!='null' && $to=='null'){
-            $sql.= " AND pth.billing_from BETWEEN '$from' AND '$to' AND";
-        }else if($from!='null' && $to!='null'){
-            $sql.= " pth.billing_from BETWEEN '$from' AND '$to' AND";
-        }else {
-            $sql.= "";
-        }
-
-        if($to!='null' && $from=='null'){
-            $sql.= " AND pth.billing_to BETWEEN '$from' AND '$to' AND";
-        }else if($to!='null' && $from!='null'){
-            $sql.= " pth.billing_to BETWEEN '$from' AND '$to' AND";
+        $ref_no=$this->uri->segment(3);
+        $date_from=$this->uri->segment(4);
+        $date_to=$this->uri->segment(5);
+        $sql='';
+        if($ref_no!='null' && $date_from=='null' && $date_to=='null'){
+            $sql.= " AND pth.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $date_from!='null' && $date_to!='null'){
+            $sql.= " AND pth.reference_number = '$ref_no' AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+        }else if($ref_no=='null' && $date_from!='null' && $date_to!='null'){
+            $sql.= " AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
         }else {
             $sql.= "";
         }
@@ -401,7 +388,8 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-3);
         $data['bill']=array();
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE saved='1' $query") AS $b){
-            $purchase_id=$this->super_model->select_column_where("payment_head","purchase_id",'purchase_id',$b->purchase_id);
+            $payment_id=$this->super_model->select_column_where("payment_details","payment_id",'purchase_details_id',$b->purchase_detail_id);
+            $purchase_id=$this->super_model->select_column_where("payment_head","purchase_id",'payment_id',$payment_id);
             if($b->purchase_id==$purchase_id){
                 $total_solver=$b->vatables_purchases + $b->zero_rated_purchases + $b->vat_on_purchases;
                 $total_b[]=$total_solver;
@@ -425,13 +413,13 @@ class Reports extends CI_Controller {
 
             foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){
                 if($b->purchase_id == $c->purchase_id){
-                    $billing_id = $this->super_model->select_column_where("purchase_transaction_details","billing_id","purchase_detail_id",$c->purchase_detail_id);
+                    $billing_id = $this->super_model->select_column_where("purchase_transaction_details","billing_id","purchase_detail_id",$c->purchase_details_id);
                     $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$billing_id);
-                    $sum_amount=$this->super_model->select_sum_where("payment_details","purchase_amount","purchase_detail_id='$c->purchase_detail_id'");
-                    $zero_rated_purchases=$this->super_model->select_column_where("purchase_transaction_details","zero_rated_purchases","purchase_detail_id",$c->purchase_detail_id);
-                    $zerorated_total=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_detail_id='$c->purchase_detail_id'");
-                    $sum_vat=$this->super_model->select_sum_where("payment_details","vat","purchase_detail_id='$c->purchase_detail_id'");
-                    $sum_total=$this->super_model->select_sum_where("payment_details","total_amount","purchase_detail_id='$c->purchase_detail_id'");
+                    $sum_amount=$this->super_model->select_sum_where("payment_details","purchase_amount","purchase_details_id='$c->purchase_details_id'");
+                    $zero_rated_purchases=$this->super_model->select_column_where("purchase_transaction_details","zero_rated_purchases","purchase_detail_id",$c->purchase_details_id);
+                    $zerorated_total=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_detail_id='$c->purchase_details_id'");
+                    $sum_vat=$this->super_model->select_sum_where("payment_details","vat","purchase_details_id='$c->purchase_details_id'");
+                    $sum_total=$this->super_model->select_sum_where("payment_details","total_amount","purchase_details_id='$c->purchase_details_id'");
                     $vatable_total=$b->vatables_purchases-$sum_amount;
                     //$zerorated_total=$b->zero_rated_purchases-$sum_zerorated;
                     $zerorated_total=$zero_rated_purchases-$zerorated_total;
