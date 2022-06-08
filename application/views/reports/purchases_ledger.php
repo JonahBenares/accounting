@@ -51,10 +51,18 @@
                                         <td class="td-30 td-head" rowspan="2">Participant Name</td>
                                         <td class="td-30 td-head" rowspan="2">Description</td> 
                                         <td class="td-30 td-head" colspan="3" align="center">Vatable Sales</td> 
-                                        <td class="td-30 td-head" colspan="3" align="center">Non-Vat Purchases</td>    
+                                        <td class="td-30 td-head" colspan="3" align="center">Zero Rated Purchases</td>    
+                                        <td class="td-30 td-head" colspan="3" align="center">Zero Rated Ecozones</td>    
                                         <td class="td-30 td-head" colspan="3" align="center">Input Vat</td>
+                                        <td class="td-30 td-head" colspan="3" align="center">EWT</td>
                                     </tr>
                                     <tr>
+                                        <td class="td-30 td-head" align="center">Billing</td>
+                                        <td class="td-30 td-head" align="center">Payment</td>
+                                        <td class="td-30 td-head" align="center">Balance</td>
+                                        <td class="td-30 td-head" align="center">Billing</td>
+                                        <td class="td-30 td-head" align="center">Payment</td>
+                                        <td class="td-30 td-head" align="center">Balance</td>
                                         <td class="td-30 td-head" align="center">Billing</td>
                                         <td class="td-30 td-head" align="center">Payment</td>
                                         <td class="td-30 td-head" align="center">Balance</td>
@@ -67,62 +75,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php 
+                                        if(!empty($bill)){
+                                        foreach($bill AS $b){ 
+                                    ?>
                                     <tr>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
+                                        <td align="left"><?php echo $b['date']; ?></td>
+                                        <td align="left"><?php echo $b['company_name']; ?></td>
+                                        <td align="left"><?php echo ($b['billing_from']!='' && $b['billing_to']!='') ? date("F d,Y",strtotime($b['billing_from']))." - ".date("F d,Y",strtotime($b['billing_to'])) : ''; ?></td>
+                                        <td align="right"><?php echo number_format($b['vatables_purchases'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['purchase_amount'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['vatable_balance'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zero_rated_purchases'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zero_rated_purchases'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zerorated_balance'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zero_rated_ecozones'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zero_rated_ecozones'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['ratedecozones_balance'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['vat_on_purchases'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['vat'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['vat_balance'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['ewt'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['p_ewt'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['ewt_balance'],2); ?></td>
                                     </tr>
-                                    <tr>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                    </tr>
+                                    <?php  } } ?>
                                 </tbody>
                                 <!-- <tbody>
                                     <?php 
