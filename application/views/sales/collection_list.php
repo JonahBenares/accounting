@@ -11,19 +11,13 @@
                                     <div class="col-lg-6 col-md-6">
                                         <h4>Collection</h4>
                                     </div>
-                                    <!-- <div class="col-lg-6 col-md-6">
-                                        <div class="input-group">
-                                            <select class="custom-select" id="inputGroupSelect04">
-                                                <option selected="">Choose Participant</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary m-0" type="button" style="border-radius: 0 .25rem .25rem 0;">Search</button>
-                                            </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group pull-right">
+                                            <button type="button" class="btn btn-warning " data-target="#bulk_upload" data-toggle="modal">
+                                                <span class="fas fa-upload"></span> Bulk Upload
+                                            </button>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -136,4 +130,83 @@
 
                 
                                        
-         
+<div class="modal fade" id="bulk_upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Bulk Upload</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method='POST' action="<?php echo base_url();?>masterfile/" enctype="multipart/form-data" target='_blank'>
+                <div class="modal-body">
+                    <span class="m-b-20">
+                        <b>Important Note: </b>Make sure the columns are correct before uploading the file to make sure the data are correctly captured. Refer to the details below to ensure your columns are correctly formatted:
+                    </span>
+                    <br>
+                    <br>
+                    <table class="table-bordered" width="100%" style="font-size: 12px;">
+                        <tr>
+                            <td colspan="15">Column Description</td>
+                        </tr>
+                        <tr>
+                            <td width="6%">A</td>
+                            <td width="6%">B</td>
+                            <td width="6%">C</td>
+                            <td width="6%">D</td>
+                            <td width="6%">E</td>
+                            <td width="6%">F</td>
+                            <td width="6%">G</td>
+                            <td width="6%">H</td>
+                            <td width="6%">I</td>
+                            <td width="6%">J</td>
+                            <td width="6%">K</td>
+                            <td width="6%">L</td>
+                            <td width="6%">M</td>
+                            <td width="6%">N</td>
+                            <td width="6%">O</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top;">Item No</td>
+                            <td style="vertical-align: top;">Billing Remarks</td>
+                            <td style="vertical-align: top;">Particulars</td>
+                            <td style="vertical-align: top;">Received From (STL ID)</td>
+                            <td style="vertical-align: top;">Buyer Full Name</td>
+                            <td style="vertical-align: top;">Statement No</td>
+                            <td style="vertical-align: top;">Vatable Sales</td>
+                            <td style="vertical-align: top;">Zero Rated Sales</td>
+                            <td style="vertical-align: top;">Zero Rated Ecozone</td>
+                            <td style="vertical-align: top;">VAT on Sales</td>
+                            <td style="vertical-align: top;">Withholding Tax</td>
+                            <td style="vertical-align: top;">Total</td>
+                            <td style="vertical-align: top;">OR #</td>
+                            <td style="vertical-align: top;">Def Int</td>
+                            <td style="vertical-align: top;">Series #  </td>
+                        </tr>
+                    </table>
+                    <br>
+                    <span class="">
+                        <b>Additional Notes:</b> "Subtotal" word should be in column F. There must be a an empty row every after subtotal. 
+                    </span>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            Upload field here:
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                               <input type="file" name="excelfile_customer" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary btn-block" value='Upload'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
