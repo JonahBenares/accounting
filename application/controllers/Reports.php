@@ -83,10 +83,16 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
-            $collected=$this->super_model->select_column_where("collection_details","total","sales_details_id",$head->sales_details_id);
-            $total_amount[]=$head->total_amount;
-            $total_collection[]=$collected;
-            $total_balance[]=$head->total_amount - $collected;
+            //$collected=$this->super_model->select_column_where("collection_details","total","sales_details_id",$head->sales_details_id);
+            $amount=$this->super_model->select_column_where("collection_details","amount","sales_details_id",$head->sales_details_id);
+            $vat=$this->super_model->select_column_where("collection_details","vat","sales_details_id",$head->sales_details_id);
+            $zero_rated=$this->super_model->select_column_where("collection_details","zero_rated","sales_details_id",$head->sales_details_id);
+            $ewt=$this->super_model->select_column_where("collection_details","ewt","sales_details_id",$head->sales_details_id);
+            $totalamount=$this->super_model->select_sum_where("sales_transaction_details","total_amount","sales_id='$head->sales_id'");
+            $totalcollected=$this->super_model->select_sum_where("collection_details","total","sales_details_id='$head->sales_detail_id'");
+            $total_amount[]=$totalamount;
+            $total_collection[]=$totalcollected;
+            $total_balance[]=$totalamount - $totalcollected;
             $data['total_amount']=array_sum($total_amount);
             $data['total_collection']=array_sum($total_collection);
             $data['total_balance']=array_sum($total_balance);
@@ -95,13 +101,13 @@ class Reports extends CI_Controller {
             'tin'=>$tin,
             'participant_name'=>$company_name,
             'address'=>$registered_address,
-            'vatable_sales'=>$head->vatable_sales,
-            'zero_rated_sales'=>$head->zero_rated_sales,
+            'vatable_sales'=>$amount,
+            'zero_rated_sales'=>$zero_rated,
             'wht_agent'=>$head->wht_agent,
-            'vat_on_sales'=>$head->vat_on_sales,
+            'vat_on_sales'=>$vat,
             'billing_from'=>$head->billing_from,
             'billing_to'=>$head->billing_to,
-            'ewt'=>$head->ewt,
+            'ewt'=>$ewt,
         );
         }
         $this->load->view('reports/sales_summary',$data);
