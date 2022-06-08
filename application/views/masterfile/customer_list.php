@@ -89,11 +89,13 @@
                                                     aria-haspopup="true" aria-expanded="false">
                                                         <span class="fas fa-bars">
                                                     </button>
-                                                    <div class="dropdown-menu dropleft p-0" style="width:0px!important;text-align:center;margin-right: 10px;box-shadow: 0 0 0 rgba(0,0,0,0)!important;">
-                                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="View" href="<?php echo base_url(); ?>masterfile/customer_view/<?php echo $p['participant_id'];?>"><span class="fas fa-eye m-0"></span></a>
-                                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Update" href="<?php echo base_url(); ?>masterfile/customer_update/<?php echo $p['participant_id'];?>"><span class="far fa-edit m-0"></span></a>
-                                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Delete" href="<?php echo base_url(); ?>masterfile/customer_delete/<?php echo $p['participant_id'];?>" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash m-0"></span></a>
-                                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Sub Company" href="javascript:void(0)" onclick="subparticipant('<?php echo base_url(); ?>','<?php echo $p['participant_id']; ?>')"><span class="fas fa-building m-0"></span></a>
+                                                    <div class="dropdown-menu dropleft p-0" style="width:0px!important;text-align:center;box-shadow: 0 0 0 rgba(0,0,0,0)!important;background: #fff0;">
+                                                        <span style="background:#fff;">
+                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" data-original-title="View" href="<?php echo base_url(); ?>masterfile/customer_view/<?php echo $p['participant_id'];?>"><span class="fas fa-eye m-0"></span></a>
+                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update" data-original-title="Update" href="<?php echo base_url(); ?>masterfile/customer_update/<?php echo $p['participant_id'];?>"><span class="far fa-edit m-0"></span></a>
+                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete" data-original-title="Delete" href="<?php echo base_url(); ?>masterfile/customer_delete/<?php echo $p['participant_id'];?>" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash m-0"></span></a>
+                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Add Sub Company" data-original-title="Add Sub Company" href="javascript:void(0)" onclick="subparticipant('<?php echo base_url(); ?>','<?php echo $p['participant_id']; ?>')"><span class="fas fa-building m-0"></span></a>
+                                                        </span>
                                                     </div>
                                                 </div> 
                                             </td>  
