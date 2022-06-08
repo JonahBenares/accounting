@@ -83,10 +83,16 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
-            $collected=$this->super_model->select_column_where("collection_details","total","sales_details_id",$head->sales_details_id);
-            $total_amount[]=$head->total_amount;
-            $total_collection[]=$collected;
-            $total_balance[]=$head->total_amount - $collected;
+            //$collected=$this->super_model->select_column_where("collection_details","total","sales_details_id",$head->sales_details_id);
+            $amount=$this->super_model->select_column_where("collection_details","amount","sales_details_id",$head->sales_details_id);
+            $vat=$this->super_model->select_column_where("collection_details","vat","sales_details_id",$head->sales_details_id);
+            $zero_rated=$this->super_model->select_column_where("collection_details","zero_rated","sales_details_id",$head->sales_details_id);
+            $ewt=$this->super_model->select_column_where("collection_details","ewt","sales_details_id",$head->sales_details_id);
+            $totalamount=$this->super_model->select_sum_where("sales_transaction_details","total_amount","sales_id='$head->sales_id'");
+            $totalcollected=$this->super_model->select_sum_where("collection_details","total","sales_details_id='$head->sales_detail_id'");
+            $total_amount[]=$totalamount;
+            $total_collection[]=$totalcollected;
+            $total_balance[]=$totalamount - $totalcollected;
             $data['total_amount']=array_sum($total_amount);
             $data['total_collection']=array_sum($total_collection);
             $data['total_balance']=array_sum($total_balance);
@@ -95,13 +101,13 @@ class Reports extends CI_Controller {
             'tin'=>$tin,
             'participant_name'=>$company_name,
             'address'=>$registered_address,
-            'vatable_sales'=>$head->vatable_sales,
-            'zero_rated_sales'=>$head->zero_rated_sales,
+            'vatable_sales'=>$amount,
+            'zero_rated_sales'=>$zero_rated,
             'wht_agent'=>$head->wht_agent,
-            'vat_on_sales'=>$head->vat_on_sales,
+            'vat_on_sales'=>$vat,
             'billing_from'=>$head->billing_from,
             'billing_to'=>$head->billing_to,
-            'ewt'=>$head->ewt,
+            'ewt'=>$ewt,
         );
         }
         $this->load->view('reports/sales_summary',$data);
@@ -163,25 +169,47 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
-            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$head->purchase_detail_id);
-            $total_amount[]=$head->total_amount;
-            $total_paid[]=$payment_amount;
-            $total_balance[]=$head->total_amount - $payment_amount;
+            //$payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$head->purchase_detail_id);
+            $mode=$this->super_model->select_column_where("payment_details","purchase_mode","purchase_details_id",$head->purchase_detail_id);
+            $vat=$this->super_model->select_column_where("payment_details","vat","purchase_details_id",$head->purchase_detail_id);
+            $ewt=$this->super_model->select_column_where("payment_details","ewt","purchase_details_id",$head->purchase_detail_id);
+            $purchase_amount=$this->super_model->select_column_where("payment_details","purchase_amount","purchase_details_id",$head->purchase_detail_id);
+            $totalamount=$this->super_model->select_sum_where("purchase_transaction_details","total_amount","purchase_id='$head->purchase_id'");
+            $totalpaid=$this->super_model->select_sum_where("payment_details","total_amount","purchase_details_id='$head->purchase_detail_id'");
+            $total_amount[]=$totalamount;
+            $total_paid[]=$totalpaid;
+            $total_balance[]=$totalamount - $totalpaid;
             $data['total_amount']=array_sum($total_amount);
             $data['total_paid']=array_sum($total_paid);
             $data['total_balance']=array_sum($total_balance);
+
+            if($mode=='Vatable Purchase'){
+                $vat_on_purchases=$vat;
+                $zero_rated='0.00';
+                $rated_ecozones='0.00';
+            }else if($mode=='Zero-Rated Purchase'){
+                $vat_on_purchases='0.00';
+                $zero_rated=$vat;
+                $rated_ecozones='0.00';
+            }else if($mode=='Zero-Rated Ecozones Purchase'){
+                $vat_on_purchases='0.00';
+                $zero_rated='0.00';
+                $rated_ecozones=$vat;
+            }
+
             $data['purchases'][] = array( 
             'transaction_date'=>$head->transaction_date,
             'tin'=>$tin,
             'participant_name'=>$company_name,
             'address'=>$registered_address,
-            'vatable_purchases'=>$head->vatables_purchases,
-            'zero_rated_purchases'=>$head->zero_rated_purchases,
+            'vatable_purchases'=>$purchase_amount,
+            'zero_rated_purchases'=>$zero_rated,
+            'zero_rated_ecozones'=>$rated_ecozones,
             'wht_agent'=>$head->wht_agent,
-            'vat_on_purchases'=>$head->vat_on_purchases,
+            'vat_on_purchases'=>$vat_on_purchases,
             'billing_from'=>$head->billing_from,
             'billing_to'=>$head->billing_to,
-            'ewt'=>$head->ewt,
+            'ewt'=>$ewt,
             );
         }
         $this->load->view('reports/purchases_summary',$data);
@@ -366,12 +394,23 @@ class Reports extends CI_Controller {
             //if($b->purchase_id==$c->purchase_id){
                 //$total_solver=$b->vatables_purchases + $b->zero_rated_purchases + $b->vat_on_purchases;
                 //$total_b[]=$total_solver;
-                $zero_rated_purchases=$this->super_model->select_column_where("purchase_transaction_details","zero_rated_purchases","purchase_detail_id",$c->purchase_details_id);
-                $zero_rated_ecozones=$this->super_model->select_column_where("purchase_transaction_details","zero_rated_ecozones","purchase_detail_id",$c->purchase_details_id);
+            if($c->purchase_mode=='Vatable Purchase'){
+                $vat_on_purchases=$c->vat;
+                $zero_rated='0.00';
+                $rated_ecozones='0.00';
+            }else if($c->purchase_mode=='Zero-Rated Purchase'){
+                $vat_on_purchases='0.00';
+                $zero_rated=$c->vat;
+                $rated_ecozones='0.00';
+            }else if($c->purchase_mode=='Zero-Rated Ecozones Purchase'){
+                $vat_on_purchases='0.00';
+                $zero_rated='0.00';
+                $rated_ecozones=$c->vat;
+            }
                 $vatable_balance=$b->vatables_purchases - $c->purchase_amount;
-                $zerorated_balance=$b->zero_rated_purchases - $zero_rated_purchases;
-                $ratedecozones_balance=$b->zero_rated_ecozones - $zero_rated_ecozones;
-                $vat_balance=$b->vat_on_purchases - $c->vat;
+                $zerorated_balance=$b->zero_rated_purchases - $zero_rated;
+                $ratedecozones_balance=$b->zero_rated_ecozones - $rated_ecozones;
+                $vat_balance=$b->vat_on_purchases - $vat_on_purchases;
                 $ewt_balance=$b->ewt - $c->ewt;
                 $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$b->billing_id);
                 $data['bill'][]=array(
@@ -383,9 +422,11 @@ class Reports extends CI_Controller {
                     "vatables_purchases"=>$b->vatables_purchases,
                     "purchase_amount"=>$c->purchase_amount,
                     "zero_rated_purchases"=>$b->zero_rated_purchases,
+                    "zero_rated"=>$zero_rated,
                     "zero_rated_ecozones"=>$b->zero_rated_ecozones,
+                    "rated_ecozones"=>$rated_ecozones,
                     "vat_on_purchases"=>$b->vat_on_purchases,
-                    "vat"=>$c->vat,
+                    "vat"=>$vat_on_purchases,
                     "ewt"=>$b->ewt,
                     "p_ewt"=>$c->ewt,
                     "vatable_balance"=>$vatable_balance,
