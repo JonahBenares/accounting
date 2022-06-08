@@ -47,18 +47,84 @@
                             <table class="table table-bordered table-hover" style="width:100%;">
                                 <thead>
                                     <tr>
-                                        <td class="td-30 td-head">Date</td>
-                                        <td class="td-30 td-head">Participant Name</td>
-                                        <td class="td-30 td-head">Description</td>
-                                        <td class="td-30 td-head">Method</td>  
-                                        <!-- <td class="td-30 td-head">Collection</td>  --> 
-                                        <td class="td-30 td-head">Vatable Purchases</td> 
-                                        <td class="td-30 td-head">Non-Vat Purchases</td>    
-                                        <td class="td-30 td-head">Input Vat</td>
-                                        <td class="td-30 td-head">Balance</td>
+                                        <td class="td-30 td-head" rowspan="2">Date</td>
+                                        <td class="td-30 td-head" rowspan="2">Participant Name</td>
+                                        <td class="td-30 td-head" rowspan="2">Description</td> 
+                                        <td class="td-30 td-head" colspan="3" align="center">Vatable Sales</td> 
+                                        <td class="td-30 td-head" colspan="3" align="center">Non-Vat Purchases</td>    
+                                        <td class="td-30 td-head" colspan="3" align="center">Input Vat</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-30 td-head" align="center">Billing</td>
+                                        <td class="td-30 td-head" align="center">Payment</td>
+                                        <td class="td-30 td-head" align="center">Balance</td>
+                                        <td class="td-30 td-head" align="center">Billing</td>
+                                        <td class="td-30 td-head" align="center">Payment</td>
+                                        <td class="td-30 td-head" align="center">Balance</td>
+                                        <td class="td-30 td-head" align="center">Billing</td>
+                                        <td class="td-30 td-head" align="center">Payment</td>
+                                        <td class="td-30 td-head" align="center">Balance</td>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td align="left">02211</td>
+                                        <td align="left">02211</td>
+                                        <td align="left">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">02211</td>
+                                        <td align="left">02211</td>
+                                        <td align="left">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">02211</td>
+                                        <td align="left">02211</td>
+                                        <td align="left">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">02211</td>
+                                        <td align="left">02211</td>
+                                        <td align="left">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                        <td align="right">02211</td>
+                                    </tr>
+                                </tbody>
+                                <!-- <tbody>
                                     <?php 
                                         if(!empty($bill)){
                                         foreach($bill AS $b){ 
@@ -92,7 +158,7 @@
                                         <td class="td-30 td-yellow" align="right"><b><?php echo number_format($total_sum,2); ?></b></td>
                                     </tr>
                                     <?php  } ?>
-                                </tbody>
+                                </tbody>     -->
                             </table>
                         </div>
                     </div>

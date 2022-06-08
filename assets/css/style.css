@@ -843,7 +843,7 @@
 .card.card-sm-6 .card-chart canvas{height:85px !important}
 .card.card-hero .card-header{padding:25px}}
 .table td,.table:not(.table-bordered) th{border-top:none}
-.table:not(.table-sm):not(.table-md):not(.dataTable) td,.table:not(.table-sm):not(.table-md):not(.dataTable) th{padding:0 10px;height:60px;vertical-align:middle}
+.table:not(.table-sm):not(.table-md):not(.dataTable) td,.table:not(.table-sm):not(.table-md):not(.dataTable) th{padding:0 10px;vertical-align:top}
 .table:not(.table-sm) thead th{border-bottom:none;background-color:rgba(0,0,0,0.04);color:#666;padding-top:15px;padding-bottom:15px}
 .table.table-md th,.table.table-md td{padding:10px 15px}
 .table.table-bordered td,.table.table-bordered th{border-color:#f6f6f6}
