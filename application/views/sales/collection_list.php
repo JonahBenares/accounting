@@ -146,26 +146,26 @@
                     </span>
                     <br>
                     <br>
-                    <table class="table-bordered" width="100%" style="font-size: 12px;">
+                    <table class="table-bordered" width="100%" style="font-size: 13px;">
                         <tr>
                             <td colspan="15">Column Description</td>
                         </tr>
                         <tr>
-                            <td width="6%">A</td>
-                            <td width="6%">B</td>
-                            <td width="6%">C</td>
-                            <td width="6%">D</td>
-                            <td width="6%">E</td>
-                            <td width="6%">F</td>
-                            <td width="6%">G</td>
-                            <td width="6%">H</td>
-                            <td width="6%">I</td>
-                            <td width="6%">J</td>
-                            <td width="6%">K</td>
-                            <td width="6%">L</td>
-                            <td width="6%">M</td>
-                            <td width="6%">N</td>
-                            <td width="6%">O</td>
+                            <td width="6%" align="center">A</td>
+                            <td width="6%" align="center">B</td>
+                            <td width="6%" align="center">C</td>
+                            <td width="6%" align="center">D</td>
+                            <td width="6%" align="center">E</td>
+                            <td width="6%" align="center">F</td>
+                            <td width="6%" align="center">G</td>
+                            <td width="6%" align="center">H</td>
+                            <td width="6%" align="center">I</td>
+                            <td width="6%" align="center">J</td>
+                            <td width="6%" align="center">K</td>
+                            <td width="6%" align="center">L</td>
+                            <td width="6%" align="center">M</td>
+                            <td width="6%" align="center">N</td>
+                            <td width="6%" align="center">O</td>
                         </tr>
                         <tr>
                             <td style="vertical-align: top;">Item No</td>
