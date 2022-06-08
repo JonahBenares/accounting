@@ -73,7 +73,8 @@
                                         <td>Address</td> 
                                         <td>Description</td>     
                                         <td>Vatable Purchases</td>  
-                                        <td>Non-Vatable Purchases</td>    
+                                        <td>Zero Rated Purchases</td>    
+                                        <td>Zero Rated Ecozones</td>    
                                         <td>Vat on Purchases </td> 
                                         <td>Withholding Tax</td>
                                     </tr>
@@ -87,9 +88,10 @@
                                         <td><?php echo $s['participant_name']; ?></td>
                                         <td><?php echo $s['address']; ?></td>
                                         <td><?php echo date("F d,Y",strtotime($s['billing_from']))." - ".date("F d,Y",strtotime($s['billing_to']));?></td>
-                                        <td><?php echo number_format($s['vatable_purchases']); ?></td>
-                                        <td><?php echo number_format($s['zero_rated_purchases']); ?></td>
-                                        <td><?php echo number_format($s['vat_on_purchases']); ?></td>
+                                        <td><?php echo number_format($s['vatable_purchases'],2); ?></td>
+                                        <td><?php echo number_format($s['zero_rated_purchases'],2); ?></td>
+                                        <td><?php echo number_format($s['zero_rated_ecozones'],2); ?></td>
+                                        <td><?php echo number_format($s['vat_on_purchases'],2); ?></td>
                                         <td><?php echo number_format($s['ewt'],2);?></td>
                                     </tr>
                                     <?php } }?>

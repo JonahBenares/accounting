@@ -87,10 +87,10 @@
                                         <td align="right"><?php echo number_format($b['purchase_amount'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['vatable_balance'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['zero_rated_purchases'],2); ?></td>
-                                        <td align="right"><?php echo number_format($b['zero_rated_purchases'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zero_rated'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['zerorated_balance'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['zero_rated_ecozones'],2); ?></td>
-                                        <td align="right"><?php echo number_format($b['zero_rated_ecozones'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['rated_ecozones'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['ratedecozones_balance'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['vat_on_purchases'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['vat'],2); ?></td>
