@@ -70,62 +70,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php 
+                                        if(!empty($bill)){
+                                        foreach($bill AS $b){ 
+                                            /*$vatable_sum[]=$b['vatable_total'];
+                                            $zerorated_sum[]=$b['zerorated_total'];
+                                            $vat_sum[]=$b['vat_total'];
+                                            $total_sum=$b['total_sum'];*/
+                                    ?>
                                     <tr>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
+                                        <td align="left"><?php echo $b['date']; ?></td>
+                                        <td align="left"><?php echo $b['company_name']; ?></td>
+                                        <td align="left"><?php echo ($b['billing_from']!='' && $b['billing_to']!='') ? date("F d,Y",strtotime($b['billing_from']))." - ".date("F d,Y",strtotime($b['billing_to'])) : ''; ?></td>
+                                        <td align="right"><?php echo number_format($b['vatable_sales'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['cvatable_sales'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['vatablebalance'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zero_rated_sales'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['czero_rated_sales'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zerobalance'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['vat_on_sales'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['cvat_on_sales'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['vatbalance'],2); ?></td>
                                     </tr>
-                                    <tr>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="left">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                        <td align="right">02211</td>
-                                    </tr>
+                                     <?php } } ?>
                                 </tbody>
                                 <!-- <tbody>
                                     <?php 
