@@ -340,11 +340,15 @@ class Reports extends CI_Controller {
             if($b->sales_id==$sales_id){
                 $amount=$this->super_model->select_sum_where("collection_details","amount","sales_details_id='$b->sales_detail_id'");
                 $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","sales_details_id='$b->sales_detail_id'");
+                $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","sales_details_id='$b->sales_detail_id'");
                 $vat=$this->super_model->select_sum_where("collection_details","vat","sales_details_id='$b->sales_detail_id'");
+                $ewt=$this->super_model->select_sum_where("collection_details","ewt","sales_details_id='$b->sales_detail_id'");
 
                 $vatablebalance=$b->vatable_sales - $amount;
                 $zerobalance=$b->zero_rated_sales - $zero_rated;
+                $zeroecobalance=$b->zero_rated_ecozones - $zero_rated_ecozone;
                 $vatbalance=$b->vat_on_sales - $vat;
+                $ewtbalance=$b->ewt - $ewt;
                 $data['bill'][]=array(
                     "date"=>$b->transaction_date,
                     "company_name"=>$b->company_name,
@@ -352,13 +356,19 @@ class Reports extends CI_Controller {
                     "billing_to"=>$b->billing_to,
                     "vatable_sales"=>$b->vatable_sales,
                     "zero_rated_sales"=>$b->zero_rated_sales,
+                    "zero_rated_ecozones"=>$b->zero_rated_ecozones,
                     "vat_on_sales"=>$b->vat_on_sales,
+                    "ewt"=>$b->ewt,
                     "vatablebalance"=>$vatablebalance,
                     "zerobalance"=>$zerobalance,
+                    "zeroecobalance"=>$zeroecobalance,
                     "vatbalance"=>$vatbalance,
+                    "ewtbalance"=>$ewtbalance,
                     "cvatable_sales"=>$amount,
                     "czero_rated_sales"=>$zero_rated,
+                    "czero_rated_ecozone"=>$zero_rated_ecozone,
                     "cvat_on_sales"=>$vat,
+                    "cewt"=>$ewt,
                 );
             }
         }

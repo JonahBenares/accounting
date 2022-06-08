@@ -282,15 +282,6 @@ $(document).on("click", "#seriesupdate", function () {
 
 });
 
-/*function calculateSales(){
- 	var amount = document.getElementById("amount").value;
-    var vat = document.getElementById("vat").value;
-    var ewt = document.getElementById("ewt").value;
-    var zero_rated = document.getElementById("zero_rated").value;
-    var zero_rated_ecozone = document.getElementById("zero_rated_ecozone").value;
-    $('#total_amount').val((amount + vat ? amount + vat : 0).toFixed(2));
-}*/
-
 function calculateSales(){
     var amount = document.getElementById("amount").value;
     var vat = document.getElementById("vat").value;
