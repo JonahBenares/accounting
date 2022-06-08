@@ -209,9 +209,21 @@ function collection_filter() {
 }
 
 function collected_filter() {
-	 var ref_number = document.getElementById("ref_number").value; 
-	  var loc= document.getElementById("baseurl").value;
-	  window.location=loc+'sales/collected_list/'+ref_number;
+	var ref_number = document.getElementById("ref_number").value;
+	var participant = document.getElementById("participant").value;  
+	var loc= document.getElementById("baseurl").value;
+	if(ref_number!=''){
+		var ref=ref_number;
+	}else{
+		var ref='null';
+	}
+
+	if(participant!=''){
+		var par=participant;
+	}else{
+		var par='null';
+	}
+	window.location=loc+'sales/collected_list/'+ref+'/'+par;
 
 }
 

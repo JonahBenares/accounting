@@ -534,38 +534,34 @@ class Purchases extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $ref_no=$this->uri->segment(3);
+        $participant=$this->uri->segment(4);
         $data['ref_no']=$ref_no;
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
-        foreach($this->super_model->custom_query("SELECT * FROM payment p INNER JOIN purchase_transaction_details pd ON p.purchase_detail_id=pd.purchase_detail_id INNER JOIN purchase_transaction_head ph ON p.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
-            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
-            $payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$d->purchase_detail_id);
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $sql="";
+        if($ref_no!='null' && $participant=='null'){
+           $sql.= " AND pth.reference_number = '$ref_no' AND";
+        }else if($ref_no!='null' && $participant!='null'){
+            $sql.= " AND pth.reference_number = '$ref_no' AND ptd.billing_id = '$participant' AND";
+        }else if($ref_no=='null' && $participant!='null'){
+            $sql.= " AND ptd.billing_id = '$participant' AND";
+        }else {
+            $sql.= "";
+        }
+        $query=substr($sql,0,-3);
+        foreach($this->super_model->custom_query("SELECT pd.purchase_details_id,ph.purchase_id,ph.payment_date,ph.payment_mode,pd.purchase_mode,pd.purchase_amount,pd.vat,pd.ewt,pd.total_amount FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id INNER JOIN purchase_transaction_head pth ON ph.purchase_id=pth.purchase_id INNER JOIN purchase_transaction_details ptd ON pd.purchase_details_id=ptd.purchase_detail_id WHERE saved='1' $query") AS $d){
+            $billing_id=$this->super_model->select_column_where("purchase_transaction_details","billing_id","purchase_detail_id",$d->purchase_details_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$billing_id);
             $data['details'][]=array(
-                'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
                 'payment_date'=>$d->payment_date,
-                'company_name'=>$d->particulars,
+                'company_name'=>$company_name,
+                'payment_mode'=>$d->payment_mode,
                 'purchase_mode'=>$d->purchase_mode,
                 'purchase_amount'=>$d->purchase_amount,
                 'vat'=>$d->vat,
                 'ewt'=>$d->ewt,
                 'total_amount'=>$d->total_amount,
-                'payment_mode'=>$d->payment_mode,
-                'facility_type'=>$d->facility_type,
-                'wht_agent'=>$d->wht_agent,
-                'ith_tag'=>$d->ith_tag,
-                'non_vatable'=>$d->non_vatable,
-                'zero_rated'=>$d->zero_rated,
-                'vatables_purchases'=>$d->vatables_purchases,
-                'vat_on_purchases'=>$d->vat_on_purchases,
-                'zero_rated_purchases'=>$d->zero_rated_purchases,
-                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
-                'serial_no'=>$d->serial_no,
-                'reference_number'=>$d->reference_number,
-                'transaction_date'=>$d->transaction_date,
-                'billing_from'=>$d->billing_from,
-                'billing_to'=>$d->billing_to,
-                'due_date'=>$d->due_date,
-                'print_counter'=>$d->print_counter
             );
         }
         $this->load->view('purchases/paid_list',$data);

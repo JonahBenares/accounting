@@ -57,7 +57,7 @@
                                         <td class="td-30 td-head">Vatable Sales</td> 
                                         <td class="td-30 td-head">Zero-Rated Sales</td>    
                                         <td class="td-30 td-head">Output Vat</td>
-                                        <td class="td-30 td-head">Total</td>
+                                        <td class="td-30 td-head">Balance</td>
                                         <!-- <td class="td-30 td-head">Balance</td> -->
                                         
                                     </tr>
@@ -79,7 +79,7 @@
                                         <td class="td-30" align="right"><?php echo number_format($b['vatable_sales'],2); ?></td>
                                         <td class="td-30" align="right"><?php echo number_format($b['zero_rated_sales'],2); ?></td>
                                         <td class="td-30" align="right"><?php echo number_format($b['vat_on_sales'],2); ?></td>
-                                        <td class="td-30" align="right"><?php echo number_format($b['total'],2); ?></td>
+                                        <td class="td-30" align="right"><?php echo $b['balance']; ?></td>
                                     </tr>
                                     <?php 
                                         } 
@@ -93,7 +93,7 @@
                                         <td class="td-30 td-yellow" align="right"><b><?php echo number_format($vatable_arraysum,2); ?></b></td>
                                         <td class="td-30 td-yellow" align="right"><b><?php echo number_format($zerorated_arraysum,2); ?></b></td>
                                         <td class="td-30 td-yellow" align="right"><b><?php echo number_format($vat_arraysum,2); ?></b></td>
-                                        <td class="td-30 td-yellow" align="right"><b><?php echo number_format($total_sum,2); ?></b></td>
+                                        <td class="td-30 td-yellow" align="right"><b><?php echo $total_sum; ?></b></td>
                                     </tr>
                                     <?php  } ?>
                                 </tbody>

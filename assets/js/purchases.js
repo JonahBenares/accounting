@@ -178,8 +178,20 @@ function payment_filter() {
 
 function paid_filter() {
     var ref_no= document.getElementById("reference_number").value;
+    var participant= document.getElementById("participant").value;
     var loc= document.getElementById("baseurl").value;
-    window.location=loc+'purchases/paid_list/'+ref_no; 
+    if(ref_no!=''){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(participant!=''){
+        var par=participant;
+    }else{
+        var par='null';
+    }
+    window.location=loc+'purchases/paid_list/'+ref+'/'+par; 
 }
 
 function savePayment(){
