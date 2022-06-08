@@ -310,60 +310,28 @@ class Reports extends CI_Controller {
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
             $sales_id=$this->super_model->select_column_where("collection_details","sales_id",'sales_details_id',$b->sales_detail_id);
             if($b->sales_id==$sales_id){
-                //$total_solver=$b->vatable_sales + $b->zero_rated_sales + $b->vat_on_sales;
-                //$total_b[]=$total_solver;
+                $amount=$this->super_model->select_sum_where("collection_details","amount","sales_details_id='$b->sales_detail_id'");
+                $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","sales_details_id='$b->sales_detail_id'");
+                $vat=$this->super_model->select_sum_where("collection_details","vat","sales_details_id='$b->sales_detail_id'");
+
+                $vatablebalance=$b->vatable_sales - $amount;
+                $zerobalance=$b->zero_rated_sales - $zero_rated;
+                $vatbalance=$b->vat_on_sales - $vat;
                 $data['bill'][]=array(
                     "date"=>$b->transaction_date,
                     "company_name"=>$b->company_name,
                     "billing_from"=>$b->billing_from,
                     "billing_to"=>$b->billing_to,
-                    "method"=>'Bill',
                     "vatable_sales"=>$b->vatable_sales,
                     "zero_rated_sales"=>$b->zero_rated_sales,
                     "vat_on_sales"=>$b->vat_on_sales,
-                    "balance"=>$b->balance,
-                    //"total"=>$total_solver,
-                    "vatable_total"=>'',
-                    "zerorated_total"=>'',
-                    "vat_total"=>'',
-                    "total_sum"=>'',
+                    "vatablebalance"=>$vatablebalance,
+                    "zerobalance"=>$zerobalance,
+                    "vatbalance"=>$vatbalance,
+                    "cvatable_sales"=>$amount,
+                    "czero_rated_sales"=>$zero_rated,
+                    "cvat_on_sales"=>$vat,
                 );
-            }
-
-            foreach($this->super_model->select_custom_where("collection_details","sales_id='$b->sales_id' AND sales_details_id='$b->sales_detail_id'") AS $c){
-                if($b->sales_id == $c->sales_id){
-                    $company_name=$this->super_model->select_column_where("sales_transaction_details","company_name","sales_detail_id",$c->sales_details_id);
-                    $sum_amount=$this->super_model->select_sum_where("collection_details","amount","sales_details_id='$b->sales_detail_id'");
-                    $sum_zerorated=$this->super_model->select_sum_where("collection_details","zero_rated","sales_details_id='$b->sales_detail_id'");
-                    $sum_vat=$this->super_model->select_sum_where("collection_details","vat","sales_details_id='$b->sales_detail_id'");
-                    $sum_total=$this->super_model->select_sum_where("collection_details","total","sales_details_id='$b->sales_detail_id'");
-                    $vatable_total=$b->vatable_sales-$sum_amount;
-                    $zerorated_total=$b->zero_rated_sales-$sum_zerorated;
-                    $vat_total=$b->vat_on_sales-$sum_vat;
-                    //$total_solve=$c->amount + $c->zero_rated + $c->vat;
-                    //$total_c[]=$total_solve;
-                    //$total=array_sum($total_b)-array_sum($total_c);
-                    //$total=array_sum($total_b)-array_sum($total_c);
-                    //$total=$b->total_amount-$sum_total;
-                    $total_b[]=$b->balance;
-                    $total_bal=array_sum($total_b);
-                    $data['bill'][]=array(
-                        "date"=>$c->date_collected,
-                        "company_name"=>$company_name,
-                        "billing_from"=>'',
-                        "billing_to"=>'',
-                        "method"=>'Collect',
-                        "vatable_sales"=>$c->amount,
-                        "zero_rated_sales"=>$c->zero_rated,
-                        "vat_on_sales"=>$c->vat,
-                        //"total"=>$total_solve,
-                        "balance"=>"",
-                        "vatable_total"=>$vatable_total,
-                        "zerorated_total"=>$zerorated_total,
-                        "vat_total"=>$vat_total,
-                        "total_sum"=>$total_bal,
-                    );
-                }
             }
         }
         $this->load->view('reports/sales_ledger',$data);
@@ -392,30 +360,49 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-3);
         $data['bill']=array();
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE saved='1' $query") AS $b){
-            $payment_id=$this->super_model->select_column_where("payment_details","payment_id",'purchase_details_id',$b->purchase_detail_id);
-            $purchase_id=$this->super_model->select_column_where("payment_head","purchase_id",'payment_id',$payment_id);
-            if($b->purchase_id==$purchase_id){
-                $total_solver=$b->vatables_purchases + $b->zero_rated_purchases + $b->vat_on_purchases;
-                $total_b[]=$total_solver;
+            //$payment_id=$this->super_model->select_column_where("payment_details","payment_id",'purchase_details_id',$b->purchase_detail_id);
+            //$purchase_id=$this->super_model->select_column_where("payment_head","purchase_id",'payment_id',$payment_id);
+                foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){
+            //if($b->purchase_id==$c->purchase_id){
+                //$total_solver=$b->vatables_purchases + $b->zero_rated_purchases + $b->vat_on_purchases;
+                //$total_b[]=$total_solver;
+                $zero_rated_purchases=$this->super_model->select_column_where("purchase_transaction_details","zero_rated_purchases","purchase_detail_id",$c->purchase_details_id);
+                $zero_rated_ecozones=$this->super_model->select_column_where("purchase_transaction_details","zero_rated_ecozones","purchase_detail_id",$c->purchase_details_id);
+                $vatable_balance=$b->vatables_purchases - $c->purchase_amount;
+                $zerorated_balance=$b->zero_rated_purchases - $zero_rated_purchases;
+                $ratedecozones_balance=$b->zero_rated_ecozones - $zero_rated_ecozones;
+                $vat_balance=$b->vat_on_purchases - $c->vat;
+                $ewt_balance=$b->ewt - $c->ewt;
                 $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$b->billing_id);
                 $data['bill'][]=array(
                     "date"=>$b->transaction_date,
                     "company_name"=>$company_name,
                     "billing_from"=>$b->billing_from,
                     "billing_to"=>$b->billing_to,
-                    "method"=>'Bill',
+                    //"method"=>'Bill',
                     "vatables_purchases"=>$b->vatables_purchases,
+                    "purchase_amount"=>$c->purchase_amount,
                     "zero_rated_purchases"=>$b->zero_rated_purchases,
+                    "zero_rated_ecozones"=>$b->zero_rated_ecozones,
                     "vat_on_purchases"=>$b->vat_on_purchases,
-                    "total"=>$total_solver,
-                    "vatable_total"=>'',
-                    "zerorated_total"=>'',
-                    "vat_total"=>'',
-                    "total_sum"=>'',
+                    "vat"=>$c->vat,
+                    "ewt"=>$b->ewt,
+                    "p_ewt"=>$c->ewt,
+                    "vatable_balance"=>$vatable_balance,
+                    "zerorated_balance"=>$zerorated_balance,
+                    "ratedecozones_balance"=>$ratedecozones_balance,
+                    "vat_balance"=>$vat_balance,
+                    "ewt_balance"=>$ewt_balance,
+                    //"total"=>$total_solver,
+                    //"vatable_total"=>'',
+                    //"zerorated_total"=>'',
+                    //"vat_total"=>'',
+                    //"total_sum"=>'',
                 );
-            }
+            //}
+        }
 
-            foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){
+/*            foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){
                 if($b->purchase_id == $c->purchase_id){
                     $billing_id = $this->super_model->select_column_where("purchase_transaction_details","billing_id","purchase_detail_id",$c->purchase_details_id);
                     $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$billing_id);
@@ -449,7 +436,7 @@ class Reports extends CI_Controller {
                         "total_sum"=>$total,
                     );
                 }
-            }
+            }*/
         }
         $this->load->view('reports/purchases_ledger',$data);
         $this->load->view('template/footer');
