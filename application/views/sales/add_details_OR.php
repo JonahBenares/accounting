@@ -1,3 +1,4 @@
+<script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <div class="card">
     <form id='collectiondetails'>
@@ -29,21 +30,21 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" class="form-control" name="amount" id="amount" onkeypress="return isNumberKey(event)">
+                        <input type="text" class="form-control" name="amount" id="amount" onkeypress="return isNumberKey(event)" onkeyup='calculateSales()'>
                     </div>
                     <div class="form-group">
                         <label>Zero Rated</label>
-                        <input type="text" style="text-align:right" class="form-control" name="zero_rated" id="zero_rated" onkeypress="return isNumberKey(event)">
+                        <input type="text" style="text-align:right" class="form-control" name="zero_rated" id="zero_rated" onkeypress="return isNumberKey(event)" onkeyup='calculateSales()'>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>VAT</label>
-                        <input type="text" style="text-align:right" class="form-control" name="vat" id="vat" onkeypress="return isNumberKey(event)">
+                        <input type="text" style="text-align:right" class="form-control" name="vat" id="vat" onkeypress="return isNumberKey(event)" onkeyup='calculateSales()'>
                     </div>
                     <div class="form-group">
                         <label>Zero Rated EcoZones</label>
-                        <input type="text" style="text-align:right" class="form-control" name="zero_rated_ecozone" id="zero_rated_ecozone" onkeypress="return isNumberKey(event)">
+                        <input type="text" style="text-align:right" class="form-control" name="zero_rated_ecozone" id="zero_rated_ecozone" onkeypress="return isNumberKey(event)" onkeyup='calculateSales()'>
                     </div>
                 </div>
             </div>
@@ -52,7 +53,14 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>EWT</label>
-                        <input type="text" style="text-align:right" class="form-control" name="ewt" id="ewt" onkeypress="return isNumberKey(event)">
+                        <input type="text" style="text-align:right" class="form-control" name="ewt" id="ewt" onkeypress="return isNumberKey(event)" onkeyup='calculateSales()'>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label>Total Amount</label>
+                        <input type="text" style="text-align:right" class="form-control" name="total_amount" id="total_amount" onkeypress="return isNumberKey(event)" readonly="">
                     </div>
                 </div>
            

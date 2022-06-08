@@ -281,3 +281,51 @@ $(document).on("click", "#seriesupdate", function () {
 	 $("#old_series_no").val(series_number);
 
 });
+
+/*function calculateSales(){
+ 	var amount = document.getElementById("amount").value;
+    var vat = document.getElementById("vat").value;
+    var ewt = document.getElementById("ewt").value;
+    var zero_rated = document.getElementById("zero_rated").value;
+    var zero_rated_ecozone = document.getElementById("zero_rated_ecozone").value;
+    $('#total_amount').val((amount + vat ? amount + vat : 0).toFixed(2));
+}*/
+
+function calculateSales(){
+    var amount = document.getElementById("amount").value;
+    var vat = document.getElementById("vat").value;
+    var ewt = document.getElementById("ewt").value;
+    var zero_rated = document.getElementById("zero_rated").value;
+    var zero_rated_ecozone = document.getElementById("zero_rated_ecozone").value;
+    if(amount==0){
+    	var amnt=0;
+    }else{
+    	var amnt=amount;
+    }
+
+    if(vat==0){
+    	var vt=0;
+    }else{
+    	var vt=vat;
+    }
+
+    if(zero_rated==0){
+    	var zrt=0;
+    }else{
+    	var zrt=zero_rated;
+    }
+
+    if(zero_rated_ecozone==0){
+    	var zre=0;
+    }else{
+    	var zre=zero_rated_ecozone;
+    }
+
+    if(ewt==0){
+    	var et=0;
+    }else{
+    	var et=ewt;
+    }
+    var total = (parseFloat(amnt)+parseFloat(vt)+parseFloat(zrt)+parseFloat(zre))-parseFloat(et);
+    document.getElementById("total_amount").value  = parseFloat(total).toFixed(2);
+}
