@@ -189,21 +189,24 @@
                     <span class="">
                         <b>Additional Notes:</b> "Subtotal" word should be in column F. There must be a an empty row every after subtotal. 
                     </span>
-                    <hr>
+                    <br>
+                    <br>
+                    <br>
                     <div class="row">
-                        <div class="col-lg-3">
-                            Upload field here:
-                        </div>
+                        <div class="col-lg-2"></div>
                         <div class="col-lg-6">
                             <div class="form-group">
+                                <label>Upload File here:</label>
                                <input type="file" name="excelfile_customer" class="form-control">
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <div class="form-group">
+                                <label><br></label>
                                 <input type="submit" class="btn btn-primary btn-block" value='Upload'>
                             </div>
                         </div>
+                        <div class="col-lg-2"></div>
                     </div>
                 </div>
             </form>
