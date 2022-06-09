@@ -896,34 +896,40 @@ class Sales extends CI_Controller {
     }
 
     public function upload_bulk_collection(){
+        $coldate=$this->input->post('col_date');
         $dest= realpath(APPPATH . '../uploads/excel/');
         $error_ext=0;
         if(!empty($_FILES['doc']['name'])){
+
             $exc= basename($_FILES['doc']['name']);
             $exc=explode('.',$exc);
             $ext1=$exc[1];
-
-
-            if($ext1=='php' || $ext1!='xlsx'){
+          
+            
+            if($ext1=='php' || $ext1!='xlsm'){
                 $error_ext++;
-            } 
 
+            } 
             else {
                 $filename1='bulkcollection.'.$ext1;
-                //echo $filename1;
+              
                 if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
-                     $this->readBulkCollection();
+                     $this->readBulkCollection($coldate);
                 } 
             }
         }
     }
 
-    public function readBulkCollection(){
+    public function readBulkCollection($coldate){
+
+
 
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
 
-        $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsx');
+        $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsm');
+
+       
 
        try {
             $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
@@ -932,80 +938,85 @@ class Sales extends CI_Controller {
    
             $objPHPExcel = $objReader->load($inputFileName);
         } 
+
         catch(Exception $e) {
             die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
         }
-        $objPHPExcel->setActiveSheetIndex(2);
-        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+         
+        $objPHPExcel->setActiveSheetIndex(1);
+
        
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
       
+        $data_head=array(
+            "collection_date"=>$coldate,
+            "user_id"=>$_SESSION['user_id'],
+            "date_uploaded"=>date('Y-m-d H:i:s')
+        );
+        $collection_id = $this->super_model->insert_return_id("collection_head", $data_head);
+        $a=1;
+       for($x=7;$x<=$highestRow;$x++){
 
-        for($x=7;$x<$highestRow;$x++){
-            
+             if($a==1){
+                $no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+             } else {
+                 $no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+             }
+            if($no!='' ){
 
-            $columnF = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+               
+                   if($a==1){
+                    $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+                 } else {
+                     $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+                     }
+               
+                $remarks = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+                $particulars = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+                $stl_id = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+                $buyer = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+                $statement_no = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
 
-            if($columnF == 'subtotal' || $columnF == 'Subtotal'){
+                $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+               
+                $zero_rated = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+                $zero_rated_ecozone = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
+                $vat = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
+                $ewt = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue());
+                $total = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue());
+                $defint = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
+                $series = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
 
-                $end=$x-7;
-                if($end<7){
-                    $end=7;
-                } else {
-                    $end=$end;
-                }
-                $start = $x-1;
+                 $data_details = array(
+                        'collection_id'=>$collection_id,
+                        'item_no'=>$itemno,
+                        'billing_remarks'=>$remarks,
+                        'particulars'=>$particulars,
+                        'series_number'=>$series,
+                        'defint'=>$defint,
+                        'reference_no'=>$statement_no,
+                        'settlement_id'=>$stl_id,
+                        'amount'=>$vatable_sales,
+                        'vat'=>$vat,
+                        'zero_rated'=>$zero_rated,
+                        'zero_rated_ecozone'=>$zero_rated_ecozone,
+                        'ewt'=>$ewt,
+                        'total'=>$total,
+                    );
+                    $this->super_model->insert_into("collection_details", $data_details);
+              
+            } 
 
-                $transaction=array();
-                for($a=$start; $a>=$end;$a--){
-                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$a)->getFormattedValue());
-                    if($itemno!=''){
-                        $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$a)->getFormattedValue());
-                        $remarks = trim($objPHPExcel->getActiveSheet()->getCell('B'.$a)->getFormattedValue());
-                        $stl_id = trim($objPHPExcel->getActiveSheet()->getCell('D'.$a)->getFormattedValue());
-                        $buyer = trim($objPHPExcel->getActiveSheet()->getCell('E'.$a)->getFormattedValue());
-                        $statement_no = trim($objPHPExcel->getActiveSheet()->getCell('F'.$a)->getFormattedValue());
-                        $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('G'.$a)->getFormattedValue());
-                        $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$a)->getFormattedValue());
-                        $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('I'.$a)->getFormattedValue());
-                        $vat = trim($objPHPExcel->getActiveSheet()->getCell('J'.$a)->getFormattedValue());
-                        $ewt = trim($objPHPExcel->getActiveSheet()->getCell('K'.$a)->getFormattedValue());
-                        $total = trim($objPHPExcel->getActiveSheet()->getCell('L'.$a)->getFormattedValue());
-                        $defint = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
-                        $series = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
-
-
-                      /*  $transaction=array(
-                            "date_collected"=>date("Y-m-d"),
-                            "series_number"=>$series,
-                            "sales_id"=>
-                        );*/
-                    }
-                }
-
-
-            }
-
-
-            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
-            $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+               $a++;
          
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
 
-            $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
-            $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
-            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-            $ith = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
-            $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
-            $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
-            $vatable_sales = $objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue();
-            $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
-            $zero_rated_ecozone = $objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue();
-            $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
-            $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
-            $ewt = trim($ewt,'-');
-            $total_amount = ($vatable_sales + $zero_rated + $zero_rated_sales + $vat_on_sales) - $ewt;
-         
-                $data_sales = array(
+
+         }
+
+
+           
+      
+              /*  $data_sales = array(
                     'sales_id'=>$sales_id,
                     'short_name'=>$shortname,
                     'billing_id'=>$billing_id,
@@ -1023,8 +1034,8 @@ class Sales extends CI_Controller {
                     'total_amount'=>$total_amount,
                     'balance'=>$total_amount
                 );
-                $this->super_model->insert_into("sales_transaction_details", $data_sales);
-        }
+                $this->super_model->insert_into("sales_transaction_details", $data_sales);*/
+        
             //echo $sales_id;
       
     }

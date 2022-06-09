@@ -187,18 +187,28 @@
                     </table>
                     <br>
                     <span class="">
-                        <b>Additional Notes:</b> "Subtotal" word should be in column F. There must be a an empty row every after subtotal. 
+                        <b>Additional Notes:</b> "Subtotal" word should be in column F. There must be a an empty row every after subtotal. DefInt and Series # should be encoded inline with the "Subtotal" row at the N and O columns, consecutively.
                     </span>
                     <br>
                     <br>
                     <br>
-
+                     <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Collection Date:</label>
+                               <input type="date" name="collection_date" id="collection_date" class="form-control">
+                            </div>
+                        </div>
+                       
+                    </div>
                     <div class="row">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Upload File here:</label>
                                <input type="file" name="collectionbulk" id="collectionbulk" class="form-control">
+                               <span id='alt'></span>
                             </div>
                         </div>
                         <div class="col-lg-2">

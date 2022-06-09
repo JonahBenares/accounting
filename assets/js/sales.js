@@ -288,11 +288,14 @@ $(document).on("click", "#seriesupdate", function () {
 
 function uploadCollection(){
 	var loc= document.getElementById("baseurl").value;
+	var col_date= document.getElementById("collection_date").value;
     var redirect = loc+"sales/upload_bulk_collection";
 	let doc = document.getElementById("collectionbulk").files[0];
 	let formData = new FormData();
 	     
 	formData.append("doc", doc);
+	formData.append("col_date", col_date);
+
 	var conf = confirm('Are you sure you want to upload this file?');
     if(conf){
 		$.ajax({
@@ -303,11 +306,12 @@ function uploadCollection(){
 			contentType: false,
 			beforeSend: function(){
 	        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
-	        	document.getElementById("proceed_sales").disabled = true;
+	        	/*document.getElementById("proceed_sales").disabled = true;
 	        	document.getElementById("cancel").disabled = true;
-	        	$("#table-wesm").hide(); 
+	        	$("#table-wesm").hide(); */
 	        },
 	        success: function(output){
+	        	
 	        	$("#alt").hide(); 
 	        	location.reload();
 			}
