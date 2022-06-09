@@ -55,9 +55,17 @@
                                         <td class="td-30 td-head" rowspan="2">Description</td> 
                                         <td class="td-30 td-head" colspan="3" align="center">Vatable Sales</td> 
                                         <td class="td-30 td-head" colspan="3" align="center">Zero-Rated Sales</td>    
+                                        <td class="td-30 td-head" colspan="3" align="center">Zero-Rated Ecozone</td>    
                                         <td class="td-30 td-head" colspan="3" align="center">Output Vat</td>
+                                        <td class="td-30 td-head" colspan="3" align="center">EWT</td>
                                     </tr>
                                     <tr>
+                                        <td class="td-30 td-head" align="center">Billing</td>
+                                        <td class="td-30 td-head" align="center">Collection</td>
+                                        <td class="td-30 td-head" align="center">Balance</td>
+                                        <td class="td-30 td-head" align="center">Billing</td>
+                                        <td class="td-30 td-head" align="center">Collection</td>
+                                        <td class="td-30 td-head" align="center">Balance</td>
                                         <td class="td-30 td-head" align="center">Billing</td>
                                         <td class="td-30 td-head" align="center">Collection</td>
                                         <td class="td-30 td-head" align="center">Balance</td>
@@ -85,12 +93,22 @@
                                         <td align="right"><?php echo number_format($b['vatable_sales'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['cvatable_sales'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['vatablebalance'],2); ?></td>
+
                                         <td align="right"><?php echo number_format($b['zero_rated_sales'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['czero_rated_sales'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['zerobalance'],2); ?></td>
+
+                                        <td align="right"><?php echo number_format($b['zero_rated_ecozones'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['czero_rated_ecozone'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['zeroecobalance'],2); ?></td>
+
                                         <td align="right"><?php echo number_format($b['vat_on_sales'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['cvat_on_sales'],2); ?></td>
                                         <td align="right"><?php echo number_format($b['vatbalance'],2); ?></td>
+
+                                        <td align="right"><?php echo number_format($b['ewt'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['cewt'],2); ?></td>
+                                        <td align="right"><?php echo number_format($b['ewtbalance'],2); ?></td>
                                     </tr>
                                      <?php } } ?>
                                 </tbody>

@@ -251,7 +251,7 @@ function calculatePayment(){
     var vat = document.getElementById("vat").value;
     var ewt = document.getElementById("ewt").value;
 
-    if(vat!=0 && purchase_amount==0 && ewt==0){
+    /*if(vat!=0 && purchase_amount==0 && ewt==0){
         var total = parseFloat(vat);
     }else if(purchase_amount!=0 && vat==0 && ewt==0){
         var total = parseFloat(purchase_amount);
@@ -263,7 +263,27 @@ function calculatePayment(){
         var total = parseFloat(purchase_amount) + parseFloat(vat);
     }else if(purchase_amount!=0 && vat!=0 && ewt!=0){
         var total = (parseFloat(purchase_amount) + parseFloat(vat)) - ewt;
+    }*/
+
+    if(purchase_amount!=0){
+        var pa=purchase_amount;
+    }else{
+        var pa=0;
     }
+
+    if(vat!=0){
+        var vt=vat;
+    }else{
+        var vt=0;
+    }
+
+    if(ewt!=0){
+        var et=ewt;
+    }else{
+        var et=0;
+    }
+    var total = (parseFloat(pa) + parseFloat(vt)) - et;
+
     document.getElementById("total_amount").value  = parseFloat(total).toFixed(2);
 }
 
