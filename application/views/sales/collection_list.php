@@ -139,7 +139,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method='POST' action="<?php echo base_url();?>masterfile/" enctype="multipart/form-data" target='_blank'>
+            <form method='POST' enctype="multipart/form-data" target='_blank'>
                 <div class="modal-body">
                     <span class="m-b-20">
                         <b>Important Note: </b>Make sure the columns are correct before uploading the file to make sure the data are correctly captured. Refer to the details below to ensure your columns are correctly formatted:
@@ -192,18 +192,19 @@
                     <br>
                     <br>
                     <br>
+
                     <div class="row">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Upload File here:</label>
-                               <input type="file" name="excelfile_customer" class="form-control">
+                               <input type="file" name="collectionbulk" id="collectionbulk" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label><br></label>
-                                <input type="submit" class="btn btn-primary btn-block" value='Upload'>
+                                <input type="button" class="btn btn-primary btn-block" value='Upload' onclick="uploadCollection()">
                             </div>
                         </div>
                         <div class="col-lg-2"></div>

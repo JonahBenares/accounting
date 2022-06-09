@@ -192,6 +192,7 @@ function saveAll(){
 function collection_filter() {
 	var ref_number = document.getElementById("ref_number").value; 
 	var participant = document.getElementById("participant").value; 
+
 	var loc= document.getElementById("baseurl").value;
 	if(ref_number!=''){
 		var ref=ref_number;
@@ -204,6 +205,8 @@ function collection_filter() {
 	}else{
 		var par='null';
 	}
+
+
 	window.location=loc+'sales/collection_list/'+ref+'/'+par;
 
 }
@@ -281,3 +284,32 @@ $(document).on("click", "#seriesupdate", function () {
 	 $("#old_series_no").val(series_number);
 
 });
+
+function uploadCollection(){
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/upload_bulk_collection";
+	let doc = document.getElementById("collectionbulk").files[0];
+	let formData = new FormData();
+	     
+	formData.append("doc", doc);
+	var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+		$.ajax({
+			type: "POST",
+			url: redirect,
+			data: formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function(){
+	        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+	        	document.getElementById("proceed_sales").disabled = true;
+	        	document.getElementById("cancel").disabled = true;
+	        	$("#table-wesm").hide(); 
+	        },
+	        success: function(output){
+	        	$("#alt").hide(); 
+	        	location.reload();
+			}
+		});
+	}
+}

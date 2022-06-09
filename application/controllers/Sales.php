@@ -227,6 +227,8 @@ class Sales extends CI_Controller {
         }else {
             $sql.= "";
         }
+
+
         $query=substr($sql,0,-3);
         foreach($this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND print_counter != '0' AND balance!='0' $query") AS $p){
             $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
@@ -891,6 +893,140 @@ class Sales extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('sales/add_details_wesm');
         $this->load->view('template/footer');
+    }
+
+    public function upload_bulk_collection(){
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $error_ext=0;
+        if(!empty($_FILES['doc']['name'])){
+            $exc= basename($_FILES['doc']['name']);
+            $exc=explode('.',$exc);
+            $ext1=$exc[1];
+
+
+            if($ext1=='php' || $ext1!='xlsx'){
+                $error_ext++;
+            } 
+
+            else {
+                $filename1='bulkcollection.'.$ext1;
+                //echo $filename1;
+                if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
+                     $this->readBulkCollection();
+                } 
+            }
+        }
+    }
+
+    public function readBulkCollection(){
+
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+
+        $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsx');
+
+       try {
+            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        
+   
+            $objPHPExcel = $objReader->load($inputFileName);
+        } 
+        catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+        $objPHPExcel->setActiveSheetIndex(2);
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+       
+      
+
+        for($x=7;$x<$highestRow;$x++){
+            
+
+            $columnF = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+
+            if($columnF == 'subtotal' || $columnF == 'Subtotal'){
+
+                $end=$x-7;
+                if($end<7){
+                    $end=7;
+                } else {
+                    $end=$end;
+                }
+                $start = $x-1;
+
+                $transaction=array();
+                for($a=$start; $a>=$end;$a--){
+                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$a)->getFormattedValue());
+                    if($itemno!=''){
+                        $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$a)->getFormattedValue());
+                        $remarks = trim($objPHPExcel->getActiveSheet()->getCell('B'.$a)->getFormattedValue());
+                        $stl_id = trim($objPHPExcel->getActiveSheet()->getCell('D'.$a)->getFormattedValue());
+                        $buyer = trim($objPHPExcel->getActiveSheet()->getCell('E'.$a)->getFormattedValue());
+                        $statement_no = trim($objPHPExcel->getActiveSheet()->getCell('F'.$a)->getFormattedValue());
+                        $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('G'.$a)->getFormattedValue());
+                        $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$a)->getFormattedValue());
+                        $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('I'.$a)->getFormattedValue());
+                        $vat = trim($objPHPExcel->getActiveSheet()->getCell('J'.$a)->getFormattedValue());
+                        $ewt = trim($objPHPExcel->getActiveSheet()->getCell('K'.$a)->getFormattedValue());
+                        $total = trim($objPHPExcel->getActiveSheet()->getCell('L'.$a)->getFormattedValue());
+                        $defint = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
+                        $series = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
+
+
+                      /*  $transaction=array(
+                            "date_collected"=>date("Y-m-d"),
+                            "series_number"=>$series,
+                            "sales_id"=>
+                        );*/
+                    }
+                }
+
+
+            }
+
+
+            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+            $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+         
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+
+            $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
+            $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+            $ith = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+            $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+            $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
+            $vatable_sales = $objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue();
+            $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
+            $zero_rated_ecozone = $objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue();
+            $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
+            $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
+            $ewt = trim($ewt,'-');
+            $total_amount = ($vatable_sales + $zero_rated + $zero_rated_sales + $vat_on_sales) - $ewt;
+         
+                $data_sales = array(
+                    'sales_id'=>$sales_id,
+                    'short_name'=>$shortname,
+                    'billing_id'=>$billing_id,
+                    'company_name'=>$company_name,
+                    'facility_type'=>$fac_type,
+                    'wht_agent'=>$wht_agent,
+                    'ith_tag'=>$ith,
+                    'non_vatable'=>$non_vatable,
+                    'zero_rated'=>$zero_rated,
+                    'vatable_sales'=>$vatable_sales,
+                    'vat_on_sales'=>$vat_on_sales,
+                    'zero_rated_sales'=>$zero_rated_sales,
+                    'zero_rated_ecozones'=>$zero_rated_ecozone,
+                    'ewt'=>$ewt,
+                    'total_amount'=>$total_amount,
+                    'balance'=>$total_amount
+                );
+                $this->super_model->insert_into("sales_transaction_details", $data_sales);
+        }
+            //echo $sales_id;
+      
     }
     
 }
