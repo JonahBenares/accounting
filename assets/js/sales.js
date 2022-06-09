@@ -313,6 +313,7 @@ function uploadCollection(){
 			}
 		});
 	}
+}
 
 function calculateSales(){
     var amount = document.getElementById("amount").value;
