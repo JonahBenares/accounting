@@ -285,7 +285,7 @@ $(document).on("click", "#seriesupdate", function () {
 
 });
 
-<<<<<<< HEAD
+
 function uploadCollection(){
 	var loc= document.getElementById("baseurl").value;
     var redirect = loc+"sales/upload_bulk_collection";
@@ -313,7 +313,7 @@ function uploadCollection(){
 			}
 		});
 	}
-=======
+
 function calculateSales(){
     var amount = document.getElementById("amount").value;
     var vat = document.getElementById("vat").value;
@@ -351,5 +351,5 @@ function calculateSales(){
     }
     var total = (parseFloat(amnt)+parseFloat(vt)+parseFloat(zrt)+parseFloat(zre))-parseFloat(et);
     document.getElementById("total_amount").value  = parseFloat(total).toFixed(2);
->>>>>>> 5242854aa37f9eeb262333eb18f5c47fbe66ec70
+
 }
