@@ -42,7 +42,7 @@ class Reports extends CI_Controller {
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql="";
-        if($ref_no!='null' && $participant=='null'){
+/*        if($ref_no!='null' && $participant=='null'){
            $sql.= " AND sth.reference_number = '$ref_no' AND";
         }else if($ref_no!='null' && $participant!='null'){
             $sql.= " AND sth.reference_number = '$ref_no' AND";
@@ -72,6 +72,18 @@ class Reports extends CI_Controller {
             $sql.= " sth.billing_to BETWEEN '$from' AND '$to' AND";
         }else {
             $sql.= "";
+        }*/
+
+        if($ref_no!='null' && $participant=='null' && $from=='null' && $to=='null'){
+            $sql.= " AND sth.reference_number = '$ref_no' AND";
+        }else if($ref_no=='null' && $participant!='null' && $from=='null' && $to=='null'){
+            $sql.= " AND std.billing_id = '$participant' AND";
+        }else if($ref_no!='null' && $participant!='null' && $from!='null' && $to!='null'){
+            $sql.= " AND sth.reference_number = '$ref_no' AND std.billing_id = '$participant' AND '$from' AND '$to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+        }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to!='null'){
+            $sql.= " AND '$from' AND '$to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+        }else {
+            $sql.= "";
         }
 
         $query=substr($sql,0,-3);
@@ -79,17 +91,18 @@ class Reports extends CI_Controller {
         $data['total_collection']=0;
         $data['total_balance']=0;
         $data['head']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' $query") AS $head){
+        foreach($this->super_model->custom_query("SELECT cd.ewt,cd.amount,cd.zero_rated,cd.vat,ch.collection_date,std.billing_id,sth.billing_from,sth.billing_to,sth.transaction_date,cd.settlement_id FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=ch.collection_id INNER JOIN sales_transaction_head sth ON cd.reference_no=sth.reference_number INNER JOIN sales_transaction_details std ON cd.settlement_id=std.short_name WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $head){
+        /*foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' $query") AS $head){*/
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
             //$collected=$this->super_model->select_column_where("collection_details","total","sales_details_id",$head->sales_details_id);
-            $amount=$this->super_model->select_column_where("collection_details","amount","sales_details_id",$head->sales_details_id);
-            $vat=$this->super_model->select_column_where("collection_details","vat","sales_details_id",$head->sales_details_id);
-            $zero_rated=$this->super_model->select_column_where("collection_details","zero_rated","sales_details_id",$head->sales_details_id);
-            $ewt=$this->super_model->select_column_where("collection_details","ewt","sales_details_id",$head->sales_details_id);
-            $totalamount=$this->super_model->select_sum_where("sales_transaction_details","total_amount","sales_id='$head->sales_id'");
-            $totalcollected=$this->super_model->select_sum_where("collection_details","total","sales_details_id='$head->sales_detail_id'");
+            //$amount=$this->super_model->select_column_where("collection_details","amount","sales_details_id",$head->sales_details_id);
+            //$vat=$this->super_model->select_column_where("collection_details","vat","sales_details_id",$head->sales_details_id);
+            //$zero_rated=$this->super_model->select_column_where("collection_details","zero_rated","sales_details_id",$head->sales_details_id);
+            //$ewt=$this->super_model->select_column_where("collection_details","ewt","sales_details_id",$head->sales_details_id);
+            $totalamount=$this->super_model->select_sum_where("sales_transaction_details","total_amount","short_name='$head->settlement_id'");
+            $totalcollected=$this->super_model->select_sum_where("collection_details","total","settlement_id='$head->settlement_id'");
             $total_amount[]=$totalamount;
             $total_collection[]=$totalcollected;
             $total_balance[]=$totalamount - $totalcollected;
@@ -101,13 +114,13 @@ class Reports extends CI_Controller {
             'tin'=>$tin,
             'participant_name'=>$company_name,
             'address'=>$registered_address,
-            'vatable_sales'=>$amount,
-            'zero_rated_sales'=>$zero_rated,
-            'wht_agent'=>$head->wht_agent,
-            'vat_on_sales'=>$vat,
+            'vatable_sales'=>$head->amount,
+            'zero_rated_sales'=>$head->zero_rated,
+            //'wht_agent'=>$head->wht_agent,
+            'vat_on_sales'=>$head->vat,
             'billing_from'=>$head->billing_from,
             'billing_to'=>$head->billing_to,
-            'ewt'=>$ewt,
+            'ewt'=>$head->ewt,
         );
         }
         $this->load->view('reports/sales_summary',$data);
@@ -128,34 +141,14 @@ class Reports extends CI_Controller {
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql="";
-        if($ref_no!='null' && $participant=='null'){
-           $sql.= " AND pth.reference_number = '$ref_no' AND";
-        }else if($ref_no!='null' && $participant!='null'){
+        if($ref_no!='null' && $participant=='null' && $from=='null' && $to=='null'){
             $sql.= " AND pth.reference_number = '$ref_no' AND";
-        }else {
-            $sql.= "";
-        }
-
-        if($participant!='null' && $ref_no=='null'){
+        }else if($ref_no=='null' && $participant!='null' && $from=='null' && $to=='null'){
             $sql.= " AND ptd.billing_id = '$participant' AND";
-        }else if($participant!='null' && $ref_no!='null'){
-            $sql.= " ptd.billing_id = '$participant' AND";
-        }else {
-            $sql.= "";
-        }
-
-        if($from!='null' && $to=='null'){
-            $sql.= " AND pth.billing_from BETWEEN '$from' AND '$to' AND";
-        }else if($from!='null' && $to!='null'){
-            $sql.= " pth.billing_from BETWEEN '$from' AND '$to' AND";
-        }else {
-            $sql.= "";
-        }
-
-        if($to!='null' && $from=='null'){
-            $sql.= " AND pth.billing_to BETWEEN '$from' AND '$to' AND";
-        }else if($to!='null' && $from!='null'){
-            $sql.= " pth.billing_to BETWEEN '$from' AND '$to' AND";
+        }else if($ref_no!='null' && $participant!='null' && $from!='null' && $to!='null'){
+            $sql.= " AND pth.reference_number = '$ref_no' AND ptd.billing_id = '$participant' AND '$from' AND '$to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+        }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to!='null'){
+            $sql.= " AND '$from' AND '$to' BETWEEN  pth.billing_from AND pth.billing_to AND";
         }else {
             $sql.= "";
         }
@@ -191,7 +184,7 @@ class Reports extends CI_Controller {
                 $vat_on_purchases='0.00';
                 $zero_rated=$vat;
                 $rated_ecozones='0.00';
-            }else if($mode=='Zero-Rated Ecozones Purchase'){
+            }else if($mode=='Zero Rated Ecozones'){
                 $vat_on_purchases='0.00';
                 $zero_rated='0.00';
                 $rated_ecozones=$vat;
