@@ -351,44 +351,45 @@ class Sales extends CI_Controller {
         //$total=0;
 
         $sales_detail_id=$this->input->post('sales_detail_id');
+        $data_headc=array(
+            'collection_date'=>$this->input->post('date_collected'),
+            'user_id'=>$_SESSION['user_id'],
+            'date_uploaded'=>date("Y-m-d H:i:s"),
+        );
+        $collection_id=$this->super_model->insert_return_id("collection_head", $data_headc);
+        $sales_id = $this->input->post('sales_id');
+        $sales_detail_id = $this->input->post('sales_detail_id');
+        $reference_number=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$sales_id);
+        $settlement_id=$this->super_model->select_column_where("sales_transaction_details","short_name","sales_detail_id",$sales_detail_id);
         $data = array(
-            'date_collected'=>$this->input->post('date_collected'),
+            'collection_id'=>$collection_id,
             'series_number'=>$this->input->post('series_number'),
-            'sales_id'=>$this->input->post('sales_id'),
-            'sales_details_id'=>$this->input->post('sales_detail_id'),
+            'reference_no'=>$reference_number,
+            'settlement_id'=>$settlement_id,
             'amount'=>$this->input->post('amount'),
             'vat'=>$vat,
             'zero_rated'=>$zero_rated,
             'zero_rated_ecozone'=>$zero_rated_ecozone,
             'ewt'=>$ewt,
             'total'=>$total,
-            'create_date'=>date("Y-m-d H:i:s"),
-            'user_id'=>$_SESSION['user_id'],
         );
-
-     
-            $collection_id = $this->super_model->insert_return_id("collection_details",$data);
-            $balance = $this->super_model->select_column_where('sales_transaction_details', 'balance', 'sales_detail_id', $sales_detail_id);
-            $new_balance = $balance - $total;
-
-            $data_update = array(
-                'balance'=>$new_balance
-            );
-
-            $this->super_model->update_where("sales_transaction_details", $data_update, "sales_detail_id", $sales_detail_id);
-            
-
-            echo $collection_id;
-
+        $collection_details_id = $this->super_model->insert_return_id("collection_details",$data);
+        $balance = $this->super_model->select_column_where('sales_transaction_details', 'balance', 'sales_detail_id', $sales_detail_id);
+        $new_balance = $balance - $total;
+        $data_update = array(
+            'balance'=>$new_balance
+        );
+        $this->super_model->update_where("sales_transaction_details", $data_update, "sales_detail_id", $sales_detail_id);
+        echo $collection_id;
     }
 
 
     public function print_OR()
     {
         $collection_id=$this->uri->segment(3);
-        $sales_id = $this->super_model->select_column_where("collection_details", "sales_id", "collection_id", $collection_id);
-        $sales_detail_id = $this->super_model->select_column_where("collection_details", "sales_details_id", "collection_id", $collection_id);
-        $billing_id = $this->super_model->select_column_where("sales_transaction_details", "billing_id", "sales_detail_id", $sales_detail_id);
+        $reference_no = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
+        $settlement_id = $this->super_model->select_column_where("collection_details", "settlement_id", "collection_id", $collection_id);
+        $billing_id = $this->super_model->select_column_where("sales_transaction_details", "billing_id", "short_name", $settlement_id);
         foreach($this->super_model->select_row_where("participant", "billing_id", $billing_id) AS $p){
             $data['client'][] = array(
                 "client_name"=>$p->participant_name,
@@ -400,8 +401,8 @@ class Sales extends CI_Controller {
         $data['vat'] =  $this->super_model->select_column_where("collection_details", "vat", "collection_id", $collection_id);
         $data['collection'] = $this->super_model->select_row_where("collection_details","collection_id",$collection_id);
 
-        $data['date'] = $this->super_model->select_column_where("collection_details", "date_collected", "collection_id", $collection_id);
-        $data['ref_no'] = $this->super_model->select_column_where("sales_transaction_head", "reference_number", "sales_id", $sales_id);
+        $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
+        $data['ref_no'] = $this->super_model->select_column_where("sales_transaction_head", "reference_number", "reference_number", $reference_no);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/print_OR',$data);
