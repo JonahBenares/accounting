@@ -328,13 +328,13 @@ class Reports extends CI_Controller {
         //echo $query;
         $data['bill']=array();
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
-            $sales_id=$this->super_model->select_column_where("collection_details","sales_id",'sales_details_id',$b->sales_detail_id);
-            if($b->sales_id==$sales_id){
-                $amount=$this->super_model->select_sum_where("collection_details","amount","sales_details_id='$b->sales_detail_id'");
-                $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","sales_details_id='$b->sales_detail_id'");
-                $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","sales_details_id='$b->sales_detail_id'");
-                $vat=$this->super_model->select_sum_where("collection_details","vat","sales_details_id='$b->sales_detail_id'");
-                $ewt=$this->super_model->select_sum_where("collection_details","ewt","sales_details_id='$b->sales_detail_id'");
+            $reference_number=$this->super_model->select_column_where("collection_details","reference_no",'settlement_id',$b->short_name);
+            if($b->reference_number==$reference_number){
+                $amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$b->short_name'");
+                $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","settlement_id='$b->short_name'");
+                $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","settlement_id='$b->short_name'");
+                $vat=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$b->short_name'");
+                $ewt=$this->super_model->select_sum_where("collection_details","ewt","settlement_id='$b->short_name'");
 
                 $vatablebalance=$b->vatable_sales - $amount;
                 $zerobalance=$b->zero_rated_sales - $zero_rated;
