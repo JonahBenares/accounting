@@ -278,19 +278,39 @@ class Sales extends CI_Controller {
         $data['ref_no'] = $ref_no;
         $data['participant'] = $participant;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
-        $data['participant_list']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $data['participant_list']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY participant_name");
         $sql="";
         if($ref_no!='null' && $participant=='null'){
-           $sql.= " AND sh.reference_number = '$ref_no' AND";
+           $sql.= " WHERE cd.reference_no = '$ref_no' AND";
         }else if($ref_no!='null' && $participant!='null'){
-            $sql.= " AND sh.reference_number = '$ref_no' AND std.billing_id = '$participant' AND";
+            $sql.= " WHERE cd.reference_no = '$ref_no' AND cd.settlement_id = '$participant' AND";
         }else if($ref_no=='null' && $participant!='null'){
-            $sql.= " AND std.billing_id = '$participant' AND";
+            $sql.= " WHERE cd.settlement_id = '$participant' AND";
         }else {
             $sql.= "";
         }
         $query=substr($sql,0,-3);
-        $data['sales'] = $this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.date_collected,cd.sales_id,cd.sales_details_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,std.company_name,std.short_name,std.billing_id FROM collection_details cd INNER JOIN sales_transaction_head sh ON cd.sales_id=sh.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sh.saved='1' $query");
+        //$data['sales'] = $this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.collection_details_id,ch.collection_date,cd.reference_no,cd.settlement_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,std.company_name,std.short_name,std.billing_id, sh.sales_id FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=ch.collection_id INNER JOIN sales_transaction_head sh ON cd.reference_no=sh.reference_number INNER JOIN sales_transaction_details std ON cd.settlement_id=std.short_name WHERE sh.saved='1' $query");
+        foreach($this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.collection_details_id,ch.collection_date,cd.reference_no,cd.settlement_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,cd.settlement_id FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=ch.collection_id $query") AS $c){
+            $company_name=$this->super_model->select_column_custom_where("sales_transaction_details","company_name","short_name='$c->settlement_id'");
+            $billing_id=$this->super_model->select_column_custom_where("sales_transaction_details","billing_id","short_name='$c->settlement_id'");
+            $data['sales'][]=array(
+                "collection_id"=>$c->collection_id,
+                "collection_details_id"=>$c->collection_details_id,
+                "collection_date"=>$c->collection_date,
+                "series_number"=>$c->series_number,
+                "company_name"=>$company_name,
+                //"billing_id"=>$billing_id,
+                "short_name"=>$c->settlement_id,
+                "amount"=>$c->amount,
+                "vat"=>$c->vat,
+                "zero_rated"=>$c->zero_rated,
+                "zero_rated_ecozone"=>$c->zero_rated_ecozone,
+                "ewt"=>$c->ewt,
+                "total"=>$c->total,
+            );
+
+        }
         $data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -406,6 +426,32 @@ class Sales extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/print_OR',$data);
+        $this->load->view('template/footer');
+    }
+
+    public function print_collected_OR()
+    {
+        $collection_details_id=$this->uri->segment(3);
+        $collection_id = $this->super_model->select_column_where("collection_details", "collection_id", "collection_details_id", $collection_details_id);
+        $reference_no = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
+        $settlement_id = $this->super_model->select_column_where("collection_details", "settlement_id", "collection_id", $collection_id);
+        $billing_id = $this->super_model->select_column_where("sales_transaction_details", "billing_id", "short_name", $settlement_id);
+        foreach($this->super_model->select_row_where("participant", "billing_id", $billing_id) AS $p){
+            $data['client'][] = array(
+                "client_name"=>$p->participant_name,
+                "address"=>$p->registered_address,
+                "tin"=>$p->tin
+            );
+        }
+        $data['amount'] =  $this->super_model->select_column_where("collection_details", "amount", "collection_details_id", $collection_details_id);
+        $data['vat'] =  $this->super_model->select_column_where("collection_details", "vat", "collection_details_id", $collection_details_id);
+        $data['collection'] = $this->super_model->select_row_where("collection_details","collection_details_id",$collection_details_id);
+
+        $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
+        $data['ref_no'] = $this->super_model->select_column_where("sales_transaction_head", "reference_number", "reference_number", $reference_no);
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/print_collected_OR',$data);
         $this->load->view('template/footer');
     }
 

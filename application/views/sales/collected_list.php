@@ -68,7 +68,7 @@
                                                         <?php 
                                                             foreach($participant_list AS $p){
                                                         ?>
-                                                        <option value="<?php echo $p->billing_id; ?>"><?php echo $p->billing_id." - ".$p->participant_name; ?></option>
+                                                        <option value="<?php echo $p->settlement_id; ?>"><?php echo $p->participant_name; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
@@ -124,8 +124,8 @@
                                                 <th width="20%">Date Collected</th>
                                                 <th width="20%">Series No.</th>
                                                 <th width="20%">Company Name</th>
-                                                <th width="15%">Billing ID</th>
-                                                <th width="15%">Short Name</th>
+                                                <!-- <th width="15%">Billing ID</th> -->
+                                                <th width="15%">Settlement ID</th>
                                                 <th width="10%">Amount</th>
                                                 <th width="10%">Vat</th>
                                                 <th width="10%">Zero Rated</th>
@@ -142,28 +142,28 @@
                                             <tr>
                                                 <td align="center">
                                                     <div class="btn-group mb-0">
-                                                        <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $s->series_number; ?>" data-id='<?php echo $s->collection_id; ?>'>
+                                                        <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $s['series_number']; ?>" data-id='<?php echo $s['collection_details_id']; ?>'>
                                                             <span class="m-0 fas fa-edit"></span>
                                                         </button>
                                                     </div>
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR/<?php echo $s->sales_id;?>" class="btn btn-success btn-sm" target="_blank"  style="color:#fff">
+                                                        <a href="<?php echo base_url(); ?>sales/print_collected_OR/<?php echo $s['collection_details_id'];?>" class="btn btn-success btn-sm" target="_blank"  style="color:#fff">
                                                             <span class="m-0 fas fa-print"></span>
                                                         </a>
                                                     </div>
                                                   <!--   <a id="clicksOR"></a> -->
                                                 </td>
-                                                <td><?php echo date("F d,Y",strtotime($s->date_collected)); ?></td>
-                                                <td><?php echo $s->series_number; ?></td>
-                                                <td><?php echo $s->company_name; ?></td>
-                                                <td><?php echo $s->billing_id; ?></td>
-                                                <td><?php echo $s->short_name; ?></td>
-                                                <td><?php echo number_format($s->amount,2); ?></td>
-                                                <td align="right"><?php echo number_format($s->vat,2); ?></td>
-                                                <td align="right"><?php echo $s->zero_rated; ?></td>
-                                                <td align="right"><?php echo number_format($s->zero_rated_ecozone,2); ?></td>
-                                                <td align="right"><?php echo number_format($s->ewt,2); ?></td>
-                                                <td align="right"><?php echo number_format($s->total,2); ?></td>
+                                                <td><?php echo date("F d,Y",strtotime($s['collection_date'])); ?></td>
+                                                <td><?php echo $s['series_number']; ?></td>
+                                                <td><?php echo $s['company_name']; ?></td>
+                                                <!-- <td><?php echo $s['billing_id']; ?></td> -->
+                                                <td><?php echo $s['short_name']; ?></td>
+                                                <td><?php echo number_format($s['amount'],2); ?></td>
+                                                <td align="right"><?php echo number_format($s['vat'],2); ?></td>
+                                                <td align="right"><?php echo $s['zero_rated']; ?></td>
+                                                <td align="right"><?php echo number_format($s['zero_rated_ecozone'],2); ?></td>
+                                                <td align="right"><?php echo number_format($s['ewt'],2); ?></td>
+                                                <td align="right"><?php echo number_format($s['total'],2); ?></td>
                                             </tr>
                                         <?php } ?>
                                         </tbody>
