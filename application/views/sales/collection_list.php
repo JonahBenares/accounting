@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/js/sales.js"></script> -->
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -25,8 +25,8 @@
                                     <div class="col-lg-12">
                                         <table width="100%">
                                             <tr>
-                                                <td width="5%"></td>
-                                                <td width="45%">
+                                                <td width="25%"></td>
+                                                <!-- <td width="45%">
                                                     <select class="form-control select2" name="participant" id="participant">
                                                         <option value="">-- Select Participant --</option>
                                                         <?php 
@@ -35,10 +35,10 @@
                                                         <option value="<?php echo $p->billing_id; ?>"><?php echo $p->billing_id." - ".$p->participant_name; ?></option>
                                                         <?php } ?>
                                                     </select>
-                                                </td>
-                                                <td width="44%">
+                                                </td> -->
+                                                <td width="45%">
                                                     <select class="form-control select2" name="ref_number" id="ref_number">
-                                                        <option value=''>-- Select Reference No --</option>
+                                                        <option value=''>-- Select OR No --</option>
                                                         <?php 
                                                             foreach($reference AS $r){
                                                         ?>
@@ -46,10 +46,10 @@
                                                         <?php } ?>
                                                     </select>
                                                 </td>
-                                                <td width="1%">
+                                                <td width="5%">
                                                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
                                                     <input type='button' class="btn btn-primary"  onclick="collection_filter()" value="Filter"></td>
-                                                <td width="5%"></td>
+                                                <td width="25%"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -76,9 +76,9 @@
                                         <?php } ?>                                     
                                     </div>
                                 </div>
+                                <br>
                                 
-                                
-                                <div id="collection-list">
+                                <!-- <div id="collection-list">
                                     <table class="table-bordered table table-hover " id="table-1" style="width:100%; ">
                                         <thead>
                                             <tr>
@@ -104,7 +104,6 @@
                                                             <span class="m-0 fas fa-indent"></span>
                                                         </a>
                                                     </div>
-                                                  <!--   <a id="clicksOR"></a> -->
                                                 </td>
                                                 <td><?php echo $s['company_name']; ?></td>
                                                 <td><?php echo $s['billing_id']; ?></td>
@@ -113,6 +112,142 @@
                                                 <td align="right"><?php echo number_format($s['balance'],2); ?></td>
                                             </tr>
                                         <?php } } ?>
+                                        </tbody>
+                                    </table>
+                                </div> -->
+                                <div>
+                                    <table class="table-bordered table table-hosver" id="table-3" width="170%"> 
+                                        <thead>
+                                            <tr>
+                                                <th width="1%"><center><span class="fas fa-bars"></span></center></th>
+                                                <th width="14%">OR#</th>
+                                                <th width="5%">Billing Remarks</th>
+                                                <th width="14%">Particulars</th>
+                                                <th width="14%">STL ID</th>
+                                                <th width="14%">Participant Name</th>
+                                                <th width="14%">Reference No</th>
+                                                <th width="14%">Vatable Sales</th>
+                                                <th width="14%">Zero Rated Sales</th>
+                                                <th width="14%">Zero Rated Ecozone</th>
+                                                <th width="14%">VAT</th>
+                                                <th width="14%">EWT</th>
+                                                <th width="14%">Total</th>
+                                                <th width="14%">Def Int</th>
+                                                <th width="14%">Overall Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="td-btm pt-1 pb-1" rowspan="2" style="vertical-align: text-top;">
+                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
+                                                </td>
+                                                <td class="td-btm pt-1 pb-1" rowspan="2">12334</td>
+                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
+                                                <td class="td-btm pt-1 pb-1">VAT - Cash</td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1" rowspan="2"></td>
+                                                <td class="td-btm pt-1 pb-1" rowspan="2"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
+                                                <td class="td-btm pt-1 pb-1">ENERGY - Cash</td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="td-btm pt-1 pb-1" style="vertical-align: text-top;">
+                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
+                                                </td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-btm pt-1 pb-1" rowspan="3" style="vertical-align: text-top;">
+                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
+                                                </td>
+                                                <td class="td-btm pt-1 pb-1" rowspan="3">890</td>
+                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
+                                                <td class="td-btm pt-1 pb-1">VAT - Cash</td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1" rowspan="3"></td>
+                                                <td class="td-btm pt-1 pb-1" rowspan="3"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
+                                                <td class="td-btm pt-1 pb-1">ENERGY - Cash</td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                            </tr>
+                                            <tr>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
+                                                <td class="td-btm pt-1 pb-1">ENERGY - Cash</td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                                <td hidden class="td-btm pt-1 pb-1"></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

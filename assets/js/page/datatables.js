@@ -27,7 +27,9 @@ $("[data-checkboxes]").each(function () {
     }
   });
 });
-
+$("#table-1").dataTable({
+  order: [[2, 'asc']],
+});
 $("#table-1").dataTable({
   order: [[2, 'asc']],
 });
@@ -40,7 +42,14 @@ $("#table-2").dataTable({
 });
 $("#table-3").dataTable({
   "scrollX": true,
+  "ordering": false
 });
+// $("#table-4").dataTable({
+//   "scrollX": true,
+//   fixedHeader: true,
+// });
+
+
 $('#save-stage').DataTable({
   "scrollX": true,
   stateSave: true
