@@ -138,7 +138,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="td-btm pt-1 pb-1" rowspan="2" style="vertical-align: text-top;">
+                                                <td class="td-btm pt-1 pb-1" rowspan="2" style="vertical-align: middle;">
                                                     <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" rowspan="2">12334</td>
@@ -176,7 +176,7 @@
                                             </tr>
 
                                             <tr>
-                                                <td class="td-btm pt-1 pb-1" style="vertical-align: text-top;">
+                                                <td class="td-btm pt-1 pb-1" style="vertical-align: middle;">
                                                     <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1"></td>
@@ -195,7 +195,7 @@
                                                 <td class="td-btm pt-1 pb-1"></td>
                                             </tr>
                                             <tr>
-                                                <td class="td-btm pt-1 pb-1" rowspan="3" style="vertical-align: text-top;">
+                                                <td class="td-btm pt-1 pb-1" rowspan="3" style="vertical-align: middle;">
                                                     <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" rowspan="3">890</td>

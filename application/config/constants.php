@@ -85,6 +85,7 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 define('LOGO','assets/img/logo/cenpri.png');
+define('LOGO_IEMOP','assets/img/logo/logo-iemop.png');
 define('TIN','TIN No. 008-691-287-000');
 define('COMPANY_NAME','CENTRAL NEGROS POWER RELIABILITY, INC.');
 define('ADDRESS','Office: 88 Corner Rizal-Mabini Sts., Bacolod City');

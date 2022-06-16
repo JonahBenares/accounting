@@ -897,4 +897,9 @@ class Purchases extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function payment_form(){
+        $this->load->view('template/print_head');
+        $this->load->view('purchases/payment_form');
+    }
+
 }
