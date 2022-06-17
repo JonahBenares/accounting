@@ -736,7 +736,8 @@ class Purchases extends CI_Controller {
         }
         
       
-        echo $reference_number;
+        //echo $reference_number;
+        echo $purchase_id;
     }
 
     public function purchases_wesm(){
@@ -898,8 +899,30 @@ class Purchases extends CI_Controller {
     }
 
     public function payment_form(){
+        $purchase_id = $this->uri->segment(3);
         $this->load->view('template/print_head');
-        $this->load->view('purchases/payment_form');
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE ptd.purchase_id='$purchase_id' GROUP BY pth.reference_number") AS $p){
+            $vatable_purchase= $this->super_model->select_sum("purchase_transaction_details", "vatables_purchases", "purchase_id", $p->purchase_id);
+            $zero_rated= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_purchases", "purchase_id", $p->purchase_id);
+            $zero_rated_ecozone= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_ecozones", "purchase_id", $p->purchase_id);
+            $energy=$vatable_purchase+$zero_rated+$zero_rated_ecozone;
+            $vat_on_purchases= $this->super_model->select_sum("purchase_transaction_details", "vat_on_purchases", "purchase_id", $p->purchase_id);
+            $ewt= $this->super_model->select_sum("purchase_transaction_details", "ewt", "purchase_id", $p->purchase_id);
+            $total_amount=($energy + $vat_on_purchases) - $ewt;
+            $data['total']=$total_amount;
+            $data['energy']=$energy;
+            $data['vat_on_purchases']=$vat_on_purchases;
+            $data['ewt']=$ewt;
+            $data['payment'][]=array(
+                "transaction_date"=>$p->transaction_date,
+                "reference_number"=>$p->reference_number,
+                "energy"=>$energy,
+                "vat_on_purchases"=>$vat_on_purchases,
+                "ewt"=>$ewt,
+                "total_amount"=>$total_amount,
+            );
+        }
+        $this->load->view('purchases/payment_form',$data);
     }
 
 }

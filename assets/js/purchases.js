@@ -237,7 +237,8 @@ function savePaymentAll(){
                 url: redirect,
                 success: function(output){
                    /* alert(output);*/
-                    window.opener.location=loc+'purchases/payment_list/'+output;
+                    //window.opener.location=loc+'purchases/payment_list/'+output;
+                    window.opener.location=loc+'purchases/payment_form/'+output;
                     window.close();
                 }
             });

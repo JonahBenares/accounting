@@ -53,12 +53,12 @@
             </tr>
             <tr>
                 <td colspan="5">Market Participant Name:</td>
-                <td colspan="10" class="bor-btm"></td>
+                <td colspan="10" class="bor-btm" align="center">CENTRAL NEGROS POWER RELIABILITY, INC. (CENPRI)</td>
                 <td colspan="5"></td>
             </tr>
             <tr>
                 <td colspan="5">Market Participant ID No.:</td>
-                <td colspan="10" class="bor-btm"></td>
+                <td colspan="10" class="bor-btm" align="center">1580</td>
                 <td colspan="5"></td>
             </tr>
             <tr>
@@ -89,400 +89,30 @@
                             <td align="right"></td>
                             <td align="right">-</td>
                         </tr>
+                        <?php 
+                            foreach($payment AS $p){ 
+                        ?>
                         <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WF-190F-0000541</td>
-                            <td align="right">(700,617.80)</td>
-                            <td align="right">(57,017.93)</td>
+                            <td align="center"><?php echo $p['transaction_date'];?></td>
+                            <td align="center"><?php echo $p['reference_number'];?></td>
+                            <td align="right">(<?php echo number_format($p['energy'],2);?>)</td>
+                            <td align="right">(<?php echo number_format($p['vat_on_purchases'],2);?>)</td>
                             <td align="right"></td>
-                            <td align="right">11,109.81 </td>
+                            <td align="right"><?php echo number_format($p['ewt'],2);?></td>
                             <td align="right"></td>
                             <td align="right"></td>
-                            <td align="right">(746,525.92)</td>
+                            <td align="right">(<?php echo number_format($p['total_amount'],2);?>)</td>
                         </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WF-190F-0000540</td>
-                            <td align="right">(545,515.58)</td>
-                            <td align="right">(44,395.38)</td>
-                            <td align="right"></td>
-                            <td align="right">8,650.20 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(581,260.76)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-122F3-0000038</td>
-                            <td align="right">(2.81)</td>
-                            <td align="right">(0.34)</td>
-                            <td align="right"></td>
-                            <td align="right">0.06 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(3.09)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-123F2-0000037</td>
-                            <td align="right">(3.05)</td>
-                            <td align="right">(0.37)</td>
-                            <td align="right"></td>
-                            <td align="right">0.06 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(3.36)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-134F3-0000037</td>
-                            <td align="right">(1.59)</td>
-                            <td align="right">(0.19)</td>
-                            <td align="right"></td>
-                            <td align="right">0.04 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(1.74)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-135F2-0000036</td>
-                            <td align="right">(0.02)</td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.02)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-136F5-0000036</td>
-                            <td align="right">(0.01)</td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.01)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-136F1-0000036</td>
-                            <td align="right">(0.01)</td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.01)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-142F2-0000043</td>
-                            <td align="right">(0.01)</td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.01)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-146F3-0000046</td>
-                            <td align="right">(0.63)</td>
-                            <td align="right">(0.08)</td>
-                            <td align="right"></td>
-                            <td align="right">0.01 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.70)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-147F2-0000042</td>
-                            <td align="right">(0.11)</td>
-                            <td align="right">(0.01)</td>
-                            <td align="right"></td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.12)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-148F2-0000046</td>
-                            <td align="right">(13.00)</td>
-                            <td align="right">(0.46)</td>
-                            <td align="right"></td>
-                            <td align="right">0.26 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(13.20)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-149F1-0000044</td>
-                            <td align="right">(0.30)</td>
-                            <td align="right">(0.04)</td>
-                            <td align="right"></td>
-                            <td align="right">0.01 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.33)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-149F5-0000047</td>
-                            <td align="right">(0.51)</td>
-                            <td align="right">(0.06)</td>
-                            <td align="right"></td>
-                            <td align="right">0.01 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.56)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-157F7-0000046</td>
-                            <td align="right">(0.12)</td>
-                            <td align="right">(0.01)</td>
-                            <td align="right"></td>
-                            <td align="right">-</td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.13)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-159F2-0000046</td>
-                            <td align="right">(9.79)</td>
-                            <td align="right">(1.17)</td>
-                            <td align="right"></td>
-                            <td align="right">0.19 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(10.77)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-160F6-0000048</td>
-                            <td align="right">(8.59)</td>
-                            <td align="right">(1.03)</td>
-                            <td align="right"></td>
-                            <td align="right">0.17 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(9.45)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-160F2-0000048</td>
-                            <td align="right">(5.72)</td>
-                            <td align="right">(0.69)</td>
-                            <td align="right"></td>
-                            <td align="right">0.11 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(6.30)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAD-165F5-0000193</td>
-                            <td align="right">(0.93)</td>
-                            <td align="right">(0.11)</td>
-                            <td align="right"></td>
-                            <td align="right">0.02 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(1.02)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-174F3-0000048</td>
-                            <td align="right">(3.94)</td>
-                            <td align="right">(0.47)</td>
-                            <td align="right"></td>
-                            <td align="right">0.08 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(4.33)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-179F13-0000053</td>
-                            <td align="right">(77.20)</td>
-                            <td align="right">(9.26)</td>
-                            <td align="right"></td>
-                            <td align="right">1.54 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(84.92)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-179F12-0000052</td>
-                            <td align="right">(14.33)</td>
-                            <td align="right">(1.72)</td>
-                            <td align="right"></td>
-                            <td align="right">0.29 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(15.76)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-179F11-0000051</td>
-                            <td align="right">(11.82)</td>
-                            <td align="right">(1.42)</td>
-                            <td align="right"></td>
-                            <td align="right">0.24 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(13.00)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAD-184F44-0000261</td>
-                            <td align="right">(98.84)</td>
-                            <td align="right">(9.76)</td>
-                            <td align="right"></td>
-                            <td align="right">1.22 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(107.38)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F22-0000024</td>
-                            <td align="right">(173.83)</td>
-                            <td align="right">(20.86)</td>
-                            <td align="right"></td>
-                            <td align="right">3.48 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(191.21)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F26-0000024</td>
-                            <td align="right">(0.11)</td>
-                            <td align="right">(0.01)</td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.12)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F50-0000019</td>
-                            <td align="right">(165.20)</td>
-                            <td align="right">(19.82)</td>
-                            <td align="right"></td>
-                            <td align="right">3.30 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(181.72)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F27-0000023</td>
-                            <td align="right">(18.88)</td>
-                            <td align="right">(2.27)</td>
-                            <td align="right"></td>
-                            <td align="right">0.38 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(20.77)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F32-0000019</td>
-                            <td align="right">(27.63)</td>
-                            <td align="right">(3.32)</td>
-                            <td align="right"></td>
-                            <td align="right">0.55 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(30.40)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F28-0000024</td>
-                            <td align="right">(267.23)</td>
-                            <td align="right">(32.07)</td>
-                            <td align="right"></td>
-                            <td align="right">5.34 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(293.96)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F54-0000019</td>
-                            <td align="right">(5.98)</td>
-                            <td align="right">(0.72)</td>
-                            <td align="right"></td>
-                            <td align="right">0.12 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(6.58)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F36-0000018</td>
-                            <td align="right">(3.15)</td>
-                            <td align="right">(0.38)</td>
-                            <td align="right"></td>
-                            <td align="right">0.06 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(3.47)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F37-0000018</td>
-                            <td align="right">(222.55)</td>
-                            <td align="right">(26.71)</td>
-                            <td align="right"></td>
-                            <td align="right">4.45 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(244.81)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-186F58-0000024</td>
-                            <td align="right">(274.22)</td>
-                            <td align="right">(32.91)</td>
-                            <td align="right"></td>
-                            <td align="right">5.48 </td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(301.65)</td>
-                        </tr>
-                        <tr>
-                            <td align="center">24/05/2022</td>
-                            <td align="center">TS-WAC-187F6-0000024</td>
-                            <td align="right">(0.07)</td>
-                            <td align="right">(0.01)</td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right"></td>
-                            <td align="right">(0.08)</td>
-                        </tr>
+                        <?php } ?>
                         <tr>
                             <td align="center" colspan="2"><b>TOTAL AMOUNT PAID</b></td>
-                            <td align="right"><b>(1,247,545.56)</b></td>
-                            <td align="right"><b>(101,579.58)</b></td>
+                            <td align="right"><b>(<?php echo number_format($energy,2);?>)</b></td>
+                            <td align="right"><b>(<?php echo number_format($vat_on_purchases,2);?>)</b></td>
                             <td align="right"><b>-</b></td>
-                            <td align="right"><b>19,787.48</b></td>
+                            <td align="right"><b><?php echo number_format($ewt,2);?></b></td>
                             <td align="right"><b>-</b></td>
                             <td align="right"><b>-</b></td>
-                            <td align="right"><b>(1,329,337.66)</b></td>
+                            <td align="right"><b>(<?php echo number_format($total,2);?>)</b></td>
                         </tr>
                     </table>
                 </td>
