@@ -99,6 +99,7 @@
                     <input type="hidden" id="total_vat" name="total_vat" value="<?php echo $total_vat; ?>">
                     <input type="hidden" id="total_ewt" name="total_ewt" value="<?php echo $total_ewt; ?>">
                     <button class="btn btn-primary mr-1 btn-block" value="Save" id="save_payment" onclick = "savePaymentAll()">Save</button>
+                    <a class="btn btn-primary btn-block" target="_blank" href="<?php echo base_url(); ?>purchases/payment_form">Payment Form</a>
                 </div>
             </div>
         </div>

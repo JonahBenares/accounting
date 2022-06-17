@@ -2213,6 +2213,28 @@ page[size="A4"] {
     width: 21cm;
     height: 29.7cm; 
 }
+page[size="Legal"] {  
+    width: 22cm;
+    height: 35.56cm; 
+}
+page[size="BS"] {
+  background: white;
+  width: 19.7cm;
+  height: 17.1cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+page[size="OR"] {
+  background: white;
+  width: 20cm;
+  height: 11cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
 page[size="A4"][layout="landscape"] {
     width: 29.7cm;
     height: 21cm;  
@@ -2257,9 +2279,12 @@ page[size="A5"][layout="landscape"] {
     #printbutton, #br, #br1{display: none}
     .table-bor{border:1px solid #000!important;}
 }
-/*.table-bordered, td {
+.table-bordered td {
     border: 1px solid #000!important;
-} */
+} 
+.font11 td {
+    font-size: 11px;
+}
 .bor-btm{
     border-bottom:1px solid #cdcdcd;
 }
