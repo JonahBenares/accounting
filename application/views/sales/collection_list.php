@@ -138,118 +138,54 @@
                                         </thead>
                                         <tbody>
                                             <?php foreach($collection AS $c){ ?>
-                                            <tr>
-                                                <?php //if(stripos($c['series_number'], $c['series_number_checker'])!==FALSE){ ?>
-                                                <td class="td-btm pt-1 pb-1" rowspan="2" style="vertical-align: middle;">
-                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
-                                                </td>
-                                                <td class="td-btm pt-1 pb-1" rowspan='2'><?php echo $c['series_number'];?></td>
-                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
-                                                <td class="td-btm pt-1 pb-1">VAT - Cash</td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1" rowspan="2"></td>
-                                                <td class="td-btm pt-1 pb-1" rowspan="2"></td>
-                                            </tr>
+                                                <?php if($c['count_series'] >= 1){ ?>
+                                                    <tr>
+                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series']; ?>" style="vertical-align: middle;">
+                                                            <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
+                                                        </td>
+                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>"><?php echo $c['series_number'];?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['billing_remarks']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['particulars']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['settlement_id']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['company_name']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['reference_no']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['vatable_sales']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['zero_rated']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['zero_rated_ecozone']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['vat']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['ewt']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['total']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>"><?php echo $c['defint']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>"></td>
+                                                    </tr>
+                                                <?php } ?>
 
-                                            <tr>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
-                                                <td class="td-btm pt-1 pb-1">ENERGY - Cash</td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="td-btm pt-1 pb-1" style="vertical-align: middle;">
-                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
-                                                </td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td-btm pt-1 pb-1" rowspan="3" style="vertical-align: middle;">
-                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
-                                                </td>
-                                                <td class="td-btm pt-1 pb-1" rowspan="3">890</td>
-                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
-                                                <td class="td-btm pt-1 pb-1">VAT - Cash</td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1" rowspan="3"></td>
-                                                <td class="td-btm pt-1 pb-1" rowspan="3"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
-                                                <td class="td-btm pt-1 pb-1">ENERGY - Cash</td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                            </tr>
-                                            <tr>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1">180 - F7</td>
-                                                <td class="td-btm pt-1 pb-1">ENERGY - Cash</td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                                <td hidden class="td-btm pt-1 pb-1"></td>
-                                            </tr>
+                                                <?php if($c['count_series'] <= 2){ ?>
+                                                    <tr>
+                                                        <?php if($c['count_series'] >= 1){ ?>
+                                                            <td hidden class="td-btm pt-1 pb-1"></td>
+                                                            <td hidden class="td-btm pt-1 pb-1"></td>
+                                                        <?php }else{ ?>
+                                                            <td class="td-btm pt-1 pb-1">
+                                                                <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
+                                                            </td>
+                                                            <td class="td-btm pt-1 pb-1"></td>
+                                                        <?php } ?>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['billing_remarks']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['particulars']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['settlement_id']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['company_name']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['reference_no']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['vatable_sales']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['zero_rated']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['zero_rated_ecozone']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['vat']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['ewt']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['total']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['defint']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"></td>
+                                                    </tr>
+                                                <?php } ?>
                                             <?php } ?>
                                         </tbody>
                                     </table>
