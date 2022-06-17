@@ -218,7 +218,7 @@ class Sales extends CI_Controller {
         /*$data['sales'] = $this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0' AND balance!='0'");*/
 
         $sql="";
-        if($ref_no!='null' && $participant=='null'){
+        /*if($ref_no!='null' && $participant=='null'){
            $sql.= " AND sh.reference_number = '$ref_no' AND";
         }else if($ref_no!='null' && $participant!='null'){
             $sql.= " AND sh.reference_number = '$ref_no' AND sd.billing_id = '$participant' AND";
@@ -226,11 +226,40 @@ class Sales extends CI_Controller {
             $sql.= " AND sd.billing_id = '$participant' AND";
         }else {
             $sql.= "";
+        }*/
+
+        if($ref_no!='null'){
+           $sql.= " WHERE cd.reference_no = '$ref_no' AND";
+        }else {
+            $sql.= "";
         }
 
 
         $query=substr($sql,0,-3);
-        foreach($this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND print_counter != '0' AND balance!='0' $query") AS $p){
+        $data['collection']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id=cd.collection_id $query") AS $col){
+            $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
+            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!=''");
+            $data['collection'][]=array(
+                "count_series"=>$count_series,
+                "settlement_id"=>$col->settlement_id,
+                "series_number"=>$col->series_number,
+                "series_number_checker"=>$col->series_number,
+                "billing_remarks"=>$col->billing_remarks,
+                "particulars"=>$col->particulars,
+                "item_no"=>$col->item_no,
+                "defint"=>$col->defint,
+                "reference_no"=>$col->reference_no,
+                "amount"=>$col->amount,
+                "vat"=>$col->vat,
+                "zero_rated"=>$col->zero_rated,
+                "zero_rated_ecozone"=>$col->zero_rated_ecozone,
+                "ewt"=>$col->ewt,
+                "total"=>$col->total,
+                "company_name"=>$company_name,
+            );
+        }
+        /*foreach($this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND print_counter != '0' AND balance!='0' $query") AS $p){
             $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
             $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
             $data['sales'][]=array(
@@ -263,9 +292,9 @@ class Sales extends CI_Controller {
                     );
                 }
             }
-        }
+        }*/
 
-        $data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
+        //$data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/collection_list', $data);
@@ -1054,12 +1083,9 @@ class Sales extends CI_Controller {
               
             } 
 
-               $a++;
-         
-
-
-         }
-
+            $a++;
+        }
+        echo 'saved';
 
            
       

@@ -1,4 +1,4 @@
-<!-- <script src="<?php echo base_url(); ?>assets/js/sales.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -55,8 +55,8 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <?php if(!empty($ref_no)){ ?>
-                                <div class="row">
+                                <?php if(!empty($ref_no) && $ref_no!='null'){ ?>
+                                <!-- <div class="row">
                                     <div class="col-lg-12">
                                         <?php foreach($sales_head AS $sh){ ?>
                                         <table width="100%" class="table-borsdered">
@@ -76,7 +76,7 @@
                                         <?php } ?>                                     
                                     </div>
                                 </div>
-                                <br>
+                                <br> -->
                                 
                                 <!-- <div id="collection-list">
                                     <table class="table-bordered table table-hover " id="table-1" style="width:100%; ">
@@ -137,11 +137,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php foreach($collection AS $c){ ?>
                                             <tr>
-                                                <td class="td-btm pt-1 pb-1" rowspan="2" style="vertical-align: text-top;">
+                                                <?php //if(stripos($c['series_number'], $c['series_number_checker'])!==FALSE){ ?>
+                                                <td class="td-btm pt-1 pb-1" rowspan="2"  style="vertical-align: text-top;">
                                                     <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
                                                 </td>
-                                                <td class="td-btm pt-1 pb-1" rowspan="2">12334</td>
+                                                <td class="td-btm pt-1 pb-1" rowspan='2'><?php echo $c['series_number'];?></td>
                                                 <td class="td-btm pt-1 pb-1">180 - F7</td>
                                                 <td class="td-btm pt-1 pb-1">VAT - Cash</td>
                                                 <td class="td-btm pt-1 pb-1"></td>
@@ -248,6 +250,7 @@
                                                 <td hidden class="td-btm pt-1 pb-1"></td>
                                                 <td hidden class="td-btm pt-1 pb-1"></td>
                                             </tr>
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
