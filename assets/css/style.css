@@ -2284,7 +2284,7 @@ page[size="OR"] {
 }
 
 .td-yellow{
-	background: #fffca5;
+	background: #fffca5!important;
 }
 .td-head{
 	background: #f1f1f1;
@@ -2301,4 +2301,52 @@ page[size="OR"] {
 
 td.td-btm{
   border-bottom: 1px solid #f1f1f1!important;
+}
+
+.header {
+  /* Background color */
+  background-color: #ddd;
+
+  /* Stick to the top */
+  position: sticky;
+  top: 0;
+  border: 1px solid #f6f6f6;
+  /* Displayed on top of other rows when scrolling */
+  z-index: 9999;
+}
+table tfoot {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+}
+.td-sticky{
+  position: sticky;
+  position: -webkit-sticky;
+  border: 1px solid #f6f6f6;
+  background: #fff;
+  z-index: 3;
+}
+.td-sticky-hd{
+  position: sticky;
+  position: -webkit-sticky;
+  border: 1px solid #f6f6f6;
+  background: #f1f1f1;
+  z-index: 3;
+}
+.left-col-1 {
+  left: 0;
+  width: 100px!important  ;
+}
+
+.left-col-2 {
+  left: 100px;
+  width: 250px;
+}
+
+.left-col-3 {
+  left: 350px;
+}
+
+.sticky-back{
+  background: #e8e0ff!important;
 }

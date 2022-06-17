@@ -66,7 +66,7 @@
             </tr>
             <tr>
                 <td colspan="20">
-                    <table class="table-bordered font11" width="100%" >
+                    <table class="table-bordered font10" width="100%" >
                         <tr>
                             <td style="vertical-align: center;" width="9%" align="center"><b>Date of Payment</b></td>
                             <td style="vertical-align: center;" width="19%" align="center"><b>Invoice No.</b></td>
@@ -511,7 +511,7 @@
             </tr>
             <tr>
                 <td colspan="20">
-                    <table class="font11" width="100%">
+                    <table class="font10" width="100%">
                         <tr>
                             <td></td>
                             <td colspan="2">

@@ -44,13 +44,24 @@
                                 </div>
                             </div>
                             <hr>
+                            <table class="table-bordersed" width="100%">
+                                <tr>
+                                    <td width="7%"></td>
+                                    <td width="13%"><b>Transaction No.:</b></td>
+                                    <td width="32%">: Sample Name</td>
+                                    <td width="12%"><b>Date From - To:</b></td>
+                                    <td width="33%">: January 10, 2022 - March 20, 2022</td>
+                                    <td width="3%"></td>
+                                </tr>
+                            </table>
+                            <br>
                             <div style="overflow-x:scroll; min-height: 500px; height:550px">
-                                <table class="table table-bordered table-hover" style="width:100%;">
-                                    <thead>
+                                <table class="table table-bordered table-hover mb-0" style="width:200%;font-size: 13px;">
+                                    <thead class="header">
                                         <tr>
-                                            <td class="td-30 td-head" rowspan="2">Date</td>
-                                            <td class="td-30 td-head" rowspan="2">Participant Name</td>
-                                            <td class="td-30 td-head" rowspan="2">Description</td> 
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-1" rowspan="2" align="center">Date</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-2" rowspan="2" align="center">Participant Name</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-3" rowspan="2" align="center">Description</td> 
                                             <td class="td-30 td-head" colspan="3" align="center">Vatable Sales</td> 
                                             <td class="td-30 td-head" colspan="3" align="center">Zero Rated Purchases</td>    
                                             <td class="td-30 td-head" colspan="3" align="center">Zero Rated Ecozones</td>    
@@ -81,9 +92,9 @@
                                             foreach($bill AS $b){ 
                                         ?>
                                         <tr>
-                                            <td align="left"><?php echo $b['date']; ?></td>
-                                            <td align="left"><?php echo $b['company_name']; ?></td>
-                                            <td align="left"><?php echo ($b['billing_from']!='' && $b['billing_to']!='') ? date("F d,Y",strtotime($b['billing_from']))." - ".date("F d,Y",strtotime($b['billing_to'])) : ''; ?></td>
+                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $b['date']; ?></td>
+                                            <td align="left" class="td-sticky left-col-2 sticky-back"><?php echo $b['company_name']; ?></td>
+                                            <td align="center" class="td-sticky left-col-3 sticky-back"><?php echo ($b['billing_from']!='' && $b['billing_to']!='') ? date("F d,Y",strtotime($b['billing_from']))." - ".date("F d,Y",strtotime($b['billing_to'])) : ''; ?></td>
                                             <td align="right"><?php echo number_format($b['vatables_purchases'],2); ?></td>
                                             <td align="right"><?php echo number_format($b['purchase_amount'],2); ?></td>
                                             <td align="right"><?php echo number_format($b['vatable_balance'],2); ?></td>
