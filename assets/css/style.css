@@ -2335,20 +2335,16 @@ table tfoot {
 }
 .left-col-1 {
   left: 0;
-  width: 100px;
-  border: 1px solid #f6f6f6 !important;
+  width: 100px!important  ;
 }
 
 .left-col-2 {
   left: 100px;
-  width: 200px;
-  border: 1px solid #f6f6f6 !important;
+  width: 250px;
 }
 
 .left-col-3 {
-  left: 295px;
-  width: 200px;
-  border: 1px solid #f6f6f6 !important;
+  left: 350px;
 }
 
 .sticky-back{
