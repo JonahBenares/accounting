@@ -161,3 +161,31 @@ function filter_purchasesledger(){
     }
     window.location=loc+'reports/purchases_ledger/'+ref+'/'+from+'/'+to;          
 }
+
+function filterCSLedger(){
+    var participant= document.getElementById("participant").value;
+    var date_from= document.getElementById("date_from").value;
+    var date_to= document.getElementById("date_to").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(participant!=''){
+        var part=participant;
+    }else{
+        var part='null';
+    }
+
+
+    if(date_from){
+        var from=date_from;
+    }else{
+        var from='null';
+    }
+
+
+    if(date_to){
+        var to=date_to;
+    }else{
+        var to='null';
+    }
+    window.location=loc+'reports/cs_ledger/'+part+'/'+from+'/'+to;          
+}
