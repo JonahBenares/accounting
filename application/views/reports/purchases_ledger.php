@@ -44,13 +44,16 @@
                                 </div>
                             </div>
                             <hr>
+                            <?php 
+                            if(!empty($ref_no) || !empty($date_from) || !empty($date_to)){
+                            ?>
                             <table class="table-bordersed" width="100%">
                                 <tr>
                                     <td width="7%"></td>
                                     <td width="13%"><b>Transaction No.:</b></td>
-                                    <td width="32%">: Sample Name</td>
+                                    <td width="32%">: <?php echo $ref_no ?></td>
                                     <td width="12%"><b>Date From - To:</b></td>
-                                    <td width="33%">: January 10, 2022 - March 20, 2022</td>
+                                    <td width="33%">: <?php echo $date_from ?> - <?php echo $date_to ?></td>
                                     <td width="3%"></td>
                                 </tr>
                             </table>
@@ -113,44 +116,37 @@
                                         </tr>
                                         <?php  } } ?>
                                     </tbody>
-                                    <!-- <tbody>
-                                        <?php 
-                                            if(!empty($bill)){
-                                            foreach($bill AS $b){ 
-                                                $vatable_sum[]=$b['vatable_total'];
-                                                $zerorated_sum[]=$b['zerorated_total'];
-                                                $vat_sum[]=$b['vat_total'];
-                                                $total_sum=$b['total_sum'];
-                                        ?>
-                                        <tr>                                        
-                                            <td class="td-30"><?php echo $b['date']; ?></td>
-                                            <td class="td-30"><?php echo $b['company_name']; ?></td>
-                                            <td class="td-30"><?php echo ($b['billing_from']!='' && $b['billing_to']!='') ? date("F d,Y",strtotime($b['billing_from']))." - ".date("F d,Y",strtotime($b['billing_to'])) : ''; ?></td>
-                                            <td class="td-30"><?php echo ($b['method']=='Bill') ? 'Billing' : 'Payment'; ?></td>
-                                            <td class="td-30" align="right"><?php echo number_format($b['vatables_purchases'],2); ?></td>
-                                            <td class="td-30" align="right"><?php echo number_format($b['zero_rated_purchases'],2); ?></td>
-                                            <td class="td-30" align="right"><?php echo number_format($b['vat_on_purchases'],2); ?></td>
-                                            <td class="td-30" align="right"><?php echo number_format($b['total'],2); ?></td>
+                                    <tfoot class="header">
+                                        <tr >
+                                            <td align="right" style="vertical-align:middle!important;" class="td-sticky left-col-1 td-yellow" colspan="3">TOTAL</td>
+
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vatable_purchases,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_purchase_amount,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vatable_balance,2); ?></td>
+
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_rated,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_p_zero_rated,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_rated_balance,2); ?></td>
+
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_ecozones,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_p_zero_ecozones,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_ecozones_balance,2); ?></td>
+
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vat,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_p_vat,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vat_balance,2); ?></td>
+
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_ewt,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_p_ewt,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_ewt_balance,2); ?></td>
                                         </tr>
-                                        <?php 
-                                            } 
-                                            $vatable_arraysum=array_sum($vatable_sum);
-                                            $zerorated_arraysum=array_sum($zerorated_sum);
-                                            $vat_arraysum=array_sum($vat_sum);
-                                            /*$total_arraysum=array_sum($total_sum);*/
-                                        ?>
-                                        <tr>
-                                            <td class="td-30 td-yellow" colspan="4">TOTAL</td>
-                                            <td class="td-30 td-yellow" align="right"><b><?php echo number_format($vatable_arraysum,2); ?></b></td>
-                                            <td class="td-30 td-yellow" align="right"><b><?php echo number_format($zerorated_arraysum,2); ?></b></td>
-                                            <td class="td-30 td-yellow" align="right"><b><?php echo number_format($vat_arraysum,2); ?></b></td>
-                                            <td class="td-30 td-yellow" align="right"><b><?php echo number_format($total_sum,2); ?></b></td>
-                                        </tr>
-                                        <?php  } ?>
-                                    </tbody>     -->
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
+                    <?php }else{ ?>
+                            <div><center><b>No Available Data...</b></center></div>
+                    <?php } ?>
                     </div>
                 </div>
             </div>
