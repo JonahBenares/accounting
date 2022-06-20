@@ -308,7 +308,7 @@ class Sales extends CI_Controller {
 
         //$data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $this->load->view('sales/collection_list', $data);
         $this->load->view('template/footer');
     }
