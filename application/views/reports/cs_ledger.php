@@ -43,10 +43,10 @@
                                     </table>
                                 </div>
                             </div>
+                            <hr>
                             <?php 
                             if(!empty($part) || !empty($date_from) || !empty($date_to)){
                             ?>
-                            <hr>
                             <table class="table-bordersed" width="100%">
                                 <tr>
                                     <td width="7%"></td>
@@ -91,8 +91,8 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            if(!empty($bill)){
-                                            foreach($bill AS $b){ 
+                                            if(!empty($csledger)){
+                                            foreach($csledger AS $b){ 
                                         ?>
                                         <tr>
                                             <td align="left" class="td-sticky left-col-1 sticky-back" align="center"><?php echo $b['date']; ?></td>
@@ -149,6 +149,8 @@
                                 </table>
                             </div>
                         </div>
+                    <?php }else{ ?>
+                            <div><center><b>No Available Data...</b></center></div>
                     <?php } ?>
                     </div>
                 </div>

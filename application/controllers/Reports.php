@@ -493,7 +493,7 @@ class Reports extends CI_Controller {
         if($participant!='null' && $date_from=='null' && $date_to=='null'){
             $sql.= " AND std.billing_id = '$participant' AND";
         }else if($participant!='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND std.billing_id = '$participant' AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            $sql.= " AND std.billing_id = '$participant' AND '$date_from' AND '$date_to' BETWEEN sth.billing_from AND sth.billing_to AND";
         }else if($participant=='null' && $date_from!='null' && $date_to!='null'){
             $sql.= " AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
         }else {
@@ -502,7 +502,7 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-3);
         //echo $query;
-        $data['bill']=array();
+        $data['csledger']=array();
         $data['total_vatable_sales']=0.00;
         $data['total_amount']=0.00;
         $data['total_vatable_balance']=0.00;
@@ -568,7 +568,7 @@ class Reports extends CI_Controller {
                 $total_ewt_balance[]=$ewtbalance;
                 $data['total_ewt_balance']=array_sum($total_ewt_balance);
 
-                $data['bill'][]=array(
+                $data['csledger'][]=array(
                     "date"=>$b->transaction_date,
                     "company_name"=>$b->company_name,
                     "billing_from"=>$b->billing_from,
@@ -599,7 +599,123 @@ class Reports extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/ss_ledger');
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $participant=$this->uri->segment(3);
+        $date_from=$this->uri->segment(4);
+        $date_to=$this->uri->segment(5);
+        $data['part'] = $participant;
+        $data['date_from'] = $date_from;
+        $data['date_to'] = $date_to;
+        $sql='';
+        if($participant!='null' && $date_from=='null' && $date_to=='null'){
+            $sql.= " AND ptd.billing_id = '$participant' AND";
+        }else if($participant!='null' && $date_from!='null' && $date_to!='null'){
+            $sql.= " AND ptd.billing_id = '$participant' AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+        }else if($participant=='null' && $date_from!='null' && $date_to!='null'){
+            $sql.= " AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+        }else {
+            $sql.= "";
+        }
+
+        $query=substr($sql,0,-3);
+        $data['ssledger']=array();
+        $data['total_vatable_purchases']=0.00;
+        $data['total_purchase_amount']=0.00;
+        $data['total_vatable_balance']=0.00;
+        $data['total_zero_rated']=0.00;
+        $data['total_p_zero_rated']=0.00;
+        $data['total_zero_rated_balance']=0.00;
+        $data['total_zero_ecozones']=0.00;
+        $data['total_p_zero_ecozones']=0.00;
+        $data['total_zero_ecozones_balance']=0.00;
+        $data['total_vat']=0.00;
+        $data['total_p_vat']=0.00;
+        $data['total_vat_balance']=0.00;
+        $data['total_ewt']=0.00;
+        $data['total_p_ewt']=0.00;
+        $data['total_ewt_balance']=0.00;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE saved='1' $query") AS $b){
+                foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){
+            if($c->purchase_mode=='Vatable Purchase'){
+                $vat_on_purchases=$c->vat;
+                $zero_rated='0.00';
+                $rated_ecozones='0.00';
+            }else if($c->purchase_mode=='Zero-Rated Purchase'){
+                $vat_on_purchases='0.00';
+                $zero_rated=$c->vat;
+                $rated_ecozones='0.00';
+            }else if($c->purchase_mode=='Zero-Rated Ecozones Purchase'){
+                $vat_on_purchases='0.00';
+                $zero_rated='0.00';
+                $rated_ecozones=$c->vat;
+            }
+                $vatable_balance=$b->vatables_purchases - $c->purchase_amount;
+                $zerorated_balance=$b->zero_rated_purchases - $zero_rated;
+                $ratedecozones_balance=$b->zero_rated_ecozones - $rated_ecozones;
+                $vat_balance=$b->vat_on_purchases - $vat_on_purchases;
+                $ewt_balance=$b->ewt - $c->ewt;
+                $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$b->billing_id);
+
+                $total_vatable_purchases[]=$b->vatables_purchases;
+                $data['total_vatable_purchases']=array_sum($total_vatable_purchases);
+                $total_purchase_amount[]=$c->purchase_amount;
+                $data['total_purchase_amount']=array_sum($total_purchase_amount);
+                $total_vatable_balance[]=$vatable_balance;
+                $data['total_vatable_balance']=array_sum($total_vatable_balance);
+
+                $total_zero_rated[]=$b->zero_rated_purchases;
+                $data['total_zero_rated']=array_sum($total_zero_rated);
+                $total_p_zero_rated[]=$zero_rated;
+                $data['total_p_zero_rated']=array_sum($total_p_zero_rated);
+                $total_zero_rated_balance[]=$zerorated_balance;
+                $data['total_zero_rated_balance']=array_sum($total_zero_rated_balance);
+
+                $total_zero_ecozones[]=$b->zero_rated_ecozones;
+                $data['total_zero_ecozones']=array_sum($total_zero_ecozones);
+                $total_p_zero_ecozones[]=$rated_ecozones;
+                $data['total_p_zero_ecozones']=array_sum($total_p_zero_ecozones);
+                $total_zero_ecozones_balance[]=$ratedecozones_balance;
+                $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones_balance);
+
+                $total_vat[]=$b->vat_on_purchases;
+                $data['total_vat']=array_sum($total_vat);
+                $total_p_vat[]=$vat_on_purchases;
+                $data['total_p_vat']=array_sum($total_p_vat);
+                $total_vat_balance[]=$vat_balance;
+                $data['total_vat_balance']=array_sum($total_vat_balance);
+
+                $total_ewt[]=$b->ewt;
+                $data['total_ewt']=array_sum($total_ewt);
+                $total_p_ewt[]=$c->ewt;
+                $data['total_p_ewt']=array_sum($total_p_ewt);
+                $total_ewt_balance[]=$ewt_balance;
+                $data['total_ewt_balance']=array_sum($total_ewt_balance);
+
+
+                $data['ssledger'][]=array(
+                    "date"=>$b->transaction_date,
+                    "company_name"=>$company_name,
+                    "billing_from"=>$b->billing_from,
+                    "billing_to"=>$b->billing_to,
+                    "vatables_purchases"=>$b->vatables_purchases,
+                    "purchase_amount"=>$c->purchase_amount,
+                    "zero_rated_purchases"=>$b->zero_rated_purchases,
+                    "zero_rated"=>$zero_rated,
+                    "zero_rated_ecozones"=>$b->zero_rated_ecozones,
+                    "rated_ecozones"=>$rated_ecozones,
+                    "vat_on_purchases"=>$b->vat_on_purchases,
+                    "vat"=>$vat_on_purchases,
+                    "ewt"=>$b->ewt,
+                    "p_ewt"=>$c->ewt,
+                    "vatable_balance"=>$vatable_balance,
+                    "zerorated_balance"=>$zerorated_balance,
+                    "ratedecozones_balance"=>$ratedecozones_balance,
+                    "vat_balance"=>$vat_balance,
+                    "ewt_balance"=>$ewt_balance,
+                );
+            }
+        }
+        $this->load->view('reports/ss_ledger',$data);
         $this->load->view('template/footer');
     }
     
