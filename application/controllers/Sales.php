@@ -235,24 +235,23 @@ class Sales extends CI_Controller {
         }
 
         $query=substr($sql,0,-3);
-        //$data['collection']=array();
+        $data['collection']=array();
         foreach($this->super_model->custom_query("SELECT DISTINCT series_number,collection_id,settlement_id FROM collection_details $query") AS $col){
-            $collection_details_id=$this->super_model->select_column_where('collection_details',"collection_details_id","collection_id",$col->collection_id);
+            $collection_details_id=$this->super_model->select_column_where('collection_details',"collection_details_id","settlement_id",$col->settlement_id);
             $reference_no=$this->super_model->select_column_where("collection_details","reference_no","collection_id",$col->collection_id);
             $series_number=$this->super_model->select_column_where("collection_details","series_number","collection_id",$col->collection_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
             $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!=''");
-            $billing_remarks=$this->super_model->select_column_where("collection_details","billing_remarks","collection_id",$col->collection_id);
-            $particulars=$this->super_model->select_column_where("collection_details","particulars","collection_id",$col->collection_id);
+            $billing_remarks=$this->super_model->select_column_where("collection_details","billing_remarks","collection_details_id",$collection_details_id);
+            $particulars=$this->super_model->select_column_where("collection_details","particulars","collection_details_id",$collection_details_id);
             $item_no=$this->super_model->select_column_where("collection_details","item_no","collection_id",$col->collection_id);
             $defint=$this->super_model->select_column_where("collection_details","defint","collection_id",$col->collection_id);
-            $amount=$this->super_model->select_column_where("collection_details","amount","collection_id",$col->collection_id);
             $vat=$this->super_model->select_column_where("collection_details","vat","collection_id",$col->collection_id);
             $zero_rated=$this->super_model->select_column_where("collection_details","zero_rated","collection_id",$col->collection_id);
-            $zero_rated_ecozone=$this->super_model->select_column_where("collection_details","zero_rated_ecozone","collection_id",$col->collection_id);
-            $ewt=$this->super_model->select_column_where("collection_details","ewt","collection_id",$col->collection_id);
-            $total=$this->super_model->select_column_where("collection_details","total","collection_id",$col->collection_id);
-            $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","short_name='$col->settlement_id'");
+            $zero_rated_ecozone=$this->super_model->select_column_where("collection_details","zero_rated_ecozone","collection_details_id",$collection_details_id);
+            $ewt=$this->super_model->select_column_where("collection_details","ewt","collection_details_id",$collection_details_id);
+            $total=$this->super_model->select_column_where("collection_details","total","collection_details_id",$collection_details_id);
+            $amount=$this->super_model->select_column_where("collection_details","amount","collection_details_id",$collection_details_id);
             $data['collection'][]=array(
                 "count_series"=>$count_series,
                 "settlement_id"=>$col->settlement_id,
@@ -262,14 +261,13 @@ class Sales extends CI_Controller {
                 "item_no"=>$item_no,
                 "defint"=>$defint,
                 "reference_no"=>$reference_no,
-                "amount"=>$amount,
                 "vat"=>$vat,
                 "zero_rated"=>$zero_rated,
                 "zero_rated_ecozone"=>$zero_rated_ecozone,
                 "ewt"=>$ewt,
                 "total"=>$total,
                 "company_name"=>$company_name,
-                "vatable_sales"=>$vatable_sales,
+                "amount"=>$amount,
             );
 
         }
