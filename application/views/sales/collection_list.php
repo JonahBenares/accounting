@@ -156,7 +156,7 @@
                                                         <td class="td-btm pt-1 pb-1"><?php echo $c['ewt']; ?></td>
                                                         <td class="td-btm pt-1 pb-1"><?php echo $c['total']; ?></td>
                                                         <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>"><?php echo $c['defint']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>"></td>
+                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>"><?php echo $c['defint']; ?></td>
                                                     </tr>
                                                 <?php } ?>
 
@@ -182,8 +182,8 @@
                                                         <td class="td-btm pt-1 pb-1"><?php echo $c['vat']; ?></td>
                                                         <td class="td-btm pt-1 pb-1"><?php echo $c['ewt']; ?></td>
                                                         <td class="td-btm pt-1 pb-1"><?php echo $c['total']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['defint']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"></td>
+                                                        <td  class="td-btm pt-1 pb-1">asdsa</td>
+                                                        <td  class="td-btm pt-1 pb-1">asdsa</td>
                                                     </tr>
                                                 <?php } ?>
                                             <?php } ?>
