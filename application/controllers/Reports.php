@@ -313,9 +313,15 @@ class Reports extends CI_Controller {
         if($ref_no!='null' && $date_from=='null' && $date_to=='null'){
             $sql.= " AND sth.reference_number = '$ref_no' AND";
         }else if($ref_no!='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND sth.reference_number = '$ref_no' AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            //$sql.= " AND sth.reference_number = '$ref_no' AND '$date_from' AND '$date_to' BETWEEN sth.billing_from AND sth.billing_to AND";
+            $sql.= " AND sth.reference_number = '$ref_no' AND (sth.billing_from >= '$date_from' AND sth.billing_to <= '$date_to') AND";
         }else if($ref_no=='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            //$sql.= " AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            $sql.= " AND (sth.billing_from >= '$date_from' AND sth.billing_to <= '$date_to') AND";
+        }else if($ref_no=='null' && $date_from!='null' && $date_to=='null'){
+            $sql.= " AND sth.billing_from = '$date_from' AND";
+        }else if($ref_no=='null' && $date_from=='null' && $date_to!='null'){
+            $sql.= " AND sth.billing_to = '$date_to' AND";
         }else {
             $sql.= "";
         }
@@ -430,9 +436,15 @@ class Reports extends CI_Controller {
         if($ref_no!='null' && $date_from=='null' && $date_to=='null'){
             $sql.= " AND pth.reference_number = '$ref_no' AND";
         }else if($ref_no!='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND pth.reference_number = '$ref_no' AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            //$sql.= " AND pth.reference_number = '$ref_no' AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            $sql.= " AND pth.reference_number = '$ref_no' AND (pth.billing_from >= '$date_from' AND pth.billing_to <= '$date_to') AND";
         }else if($ref_no=='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            //$sql.= " AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            $sql.= " AND (pth.billing_from >= '$date_from' AND pth.billing_to <= '$date_to') AND";
+        }else if($ref_no=='null' && $date_from!='null' && $date_to=='null'){
+            $sql.= " AND pth.billing_from = '$date_from' AND";
+        }else if($ref_no=='null' && $date_from=='null' && $date_to!='null'){
+            $sql.= " AND pth.billing_to = '$date_to' AND";
         }else {
             $sql.= "";
         }
@@ -561,9 +573,15 @@ class Reports extends CI_Controller {
         if($participant!='null' && $date_from=='null' && $date_to=='null'){
             $sql.= " AND std.billing_id = '$participant' AND";
         }else if($participant!='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND std.billing_id = '$participant' AND '$date_from' AND '$date_to' BETWEEN sth.billing_from AND sth.billing_to AND";
+            //$sql.= " AND std.billing_id = '$participant' AND '$date_from' AND '$date_to' BETWEEN sth.billing_from AND sth.billing_to AND";
+            $sql.= " AND std.billing_id = '$participant' AND (sth.billing_from >= '$date_from' AND sth.billing_to <= '$date_to') AND";
         }else if($participant=='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            //$sql.= " AND '$date_from' AND '$date_to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            $sql.= " AND (sth.billing_from >= '$date_from' AND sth.billing_to <= '$date_to') AND";
+        }else if($participant=='null' && $date_from!='null' && $date_to=='null'){
+            $sql.= " AND sth.billing_from = '$date_from' AND";
+        }else if($participant=='null' && $date_from=='null' && $date_to!='null'){
+            $sql.= " AND sth.billing_to = '$date_to' AND";
         }else {
             $sql.= "";
         }
@@ -678,9 +696,15 @@ class Reports extends CI_Controller {
         if($participant!='null' && $date_from=='null' && $date_to=='null'){
             $sql.= " AND ptd.billing_id = '$participant' AND";
         }else if($participant!='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND ptd.billing_id = '$participant' AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            //$sql.= " AND ptd.billing_id = '$participant' AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            $sql.= " AND ptd.billing_id = '$participant' AND (pth.billing_from >= '$date_from' AND pth.billing_to <= '$date_to') AND";
         }else if($participant=='null' && $date_from!='null' && $date_to!='null'){
-            $sql.= " AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            //$sql.= " AND '$date_from' AND '$date_to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            $sql.= " AND (pth.billing_from >= '$date_from' AND pth.billing_to <= '$date_to') AND";
+        }else if($participant=='null' && $date_from!='null' && $date_to=='null'){
+            $sql.= " AND pth.billing_from = '$date_from' AND";
+        }else if($participant=='null' && $date_from=='null' && $date_to!='null'){
+            $sql.= " AND pth.billing_to = '$date_to' AND";
         }else {
             $sql.= "";
         }
