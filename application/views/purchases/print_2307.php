@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Otika - Admin Dashboard Template</title>
+    <title>FEBA SYSTEM</title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print2307-style.css">
-    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/favicon.ico' />
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
 <div class="" id="printbutton">
     <center>

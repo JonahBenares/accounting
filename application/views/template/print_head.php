@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Otika - Admin Dashboard Template</title>
+    <title>FEBA SYSTEM</title>
     <!-- General CSS Files -->    
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print_style.css">
     <!-- Custom style CSS -->
-    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/favicon.ico' />
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>

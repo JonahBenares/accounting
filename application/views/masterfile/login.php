@@ -3,13 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-        <title>Otika - Admin Dashboard Template</title>
+        <title>FEBA SYSTEM</title>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/app.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bundles/bootstrap-social/bootstrap-social.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/components.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css">
-        <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/favicon.ico' />
+        <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
     </head>
     <body>
                 <?php
