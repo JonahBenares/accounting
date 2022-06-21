@@ -215,19 +215,8 @@ class Sales extends CI_Controller {
         $data['ref_no'] = $ref_no;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        /*$data['sales'] = $this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND reference_number='$ref_no' AND print_counter != '0' AND balance!='0'");*/
 
         $sql="";
-        /*if($ref_no!='null' && $participant=='null'){
-           $sql.= " AND sh.reference_number = '$ref_no' AND";
-        }else if($ref_no!='null' && $participant!='null'){
-            $sql.= " AND sh.reference_number = '$ref_no' AND sd.billing_id = '$participant' AND";
-        }else if($ref_no=='null' && $participant!='null'){
-            $sql.= " AND sd.billing_id = '$participant' AND";
-        }else {
-            $sql.= "";
-        }*/
-
         if($ref_no!='null'){
            $sql.= " WHERE reference_no = '$ref_no' AND";
         }else {
@@ -236,82 +225,42 @@ class Sales extends CI_Controller {
 
         $query=substr($sql,0,-3);
         $data['collection']=array();
-        foreach($this->super_model->custom_query("SELECT DISTINCT (series_number),collection_id,settlement_id FROM collection_details $query") AS $col){
-        //foreach($this->super_model->custom_query("SELECT DISTINCT series_number,collection_id,settlement_id FROM collection_details $query") AS $col){
-            $collection_details_id=$this->super_model->select_column_where('collection_details',"collection_details_id","settlement_id",$col->settlement_id);
-            $reference_no=$this->super_model->select_column_where("collection_details","reference_no","collection_id",$col->collection_id);
-            $series_number=$this->super_model->select_column_where("collection_details","series_number","collection_id",$col->collection_id);
+        foreach($this->super_model->custom_query("SELECT * FROM collection_details $query") AS $col){
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
-            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!=''");
-            $billing_remarks=$this->super_model->select_column_where("collection_details","billing_remarks","collection_details_id",$collection_details_id);
-            $particulars=$this->super_model->select_column_where("collection_details","particulars","collection_details_id",$collection_details_id);
-            $item_no=$this->super_model->select_column_where("collection_details","item_no","collection_id",$col->collection_id);
-            $defint=$this->super_model->select_column_where("collection_details","defint","collection_id",$col->collection_id);
-            $vat=$this->super_model->select_column_where("collection_details","vat","collection_id",$col->collection_id);
-            $zero_rated=$this->super_model->select_column_where("collection_details","zero_rated","collection_id",$col->collection_id);
-            $zero_rated_ecozone=$this->super_model->select_column_where("collection_details","zero_rated_ecozone","collection_details_id",$collection_details_id);
-            $ewt=$this->super_model->select_column_where("collection_details","ewt","collection_details_id",$collection_details_id);
-            $total=$this->super_model->select_column_where("collection_details","total","collection_details_id",$collection_details_id);
-            $amount=$this->super_model->select_column_where("collection_details","amount","collection_details_id",$collection_details_id);
-            $series_numbers=$this->super_model->select_column_where("collection_details","series_number","collection_details_id",$collection_details_id);
-            if($col->series_number==$series_numbers){
-                $data['collection'][]=array(
-                    "count_series"=>$count_series,
-                    "settlement_id"=>$col->settlement_id,
-                    "series_number"=>$col->series_number,
-                    "billing_remarks"=>$billing_remarks,
-                    "particulars"=>$particulars,
-                    "item_no"=>$item_no,
-                    "defint"=>$defint,
-                    "reference_no"=>$reference_no,
-                    "vat"=>$vat,
-                    "zero_rated"=>$zero_rated,
-                    "zero_rated_ecozone"=>$zero_rated_ecozone,
-                    "ewt"=>$ewt,
-                    "total"=>$total,
-                    "company_name"=>$company_name,
-                    "amount"=>$amount,
-                );
+            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id'");
+            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
+            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
+            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
+            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
+            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
+            $sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
+            $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
+            if($count_series>=1){
+                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+            }else{
+                $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             }
-        }
-        /*foreach($this->super_model->custom_query("SELECT sd.* FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE saved = '1' AND print_counter != '0' AND balance!='0' $query") AS $p){
-            $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
-            $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
-            $data['sales'][]=array(
-                "company_name"=>$p->company_name,
-                "sales_id"=>$p->sales_id,
-                "sales_detail_id"=>$p->sales_detail_id,
-                "billing_id"=>$p->billing_id,
-                "short_name"=>$p->short_name,
-                "vatable_sales"=>$p->vatable_sales,
-                "balance"=>$p->balance,
+            $data['collection'][]=array(
+                "count_series"=>$count_series,
+                "settlement_id"=>$col->settlement_id,
+                "series_number"=>$col->series_number,
+                "billing_remarks"=>$col->billing_remarks,
+                "particulars"=>$col->particulars,
+                "item_no"=>$col->item_no,
+                "defint"=>$sum_def_int,
+                "reference_no"=>$col->reference_no,
+                "vat"=>$col->vat,
+                "zero_rated"=>$col->zero_rated,
+                "zero_rated_ecozone"=>$col->zero_rated_ecozone,
+                "ewt"=>$col->ewt,
+                "total"=>$total,
+                "company_name"=>$company_name,
+                "amount"=>$col->amount,
+                "overall_total"=>$overall_total,
             );
-            if($count_sub >1){
-                foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
-                    $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $company_name=$this->super_model->select_column_custom_where("sales_transaction_details","company_name","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
-                    $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
-                    $sales_id=$this->super_model->select_column_custom_where("sales_transaction_details","sales_id","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
-                    $sales_detail_id=$this->super_model->select_column_custom_where("sales_transaction_details","sales_detail_id","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
-                    $short_name=$this->super_model->select_column_custom_where("sales_transaction_details","short_name","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
-                    $balance=$this->super_model->select_column_custom_where("sales_transaction_details","balance","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
-                    $data['sales'][]=array(
-                        "company_name"=>$company_name,
-                        "billing_id"=>$billing_id,
-                        "sales_id"=>$sales_id,
-                        "sales_detail_id"=>$sales_detail_id,
-                        "short_name"=>$short_name,
-                        "vatable_sales"=>$vatable_sales,
-                        "balance"=>$balance,
-                    );
-                }
-            }
-        }*/
-
-        //$data['sales_head'] = $this->super_model->select_row_where("sales_transaction_head", "reference_number", $ref_no);
+        }
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $this->load->view('sales/collection_list', $data);
         $this->load->view('template/footer');
     }

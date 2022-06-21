@@ -56,65 +56,6 @@
                                 </div>
                                 <hr>
                                 <?php if(!empty($ref_no) && $ref_no!='null'){ ?>
-                                <!-- <div class="row">
-                                    <div class="col-lg-12">
-                                        <?php foreach($sales_head AS $sh){ ?>
-                                        <table width="100%" class="table-borsdered">
-                                            <tr>
-                                                <td width="13%">Reference Number:</td>
-                                                <td><b><?php echo $sh->reference_number; ?></b></td>
-                                                <td width="13%">Transaction Date:</td>
-                                                <td><?php echo date("F j, Y", strtotime($sh->transaction_date)); ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Billing Period:</td>
-                                                <td><?php echo date("F j, Y", strtotime($sh->billing_from)); ?> - <?php echo date("F j, Y", strtotime($sh->billing_to)); ?></td>
-                                                <td>Due Date:</td>
-                                                <td><?php echo date("F j, Y", strtotime($sh->due_date)); ?></td>
-                                            </tr>
-                                        </table>   
-                                        <?php } ?>                                     
-                                    </div>
-                                </div>
-                                <br> -->
-                                
-                                <!-- <div id="collection-list">
-                                    <table class="table-bordered table table-hover " id="table-1" style="width:100%; ">
-                                        <thead>
-                                            <tr>
-                                                <th width="5%" align="center">
-                                                    <center><span class="fas fa-bars"></span></center>
-                                                </th>
-                                                <th width="20%">Company Name</th>
-                                                <th width="15%">Billing ID</th>
-                                                <th width="15%">Short Name</th>
-                                                <th width="10%">Vatable Sales</th>
-                                                <th width="15%">Total Amount Due</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                                if(!empty($sales)){
-                                                    foreach($sales AS $s){ 
-                                            ?>
-                                            <tr>
-                                                <td align="center">
-                                                    <div class="btn-group mb-0">
-                                                        <a class="btn btn-success btn-sm" target="_blank" onClick="add_details_OR('<?php echo base_url(); ?>', '<?php echo $s['sales_id']; ?>','<?php echo $s['sales_detail_id']; ?>')" style="color:#fff">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                                <td><?php echo $s['company_name']; ?></td>
-                                                <td><?php echo $s['billing_id']; ?></td>
-                                                <td><?php echo $s['short_name']; ?></td>
-                                                <td><?php echo number_format($s['vatable_sales'],2); ?></td>
-                                                <td align="right"><?php echo number_format($s['balance'],2); ?></td>
-                                            </tr>
-                                        <?php } } ?>
-                                        </tbody>
-                                    </table>
-                                </div> -->
                                 <div>
                                     <table class="table-bordered table table-hosver" id="table-3" width="170%"> 
                                         <thead>
@@ -137,60 +78,92 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($collection AS $c){ ?>
-                                                <?php if($c['count_series'] >= 1){ ?>
-                                                    <tr>
-                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series']; ?>" style="vertical-align: middle;">
-                                                            <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
-                                                        </td>
-                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>" align="center"><?php echo $c['series_number'];?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['billing_remarks']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['particulars']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['settlement_id']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['company_name']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['reference_no']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['amount']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['zero_rated']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['zero_rated_ecozone']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['vat']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['ewt']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['total']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>"><?php echo $c['defint']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1" rowspan="<?php echo $c['count_series'];?>"><?php echo $c['defint']; ?></td>
-                                                    </tr>
-                                                <?php } ?>
+                                            <?php 
+                                                $data2 = array();
+                                                foreach($collection as $value) {
+                                                    $key = $value['series_number'].$value['settlement_id'];
+                                                    if(!isset($data2[$key])) {
+                                                        $data2[$key] = array(
+                                                            'series_number' => $value['series_number'], 
+                                                            'billing_remarks' => array(),
+                                                            'billing_remarks_single'=>$value['billing_remarks'],
+                                                            'particulars' => array(),
+                                                            'particular_single'=>$value['particulars'], 
+                                                            'settlement_id' => array(),
+                                                            'settlement_id_single'=>$value['settlement_id'], 
+                                                            'company_name' => array(),
+                                                            'company_single'=>$value['company_name'], 
+                                                            'reference_no' => array(),
+                                                            'reference_no_single'=>$value['reference_no'], 
+                                                            'amount' => array(),
+                                                            'amount_single'=>$value['amount'],
+                                                            'zero_rated' => array(),
+                                                            'zero_rated_single'=>$value['zero_rated'], 
+                                                            'zero_rated_ecozone' => array(),
+                                                            'zero_rated_ecozone_single'=>$value['zero_rated_ecozone'], 
+                                                            'vat' => array(),
+                                                            'vat_single'=>$value['vat'], 
+                                                            'ewt' => array(),
+                                                            'ewt_single'=>$value['ewt'], 
+                                                            'total' => array(),
+                                                            'total_single'=>$value['total'],
+                                                            'defint' => array(),
+                                                            'defint_single'=>$value['defint'],  
+                                                            'count_series'=>$value['count_series'],
+                                                            'overall_total'=>$value['overall_total'],
+                                                        );
+                                                    }
+                                                    $data2[$key]['billing_remarks'][] = $value['billing_remarks'];
+                                                    $data2[$key]['particulars'][] = $value['particulars'];
+                                                    $data2[$key]['settlement_id'][] = $value['settlement_id'];
+                                                    $data2[$key]['company_name'][] = $value['company_name'];
+                                                    $data2[$key]['reference_no'][] = $value['reference_no'];
+                                                    $data2[$key]['amount'][] = $value['amount'];
+                                                    $data2[$key]['zero_rated'][] = $value['zero_rated'];
+                                                    $data2[$key]['zero_rated_ecozone'][] = $value['zero_rated_ecozone'];
+                                                    $data2[$key]['vat'][] = $value['vat'];
+                                                    $data2[$key]['ewt'][] = $value['ewt'];
+                                                    $data2[$key]['total'][] = $value['total'];
+                                                    $data2[$key]['defint'][] = $value['defint'];
+                                                }
 
-                                                <?php if($c['count_series'] <= 2){ ?>
-                                                    <tr>
-                                                        <?php if($c['count_series'] >= 1){ ?>
-                                                            <td hidden class="td-btm pt-1 pb-1"></td>
-                                                            <td hidden class="td-btm pt-1 pb-1"></td>
-                                                        <?php }else{ ?>
-                                                            <td class="td-btm pt-1 pb-1">
-                                                                <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
-                                                            </td>
-                                                            <td class="td-btm pt-1 pb-1"></td>
-                                                        <?php } ?>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['billing_remarks']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['particulars']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['settlement_id']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['company_name']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['reference_no']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['amount']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['zero_rated']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['zero_rated_ecozone']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['vat']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['ewt']; ?></td>
-                                                        <td class="td-btm pt-1 pb-1"><?php echo $c['total']; ?></td>
-                                                        <?php if($c['count_series'] >= 1){ ?>
-                                                            <td hidden class="td-btm pt-1 pb-1"></td>
-                                                            <td hidden class="td-btm pt-1 pb-1"></td>
-                                                        <?php }else{ ?>
-                                                            <td class="td-btm pt-1 pb-1"><?php echo $c['defint']; ?></td>
-                                                            <td class="td-btm pt-1 pb-1"></td>
-                                                        <?php } ?>
-                                                    </tr>
+                                                foreach($data2 as $log) {
+                                            ?>
+                                            <tr>
+                                                <td class="td-btm pt-1 pb-1" style="vertical-align: middle;">
+                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
+                                                </td>
+                                                <td class="td-btm pt-1 pb-1" align="center"><?php echo $log['series_number'];?></td>
+                                                <?php if($log['count_series']>=1){ ?>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['billing_remarks']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['particulars']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['settlement_id']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['company_name']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['reference_no']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['amount']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated_ecozone']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
+                                                <?php }else{ ?>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['billing_remarks_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['particular_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['settlement_id_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['company_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['reference_no_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['amount_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['zero_rated_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['zero_rated_ecozone_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['vat_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['ewt_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['total_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php } ?>
+                                            </tr>
                                             <?php } ?>
                                         </tbody>
                                     </table>
