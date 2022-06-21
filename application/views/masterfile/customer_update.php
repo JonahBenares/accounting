@@ -83,14 +83,22 @@
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="wht_agent" value="Yes">
                                                     <div class="state p-warning">
+                                                        <?php if($det['wht_agent']=='Yes'){ ?>
                                                         <i class="icon material-icons">done</i>
+                                                        <?php } else { ?>
+                                                        <i class="icon material-icons">done</i>
+                                                    <?php } ?>
                                                         <label> YES</label>
                                                     </div>
                                                 </div>
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="wht_agent" value="No">
                                                     <div class="state p-warning">
+                                                        <?php if($det['wht_agent']=='No'){ ?>
                                                         <i class="icon material-icons">done</i>
+                                                        <?php } else { ?>
+                                                        <i class="icon material-icons"></i>
+                                                        <?php } ?>
                                                         <label> NO</label>
                                                     </div>
                                                 </div>
@@ -104,14 +112,22 @@
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="vat_zerorated" value="Yes">
                                                     <div class="state p-warning">
+                                                        <?php if($det['vat_zerorated']=='Yes'){ ?>
                                                         <i class="icon material-icons">done</i>
+                                                        <?php } else { ?>
+                                                        <i class="icon material-icons"></i>
+                                                        <?php } ?>
                                                         <label> YES</label>
                                                     </div>
                                                 </div>
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="vat_zerorated" value="No">
                                                     <div class="state p-warning">
+                                                    <?php if($det['vat_zerorated']=='No'){ ?>
                                                         <i class="icon material-icons">done</i>
+                                                        <?php } else { ?>
+                                                        <i class="icon material-icons"></i>
+                                                        <?php } ?>
                                                         <label> NO</label>
                                                     </div>
                                                 </div>
@@ -125,14 +141,22 @@
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="income_tax_holiday" value="Yes">
                                                     <div class="state p-warning">
+                                                         <?php if($det['income_tax_holiday']=='YES'){ ?>
                                                         <i class="icon material-icons">done</i>
+                                                         <?php } else { ?>
+                                                        <i class="icon material-icons"></i>
+                                                        <?php } ?>
                                                         <label> YES</label>
                                                     </div>
                                                 </div>
                                                 <div class="pretty p-icon p-curve p-jelly">
                                                     <input type="radio" name="income_tax_holiday" value="No">
                                                     <div class="state p-warning">
+                                                    <?php if($det['income_tax_holiday']=='No'){ ?>
                                                         <i class="icon material-icons">done</i>
+                                                         <?php } else { ?>
+                                                        <i class="icon material-icons"></i>
+                                                        <?php } ?>
                                                         <label> NO</label>
                                                     </div>
                                                 </div>
