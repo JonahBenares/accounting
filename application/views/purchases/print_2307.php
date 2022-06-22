@@ -57,6 +57,8 @@
         <label class="row2-col5"><?php echo (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)); ?></label>
         <label class="row2-col6"><?php echo number_format($total,2); ?></label>
         <label class="row2-col7"><?php echo number_format($ewt,2); ?> <span>&nbsp;&nbsp;</span></label>
+        <label class="row2-col8"> Reference Number: <b><?php echo $reference_no; ?></b></label>
+        <label class="row2-col9"> Item Number: <b><?php echo $item_no; ?></b></label>
     </page>
     </div>
 </div>

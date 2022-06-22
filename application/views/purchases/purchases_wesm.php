@@ -91,7 +91,7 @@
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                $x=1;
+                                                //$x=1;
                                                 foreach($details AS $d){ 
                                                     if(!empty($d['purchase_id'])){ 
                                             ?>
@@ -106,7 +106,7 @@
                                                         <a /a>
                                                  
                                                 </td>
-                                                <td><?php echo $x; ?></td>
+                                                <td><?php echo $d['item_no'];?></td>
                                                 <!-- <td><?php echo $d['serial_no'];?></td> -->
                                                 <td><?php echo $d['short_name'];?></td>
                                                 <td><?php echo $d['billing_id']; ?></td>
@@ -122,7 +122,7 @@
                                                 <td><?php echo $d['ewt']; ?></td>
                                                 <td><?php echo $d['total_amount']; ?></td>
                                             </tr>
-                                            <?php } $x++; } ?>
+                                            <?php } } ?>
                                         </tbody>
                                     </table>
                                 </div>

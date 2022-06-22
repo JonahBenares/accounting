@@ -45,6 +45,7 @@ class Sales extends CI_Controller {
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_detail_id,
                         'sales_id'=>$d->sales_id,
+                        'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
                         'billing_id'=>$d->billing_id,
                         'company_name'=>$d->company_name,
@@ -145,7 +146,7 @@ class Sales extends CI_Controller {
         }
         $objPHPExcel->setActiveSheetIndex(2);
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
-       
+        $y=1;
         for($x=3;$x<$highestRow;$x++){
           
             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
@@ -203,6 +204,7 @@ class Sales extends CI_Controller {
          
                 $data_sales = array(
                     'sales_id'=>$sales_id,
+                    'item_no'=>$y,
                     'short_name'=>$shortname,
                     'billing_id'=>$billing_id,
                     'company_name'=>$company_name,
@@ -220,6 +222,7 @@ class Sales extends CI_Controller {
                     'balance'=>$total_amount
                 );
                 $this->super_model->insert_into("sales_transaction_details", $data_sales);
+                $y++;
         }
             //echo $sales_id;
       
@@ -498,6 +501,7 @@ class Sales extends CI_Controller {
             $data['details'][]=array(
                 'sales_detail_id'=>$d->sales_detail_id,
                 'sales_id'=>$d->sales_id,
+                'item_no'=>$d->item_no,
                 'short_name'=>$d->short_name,
                 'billing_id'=>$d->billing_id,
                 'company_name'=>$d->company_name,

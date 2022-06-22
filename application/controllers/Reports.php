@@ -79,9 +79,15 @@ class Reports extends CI_Controller {
         }else if($ref_no=='null' && $participant!='null' && $from=='null' && $to=='null'){
             $sql.= " AND std.billing_id = '$participant' AND";
         }else if($ref_no!='null' && $participant!='null' && $from!='null' && $to!='null'){
-            $sql.= " AND sth.reference_number = '$ref_no' AND std.billing_id = '$participant' AND '$from' AND '$to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            //$sql.= " AND sth.reference_number = '$ref_no' AND std.billing_id = '$participant' AND '$from' AND '$to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+             $sql.= " AND sth.reference_number = '$ref_no' AND (sth.billing_from >= '$from' AND sth.billing_to <= '$to') AND";
         }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to!='null'){
-            $sql.= " AND '$from' AND '$to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            //$sql.= " AND '$from' AND '$to' BETWEEN  sth.billing_from AND sth.billing_to AND";
+            $sql.= " AND (sth.billing_from >= '$from' AND sth.billing_to <= '$to') AND";
+        }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to=='null'){
+            $sql.= " AND sth.billing_from = '$from' AND";
+        }else if($ref_no=='null'&& $participant=='null'  && $from=='null' && $to!='null'){
+            $sql.= " AND sth.billing_to = '$to' AND";
         }else {
             $sql.= "";
         }
@@ -146,9 +152,15 @@ class Reports extends CI_Controller {
         }else if($ref_no=='null' && $participant!='null' && $from=='null' && $to=='null'){
             $sql.= " AND ptd.billing_id = '$participant' AND";
         }else if($ref_no!='null' && $participant!='null' && $from!='null' && $to!='null'){
-            $sql.= " AND pth.reference_number = '$ref_no' AND ptd.billing_id = '$participant' AND '$from' AND '$to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            //$sql.= " AND pth.reference_number = '$ref_no' AND ptd.billing_id = '$participant' AND '$from' AND '$to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            $sql.= " AND pth.reference_number = '$ref_no' AND (pth.billing_from >= '$from' AND pth.billing_to <= '$to') AND";
         }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to!='null'){
-            $sql.= " AND '$from' AND '$to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            //$sql.= " AND '$from' AND '$to' BETWEEN  pth.billing_from AND pth.billing_to AND";
+            $sql.= " AND (pth.billing_from >= '$from' AND pth.billing_to <= '$to') AND";
+        }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to=='null'){
+            $sql.= " AND pth.billing_from = '$from' AND";
+        }else if($ref_no=='null' && $participant=='null' && $from=='null' && $to!='null'){
+            $sql.= " AND pth.billing_to = '$to' AND";
         }else {
             $sql.= "";
         }
