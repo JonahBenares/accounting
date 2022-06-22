@@ -236,6 +236,28 @@
         font-family: arial;
         text-align: right;
     }
+    .row2-col8{
+        left: 15px;
+        top: 1260px;
+        position: absolute;
+        width: 300px;
+        background: #fff0;
+        line-height: 19px;
+        font-size: 11px;
+        font-family: arial;
+        text-align: left;
+    }
+    .row2-col9{
+        left: 15px;
+        top: 1270px;
+        position: absolute;
+        width: 300px;
+        background: #fff0;
+        line-height: 19px;
+        font-size: 11px;
+        font-family: arial;
+        text-align: left;
+    }
     .btn-success, .btn-success.disabled {
         box-shadow: 0 2px 6px #8edc9c;
         background-color: #54ca68;
@@ -491,6 +513,28 @@
             font-size: 15px;
             font-family: arial;
             text-align: right;
+        }
+        .row2-col8{
+            left: 15px;
+            top: 1657px;
+            position: absolute;
+            width: 300px;
+            background: #fff0;
+            line-height: 19px;
+            font-size: 13px;
+            font-family: arial;
+            text-align: left;
+        }
+        .row2-col9{
+            left: 15px;
+            top: 1670px;
+            position: absolute;
+            width: 300px;
+            background: #fff0;
+            line-height: 19px;
+            font-size: 13px;
+            font-family: arial;
+            text-align: left;
         }
         .hey{
             display: none;
