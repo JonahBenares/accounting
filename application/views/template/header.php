@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['user_id'] == '')) {
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Otika - Admin Dashboard Template</title>
+    <title>FEBA SYSTEM</title>
     <!-- General CSS Files -->    
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/app.min.css" >
@@ -22,7 +22,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['user_id'] == '')) {
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/components.css">
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css">
-    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/favicon.ico' />
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
 <body>
     <div class="loader"></div>
