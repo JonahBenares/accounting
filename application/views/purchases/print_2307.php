@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Otika - Admin Dashboard Template</title>
+    <title>FEBA SYSTEM</title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print2307-style.css">
-    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/favicon.ico' />
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
 <div class="" id="printbutton">
     <center>
@@ -57,6 +57,8 @@
         <label class="row2-col5"><?php echo (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)); ?></label>
         <label class="row2-col6"><?php echo number_format($total,2); ?></label>
         <label class="row2-col7"><?php echo number_format($ewt,2); ?> <span>&nbsp;&nbsp;</span></label>
+        <label class="row2-col8"> Reference Number: <b>TW-1928-9827</b></label>
+        <label class="row2-col9"> Item Number: <b>01</b></label>
     </page>
     </div>
 </div>

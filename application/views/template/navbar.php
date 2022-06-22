@@ -26,7 +26,7 @@
         </ul>
     </div>
     <ul class="navbar-nav navbar-right">
-        <li class="dropdown dropdown-list-toggle">
+        <!-- <li class="dropdown dropdown-list-toggle">
             <a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle">
                 <i data-feather="mail"></i>
                 <span class="badge headerBadge1"> 6 </span> 
@@ -162,7 +162,7 @@
                     <a href="#">View All <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
-        </li>
+        </li> -->
         <li class="dropdown">
             <a href="#" data-toggle="dropdown"class="nav-link dropdown-toggle nav-link-lg nav-link-user"> 
                 <img alt="image" src="<?php echo base_url(); ?>assets/img/user.png" class="user-img-radious-style"> 
@@ -192,7 +192,7 @@
         <div class="sidebar-brand">
             <a href="index.html"> 
                 <img alt="image" src="<?php echo base_url(); ?>assets/img/logo.png" class="header-logo" /> 
-                <span class="logo-name">Otika</span>
+                <span class="logo-name">FEBA SYSTEM</span>
             </a>
         </div>
         <ul class="sidebar-menu">

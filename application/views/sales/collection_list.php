@@ -148,6 +148,20 @@
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
+                                                <?php }else if($log['count_series']<=2){ ?>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['billing_remarks']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['particulars']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['settlement_id']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['company_name']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['reference_no']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['amount']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated_ecozone']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php }else{ ?>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['billing_remarks_single']; ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['particular_single']; ?></td>

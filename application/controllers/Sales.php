@@ -168,7 +168,39 @@ class Sales extends CI_Controller {
             $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
             $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
             $ewt = trim($ewt,'-');
-            $total_amount = ($vatable_sales + $zero_rated + $zero_rated_sales + $vat_on_sales) - $ewt;
+
+            if($vatable_sales!=''){
+                $vatable_sales_disp=$vatable_sales;
+            }else{
+                $vatable_sales_disp=0;
+            }
+
+            if($zero_rated_sales!=''){
+                $zero_rated_sales_disp=$zero_rated_sales;
+            }else{
+                $zero_rated_sales_disp=0;
+            }
+
+            if($zero_rated_ecozone!=''){
+                $zero_rated_ecozone_disp=$zero_rated_ecozone;
+            }else{
+                $zero_rated_ecozone_disp=0;
+            }
+
+            if($vat_on_sales!=''){
+                $vat_on_sales_disp=$vat_on_sales;
+            }else{
+                $vat_on_sales_disp=0;
+            }
+
+            if($ewt!=''){
+                $ewt_disp=$ewt;
+            }else{
+                $ewt_disp=0;
+            }
+
+            //$total_amount = ($vatable_sales + $zero_rated + $zero_rated_sales + $vat_on_sales) - $ewt;
+            $total_amount = ($vatable_sales_disp + $zero_rated_sales_disp + $zero_rated_ecozone_disp + $vat_on_sales_disp) - $ewt_disp;
          
                 $data_sales = array(
                     'sales_id'=>$sales_id,
@@ -239,6 +271,8 @@ class Sales extends CI_Controller {
             $sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
             $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             if($count_series>=1){
+                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+            }if($count_series<=2){
                 $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
             }else{
                 $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
