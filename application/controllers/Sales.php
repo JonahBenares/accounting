@@ -245,17 +245,22 @@ class Sales extends CI_Controller {
         $ref_no=$this->uri->segment(3);
         $participant=$this->uri->segment(4);
         $data['ref_no'] = $ref_no;
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $ref_exp=explode("-", $ref_no);
+        /*$data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");*/
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_details WHERE reference_no!=''");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
 
         $sql="";
-        if($ref_no!='null'){
+        if($ref_no!='null' && strpos($ref_exp[0], 'saved') === false){
            $sql.= " WHERE reference_no = '$ref_no' AND";
+        }else if($ref_no!='null' && strpos($ref_exp[0], 'saved') !== false){
+            $sql.= " WHERE collection_id = '$ref_exp[1]' AND";
         }else {
             $sql.= "";
         }
 
         $query=substr($sql,0,-3);
+        //echo $query;
         $data['collection']=array();
         foreach($this->super_model->custom_query("SELECT * FROM collection_details $query") AS $col){
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
@@ -572,7 +577,8 @@ class Sales extends CI_Controller {
 
      70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety');
 
-  $here_digits = array('', 'Hundred','Thousand','Lakh', 'Crore');
+  //$here_digits = array('', 'Hundred','Thousand','Lakh', 'Crore');
+  $here_digits = array('', 'Hundred','Thousand');
 
   while( $x < $count_length ) {
 
@@ -1084,7 +1090,7 @@ class Sales extends CI_Controller {
 
             $a++;
         }
-        echo 'saved';
+        echo "saved-".$collection_id;
 
            
       

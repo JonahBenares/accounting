@@ -42,7 +42,7 @@
                                                         <?php 
                                                             foreach($reference AS $r){
                                                         ?>
-                                                        <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                        <option value="<?php echo $r->reference_no; ?>"><?php echo $r->reference_no; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <?php if(!empty($ref_no) && $ref_no!='null'){ ?>
+                                <?php //if(!empty($ref_no) && $ref_no!='null'){ ?>
                                 <div>
                                     <table class="table-bordered table table-hosver" id="table-3" width="170%"> 
                                         <thead>
@@ -81,7 +81,7 @@
                                             <?php 
                                                 $data2 = array();
                                                 foreach($collection as $value) {
-                                                    $key = $value['series_number'].$value['settlement_id'];
+                                                    $key = $value['series_number'].$value['settlement_id'].$value['reference_no'];
                                                     if(!isset($data2[$key])) {
                                                         $data2[$key] = array(
                                                             'series_number' => $value['series_number'], 
@@ -182,7 +182,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            <?php } ?>
+                            <?php //} ?>
                             </div>
                         </form>
                     </div>
@@ -274,13 +274,13 @@
                             <div class="form-group">
                                 <label>Upload File here:</label>
                                <input type="file" name="collectionbulk" id="collectionbulk" class="form-control">
-                               <span id='alt'></span>
+                               <center><span id='alt'></span></center>
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label><br></label>
-                                <input type="button" class="btn btn-primary btn-block" value='Upload' onclick="uploadCollection()">
+                                <input type="button" class="btn btn-primary btn-block" id="upload" value='Upload' onclick="uploadCollection()">
                             </div>
                         </div>
                         <div class="col-lg-2"></div>

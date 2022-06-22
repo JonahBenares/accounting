@@ -305,6 +305,7 @@ function uploadCollection(){
 			contentType: false,
 			beforeSend: function(){
 	        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+	        	document.getElementById("upload").disabled = true;
 	        	/*document.getElementById("proceed_sales").disabled = true;
 	        	document.getElementById("cancel").disabled = true;
 	        	$("#table-wesm").hide(); */
