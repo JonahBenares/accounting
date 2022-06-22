@@ -103,7 +103,7 @@
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                $x=1;
+                                                //$x=1;
                                                 if(!empty($details)){
                                                 foreach($details AS $s){ 
                                             ?>
@@ -127,7 +127,7 @@
                                                         </div>
                                                     <?php } ?>
                                                 </td>
-                                                <td><center><?php echo $x;?></center></td>
+                                                <td><center><?php echo $s['item_no'];?></center></td>
                                                 <td><?php echo $s['serial_no'];?></td>
                                                 <td><?php echo $s['short_name'];?></td>
                                                 <td><?php echo $s['billing_id'];?></td>
@@ -144,7 +144,7 @@
                                                 <td><?php echo $s['ewt'];?></td>
                                                 <td><?php echo $s['total_amount'];?></td>
                                             </tr>
-                                            <?php $x++; } } ?>
+                                            <?php } } ?>
                                         </tbody>
                                     </table>
                                 </div>

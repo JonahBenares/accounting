@@ -45,6 +45,7 @@ class Purchases extends CI_Controller {
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,
                         'purchase_id'=>$d->purchase_id,
+                        'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
                         'billing_id'=>$d->billing_id,
                         'facility_type'=>$d->facility_type,
@@ -152,7 +153,8 @@ class Purchases extends CI_Controller {
         }
         $objPHPExcel->setActiveSheetIndex(2);
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
-         $highestRow = $highestRow-1;
+        $highestRow = $highestRow-1;
+        $y=1;
         for($x=3;$x<$highestRow;$x++){
             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
@@ -177,6 +179,7 @@ class Purchases extends CI_Controller {
          
                 $data_purchase = array(
                     'purchase_id'=>$purchase_id,
+                    'item_no'=>$y,
                     'short_name'=>$shortname,
                     'billing_id'=>$billing_id,
                     'facility_type'=>$fac_type,
@@ -194,6 +197,7 @@ class Purchases extends CI_Controller {
                     //'balance'=>$total_amount
                 );
                 $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
+                $y++;
         }
            
       
@@ -750,6 +754,7 @@ class Purchases extends CI_Controller {
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
+                'item_no'=>$d->item_no,
                 'short_name'=>$d->short_name,
                 'billing_id'=>$d->billing_id,
                 'facility_type'=>$d->facility_type,

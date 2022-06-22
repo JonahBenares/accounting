@@ -108,7 +108,7 @@ if(!empty($sales_id)){
                                         </thead>
                                         <tbody>
                                             <?php 
-                                            $x=1;
+                                            //$x=1;
                                                 foreach($details AS $d){ 
                                                     if(!empty($d['sales_id'])){ 
                                             ?>
@@ -137,7 +137,7 @@ if(!empty($sales_id)){
                                                         }
                                                     ?>
                                                 </td>
-                                                <td><center><?php echo $x;?></center></td>
+                                                <td><center><?php echo $d['item_no'];?></center></td>
                                                 <td><?php echo $d['serial_no'];?></td>
                                                 <td><?php echo $d['short_name'];?></td>
                                                 <td><?php echo $d['billing_id'];?></td>
@@ -154,7 +154,7 @@ if(!empty($sales_id)){
                                                 <td><?php echo $d['ewt'];?></td>
                                                 <td><?php echo $d['total_amount'];?></td>
                                             </tr>
-                                            <?php $x++; } } ?>
+                                            <?php } } ?>
                                         </tbody>
                                     </table>
                                 </div>
