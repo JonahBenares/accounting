@@ -485,10 +485,8 @@ class Sales extends CI_Controller {
 
         $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         $data['ref_no'] = $this->super_model->select_column_where("sales_transaction_head", "reference_number", "reference_number", $reference_no);
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        $this->load->view('template/print_head');
         $this->load->view('sales/print_collected_OR',$data);
-        $this->load->view('template/footer');
     }
 
     public function sales_wesm(){
