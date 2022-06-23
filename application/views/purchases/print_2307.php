@@ -1,5 +1,10 @@
 <script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+<script>
+    function goBack() {
+      window.history.back();
+    }
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +16,9 @@
 </head>
 <div class="" id="printbutton">
     <center>
-        <button class="btn btn-warning " onclick="document.location='upload_purchases'">Back</button>
+        <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
-        <button class="btn btn-primary " onclick="saveDiv('printableArea','Title')">Save as PDF</button>
+        <!-- <button class="btn btn-primary " onclick="saveDiv('printableArea','Title')">Save as PDF</button> -->
     </center>
     <br>
 </div>
