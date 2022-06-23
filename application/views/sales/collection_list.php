@@ -38,7 +38,7 @@
                                                 </td> -->
                                                 <td width="45%">
                                                     <select class="form-control select2" name="ref_number" id="ref_number">
-                                                        <option value=''>-- Select OR No --</option>
+                                                        <option value=''>-- Select Reference No --</option>
                                                         <?php 
                                                             foreach($reference AS $r){
                                                         ?>
