@@ -2,6 +2,7 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script>
     function goBack() {
+        window.close();
       window.history.back();
     }
 </script>
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print2307-style.css">
     <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
+
 <div class="" id="printbutton">
     <center>
         <button class="btn btn-warning " onclick="goBack()">Back</button>

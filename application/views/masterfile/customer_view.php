@@ -69,110 +69,69 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                         <center>
                                             <label>Witholding Tax Agent</label>
                                             <div class="form-group mb-2">
                                                 <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="withhold">
-                                                        <?php if($det['wht_agent']=='Yes'){ ?>
+                                                    <input type="radio" name="wht_agent" value="Yes" <?php if($det['wht_agent']=='Yes'){ ?> checked <?php } else { ?><?php } ?>>
+                                                    <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
-                                                        <?php } else { ?>
-                                                        <i class="icon material-icons"></i>
-                                                        <?php } ?>
                                                         <label> YES</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="withhold">
-                                                    <?php if($det['wht_agent']=='No'){ ?>
+                                                    <input type="radio" name="wht_agent" value="No" <?php if($det['wht_agent']=='No'){ ?> checked <?php } else { ?><?php } ?>>
+                                                    <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
-                                                        <?php } else { ?>
-                                                        <i class="icon material-icons"></i>
-                                                        <?php } ?>
                                                         <label> NO</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </center>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                         <center>
                                             <label>VAT zero-rated</label>
                                             <div class="form-group mb-2">
                                                 <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="vat">
-                                                    <?php if($det['vat_zerorated']=='Yes'){ ?>
+                                                    <input type="radio" name="vat_zerorated" value="Yes" <?php if($det['vat_zerorated']=='Yes'){ ?> checked <?php } else { ?> <?php } ?> >
+                                                    <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
-                                                        <?php } else { ?>
-                                                        <i class="icon material-icons"></i>
-                                                        <?php } ?>
                                                         <label> YES</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="vat">
-                                                    <?php if($det['vat_zerorated']=='No'){ ?>
+                                                    <input type="radio" name="vat_zerorated" value="No" <?php if($det['vat_zerorated']=='No'){ ?> checked <?php } else { ?> <?php } ?>>
+                                                    <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
-                                                        <?php } else { ?>
-                                                        <i class="icon material-icons"></i>
-                                                        <?php } ?>
                                                         <label> NO</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </center>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                         <center>
                                             <label>Income tax holiday</label>
                                             <div class="form-group mb-2">
                                                 <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="income">
-                                                    <?php if($det['income_tax_holiday']=='YES'){ ?>
+                                                    <input type="radio" name="income_tax_holiday" value="Yes" <?php if($det['income_tax_holiday']=='YES'){ ?> checked <?php } else { ?> <?php } ?>>
+                                                    <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
-                                                         <?php } else { ?>
-                                                        <i class="icon material-icons"></i>
-                                                        <?php } ?>
                                                         <label> YES</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="income">
-                                                    <?php if($det['income_tax_holiday']=='No'){ ?>
+                                                    <input type="radio" name="income_tax_holiday" value="No" <?php if($det['income_tax_holiday']=='No'){ ?> checked <?php } else { ?> <?php } ?>>
+                                                    <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
-                                                         <?php } else { ?>
-                                                        <i class="icon material-icons"></i>
-                                                        <?php } ?>
                                                         <label> NO</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </center>
                                     </div>
-                                    <!-- <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <center>
-                                        <label>Documents submitted</label>
-                                            <div class="form-group mb-2">
-                                                <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="docu">
-                                                    <div class="state p-warning">
-                                                        <i class="icon material-icons">done</i>
-                                                        <label> YES</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="docu">
-                                                    <div class="state p-warning">
-                                                        <i class="icon material-icons">done</i>
-                                                        <label> NO</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </center>
-                                    </div> -->
                                 </div>
                                 <hr>
                                 <div class="row">
