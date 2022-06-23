@@ -86,7 +86,7 @@ class Reports extends CI_Controller {
             $sql.= " AND (sth.billing_from >= '$from' AND sth.billing_to <= '$to') AND";
         }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to=='null'){
             $sql.= " AND sth.billing_from = '$from' AND";
-        }else if($ref_no=='null'&& $participant=='null'  && $from=='null' && $to!='null'){
+        }else if($ref_no=='null' && $participant=='null' && $from=='null' && $to!='null'){
             $sql.= " AND sth.billing_to = '$to' AND";
         }else {
             $sql.= "";
@@ -175,10 +175,10 @@ class Reports extends CI_Controller {
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
             //$payment_amount=$this->super_model->select_column_where("payment","purchase_amount","purchase_detail_id",$head->purchase_detail_id);
-            $mode=$this->super_model->select_column_where("payment_details","purchase_mode","purchase_details_id",$head->purchase_detail_id);
-            $vat=$this->super_model->select_column_where("payment_details","vat","purchase_details_id",$head->purchase_detail_id);
-            $ewt=$this->super_model->select_column_where("payment_details","ewt","purchase_details_id",$head->purchase_detail_id);
-            $purchase_amount=$this->super_model->select_column_where("payment_details","purchase_amount","purchase_details_id",$head->purchase_detail_id);
+            //$mode=$this->super_model->select_column_where("payment_details","purchase_mode","purchase_details_id",$head->purchase_detail_id);
+            //$vat=$this->super_model->select_column_where("payment_details","vat","purchase_details_id",$head->purchase_detail_id);
+            //$ewt=$this->super_model->select_column_where("payment_details","ewt","purchase_details_id",$head->purchase_detail_id);
+            //$purchase_amount=$this->super_model->select_column_where("payment_details","purchase_amount","purchase_details_id",$head->purchase_detail_id);
             $totalamount=$this->super_model->select_sum_where("purchase_transaction_details","total_amount","purchase_id='$head->purchase_id'");
             $totalpaid=$this->super_model->select_sum_where("payment_details","total_amount","purchase_details_id='$head->purchase_detail_id'");
             $total_amount[]=$totalamount;
@@ -187,19 +187,19 @@ class Reports extends CI_Controller {
             $data['total_amount']=array_sum($total_amount);
             $data['total_paid']=array_sum($total_paid);
             $data['total_balance']=array_sum($total_balance);
-
-            if($mode=='Vatable Purchase'){
-                $vat_on_purchases=$vat;
+            foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$head->purchase_id' AND pd.purchase_details_id='$head->purchase_detail_id'") AS $c){
+            if($c->purchase_mode=='Vatable Purchase'){
+                $vat_on_purchases=$c->vat;
                 $zero_rated='0.00';
                 $rated_ecozones='0.00';
-            }else if($mode=='Zero-Rated Purchase'){
+            }else if($c->purchase_mode=='Zero-Rated Purchase'){
                 $vat_on_purchases='0.00';
-                $zero_rated=$vat;
+                $zero_rated=$c->vat;
                 $rated_ecozones='0.00';
-            }else if($mode=='Zero Rated Ecozones'){
+            }else if($c->purchase_mode=='Zero-Rated Ecozones Purchase'){
                 $vat_on_purchases='0.00';
                 $zero_rated='0.00';
-                $rated_ecozones=$vat;
+                $rated_ecozones=$c->vat;
             }
 
             $data['purchases'][] = array( 
@@ -207,15 +207,16 @@ class Reports extends CI_Controller {
             'tin'=>$tin,
             'participant_name'=>$company_name,
             'address'=>$registered_address,
-            'vatable_purchases'=>$purchase_amount,
+            'vatable_purchases'=>$c->purchase_amount,
             'zero_rated_purchases'=>$zero_rated,
             'zero_rated_ecozones'=>$rated_ecozones,
             'wht_agent'=>$head->wht_agent,
             'vat_on_purchases'=>$vat_on_purchases,
             'billing_from'=>$head->billing_from,
             'billing_to'=>$head->billing_to,
-            'ewt'=>$ewt,
-            );
+            'ewt'=>$c->ewt,
+                );
+            }
         }
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
