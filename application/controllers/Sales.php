@@ -876,7 +876,7 @@ class Sales extends CI_Controller {
     public function print_invoice(){
         error_reporting(0);
         $sales_detail_id = $this->uri->segment(3);
-        $this->load->view('template/header');
+        // $this->load->view('template/header');
         //$this->load->view('template/navbar');
         foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
@@ -956,8 +956,8 @@ class Sales extends CI_Controller {
                 $data['total_cents']=$total_exp[1];
            
         }
+        $this->load->view('template/print_head');
         $this->load->view('sales/print_invoice',$data);
-        $this->load->view('template/footer');
     }
 
     public function add_details_OR()

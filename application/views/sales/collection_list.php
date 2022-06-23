@@ -57,24 +57,24 @@
                                 <hr>
                                 <?php //if(!empty($ref_no) && $ref_no!='null'){ ?>
                                 <div>
-                                    <table class="table-bordered table table-hosver" id="table-3" width="170%"> 
+                                    <table class="table-bordered table table-hosver" id="table-3" width="200%"> 
                                         <thead>
                                             <tr>
                                                 <th width="1%"><center><span class="fas fa-bars"></span></center></th>
-                                                <th width="14%">OR#</th>
-                                                <th width="5%">Billing Remarks</th>
+                                                <th width="10%">OR#</th>
+                                                <th width="8%">Billing Remarks</th>
                                                 <th width="14%">Particulars</th>
-                                                <th width="14%">STL ID</th>
-                                                <th width="14%">Participant Name</th>
-                                                <th width="14%">Reference No</th>
-                                                <th width="14%">Vatable Sales</th>
-                                                <th width="14%">Zero Rated Sales</th>
-                                                <th width="14%">Zero Rated Ecozone</th>
-                                                <th width="14%">VAT</th>
-                                                <th width="14%">EWT</th>
-                                                <th width="14%">Total</th>
-                                                <th width="14%">Def Int</th>
-                                                <th width="14%">Overall Total</th>
+                                                <th width="10%">STL ID</th>
+                                                <th width="16%">Participant Name</th>
+                                                <th width="16%">Reference No</th>
+                                                <th width="10%">Vatable Sales</th>
+                                                <th width="10%">Zero Rated Sales</th>
+                                                <th width="10%">Zero Rated Ecozone</th>
+                                                <th width="10%">VAT</th>
+                                                <th width="10%">EWT</th>
+                                                <th width="10%">Total</th>
+                                                <th width="10%">Def Int</th>
+                                                <th width="10%">Overall Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -131,7 +131,7 @@
                                             ?>
                                             <tr>
                                                 <td class="td-btm pt-1 pb-1" style="vertical-align: middle;">
-                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
+                                                    <a href="" class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</a>
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" align="center"><?php echo $log['series_number'];?></td>
                                                 <?php if($log['count_series']>=1){ ?>

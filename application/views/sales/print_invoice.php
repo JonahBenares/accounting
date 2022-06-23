@@ -1,14 +1,12 @@
-<script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <script>
     function goBack() {
-      window.history.back();
+        window.history.back();
     }
 </script>
 <div style="margin-top:10px" id="printbutton">
     <center>
         <button onclick="goBack()" class="btn btn-warning ">Back</button>
         <button href="#" class="btn btn-success " onclick="window.print()">Print</button>
-        <!-- <a href='<?php echo base_url(); ?>sales/print_invoice/<?php echo $sales_detail_id ?>' class="btn btn-primary button">Invoice</a>  -->
         <br>
         <br>
     </center>
@@ -192,3 +190,30 @@
         </tr>
     </table>
 </page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
