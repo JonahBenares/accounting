@@ -20,7 +20,7 @@
                 <div class="modal-footer bg-whitesmoke br">
                     <input type="hidden" id="ref_no" name="ref_no" value="<?php echo $ref_no; ?>">
                     <input type="hidden" id="old_series_no" name="old_series_no" class="form-control">
-                    <input type="hidden" id="collection_id" name="collection_id" class="form-control">
+                    <input type="hidden" id="collection_details_id" name="collection_details_id" class="form-control">
                     <input type="hidden" id="baseurl" name="baseurl" value="<?php echo base_url(); ?>">
                     <button type="button" class="btn btn-primary" onclick="saveSeries()">Save Changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
