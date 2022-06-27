@@ -25,7 +25,7 @@
                                                 <select class="form-control select2" name="ref_no" id="ref_no">
                                                     <option value="">-- Select Reference Number --</option>
                                                     <?php foreach($reference_no AS $r){ ?>
-                                                        <option value="<?php echo $r->reference_number;?>"><?php echo $r->reference_number;?></option>
+                                                        <option value="<?php echo $r->reference_no;?>"><?php echo $r->reference_no;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
