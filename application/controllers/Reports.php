@@ -275,13 +275,13 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(4);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_details WHERE reference_no!=''");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql="";
         if($ref_no!='null' && $participant=='null'){
-           $sql.= " AND sth.reference_number = '$ref_no' AND";
+           $sql.= " AND std.reference_no = '$ref_no' AND";
         }else if($ref_no!='null' && $participant!='null'){
-            $sql.= " AND sth.reference_number = '$ref_no' AND std.billing_id = '$participant' AND";
+            $sql.= " AND std.reference_no = '$ref_no' AND std.billing_id = '$participant' AND";
         }else if($ref_no=='null' && $participant!='null'){
             $sql.= " AND std.billing_id = '$participant' AND";
         }else {
@@ -291,20 +291,23 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-3);
         //echo $query;
         $data['total']=0;
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE sth.saved='1' AND std.ewt!='0' $query") AS $s){
-            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
-            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
+        foreach($this->super_model->custom_query("SELECT * FROM collection_head sth INNER JOIN collection_details std ON sth.collection_id=std.collection_id WHERE std.ewt!='0' $query") AS $s){
+            $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$s->settlement_id);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","settlement_id",$s->settlement_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$s->settlement_id);
+            $billing_from=$this->super_model->select_column_where("sales_transaction_head","billing_from","reference_number",$s->reference_no);
+            $billing_to=$this->super_model->select_column_where("sales_transaction_head","billing_to","reference_number",$s->reference_no);
             //$total_amount[]=$s->ewt;
             //$data['total']=array_sum($total_amount);
-            $data['total']=$this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$s->sales_id'");
+            $data['total']=$this->super_model->select_sum_where("collection_details","ewt","collection_id='$s->collection_id' AND reference_no='$s->reference_no'");
             $data['sales'][]=array(
-                'transaction_date'=>$s->transaction_date,
+                'transaction_date'=>$s->collection_date,
                 'tin'=>$tin,
-                'participant_name'=>$s->company_name,
+                'participant_name'=>$company_name,
                 'address'=>$registered_address,
                 'ewt'=>$s->ewt,
-                'billing_from'=>$s->billing_from,
-                'billing_to'=>$s->billing_to,
+                'billing_from'=>$billing_from,
+                'billing_to'=>$billing_to,
             );
 
         }

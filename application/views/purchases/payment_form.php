@@ -122,7 +122,7 @@
             </tr>
             <tr>
                 <td colspan="5"><b>Certified Correct:</b></td>
-                <td colspan="8" align="center" class="bor-btm">CELINA MARIE G. TIGNERO</td>
+                <td colspan="8" align="center" class="bor-btm"><?php echo $_SESSION['fullname'];?></td>
                 <td colspan="7"></td>
             </tr>
             <tr>
