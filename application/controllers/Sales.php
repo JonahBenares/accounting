@@ -105,6 +105,7 @@ class Sales extends CI_Controller {
 
     public function upload_sales_process(){
         $sales_id = $this->input->post('sales_id');
+        //echo $sales_id;
         $dest= realpath(APPPATH . '../uploads/excel/');
         $error_ext=0;
         if(!empty($_FILES['doc']['name'])){
@@ -121,7 +122,7 @@ class Sales extends CI_Controller {
                 $filename1='wesm_sales.'.$ext1;
                 //echo $filename1;
                 if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
-                     $this->readExcel_inv($sales_id);
+                    $this->readExcel_inv($sales_id);
                 } 
             }
         }
@@ -149,27 +150,48 @@ class Sales extends CI_Controller {
         $y=1;
         for($x=3;$x<$highestRow;$x++){
           
-            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+
           
           
             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+
+            if($shortname!="" || !empty($shortname)){
          
             $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
 
             $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
-            $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
-            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-            $ith = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
-            $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
-            $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
-            $vatable_sales = $objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue();
-            $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
-            $zero_rated_ecozone = $objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue();
+             $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getOldCalculatedValue());
+            $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+
+             
+            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+           
+
+            $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+            $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
+              
+             $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
+             
+            $vatable_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
+
+           
+
+            
+            //$zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
+
+
+           $zero_rated_ecozone = $objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue();
+          
+
             $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
+
+           
             $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
             $ewt = trim($ewt,'-');
+             $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue(),'()');
+                //echo "hi";
 
-            if($vatable_sales!=''){
+   /*       if($vatable_sales!=''){
                 $vatable_sales_disp=$vatable_sales;
             }else{
                 $vatable_sales_disp=0;
@@ -197,10 +219,10 @@ class Sales extends CI_Controller {
                 $ewt_disp=$ewt;
             }else{
                 $ewt_disp=0;
-            }
+            }*/
 
-            //$total_amount = ($vatable_sales + $zero_rated + $zero_rated_sales + $vat_on_sales) - $ewt;
-            $total_amount = ($vatable_sales_disp + $zero_rated_sales_disp + $zero_rated_ecozone_disp + $vat_on_sales_disp) - $ewt_disp;
+           /* $total_amount = ($vatable_sales + $zero_rated_sales + $vat_on_sales) - $ewt;*/
+          /*  $total_amount = ($vatable_sales_disp + $zero_rated_ecozone_disp + $vat_on_sales_disp) - $ewt_disp;*/
          
                 $data_sales = array(
                     'sales_id'=>$sales_id,
@@ -215,7 +237,7 @@ class Sales extends CI_Controller {
                     'zero_rated'=>$zero_rated,
                     'vatable_sales'=>$vatable_sales,
                     'vat_on_sales'=>$vat_on_sales,
-                    'zero_rated_sales'=>$zero_rated_sales,
+                   /* 'zero_rated_sales'=>$zero_rated_sales,*/
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
@@ -223,6 +245,8 @@ class Sales extends CI_Controller {
                 );
                 $this->super_model->insert_into("sales_transaction_details", $data_sales);
                 $y++;
+                
+            }
         }
             //echo $sales_id;
       
