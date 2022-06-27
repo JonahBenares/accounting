@@ -471,7 +471,9 @@ class Sales extends CI_Controller {
     {
         $collection_id=$this->uri->segment(3);
         $settlement_id=$this->uri->segment(4);
-        $reference_no = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
+        $reference_no=$this->uri->segment(5);
+        $data['ref_no'] = $reference_no;
+        //$reference_no = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
         //$settlement_id = $this->super_model->select_column_where("collection_details", "settlement_id", "collection_id", $collection_id);
         $billing_id = $this->super_model->select_column_where("sales_transaction_details", "billing_id", "short_name", $settlement_id);
         
@@ -485,7 +487,7 @@ class Sales extends CI_Controller {
         $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
 
         $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
-        $data['ref_no'] = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
+        //$data['ref_no'] = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/print_OR',$data);
