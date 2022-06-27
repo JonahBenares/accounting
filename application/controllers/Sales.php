@@ -172,26 +172,28 @@ class Sales extends CI_Controller {
               
              $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
              
-            $vatable_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
+            $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue());
 
-           
+         
 
             
-            //$zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
+            $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
 
 
-           $zero_rated_ecozone = $objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue();
+           $zero_rated_ecozone = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue());
           
 
-            $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
+            $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue());
 
            
-            $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
-            $ewt = trim($ewt,'-');
-             $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue(),'()');
-                //echo "hi";
+            $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
+          
 
-   /*       if($vatable_sales!=''){
+             $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue());
+            
+  
+   /*
+          if($vatable_sales!=''){
                 $vatable_sales_disp=$vatable_sales;
             }else{
                 $vatable_sales_disp=0;
@@ -219,11 +221,11 @@ class Sales extends CI_Controller {
                 $ewt_disp=$ewt;
             }else{
                 $ewt_disp=0;
-            }*/
+            }
 
-           /* $total_amount = ($vatable_sales + $zero_rated_sales + $vat_on_sales) - $ewt;*/
-          /*  $total_amount = ($vatable_sales_disp + $zero_rated_ecozone_disp + $vat_on_sales_disp) - $ewt_disp;*/
-         
+            $total_amount = ($vatable_sales + $zero_rated_sales + $vat_on_sales) - $ewt;
+            $total_amount = ($vatable_sales_disp + $zero_rated_ecozone_disp + $vat_on_sales_disp) - $ewt_disp;
+         */
                 $data_sales = array(
                     'sales_id'=>$sales_id,
                     'item_no'=>$y,
@@ -237,7 +239,7 @@ class Sales extends CI_Controller {
                     'zero_rated'=>$zero_rated,
                     'vatable_sales'=>$vatable_sales,
                     'vat_on_sales'=>$vat_on_sales,
-                   /* 'zero_rated_sales'=>$zero_rated_sales,*/
+              
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
