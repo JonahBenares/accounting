@@ -71,12 +71,12 @@
                                         </tr>
                                         <?php foreach($client AS $c){ ?>
                                         <tr>
-                                            <td colspan="10"><b>CUSTOMER NAME:<span class="pl-2"><?php echo $c['client_name']; ?></span></b></td>
-                                            <td colspan="10"><b>ADDRESS:<span class="pl-2"><?php echo $c['address']; ?></span></b></td>
+                                            <td colspan="10"><b>CUSTOMER NAME:<span class="pl-2"><?php echo $c->participant_name; ?></span></b></td>
+                                            <td colspan="10"><b>ADDRESS:<span class="pl-2"><?php echo $c->registered_address; ?></span></b></td>
                                         </tr>
                                         <tr>
                                             <td colspan="15"><b>BUSINESS STYLE:</b></td>
-                                            <td colspan="5"><b>TIN:<span class="pl-2"><?php echo $c['tin']; ?></span></b></td>
+                                            <td colspan="5"><b>TIN:<span class="pl-2"><?php echo $c->tin; ?></span></b></td>
                                         </tr>
                                     <?php } ?>
                                     </table>
@@ -113,10 +113,14 @@
                                             <td align="center" colspan="3"><b>UNIT PRICE</b></td>
                                             <td align="center" colspan="2"><b>AMOUNT P</b></td>
                                             <td colspan="5" rowspan="7" class="p-0">
-                                                <?php foreach($collection AS $c){ 
-                                                    $total = $c->amount + $c->vat; 
-                                                    $total_due = $total - $c->ewt;
-                                                    $zero_rated = $c->zero_rated + $c->zero_rated_ecozone; ?>
+                                                <?php //foreach($collection AS $c){ 
+                                                    /*$total = $c['amount'] + $c['vat']; 
+                                                    $total_due = $total - $c['ewt'];
+                                                    $zero_rated = $c['zero_rated'] + $c['zero_rated_ecozone']; */
+                                                    $total = $sum_amount + $sum_vat; 
+                                                    $total_due = $total - $sum_ewt;
+                                                    $zero_rated = $sum_zero_rated + $sum_zero_rated_ecozone; 
+                                                ?>
                                                 <table width="100%" style="font-size:9px;font-family: arial; ">
                                                     <tr>
                                                         <td style="border: 0px solid #000;" width="60%">TOTAL SALES <br> (VAT INCLUSIVE)</td>
@@ -124,11 +128,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td style="border: 0px solid #000;">AMOUNT: NET OF VAT</td>
-                                                        <td style="border: 0px solid #000;border-bottom: 1px solid #dee2e6;" align="right"><?php echo number_format($c->amount,2); ?></td>
+                                                        <td style="border: 0px solid #000;border-bottom: 1px solid #dee2e6;" align="right"><?php echo number_format($sum_amount,2); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="border: 0px solid #000;">ADD: VAT</td>
-                                                        <td style="border: 0px solid #000;border-bottom: 1px solid #dee2e6;" align="right"><?php echo number_format($c->vat,2); ?></td>
+                                                        <td style="border: 0px solid #000;border-bottom: 1px solid #dee2e6;" align="right"><?php echo number_format($sum_vat,2); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="border: 0px solid #000;">TOTAL</td>
@@ -136,7 +140,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td style="border: 0px solid #000;">LESS WITHHOLDING</td>
-                                                        <td style="border: 0px solid #000;border-bottom: 1px solid #dee2e6;" align="right"><?php echo number_format($c->ewt,2); ?></td>
+                                                        <td style="border: 0px solid #000;border-bottom: 1px solid #dee2e6;" align="right"><?php echo number_format($sum_ewt,2); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="border: 0px solid #000;">TOTAL AMOUNT DUE</td>
@@ -155,7 +159,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            <?php } ?>
+                                            <?php //} ?>
                                             </td>
                                         </tr>
                                           <tr>
@@ -175,13 +179,13 @@
                                             <td colspan="8" align="right">ENERGY</td>
                                             <td colspan="2"></td>
                                             <td colspan="3"></td>
-                                            <td colspan="2"><?php echo number_format($amount,2); ?></td>
+                                            <td colspan="2"><?php echo number_format($sum_amount,2); ?></td>
                                         </tr>
                                         <tr>
                                             <td colspan="8" align="right">VAT</td>
                                             <td colspan="2"></td>
                                             <td colspan="3"></td>
-                                            <td colspan="2"><?php echo number_format($vat,2); ?></td>
+                                            <td colspan="2"><?php echo number_format($sum_vat,2); ?></td>
                                         </tr>
                                         <tr>
                                             <td colspan="8"><br></td>

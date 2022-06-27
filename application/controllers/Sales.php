@@ -284,6 +284,8 @@ class Sales extends CI_Controller {
             }
             $data['collection'][]=array(
                 "count_series"=>$count_series,
+                "collection_details_id"=>$col->collection_details_id,
+                "collection_id"=>$col->collection_id,
                 "settlement_id"=>$col->settlement_id,
                 "series_number"=>$col->series_number,
                 "billing_remarks"=>$col->billing_remarks,
@@ -359,8 +361,9 @@ class Sales extends CI_Controller {
         $collection_id=$this->input->post('collection_id');
         $new_series=$this->input->post('series_number');
         $old_series=$this->input->post('old_series_no');
-        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id'") AS $check){
-            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!=''");
+        $settlement_id=$this->input->post('settlement_id');
+        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
+            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
             if($count==0){
                 $old_series_insert = $old_series;
             }else{
@@ -373,7 +376,7 @@ class Sales extends CI_Controller {
             'old_series_no'=>$old_series_insert,
         );
 
-        $this->super_model->update_where("collection_details", $data_update, "collection_id", $collection_id);
+        $this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
         echo $ref_no;
     }
 
@@ -443,22 +446,22 @@ class Sales extends CI_Controller {
     public function print_OR()
     {
         $collection_id=$this->uri->segment(3);
+        $settlement_id=$this->uri->segment(4);
         $reference_no = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
-        $settlement_id = $this->super_model->select_column_where("collection_details", "settlement_id", "collection_id", $collection_id);
+        //$settlement_id = $this->super_model->select_column_where("collection_details", "settlement_id", "collection_id", $collection_id);
         $billing_id = $this->super_model->select_column_where("sales_transaction_details", "billing_id", "short_name", $settlement_id);
-        foreach($this->super_model->select_row_where("participant", "billing_id", $billing_id) AS $p){
-            $data['client'][] = array(
-                "client_name"=>$p->participant_name,
-                "address"=>$p->registered_address,
-                "tin"=>$p->tin
-            );
-        }
-        $data['amount'] =  $this->super_model->select_column_where("collection_details", "amount", "collection_id", $collection_id);
-        $data['vat'] =  $this->super_model->select_column_where("collection_details", "vat", "collection_id", $collection_id);
-        $data['collection'] = $this->super_model->select_row_where("collection_details","collection_id",$collection_id);
+        
+        $data['client']=$this->super_model->select_row_where("participant", "billing_id", $billing_id);
+        $data['sum_amount']=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        /*$data['amount'] =  $this->super_model->select_column_custom_where("collection_details", "amount", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['vat'] =  $this->super_model->select_column_custom_where("collection_details", "vat", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");*/
+        $data['sum_vat']=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_ewt'] =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
 
         $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
-        $data['ref_no'] = $this->super_model->select_column_where("sales_transaction_head", "reference_number", "reference_number", $reference_no);
+        $data['ref_no'] = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/print_OR',$data);

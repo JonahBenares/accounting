@@ -1,4 +1,35 @@
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
+<!-- Modal -->
+<div class="modal fade" id="updateSeries" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Series Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" id="update">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Series Number</label>
+                        <input type="text" id="series_number" name="series_number" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type="hidden" id="ref_no" name="ref_no" value="<?php echo $ref_no; ?>">
+                    <input type="hidden" id="old_series_no" name="old_series_no" class="form-control">
+                    <input type="hidden" id="collection_id" name="collection_id" class="form-control">
+                    <input type="hidden" id="settlement_id" name="settlement_id" class="form-control">
+                    <input type="hidden" id="baseurl" name="baseurl" value="<?php echo base_url(); ?>">
+                    <button type="button" class="btn btn-primary" onclick="saveSeries()">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -9,7 +40,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
-                                        <h4>Collection</h4>
+                                        <h4>Collected</h4>
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group pull-right">
@@ -84,6 +115,8 @@
                                                     $key = $value['series_number'].$value['settlement_id'].$value['reference_no'];
                                                     if(!isset($data2[$key])) {
                                                         $data2[$key] = array(
+                                                            'collection_id' => $value['collection_id'], 
+                                                            'collection_details_id' => $value['collection_details_id'], 
                                                             'series_number' => $value['series_number'], 
                                                             'billing_remarks' => array(),
                                                             'billing_remarks_single'=>$value['billing_remarks'],
@@ -131,7 +164,13 @@
                                             ?>
                                             <tr>
                                                 <td class="td-btm pt-1 pb-1" style="vertical-align: middle;">
-                                                    <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
+                                                    <div class="btn-group">
+                                                        <a href="<?php echo base_url(); ?>sales/print_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white"><span class="fas fa-print"></span></a>
+                                                    
+                                                        <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $log['series_number']; ?>" data-id='<?php echo $log['collection_id']; ?>' data-settlement='<?php echo $log['settlement_id_single'];?>'>
+                                                            <span class="m-0 fas fa-edit"></span>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" align="center"><?php echo $log['series_number'];?></td>
                                                 <?php if($log['count_series']>=1){ ?>

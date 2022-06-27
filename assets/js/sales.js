@@ -238,7 +238,7 @@ function saveSeries(){
         type: "POST",
         url: redirect,
         success: function(output){
-        	window.location=loc+'sales/collected_list/'+output;  
+        	window.location=loc+'sales/collection_list/'+output;  
         }
     });  
 }
@@ -278,9 +278,11 @@ function filterSales(){
 $(document).on("click", "#seriesupdate", function () {
 	 var collection_id = $(this).attr("data-id");
 	 var series_number = $(this).attr("data-name");
+	 var settlement_id = $(this).attr("data-settlement");
 	 $("#collection_id").val(collection_id);
 	 $("#series_number").val(series_number);
 	 $("#old_series_no").val(series_number);
+	 $("#settlement_id").val(settlement_id);
 
 });
 
