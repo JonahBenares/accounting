@@ -291,16 +291,16 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-3);
         //echo $query;
         $data['total']=0;
-        foreach($this->super_model->custom_query("SELECT cd.ewt,ch.collection_date,std.billing_id,sth.billing_from,sth.billing_to FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=ch.collection_id INNER JOIN sales_transaction_head sth ON cd.reference_no=sth.reference_number INNER JOIN sales_transaction_details std ON cd.settlement_id=std.short_name WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $s){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE sth.saved='1' AND std.ewt!='0' $query") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
-            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
-            $total_amount[]=$s->ewt;
-            $data['total']=array_sum($total_amount);
+            //$total_amount[]=$s->ewt;
+            //$data['total']=array_sum($total_amount);
+            $data['total']=$this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$s->sales_id'");
             $data['sales'][]=array(
-                'transaction_date'=>$s->collection_date,
+                'transaction_date'=>$s->transaction_date,
                 'tin'=>$tin,
-                'participant_name'=>$company_name,
+                'participant_name'=>$s->company_name,
                 'address'=>$registered_address,
                 'ewt'=>$s->ewt,
                 'billing_from'=>$s->billing_from,

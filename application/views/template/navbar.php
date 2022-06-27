@@ -175,15 +175,15 @@
             <li class="dropdown">
                 <a href="<?php echo base_url(); ?>sales/collection_list" class="nav-link">
                     <i data-feather="layers"></i>
-                    <span>Collection</span>
+                    <span>Collected</span>
                 </a>
             </li>
-            <li class="dropdown">
+            <!-- <li class="dropdown">
                 <a href="<?php echo base_url(); ?>sales/collected_list" class="nav-link">
                     <i data-feather="layers"></i>
                     <span>Collected</span>
                 </a>
-            </li>
+            </li> -->
             <li class="dropdown">
                 <a href="<?php echo base_url(); ?>sales/sales_wesm" class="nav-link">
                     <i data-feather="list"></i>

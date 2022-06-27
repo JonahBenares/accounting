@@ -105,6 +105,7 @@ class Sales extends CI_Controller {
 
     public function upload_sales_process(){
         $sales_id = $this->input->post('sales_id');
+        //echo $sales_id;
         $dest= realpath(APPPATH . '../uploads/excel/');
         $error_ext=0;
         if(!empty($_FILES['doc']['name'])){
@@ -121,7 +122,7 @@ class Sales extends CI_Controller {
                 $filename1='wesm_sales.'.$ext1;
                 //echo $filename1;
                 if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
-                     $this->readExcel_inv($sales_id);
+                    $this->readExcel_inv($sales_id);
                 } 
             }
         }
@@ -149,27 +150,50 @@ class Sales extends CI_Controller {
         $y=1;
         for($x=3;$x<$highestRow;$x++){
           
-            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+
           
           
             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+
+            if($shortname!="" || !empty($shortname)){
          
             $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
 
             $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
-            $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
-            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-            $ith = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
-            $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
-            $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
-            $vatable_sales = $objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue();
-            $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
-            $zero_rated_ecozone = $objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue();
-            $vat_on_sales = $objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue();
-            $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
-            $ewt = trim($ewt,'-');
+             $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getOldCalculatedValue());
+            $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
 
-            if($vatable_sales!=''){
+             
+            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+           
+
+            $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+            $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
+              
+             $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
+             
+            $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue());
+
+         
+
+            
+            $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue();
+
+
+           $zero_rated_ecozone = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue());
+          
+
+            $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue());
+
+           
+            $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
+          
+
+             $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue());
+            
+  
+   /*
+          if($vatable_sales!=''){
                 $vatable_sales_disp=$vatable_sales;
             }else{
                 $vatable_sales_disp=0;
@@ -199,9 +223,9 @@ class Sales extends CI_Controller {
                 $ewt_disp=0;
             }
 
-            //$total_amount = ($vatable_sales + $zero_rated + $zero_rated_sales + $vat_on_sales) - $ewt;
-            $total_amount = ($vatable_sales_disp + $zero_rated_sales_disp + $zero_rated_ecozone_disp + $vat_on_sales_disp) - $ewt_disp;
-         
+            $total_amount = ($vatable_sales + $zero_rated_sales + $vat_on_sales) - $ewt;
+            $total_amount = ($vatable_sales_disp + $zero_rated_ecozone_disp + $vat_on_sales_disp) - $ewt_disp;
+         */
                 $data_sales = array(
                     'sales_id'=>$sales_id,
                     'item_no'=>$y,
@@ -215,7 +239,7 @@ class Sales extends CI_Controller {
                     'zero_rated'=>$zero_rated,
                     'vatable_sales'=>$vatable_sales,
                     'vat_on_sales'=>$vat_on_sales,
-                    'zero_rated_sales'=>$zero_rated_sales,
+              
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
@@ -223,6 +247,8 @@ class Sales extends CI_Controller {
                 );
                 $this->super_model->insert_into("sales_transaction_details", $data_sales);
                 $y++;
+                
+            }
         }
             //echo $sales_id;
       
@@ -284,6 +310,8 @@ class Sales extends CI_Controller {
             }
             $data['collection'][]=array(
                 "count_series"=>$count_series,
+                "collection_details_id"=>$col->collection_details_id,
+                "collection_id"=>$col->collection_id,
                 "settlement_id"=>$col->settlement_id,
                 "series_number"=>$col->series_number,
                 "billing_remarks"=>$col->billing_remarks,
@@ -359,8 +387,9 @@ class Sales extends CI_Controller {
         $collection_id=$this->input->post('collection_id');
         $new_series=$this->input->post('series_number');
         $old_series=$this->input->post('old_series_no');
-        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id'") AS $check){
-            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!=''");
+        $settlement_id=$this->input->post('settlement_id');
+        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
+            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
             if($count==0){
                 $old_series_insert = $old_series;
             }else{
@@ -373,7 +402,7 @@ class Sales extends CI_Controller {
             'old_series_no'=>$old_series_insert,
         );
 
-        $this->super_model->update_where("collection_details", $data_update, "collection_id", $collection_id);
+        $this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
         echo $ref_no;
     }
 
@@ -443,22 +472,24 @@ class Sales extends CI_Controller {
     public function print_OR()
     {
         $collection_id=$this->uri->segment(3);
-        $reference_no = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
-        $settlement_id = $this->super_model->select_column_where("collection_details", "settlement_id", "collection_id", $collection_id);
+        $settlement_id=$this->uri->segment(4);
+        $reference_no=$this->uri->segment(5);
+        $data['ref_no'] = $reference_no;
+        //$reference_no = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
+        //$settlement_id = $this->super_model->select_column_where("collection_details", "settlement_id", "collection_id", $collection_id);
         $billing_id = $this->super_model->select_column_where("sales_transaction_details", "billing_id", "short_name", $settlement_id);
-        foreach($this->super_model->select_row_where("participant", "billing_id", $billing_id) AS $p){
-            $data['client'][] = array(
-                "client_name"=>$p->participant_name,
-                "address"=>$p->registered_address,
-                "tin"=>$p->tin
-            );
-        }
-        $data['amount'] =  $this->super_model->select_column_where("collection_details", "amount", "collection_id", $collection_id);
-        $data['vat'] =  $this->super_model->select_column_where("collection_details", "vat", "collection_id", $collection_id);
-        $data['collection'] = $this->super_model->select_row_where("collection_details","collection_id",$collection_id);
-
+        
+        $data['client']=$this->super_model->select_row_where("participant", "billing_id", $billing_id);
+        $data['sum_amount']=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        /*$data['amount'] =  $this->super_model->select_column_custom_where("collection_details", "amount", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['vat'] =  $this->super_model->select_column_custom_where("collection_details", "vat", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");*/
+        $data['sum_vat']=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_ewt'] =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['defint'] =  $this->super_model->select_column_custom_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
-        $data['ref_no'] = $this->super_model->select_column_where("sales_transaction_head", "reference_number", "reference_number", $reference_no);
+        //$data['ref_no'] = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/print_OR',$data);
