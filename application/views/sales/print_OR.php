@@ -173,7 +173,7 @@
                                             <td colspan="8" align="right">DEF. INTEREST</td>
                                             <td colspan="2"></td>
                                             <td colspan="3"></td>
-                                            <td colspan="2"></td>
+                                            <td colspan="2"><?php echo number_format($defint,2); ?></td>
                                         </tr>
                                         <tr>
                                             <td colspan="8" align="right">ENERGY</td>
