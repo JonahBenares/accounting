@@ -144,6 +144,7 @@ async function upload_btn() {
 	        	$("#table-wesm").hide(); 
 	        },
 	        success: function(output){
+	        	//console.log(output);
 	        	$("#alt").hide(); 
 	        	location.reload();
 			}

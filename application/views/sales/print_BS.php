@@ -1,6 +1,8 @@
 <script>
     function goBack() {
-      window.history.back();
+        window.history.back();
+        window.close() ;
+
     }
 </script>
 <div style="margin-top:10px" id="printbutton">

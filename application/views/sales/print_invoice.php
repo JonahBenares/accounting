@@ -14,7 +14,7 @@
     </center>
 </div>
 <page size="BS">
-    <table class="table-borddered" width="100%" style="font-size:13px">
+    <table class="table-bordersed" width="100%" style="font-size:13px">
         <tr>
             <td width="5%"><br></td>
             <td width="5%"></td>
@@ -52,20 +52,20 @@
             </td>
         </tr>
         <tr>
-            <td>Billed to:</td>
-            <td colspan="13" class="bor-btm pl-2"><?php echo $company_name; ?></td>
+            <td colspan="3">Billed to:</td>
+            <td colspan="12" class="bor-btm pl-2"><?php echo $company_name; ?></td>
             <td></td>
             <td>Date:</td>
             <td colspan="3" class="bor-btm  pl-2"><?php echo date("F d,Y");?></td>
         </tr>
         <tr>
-            <td colspan="2">Business Style:</td>
-            <td colspan="8" class="bor-btm pl-2"></td>
+            <td colspan="3">Business Style:</td>
+            <td colspan="9" class="bor-btm pl-2"></td>
             <td>TIN</td>
             <td colspan="3" class="bor-btm pl-2"><?php echo $tin; ?></td>
         </tr>
         <tr>
-            <td>Address:</td>
+            <td colspan="3">Address:</td>
             <td colspan="13" class="bor-btm pl-2"><?php echo $address;?></td>
         </tr>
         <tr>

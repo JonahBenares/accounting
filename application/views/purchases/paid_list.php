@@ -53,7 +53,7 @@
                                 </div>   
                                 <br>  -->
                                 <div class="table-responsive" id="payment-list">
-                                    <table class="table-bordered table table-hover" id="table-1" style="width:200%; ">
+                                    <table class="table-bordered table table-hover" id="table-1" style="width:100%; ">
                                         <thead>
                                             <tr>
                                                 <!-- <th width="1%" align="center" style="background:rgb(245 245 245)">

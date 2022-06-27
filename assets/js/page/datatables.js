@@ -42,7 +42,7 @@ $("#table-2").dataTable({
 });
 $("#table-3").dataTable({
   "scrollX": true,
-  "ordering": false
+  "ordering": true
 });
 // $("#table-4").dataTable({
 //   "scrollX": true,

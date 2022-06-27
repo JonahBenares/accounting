@@ -447,7 +447,20 @@ class Masterfile extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('masterfile/user_list');
+        $rows = $this->super_model->count_rows("users");
+        $data['users']=array();
+        if($rows!=0){
+            foreach($this->super_model->select_all_order_by("users","fullname","ASC") AS $user){
+                $data['users'][] = array(
+                    'user_id'=>$user->user_id,
+                    'username'=>$user->username,
+                    'fullname'=>$user->fullname,
+                    'position'=>$user->position,
+                    'department'=>$user->department,
+                ); 
+            }
+        }
+        $this->load->view('masterfile/user_list',$data);
         $this->load->view('template/footer');
     }
     
