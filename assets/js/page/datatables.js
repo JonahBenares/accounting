@@ -41,8 +41,11 @@ $("#table-2").dataTable({
 
 });
 $("#table-3").dataTable({
-  "scrollX": true,
-  "ordering": true
+  // "scrollX": true,
+  // "ordering": true,
+  "columnDefs": [
+    { "width": "1%", "targets": 1 }
+  ]
 });
 // $("#table-4").dataTable({
 //   "scrollX": true,

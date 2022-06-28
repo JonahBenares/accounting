@@ -31,6 +31,8 @@ class Reports extends CI_Controller {
     public function sales_summary()
     {
         $ref_no=$this->uri->segment(3);
+
+      
         $participant=$this->uri->segment(4);
         $from=$this->uri->segment(5);
         $to=$this->uri->segment(6);
@@ -42,71 +44,69 @@ class Reports extends CI_Controller {
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql="";
-/*        if($ref_no!='null' && $participant=='null'){
-           $sql.= " AND sth.reference_number = '$ref_no' AND";
-        }else if($ref_no!='null' && $participant!='null'){
-            $sql.= " AND sth.reference_number = '$ref_no' AND";
-        }else {
-            $sql.= "";
+
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "billing_from = '$from' AND billing_to = '$to' AND ";
+        } if($participant!='null'){
+             $sql.= "billing_id = '$participant' AND "; 
+        } if($ref_no!='null'){
+            $sql.= "reference_number = '$ref_no' AND ";
         }
 
-        if($participant!='null' && $ref_no=='null'){
-            $sql.= " AND std.billing_id = '$participant' AND";
-        }else if($participant!='null' && $ref_no!='null'){
-            $sql.= " std.billing_id = '$participant' AND";
-        }else {
-            $sql.= "";
+     
+        $query=substr($sql,0,-4);
+
+        $qu = "saved = '1' AND ".$query;
+        $total_am = $this->super_model->select_sum_join("total_amount","sales_transaction_details","sales_transaction_head", $qu,"sales_id");
+        $data['total_amount'] = $total_am;
+
+
+
+        foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","short_name") AS $sales){
+
+            $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'");
+           
+            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sales->billing_id);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$sales->billing_id);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sales->billing_id);
+
+            if($count_collection>0){
+
+
+                foreach($this->super_model->select_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'") AS $col){
+
+                     $total_col[] = $col->amount;
+
+                     $data['sales'][] = array( 
+                        'transaction_date'=>$sales->transaction_date,
+                        'tin'=>$tin,
+                        'participant_name'=>$company_name,
+                        'address'=>$registered_address,
+                        'vatable_sales'=>$col->amount,
+                        'zero_rated_sales'=>$col->zero_rated,
+                        'vat_on_sales'=>$col->vat,
+                        'billing_from'=>$sales->billing_from,
+                        'billing_to'=>$sales->billing_to,
+                        'ewt'=>$col->ewt,
+                    );
+                }
+            }
+
+
         }
-
-        if($from!='null' && $to=='null'){
-            $sql.= " AND sth.billing_from BETWEEN '$from' AND '$to' AND";
-        }else if($from!='null' && $to!='null'){
-            $sql.= " sth.billing_from BETWEEN '$from' AND '$to' AND";
-        }else {
-            $sql.= "";
-        }
-
-        if($to!='null' && $from=='null'){
-            $sql.= " AND sth.billing_to BETWEEN '$from' AND '$to' AND";
-        }else if($to!='null' && $from!='null'){
-            $sql.= " sth.billing_to BETWEEN '$from' AND '$to' AND";
-        }else {
-            $sql.= "";
-        }*/
-
-        if($ref_no!='null' && $participant=='null' && $from=='null' && $to=='null'){
-            $sql.= " AND sth.reference_number = '$ref_no' AND";
-        }else if($ref_no=='null' && $participant!='null' && $from=='null' && $to=='null'){
-            $sql.= " AND std.billing_id = '$participant' AND";
-        }else if($ref_no!='null' && $participant!='null' && $from!='null' && $to!='null'){
-            //$sql.= " AND sth.reference_number = '$ref_no' AND std.billing_id = '$participant' AND '$from' AND '$to' BETWEEN  sth.billing_from AND sth.billing_to AND";
-             $sql.= " AND sth.reference_number = '$ref_no' AND (sth.billing_from >= '$from' AND sth.billing_to <= '$to') AND";
-        }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to!='null'){
-            //$sql.= " AND '$from' AND '$to' BETWEEN  sth.billing_from AND sth.billing_to AND";
-            $sql.= " AND (sth.billing_from >= '$from' AND sth.billing_to <= '$to') AND";
-        }else if($ref_no=='null' && $participant=='null' && $from!='null' && $to=='null'){
-            $sql.= " AND sth.billing_from = '$from' AND";
-        }else if($ref_no=='null' && $participant=='null' && $from=='null' && $to!='null'){
-            $sql.= " AND sth.billing_to = '$to' AND";
-        }else {
-            $sql.= "";
-        }
-
-        $query=substr($sql,0,-3);
-        $data['total_amount']=0;
-        $data['total_collection']=0;
-        $data['total_balance']=0;
-        $data['head']=array();
-        foreach($this->super_model->custom_query("SELECT cd.ewt,cd.amount,cd.zero_rated,cd.vat,ch.collection_date,std.billing_id,sth.billing_from,sth.billing_to,sth.transaction_date,cd.settlement_id FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=ch.collection_id INNER JOIN sales_transaction_head sth ON cd.reference_no=sth.reference_number INNER JOIN sales_transaction_details std ON cd.settlement_id=std.short_name WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $head){
-        /*foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.sales_id=sth.sales_id INNER JOIN sales_transaction_details std ON cd.sales_details_id=std.sales_detail_id WHERE sth.saved='1' $query") AS $head){*/
+        $total_c = array_sum($total_col);
+        $data['total_collection'] = $total_c;
+        $data['total_balance'] = $total_am - $total_c;
+       
+      
+    
+      /*  foreach($this->super_model->custom_query("SELECT cd.ewt,cd.amount,cd.zero_rated,cd.vat,ch.collection_date,std.billing_id,sth.billing_from,sth.billing_to,sth.transaction_date,cd.settlement_id FROM collection_details cd INNER JOIN sales_transaction_head sth ON cd.reference_no=sth.reference_number INNER JOIN sales_transaction_details std ON std.sales_id=sth.sales_id WHERE sth.saved='1' AND cd.ewt!='0' $query") AS $head){
+      
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$head->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$head->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$head->billing_id);
-            //$collected=$this->super_model->select_column_where("collection_details","total","sales_details_id",$head->sales_details_id);
-            //$amount=$this->super_model->select_column_where("collection_details","amount","sales_details_id",$head->sales_details_id);
-            //$vat=$this->super_model->select_column_where("collection_details","vat","sales_details_id",$head->sales_details_id);
-            //$zero_rated=$this->super_model->select_column_where("collection_details","zero_rated","sales_details_id",$head->sales_details_id);
-            //$ewt=$this->super_model->select_column_where("collection_details","ewt","sales_details_id",$head->sales_details_id);
+           
             $totalamount=$this->super_model->select_sum_where("sales_transaction_details","total_amount","short_name='$head->settlement_id'");
             $totalcollected=$this->super_model->select_sum_where("collection_details","total","settlement_id='$head->settlement_id'");
             $total_amount[]=$totalamount;
@@ -122,13 +122,13 @@ class Reports extends CI_Controller {
             'address'=>$registered_address,
             'vatable_sales'=>$head->amount,
             'zero_rated_sales'=>$head->zero_rated,
-            //'wht_agent'=>$head->wht_agent,
+         
             'vat_on_sales'=>$head->vat,
             'billing_from'=>$head->billing_from,
             'billing_to'=>$head->billing_to,
             'ewt'=>$head->ewt,
         );
-        }
+        }*/
         $this->load->view('reports/sales_summary',$data);
         $this->load->view('template/footer');
     }
@@ -278,7 +278,7 @@ class Reports extends CI_Controller {
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_details WHERE reference_no!=''");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql="";
-        if($ref_no!='null' && $participant=='null'){
+      /*  if($ref_no!='null' && $participant=='null'){
            $sql.= " AND std.reference_no = '$ref_no' AND";
         }else if($ref_no!='null' && $participant!='null'){
             $sql.= " AND std.reference_no = '$ref_no' AND std.settlement_id = '$participant' AND";
@@ -286,12 +286,12 @@ class Reports extends CI_Controller {
             $sql.= " AND std.settlement_id = '$participant' AND";
         }else {
             $sql.= "";
-        }
+        }*/
         
         $query=substr($sql,0,-3);
         //echo $query;
         $data['total']=0;
-        foreach($this->super_model->custom_query("SELECT * FROM collection_head sth INNER JOIN collection_details std ON sth.collection_id=std.collection_id WHERE std.ewt!='0' $query") AS $s){
+        foreach($this->super_model->custom_query("SELECT * FROM collection_head sth INNER JOIN collection_details std ON sth.collection_id=std.collection_id WHERE std.ewt!='0'") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$s->settlement_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","settlement_id",$s->settlement_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$s->settlement_id);
