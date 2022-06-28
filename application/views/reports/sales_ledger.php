@@ -94,7 +94,8 @@
                                     <tbody>
                                         <?php 
                                             if(!empty($bill)){
-                                            foreach($bill AS $b){ 
+                                            foreach($bill AS $b){
+                                            $sum_cvatable_sales[]=$b['cvatable_sales']; 
                                         ?>
                                         <tr>
                                             <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $b['date']; ?></td>
@@ -127,7 +128,7 @@
                                             <td align="right" style="vertical-align:middle!important;" class="td-sticky left-col-1 td-yellow" colspan="3">TOTAL</td>
 
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vatable_sales,2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_amount,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_cvatable_sales),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vatable_balance,2); ?></td>
 
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_rated,2); ?></td>
