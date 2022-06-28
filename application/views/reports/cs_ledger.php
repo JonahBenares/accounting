@@ -59,7 +59,7 @@
                             </table>
                             <br>
                             <div style="overflow-x:scroll; min-height: 500px; height:550px">
-                                <table class="table table-bordered table-hover mb-0" style="width:170%;font-size: 13px;">
+                                <table class="table table-bordered table-hover mb-0" style="width:200%;font-size: 13px;">
                                     <thead class="header">
                                         <tr>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-1" rowspan="2" align="center">Date</td>

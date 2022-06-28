@@ -122,7 +122,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
                 <div class="dropdown-title"><!-- Hello <?php echo $_SESSION['fullname'];?> --></div>
-                <a href="profile.html" class="dropdown-item has-icon"> 
+                <!-- <a href="profile.html" class="dropdown-item has-icon"> 
                     <i class="far fa-user"></i> Profile
                 </a>
                 <a href="timeline.html" class="dropdown-item has-icon"> 
@@ -131,7 +131,7 @@
                 <a href="#" class="dropdown-item has-icon">
                     <i class="fas fa-cog"></i> Settings
                 </a>
-                <div class="dropdown-divider"></div>
+                <div class="dropdown-divider"></div> -->
                 <a href="<?php echo base_url(); ?>index.php/masterfile/user_logout" class="dropdown-item has-icon text-danger"> 
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
