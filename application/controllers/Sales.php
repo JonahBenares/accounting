@@ -490,10 +490,8 @@ class Sales extends CI_Controller {
         $data['defint'] =  $this->super_model->select_column_custom_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         //$data['ref_no'] = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        $this->load->view('template/print_head');
         $this->load->view('sales/print_OR',$data);
-        $this->load->view('template/footer');
     }
 
     public function print_collected_OR()

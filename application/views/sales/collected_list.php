@@ -118,7 +118,7 @@
                                     <table class="table-bordered table table-hover " id="table-1" style="width:100%; ">
                                         <thead>
                                             <tr>
-                                                <th width="5%" align="center">
+                                                <th width="1%" align="center">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
                                                 <th width="20%">Date Collected</th>

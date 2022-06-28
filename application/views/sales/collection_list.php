@@ -87,25 +87,25 @@
                                 </div>
                                 <hr>
                                 <?php //if(!empty($ref_no) && $ref_no!='null'){ ?>
-                                <div>
+                                <div style="overflow-x:scroll;">
                                     <table class="table-bordered table table-hosver" id="table-3" width="200%"> 
                                         <thead>
                                             <tr>
-                                                <th width="1%"><center><span class="fas fa-bars"></span></center></th>
+                                                <th width="2%"><center><span class="fas fa-bars"></span></center></th>
                                                 <th width="10%">OR#</th>
-                                                <th width="8%">Billing Remarks</th>
-                                                <th width="14%">Particulars</th>
-                                                <th width="10%">STL ID</th>
-                                                <th width="16%">Participant Name</th>
-                                                <th width="16%">Reference No</th>
-                                                <th width="10%">Vatable Sales</th>
-                                                <th width="10%">Zero Rated Sales</th>
-                                                <th width="10%">Zero Rated Ecozone</th>
-                                                <th width="10%">VAT</th>
-                                                <th width="10%">EWT</th>
-                                                <th width="10%">Total</th>
-                                                <th width="10%">Def Int</th>
-                                                <th width="10%">Overall Total</th>
+                                                <th width="10%">Billing Remarks</th>
+                                                <th>Particulars</th>
+                                                <th>STL ID</th>
+                                                <th>Participant Name</th>
+                                                <th>Reference No</th>
+                                                <th width="5%" align="center">Vatable Sales</th>
+                                                <th width="5%" align="center">Zero Rated Sales</th>
+                                                <th width="5%" align="center">Zero Rated Ecozone</th>
+                                                <th width="5%" align="center">VAT</th>
+                                                <th width="5%" align="center">EWT</th>
+                                                <th width="5%" align="center">Total</th>
+                                                <th width="5%" align="center">Def Int</th>
+                                                <th width="5%" align="center">Overall Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -163,7 +163,7 @@
                                                 foreach($data2 as $log) {
                                             ?>
                                             <tr>
-                                                <td class="td-btm pt-1 pb-1" style="vertical-align: middle;">
+                                                <td class="td-btm pt-1 pb-1" style="vertical-align: middle;" align="center">
                                                     <div class="btn-group">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white"><span class="fas fa-print"></span></a>
                                                     
@@ -179,42 +179,42 @@
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['settlement_id']); ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['company_name']); ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['reference_no']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['amount']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated_ecozone']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['amount']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated_ecozone']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php }else if($log['count_series']<=2){ ?>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['billing_remarks']); ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['particulars']); ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['settlement_id']); ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['company_name']); ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['reference_no']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['amount']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated_ecozone']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['amount']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['zero_rated_ecozone']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php }else{ ?>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['billing_remarks_single']; ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['particular_single']; ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['settlement_id_single']; ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['company_single']; ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['reference_no_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['amount_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['zero_rated_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['zero_rated_ecozone_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['vat_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['ewt_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['total_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
-                                                    <td class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['amount_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['zero_rated_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['zero_rated_ecozone_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['vat_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['ewt_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['total_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td>
+                                                    <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php } ?>
                                             </tr>
                                             <?php } ?>
