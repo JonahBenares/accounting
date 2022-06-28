@@ -57,11 +57,11 @@
                                 <tr>
                                     <td width="10%"></td>
                                     <td width="10%">Total Amount</td>
-                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_amount!=0)? number_format($total_amount,2) : '0.00'; ?></b></td>
+                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_amount!=0) ? number_format($total_amount,2) : '0.00'; ?></b></td>
                                      <td width="10%">Total Collected</td>
-                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_collection!=0)? number_format($total_collection,2) : '0.00'; ?></b></td>
+                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_collection!=0) ? number_format($total_collection,2) : '0.00'; ?></b></td>
                                     <td width="10%">Balance</td>
-                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_balance!=0)? number_format($total_balance,2) : '0.00'; ?></b></td> 
+                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_balance!=0) ? number_format($total_balance,2) : '0.00'; ?></b></td> 
                                 </tr>
                             </table>
                             <hr>
