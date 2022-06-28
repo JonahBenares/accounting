@@ -51,9 +51,9 @@
                                 <tr>
                                     <td width="7%"></td>
                                     <td width="13%"><b>Transaction No.:</b></td>
-                                    <td width="32%">: <?php echo $ref_no ?></td>
+                                    <td width="32%"><?php echo $ref_no ?></td>
                                     <td width="12%"><b>Date From - To:</b></td>
-                                    <td width="33%">: <?php echo $date_from ?> - <?php echo $date_to ?></td>
+                                    <td width="33%"><?php echo $date_from ?> - <?php echo $date_to ?></td>
                                     <td width="3%"></td>
                                 </tr>
                             </table>
