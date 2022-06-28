@@ -93,8 +93,8 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            if(!empty($bill)){
-                                            foreach($bill AS $b){ 
+                                            if(!empty($sales)){
+                                            foreach($sales AS $b){ 
                                         ?>
                                         <tr>
                                             <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $b['date']; ?></td>
