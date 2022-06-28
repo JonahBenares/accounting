@@ -291,20 +291,26 @@ class Reports extends CI_Controller {
         $qu = "saved = '1' AND ".$query;
         $data['bill']=array();
         $data['total_vatable_sales']=0.00;
+        $data['total_vatable_sales']=0.00;
         $data['total_amount']=0.00;
         $data['total_vatable_balance']=0.00;
+        $total_vatable_balance=array();
         $data['total_zero_rated']=0.00;
         $data['total_c_zero_rated']=0.00;
         $data['total_zero_rated_balance']=0.00;
+        $total_zero_rated_balance=array();
         $data['total_zero_ecozones']=0.00;
         $data['total_c_zero_ecozones']=0.00;
         $data['total_zero_ecozones_balance']=0.00;
+        $total_zero_ecozones_balance=array();
         $data['total_vat']=0.00;
         $data['total_c_vat']=0.00;
         $data['total_vat_balance']=0.00;
+        $total_vat_balance=array();
         $data['total_ewt']=0.00;
         $data['total_c_ewt']=0.00;
         $data['total_ewt_balance']=0.00;
+        $total_ewt_balance=array();
         foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","short_name") AS $b){
                 $vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$b->sales_id' AND short_name='$b->short_name'");
                 $zero_rated_sales = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$b->sales_id' AND short_name='$b->short_name'");
