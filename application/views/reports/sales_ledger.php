@@ -93,8 +93,13 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            if(!empty($sales)){
-                                            foreach($sales AS $b){ 
+                                            if(!empty($bill)){
+                                            foreach($bill AS $b){
+                                            $sum_cvatable_sales[]=$b['cvatable_sales']; 
+                                            $sum_czero_rated_sales[]=$b['czero_rated_sales']; 
+                                            $sum_czero_rated_ecozone[]=$b['czero_rated_ecozone']; 
+                                            $sum_cvat_on_sales[]=$b['cvat_on_sales']; 
+                                            $sum_cewt[]=$b['cewt']; 
                                         ?>
                                         <tr>
                                             <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $b['date']; ?></td>
@@ -127,23 +132,23 @@
                                             <td align="right" style="vertical-align:middle!important;" class="td-sticky left-col-1 td-yellow" colspan="3">TOTAL</td>
 
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vatable_sales,2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_amount,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_cvatable_sales),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vatable_balance,2); ?></td>
 
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_rated,2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_c_zero_rated,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_czero_rated_sales),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_rated_balance,2); ?></td>
 
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_ecozones,2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_c_zero_ecozones,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_czero_rated_ecozone),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_zero_ecozones_balance,2); ?></td>
 
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vat,2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_c_vat,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_cvat_on_sales),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_vat_balance,2); ?></td>
 
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_ewt,2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_c_ewt,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_cewt),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($total_ewt_balance,2); ?></td>
                                         </tr>
                                     </tfoot>
