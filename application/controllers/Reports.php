@@ -121,13 +121,13 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
-        $total_am = $this->super_model->select_sum_join("total_amount","purchase_transaction_details","purchase_transaction_head", $qu,"purchase_id");
+        $pur = "saved = '1' AND ".$query;
+        $total_am = $this->super_model->select_sum_join("total_amount","purchase_transaction_details","purchase_transaction_head", $pur,"purchase_id");
         $data['total_amount'] = $total_am;
         $data['total_paid']=0.00;
         $data['total_balance']=0.00;
         $data['head']=array();
-        foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $qu,"purchase_id","purchase_detail_id") AS $purchase){
+        foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $pur,"purchase_id","purchase_detail_id") AS $purchase){
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$purchase->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$purchase->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$purchase->billing_id);
@@ -448,7 +448,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $purchases = "saved = '1' AND ".$query;
         $data['bill']=array();
         $data['total_vatable_purchases']=0.00;
         $data['total_purchase_amount']=0.00;
@@ -466,7 +466,7 @@ class Reports extends CI_Controller {
         $data['total_p_ewt']=0.00;
         $data['total_ewt_balance']=0.00;
         /*foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE saved='1' $query") AS $b){*/
-        foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $qu,"purchase_id","purchase_detail_id") AS $b){
+        foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $purchases,"purchase_id","purchase_detail_id") AS $b){
                 /*foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){*/
             $count_payment = $this->super_model->count_custom_where("payment_details", "purchase_details_id ='$b->purchase_detail_id'");
              if($count_payment>0){
