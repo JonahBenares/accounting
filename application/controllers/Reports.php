@@ -170,7 +170,7 @@ class Reports extends CI_Controller {
         }
             $total_p = array_sum($total_pay);
             $data['total_paid'] = $total_p;
-            $data['total_balance'] = $total_am - $total_p;
+            $data['total_balance'] = $total_p - $total_am;
     }   
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
