@@ -66,7 +66,7 @@ class Reports extends CI_Controller {
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$sales->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sales->billing_id);
 
-            if($count_collection>0){
+            //if($count_collection>0){
 
 
                 foreach($this->super_model->select_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'") AS $col){
@@ -87,7 +87,7 @@ class Reports extends CI_Controller {
                         'ewt'=>$col->ewt,
                     );
                 }
-            }
+            //}
                     $total_c = array_sum($total_col);
                     $data['total_collection'] = $total_c;
                     $data['total_balance'] = $total_am - $total_c;
@@ -558,10 +558,6 @@ class Reports extends CI_Controller {
 
     public function cs_ledger()
     {
-
-
-
-        
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
