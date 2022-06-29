@@ -170,7 +170,7 @@ class Reports extends CI_Controller {
         }
             $total_p = array_sum($total_pay);
             $data['total_paid'] = $total_p;
-            $data['total_balance'] = $total_am - $total_p;
+            $data['total_balance'] = (abs($total_am - $total_p));
     }   
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
@@ -555,6 +555,10 @@ class Reports extends CI_Controller {
 
     public function cs_ledger()
     {
+
+
+
+        
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");

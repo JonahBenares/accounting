@@ -51,9 +51,9 @@
                                 <tr>
                                     <td width="7%"></td>
                                     <td width="13%"><b>Participant Name:</b></td>
-                                    <td width="32%">: <?php echo $part ?></td>
+                                    <td width="32%"><?php echo $part ?></td>
                                     <td width="12%"><b>Date From - To:</b></td>
-                                    <td width="33%">: <?php echo $date_from ?> - <?php echo $date_to ?></td>
+                                    <td width="33%"><?php echo $date_from ?> - <?php echo $date_to ?></td>
                                     <td width="3%"></td>
                                 </tr>
                             </table>
@@ -149,9 +149,9 @@
                                 </table>
                             </div>
                         </div>
-                    <!-- <?php }else{ ?>
+                    <?php }else{ ?>
                             <div><center><b>No Available Data...</b></center></div>
-                    <?php } ?> -->
+                    <?php } ?>
                     </div>
                 </div>
             </div>
