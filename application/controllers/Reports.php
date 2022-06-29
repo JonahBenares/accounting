@@ -66,7 +66,7 @@ class Reports extends CI_Controller {
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$sales->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sales->billing_id);
 
-            //if($count_collection>0){
+            if($count_collection>0){
 
 
                 foreach($this->super_model->select_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'") AS $col){
@@ -86,11 +86,11 @@ class Reports extends CI_Controller {
                         'billing_to'=>$sales->billing_to,
                         'ewt'=>$col->ewt,
                     );
-                }
-            //}
                     $total_c = array_sum($total_col);
                     $data['total_collection'] = $total_c;
                     $data['total_balance'] = $total_am - $total_c;
+                }
+            }
         }
 
         $this->load->view('reports/sales_summary',$data);
@@ -166,11 +166,11 @@ class Reports extends CI_Controller {
             'billing_to'=>$purchase->billing_to,
             'ewt'=>$c->ewt,
                 );
-            }
-        }
             $total_p = array_sum($total_pay);
             $data['total_paid'] = $total_p;
             $data['total_balance'] = (abs($total_am - $total_p));
+            }
+        }
     }   
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
