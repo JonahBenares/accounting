@@ -183,27 +183,21 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
-        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        $sql="";
-        if($ref_no!='null' && $participant=='null'){
-           $sql.= " AND pth.reference_number = '$ref_no' AND";
-        }else if($ref_no!='null' && $participant!='null'){
-            $sql.= " AND pth.reference_number = '$ref_no' AND";
-        }else {
-            $sql.= "";
+         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $sql='';
+        if($participant!='null'){
+            $sql.= "short_name = '$participant' AND ";
+        } 
+        if($ref_no!='null'){
+            $sql.= "reference_number = '$ref_no' AND ";
         }
 
-        if($participant!='null' && $ref_no=='null'){
-            $sql.= " AND ptd.billing_id = '$participant' AND";
-        }else if($participant!='null' && $ref_no!='null'){
-            $sql.= " ptd.billing_id = '$participant' AND";
-        }else {
-            $sql.= "";
-        }
-
-        $query=substr($sql,0,-3);
+        $query=substr($sql,0,-4);
+        $qu = " WHERE saved='1' AND ewt!='0' AND ".$query;
         $data['total']=0;
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE saved='1' AND ewt!='0' $query") AS $s){
+        //foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $qu,"purchase_id","short_name") AS $s){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id $qu") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
@@ -240,9 +234,10 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " ewt!='0' AND ".$query;
+        $qu = " WHERE ewt!='0' AND ".$query;
         $data['total']=0;
-        foreach($this->super_model->select_innerjoin_where("collection_details","collection_head", $qu,"collection_id","settlement_id") AS $s){
+        //foreach($this->super_model->select_innerjoin_where("collection_details","collection_head", $qu,"collection_id","settlement_id") AS $s){
+        foreach($this->super_model->custom_query("SELECT * FROM collection_details ptd INNER JOIN collection_head pth ON ptd.collection_id=pth.collection_id $qu") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$s->settlement_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","settlement_id",$s->settlement_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$s->settlement_id);
