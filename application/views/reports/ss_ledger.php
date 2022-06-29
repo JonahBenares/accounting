@@ -73,19 +73,19 @@
                                         </tr>
                                         <tr>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                         </tr>
                                     </thead>
