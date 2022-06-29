@@ -622,99 +622,104 @@ class Reports extends CI_Controller {
         $cs_qu = "saved = '1' AND ".$query;
         $data['csledger']=array();
         $data['total_vatable_sales']=0.00;
+        $data['total_vatable_sales']=0.00;
         $data['total_amount']=0.00;
         $data['total_vatable_balance']=0.00;
+        $total_vatable_balance=array();
         $data['total_zero_rated']=0.00;
         $data['total_c_zero_rated']=0.00;
         $data['total_zero_rated_balance']=0.00;
+        $total_zero_rated_balance=array();
         $data['total_zero_ecozones']=0.00;
         $data['total_c_zero_ecozones']=0.00;
         $data['total_zero_ecozones_balance']=0.00;
+        $total_zero_ecozones_balance=array();
         $data['total_vat']=0.00;
         $data['total_c_vat']=0.00;
         $data['total_vat_balance']=0.00;
+        $total_vat_balance=array();
         $data['total_ewt']=0.00;
         $data['total_c_ewt']=0.00;
         $data['total_ewt_balance']=0.00;
 /*        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
             $reference_number=$this->super_model->select_column_where("collection_details","reference_no",'settlement_id',$b->short_name);*/
+        //foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id","short_name") AS $cs){
         foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id","short_name") AS $cs){
+                $vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
+                $zero_rated_sales = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
+                $zero_rated_ecozones = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
+                $vat_on_sales = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
+                $ewt_sales = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
 
-            $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'");
-           
-            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$cs->billing_id);
-            $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$cs->billing_id);
-            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$cs->billing_id);
+                $amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+                $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+                $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+                $vat=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+                $ewt=$this->super_model->select_sum_where("collection_details","ewt","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
 
-            if($count_collection>0){
+                $vatablebalance=$vatable_sales - $amount;
+                $zerobalance=$zero_rated_sales - $zero_rated;
+                $zeroecobalance=$zero_rated_ecozones - $zero_rated_ecozone;
+                $vatbalance=$vat_on_sales - $vat;
+                $ewtbalance=$ewt_sales - $ewt;
 
-                foreach($this->super_model->select_custom_where("collection_details", "reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'") AS $col){
+                $vatable_sales_total= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$cs->sales_id'");
+                $data['total_vatable_sales']=$vatable_sales_total;
+                $amount_total=$this->super_model->select_sum_where("collection_details","amount","reference_no='$cs->reference_number'");
+                $data['total_amount']=$amount_total;
+                $total_vatable_balance[]=$vatablebalance;
 
-                $vatablebalance=$cs->vatable_sales - $col->amount;
-                $zerobalance=$cs->zero_rated_sales - $col->zero_rated;
-                $zeroecobalance=$cs->zero_rated_ecozones - $col->zero_rated_ecozone;
-                $vatbalance=$cs->vat_on_sales - $col->vat;
-                $ewtbalance=$cs->ewt - $col->ewt;
+                $zero_rated_total=$this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$cs->sales_id'");
+                $data['total_zero_rated']=$zero_rated_total;
+                $c_zero_rated_total=$this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$cs->reference_number'");
+                $data['total_c_zero_rated']=$c_zero_rated_total;
+                $total_zero_rated_balance[]=$zerobalance;
+
+                $zero_rated_ecozone_total=$this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id='$cs->sales_id'");
+                $data['total_zero_ecozones']=$zero_rated_ecozone_total;
+                $c_zero_rated_ecozone_total=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$cs->reference_number'");
+                $data['total_c_zero_ecozones']=$c_zero_rated_ecozone_total;
+                $total_zero_ecozones_balance[]=$zeroecobalance;
+
+                $vat_total=$this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id='$cs->sales_id'");
+                $data['total_vat']=$vat_total;
+                $c_vat_total=$this->super_model->select_sum_where("collection_details","vat","reference_no='$cs->reference_number'");
+                $data['total_c_vat']=$c_vat_total;
+                $total_vat_balance[]=$vatbalance;
+
+                $ewt_total=$this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$cs->sales_id'");
+                $data['total_ewt']=$ewt_total;
+                $c_ewt_total=$this->super_model->select_sum_where("collection_details","ewt","reference_no='$cs->reference_number'");
+                $data['total_c_ewt']=$c_ewt_total;
+                $total_ewt_balance[]=$ewtbalance;
 
                 $data['csledger'][]=array(
                     "date"=>$cs->transaction_date,
                     "company_name"=>$cs->company_name,
                     "billing_from"=>$cs->billing_from,
                     "billing_to"=>$cs->billing_to,
-                    "vatable_sales"=>$cs->vatable_sales,
-                    "zero_rated_sales"=>$cs->zero_rated_sales,
-                    "zero_rated_ecozones"=>$cs->zero_rated_ecozones,
-                    "vat_on_sales"=>$cs->vat_on_sales,
-                    "ewt"=>$cs->ewt,
+                    "vatable_sales"=>$vatable_sales,
+                    "zero_rated_sales"=>$zero_rated_sales,
+                    "zero_rated_ecozones"=>$zero_rated_ecozones,
+                    "vat_on_sales"=>$vat_on_sales,
+                    "ewt"=>$ewt_sales,
                     "vatablebalance"=>$vatablebalance,
                     "zerobalance"=>$zerobalance,
                     "zeroecobalance"=>$zeroecobalance,
                     "vatbalance"=>$vatbalance,
                     "ewtbalance"=>$ewtbalance,
-                    "cvatable_sales"=>$col->amount,
-                    "czero_rated_sales"=>$col->zero_rated,
-                    "czero_rated_ecozone"=>$col->zero_rated_ecozone,
-                    "cvat_on_sales"=>$col->vat,
-                    "cewt"=>$col->ewt,
+                    "cvatable_sales"=>$amount,
+                    "czero_rated_sales"=>$zero_rated,
+                    "czero_rated_ecozone"=>$zero_rated_ecozone,
+                    "cvat_on_sales"=>$vat,
+                    "cewt"=>$ewt,
                 );
-
-                $total_vatable_sales[]=$cs->vatable_sales;
-                $data['total_vatable_sales']=array_sum($total_vatable_sales);
-                $total_amount[]=$col->amount;
-                $data['total_amount']=array_sum($total_amount);
-                $total_vatable_balance[]=$vatablebalance;
-                $data['total_vatable_balance']=array_sum($total_vatable_balance);
-
-                $total_zero_rated[]=$cs->zero_rated_sales;
-                $data['total_zero_rated']=array_sum($total_zero_rated);
-                $total_c_zero_rated[]=$col->zero_rated;
-                $data['total_c_zero_rated']=array_sum($total_c_zero_rated);
-                $total_zero_rated_balance[]=$zerobalance;
-                $data['total_zero_rated_balance']=array_sum($total_zero_rated_balance);
-
-                $total_zero_ecozones[]=$cs->zero_rated_ecozones;
-                $data['total_zero_ecozones']=array_sum($total_zero_ecozones);
-                $total_c_zero_ecozones[]=$col->zero_rated_ecozone;
-                $data['total_c_zero_ecozones']=array_sum($total_c_zero_ecozones);
-                $total_zero_ecozones_balance[]=$zeroecobalance;
-                $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones_balance);
-
-                $total_vat[]=$cs->vat_on_sales;
-                $data['total_vat']=array_sum($total_vat);
-                $total_c_vat[]=$col->vat;
-                $data['total_c_vat']=array_sum($total_c_vat);
-                $total_vat_balance[]=$vatbalance;
-                $data['total_vat_balance']=array_sum($total_vat_balance);
-
-                $total_ewt[]=$cs->ewt;
-                $data['total_ewt']=array_sum($total_ewt);
-                $total_c_ewt[]=$col->ewt;
-                $data['total_c_ewt']=array_sum($total_c_ewt);
-                $total_ewt_balance[]=$ewtbalance;
-                $data['total_ewt_balance']=array_sum($total_ewt_balance);
-                }
             }
-        }
+        $data['total_vatable_balance']=array_sum($total_vatable_balance);
+        $data['total_zero_rated_balance']=array_sum($total_zero_rated_balance);
+        $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones_balance);
+        $data['total_vat_balance']=array_sum($total_vat_balance);
+        $data['total_ewt_balance']=array_sum($total_ewt_balance);
         $this->load->view('reports/cs_ledger', $data);
         $this->load->view('template/footer');
     }
