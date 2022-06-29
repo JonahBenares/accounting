@@ -65,13 +65,14 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sales->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$sales->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sales->billing_id);
-
+            $amount=$this->super_model->select_column_where("collection_details","amount","settlement_id",$sales->short_name);
+            $total_col[] = $amount;
             if($count_collection>0){
 
 
                 foreach($this->super_model->select_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'") AS $col){
 
-                     $total_col[] = $col->amount;
+                     //$total_col[] = $col->amount;
 
 
                      $data['sales'][] = array( 
@@ -88,11 +89,28 @@ class Reports extends CI_Controller {
                     );
                     $total_c = array_sum($total_col);
                     $data['total_collection'] = $total_c;
-                    if (!empty($total_c)){
                     $data['total_balance'] = $total_am - $total_c;
-                    }
-                    $data['total_balance'] = $total_am;
                 }
+            } else {
+                     $data['sales'][] = array( 
+                        'transaction_date'=>$sales->transaction_date,
+                        'tin'=>$tin,
+                        'participant_name'=>$company_name,
+                        'address'=>$registered_address,
+                        'vatable_sales'=>$sales->vatable_sales,
+                        'zero_rated_sales'=>$sales->zero_rated_sales,
+                        'vat_on_sales'=>$sales->vat_on_sales,
+                        'billing_from'=>$sales->billing_from,
+                        'billing_to'=>$sales->billing_to,
+                        'ewt'=>$sales->ewt,
+                    );
+                    $total_c = array_sum($total_col);
+                    $data['total_collection'] = $total_c;
+                        if ($count_collection!=0) {
+                    $data['total_balance'] = $total_am - $total_c;
+                        } else {
+                    $data['total_balance'] = $total_am;
+                    }
             }
         }
 
@@ -134,13 +152,17 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$purchase->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$purchase->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$purchase->billing_id);
-
+            $total_amount=$this->super_model->select_column_where("payment_details","total_amount","purchase_details_id",$purchase->purchase_detail_id);
+            $total_pay[] = $total_amount;
             /*foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$head->purchase_id' AND pd.purchase_details_id='$head->purchase_detail_id'") AS $c){*/
 
             $count_payment = $this->super_model->count_custom_where("payment_details", "purchase_details_id ='$purchase->purchase_detail_id'");
             if($count_payment>0){
+
             foreach($this->super_model->select_custom_where("payment_details", "purchase_details_id ='$purchase->purchase_detail_id'") AS $c){
-                    $total_pay[] = $c->total_amount;
+
+            //$total_pay[] = $c->total_amount;
+
             if($c->purchase_mode=='Vatable Purchase'){
                 $vatable_purchases=$c->purchase_amount;
                 $zero_rated='0.00';
@@ -176,6 +198,7 @@ class Reports extends CI_Controller {
             }
 
         } else {
+
             $data['purchases'][] = array( 
             'transaction_date'=>$purchase->transaction_date,
             'tin'=>$tin,
@@ -190,7 +213,13 @@ class Reports extends CI_Controller {
             'billing_to'=>$purchase->billing_to,
             'ewt'=>$purchase->ewt,
                 );
-            $data['total_balance'] = $total_am;
+            $total_p = array_sum($total_pay);
+            $data['total_paid'] = $total_p;
+            if ($count_payment!=0) {
+                 $data['total_balance'] = $total_am - $total_p;
+            } else {
+                $data['total_balance'] = $total_am;
+            }
 
         }
     }   
