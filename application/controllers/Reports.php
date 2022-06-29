@@ -252,8 +252,9 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
-            $total_amount[]=$s->ewt;
-            $data['total']=array_sum($total_amount);
+            //$total_amount[]=$s->ewt;
+            //$data['total']=array_sum($total_amount);
+            $data['total']=$this->super_model->select_sum_join("ewt","purchase_transaction_details","purchase_transaction_head","purchase_transaction_head.purchase_id='$s->purchase_id' AND $query","purchase_id");
             $data['purchase'][]=array(
                 'transaction_date'=>$s->transaction_date,
                 'tin'=>$tin,
@@ -278,10 +279,10 @@ class Reports extends CI_Controller {
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql='';
         if($participant!='null'){
-            $sql.= "settlement_id = '$participant' AND ";
+            $sql.= " settlement_id = '$participant' AND ";
         } 
         if($ref_no!='null'){
-            $sql.= "reference_no = '$ref_no' AND ";
+            $sql.= " reference_no = '$ref_no' AND ";
         }
 
         $query=substr($sql,0,-4);
@@ -296,7 +297,7 @@ class Reports extends CI_Controller {
             $billing_to=$this->super_model->select_column_where("sales_transaction_head","billing_to","reference_number",$s->reference_no);
             //$total_amount[]=$s->ewt;
             //$data['total']=array_sum($total_amount);
-            $data['total']=$this->super_model->select_sum_where("collection_details","ewt","collection_id='$s->collection_id' AND reference_no='$s->reference_no'");
+            $data['total']=$this->super_model->select_sum_where("collection_details","ewt","collection_id='$s->collection_id' AND $query");
             $data['sales'][]=array(
                 'transaction_date'=>$s->collection_date,
                 'tin'=>$tin,
