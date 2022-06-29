@@ -728,7 +728,7 @@ class Reports extends CI_Controller {
     public function ss_ledger()
     {
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
@@ -783,7 +783,7 @@ class Reports extends CI_Controller {
                 $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$ss->billing_id);
 
             $count_payment = $this->super_model->count_custom_where("payment_details", "purchase_details_id ='$ss->purchase_detail_id'");
-            
+
              if($count_payment>0){
             if($purchase_mode=='Vatable Purchase'){
                 $vatable_purchase=$purchase_amount;
