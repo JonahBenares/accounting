@@ -644,7 +644,7 @@ class Reports extends CI_Controller {
 /*        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
             $reference_number=$this->super_model->select_column_where("collection_details","reference_no",'settlement_id',$b->short_name);*/
         //foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id","short_name") AS $cs){
-        foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id","short_name") AS $cs){
+        foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id","sales_detail_id") AS $cs){
                 $vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
                 $zero_rated_sales = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
                 $zero_rated_ecozones = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
@@ -775,15 +775,18 @@ class Reports extends CI_Controller {
                 $vat_on_purchases = $this->super_model->select_sum_where("purchase_transaction_details","vat_on_purchases","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
                 $ewt_purchases = $this->super_model->select_sum_where("purchase_transaction_details","ewt","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
 
-                $purchase_mode=$this->super_model->select_sum_where("payment_details","purchase_mode","purchase_details_id='$ss->purchase_detail_id'");
-                $purchase_amount=$this->super_model->select_sum_where("payment_details","purchase_amount","purchase_details_id='$ss->purchase_detail_id'");
-                $vat=$this->super_model->select_sum_where("payment_details","vat","purchase_details_id='$ss->purchase_detail_id'");
-                $ewt=$this->super_model->select_sum_where("payment_details","ewt","purchase_details_id='$ss->purchase_detail_id'");
+                $purchase_mode=$this->super_model->select_column_where("payment_details","purchase_mode","purchase_details_id",$ss->purchase_detail_id);
+                $purchase_amount=$this->super_model->select_column_where("payment_details","purchase_amount","purchase_details_id",$ss->purchase_detail_id);
+                $vat=$this->super_model->select_column_where("payment_details","vat","purchase_details_id",$ss->purchase_detail_id);
+                $ewt=$this->super_model->select_column_where("payment_details","ewt","purchase_details_id",$ss->purchase_detail_id);
 
                 $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$ss->billing_id);
 
+            $count_payment = $this->super_model->count_custom_where("payment_details", "purchase_details_id ='$ss->purchase_detail_id'");
+
+             if($count_payment>0){
             if($purchase_mode=='Vatable Purchase'){
-                $vatablepurchases=$purchase_amount;
+                $vatable_purchase=$purchase_amount;
                 $zero_rated='0.00';
                 $rated_ecozones='0.00';
             }else if($purchase_mode=='Zero Rated Purchase'){
@@ -796,7 +799,8 @@ class Reports extends CI_Controller {
                 $rated_ecozones=$purchase_amount;
             }
 
-                $vatablebalance=$vatables_purchases - $vatablepurchases;
+
+                $vatablebalance=$vatables_purchases - $vatable_purchase;
                 $zerobalance=$zero_rated_purchases - $zero_rated;
                 $zeroecobalance=$zero_rated_ecozones - $rated_ecozones;
                 $vatbalance=$vat_on_purchases - $vat;
@@ -804,33 +808,38 @@ class Reports extends CI_Controller {
 
                 $total_vatable_purchases[]=$vatables_purchases;
                 $data['total_vatable_purchases']=array_sum($total_vatable_purchases);
-                $total_purchase_amount[]=$vatable_purchases;
+                $total_purchase_amount[]=$vatable_purchase;
                 $data['total_purchase_amount']=array_sum($total_purchase_amount);
                 $total_vatable_balance[]=$vatablebalance;
+                $data['total_vatable_balance']=array_sum($total_vatable_balance);
 
                 $total_zero_rated[]=$zero_rated_purchases;
                 $data['total_zero_rated']=array_sum($total_zero_rated);
                 $total_p_zero_rated[]=$zero_rated;
                 $data['total_p_zero_rated']=array_sum($total_p_zero_rated);
                 $total_zero_rated_balance[]=$zerobalance;
+                $data['total_zero_rated_balance']=array_sum($total_zero_rated_balance);
 
                 $total_zero_ecozones[]=$zero_rated_ecozones;
                 $data['total_zero_ecozones']=array_sum($total_zero_ecozones);
                 $total_p_zero_ecozones[]=$rated_ecozones;
                 $data['total_p_zero_ecozones']=array_sum($total_p_zero_ecozones);
                 $total_zero_ecozones_balance[]=$zeroecobalance;
+                $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones_balance);
 
                 $total_vat[]=$vat_on_purchases;
                 $data['total_vat']=array_sum($total_vat);
-                $total_p_vat[]=$c->vat;
+                $total_p_vat[]=$vat;
                 $data['total_p_vat']=array_sum($total_p_vat);
                 $total_vat_balance[]=$vatbalance;
+                $data['total_vat_balance']=array_sum($total_vat_balance);
 
                 $total_ewt[]=$ewt_purchases;
                 $data['total_ewt']=array_sum($total_ewt);
-                $total_p_ewt[]=$c->ewt;
+                $total_p_ewt[]=$ewt;
                 $data['total_p_ewt']=array_sum($total_p_ewt);
                 $total_ewt_balance[]=$ewtbalance;
+                $data['total_ewt_balance']=array_sum($total_ewt_balance);
 
                 $data['ssledger'][]=array(
                     "date"=>$ss->transaction_date,
@@ -838,7 +847,7 @@ class Reports extends CI_Controller {
                     "billing_from"=>$ss->billing_from,
                     "billing_to"=>$ss->billing_to,
                     "vatables_purchases"=>$vatables_purchases,
-                    "purchase_amount"=>$vatable_purchases,
+                    "purchase_amount"=>$vatable_purchase,
                     "zero_rated_purchases"=>$zero_rated_purchases,
                     "zero_rated"=>$zero_rated,
                     "zero_rated_ecozones"=>$zero_rated_ecozones,
@@ -847,13 +856,13 @@ class Reports extends CI_Controller {
                     "vat"=>$vat,
                     "ewt"=>$ewt_purchases,
                     "p_ewt"=>$ewt,
-                    "vatable_balance"=>$vatable_balance,
-                    "zerorated_balance"=>$zerorated_balance,
-                    "ratedecozones_balance"=>$ratedecozones_balance,
-                    "vat_balance"=>$vat_balance,
-                    "ewt_balance"=>$ewt_balance,
+                    "vatable_balance"=>$vatablebalance,
+                    "zerorated_balance"=>$zerobalance,
+                    "ratedecozones_balance"=>$zeroecobalance,
+                    "vat_balance"=>$vatbalance,
+                    "ewt_balance"=>$ewtbalance,
                 );
-
+                }
             }
 
         $data['total_vatable_balance']=array_sum($total_vatable_balance);
