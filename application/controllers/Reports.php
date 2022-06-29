@@ -88,7 +88,10 @@ class Reports extends CI_Controller {
                     );
                     $total_c = array_sum($total_col);
                     $data['total_collection'] = $total_c;
+                    if (!empty($total_c)){
                     $data['total_balance'] = $total_am - $total_c;
+                    }
+                    $data['total_balance'] = $total_am;
                 }
             }
         }
@@ -169,7 +172,26 @@ class Reports extends CI_Controller {
             $total_p = array_sum($total_pay);
             $data['total_paid'] = $total_p;
             $data['total_balance'] = (abs($total_am - $total_p));
+            
             }
+
+        } else {
+            $data['purchases'][] = array( 
+            'transaction_date'=>$purchase->transaction_date,
+            'tin'=>$tin,
+            'participant_name'=>$company_name,
+            'address'=>$registered_address,
+            'vatable_purchases'=>$purchase->vatables_purchases,
+            'zero_rated_purchases'=>$purchase->zero_rated_purchases,
+            'zero_rated_ecozones'=>$purchase->zero_rated_ecozones,
+            'wht_agent'=>$purchase->wht_agent,
+            'vat_on_purchases'=>$purchase->vat_on_purchases,
+            'billing_from'=>$purchase->billing_from,
+            'billing_to'=>$purchase->billing_to,
+            'ewt'=>$purchase->ewt,
+                );
+            $data['total_balance'] = $total_am;
+
         }
     }   
         $this->load->view('reports/purchases_summary',$data);
