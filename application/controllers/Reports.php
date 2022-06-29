@@ -558,6 +558,10 @@ class Reports extends CI_Controller {
 
     public function cs_ledger()
     {
+
+
+
+        
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
