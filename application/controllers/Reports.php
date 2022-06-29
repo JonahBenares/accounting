@@ -58,6 +58,7 @@ class Reports extends CI_Controller {
         $data['total_amount'] = $total_am;
         $data['total_collection']=0.00;
         $data['total_balance']=0.00;
+        $total_col=array();
         foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","short_name") AS $sales){
 
             $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'");
@@ -153,13 +154,14 @@ class Reports extends CI_Controller {
         $data['total_amount'] = $total_am;
         $data['total_paid']=0.00;
         $data['total_balance']=0.00;
+        $total_pay=array();
         $data['head']=array();
         foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $pur,"purchase_id","purchase_detail_id") AS $purchase){
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$purchase->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$purchase->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$purchase->billing_id);
-            $total_amount=$this->super_model->select_column_where("payment_details","total_amount","purchase_details_id",$purchase->purchase_detail_id);
-            $total_pay[] = $total_amount;
+            /*$total_amount=$this->super_model->select_column_where("payment_details","total_amount","purchase_details_id",$purchase->purchase_detail_id);
+            $total_pay[] = $total_amount;*/
             /*foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$head->purchase_id' AND pd.purchase_details_id='$head->purchase_detail_id'") AS $c){*/
 
             $count_payment = $this->super_model->count_custom_where("payment_details", "purchase_details_id ='$purchase->purchase_detail_id'");
@@ -167,7 +169,7 @@ class Reports extends CI_Controller {
 
             foreach($this->super_model->select_custom_where("payment_details", "purchase_details_id ='$purchase->purchase_detail_id'") AS $c){
 
-            //$total_pay[] = $c->total_amount;
+            $total_pay[] = $c->total_amount;
 
             if($c->purchase_mode=='Vatable Purchase'){
                 $vatable_purchases=$c->purchase_amount;
@@ -197,13 +199,11 @@ class Reports extends CI_Controller {
             'billing_to'=>$purchase->billing_to,
             'ewt'=>$c->ewt,
                 );
-            $total_p = array_sum($total_pay);
-            $data['total_paid'] = $total_p;
-            $data['total_balance'] = (abs($total_am - $total_p));
             
             }
 
         } else {
+            $total_pay[] = $purchase->total_amount;
 
             $data['purchases'][] = array( 
             'transaction_date'=>$purchase->transaction_date,
@@ -219,16 +219,12 @@ class Reports extends CI_Controller {
             'billing_to'=>$purchase->billing_to,
             'ewt'=>$purchase->ewt,
                 );
-            $total_p = array_sum($total_pay);
-            $data['total_paid'] = $total_p;
-            if ($count_payment!=0) {
-                 $data['total_balance'] = $total_am - $total_p;
-            } else {
-                $data['total_balance'] = $total_am;
-            }
 
         }
-    }   
+    }  
+        $total_p = array_sum($total_pay);
+        $data['total_paid'] = $total_p;
+        $data['total_balance'] = (abs($total_am - $total_p)); 
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
     }
