@@ -231,21 +231,18 @@ class Reports extends CI_Controller {
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_details WHERE reference_no!=''");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
-        $sql="";
-      /*  if($ref_no!='null' && $participant=='null'){
-           $sql.= " AND std.reference_no = '$ref_no' AND";
-        }else if($ref_no!='null' && $participant!='null'){
-            $sql.= " AND std.reference_no = '$ref_no' AND std.settlement_id = '$participant' AND";
-        }else if($ref_no=='null' && $participant!='null'){
-            $sql.= " AND std.settlement_id = '$participant' AND";
-        }else {
-            $sql.= "";
-        }*/
-        
-        $query=substr($sql,0,-3);
-        //echo $query;
+        $sql='';
+        if($participant!='null'){
+            $sql.= "settlement_id = '$participant' AND ";
+        } 
+        if($ref_no!='null'){
+            $sql.= "reference_no = '$ref_no' AND ";
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = " ewt!='0' AND ".$query;
         $data['total']=0;
-        foreach($this->super_model->custom_query("SELECT * FROM collection_head sth INNER JOIN collection_details std ON sth.collection_id=std.collection_id WHERE std.ewt!='0'") AS $s){
+        foreach($this->super_model->select_innerjoin_where("collection_details","collection_head", $qu,"collection_id","settlement_id") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$s->settlement_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","settlement_id",$s->settlement_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$s->settlement_id);
