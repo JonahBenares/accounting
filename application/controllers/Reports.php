@@ -65,14 +65,14 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sales->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$sales->billing_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sales->billing_id);
-            $amount=$this->super_model->select_column_where("collection_details","amount","settlement_id",$sales->short_name);
-            $total_col[] = $amount;
+            /*$amount=$this->super_model->select_column_where("collection_details","amount","settlement_id",$sales->short_name);
+            $total_col[] = $amount;*/
             if($count_collection>0){
 
 
                 foreach($this->super_model->select_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'") AS $col){
 
-                     //$total_col[] = $col->amount;
+                     $total_col[] = $col->amount;
 
 
                      $data['sales'][] = array( 
@@ -87,11 +87,13 @@ class Reports extends CI_Controller {
                         'billing_to'=>$sales->billing_to,
                         'ewt'=>$col->ewt,
                     );
-                    $total_c = array_sum($total_col);
-                    $data['total_collection'] = $total_c;
-                    $data['total_balance'] = $total_am - $total_c;
+                    //$total_c = array_sum($total_col);
+                    //$data['total_collection'] = $total_c;
+                    //$data['total_balance'] = $total_am - $total_c;
                 }
             } else {
+
+                $total_col[] = $sales->total_amount;
                      $data['sales'][] = array( 
                         'transaction_date'=>$sales->transaction_date,
                         'tin'=>$tin,
@@ -104,15 +106,19 @@ class Reports extends CI_Controller {
                         'billing_to'=>$sales->billing_to,
                         'ewt'=>$sales->ewt,
                     );
-                    $total_c = array_sum($total_col);
+                  /*  $total_c = array_sum($total_col);
                     $data['total_collection'] = $total_c;
                         if ($count_collection!=0) {
                     $data['total_balance'] = $total_am - $total_c;
                         } else {
                     $data['total_balance'] = $total_am;
-                    }
+                    }*/
             }
         }
+
+        $total_c = array_sum($total_col);
+        $data['total_collection'] = $total_c;
+        $data['total_balance'] = $total_am - $total_c;
 
         $this->load->view('reports/sales_summary',$data);
         $this->load->view('template/footer');
