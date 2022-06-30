@@ -56,7 +56,7 @@ class Reports extends CI_Controller {
             $sql.= "reference_number = '$ref_no' AND ";
         }
 
-        //echo $sql;
+        echo $sql;
      
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
@@ -85,6 +85,7 @@ class Reports extends CI_Controller {
 
 
                      $data['sales'][] = array( 
+                        'collection_details_id'=>$col->collection_details_id,
                         'transaction_date'=>$sales->transaction_date,
                         'tin'=>$tin,
                         'participant_name'=>$company_name,

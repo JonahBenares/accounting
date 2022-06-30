@@ -372,7 +372,7 @@ class super_model extends CI_Model
         $this->db->from($table1);
         $this->db->join($table2, $table1.'.'.$group_id .' = '.$table2.'.'.$group_id, 'inner');
         $this->db->where($where);
-        $this->db->group_by($group_by);
+        //$this->db->group_by($group_by);
         $query = $this->db->get();
         return $query->result();
     }

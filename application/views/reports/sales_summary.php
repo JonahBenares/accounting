@@ -1,3 +1,4 @@
+
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/report.js"></script>
 <div class="main-content">
@@ -102,6 +103,7 @@
                                 </thead>
                                 <tbody>
                                     <?php if(!empty($sales)){
+                                        $sales = array_map("unserialize", array_unique(array_map("serialize", $sales)));
                                         foreach($sales AS $s) {?>
                                     <tr>
                                         <td><?php echo $s['transaction_date']; ?></td>
