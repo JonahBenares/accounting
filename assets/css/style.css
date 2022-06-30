@@ -2344,3 +2344,6 @@ table tfoot {
 .sticky-back{
   background: #e8e0ff!important;
 }
+.select2-container--default{
+    width: 100%!important;
+}
