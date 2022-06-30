@@ -37,7 +37,9 @@ class Reports extends CI_Controller {
         $data['from'] = $from;
         $data['to'] = $to;
         $data['ref_no'] = $ref_no;
-        $data['part'] = $participant;
+        //$data['part'] = $participant;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
@@ -140,7 +142,8 @@ class Reports extends CI_Controller {
         $data['from'] = $from;
         $data['to'] = $to;
         $data['ref_no'] = $ref_no;
-        $data['part'] = $participant;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
         $this->load->view('template/header');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
@@ -242,7 +245,8 @@ class Reports extends CI_Controller {
         $ref_no=$this->uri->segment(3);
         $participant=$this->uri->segment(4);
         $data['ref_no'] = $ref_no;
-        $data['part'] = $participant;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
@@ -286,7 +290,8 @@ class Reports extends CI_Controller {
         $ref_no=$this->uri->segment(3);
         $participant=$this->uri->segment(4);
         $data['ref_no'] = $ref_no;
-        $data['part'] = $participant;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_details WHERE reference_no!=''");
@@ -642,7 +647,8 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
-        $data['part'] = $participant;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
         $data['date_from'] = $date_from;
         $data['date_to'] = $date_to;
         $sql='';
@@ -794,7 +800,8 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
-        $data['part'] = $participant;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
         $data['date_from'] = $date_from;
         $data['date_to'] = $date_to;
         $sql='';
