@@ -56,6 +56,7 @@ class Reports extends CI_Controller {
             $sql.= "reference_number = '$ref_no' AND ";
         }
 
+        //echo $sql;
      
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
@@ -64,9 +65,11 @@ class Reports extends CI_Controller {
         $data['total_collection']=0.00;
         $data['total_balance']=0.00;
         $total_col=array();
-        foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","short_name") AS $sales){
+        foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","reference_number") AS $sales){
 
             $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'");
+
+            //ECHO "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'";
            
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sales->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$sales->billing_id);
