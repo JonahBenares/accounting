@@ -222,9 +222,10 @@ class Reports extends CI_Controller {
             'billing_to'=>$purchase->billing_to,
             'ewt'=>$purchase->ewt,
                 );*/
+            }
 
         }
-    }  
+     
         $total_p = array_sum($total_pay);
         $data['total_paid'] = $total_p;
         $data['total_balance'] = (abs($total_am - $total_p)); 
@@ -691,6 +692,10 @@ class Reports extends CI_Controller {
                 $vat_on_sales = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
                 $ewt_sales = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
 
+            $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'");
+                
+            if($count_collection>0){
+
                 $amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
                 $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
                 $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
@@ -746,6 +751,7 @@ class Reports extends CI_Controller {
                     "cewt"=>$ewt,
                 );
             }
+        }
 
         $data['total_vatable_sales']=array_sum($total_vatable_sales);
         $data['total_amount']=array_sum($total_amount);
