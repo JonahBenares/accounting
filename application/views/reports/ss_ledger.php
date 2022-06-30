@@ -92,6 +92,7 @@
                                     <tbody>
                                         <?php 
                                             if(!empty($ssledger)){
+                                                $ssledger = array_map("unserialize", array_unique(array_map("serialize", $ssledger)));
                                             foreach($ssledger AS $b){ 
                                         ?>
                                         <tr>
