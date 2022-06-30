@@ -56,7 +56,7 @@ class Reports extends CI_Controller {
             $sql.= "reference_number = '$ref_no' AND ";
         }
 
-        echo $sql;
+        //echo $sql;
      
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
@@ -646,8 +646,8 @@ class Reports extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
@@ -659,7 +659,7 @@ class Reports extends CI_Controller {
         if($date_from!='null' && $date_to != 'null'){
             $sql.= "billing_from >= '$date_from' AND billing_to <= '$date_to' OR "; 
         } if($participant!='null'){
-            $sql.= "short_name = '$participant' AND ";
+            $sql.= "billing_id = '$participant' AND ";
         }
 
         $query=substr($sql,0,-4);
@@ -799,8 +799,8 @@ class Reports extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
@@ -812,7 +812,7 @@ class Reports extends CI_Controller {
         if($date_from!='null' && $date_to != 'null'){
             $sql.= "billing_from >= '$date_from' AND billing_to <= '$date_to' AND "; 
         } if($participant!='null'){
-            $sql.= "short_name = '$participant' AND ";
+            $sql.= "billing_id = '$participant' AND ";
         }
 
         $query=substr($sql,0,-4);
