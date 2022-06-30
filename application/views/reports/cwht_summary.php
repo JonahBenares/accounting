@@ -72,7 +72,7 @@
                                         <td><?php echo $sa['tin'];?></td>
                                         <td><?php echo $sa['participant_name'];?></td>
                                         <td><?php echo $sa['address'];?></td>
-                                        <td><?php echo date("F d,Y",strtotime($sa['billing_from']))." - ".date("F d,Y",strtotime($sa['billing_to']));?></td>
+                                        <td><?php echo ($sa['billing_from']!='' && $sa['billing_to']!='') ? date("F d,Y",strtotime($sa['billing_from']))." - ".date("F d,Y",strtotime($sa['billing_to'])) : '';?></td>
                                         <td align="center"><?php echo number_format($sa['ewt'],2);?></td>
                                     </tr>
                                     <?php } } ?>

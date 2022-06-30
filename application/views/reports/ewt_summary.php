@@ -33,7 +33,7 @@
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->billing_id." - ".$p->participant_name;?></option>
+                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -72,7 +72,7 @@
                                         <td><?php echo $pu['tin'];?></td>
                                         <td><?php echo $pu['participant_name'];?></td>
                                         <td><?php echo $pu['address'];?></td>
-                                        <td><?php echo date("F d,Y",strtotime($pu['billing_from']))." - ".date("F d,Y",strtotime($pu['billing_to']));?></td>
+                                        <td><?php echo ($pu['billing_from']!='' && $pu['billing_to']!='') ? date("F d,Y",strtotime($pu['billing_from']))." - ".date("F d,Y",strtotime($pu['billing_to'])) : '';?></td>
                                         <td align="center"><?php echo number_format($pu['ewt'],2);?></td>
                                     </tr>
                                     <?php } } ?>
