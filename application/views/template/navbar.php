@@ -111,7 +111,7 @@
             </a>
         </li> -->
         <li class="dropdown dropdown-list-toggle">
-            <a data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg" style="color: #000">
+            <a data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg" style="color: #000;text-transform: capitalize;">
                 <?php echo $_SESSION['fullname'];?>
             </a>
         </li>
