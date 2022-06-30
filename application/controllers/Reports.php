@@ -241,6 +241,8 @@ class Reports extends CI_Controller {
     public function ewt_summary(){
         $ref_no=$this->uri->segment(3);
         $participant=$this->uri->segment(4);
+        $data['ref_no'] = $ref_no;
+        $data['part'] = $participant;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
@@ -283,6 +285,8 @@ class Reports extends CI_Controller {
     public function cwht_summary(){
         $ref_no=$this->uri->segment(3);
         $participant=$this->uri->segment(4);
+        $data['ref_no'] = $ref_no;
+        $data['part'] = $participant;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_details WHERE reference_no!=''");
@@ -840,7 +844,7 @@ class Reports extends CI_Controller {
         $total_ewt_balance=array();
         /*foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE saved='1' $query") AS $b){
                 foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){*/
-       foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $ss_qu,"purchase_id","purchase_detail_id") AS $ss){
+       foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $ss_qu,"purchase_id","short_name") AS $ss){
                 $vatables_purchases = $this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
                 $zero_rated_purchases = $this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
                 $zero_rated_ecozones = $this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");

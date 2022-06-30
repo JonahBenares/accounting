@@ -48,9 +48,9 @@
                                 <tr>
                                     <td width="3%"></td>
                                     <td width="13%"><b>Reference Number:</b></td>
-                                    <td width="33%"></td>
+                                    <td width="33%"><?php echo $ref_no ?></td>
                                     <td width="13%"><b>Participant Name:</b></td>
-                                    <td width="33%"></td>
+                                    <td width="33%"><?php echo $part ?></td>
                                     <td width="3%"></td>
                                 </tr>
                             </table>
