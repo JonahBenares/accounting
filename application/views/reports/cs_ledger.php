@@ -25,7 +25,7 @@
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->billing_id." - ".$p->participant_name;?></option>
+                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -92,6 +92,7 @@
                                     <tbody>
                                         <?php 
                                             if(!empty($csledger)){
+                                                $csledger = array_map("unserialize", array_unique(array_map("serialize", $csledger)));
                                             foreach($csledger AS $b){ 
                                         ?>
                                         <tr>
