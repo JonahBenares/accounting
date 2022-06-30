@@ -56,17 +56,17 @@
                                 <tr>
                                     <td width="3%"></td>
                                     <td width="13%"><b>Date From:</b></td>
-                                    <td width="25%"></td>
+                                    <td width="25%"><?php echo $from ?></td>
                                     <td width="13%"><b>Reference Number:</b></td>
-                                    <td width="41%"></td>
+                                    <td width="41%"><?php echo $ref_no ?></td>
                                     <td width="3%"></td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td><b>Date To:</b></td>
-                                    <td></td>
+                                    <td><?php echo $to ?></td>
                                     <td><b>Participant Name:</b></td>
-                                    <td></td>
+                                    <td><?php echo $part ?></td>
                                     <td></td>
                                 </tr>
                             </table>

@@ -34,8 +34,10 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(4);
         $from=$this->uri->segment(5);
         $to=$this->uri->segment(6);
+        $data['from'] = $from;
+        $data['to'] = $to;
         $data['ref_no'] = $ref_no;
-        $data['participant'] = $participant;
+        $data['part'] = $participant;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
@@ -135,8 +137,10 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(4);
         $from=$this->uri->segment(5);
         $to=$this->uri->segment(6);
+        $data['from'] = $from;
+        $data['to'] = $to;
         $data['ref_no'] = $ref_no;
-        $data['participant'] = $participant;
+        $data['part'] = $participant;
         $this->load->view('template/header');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
