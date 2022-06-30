@@ -657,7 +657,7 @@ class Reports extends CI_Controller {
         $data['date_to'] = $date_to;
         $sql='';
         if($date_from!='null' && $date_to != 'null'){
-            $sql.= "billing_from >= '$date_from' AND billing_to <= '$date_to' OR "; 
+            $sql.= "billing_from >= '$date_from' AND billing_to <= '$date_to' AND "; 
         } if($participant!='null'){
             $sql.= "billing_id = '$participant' AND ";
         }
