@@ -646,8 +646,8 @@ class Reports extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
@@ -799,8 +799,8 @@ class Reports extends CI_Controller {
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
