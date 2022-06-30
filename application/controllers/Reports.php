@@ -49,7 +49,7 @@ class Reports extends CI_Controller {
 
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from = '$from' AND billing_to = '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($ref_no!='null'){
