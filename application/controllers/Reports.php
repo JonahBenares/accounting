@@ -62,15 +62,19 @@ class Reports extends CI_Controller {
         $qu = "saved = '1' AND ".$query;
         $total_am = $this->super_model->select_sum_join("total_amount","sales_transaction_details","sales_transaction_head", $qu,"sales_id");
         $data['total_amount'] = $total_am;
-        $data['total_collection']=0.00;
-        $data['total_balance']=0.00;
+        $data['total_collection']=0;
+        $data['total_balance']=0;
         $total_col=array();
-        $ref_no=array();
+        $ref_no =array();
 
+     /*   echo "SELECT DISTINCT(reference_number) as refno FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu GROUP BY reference_number";
+        foreach($this->super_model->custom_query("SELECT DISTINCT(reference_number) as refno FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu GROUP BY reference_number") AS $sl){
+            
+        }*/
 
         foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","reference_number") AS $sales){
 
-            
+            $ref_no[] = $sales->reference_number;
             $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'");
 
             /*ECHO "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'";*/
@@ -86,7 +90,7 @@ class Reports extends CI_Controller {
                 foreach($this->super_model->select_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'") AS $col){
 
                     //if($col->reference_no==$sales->reference_number && $col->settlement_id ==$sales->short_name ){
-                     $total_col[] = $col->amount;
+                     //$total_col[] = $col->amount;
                      //echo $col->collection_details_id . "<br>"
    
                      $data['sales'][] = array( 
@@ -109,13 +113,23 @@ class Reports extends CI_Controller {
                 }
 
         } 
-        $ref_no=array_unique($ref_no);
-        print_r($ref_no);
+        
+      
            //$data['sales']= array_map("unserialize", array_unique(array_map("serialize", $sales)));
     }
 
-        $total_c = array_sum($total_col);
+        $ref_no = array_unique($ref_no);
+        $sq = " ";
+        foreach($ref_no AS $rn){
+            $sq .= " reference_no = '". $rn . "' OR ";
+        }
+
+        $sq = substr($sq, 0, -3);
+
+        $total_c = $this->super_model->select_sum_where("collection_details", "amount", $sq);
         $data['total_collection'] = $total_c;
+       /* $total_c = array_sum($total_col);*/
+       // $data['total_collection'] = $total_c;
         $data['total_balance'] = $total_am - $total_c;
 
         $this->load->view('reports/sales_summary',$data);
