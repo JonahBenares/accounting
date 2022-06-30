@@ -80,7 +80,7 @@
                                     <td class="p-t-10 p-b-10" width="10%">Total Amount</td>
                                     <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_amount!=0) ? number_format($total_amount,2) : '0.00'; ?></b></td>
                                     <td class="p-t-10 p-b-10" width="10%">Total Collected</td>
-                                    <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_collection!=0) ? number_format($total_collection,2) : '0.00'; ?></b></td>
+                                    <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_collection!=0) ? number_format($total_collection/2,2) : '0.00'; ?></b></td>
                                     <td class="p-t-10 p-b-10" width="10%">Balance</td>
                                     <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_balance!=0) ? number_format($total_balance,2) : '0.00'; ?></b></td> 
                                 </tr>

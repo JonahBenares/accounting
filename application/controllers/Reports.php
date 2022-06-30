@@ -46,7 +46,7 @@ class Reports extends CI_Controller {
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql="";
-
+       /* $sales=array();*/
 
         if($from!='null' && $to != 'null'){
             $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
@@ -56,7 +56,7 @@ class Reports extends CI_Controller {
             $sql.= "reference_number = '$ref_no' AND ";
         }
 
-        echo $sql;
+        //echo $sql;
      
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
@@ -65,11 +65,15 @@ class Reports extends CI_Controller {
         $data['total_collection']=0.00;
         $data['total_balance']=0.00;
         $total_col=array();
+        $ref_no=array();
+
+
         foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","reference_number") AS $sales){
 
+            
             $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'");
 
-            //ECHO "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'";
+            /*ECHO "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'";*/
            
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sales->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$sales->billing_id);
@@ -78,53 +82,36 @@ class Reports extends CI_Controller {
             $total_col[] = $amount;*/
             if($count_collection>0){
 
-
+         
                 foreach($this->super_model->select_custom_where("collection_details", "reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'") AS $col){
 
+                    //if($col->reference_no==$sales->reference_number && $col->settlement_id ==$sales->short_name ){
                      $total_col[] = $col->amount;
-
-
+                     //echo $col->collection_details_id . "<br>"
+   
                      $data['sales'][] = array( 
-                        'collection_details_id'=>$col->collection_details_id,
+                        //'collection_details_id'=>$col->collection_details_id,
                         'transaction_date'=>$sales->transaction_date,
                         'tin'=>$tin,
                         'participant_name'=>$company_name,
                         'address'=>$registered_address,
-                        'vatable_sales'=>$col->amount,
+                        'vatable_sales'=>$this->super_model->select_column_custom_where("collection_details","amount","reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'"),
                         'zero_rated_sales'=>$col->zero_rated,
                         'vat_on_sales'=>$col->vat,
                         'billing_from'=>$sales->billing_from,
                         'billing_to'=>$sales->billing_to,
                         'ewt'=>$col->ewt,
                     );
+                 //}
                     //$total_c = array_sum($total_col);
                     //$data['total_collection'] = $total_c;
                     //$data['total_balance'] = $total_am - $total_c;
                 }
-/*            } else {
 
-                $total_col[] = $sales->total_amount;
-                     $data['sales'][] = array( 
-                        'transaction_date'=>$sales->transaction_date,
-                        'tin'=>$tin,
-                        'participant_name'=>$company_name,
-                        'address'=>$registered_address,
-                        'vatable_sales'=>$sales->vatable_sales,
-                        'zero_rated_sales'=>$sales->zero_rated_sales,
-                        'vat_on_sales'=>$sales->vat_on_sales,
-                        'billing_from'=>$sales->billing_from,
-                        'billing_to'=>$sales->billing_to,
-                        'ewt'=>$sales->ewt,
-                    );
-                   $total_c = array_sum($total_col);
-                    $data['total_collection'] = $total_c;
-                        if ($count_collection!=0) {
-                    $data['total_balance'] = $total_am - $total_c;
-                        } else {
-                    $data['total_balance'] = $total_am;
-                    }
-            }*/
-        }
+        } 
+        $ref_no=array_unique($ref_no);
+        print_r($ref_no);
+           //$data['sales']= array_map("unserialize", array_unique(array_map("serialize", $sales)));
     }
 
         $total_c = array_sum($total_col);
