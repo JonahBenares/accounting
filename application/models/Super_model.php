@@ -377,6 +377,17 @@ class super_model extends CI_Model
         return $query->result();
     }
 
+        public function select_inner_join_where($table1,$table2, $where,$group_id,$group_by)
+    {
+        $this->db->select('*');
+        $this->db->from($table1);
+        $this->db->join($table2, $table1.'.'.$group_id .' = '.$table2.'.'.$group_id, 'inner');
+        $this->db->where($where);
+        $this->db->group_by($group_by);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     /*public function login_user($username, $password){
         $this->db->select('*');
         $this->db->from('users');
