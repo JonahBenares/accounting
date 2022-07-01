@@ -1,6 +1,7 @@
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <script>
     function goBack() {
+      window.close();
       window.history.back();
     }
 </script>
