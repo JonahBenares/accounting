@@ -1013,8 +1013,6 @@ class Sales extends CI_Controller {
         $error_ext=0;
         if(!empty($_FILES['doc']['name'])){
 
-
-
             
 
             $exc= basename($_FILES['doc']['name']);
