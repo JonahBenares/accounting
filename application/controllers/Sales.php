@@ -1036,8 +1036,6 @@ class Sales extends CI_Controller {
 
     public function readBulkCollection($coldate){
 
-
-
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
 
