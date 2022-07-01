@@ -25,7 +25,7 @@
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->billing_id." - ".$p->participant_name;?></option>
+                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -59,7 +59,7 @@
                             </table>
                             <br>
                             <div style="overflow-x:scroll; min-height: 500px; height:550px">
-                                <table class="table table-bordered table-hover mb-0" style="width:170%;font-size: 13px;">
+                                <table class="table table-bordered table-hover mb-0" style="width:200%;font-size: 13px;">
                                     <thead class="header">
                                         <tr>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-1" rowspan="2" align="center">Date</td>
@@ -92,6 +92,7 @@
                                     <tbody>
                                         <?php 
                                             if(!empty($csledger)){
+                                                $csledger = array_map("unserialize", array_unique(array_map("serialize", $csledger)));
                                             foreach($csledger AS $b){ 
                                         ?>
                                         <tr>

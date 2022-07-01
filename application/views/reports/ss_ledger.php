@@ -25,7 +25,7 @@
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->billing_id." - ".$p->participant_name;?></option>
+                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -73,25 +73,26 @@
                                         </tr>
                                         <tr>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
                                             if(!empty($ssledger)){
+                                                $ssledger = array_map("unserialize", array_unique(array_map("serialize", $ssledger)));
                                             foreach($ssledger AS $b){ 
                                         ?>
                                         <tr>

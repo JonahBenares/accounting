@@ -43,17 +43,27 @@
                                     </table>
                                 </div>
                             </div>
-                            
-                            <hr class="m-bs-0">
-                            <table class="table-borsdered" width="100%">
+                            <br>
+                            <table class="table-bordsered" width="100%">
                                 <tr>
-                                    <td width="40%"></td>
-                                    <td width="5%">Total</td>
-                                    <td width="10%" class="font-blue">:&nbsp;<b><?php echo ($total!=0)? number_format($total,2) : '0.00'; ?></b></td>
-                                    <td width="45%"></td>
+                                    <td width="3%"></td>
+                                    <td width="13%"><b>Reference Number:</b></td>
+                                    <td width="33%"><?php echo $ref_no ?></td>
+                                    <td width="13%"><b>Participant Name:</b></td>
+                                    <td width="33%"><?php echo $part ?></td>
+                                    <td width="3%"></td>
                                 </tr>
                             </table>
-                            <hr>
+                            <hr class="m-b-0">
+                            <table class="table-borsdered" width="100%" style="background-color:#fffaf4">
+                                <tr>
+                                    <td class="p-t-10 p-b-10" width="40%"></td>
+                                    <td class="p-t-10 p-b-10" width="5%">Total</td>
+                                    <td class="p-t-10 p-b-10 font-blue" width="10%">:&nbsp;<b><?php echo ($total!=0)? number_format($total,2) : '0.00'; ?></b></td>
+                                    <td class="p-t-10 p-b-10" width="45%"></td>
+                                </tr>
+                            </table>
+                            <hr class="m-t-0">
                             <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
                                 <thead>
                                     <tr>

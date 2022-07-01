@@ -487,7 +487,7 @@ class Sales extends CI_Controller {
         $data['sum_ewt'] =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['defint'] =  $this->super_model->select_column_custom_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['defint'] =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         //$data['ref_no'] = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
         $this->load->view('template/print_head');
@@ -1013,8 +1013,6 @@ class Sales extends CI_Controller {
         $error_ext=0;
         if(!empty($_FILES['doc']['name'])){
 
-
-
             
 
             $exc= basename($_FILES['doc']['name']);
@@ -1037,8 +1035,6 @@ class Sales extends CI_Controller {
     }
 
     public function readBulkCollection($coldate){
-
-
 
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();

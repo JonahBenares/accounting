@@ -9,7 +9,7 @@
     <center>
         <button onclick="goBack()" class="btn btn-warning ">Back</button>
         <button href="#" class="btn btn-success " onclick="window.print()">Print</button>
-        <a href='<?php echo base_url(); ?>sales/print_invoice/<?php echo $sales_detail_id ?>' class="btn btn-primary button">Invoice</a> 
+        <a href='<?php echo base_url(); ?>sales/print_invoice/<?php echo $sales_detail_id ?>' class="btn btn-primary button" target="_blank">Invoice</a> 
         <!-- <button class="btn btn-danger btn-fill"onclick="printDiv('printableArea')" style="margin-bottom:5px;width:80px;"></span> Print</button><br> -->
         <br>
         <br>

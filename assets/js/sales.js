@@ -258,9 +258,10 @@ function saveBS(){
 			success: function(output){
 				if(serial_no!=''){
 					countPrint(loc,sales_detail_id);
-					window.opener.location.reload();
-					opener.open(loc+'sales/print_BS/'+output, '_blank');
+					/*window.opener.location.reload();
+					opener.open(loc+'sales/print_BS/'+output, '_blank');*/
 				    //window.opener.location=loc+'sales/print_BS/'+output;
+				    window.open(loc+'sales/print_BS/'+output,'_blank');
 				    window.close();
 				}else{
 					alert("Please encode serial number!");

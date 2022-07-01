@@ -1,3 +1,4 @@
+
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/report.js"></script>
 <div class="main-content">
@@ -18,7 +19,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-10 offset-lg-1">
+                                <div class="col-lg-12">
                                     <table width="100%">
                                         <tr>
                                             <td width="15%">
@@ -40,31 +41,52 @@
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->billing_id." - ".$p->participant_name;?></option>
+                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->settlement_id." - ".$p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
                                             <td width="1%">
-                                                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                                                    <input type='button' class="btn btn-primary"  onclick="filter_sales()" value="Filter"></td>
-                                            <td width="5%"></td>
+                                                <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
+                                                <input type='button' class="btn btn-primary"  onclick="filter_sales()" value="Filter">
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
-                            <hr class="m-bs-0">
-                            <table class="table-borsdered" width="100%">
+                            <br>
+                            <table class="table-bordsered" width="100%">
                                 <tr>
-                                    <td width="10%"></td>
-                                    <td width="10%">Total Amount</td>
-                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_amount!=0) ? number_format($total_amount,2) : '0.00'; ?></b></td>
-                                     <td width="10%">Total Collected</td>
-                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_collection!=0) ? number_format($total_collection,2) : '0.00'; ?></b></td>
-                                    <td width="10%">Balance</td>
-                                    <td class="font-blue">:&nbsp;<b><?php echo ($total_balance!=0) ? number_format($total_balance,2) : '0.00'; ?></b></td> 
+                                    <td width="3%"></td>
+                                    <td width="13%"><b>Date From:</b></td>
+                                    <td width="25%"><?php echo $from ?></td>
+                                    <td width="13%"><b>Reference Number:</b></td>
+                                    <td width="41%"><?php echo $ref_no ?></td>
+                                    <td width="3%"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>Date To:</b></td>
+                                    <td><?php echo $to ?></td>
+                                    <td><b>Participant Name:</b></td>
+                                    <td><?php echo $part ?></td>
+                                    <td></td>
                                 </tr>
                             </table>
-                            <hr>
+                            
+                            <hr class="m-b-0">
+                            <table class="table-borsdered" width="100%" style="background-color:#fffaf4">
+                                <tr>
+                                    <td class="p-t-10 p-b-10" width="10%"></td>
+                                    <td class="p-t-10 p-b-10" width="10%">Total Amount</td>
+                                    <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_amount!=0) ? number_format($total_amount,2) : '0.00'; ?></b></td>
+                                    <td class="p-t-10 p-b-10" width="10%">Total Collected</td>
+                                    <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_collection!=0) ? number_format($total_collection,2) : '0.00'; ?></b></td>
+                                    <td class="p-t-10 p-b-10" width="10%">Balance</td>
+                                    <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_balance!=0) ? number_format($total_balance,2) : '0.00'; ?></b></td> 
+                                </tr>
+                            </table>
+                            <hr class="m-t-0">
+                            
                             <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
                                 <thead>
                                     <tr>
@@ -81,6 +103,7 @@
                                 </thead>
                                 <tbody>
                                     <?php if(!empty($sales)){
+                                        $sales = array_map("unserialize", array_unique(array_map("serialize", $sales)));
                                         foreach($sales AS $s) {?>
                                     <tr>
                                         <td><?php echo $s['transaction_date']; ?></td>
