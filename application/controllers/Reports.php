@@ -331,6 +331,8 @@ class Reports extends CI_Controller {
             $sql.= "reference_number = '$ref_no' AND ";
         }
 
+        
+
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
         $data['bill']=array();
