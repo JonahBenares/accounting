@@ -65,7 +65,7 @@
                                             <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-1" rowspan="2" align="center">Date</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-2" rowspan="2" align="center">Participant Name</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-3" rowspan="2" align="center">Description</td> 
-                                            <td class="td-30 td-head" colspan="3" align="center">Vatable Sales</td> 
+                                            <td class="td-30 td-head" colspan="3" align="center">Vatable Purchases</td> 
                                             <td class="td-30 td-head" colspan="3" align="center">Zero Rated Purchases</td>    
                                             <td class="td-30 td-head" colspan="3" align="center">Zero Rated Ecozones</td>    
                                             <td class="td-30 td-head" colspan="3" align="center">Input Vat</td>
