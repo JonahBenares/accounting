@@ -546,6 +546,9 @@ class Reports extends CI_Controller {
         $data['total_ewt']=0;
         $data['total_p_ewt']=0;
         $data['total_ewt_balance']=0;
+        $total_p_vat=array();
+        $vat_balance=array();
+        $total_p_ewt_sum =array();
         $total_ewt_balance=array();
         /*foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE saved='1' $query") AS $b){*/
         foreach($this->super_model->select_inner_join_where("purchase_transaction_details","purchase_transaction_head", $purchases,"purchase_id","purchase_detail_id") AS $b){
@@ -570,6 +573,7 @@ class Reports extends CI_Controller {
                 $zerorated_balance=$b->zero_rated_purchases - $zero_rated;
                 $ratedecozones_balance=$b->zero_rated_ecozones - $rated_ecozones;
                 $vat_balance=$b->vat_on_purchases - $c->vat;
+                $total_vat_balance[] = $vat_balance;
                 $ewt_balance=$b->ewt - $c->ewt;
                 $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$b->billing_id);
 
@@ -641,7 +645,7 @@ class Reports extends CI_Controller {
         $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones_balance);
 
         $data['total_p_vat']=array_sum($total_p_vat);
-        $data['total_vat_balance']=array_sum($vat_balance);
+        $data['total_vat_balance']=array_sum($total_vat_balance);
         
         $data['total_p_ewt']=array_sum($total_p_ewt_sum);
 
@@ -903,11 +907,11 @@ class Reports extends CI_Controller {
                 $zero_rated='0.00';
                 $rated_ecozones='0.00';
             }else if($purchase_mode=='Zero Rated Purchase'){
-                $vatable_purchases='0.00';
+                $vatable_purchase='0.00';
                 $zero_rated=$purchase_amount;
                 $rated_ecozones='0.00';
             }else if($purchase_mode=='Zero Rated Ecozones'){
-                $vatable_purchases='0.00';
+                $vatable_purchase='0.00';
                 $zero_rated='0.00';
                 $rated_ecozones=$purchase_amount;
             }
