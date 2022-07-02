@@ -614,14 +614,18 @@ class Reports extends CI_Controller {
                 
                 $total_vat= $this->super_model->select_sum_where("purchase_transaction_details","vat_on_purchases","purchase_id='$b->purchase_id'");
                 $data['total_vat']=$total_vat;
-                $total_p_vat= $this->super_model->select_sum_where("payment_details","vat","purchase_details_id ='$b->purchase_detail_id'");
-                $data['total_p_vat']=$total_p_vat;
-                $total_vat_balance[]=$vat_balance;
+                $total_b_vat[] = $total_vat;
+                $total_p_vat[]= $this->super_model->select_sum_where("payment_details","vat","purchase_details_id ='$b->purchase_detail_id'");
+               
+            
+                
+               // $total_vat_balance[]=$vat_balance;
                 
                 $total_ewt= $this->super_model->select_sum_where("purchase_transaction_details","ewt","purchase_id='$b->purchase_id'");
                 $data['total_ewt']=$total_ewt;
-                $total_p_ewt= $this->super_model->select_sum_where("payment_details","vat","purchase_details_id ='$b->purchase_detail_id'");
-                $data['total_p_ewt']=$total_p_ewt;
+                $total_p_ewt= $this->super_model->select_sum_where("payment_details","ewt","purchase_details_id ='$b->purchase_detail_id'");
+                //$data['total_p_ewt']=$total_p_ewt;
+                $total_p_ewt_sum[] = $total_p_ewt;
                 $total_ewt_balance[]=$ewt_balance;
                 
                 }
@@ -636,7 +640,10 @@ class Reports extends CI_Controller {
         $data['total_p_zero_ecozones']=array_sum($total_p_zero_ecozones);
         $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones_balance);
 
-        $data['total_vat_balance']=array_sum($total_vat_balance);
+        $data['total_p_vat']=array_sum($total_p_vat);
+        $data['total_vat_balance']=array_sum($vat_balance);
+        
+        $data['total_p_ewt']=array_sum($total_p_ewt_sum);
 
         $data['total_ewt_balance']=array_sum($total_ewt_balance);
 
