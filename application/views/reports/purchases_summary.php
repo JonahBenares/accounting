@@ -71,7 +71,7 @@
                                 </tr>
                             </table>
                             <hr class="m-b-0">
-                            <table class="table-borsdered" width="100%" style="background-color:#fffaf4">
+                            <!-- <table class="table-borsdered" width="100%" style="background-color:#fffaf4">
                                 <tr>
                                     <td class="p-t-10 p-b-10" width="10%"></td>
                                     <td class="p-t-10 p-b-10" width="10%">Total Amount</td>
@@ -82,7 +82,7 @@
                                     <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_balance!=0)? number_format($total_balance,2) : '0.00'; ?></b></td>
                                 </tr>
                             </table>
-                            <hr class="m-t-0">
+                            <hr class="m-t-0"> -->
                             <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
                                 <thead>
                                     <tr>
