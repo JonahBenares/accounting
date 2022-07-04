@@ -18,7 +18,8 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
-                    <input type="hidden" id="ref_no" name="ref_no" value="<?php echo $ref_no; ?>">
+                    <input type="hidden" id="saved" name="saved" value="<?php echo $ref_no; ?>">
+                    <input type="hidden" id="ref_no" name="ref_no">
                     <input type="hidden" id="old_series_no" name="old_series_no" class="form-control">
                     <input type="hidden" id="collection_id" name="collection_id" class="form-control">
                     <input type="hidden" id="settlement_id" name="settlement_id" class="form-control">
@@ -167,7 +168,7 @@
                                                     <div class="btn-group">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white"><span class="fas fa-print"></span></a>
                                                     
-                                                        <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $log['series_number']; ?>" data-id='<?php echo $log['collection_id']; ?>' data-settlement='<?php echo $log['settlement_id_single'];?>'>
+                                                        <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $log['series_number']; ?>" data-id='<?php echo $log['collection_id']; ?>' data-settlement='<?php echo $log['settlement_id_single'];?>' data-reference='<?php echo $log['reference_no_single'];?>'>
                                                             <span class="m-0 fas fa-edit"></span>
                                                         </button>
                                                     </div>

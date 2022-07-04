@@ -383,11 +383,13 @@ class Sales extends CI_Controller {
     }
 
     public function update_seriesno(){
+        $saved=$this->input->post('saved');
         $ref_no=$this->input->post('ref_no');
         $collection_id=$this->input->post('collection_id');
         $new_series=$this->input->post('series_number');
         $old_series=$this->input->post('old_series_no');
         $settlement_id=$this->input->post('settlement_id');
+        $saved_exp=explode("-", $saved);
         foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
             $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
             if($count==0){
@@ -403,7 +405,11 @@ class Sales extends CI_Controller {
         );
 
         $this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
-        echo $ref_no;
+        if($saved_exp[0]=='saved'){
+            echo $saved;
+        }else{
+            echo $ref_no;
+        }
     }
 
     public function save_collection(){
