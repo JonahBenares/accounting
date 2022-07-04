@@ -281,10 +281,12 @@ $(document).on("click", "#seriesupdate", function () {
 	 var collection_id = $(this).attr("data-id");
 	 var series_number = $(this).attr("data-name");
 	 var settlement_id = $(this).attr("data-settlement");
+	 var reference_number = $(this).attr("data-reference");
 	 $("#collection_id").val(collection_id);
 	 $("#series_number").val(series_number);
 	 $("#old_series_no").val(series_number);
 	 $("#settlement_id").val(settlement_id);
+	 $("#ref_no").val(reference_number);
 
 });
 
