@@ -604,6 +604,7 @@ class Purchases extends CI_Controller {
        
        $purchase_id=$this->input->post('purchase_id');
         $purchase_detail_id=$this->input->post('purchase_detail_id');
+        $short_name = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id",$purchase_detail_id);
         $payment_date=$this->input->post('payment_date');
         $particulars=$this->input->post('particulars');
         $purchase_mode=$this->input->post('purchase_mode');
@@ -641,6 +642,7 @@ class Purchases extends CI_Controller {
         $data_details = array(
             'payment_id'=>$payment_id,
             'purchase_details_id'=>$purchase_detail_id,
+            'short_name'=>$short_name,
             'purchase_mode'=>$purchase_mode,
             'purchase_amount'=>$purchase_amount,
             'vat'=>$vat,
@@ -718,6 +720,7 @@ class Purchases extends CI_Controller {
             $data_details = array(
                 'payment_id'=>$payment_id,
                 'purchase_details_id'=>$det->purchase_detail_id,
+                'short_name'=>$det->short_name,
                 'purchase_mode'=>$mode,
                 'purchase_amount'=>$amount,
                 'vat'=>$det->vat_on_purchases,
