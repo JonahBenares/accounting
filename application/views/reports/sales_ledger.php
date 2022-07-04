@@ -70,7 +70,7 @@
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Vatable Sales</td> 
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Zero-Rated Sales</td>    
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Zero-Rated Ecozone</td>    
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Output Vat</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">VAT</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">EWT</td>
                                         </tr>
                                         <tr>

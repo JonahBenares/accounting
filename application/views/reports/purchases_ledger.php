@@ -68,7 +68,7 @@
                                             <td class="td-30 td-head" colspan="3" align="center">Vatable Purchases</td> 
                                             <td class="td-30 td-head" colspan="3" align="center">Zero Rated Purchases</td>    
                                             <td class="td-30 td-head" colspan="3" align="center">Zero Rated Ecozones</td>    
-                                            <td class="td-30 td-head" colspan="3" align="center">Input Vat</td>
+                                            <td class="td-30 td-head" colspan="3" align="center">VAT</td>
                                             <td class="td-30 td-head" colspan="3" align="center">EWT</td>
                                         </tr>
                                         <tr>
