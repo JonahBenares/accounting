@@ -120,7 +120,7 @@
                                                     </button>
                                                 </td>
                                                 <td><center><?php echo $s['item_no'];?></center></td>
-                                                <td><?php echo $s['serial_no'];?></td>
+                                                <td width="7%"><a href="" data-toggle="modal" data-target="#olSeries" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
                                                 <td width="7%"><a href="" data-toggle="modal" data-target="#oldOR" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
                                                 <td><?php echo $s['short_name'];?></td>
                                                 <td><?php echo $s['billing_id'];?></td>
@@ -214,4 +214,34 @@
         </div>
     </div>
 </div>                             
-         
+<div class="modal fade" id="olSeries" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="line-height: 1">
+                    <small style="font-size: 10px;">Current Series</small>
+                    <br>1231-1001
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table width="100%" class="table-bordered">
+                    <tr>
+                        <td>12312-1003</td>
+                    </tr>
+                    <tr>
+                        <td>123123-1004</td>
+                    </tr>
+                    <tr>
+                        <td>123123-1005</td>
+                    </tr>
+                    <tr>
+                        <td>231123-1006</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>                             
