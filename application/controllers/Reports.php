@@ -296,25 +296,45 @@ class Reports extends CI_Controller {
         $ref_no=$this->uri->segment(3);
         $participant=$this->uri->segment(4);
         $data['ref_no'] = $ref_no;
-        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $part=$this->super_model->select_column_where("participant","participant_name","billing_id",$participant);
         $data['part'] = $part;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_details WHERE reference_no!=''");
-        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant ORDER BY participant_name ASC");
         $sql='';
         if($participant!='null'){
-            $sql.= " settlement_id = '$participant' AND ";
+            $sql.= " billing_id = '$participant' AND ";
         } 
         if($ref_no!='null'){
-            $sql.= " reference_no = '$ref_no' AND ";
+            $sql.= " reference_number = '$ref_no' AND ";
         }
 
         $query=substr($sql,0,-4);
-        $qu = " WHERE ewt!='0' AND ".$query;
+        $qu = " WHERE saved='1' AND ewt!='0' AND ".$query;
         $data['total']=0;
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id $qu") AS $s){
+            $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$s->short_name);
+            $registered_address=$this->super_model->select_column_where("participant","registered_address","settlement_id",$s->short_name);
+            $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$s->short_name);
+            //$billing_from=$this->super_model->select_column_where("sales_transaction_head","billing_from","reference_number",$s->reference_no);
+            //$billing_to=$this->super_model->select_column_where("sales_transaction_head","billing_to","reference_number",$s->reference_no);
+            //$total_amount[]=$s->ewt;
+            //$data['total']=array_sum($total_amount);
+            $data['total']=$this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head","sales_transaction_head.sales_id='$s->sales_id' AND $query", 'sales_id');
+            $data['sales'][]=array(
+                'transaction_date'=>$s->transaction_date,
+                'tin'=>$tin,
+                'participant_name'=>$company_name,
+                'address'=>$registered_address,
+                'ewt'=>$s->ewt,
+                'billing_from'=>$s->billing_from,
+                'billing_to'=>$s->billing_to,
+            );
+
+        }
         //foreach($this->super_model->select_innerjoin_where("collection_details","collection_head", $qu,"collection_id","settlement_id") AS $s){
-        foreach($this->super_model->custom_query("SELECT * FROM collection_details ptd INNER JOIN collection_head pth ON ptd.collection_id=pth.collection_id $qu") AS $s){
+        /*foreach($this->super_model->custom_query("SELECT * FROM collection_details ptd INNER JOIN collection_head pth ON ptd.collection_id=pth.collection_id $qu") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$s->settlement_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","settlement_id",$s->settlement_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$s->settlement_id);
@@ -333,7 +353,7 @@ class Reports extends CI_Controller {
                 'billing_to'=>$billing_to,
             );
 
-        }
+        }*/
         $this->load->view('reports/cwht_summary',$data);
         $this->load->view('template/footer');
     }
