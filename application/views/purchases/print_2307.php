@@ -20,11 +20,10 @@
     <center>
         <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
-<<<<<<< HEAD
+
         <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
-=======
-        <button class="btn btn-primary " onclick="getPDF()">Save as PDF</button>
->>>>>>> d0dc174b8d418c4df2b1491769adb8785061afc8
+
+
     </center>
     <br>
 </div>
