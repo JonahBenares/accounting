@@ -20,7 +20,11 @@
     <center>
         <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
+<<<<<<< HEAD
+        <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
+=======
         <button class="btn btn-primary " onclick="getPDF()">Save as PDF</button>
+>>>>>>> d0dc174b8d418c4df2b1491769adb8785061afc8
     </center>
     <br>
 </div>
@@ -78,11 +82,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script type="text/javascript">
-    function getPDF(){
+    function getPDF(shortname, refno, timestamp){
 
         var HTML_Width = $(".canvas_div_pdf").width();
+        
         var HTML_Height = $(".canvas_div_pdf").height();
-        var top_left_margin = 15;
+
+        /*alert(HTML_Height);*/
+        var top_left_margin = 10;
         var PDF_Width = HTML_Width+(top_left_margin*2);
         var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
         var canvas_image_width = HTML_Width;
@@ -90,10 +97,14 @@
         
         var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
 
-        html2canvas($(".canvas_div_pdf")[0],{allowTaint:true}).then(function(canvas) {
+        html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
+            useCORS: true,
+            logging: false,
+            height: window.outerHeight + window.innerHeight,
+            windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
             canvas.getContext('2d');
-            
-            console.log(canvas.height+"  "+canvas.width);
+        /*    
+            console.log(canvas.height+"  "+canvas.width);*/
             
             
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -106,7 +117,8 @@
                 pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
             }
             
-            pdf.save("HTML-Document.pdf");
+
+            pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+timestamp+".pdf");
         });
     };
 </script>
