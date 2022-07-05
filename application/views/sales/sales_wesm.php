@@ -80,7 +80,7 @@
                                     <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
                                         <thead>
                                             <tr>    
-                                                <th width="5%" align="center" style="background:rgb(245 245 245)">
+                                                <th width="6%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>                                            
                                                 <th>Item No</th>
@@ -126,6 +126,9 @@
                                                             </a>
                                                         </div>
                                                     <?php } ?>
+                                                    <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSerial" data-name="" data-id=''>
+                                                        <span class="m-0 fas fa-edit"></span>
+                                                    </button>
                                                 </td>
                                                 <td><center><?php echo $s['item_no'];?></center></td>
                                                 <td><?php echo $s['serial_no'];?></td>
@@ -161,7 +164,29 @@
     </section>
 </div>
 
-
+<div class="modal fade" id="updateSerial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Serial Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" id="update">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Serial Number</label>
+                        <input type="text" id="series_number" name="series_number" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-primary" onclick="saveSeries()">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
                 
                                        
          
