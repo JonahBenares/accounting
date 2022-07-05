@@ -224,28 +224,3 @@
         </div>
     </section>
 </div>
-
-
-<!-- <div class="col-lg-3 col-md-3 col-sm-3">
-    <center>
-    <label>Documents submitted</label>
-        <div class="form-group mb-2">
-            <div class="pretty p-icon p-curve p-jelly">
-                <input type="radio" name="docu">
-                <div class="state p-warning">
-                    <i class="icon material-icons">done</i>
-                    <label> YES</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="pretty p-icon p-curve p-jelly">
-                <input type="radio" name="docu">
-                <div class="state p-warning">
-                    <i class="icon material-icons">done</i>
-                    <label> NO</label>
-                </div>
-            </div>
-        </div>
-    </center>
-</div> -->

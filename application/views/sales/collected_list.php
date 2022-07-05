@@ -41,19 +41,6 @@
                                     <div class="col-lg-6 col-md-6">
                                         <h4>Collected</h4>
                                     </div>
-                                    <!-- <div class="col-lg-6 col-md-6">
-                                        <div class="input-group">
-                                            <select class="custom-select" id="inputGroupSelect04">
-                                                <option selected="">Choose Participant</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary m-0" type="button" style="border-radius: 0 .25rem .25rem 0;">Search</button>
-                                            </div>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                             <div class="card-body">

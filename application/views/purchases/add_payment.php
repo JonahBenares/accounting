@@ -1,4 +1,3 @@
- <!-- <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <div class="card">
     <form method="POST" id="paymentdata">
@@ -31,11 +30,6 @@
                     <div class="form-group">
                         <label>Mode</label>
                         <input type="text" class="form-control" name="purchase_mode" id="purchase_mode" value="<?php echo $mode_name; ?>">
-                        <!-- <select class="form-control" name="payment_mode" id="payment_mode">
-                            <option>Vatable Purchase</option>
-                            <option>Zero-Rated Purchase</option>
-                            <option>Zero-Rated Ecozones Purchase</option>
-                        </select> -->
                     </div>
                     
                     <div class="form-group">

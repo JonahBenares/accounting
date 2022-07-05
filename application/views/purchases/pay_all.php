@@ -1,4 +1,3 @@
- <!-- <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <div class="card">
     <form method="POST" id="paymentdataall">

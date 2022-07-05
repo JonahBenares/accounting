@@ -6,12 +6,6 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <!-- <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <label>Date Collected</label>
-                        <input type="date" class="form-control">
-                    </div>
-                </div> -->
                 <div class="col-lg-8 col-md-8 col-sm-8 offset-lg-2 offset-md-2 offset-sm-2">
                     <div class="form-group">
                         <label>Series Number</label>
