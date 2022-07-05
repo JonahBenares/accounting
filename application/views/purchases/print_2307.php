@@ -73,7 +73,7 @@
 <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
 <input type="hidden" name="purchase_detail_id" id="purchase_detail_id" value="<?php echo $purchase_detail_id; ?>">
 </html>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.2.0/jspdf.umd.min.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script> -->
 <script type="text/javascript">
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
