@@ -532,11 +532,14 @@ class Sales extends CI_Controller {
         $this->load->view('template/navbar');
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
             $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+            $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
             $data['details'][]=array(
                 'sales_detail_id'=>$d->sales_detail_id,
                 'sales_id'=>$d->sales_id,
                 'item_no'=>$d->item_no,
                 'series_number'=>$series_number,
+                'old_series_no_col'=>$old_series_no,
+                'old_series_no'=>$d->old_series_no,
                 'short_name'=>$d->short_name,
                 'billing_id'=>$d->billing_id,
                 'company_name'=>$d->company_name,

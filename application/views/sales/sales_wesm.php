@@ -72,7 +72,7 @@
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>                                            
                                                 <th>Item No</th>
-                                                <th>Series No.</th>
+                                                <th>BS No.</th>
                                                 <th>OR No.</th>
                                                 <th>STL ID / TPShort Name</th>
                                                 <th>Billing ID</th>
@@ -120,8 +120,16 @@
                                                     </button>
                                                 </td>
                                                 <td><center><?php echo $s['item_no'];?></center></td>
-                                                <td width="7%"><a href="" data-toggle="modal" data-target="#olSeries" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
-                                                <td width="7%"><a href="" data-toggle="modal" data-target="#oldOR" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
+                                                <?php if(!empty($s['old_series_no'])) {?>
+                                                <td width="7%"><a href="" data-toggle="modal" id="BSNo" data-target="#olSeries" data-bs="<?php echo $s['serial_no']; ?>" data-old-bs="<?php echo $s['old_series_no'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
+                                                <?php }else{ ?>
+                                                <td><?php echo $s['serial_no'];?></td>
+                                                <?php } ?>
+                                                <?php if(!empty($s['old_series_no_col'])) {?>
+                                                <td width="7%"><a href="" data-toggle="modal" id="ORNo" data-target="#oldOR" data-series-col="<?php echo $s['series_number']; ?>" data-old-series-col="<?php echo $s['old_series_no_col'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
+                                                <?php }else{ ?>
+                                                <td><?php echo $s['series_number'];?></td>
+                                                <?php } ?>
                                                 <td><?php echo $s['short_name'];?></td>
                                                 <td><?php echo $s['billing_id'];?></td>
                                                 <td><?php echo $s['company_name'];?></td>
@@ -189,7 +197,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel" style="line-height: 1">
                     <small style="font-size: 10px;">Current OR</small>
-                    <br>OR-1001
+                    <br><!-- <input type="text" id="series_no" class="form-control"> --><span id="series_no"></span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -198,16 +206,7 @@
             <div class="modal-body">
                 <table width="100%" class="table-bordered">
                     <tr>
-                        <td>OR-1003</td>
-                    </tr>
-                    <tr>
-                        <td>OR-1004</td>
-                    </tr>
-                    <tr>
-                        <td>OR-1005</td>
-                    </tr>
-                    <tr>
-                        <td>OR-1006</td>
+                        <td ><span id="old_series_no_disp"></span></td>
                     </tr>
                 </table>
             </div>
@@ -220,7 +219,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel" style="line-height: 1">
                     <small style="font-size: 10px;">Current Series</small>
-                    <br>1231-1001
+                    <br><span id="bs_no"></span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -229,16 +228,7 @@
             <div class="modal-body">
                 <table width="100%" class="table-bordered">
                     <tr>
-                        <td>12312-1003</td>
-                    </tr>
-                    <tr>
-                        <td>123123-1004</td>
-                    </tr>
-                    <tr>
-                        <td>123123-1005</td>
-                    </tr>
-                    <tr>
-                        <td>231123-1006</td>
+                        <td><span id="old_bs_no_disp"></td>
                     </tr>
                 </table>
             </div>
