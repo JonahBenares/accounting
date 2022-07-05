@@ -85,7 +85,7 @@
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>                                            
                                                 <th>Item No</th>
-                                                <th>Series No.</th>
+                                                <th>BS No.</th>
                                                 <th>OR No.</th>
                                                 <th>STL ID / TPShort Name</th>
                                                 <th>Billing ID</th>
@@ -134,7 +134,11 @@
                                                 </td>
                                                 <td><center><?php echo $s['item_no'];?></center></td>
                                                 <td><?php echo $s['serial_no'];?></td>
-                                                <td width="7%"><a href="" data-toggle="modal" data-target="#oldOR" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
+                                                <?php if(!empty($s['series_number'])) {?>
+                                                <td width="7%"><a href="" data-toggle="modal" data-target="#oldOR" data-id="<?php echo $s['sales_detail_id']; ?>" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
+                                                <?php }else{ ?>
+                                                <td><?php echo $s['series_number'];?></td>
+                                                <?php } ?>
                                                 <td><?php echo $s['short_name'];?></td>
                                                 <td><?php echo $s['billing_id'];?></td>
                                                 <td><?php echo $s['company_name'];?></td>
@@ -211,16 +215,7 @@
             <div class="modal-body">
                 <table width="100%" class="table-bordered">
                     <tr>
-                        <td>OR-1003</td>
-                    </tr>
-                    <tr>
-                        <td>OR-1004</td>
-                    </tr>
-                    <tr>
-                        <td>OR-1005</td>
-                    </tr>
-                    <tr>
-                        <td>OR-1006</td>
+                        <td>OR-1003<hr></td>
                     </tr>
                 </table>
             </div>
