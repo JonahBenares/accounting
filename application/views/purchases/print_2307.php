@@ -51,8 +51,8 @@
         <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
         <label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label>
         <label class="zip2">6100</label>
-        <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of goods other than those covered by other rates of withholding tax</label>
-        <label class="row1-col2">WC158</label>
+        <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label>
+        <label class="row1-col2">WC160</label>
         <label class="row1-col3"><?php echo (($firstmonth=="-") ? "-" : number_format($firstmonth,2)); ?></label>
         <label class="row1-col4"><?php echo (($secondmonth=="-") ? "-" : number_format($secondmonth,2)); ?></label>
         <label class="row1-col5"><?php echo (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)); ?></label>
