@@ -808,6 +808,13 @@ class Purchases extends CI_Controller {
         $purchase_id = $this->uri->segment(3);
         $purchase_detail_id = $this->uri->segment(4);
         $data['purchase_detail_id']=$purchase_detail_id;
+
+        $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
+
+        $reference_number = $this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
+        $data['refno'] =preg_replace("/[^0-9]/", "", $reference_number);
+        
+
         $billing_id=$this->super_model->select_column_where("purchase_transaction_details", "billing_id", "purchase_detail_id", $purchase_detail_id);
 
         $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
