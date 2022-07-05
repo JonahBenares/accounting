@@ -89,6 +89,7 @@
         var canvas_image_height = HTML_Height;
         
         var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+        
 
         html2canvas($(".canvas_div_pdf")[0],{allowTaint:true}).then(function(canvas) {
             canvas.getContext('2d');
@@ -110,7 +111,7 @@
         });
     };
 </script>
-<!-- <script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script>
 <script type="text/javascript">
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
