@@ -134,7 +134,7 @@
                                                 </td>
                                                 <td><center><?php echo $s['item_no'];?></center></td>
                                                 <td><?php echo $s['serial_no'];?></td>
-                                                <td width="7%"><a href="" data-toggle="modal" data-target="#oldOR" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR">OR-1001</a></td>
+                                                <td width="7%"><a href="" data-toggle="modal" data-target="#oldOR" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
                                                 <td><?php echo $s['short_name'];?></td>
                                                 <td><?php echo $s['billing_id'];?></td>
                                                 <td><?php echo $s['company_name'];?></td>
