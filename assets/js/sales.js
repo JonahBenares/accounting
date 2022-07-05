@@ -230,20 +230,6 @@ function collected_filter() {
 
 }
 
-function saveSeries(){
-	var data = $("#update").serialize();
-	var loc= document.getElementById("baseurl").value;
-    var redirect = loc+"sales/update_seriesno";
-    $.ajax({
-        data: data,
-        type: "POST",
-        url: redirect,
-        success: function(output){
-        	window.location=loc+'sales/collection_list/'+output;  
-        }
-    });  
-}
-
 function saveBS(){
     var sales_detail_id = document.getElementById("sales_detail_id").value; 
     var serial_no = document.getElementById("serial_no").value; 
@@ -277,6 +263,7 @@ function filterSales(){
 	window.location=loc+'sales/sales_wesm/'+ref_no;          
 }
 
+
 $(document).on("click", "#seriesupdate", function () {
 	 var collection_id = $(this).attr("data-id");
 	 var series_number = $(this).attr("data-name");
@@ -289,6 +276,45 @@ $(document).on("click", "#seriesupdate", function () {
 	 $("#ref_no").val(reference_number);
 
 });
+
+function saveSeries(){
+	var data = $("#update").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/update_seriesno";
+    $.ajax({
+        data: data,
+        type: "POST",
+        url: redirect,
+        success: function(output){
+        	window.location=loc+'sales/collection_list/'+output;  
+        }
+    });  
+}
+
+$(document).on("click", "#BSupdate", function () {
+	 var sales_detail_id = $(this).attr("data-id");
+	 var series_number = $(this).attr("data-series");
+	 $("#sales_detail_id").val(sales_detail_id);
+	 $("#series_number").val(series_number);
+	 $("#old_series_no").val(series_number);
+
+});
+
+function saveBseries(){
+	var data = $("#update").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/update_BSeriesno";
+    $.ajax({
+        data: data,
+        type: "POST",
+        url: redirect,
+        success: function(output){
+        	window.location=loc+'sales/sales_wesm/'+output;  
+        }
+    });  
+}
+
+
 
 
 function uploadCollection(){
