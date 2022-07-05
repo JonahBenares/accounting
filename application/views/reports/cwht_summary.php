@@ -25,7 +25,7 @@
                                                 <select class="form-control select2" name="ref_no" id="ref_no">
                                                     <option value="">-- Select Reference Number --</option>
                                                     <?php foreach($reference_no AS $r){ ?>
-                                                        <option value="<?php echo $r->reference_no;?>"><?php echo $r->reference_no;?></option>
+                                                        <option value="<?php echo $r->reference_number;?>"><?php echo $r->reference_number;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -33,7 +33,7 @@
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->participant_name;?></option>
+                                                        <option value="<?php echo $p->billing_id;?>"><?php echo $p->billing_id." - ".$p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
