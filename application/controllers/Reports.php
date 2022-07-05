@@ -905,16 +905,17 @@ class Reports extends CI_Controller {
         /*foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id=ptd.purchase_id WHERE saved='1' $query") AS $b){
                 foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$b->purchase_id' AND pd.purchase_details_id='$b->purchase_detail_id'") AS $c){*/
        foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $ss_qu,"purchase_id","short_name") AS $ss){
-                $vatables_purchases = $this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
-                $zero_rated_purchases = $this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
-                $zero_rated_ecozones = $this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
-                $vat_on_purchases = $this->super_model->select_sum_where("purchase_transaction_details","vat_on_purchases","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
-                $ewt_purchases = $this->super_model->select_sum_where("purchase_transaction_details","ewt","purchase_id='$ss->purchase_id' AND billing_id='$ss->billing_id'");
+                $vatables_purchases = $this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ss->purchase_id' AND short_name='$ss->short_name'");
+                $zero_rated_purchases = $this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ss->purchase_id' AND short_name='$ss->short_name'");
+                $zero_rated_ecozones = $this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ss->purchase_id' AND short_name='$ss->short_name'");
+                $vat_on_purchases = $this->super_model->select_sum_where("purchase_transaction_details","vat_on_purchases","purchase_id='$ss->purchase_id' AND short_name='$ss->short_name'");
+                $ewt_purchases = $this->super_model->select_sum_where("purchase_transaction_details","ewt","purchase_id='$ss->purchase_id' AND short_name='$ss->short_name'");
 
+                $payment_id=$this->super_model->select_column_where("payment_head","payment_id","purchase_id",$ss->purchase_id);
                 $purchase_mode=$this->super_model->select_column_where("payment_details","purchase_mode","purchase_details_id",$ss->purchase_detail_id);
-                $purchase_amount=$this->super_model->select_column_where("payment_details","purchase_amount","purchase_details_id",$ss->purchase_detail_id);
-                $vat=$this->super_model->select_column_where("payment_details","vat","purchase_details_id",$ss->purchase_detail_id);
-                $ewt=$this->super_model->select_column_where("payment_details","ewt","purchase_details_id",$ss->purchase_detail_id);
+                $purchase_amount=$this->super_model->select_sum_where("payment_details","purchase_amount","payment_id ='$payment_id' AND short_name='$ss->short_name'");
+                $vat= $this->super_model->select_sum_where("payment_details","vat","payment_id ='$payment_id' AND short_name='$ss->short_name'");
+                $ewt= $this->super_model->select_sum_where("payment_details","ewt","payment_id ='$payment_id' AND short_name='$ss->short_name'");
 
                 $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$ss->billing_id);
 

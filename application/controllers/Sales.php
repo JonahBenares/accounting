@@ -1097,16 +1097,16 @@ class Sales extends CI_Controller {
                 $buyer = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
                 $statement_no = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
 
-                $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+                $vatable_sales = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
                
                 $zero_rated = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
-                $zero_rated_ecozone = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
-                $vat = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
+                $zero_rated_ecozone = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
+                $vat = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
                 $ewt = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue());
-                $total = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue());
+                $total = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue());
                 $defint = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
                 $series = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
-
+             
                  $data_details = array(
                         'collection_id'=>$collection_id,
                         'item_no'=>$itemno,
@@ -1129,6 +1129,8 @@ class Sales extends CI_Controller {
 
             $a++;
         }
+
+       
         echo "saved-".$collection_id;
 
            

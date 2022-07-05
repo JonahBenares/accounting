@@ -317,7 +317,7 @@ function uploadCollection(){
 	        	$("#table-wesm").hide(); */
 	        },
 	        success: function(output){
-	        	
+	        	console.log(output);
 	        	$("#alt").hide(); 
 	        	window.location=loc+'sales/collection_list/'+output;  
 	        	//location.reload();
