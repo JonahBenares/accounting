@@ -204,10 +204,10 @@
                                 foreach($sub AS $s){ 
                                      if($x <= 5){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['ewt'],2);?></td>
+                            <td class="bor-btm" align="right">(<?php echo number_format($s['ewt'],2);?>)</td>
                             <td></td>
                             <?php } $x++; } ?>
-                            <td class="bor-btm" align="right"><?php echo number_format(array_sum($ewt_arraysum),2);?></td> 
+                            <td class="bor-btm" align="right">(<?php echo number_format(array_sum($ewt_arraysum),2);?>)</td> 
                         </tr>
                         <tr>
                             <td colspan="12"><br></td>
@@ -253,10 +253,7 @@
                 <td colspan="20">
                     <b>Note:</b><br>
                     1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
-                    <br>
-                    <br>
-
-                    2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
+                    <br><br>
                 </td>
             </tr>
             <tr>
@@ -578,10 +575,10 @@
                                 foreach($sub_second AS $s){ 
                                      if($x >= 6){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['ewt'],2);?></td>
+                            <td class="bor-btm" align="right">(<?php echo number_format($s['ewt'],2);?>)</td>
                             <td></td>
                             <?php } $x++; } ?>
-                            <td class="bor-btm" align="right"><?php echo number_format(array_sum($ewt_arraysum_second),2);?></td> 
+                            <td class="bor-btm" align="right">(<?php echo number_format(array_sum($ewt_arraysum_second),2);?>)</td> 
                         </tr>
                         <tr>
                             <td colspan="12"><br></td>
@@ -624,8 +621,6 @@
                     1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
                     <br>
                     <br>
-
-                    2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
                 </td>
             </tr>
             <tr>
