@@ -133,7 +133,7 @@
                                                 </td>
                                                 <td><center><?php echo $s['item_no'];?></center></td>
                                                 <td><?php echo $s['serial_no'];?></td>
-                                                <td></td>
+                                                <td width="7%"><a href="" data-toggle="modal" data-target="#oldOR" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR">OR-1001</a></td>
                                                 <td><?php echo $s['short_name'];?></td>
                                                 <td><?php echo $s['billing_id'];?></td>
                                                 <td><?php echo $s['company_name'];?></td>
@@ -190,5 +190,36 @@
     </div>
 </div>
                 
-                                       
+          
+<div class="modal fade" id="oldOR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="line-height: 1">
+                    <small style="font-size: 10px;">Current OR</small>
+                    <br>OR-1001
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table width="100%" class="table-bordered">
+                    <tr>
+                        <td>OR-1003</td>
+                    </tr>
+                    <tr>
+                        <td>OR-1004</td>
+                    </tr>
+                    <tr>
+                        <td>OR-1005</td>
+                    </tr>
+                    <tr>
+                        <td>OR-1006</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>                             
          
