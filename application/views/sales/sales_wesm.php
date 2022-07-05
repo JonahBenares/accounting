@@ -85,6 +85,7 @@
                                                 </th>                                            
                                                 <th>Item No</th>
                                                 <th>Series No.</th>
+                                                <th>OR No.</th>
                                                 <th>STL ID / TPShort Name</th>
                                                 <th>Billing ID</th>
                                                 <th>Trading Participant Name</th>
@@ -132,6 +133,7 @@
                                                 </td>
                                                 <td><center><?php echo $s['item_no'];?></center></td>
                                                 <td><?php echo $s['serial_no'];?></td>
+                                                <td></td>
                                                 <td><?php echo $s['short_name'];?></td>
                                                 <td><?php echo $s['billing_id'];?></td>
                                                 <td><?php echo $s['company_name'];?></td>
