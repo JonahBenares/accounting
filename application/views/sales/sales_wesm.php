@@ -15,9 +15,6 @@
                                         <div class="col-lg-10 offset-lg-1">
                                             <table class="table-borderded" width="100%">
                                                 <tr>
-                                                    <!-- <td>
-                                                        <input placeholder="Reference Number" name="ref_no" id="ref_no" class="form-control" type="text" >
-                                                    </td> -->
                                                     <td>
                                                         <select class="form-control select2" name="ref_no" id="ref_no">
                                                             <option value=''>-- Select Reference No --</option>
@@ -28,16 +25,6 @@
                                                             <?php } ?>
                                                         </select>
                                                     </td>
-                                                    <!-- <td>
-                                                        <select class="form-control" name="participant" id="participant">
-                                                            <option value=''>-- Select Participant --</option>
-                                                            <?php 
-                                                                foreach($participants AS $p){
-                                                            ?>
-                                                            <option value="<?php echo $p->billing_id; ?>"><?php echo $p->billing_id." - ".$p->participant_name; ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </td> -->
                                                     <td  width="1%"><button type="button" onclick="filterSales();" class="btn btn-primary btn-block">Filter</button></td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                 </tr>
@@ -133,9 +120,13 @@
                                                     </button>
                                                 </td>
                                                 <td><center><?php echo $s['item_no'];?></center></td>
+                                                <?php if(!empty($s['old_series_no'])) {?>
+                                                <td width="7%"><a href="" data-toggle="modal" id="BSNo" data-target="#olSeries" data-bs="<?php echo $s['serial_no']; ?>" data-old-bs="<?php echo $s['old_series_no'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
+                                                <?php }else{ ?>
                                                 <td><?php echo $s['serial_no'];?></td>
-                                                <?php if(!empty($s['series_number'])) {?>
-                                                <td width="7%"><a href="" data-toggle="modal" data-target="#oldOR" data-id="<?php echo $s['sales_detail_id']; ?>" class="btn-link btn btn-md btn-block" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
+                                                <?php } ?>
+                                                <?php if(!empty($s['old_series_no_col'])) {?>
+                                                <td width="7%"><a href="" data-toggle="modal" id="ORNo" data-target="#oldOR" data-series-col="<?php echo $s['series_number']; ?>" data-old-series-col="<?php echo $s['old_series_no_col'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
                                                 <?php }else{ ?>
                                                 <td><?php echo $s['series_number'];?></td>
                                                 <?php } ?>
@@ -206,7 +197,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel" style="line-height: 1">
                     <small style="font-size: 10px;">Current OR</small>
-                    <br>OR-1001
+                    <br><!-- <input type="text" id="series_no" class="form-control"> --><span id="series_no"></span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -215,11 +206,32 @@
             <div class="modal-body">
                 <table width="100%" class="table-bordered">
                     <tr>
-                        <td>OR-1003<hr></td>
+                        <td ><span id="old_series_no_disp"></span></td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
 </div>                             
-         
+<div class="modal fade" id="olSeries" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="line-height: 1">
+                    <small style="font-size: 10px;">Current Series</small>
+                    <br><span id="bs_no"></span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table width="100%" class="table-bordered">
+                    <tr>
+                        <td><span id="old_bs_no_disp"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>                             

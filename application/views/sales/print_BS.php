@@ -129,16 +129,6 @@
                         <?php if(!empty($sub)){ ?>
                         <tr class="table-bor">
                             <td align="center" width="15%">ITEMS</td>
-                            <!-- <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%">1590EC_SS</td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%">1590EC</td>
-                            <td align="center" width="1%"></td> -->
                             <?php 
                                 $x=1;
                                 foreach($sub AS $s){ 
@@ -242,7 +232,6 @@
                             <td></td>
                             <?php } $x++; } ?>
                             <?php 
-                                //$overall_total=($vatable+$zero+$total+$vat)-$ewt;
                                 $overall_total=($total+$vat)-$ewt;
                             ?>
                             <td class="bor-btm2" align="right"><b><?php echo number_format($overall_total,2);?></b></td> 
@@ -330,77 +319,6 @@
             <tr>
                 <td colspan="20"><br><br><br></td>
             </tr>
-            <!-- <tr>
-                <td colspan="20" style="padding:5px">
-                    <table width="100%">
-                        <tr>
-                            <td></td>
-                            <td colspan="5"><b>Checked by:</b></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td colspan="7"><br></td>
-                        </tr>
-                        <tr>
-                            <td width="1%"></td>
-                            <td class="bor-btm" align="center" width="32%">JEOMAR DELOS SANTOS</td>
-                            <td width="1%"></td>
-                            <td class="bor-btm" align="center" width="32%">CRISTY CESAR</td>
-                            <td width="1%"></td>
-                            <td class="bor-btm" align="center" width="32%">ZYNDYRYN PASTERA</td>
-                            <td width="1%"></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td align="center">EMG Supervisor</td>
-                            <td></td>
-                            <td align="center">Accounting</td>
-                            <td></td>
-                            <td align="center">Finance</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="20"><br></td>
-            </tr>
-            <tr>
-                <td colspan="20" style="padding:5px">
-                    <table width="100%">
-                        <tr>
-                            <td width="1%"></td>
-                            <td width="32%"><b>Prepared by:</b></td>
-                            <td width="1%"></td>
-                            <td width="32%"></td>
-                            <td width="1%"></td>
-                            <td width="32%"><b>Noted by:</b></td>
-                            <td width="1%"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="7"><br></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td align="center" class="bor-btm">CELINA TIGNERO</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td align="center" class="bor-btm">MILA ARANA</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td align="center">Billing</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td align="center">General Manager</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
         </table>
     </div>
 </page>
@@ -503,16 +421,6 @@
                     <table width="100%"> 
                         <tr class="table-bor">
                             <td align="center" width="15%">ITEMS</td>
-                            <!-- <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%"></td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%">1590EC_SS</td>
-                            <td align="center" width="1%"></td>
-                            <td align="center" width="13%">1590EC</td>
-                            <td align="center" width="1%"></td> -->
                             <?php 
                                 $x=1;
                                 foreach($sub_second AS $s){ 
@@ -697,78 +605,6 @@
             <tr>
                 <td colspan="20"><br><br><br></td>
             </tr>
-            <!-- <tr>
-                <td colspan="20" style="padding:5px">
-                    <table width="100%">
-                        <tr>
-                            <td></td>
-                            <td colspan="5"><b>Checked by:</b></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td colspan="7"><br></td>
-                        </tr>
-                        <tr>
-                            <td width="1%"></td>
-                            <td class="bor-btm" align="center" width="32%">JEOMAR DELOS SANTOS</td>
-                            <td width="1%"></td>
-                            <td class="bor-btm" align="center" width="32%">CRISTY CESAR</td>
-                            <td width="1%"></td>
-                            <td class="bor-btm" align="center" width="32%">ZYNDYRYN PASTERA</td>
-                            <td width="1%"></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td align="center">EMG Supervisor</td>
-                            <td></td>
-                            <td align="center">Accounting</td>
-                            <td></td>
-                            <td align="center">Finance</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="20"><br></td>
-            </tr>
-            <tr>
-                <td colspan="20" style="padding:5px">
-                    <table width="100%">
-                        <tr>
-                            <td width="1%"></td>
-                            <td width="32%"><b>Prepared by:</b></td>
-                            <td width="1%"></td>
-                            <td width="32%"></td>
-                            <td width="1%"></td>
-                            <td width="32%"><b>Noted by:</b></td>
-                            <td width="1%"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="7"><br></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td align="center" class="bor-btm">CELINA TIGNERO</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td align="center" class="bor-btm">MILA ARANA</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td align="center">Billing</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td align="center">General Manager</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
-
         </table>
     </div>
 </page>

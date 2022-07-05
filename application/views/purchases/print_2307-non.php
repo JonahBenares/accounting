@@ -146,7 +146,6 @@
                     <div class="" id="printbutton">
                         <center>
                             <a href="#" class="btn btn-warning ">Back</a>
-                            <!-- <a href="#" class="btn btn-success " onclick=" window.print();">Print</a> -->
                             <a href="#" class="btn btn-success " onclick="printDiv('printableArea')">Print</a>
                         </center>
                         <br>

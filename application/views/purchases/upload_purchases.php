@@ -116,33 +116,8 @@
                                                     </a>
                                                 </div>
                                             <?php } ?>
-                                                <!-- <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a> -->
-                                              <!--   <?php 
-                                                    if($saved==1){ 
-                                                        if($d['serial_no']=='' && $d['print_counter']==0){
-                                                ?>
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_details_wesm('<?php echo base_url(); ?>','<?php echo $d['purchase_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
-                                                <?php 
-                                                    }else{
-                                                ?>
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff" href="<?php echo base_url(); ?>purchases/print_BS/<?php echo $d['purchase_detail_id'];?>" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $d['purchase_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span>
-                                                        </a>
-                                                    </div>
-                                                    <a id="clicksBS"><?php echo "(".$d['print_counter'].")"; ?></a>
-                                                <?php       
-                                                        } 
-                                                    }
-                                                ?> -->
                                             </td>
                                             <td><?php echo $d['item_no'];?></td>
-                                            <!-- <td><?php echo $d['serial_no'];?></td> -->
                                             <td><?php echo $d['short_name'];?></td>
                                             <td><?php echo $d['billing_id']; ?></td>
                                             <td><?php echo $d['facility_type']; ?></td>

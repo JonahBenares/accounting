@@ -14,19 +14,16 @@
                                     <div class="col-lg-10 offset-lg-1">
                                         <table class="table-borderded" width="100%">
                                             <tr>
-                                                <!-- <td>
-                                                    <input placeholder="Reference Number" name="ref_no" id="ref_no" class="form-control" type="text" >
-                                                </td> -->
-                                                    <td>
-                                                        <select class="form-control select2" name="ref_no" id="ref_no">
-                                                            <option value=''>-- Select Reference No --</option>
-                                                            <?php 
-                                                                foreach($reference AS $r){
-                                                            ?>
-                                                            <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </td>
+                                                <td>
+                                                    <select class="form-control select2" name="ref_no" id="ref_no">
+                                                        <option value=''>-- Select Reference No --</option>
+                                                        <?php 
+                                                            foreach($reference AS $r){
+                                                        ?>
+                                                        <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
                                                 <td  width="1%"><button type="button" onclick="filterPurchase();" class="btn btn-primary btn-block">Filter</button></td>
                                                 <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                             </tr>
@@ -72,7 +69,6 @@
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
                                                 <th>Item No.</th>
-                                                <!-- <th>Serial No.</th> -->
                                                 <th>STL ID / TPShort Name</th>
                                                 <th>Billing ID</th>
                                                 <th>Facility Type </th>
@@ -91,7 +87,6 @@
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                //$x=1;
                                                 foreach($details AS $d){ 
                                                     if(!empty($d['purchase_id'])){ 
                                             ?>
@@ -107,7 +102,6 @@
                                                  
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
-                                                <!-- <td><?php echo $d['serial_no'];?></td> -->
                                                 <td><?php echo $d['short_name'];?></td>
                                                 <td><?php echo $d['billing_id']; ?></td>
                                                 <td><?php echo $d['facility_type']; ?></td>

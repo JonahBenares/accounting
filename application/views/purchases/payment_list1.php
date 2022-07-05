@@ -15,66 +15,6 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-10 offset-lg-1">
-                                        <table width="100%" class="table-bordsered">
-                                            <tr>
-                                                <td>
-                                                    <select class="form-control select2" name="reference_number" id="reference_number">
-                                                        <option value="">-- Select Reference Number --</option>
-                                                    </select>
-                                                </td>
-                                                <td width="1%">
-                                                    <button class="btn btn-primary" type="button">Add</button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <br>
-                                        <table class="table-bordered" width="100%">
-                                            <tr class="td-head">
-                                                <td><b>Reference Number</b></td>
-                                                <td width="15%" align="center"><b>Total Amount</b></td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr class="td-yellow">
-                                                <td align="right"><b>Grand Total</b></td>
-                                                <td align="right"><b>701,399.86</b></td>
-                                            </tr>
-                                        </table>
-                                        <br>
-                                        <a style="color:#fff" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>', '<?php echo $purchase_id; ?>')">Pay All</a>
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="card-body">
-                                <div class="row">
                                     <div class="col-lg-12">
                                         <table width="100%">
                                             <tr>
@@ -156,7 +96,7 @@
                                 <?php }else{ ?>
                                     <div><center><b>No Available Data...</b></center></div>
                                 <?php } ?>
-                            </div> -->
+                            </div>
                         </form>
                     </div>
                 </div>

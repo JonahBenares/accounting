@@ -7,14 +7,12 @@
                         <?php foreach($details AS $det) { ?>
                         <form>
                             <div class="card-header">
-                               <!--  <h4>Add Customer</h4> -->
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label>Participant Name</label>
-                                            <!-- <textarea class="form-control" rows="2" readonly=""><?php echo $det['participant_name'];?></textarea> -->
                                             <input class="form-control" rows="2" value="<?php echo $det['participant_name'];?>" readonly="">
                                         </div>
                                         <div class="form-group">

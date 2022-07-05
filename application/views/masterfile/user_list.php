@@ -40,17 +40,19 @@
                                             <td><?php echo $u['position'];?></td>
                                             <td><?php echo $u['username'];?></td>
                                             <td align="center">
-                                                <div class="btn-group mb-0">
+                                                <div class="btn-group mb-0 dropleft">
                                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
-                                                        Option
+                                                        <span class="fas fa-bars">
                                                     </button>
-                                                    <div class="dropdown-menu">
-                                                        <!-- <a class="dropdown-item" href="#"><span class="fas fa-eye mr-2"></span>View</a> -->
-                                                        <a class="dropdown-item" href="#"><span class="far fa-edit mr-2"></span>Update</a>
-                                                        <a class="dropdown-item" href="#"><span class="fas fa-trash mr-2"></span>Delete</a>
+                                                    <div class="dropdown-menu dropleft p-0" style="width:0px!important;text-align:center;box-shadow: 0 0 0 rgba(0,0,0,0)!important;background: #fff0;">
+                                                        <span style="background:#fff;right: 0;position: absolute;">
+                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" data-original-title="View" href=""><span class="fas fa-eye m-0"></span></a>
+                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update" data-original-title="Update" href=""><span class="far fa-edit m-0"></span></a>
+                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete" data-original-title="Delete" href="" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash m-0"></span></a>
+                                                        </span>
                                                     </div>
-                                                </div>
+                                                </div> 
                                             </td>
                                         </tr>
                                         <?php } } else { ?>
