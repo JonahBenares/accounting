@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <div class="main-content">
     <section class="section">
@@ -126,7 +127,7 @@
                                                             </a>
                                                         </div>
                                                     <?php } ?>
-                                                    <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSerial" data-name="" data-id=''>
+                                                    <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="BSupdate" data-toggle="modal" data-target="#updateSerial" data-series="<?php echo $s['serial_no']; ?>" data-id="<?php echo $s['sales_detail_id'];?>">
                                                         <span class="m-0 fas fa-edit"></span>
                                                     </button>
                                                 </td>
@@ -168,7 +169,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Serial Number</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Billing Statement Series</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -176,12 +177,16 @@
             <form method="POST" id="update">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Serial Number</label>
+                        <label>Series Number</label>
                         <input type="text" id="series_number" name="series_number" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
-                    <button type="button" class="btn btn-primary" onclick="saveSeries()">Save Changes</button>
+                    <input type="hidden" id="ref_no" name="ref_no" class="form-control" value="<?php echo $ref_no; ?>">
+                    <input type="hidden" id="old_series_no" name="old_series_no" class="form-control">
+                    <input type="hidden" id="sales_detail_id" name="sales_detail_id" class="form-control">
+                    <input type="hidden" id="baseurl" name="baseurl" value="<?php echo base_url(); ?>">
+                    <button type="button" class="btn btn-primary" onclick="saveBseries()">Save Changes</button>
                 </div>
             </form>
         </div>

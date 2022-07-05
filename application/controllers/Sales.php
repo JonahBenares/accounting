@@ -562,6 +562,29 @@ class Sales extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function update_BSeriesno(){
+        $ref_no=$this->input->post('ref_no');
+        $sales_detail_id=$this->input->post('sales_detail_id');
+        $new_series=$this->input->post('series_number');
+        $old_series=$this->input->post('old_series_no');
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details WHERE sales_detail_id='$sales_detail_id'") AS $check){
+            $count=$this->super_model->count_custom_where("sales_transaction_details","sales_detail_id = '$check->sales_detail_id' AND old_series_no!=''");
+            if($count==0){
+                $old_series_insert = $old_series;
+            }else{
+                $old_series_insert = $old_series.", ".$check->old_series_no;
+            }
+        }
+
+        $data_update = array(
+            'serial_no'=>$new_series,
+            'old_series_no'=>$old_series_insert,
+        );
+
+        $this->super_model->update_custom_where("sales_transaction_details", $data_update, "sales_detail_id='$sales_detail_id'");
+        echo $ref_no;
+    }
+
     public function add_details_BS(){
         $sales_detail_id = $this->uri->segment(3);
         $data['sales_detail_id']=$sales_detail_id;
@@ -1158,5 +1181,7 @@ class Sales extends CI_Controller {
             //echo $sales_id;
       
     }
+
+
     
 }
