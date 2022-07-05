@@ -2,7 +2,6 @@
     function goBack() {
         window.history.back();
         window.close() ;
-
     }
 </script>
 <div style="margin-top:10px" id="printbutton">
@@ -10,10 +9,30 @@
         <button onclick="goBack()" class="btn btn-warning ">Back</button>
         <button href="#" class="btn btn-success " onclick="window.print()">Print</button>
         <a href='<?php echo base_url(); ?>sales/print_invoice/<?php echo $sales_detail_id ?>' class="btn btn-primary button" target="_blank">Invoice</a> 
-        <!-- <button class="btn btn-danger btn-fill"onclick="printDiv('printableArea')" style="margin-bottom:5px;width:80px;"></span> Print</button><br> -->
+        <button class="btn btn-info btn-fill" data-toggle="modal" data-target="#basicModal"></span> Update Serial No.</button><br>
         <br>
         <br>
     </center>
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Serial Number</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Serial Number">
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-primary " style="color: #fff;">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <page size="A4">
     <div style="padding:30px">
@@ -204,10 +223,10 @@
                                 foreach($sub AS $s){ 
                                      if($x <= 5){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['ewt'],2);?></td>
+                            <td class="bor-btm" align="right">(<?php echo number_format($s['ewt'],2);?>)</td>
                             <td></td>
                             <?php } $x++; } ?>
-                            <td class="bor-btm" align="right"><?php echo number_format(array_sum($ewt_arraysum),2);?></td> 
+                            <td class="bor-btm" align="right">(<?php echo number_format(array_sum($ewt_arraysum),2);?>)</td> 
                         </tr>
                         <tr>
                             <td colspan="12"><br></td>
@@ -253,10 +272,7 @@
                 <td colspan="20">
                     <b>Note:</b><br>
                     1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
-                    <br>
-                    <br>
-
-                    2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
+                    <br><br>
                 </td>
             </tr>
             <tr>
@@ -578,10 +594,10 @@
                                 foreach($sub_second AS $s){ 
                                      if($x >= 6){ 
                             ?>
-                            <td class="bor-btm" align="right"><?php echo number_format($s['ewt'],2);?></td>
+                            <td class="bor-btm" align="right">(<?php echo number_format($s['ewt'],2);?>)</td>
                             <td></td>
                             <?php } $x++; } ?>
-                            <td class="bor-btm" align="right"><?php echo number_format(array_sum($ewt_arraysum_second),2);?></td> 
+                            <td class="bor-btm" align="right">(<?php echo number_format(array_sum($ewt_arraysum_second),2);?>)</td> 
                         </tr>
                         <tr>
                             <td colspan="12"><br></td>
@@ -624,8 +640,6 @@
                     1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
                     <br>
                     <br>
-
-                    2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
                 </td>
             </tr>
             <tr>
@@ -759,9 +773,4 @@
     </div>
 </page>
 <?php } ?>
-<!-- <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
-<script src="assets/js/demo.js"></script>  -->
-   
-
 </html>
