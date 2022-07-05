@@ -10,4 +10,5 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print_style.css">
     <!-- Custom style CSS -->
     <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
+    <script src="<?php echo base_url(); ?>assets/js/app.min.js"></script>
 </head>

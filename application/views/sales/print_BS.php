@@ -2,7 +2,6 @@
     function goBack() {
         window.history.back();
         window.close() ;
-
     }
 </script>
 <div style="margin-top:10px" id="printbutton">
@@ -10,10 +9,30 @@
         <button onclick="goBack()" class="btn btn-warning ">Back</button>
         <button href="#" class="btn btn-success " onclick="window.print()">Print</button>
         <a href='<?php echo base_url(); ?>sales/print_invoice/<?php echo $sales_detail_id ?>' class="btn btn-primary button" target="_blank">Invoice</a> 
-        <!-- <button class="btn btn-danger btn-fill"onclick="printDiv('printableArea')" style="margin-bottom:5px;width:80px;"></span> Print</button><br> -->
+        <button class="btn btn-info btn-fill" data-toggle="modal" data-target="#basicModal"></span> Update Serial No.</button><br>
         <br>
         <br>
     </center>
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Serial Number</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Serial Number">
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-primary " style="color: #fff;">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <page size="A4">
     <div style="padding:30px">
@@ -754,9 +773,4 @@
     </div>
 </page>
 <?php } ?>
-<!-- <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
-<script src="assets/js/demo.js"></script>  -->
-   
-
 </html>
