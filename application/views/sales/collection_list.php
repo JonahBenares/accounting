@@ -58,16 +58,6 @@
                                         <table width="100%">
                                             <tr>
                                                 <td width="25%"></td>
-                                                <!-- <td width="45%">
-                                                    <select class="form-control select2" name="participant" id="participant">
-                                                        <option value="">-- Select Participant --</option>
-                                                        <?php 
-                                                            foreach($participant AS $p){
-                                                        ?>
-                                                        <option value="<?php echo $p->billing_id; ?>"><?php echo $p->billing_id." - ".$p->participant_name; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </td> -->
                                                 <td width="45%">
                                                     <select class="form-control select2" name="ref_number" id="ref_number">
                                                         <option value=''>-- Select Reference No --</option>

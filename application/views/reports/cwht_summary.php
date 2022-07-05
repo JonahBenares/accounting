@@ -21,7 +21,6 @@
                                     <table width="100%">
                                         <tr>
                                             <td width="45%">
-                                                <!-- <input placeholder="Reference Number" class="form-control" type="text" id=""> -->
                                                 <select class="form-control select2" name="ref_no" id="ref_no">
                                                     <option value="">-- Select Reference Number --</option>
                                                     <?php foreach($reference_no AS $r){ ?>

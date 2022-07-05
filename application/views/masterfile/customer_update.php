@@ -9,14 +9,12 @@
                         <?php foreach($details AS $det) { ?>
                         <form id='CustomerHead'>
                             <div class="card-header">
-                               <!--  <h4>Add Customer</h4> -->
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label>Participant Name</label>
-                                            <!-- <textarea class="form-control" rows="2" readonly=""><?php echo $det['participant_name'];?></textarea> -->
                                             <input class="form-control" rows="2" value="<?php echo $det['participant_name'];?>" name="participant_name">
                                         </div>
                                         <div class="form-group">
@@ -199,7 +197,6 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-lg-6 offset-lg-3">
-                                        <!-- <input class="btn btn-primary mr-1 btn-block" value="Save" type="button"> -->
                                         <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
                                         <input type='button' id="updateCustomer" class="btn btn-primary mr-1 btn-block" value='Update Customer' onclick='UpdateCustomer()'>
                                     </div>

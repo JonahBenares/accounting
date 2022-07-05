@@ -15,9 +15,6 @@
                                         <div class="col-lg-10 offset-lg-1">
                                             <table class="table-borderded" width="100%">
                                                 <tr>
-                                                    <!-- <td>
-                                                        <input placeholder="Reference Number" name="ref_no" id="ref_no" class="form-control" type="text" >
-                                                    </td> -->
                                                     <td>
                                                         <select class="form-control select2" name="ref_no" id="ref_no">
                                                             <option value=''>-- Select Reference No --</option>
@@ -28,16 +25,6 @@
                                                             <?php } ?>
                                                         </select>
                                                     </td>
-                                                    <!-- <td>
-                                                        <select class="form-control" name="participant" id="participant">
-                                                            <option value=''>-- Select Participant --</option>
-                                                            <?php 
-                                                                foreach($participants AS $p){
-                                                            ?>
-                                                            <option value="<?php echo $p->billing_id; ?>"><?php echo $p->billing_id." - ".$p->participant_name; ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </td> -->
                                                     <td  width="1%"><button type="button" onclick="filterSales();" class="btn btn-primary btn-block">Filter</button></td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                 </tr>
