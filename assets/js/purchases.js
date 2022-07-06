@@ -2,8 +2,17 @@ function add_payment(baseurl,purchase_id,purchase_detail_id) {
     window.open(baseurl+"purchases/add_payment/"+purchase_id+'/'+purchase_detail_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
 function pay_all(baseurl, id) {
-    window.open(baseurl+"purchases/pay_all/"+id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+    /*var classes= document.getElementsByClassName("total_amount");
+    var parentText =classes[0].innerText;*/
+    //alert(parentText);
+
+    //var v = window.opener.classes;
+    //alert(parentText);
+   window.open(baseurl+"purchases/pay_all/"+id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
 }
+
+
+
 
 function add_details_wesm(baseurl,purchase_details_id) {
     /*var redirect = baseurl+"purchases/count_print";
@@ -334,3 +343,58 @@ function isNumberKey(txt, evt){
         x.style.display = "none";
       }
     }
+
+function add_reference(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect=loc+'purchases/getpayment';
+    var reference_number =$('#reference_number').val();
+    var rowCount = $('#item_body tr').length;
+    count=rowCount+1;
+    $.ajax({
+            type: "POST",
+            url:redirect,
+            data: "reference_number="+reference_number,
+            success: function(html){
+            $('#item_body').append(html);
+
+            var total =0;
+            $('.total_amount').each(function(){
+              total += parseFloat($(this).text());
+            });
+            //document.getElementById("grand").innerHTML=total.toFixed(2);
+            internationalNumberFormat = new Intl.NumberFormat('en-US')
+            document.getElementById("grand").innerHTML=internationalNumberFormat.format(total);
+            document.getElementById("reference_number").value = '';
+            document.getElementById("counter").value = count;
+        }
+    });  
+}
+
+function savePayment(){
+    var req = $("#Paymentfrm").serialize();
+    var loc= document.getElementById("baseurl").value;
+    //var redirect = loc+'index.php/request/insertRequest';
+    var conf = confirm('Are you sure you want to save this record?');
+    if(conf==true){
+        var redirect = loc+'purchases/insertPayment';
+    }else {
+        var redirect = '';
+    }
+     $.ajax({
+            type: "POST",
+            url: redirect,
+            data: req,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#savebutton").hide(); 
+            },
+            success: function(output){
+                //var conf = confirm('Are you sure you want to save this record?');
+                if(conf==true){
+                    alert("Successfully Saved!");
+                    location.reload();
+                    window.open(loc+'purchases/payment_list/'+output, '_blank');
+                }
+            }
+      });
+}

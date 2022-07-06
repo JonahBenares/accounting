@@ -499,7 +499,7 @@ class Purchases extends CI_Controller {
         $ref_no=$this->uri->segment(3);
         $data['ref_no']=$ref_no;
         $data['purchase_id'] =$this->super_model->select_column_where("purchase_transaction_head","purchase_id","reference_number",$ref_no);
-        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,purchase_id FROM purchase_transaction_head WHERE reference_number!=''");
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
         
@@ -532,6 +532,54 @@ class Purchases extends CI_Controller {
         }
         $this->load->view('purchases/payment_list',$data);
         $this->load->view('template/footer');
+    }
+
+    public function getpayment(){
+        $reference_number=$this->input->post('reference_number');
+        $ref_exp=explode(".",$reference_number);
+        $purchase_id=$ref_exp[0];
+        $ref_no=$ref_exp[1];
+        $total_amount= $this->super_model->select_sum("purchase_transaction_details", "balance", "purchase_id", $purchase_id);
+        $data['list'] = array(
+            'purchase_id'=>$purchase_id,
+            'reference_number'=>$ref_no,
+            'total_amount'=>$total_amount,
+            'count'=>$this->input->post('count'),
+        );
+            
+        $this->load->view('purchases/row_payment',$data);
+    }
+
+     public function insertPayment(){
+        $counter = $this->input->post('counter');
+        $id=$this->input->post('delivery_id');
+        for($a=0;$a<$counter;$a++){
+            if(!empty($this->input->post('item_id['.$a.']'))){
+                $data = array(
+                    'delivery_id'=>$this->input->post('delivery_id'),
+                    'item_id'=>$this->input->post('item_id['.$a.']'),
+                    'serial_no'=>$this->input->post('serial['.$a.']'),
+                    'qty'=>$this->input->post('quantity['.$a.']'),
+                    'selling_price'=>$this->input->post('selling['.$a.']'),
+                    'discount'=>$this->input->post('discount['.$a.']'),
+                    'shipping_fee'=>$this->input->post('shipping['.$a.']'),
+                    'unit_id'=>$this->input->post('unit_id['.$a.']'),
+                    'pn_no'=>$this->input->post('original_pn['.$a.']'),
+                    'supplier_id'=>$this->input->post('supplier_id['.$a.']'),
+                    'catalog_no'=>$this->input->post('catalog_no['.$a.']'),
+                    'nkk_no'=>$this->input->post('nkk_no['.$a.']'),
+                    'semt_no'=>$this->input->post('semt_no['.$a.']'),
+                    'brand_id'=>$this->input->post('brand_id['.$a.']'),
+                );
+                $this->super_model->insert_into("delivery_details", $data); 
+            }
+        }
+
+        $saved=array(
+            'saved'=>1
+        );
+        $this->super_model->update_where("delivery_head", $saved, "delivery_id", $id);
+        echo $id;
     }
 
     public function paid_list(){

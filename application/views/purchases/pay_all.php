@@ -1,7 +1,8 @@
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <div class="card">
     <form method="POST" id="paymentdataall">
-        <div class="card-header">
+        <div class="card-header" >
             <h4>Add Payment Details</h4>
         </div>
         <div class="card-body">
@@ -26,8 +27,8 @@
             </div>
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                     <label>Total Amount Due</label>
-                    <input type="text"  class="form-control" value="<?php echo number_format($total_amount,2); ?>" readonly>
+                     <label id="tad"> Total Amount Due</label>
+                    <input type="text"  class="form-control"   value="<?php //echo number_format($total_amount,2); ?>" readonly>
                 </div>
                  <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
