@@ -140,9 +140,12 @@
                                 /*$total = $c['amount'] + $c['vat']; 
                                 $total_due = $total - $c['ewt'];
                                 $zero_rated = $c['zero_rated'] + $c['zero_rated_ecozone']; */
-                                $total = $sum_amount + $sum_vat; 
-                                $total_due = $total - $sum_ewt;
                                 $zero_rated = $sum_zero_rated + $sum_zero_rated_ecozone; 
+                                $total = $sum_amount +$zero_rated + $sum_vat; 
+                                $total_due = $total - $sum_ewt;
+                                
+                                
+                                //$total_last = $sum_amount +$zero_rated+ $sum_vat; 
                             ?>
                             <table width="100%" class="table-size" style="border: 0px solid #fff;">
                                 <tr>
@@ -169,18 +172,30 @@
                                     <td style="border: 0px solid #000;">TOTAL AMOUNT DUE</td>
                                     <td style="border: 0px solid #000;border-bottom: 1px solid #dee2e6;" align="right"><?php echo number_format($total_due,2); ?></td>
                                 </tr>
-                                 <tr>
-                                    <td style="border: 0px solid #000;">
-                                        VATABLE (V)<br>
-                                        VAT EXEMPT (E) <br>
-                                        ZERO-RATED (Z) <br>
-                                        VAT (12%) <br>
-                                        TOTAL
-                                    </td>
-                                    <td style="border: 0px solid #000;" align="right">
-                                        <?php echo number_format($zero_rated,2); ?>
-                                    </td>
+
+                                  <tr>
+                                    <td style="border: 0px solid #000;" width="60%"> VATABLE (V) </td>
+                                    <td width="40%" align="right"><?php echo number_format($sum_amount,2); ?></td>
                                 </tr>
+                                <tr>
+                                    <td style="border: 0px solid #000;">VAT EXEMPT (E)</td>
+                                    <td align="right">0.00</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 0px solid #000;">ZERO-RATED (Z)</td>
+                                    <td align="right"><?php echo number_format($zero_rated,2); ?></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 0px solid #000;">VAT (12%) </td>
+                                    <td align="right"><?php echo number_format($sum_vat,2); ?></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 0px solid #000;">TOTAL</td>
+                                    <td align="right"><?php echo number_format($total,2); ?></td>
+                                </tr>
+
+
+                                
                             </table>
                         <?php //} ?>
                         </td>
