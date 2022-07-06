@@ -21,7 +21,7 @@
         <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
 
-        <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
+        <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo $billing_month; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
 
 
     </center>
@@ -77,11 +77,11 @@
 <input type="hidden" name="purchase_detail_id" id="purchase_detail_id" value="<?php echo $purchase_detail_id; ?>">
 </html>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
 <script type="text/javascript">
-    function getPDF(shortname, refno, timestamp){
+    function getPDF(shortname, refno,billing_month, timestamp){
 
         var HTML_Width = $(".canvas_div_pdf").width();
         
@@ -118,11 +118,11 @@
             }
             
 
-            pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+timestamp+".pdf");
+            pdf.save("BIR2307 CENPRI "+shortname+" "+refno+" "+billing_month+" "+timestamp+".pdf");
         });
     };
 </script>
-<script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script> -->
 <script type="text/javascript">
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
@@ -135,10 +135,5 @@
         document.body.innerHTML = originalContents;
     }
 
-    var doc = new jsPDF();
-
-    function saveDiv(divId, title) {
-        doc.fromHTML(`<html><head><title>${title}</title></head><body>` + document.getElementById(divId).innerHTML + `</body></html>`);
-        doc.save('FORM_2307.pdf');
-    }
+   
 </script>
