@@ -409,17 +409,19 @@ function calculateSales(){
 }
 
 
-function updateSeries(baseurl,count,collection_id,settlement_id,reference_number,old_series){
+function updateSeries(baseurl,count,collection_id,settlement_id,reference_number){
     var redirect = baseurl+"sales/update_seriesno";
     var series_number=document.getElementById("series_number"+count).value;
-    alert(settlement_id);
+    var old_series=document.getElementById("old_series_no"+count).value;
+    //alert(settlement_id);
 	$.ajax({
 		type: "POST",
 		url: redirect,
 		data: 'series_number='+series_number+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_series='+old_series,
 		success: function(output){
-			alert(output);
-			//document.getElementById("series_number"+count).value=output;
+			//alert(output);
+			document.getElementById("series_number"+count).value=output;
+			document.getElementById("old_series_no"+count).value=output;
 		}
 	});
 }
