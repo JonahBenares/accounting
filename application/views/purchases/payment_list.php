@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                        <form>
+                        <form id="Paymentfrm">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
@@ -21,10 +21,14 @@
                                                 <td>
                                                     <select class="form-control select2" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Reference Number --</option>
+                                                        <?php foreach($head AS $r){ ?>
+                                                            <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </td>
                                                 <td width="1%">
-                                                    <button class="btn btn-primary" type="button">Add</button>
+                                                    <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url();?>">
+                                                    <button class="btn btn-primary" type="button" onclick="add_reference()">Add</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -34,41 +38,101 @@
                                                 <td><b>Reference Number</b></td>
                                                 <td width="15%" align="center"><b>Total Amount</b></td>
                                             </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr class="td-yellow">
-                                                <td align="right"><b>Grand Total</b></td>
-                                                <td align="right"><b>701,399.86</b></td>
-                                            </tr>
+                                            <tbody id="item_body"></tbody>
+                                            <tfooter>
+                                                <tr class="td-yellow">
+                                                    <td align="right"><b>Total Amount Due</b></td>
+                                                    <td align="right" id="grand" style="font-weight:800"></td>
+                                                    <input type="hidden" name="counter" id="counter">
+                                                </tr>
+                                            </tfooter>
                                         </table>
                                         <br>
-                                        <a style="color:#fff" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>', '<?php echo $purchase_id; ?>')">Pay All</a>
+
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Date of Payment</label>
+                                                    <input type="date" name="payment_date" id="payment_date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Total Payment Amount </label>
+                                                    <input type="text" onkeypress="return isNumberKey(this, event)" style="text-align:right" name="payment_amount" id="payment_amount" placeholder="00.00" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label>Particulars</label>
+                                                    <textarea class="form-control" name="particulars" id="particulars" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                 <label id="tad"> Total Amount Due</label>
+                                                <input type="text"  class="form-control"  readonly>
+                                            </div>
+                                             
+                                        </div> -->
+
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6 col-lg-6 offset-lg-3 offset-md-3 offset-sm-3">
+                                                <center>
+                                                    
+                                                    <div class="custom-control custom-radio custom-control-inline mr-3" >
+                                                        <input type="radio" id="customRadioInline2" name="customRadioInline1" value="1" class="custom-control-input" onclick="checkRadio()">
+                                                        <label class="custom-control-label" for="customRadioInline2" >Check</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline" >
+                                                        <input type="radio" id="customRadioInline1" name="customRadioInline1" value="2" class="custom-control-input" onclick="cashRadio()">
+                                                        <label class="custom-control-label" for="customRadioInline1">Cash</label>
+                                                    </div>
+                                                </center>
+                                            </div>
+                                        </div>
+                                        <div id="checkID" style="display:none">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Check No</label>
+                                                        <input type="text" class="form-control" name="check_no" id="check_no">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>CV No</label>
+                                                        <input type="text" class="form-control" name="cv_no" id="cv_no">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Check Date</label>
+                                                        <input type="date" class="form-control" name="check_date" id="check_date">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="cashID" style="display:none">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>PCV</label>
+                                                        <input type="text" class="form-control" name="pcv" id="pcv">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <!-- <a style="color:#fff" id="pay" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>', '<?php echo $purchase_id; ?>')">Pay All</a> -->
+                                        <center><span id="alt"></span></center>
+                                        <input type='button' class="btn btn-success btn-md btn-block" id='pay' onclick='savePaymentall()' style="color:#fff" value='Pay All'>
                                         <br>
                                     </div>
                                 </div>

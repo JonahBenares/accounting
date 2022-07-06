@@ -20,14 +20,17 @@
     <center>
         <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
-        <!-- <button class="btn btn-primary " onclick="saveDiv('printableArea','Title')">Save as PDF</button> -->
+
+        <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo $billing_month; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
+
+
     </center>
     <br>
 </div>
 <center>
 <div style="padding-bottom:90px;">
-    <div id="contentPDF">
-    <page size="Long" id="printableArea" >
+    <div id="contentPDF" >
+    <page size="Long" id="printableArea" class="canvas_div_pdf" >
         <img class="img2307" src="<?php echo base_url(); ?>assets/img/form2307.jpg" style="width: 100%;">
         <label class="period_from "><?php echo $period_from; ?></label>
         <label class="period_to"><?php echo $period_to; ?></label>
@@ -73,6 +76,52 @@
 <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
 <input type="hidden" name="purchase_detail_id" id="purchase_detail_id" value="<?php echo $purchase_detail_id; ?>">
 </html>
+
+<script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
+<script type="text/javascript">
+    function getPDF(shortname, refno,billing_month, timestamp){
+
+        var HTML_Width = $(".canvas_div_pdf").width();
+        
+        var HTML_Height = $(".canvas_div_pdf").height();
+
+        /*alert(HTML_Height);*/
+        var top_left_margin = 10;
+        var PDF_Width = HTML_Width+(top_left_margin*2);
+        var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+        
+        var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+        
+
+        html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
+            useCORS: true,
+            logging: false,
+            height: window.outerHeight + window.innerHeight,
+            windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
+            canvas.getContext('2d');
+        /*    
+            console.log(canvas.height+"  "+canvas.width);*/
+            
+            
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+            
+            
+            for (var i = 1; i <= totalPDFPages; i++) { 
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+            }
+            
+
+            pdf.save("BIR2307 CENPRI "+shortname+" "+refno+" "+billing_month+" "+timestamp+".pdf");
+        });
+    };
+</script>
 <!-- <script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script> -->
 <script type="text/javascript">
     function printDiv(divName) {
@@ -86,10 +135,5 @@
         document.body.innerHTML = originalContents;
     }
 
-    var doc = new jsPDF();
-
-    function saveDiv(divId, title) {
-        doc.fromHTML(`<html><head><title>${title}</title></head><body>` + document.getElementById(divId).innerHTML + `</body></html>`);
-        doc.save('FORM_2307.pdf');
-    }
+   
 </script>
