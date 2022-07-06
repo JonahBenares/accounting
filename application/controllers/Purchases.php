@@ -860,6 +860,8 @@ class Purchases extends CI_Controller {
         $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
 
         $reference_number = $this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
+        $billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        $data['billing_month'] = date('my',strtotime($billing_to));
         $data['refno'] =preg_replace("/[^0-9]/", "", $reference_number);
         
 
