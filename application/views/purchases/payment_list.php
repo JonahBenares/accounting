@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                        <form>
+                        <form id="Paymentfrm">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
@@ -21,10 +21,14 @@
                                                 <td>
                                                     <select class="form-control select2" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Reference Number --</option>
+                                                        <?php foreach($head AS $r){ ?>
+                                                            <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </td>
                                                 <td width="1%">
-                                                    <button class="btn btn-primary" type="button">Add</button>
+                                                    <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url();?>">
+                                                    <button class="btn btn-primary" type="button" onclick="add_reference()">Add</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -34,41 +38,17 @@
                                                 <td><b>Reference Number</b></td>
                                                 <td width="15%" align="center"><b>Total Amount</b></td>
                                             </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TW-10991-000099</td>
-                                                <td align="right">100,199.98</td>
-                                            </tr>
-                                            <tr class="td-yellow">
-                                                <td align="right"><b>Grand Total</b></td>
-                                                <td align="right"><b>701,399.86</b></td>
-                                            </tr>
+                                            <tbody id="item_body"></tbody>
+                                            <tfooter>
+                                                <tr class="td-yellow">
+                                                    <td align="right"><b>Grand Total</b></td>
+                                                    <td align="right" id="grand"></td>
+                                                    <input type="hidden" name="counter" id="counter">
+                                                </tr>
+                                            </tfooter>
                                         </table>
                                         <br>
-                                        <a style="color:#fff" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>', '<?php echo $purchase_id; ?>')">Pay All</a>
+                                        <a style="color:#fff" id="pay" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>', '<?php echo $purchase_id; ?>')">Pay All</a>
                                         <br>
                                     </div>
                                 </div>
