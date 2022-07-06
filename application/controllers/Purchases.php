@@ -790,7 +790,7 @@ class Purchases extends CI_Controller {
         $total_vatable_purchase=$this->input->post('total_vatable_purchase');
         $total_vat=$this->input->post('total_vat');
         $total_ewt=$this->input->post('total_ewt');
-        $payment_amount=$this->input->post('payment_amount');
+        $total_amount=$this->input->post('total_amount');
         $payment_mode=$this->input->post('customRadioInline1');
         $check_no=$this->input->post('check_no');
         $cv_no=$this->input->post('cv_no');
@@ -806,7 +806,7 @@ class Purchases extends CI_Controller {
                 'total_purchase'=>$total_vatable_purchase[$a],
                 'total_vat'=>$total_vat[$a],
                 'total_ewt'=>$total_ewt[$a],
-                'total_amount'=>$payment_amount,
+                'total_amount'=>$total_amount[$a],
                 'payment_mode'=>$payment_mode,
                 'pcv'=>$pcv,
                 'check_no'=>$check_no,

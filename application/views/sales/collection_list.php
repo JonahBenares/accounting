@@ -164,11 +164,11 @@
                                                     </div>
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" align="center">
-                                                    <input type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onkeyup="updateSeries('<?php echo base_url(); ?>','<?php echo $x; ?>');">
-                                                    <input type="" name="collection_id" id="collection_id<?php echo $x; ?>" value='<?php echo $log['collection_id'];?>'>
+                                                    <input type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onblur="updateSeries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo $log['series_number'];?>');">
+                                                    <!-- <input type="" name="collection_id" id="collection_id<?php echo $x; ?>" value='<?php echo $log['collection_id'];?>'>
                                                     <input type="" name="settlement_id_single" id="settlement_id_single<?php echo $x; ?>" value='<?php echo $log['settlement_id_single'];?>'>
                                                     <input type="" name="reference_no_single" id="reference_no_single<?php echo $x; ?>" value='<?php echo $log['reference_no_single'];?>'>
-                                                    <input type="" name="series_number" id="series_number<?php echo $x; ?>" value='<?php echo $log['series_number'];?>'>
+                                                    <input type="" name="series_number" id="series_number<?php echo $x; ?>" value='<?php echo $log['series_number'];?>'> -->
                                                 </td>
                                                 <?php if($log['count_series']>=1){ ?>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['billing_remarks']); ?></td>
