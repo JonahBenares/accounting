@@ -806,7 +806,7 @@ class Purchases extends CI_Controller {
                 'total_purchase'=>$total_vatable_purchase[$a],
                 'total_vat'=>$total_vat[$a],
                 'total_ewt'=>$total_ewt[$a],
-                'total_amount'=>$payment_amount[$a],
+                'total_amount'=>$payment_amount,
                 'payment_mode'=>$payment_mode,
                 'pcv'=>$pcv,
                 'check_no'=>$check_no,

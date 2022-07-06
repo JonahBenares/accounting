@@ -407,3 +407,20 @@ function calculateSales(){
     document.getElementById("total_amount").value  = parseFloat(total).toFixed(2);
 
 }
+
+
+function updateSeries(baseurl,count,collection_id,settlement_id,reference_number,old_series){
+    var redirect = baseurl+"sales/update_seriesno";
+    var series_number=document.getElementById("series_number"+count).value;
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'series_number='+series_number+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_series='+old_series,
+		processData: false,
+		contentType: false,
+		success: function(output){
+			alert(output);
+			//document.getElementById("series_number"+count).value=output;
+		}
+	});
+}
