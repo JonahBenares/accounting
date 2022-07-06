@@ -77,9 +77,9 @@
 <input type="hidden" name="purchase_detail_id" id="purchase_detail_id" value="<?php echo $purchase_detail_id; ?>">
 </html>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
 <script type="text/javascript">
     function getPDF(shortname, refno, timestamp){
 
@@ -122,7 +122,7 @@
         });
     };
 </script>
-<script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script> -->
 <script type="text/javascript">
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
