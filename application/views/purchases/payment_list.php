@@ -41,7 +41,7 @@
                                             <tbody id="item_body"></tbody>
                                             <tfooter>
                                                 <tr class="td-yellow">
-                                                    <td align="right"><b>Grand Total</b></td>
+                                                    <td align="right"><b>Total Amount Due</b></td>
                                                     <td align="right" id="grand" style="font-weight:800"></td>
                                                     <input type="hidden" name="counter" id="counter">
                                                 </tr>
@@ -130,7 +130,9 @@
                                             </div>
                                         </div>
                                         <br>
-                                        <a style="color:#fff" id="pay" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>', '<?php echo $purchase_id; ?>')">Pay All</a>
+                                        <!-- <a style="color:#fff" id="pay" class="btn btn-success btn-md btn-block" onclick="pay_all('<?php echo base_url(); ?>', '<?php echo $purchase_id; ?>')">Pay All</a> -->
+                                        <center><span id="alt"></span></center>
+                                        <input type='button' class="btn btn-success btn-md btn-block" id='pay' onclick='savePaymentall()' style="color:#fff" value='Pay All'>
                                         <br>
                                     </div>
                                 </div>
