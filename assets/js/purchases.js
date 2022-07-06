@@ -359,24 +359,26 @@ function add_reference(){
 
             var total =0;
             $('.total_amount').each(function(){
-              total += parseFloat($(this).text());
+              total += parseFloat($(this).val());
             });
-            //document.getElementById("grand").innerHTML=total.toFixed(2);
-            internationalNumberFormat = new Intl.NumberFormat('en-US')
-            document.getElementById("grand").innerHTML=internationalNumberFormat.format(total);
+            document.getElementById("grand").innerHTML=total.toFixed(2);
+            document.getElementById("payment_amount").value=total.toFixed(2);
+            $("#reference_number option[value='"+reference_number+"']").remove();
+            //internationalNumberFormat = new Intl.NumberFormat('en-US')
+            //document.getElementById("grand").innerHTML=internationalNumberFormat.format(total);
             document.getElementById("reference_number").value = '';
             document.getElementById("counter").value = count;
         }
     });  
 }
 
-function savePayment(){
+function savePaymentall(){
     var req = $("#Paymentfrm").serialize();
     var loc= document.getElementById("baseurl").value;
     //var redirect = loc+'index.php/request/insertRequest';
     var conf = confirm('Are you sure you want to save this record?');
     if(conf==true){
-        var redirect = loc+'purchases/insertPayment';
+        var redirect = loc+'purchases/save_payment_all';
     }else {
         var redirect = '';
     }
@@ -386,14 +388,20 @@ function savePayment(){
             data: req,
             beforeSend: function(){
                 document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
-                $("#savebutton").hide(); 
+                document.getElementById("pay").disabled = true;
+                $('#reference_number').hide();
+                //document.getElementById("reference_number").disabled = true;
             },
             success: function(output){
+                document.getElementById("pay").disabled = false;
+                $('#reference_number').show();
+                //alert(output);
                 //var conf = confirm('Are you sure you want to save this record?');
                 if(conf==true){
                     alert("Successfully Saved!");
                     location.reload();
-                    window.open(loc+'purchases/payment_list/'+output, '_blank');
+                    window.open(loc+'purchases/payment_form/'+output, '_blank');
+                    //window.location=loc+'purchases/payment_form/'+output;;
                 }
             }
       });
