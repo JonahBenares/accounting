@@ -220,8 +220,8 @@ function filterSSLedger(){
 
 function filterOR(){
     var participant= document.getElementById("participant").value;
-    var date_from= document.getElementById("date_from").value;
-    var date_to= document.getElementById("date_to").value;
+    var from= document.getElementById("date_from").value;
+    var to= document.getElementById("date_to").value;
     var loc= document.getElementById("baseurl").value;
 
     if(participant!=''){
@@ -231,15 +231,15 @@ function filterOR(){
     }
 
 
-    if(date_from){
-        var from=date_from;
+    if(from){
+        var from=from;
     }else{
         var from='null';
     }
 
 
-    if(date_to){
-        var to=date_to;
+    if(to){
+        var to=to;
     }else{
         var to='null';
     }

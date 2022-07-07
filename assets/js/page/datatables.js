@@ -72,3 +72,7 @@ $('#tableExport').DataTable({
     'copy', 'csv', 'excel', 'pdf', 'print'
   ]
 });
+
+$("#table-4").dataTable({
+  order: [[1, 'asc']],
+});
