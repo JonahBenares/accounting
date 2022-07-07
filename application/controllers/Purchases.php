@@ -566,14 +566,15 @@ class Purchases extends CI_Controller {
         $participant=$this->uri->segment(4);
         $data['ref_no']=$ref_no;
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
-        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql="";
         if($ref_no!='null' && $participant=='null'){
            $sql.= " AND pth.reference_number = '$ref_no' AND";
         }else if($ref_no!='null' && $participant!='null'){
             $sql.= " AND pth.reference_number = '$ref_no' AND ptd.billing_id = '$participant' AND";
         }else if($ref_no=='null' && $participant!='null'){
-            $sql.= " AND ptd.billing_id = '$participant' AND";
+            $sql.= " AND ptd.short_name = '$participant' AND";
         }else {
             $sql.= "";
         }
