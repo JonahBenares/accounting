@@ -578,7 +578,7 @@
                             <td colspan="20"><br><br></td>
                         </tr>
                         <tr>
-                            <td width="19" align="center" class="bor-btm font-10">CELINA TIGNERO</td>
+                            <td width="19" align="center" class="bor-btm font-10"><?php echo strtoupper($_SESSION['fullname']);?></td>
                             <td width="1%"></td>
                             <td width="19" align="center" class="bor-btm font-10">JEOMAR DELOS SANTOS</td>
                             <td width="1%"></td>
