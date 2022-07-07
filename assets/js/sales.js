@@ -304,7 +304,7 @@ $(document).on("click", "#ORNo", function () {
 	 var series_no = $(this).attr("data-series-col");
 	 var old_series_no_col = $(this).attr("data-old-series-col");
 	 document.getElementById('series_no').innerHTML=series_no;
-	 document.getElementById('old_series_no_disp').innerHTML=old_series_no_col.replace(/(,)/g, '<hr>');
+	 document.getElementById('old_series_no_disp').innerHTML=old_series_no_col.replace(/(,)/g, '<hr style="margin:3px 0px">');
 
 });
 
@@ -312,7 +312,7 @@ $(document).on("click", "#BSNo", function () {
 	 var bs_no = $(this).attr("data-bs");
 	 var old_bs_no = $(this).attr("data-old-bs");
 	 document.getElementById('bs_no').innerHTML=bs_no;
-	 document.getElementById('old_bs_no_disp').innerHTML=old_bs_no.replace(/(,)/g, '<hr>');
+	 document.getElementById('old_bs_no_disp').innerHTML=old_bs_no.replace(/(,)/g, '<hr style="margin:3px 0px">');
 
 });
 

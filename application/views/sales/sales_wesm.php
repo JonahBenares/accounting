@@ -193,13 +193,13 @@
                 
           
 <div class="modal fade" id="oldOR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="width:400px">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="line-height: 1">
+            <div class="modal-header" style="background: #6777ef;color:#fff">
+                <h4 class="modal-title" id="exampleModalLabel" style="line-height: 1">
                     <small style="font-size: 10px;">Current OR</small>
                     <br><!-- <input type="text" id="series_no" class="form-control"> --><span id="series_no"></span>
-                </h5>
+                </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -207,7 +207,9 @@
             <div class="modal-body">
                 <table width="100%" class="table-bordered">
                     <tr>
-                        <td ><span id="old_series_no_disp"></span></td>
+                        <td style="padding: 3px;border-left: 1px solid #fff;border-right:1px solid #fff;">
+                            <b><span id="old_series_no_disp"></span></b>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -215,9 +217,9 @@
     </div>
 </div>                             
 <div class="modal fade" id="olSeries" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="width:400px">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background: #ffa426;color:#fff">
                 <h5 class="modal-title" id="exampleModalLabel" style="line-height: 1">
                     <small style="font-size: 10px;">Current Series</small>
                     <br><span id="bs_no"></span>
@@ -229,7 +231,9 @@
             <div class="modal-body">
                 <table width="100%" class="table-bordered">
                     <tr>
-                        <td><span id="old_bs_no_disp"></td>
+                        <td style="padding: 3px;border-left: 1px solid #fff;border-right:1px solid #fff;">
+                            <b><span id="old_bs_no_disp"></b>
+                        </td>
                     </tr>
                 </table>
             </div>
