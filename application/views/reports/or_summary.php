@@ -31,13 +31,13 @@
                                                 </select>
                                                 </td>
                                                 <td width="20%">
-                                                    <input placeholder="Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Date From" id="date_from" name="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td width="20%">
-                                                    <input placeholder="Date To" id="date_to" class="form-control" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Date To" id="date_to" name="date_to" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td width="10%">
-                                                    <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
+                                                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
                                                     <button type="button" onclick="filterOR();" class="btn btn-primary btn-block">Filter</button>
                                                 </td>
                                             </tr>
@@ -61,30 +61,37 @@
                             </table>
                             <br>
                             <div>
-                                <table class="table table-bordered">
-                                    <thead class="header">
+                                <table class="table" id='table-4'>
+                                    <thead>
                                         <tr>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" rowspan="2" align="center">Date</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" rowspan="2" align="center">OR No</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" rowspan="2" align="center">STL ID</td> 
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="1" align="center">Company Name</td> 
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="1" align="center">Amount</td>    
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="1" align="center">Remarks</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Date</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">OR No</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">STL ID</td> 
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Company Name</td> 
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Amount</td>    
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Remarks</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
                                             if(!empty($or_summary)){
-                                                $or_summary_array = array_map("unserialize", array_unique(array_map("serialize", $or_summary)));
-                                            foreach($or_summary_array AS $or){
+                                                //$or_summary = array_map("unserialize", array_unique(array_map("serialize", $or_summary)));
+                                            foreach($or_summary AS $or){
                                         ?>
                                         <tr>
-                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['date']; ?></td>
-                                            <td align="center" class="td-sticky left-col-2 sticky-back"><?php echo $or['or_no']; ?></td>
-                                            <td align="center" class="td-sticky left-col-2 sticky-back"><?php echo $or['stl_id']; ?></td>
-                                            <td align="center" class="td-sticky left-col-2 sticky-back"><?php echo $or['company_name']; ?></td>
-                                            <td align="center" class="td-sticky left-col-2 sticky-back"><?php echo $or['amount']; ?></td>
-                                            <td align="center" class="td-sticky left-col-2 sticky-back"></td>
+                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo ($or['date']!='') ? date("F d,Y",strtotime($or['date'])) : ''; ?></td>
+                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['or_no']; ?></td>
+                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['stl_id']; ?></td>
+                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['company_name']; ?></td>
+                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo ($or['amount']!='') ? number_format($or['amount'],2) : '' ; ?></td>
+                                            <?php if($or['remarks']!=''){ ?>
+                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['remarks']; ?></td>
+                                            <?php } else {?>
+                                            <td align="center" class="td-sticky left-col-1 sticky-back">
+                                            <a href="<?php echo base_url(); ?>index.php/reports/ignore_or/<?php echo $or['or_no']; ?>" class="btn btn-md btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')">Ignore</a>
+                                            <a href="<?php echo base_url(); ?>index.php/reports/cancel_or/<?php echo $or['or_no']; ?>" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to cancel this OR?')">Cancel</a>
+                                            </td>
+                                        <?php } ?>
                                         </tr>
                                         <?php } } ?>
                                     </tbody>

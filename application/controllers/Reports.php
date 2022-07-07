@@ -1010,9 +1010,42 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-        public function or_summary(){
+
+        public function ignore_or(){
+            $or_no=$this->uri->segment(3);
+
+                 $ignore_or = array(
+                   "or_no"=>$or_no,
+                   "remarks"=>'Ignored',
+                );
+                $this->super_model->insert_into("or_remarks", $ignore_or);
+
+            ?>
+            <script>alert('Successfully Ignored the OR.'); 
+            window.location='<?php echo base_url(); ?>index.php/reports/or_summary/'
+            </script> 
+            <?php
+        }
+
+        public function cancel_or(){
+        $or_no=$this->uri->segment(3);
+
+             $cancel_or = array(
+               "or_no"=>$or_no,
+               "remarks"=>'Cancelled',
+            );
+            $this->super_model->insert_into("or_remarks", $cancel_or);
+
+        ?>
+        <script>alert('Successfully Cancelled the OR.'); 
+        window.location='<?php echo base_url(); ?>index.php/reports/or_summary/'
+        </script> 
+        <?php
+    }
+
+    public function or_summary(){
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
@@ -1025,40 +1058,50 @@ class Reports extends CI_Controller {
         if($date_from!='null' && $date_to != 'null'){
             $sql.= "ch.collection_date BETWEEN '$date_from' AND '$date_to' AND ";
         } if($participant!='null'){
-             $sql.= "cd.settlement_id = '$participant' AND "; 
+             $sql.= "cd.settlement_id = '$participant' AND ";
 
         $query=substr($sql,0,-4);
         $data['or_summary']=array();
-        $max = $this->super_model->get_max_where("collection_details", "series_number","series_number != ''");
-        $min = $this->super_model->get_min_where("collection_details", "series_number","series_number != ''");
-
+        $max = $this->super_model->get_max_where("collection_details cd", "series_number","series_number != '' AND ".$query."");
+        $min = $this->super_model->get_min_where("collection_details cd", "series_number","series_number != '' AND ".$query."");
         foreach (range($min, $max) as $number) {
+        }
+        $or_no = $this->super_model->select_column_custom_where("collection_details cd", "series_number","series_number != '' AND ".$query."");
+        $complete_orno = $this->super_model->select_column_custom_where("collection_details cd", "series_number","series_number != ''");
+
+         //foreach (range($min, $max) as $number) {
         foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
-            //$count=$this->super_model->count_rows_where("collection_details","series_number","series_number!=''");
-            //for($x=1;$x<=$number;$x++){
-            //echo $or->series_number." - ".$number."<br>";
-            if ($or->series_number == $number) {
+            $min++;
+            if($or->series_number==$min){
                 $data['or_summary'][]=array(
                     "date"=>$or->collection_date,
-                    "series_number"=>$or->series_number,
-                    "or_no"=>$number,
+                    "or_no"=>$or->series_number,
                     "stl_id"=>$or->settlement_id,
                     "amount"=>$or->total,
+                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
                     "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
                 );
-            } else {
+            }else if($or->series_number!=$min){
+                $data['or_summary'][]=array(
+                    "date"=>$or->collection_date,
+                    "or_no"=>$or->series_number,
+                    "stl_id"=>$or->settlement_id,
+                    "amount"=>$or->total,
+                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
+                    "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
+                );
+            //}else if($min!=$complete_orno AND $min==$or_no){
                 $data['or_summary'][]=array(
                     "date"=>'',
-                    "series_number"=>$or->series_number,
-                    "or_no"=>$number,
+                    "or_no"=>$min,
                     "stl_id"=>'',
                     "amount"=>'',
+                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$min),
                     "company_name"=>'',
                 );
-                    }
-                //}
-             }
-        }     
+                }
+            //}
+        }    
         $this->load->view('reports/or_summary',$data);
         $this->load->view('template/footer');
     }
