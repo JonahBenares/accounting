@@ -150,7 +150,7 @@
                                                     $data2[$key]['total'][] = $value['total'];
                                                     $data2[$key]['defint'][] = $value['defint'];
                                                 }
-
+                                                $x=1;
                                                 foreach($data2 as $log) {
                                             ?>
                                             <tr>
@@ -158,12 +158,18 @@
                                                     <div class="btn-group">
                                                         <a href="<?php echo base_url(); ?>sales/print_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white"><span class="fas fa-print"></span></a>
                                                     
-                                                        <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $log['series_number']; ?>" data-id='<?php echo $log['collection_id']; ?>' data-settlement='<?php echo $log['settlement_id_single'];?>' data-reference='<?php echo $log['reference_no_single'];?>'>
+                                                        <!-- <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $log['series_number']; ?>" data-id='<?php echo $log['collection_id']; ?>' data-settlement='<?php echo $log['settlement_id_single'];?>' data-reference='<?php echo $log['reference_no_single'];?>'>
                                                             <span class="m-0 fas fa-edit"></span>
-                                                        </button>
+                                                        </button> -->
                                                     </div>
                                                 </td>
-                                                <td class="td-btm pt-1 pb-1" align="center"><?php echo $log['series_number'];?></td>
+                                                <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
+                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onchange="updateSeries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input Series Number'>
+                                                    <!-- <input type="" name="collection_id" id="collection_id<?php echo $x; ?>" value='<?php echo $log['collection_id'];?>'>
+                                                    <input type="" name="settlement_id_single" id="settlement_id_single<?php echo $x; ?>" value='<?php echo $log['settlement_id_single'];?>'>
+                                                    <input type="" name="reference_no_single" id="reference_no_single<?php echo $x; ?>" value='<?php echo $log['reference_no_single'];?>'>-->
+                                                    <input type="hidden" name="old_series_no" id="old_series_no<?php echo $x; ?>" value='<?php echo $log['series_number'];?>'> 
+                                                </td>
                                                 <?php if($log['count_series']>=1){ ?>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['billing_remarks']); ?></td>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['particulars']); ?></td>
@@ -208,7 +214,7 @@
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php } ?>
                                             </tr>
-                                            <?php } ?>
+                                            <?php $x++; } ?>
                                         </tbody>
                                     </table>
                                 </div>

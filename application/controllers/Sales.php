@@ -383,13 +383,11 @@ class Sales extends CI_Controller {
     }
 
     public function update_seriesno(){
-        $saved=$this->input->post('saved');
-        $ref_no=$this->input->post('ref_no');
+        $ref_no=$this->input->post('reference_number');
         $collection_id=$this->input->post('collection_id');
         $new_series=$this->input->post('series_number');
-        $old_series=$this->input->post('old_series_no');
+        $old_series=$this->input->post('old_series');
         $settlement_id=$this->input->post('settlement_id');
-        $saved_exp=explode("-", $saved);
         foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
             $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
             if($count==0){
@@ -404,11 +402,10 @@ class Sales extends CI_Controller {
             'old_series_no'=>$old_series_insert,
         );
 
-        $this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
-        if($saved_exp[0]=='saved'){
-            echo $saved;
-        }else{
-            echo $ref_no;
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_series){
+               echo $latest_series->series_number;
+            }
         }
     }
 
@@ -949,10 +946,14 @@ class Sales extends CI_Controller {
             $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
             foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                 $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+
+
                 $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                 $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                 $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                 $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+
+              
                 $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                 $sum_vatable_sales=array_sum($vatable_sales_bs);
                 $sum_vs_exp = explode(".", $sum_vatable_sales);

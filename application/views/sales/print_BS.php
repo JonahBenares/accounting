@@ -262,6 +262,7 @@
                     <b>Note:</b><br>
                     1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
                     <br><br>
+                    2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
                 </td>
             </tr>
             <tr>
@@ -548,6 +549,7 @@
                     1. The scanned copies of the withholding tax certificate shall be submitted to IEMOP thru tax data facility no later than three (3) working days from the end of the calendar month.
                     <br>
                     <br>
+                    2. The original copy shall be submitted at the offices of the IEMOP at the 9th Floor Robinsons Equitable Tower ADB Avenue, Ortigas Center, Pasig City.
                 </td>
             </tr>
             <tr>
@@ -576,7 +578,7 @@
                             <td colspan="20"><br><br></td>
                         </tr>
                         <tr>
-                            <td width="19" align="center" class="bor-btm font-10">CELINA TIGNERO</td>
+                            <td width="19" align="center" class="bor-btm font-10"><?php echo strtoupper($_SESSION['fullname']);?></td>
                             <td width="1%"></td>
                             <td width="19" align="center" class="bor-btm font-10">JEOMAR DELOS SANTOS</td>
                             <td width="1%"></td>
