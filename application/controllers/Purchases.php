@@ -994,6 +994,95 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/print_2307',$data);
     }
 
+
+    public function bulk_print_2307()
+    {
+        $purchase_id = $this->uri->segment(3);
+        $purchase_detail_id = $this->uri->segment(4);
+        $data['purchase_detail_id']=$purchase_detail_id;
+
+        $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
+
+        $reference_number = $this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
+        $billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        $data['billing_month'] = date('my',strtotime($billing_to));
+        $data['refno'] =preg_replace("/[^0-9]/", "", $reference_number);
+        
+
+        $billing_id=$this->super_model->select_column_where("purchase_transaction_details", "billing_id", "purchase_detail_id", $purchase_detail_id);
+
+        $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
+        $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
+        $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
+        $data['zip']=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $billing_id);
+        $billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        $data['reference_no']=$this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
+        $data['item_no']=$this->super_model->select_column_where("purchase_transaction_details", "item_no", "purchase_detail_id", $purchase_detail_id);
+
+        $month= date("n",strtotime($billing_to));
+        $yearQuarter = ceil($month / 3);
+        $first = array(1,4,7,10);
+        $second = array(2,5,8,11);
+        $third = array(3,6,9,12);
+
+        $vatable_purchase = $this->super_model->select_column_where("purchase_transaction_details", "vatables_purchases", "purchase_detail_id", $purchase_detail_id);
+        $zero_rated = $this->super_model->select_column_where("purchase_transaction_details", "zero_rated_purchases", "purchase_detail_id", $purchase_detail_id);
+        $zero_rated_ecozone = $this->super_model->select_column_where("purchase_transaction_details", "zero_rated_ecozones", "purchase_detail_id", $purchase_detail_id);
+
+        if($vatable_purchase != 0){
+            $amount=$vatable_purchase;
+        }
+        if($zero_rated != 0){
+            $amount=$zero_rated;
+        }
+        if($zero_rated_ecozone != 0){
+            $amount=$zero_rated_ecozone;
+        }
+
+        $data['total'] = $amount;
+
+        if(in_array($month, $first)){
+            $data['firstmonth'] = $amount; 
+        } else {
+            $data['firstmonth'] = "-"; 
+        }
+
+        if(in_array($month, $second)){
+            $data['secondmonth'] = $amount; 
+        } else {
+            $data['secondmonth'] = "-"; 
+        }
+
+        if(in_array($month, $third)){
+            $data['thirdmonth'] = $amount; 
+        } else {
+            $data['thirdmonth'] = "-"; 
+        }
+
+         $data['ewt'] = $this->super_model->select_column_where("purchase_transaction_details", "ewt", "purchase_detail_id", $purchase_detail_id);
+
+        if($yearQuarter ==1){
+            $period_from = "0101".date("Y");
+            $period_to = "0331".date("Y");
+        } else if($yearQuarter == 2){
+            $period_from = "0401".date("Y");
+            $period_to = "0630".date("Y");
+        } else if($yearQuarter == 3){
+            $period_from = "0701".date("Y");
+            $period_to = "0930".date("Y");
+        } else if($yearQuarter == 4){
+            $period_from = "1001".date("Y");
+            $period_to = "1231".date("Y");
+        }
+
+        $data['period_from'] = $period_from;
+        $data['period_to'] = $period_to;
+
+ 
+        $this->load->view('purchases/bulk_print_2307',$data);
+    }
+
+
     public function print_2307sample()
     {   
         $this->load->view('purchases/print_2307sample');
