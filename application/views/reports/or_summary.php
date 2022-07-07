@@ -75,8 +75,8 @@
                                     <tbody>
                                         <?php 
                                             if(!empty($or_summary)){
-                                                $or_summary_array = array_map("unserialize", array_unique(array_map("serialize", $or_summary)));
-                                            foreach($or_summary_array AS $or){
+                                                $or_summary = array_map("unserialize", array_unique(array_map("serialize", $or_summary)));
+                                            foreach($or_summary AS $or){
                                         ?>
                                         <tr>
                                             <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['date']; ?></td>
