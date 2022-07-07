@@ -946,10 +946,14 @@ class Sales extends CI_Controller {
             $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
             foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                 $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+
+
                 $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                 $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                 $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                 $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+
+              
                 $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                 $sum_vatable_sales=array_sum($vatable_sales_bs);
                 $sum_vs_exp = explode(".", $sum_vatable_sales);

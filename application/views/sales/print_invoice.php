@@ -111,28 +111,28 @@
                         <td colspan="1"><?php echo $vat_sales_cents; ?></td>
                     </tr>
 
-                    <?php if($zero_rated_peso!=0) { ?>
+                    <?php if($zero_rated_peso!=0 || $zero_rated_cents != 0) { ?>
                      <tr>
                         <td colspan="15" align="right">Zero Rated</td>
                         <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_peso,0); ?></td>
                         <td colspan="1"><?php echo $zero_rated_cents; ?></td>
                     </tr>
                     <?php } ?>
-                    <?php if($zero_rated_ecozones_peso!=0) { ?>
+                    <?php if($zero_rated_ecozones_peso!=0 ||$zero_rated_ecozones_cents != 0) { ?>
                     <tr>
                         <td colspan="15" align="right">Zero Rated Ecozones Sales</td>
                         <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_ecozones_peso,0); ?></td>
                         <td colspan="1"><?php echo $zero_rated_ecozones_cents; ?></td>
                     </tr>
                     <?php } 
-                    if($vat_peso!=0) { ?>
+                    if($vat_peso!=0  || $vat_cents != 0) { ?>
                      <tr>
                         <td colspan="15" align="right">VAT</td>
                         <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_peso,0); ?></td>
                         <td colspan="1"><?php echo $vat_cents; ?></td>
                     </tr>
                     <?php }
-                    if($ewt_peso!=0) { ?>
+                    if($ewt_peso!=0 || $ewt_cents != 0) { ?>
                     <tr>
                         <td colspan="15" align="right">EWT</td>
                         <td colspan="4" align="center"><?php echo "₱ (".number_format($ewt_peso,0).")"; ?></td>
