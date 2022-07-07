@@ -1150,4 +1150,135 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/payment_form',$data);
     }
 
+    public function download_bulk(){
+        $refno = $this->input->post('refno');
+        $purchase_id = $this->super_model->select_column_where('purchase_transaction_head', 'purchase_id', 'reference_number', $refno);
+        $billing_to = $this->super_model->select_column_where('purchase_transaction_head', 'billing_to', 'reference_number', $refno);
+          $month= date("n",strtotime($billing_to));
+            $yearQuarter = ceil($month / 3);
+            $first = array(1,4,7,10);
+            $second = array(2,5,8,11);
+            $third = array(3,6,9,12);
+
+            if($yearQuarter ==1){
+                $period_from = "0101".date("Y");
+                $period_to = "0331".date("Y");
+            } else if($yearQuarter == 2){
+                $period_from = "0401".date("Y");
+                $period_to = "0630".date("Y");
+            } else if($yearQuarter == 3){
+                $period_from = "0701".date("Y");
+                $period_to = "0930".date("Y");
+            } else if($yearQuarter == 4){
+                $period_from = "1001".date("Y");
+                $period_to = "1231".date("Y");
+            }
+
+           
+
+        foreach($this->super_model->select_row_where('purchase_transaction_details', 'purchase_id', $purchase_id) AS $det){ 
+            $tin=$this->super_model->select_column_where("participant", "tin", "billing_id", $det->billing_id);
+            if(!empty($tin)){
+              $tin=explode("-",$tin);
+            } else {
+              $tin2='000-000-000-000';
+              $tin=explode("-",$tin2);
+            }
+
+
+            $name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id);
+            $address=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id);
+            $zip=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id);
+
+             if($det->vatables_purchases != 0){
+                $amount=$det->vatables_purchases;
+            }
+            if($det->zero_rated_purchases != 0){
+                $amount=$det->zero_rated_purchases;
+            }
+            if($det->zero_rated_ecozones != 0){
+                $amount=$det->zero_rated_ecozones;
+            }
+
+             $total = $amount;
+
+               if(in_array($month, $first)){
+                $firstmonth = $amount; 
+            } else {
+                $firstmonth = "-"; 
+            }
+
+            if(in_array($month, $second)){
+                $secondmonth = $amount; 
+            } else {
+                $secondmonth = "-"; 
+            }
+
+            if(in_array($month, $third)){
+                $thirdmonth = $amount; 
+            } else {
+                $thirdmonth = "-"; 
+            }
+
+           $str= '<div id="contentPDF" >
+            <page size="Long" id="printableArea" class="canvas_div_pdf" >
+                <img class="img2307" src="<?php echo base_url(); ?>assets/img/form2307.jpg" style="width: 100%;">
+                <label class="period_from ">'.$period_from.'</label>
+                <label class="period_to">'. $period_to.'</label>';
+
+                if(!empty($tin[1])){ 
+                   
+                    $str.='<div class="tin1">
+                       <label class="">'.$tin[0].'</label> 
+                       <label class="">'.$tin[1].'</label> 
+                       <label class="">'.$tin[2].'</label> 
+                       <label class="last1">0000</label> 
+                    </div>';
+
+                } else {
+
+                   $str.='<div class="tin1">
+                   <label class=""></label> 
+                   <label class=""></label> 
+                   <label class=""></label> 
+                   <label class="last1">0000</label> 
+                     </div>';
+
+                }
+
+                $str.='<label class="payee">'.$name.'</label>
+                <label class="address1">'.$address.'</label>
+                <label class="zip1">'.$zip.'</label>
+                <label class="address2"></label>
+                <div class="tin2">
+                   <label class="">008</label> 
+                   <label class="">691</label> 
+                   <label class="">287</label> 
+                   <label class="last1">0000</label> 
+                </div>
+                <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
+                <label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label>
+                <label class="zip2">6100</label>
+                <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label>
+                <label class="row1-col2">WC160</label>
+                <label class="row1-col3">'. (($firstmonth=="-") ? "-" : number_format($firstmonth,2)).'</label>
+                <label class="row1-col4">'. (($secondmonth=="-") ? "-" : number_format($secondmonth,2)).'</label>
+                <label class="row1-col5">'.(($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)).'</label>
+                <label class="row1-col6">'. number_format($total,2).'</label>
+                <label class="row1-col7">'.number_format($det->ewt,2) .'<span class="hey">&nbsp;&nbsp;</span></label>
+
+                <label class="row2-col3">'.(($firstmonth=="-") ? "-" : number_format($firstmonth,2)).'</label>
+                <label class="row2-col4">'. (($secondmonth=="-") ? "-" : number_format($secondmonth,2)).'</label>
+                <label class="row2-col5">'. (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)).'</label>
+                <label class="row2-col6">'. number_format($total,2).'</label>
+                <label class="row2-col7">'. number_format($det->ewt,2) .'<span>&nbsp;&nbsp;</span></label>
+                <label class="row2-col8"> Reference Number: <b>'. $refno.'</b></label>
+                <label class="row2-col9"> Item Number: <b>'. $det->item_no.'</b></label>
+            </page>
+            </div>';
+
+            echo $str;
+        }
+    }
+
 }
