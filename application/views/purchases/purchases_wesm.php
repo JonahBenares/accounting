@@ -1,4 +1,5 @@
 <script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
+
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -58,6 +59,9 @@
                                     <tr>
                                         <td>Due Date</td>
                                         <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
+                                    </tr>
+                                     <tr>
+                                        <td colspan="4"><center><button type="button" onclick="downloadbulk2307('<?php echo base_url(); ?>','<?php echo $reference_number; ?>');" class="btn btn-primary btn-block">Download Bulk 2307</button></center></td>
                                     </tr>
                                 </table>
                                 <br>
@@ -135,5 +139,7 @@
 
 
                 
-                                       
+                     <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>                  
          
