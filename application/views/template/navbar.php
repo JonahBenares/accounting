@@ -246,6 +246,9 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_ledger">Purchases Ledger</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="<?php echo base_url(); ?>reports/or_summary" ><i data-feather="layout"></i><span>OR Summary</span></a>
+            </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Subsidiary Ledger</span></a>
                 <ul class="dropdown-menu">
