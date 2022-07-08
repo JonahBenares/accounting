@@ -47,6 +47,9 @@
                             </div>
                             <hr>
                             <?php 
+                            $ors=array();
+                            $consolidated=array();
+                            $missing=array();
                             if(!empty($participant) || !empty($date_from) || !empty($date_to)){
                             ?>
                             <table class="table" width="100%">
@@ -103,18 +106,9 @@
                                                 );
                                                 ?>
                                          
-                                        <!--     <tr>
-                                                <td><?php echo $or_summary[$x]['date']?></td>
-                                                <td><?php echo $or_summary[$x]['or_no']?></td>
-                                                <td><?php echo $or_summary[$y]['stl_id'] . "<br>" . $or_summary[$x]['stl_id']?></td>
-                                                <td><?php echo $or_summary[$y]['company_name']."<br>". $or_summary[$x]['company_name'];?></td>
-                                                <td><?php echo $or_summary[$y]['amount'] . "<br>" . $or_summary[$x]['amount']?></td>
-                                                <td><?php echo $or_summary[$y]['remarks'] . "<br>" . $or_summary[$x]['remarks']?></td>
-                                            </tr> -->
+                                     
                                             <?php $y=$x;
                                           
-
-                                           
                                             } else { 
                                                       $ors[]=$or_summary[$x]['or_no'];
                                                   $consolidated[]=array(
@@ -128,14 +122,7 @@
                                                 );
 
                                                 ?>
-                                             <!--    <tr>
-                                                <td><?php echo $or_summary[$x]['date']?></td>
-                                                <td><?php echo $or_summary[$x]['or_no']?></td>
-                                                <td><?php echo  $or_summary[$x]['stl_id']?></td>
-                                                <td><?php echo  $or_summary[$x]['company_name'];?></td>
-                                                <td><?php echo  $or_summary[$x]['amount']?></td>
-                                                <td><?php echo  $or_summary[$x]['remarks']?></td>
-                                            </tr> -->
+                                        
                                             <?php }
                                          } 
                                 } 
@@ -152,10 +139,14 @@
                                     );
                                }
 
-
-                               $all = array_merge($missing,$consolidated);
+                               if(!empty($missing) && !empty($consolidated)){
+                                    $all = array_merge($missing,$consolidated);
+                                } else {
+                                    $all=array();
+                                }
                                $columns = array_column($all, 'or_no');
                                 array_multisort($columns, SORT_ASC, $all);
+                              
                                 ?>
                                 <tbody>
                                     <?php foreach($all AS $a){ ?>
