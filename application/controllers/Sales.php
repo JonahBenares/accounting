@@ -1187,6 +1187,12 @@ class Sales extends CI_Controller {
             //echo $sales_id;
       
     }
+    public function sample_table(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/sample_table');
+        $this->load->view('template/footer');
+    }
 
 
 
