@@ -65,7 +65,7 @@
                             </table>
                             <br>
                             <div>
-                                <table class="table table-bordered" id='table-4'>
+                                <table class="table table-bordered table-hover" id='table-4'>
                                     <thead>
                                         <tr>
                                             <td style="vertical-align:middle!important; border-bottom:1px solid #000" class="td-30 td-head" align="center">Date</td>
@@ -83,52 +83,38 @@
                                 for($a=$min;$a<=$max;$a++){
                                     $series[] = $a;
                                 }
-
-
                                 $asize = count($or_summary);
-                              
                                 for($x=0;$x<$asize;$x++){ 
-                                        $y=$x-1;
-                                  
-                                        if($y>=0){ 
-
-                                            if($or_summary[$y]['or_no'] == $or_summary[$x]['or_no']){
-
-                                                $ors[]=$or_summary[$x]['or_no'];
-                                                $consolidated[]=array(
-
-                                                    "date"=>$or_summary[$x]['date'],
-                                                    "or_no"=>$or_summary[$x]['or_no'],
-                                                    "stl_id"=>$or_summary[$y]['stl_id'] . " - " . $or_summary[$x]['stl_id'],
-                                                    "company_name"=>$or_summary[$y]['company_name'] . " - " . $or_summary[$x]['company_name'],
-                                                    "amount"=>$or_summary[$y]['amount'] . " - " . $or_summary[$x]['amount'],
-                                                    "remarks"=>$or_summary[$y]['remarks'] . " - " . $or_summary[$x]['remarks'],
-                                                );
-                                                ?>
-                                         
-                                     
-                                            <?php $y=$x;
-                                          
+                                    $y=$x-1;
+                                    if($y>=0){ 
+                                        if($or_summary[$y]['or_no'] == $or_summary[$x]['or_no']){
+                                            $ors[]=$or_summary[$x]['or_no'];
+                                            $consolidated[]=array(
+                                                "date"=>$or_summary[$x]['date'],
+                                                "or_no"=>$or_summary[$x]['or_no'],
+                                                "stl_id"=>$or_summary[$y]['stl_id'] . " - " . $or_summary[$x]['stl_id'],
+                                                "company_name"=>$or_summary[$y]['company_name'] . " - " . $or_summary[$x]['company_name'],
+                                                "amount"=>$or_summary[$y]['amount'] . " - " . $or_summary[$x]['amount'],
+                                                "remarks"=>$or_summary[$y]['remarks'] . " - " . $or_summary[$x]['remarks'],
+                                            );
+                                        ?>
+                                        <?php $y=$x;
                                             } else { 
-                                                      $ors[]=$or_summary[$x]['or_no'];
-                                                  $consolidated[]=array(
-
-                                                    "date"=>$or_summary[$x]['date'],
-                                                    "or_no"=>$or_summary[$x]['or_no'],
-                                                    "stl_id"=>$or_summary[$x]['stl_id'],
-                                                    "company_name"=>$or_summary[$x]['company_name'],
-                                                    "amount"=>$or_summary[$x]['amount'],
-                                                    "remarks"=>$or_summary[$x]['remarks'],
-                                                );
-
-                                                ?>
-                                        
-                                            <?php }
-                                         } 
+                                            $ors[]=$or_summary[$x]['or_no'];
+                                            $consolidated[]=array(
+                                                "date"=>$or_summary[$x]['date'],
+                                                "or_no"=>$or_summary[$x]['or_no'],
+                                                "stl_id"=>$or_summary[$x]['stl_id'],
+                                                "company_name"=>$or_summary[$x]['company_name'],
+                                                "amount"=>$or_summary[$x]['amount'],
+                                                "remarks"=>$or_summary[$x]['remarks'],
+                                            );
+                                            ?>
+                                        <?php }
+                                    } 
                                 } 
-
-                               $result= array_diff($series,$ors); 
-                               foreach($result AS $r){
+                                $result= array_diff($series,$ors); 
+                                foreach($result AS $r){
                                     $missing[] = array(
                                         "date"=>"",
                                         "or_no"=>$r,
@@ -137,34 +123,31 @@
                                         "amount"=>"",
                                         "remarks"=>"",
                                     );
-                               }
-
-                               if(!empty($missing) && !empty($consolidated)){
+                                }
+                                if(!empty($missing) && !empty($consolidated)){
                                     $all = array_merge($missing,$consolidated);
                                 } else {
                                     $all=array();
                                 }
-                               $columns = array_column($all, 'or_no');
+                                $columns = array_column($all, 'or_no');
                                 array_multisort($columns, SORT_ASC, $all);
-                              
                                 ?>
                                 <tbody>
                                     <?php foreach($all AS $a){ ?>
                                         <tr>
-                                            <td><?php echo $a['date']; ?></td>
-                                            <td><?php echo $a['or_no']; ?></td>
-                                            <td><?php echo str_replace("-", "<br>", $a['stl_id']); ?></td>
-                                            <td><?php echo str_replace("-", "<br>",$a['company_name']); ?></td>
-                                            <td><?php echo str_replace("-", "<br>",$a['amount']); ?></td>
-                                            <td><?php echo str_replace("-", "<br>",$a['remarks']); ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo $a['date']; ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo $a['or_no']; ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>", $a['stl_id']); ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['company_name']); ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['amount']); ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['remarks']); ?></td>
                                             <?php if(empty($a['date'])){ ?>
-                                                <td align="center" class="td-sticky left-col-1 sticky-back">
-                                                <a href="<?php echo base_url(); ?>index.php/reports/ignore_or/<?php echo $a['or_no']; ?>" class="btn btn-md btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')">Ignore</a>
-                                                <a href="<?php echo base_url(); ?>index.php/reports/cancel_or/<?php echo $a['or_no']; ?>" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to cancel this OR?')">Cancel</a>
+                                                <td style="border-bottom: 1px solid #e5e5e5;" align="center" class="left-col-1 ">
+                                                    <a href="<?php echo base_url(); ?>index.php/reports/ignore_or/<?php echo $a['or_no']; ?>" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')"><span class="fas fa-ban ml-0"></span></a>
+                                                    <a href="<?php echo base_url(); ?>index.php/reports/cancel_or/<?php echo $a['or_no']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this OR?')"><span class="fas fa-times ml-1 mr-1 "></span></a>
                                                 </td>
                                             <?php } else { ?>
-                                                <td></td>
-                                            
+                                                <td style="border-bottom: 1px solid #e5e5e5;"></td>
                                             <?php } ?>
                                         </tr>
                                     <?php } ?>
@@ -181,31 +164,3 @@
         </div>
     </section>
 </div>
-
- <!--    <tbody>
-                                        <?php 
-                                       /*     if(!empty($or_summary)){
-                                                $previous=0;    
-                                            foreach($or_summary AS $or){
-
-                                                if($previous!=){
-                                                    $previous=$or->or_no;
-                                                }   */
-                                        ?>
-                                        <tr>
-                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo ($or['date']!='') ? date("F d,Y",strtotime($or['date'])) : ''; ?></td>
-                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['or_no']; ?></td>
-                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['stl_id']; ?></td>
-                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['company_name']; ?></td>
-                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo ($or['amount']!='') ? number_format($or['amount'],2) : '' ; ?></td>
-                                            <?php //if($or['remarks']!=''){ ?>
-                                            <td align="center" class="td-sticky left-col-1 sticky-back"><?php echo $or['remarks']; ?></td>
-                                            <?php //} else {?>
-                                            <td align="center" class="td-sticky left-col-1 sticky-back">
-                                            <a href="<?php echo base_url(); ?>index.php/reports/ignore_or/<?php echo $or['or_no']; ?>" class="btn btn-md btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')">Ignore</a>
-                                            <a href="<?php echo base_url(); ?>index.php/reports/cancel_or/<?php echo $or['or_no']; ?>" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to cancel this OR?')">Cancel</a>
-                                            </td>
-                                        <?php //} ?>
-                                        </tr>
-                                        <?php //} } ?>
-                                    </tbody> -->
