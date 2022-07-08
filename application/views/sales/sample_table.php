@@ -79,7 +79,7 @@
                                                         <td class="td-btm pt-1 pb-1" style="vertical-align: text-top;">
                                                             <button class="btn btn-primary btn-sm btn-block"><span class="fas fa-print"></span> Print</button>
                                                         </td>
-                                                        <td class="td-btm pt-1 pb-1"></td>
+                                                        <td class="td-btm pt-1 pb-1">abcd</td>
                                                         <td class="td-btm pt-1 pb-1"></td>
                                                         <td class="td-btm pt-1 pb-1"></td>
                                                         <td class="td-btm pt-1 pb-1"></td>

@@ -415,8 +415,8 @@ function downloadbulk2307(baseurl,refno){
         data: 'refno='+refno,
         success: function(output){
           
-            var HTML_Width = $(output+".canvas_div_pdf").width();
-   alert(HTML_Width);
+        
+   console.log(output);
     /*contents = output.find(".canvas_div_pdf").first();
     console.log(contents.height());*/
     //alert(contents.height());
