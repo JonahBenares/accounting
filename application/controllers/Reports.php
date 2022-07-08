@@ -1065,15 +1065,27 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
         $data['or_summary']=array();
         //$max = $this->super_model->get_max_where("collection_details cd", "series_number","series_number != '' AND ".$query."");
-        $min = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
-        $max = $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
+        $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
+        $data['max'] = $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
         //foreach (range($min, $max) as $number) {
+
+       
         foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
 
-            $orno=$this->super_model->select_column_custom_where("collection_details","series_number","series_number != '$or->series_number' AND series_number != '' ");
+
+            $data['or_summary'][]=array(
+                    "date"=>$or->collection_date,
+                    "or_no"=>$or->series_number,
+                    "stl_id"=>$or->settlement_id,
+                    "amount"=>$or->total,
+                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
+                    "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
+                );
+
+        /*    $orno=$this->super_model->select_column_custom_where("collection_details","series_number","series_number != '$or->series_number' AND series_number != '' ");*/
 
             //echo $orno."<br>";
-            $min++;
+         /*   $min++;
             if($or->series_number==$min){
                 $data['or_summary'][]=array(
                     "date"=>$or->collection_date,
@@ -1100,9 +1112,12 @@ class Reports extends CI_Controller {
                     "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$min),
                     "company_name"=>'',
                 );
-                //}
-            }
-        }    
+              
+            }*/
+        } 
+
+        /* foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query."  ORDER BY cd.series_number ASC") AS $or){*/
+ 
         $this->load->view('reports/or_summary',$data);
         $this->load->view('template/footer');
     
