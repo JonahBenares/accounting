@@ -143,8 +143,8 @@
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['remarks']); ?></td>
                                             <?php if(empty($a['date'])){ ?>
                                                 <td style="border-bottom: 1px solid #e5e5e5;" align="center" class="left-col-1 ">
-                                                    <a href="<?php echo base_url(); ?>index.php/reports/ignore_or/<?php echo $a['or_no']; ?>" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')"><span class="fas fa-ban ml-0"></span></a>
-                                                    <a href="<?php echo base_url(); ?>index.php/reports/cancel_or/<?php echo $a['or_no']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this OR?')"><span class="fas fa-times ml-1 mr-1 "></span></a>
+                                                    <a href="<?php echo base_url(); ?>index.php/reports/ignore_or/<?php echo $a['or_no']; ?>" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')" data-toggle="tooltip" data-placement="bottom" title="Ignore" data-original-title="Ignore"><span class="fas fa-ban ml-0"></span></a>
+                                                    <a href="<?php echo base_url(); ?>index.php/reports/cancel_or/<?php echo $a['or_no']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this OR?')" data-toggle="tooltip" data-placement="bottom" title="Cancel" data-original-title="Cancel"><span class="fas fa-times ml-1 mr-1 "></span></a>
                                                 </td>
                                             <?php } else { ?>
                                                 <td style="border-bottom: 1px solid #e5e5e5;"></td>
