@@ -1,5 +1,19 @@
 <script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
+<script type="text/javascript">
+/*function onClick() {
+  var pdf = new jsPDF('p', 'pt', 'letter');
+  pdf.canvas.height = 72 * 11;
+  pdf.canvas.width = 72 * 8.5;
 
+  pdf.fromHTML(output);
+  //pdf.fromHTML(document.body);
+
+  pdf.save('test.pdf');
+};
+
+var element = document.getElementById("clickbind");
+element.addEventListener("click", onClick);*/
+</script>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -61,7 +75,9 @@
                                         <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
                                     </tr>
                                      <tr>
-                                        <td colspan="4"><center><button type="button" onclick="downloadbulk2307('<?php echo base_url(); ?>','<?php echo $reference_number; ?>');" class="btn btn-primary btn-block">Download Bulk 2307</button></center></td>
+                                        <td colspan="4"><center><button type="button" onclick="downloadbulk2307('<?php echo base_url(); ?>','<?php echo $reference_number; ?>');" class="btn btn-primary btn-block">Download Bulk 2307</button>
+                                            <!-- <button type="button" onclick="onClick()" class="btn btn-primary btn-block">Download Bulk 2307</button> -->
+                                        </center></td>
                                     </tr>
                                 </table>
                                 <br>
