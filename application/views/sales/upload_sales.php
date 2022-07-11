@@ -56,7 +56,7 @@ if(!empty($sales_id)){
                                             <label><br></label>
                                             <div class="form-group mb-2">
                                                 <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="checkbox" name="adjustment" value="1" >
+                                                    <input type="checkbox" name="adjustment" value="1" <?php echo (!empty($sales_id)) ? (($adjustment==1) ? 'checked' : '') : ''; ?>>
                                                     <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
                                                         <label>Adjustment</label>

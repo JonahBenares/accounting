@@ -41,6 +41,7 @@ class Purchases extends CI_Controller {
                 $data['reference_number']=$h->reference_number;
                 $data['due_date']=$h->due_date;
                 $data['saved']=$h->saved;
+                $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_id",$h->purchase_id) AS $d){
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,

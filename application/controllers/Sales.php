@@ -41,6 +41,7 @@ class Sales extends CI_Controller {
                 $data['reference_number']=$h->reference_number;
                 $data['due_date']=$h->due_date;
                 $data['saved']=$h->saved;
+                $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_detail_id,
