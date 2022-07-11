@@ -41,6 +41,7 @@ class Sales extends CI_Controller {
                 $data['reference_number']=$h->reference_number;
                 $data['due_date']=$h->due_date;
                 $data['saved']=$h->saved;
+                $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_detail_id,
@@ -89,6 +90,11 @@ class Sales extends CI_Controller {
         $billingf=date("Y-m-d", strtotime($this->input->post('billing_from')));
         $billingt=date("Y-m-d", strtotime($this->input->post('billing_to')));
         $due=date("Y-m-d", strtotime($this->input->post('due_date')));
+        if(!empty($this->input->post('adjustment'))){
+            $adjustment=$this->input->post('adjustment');
+        }else{
+            $adjustment=0;
+        }
         $data=array(
             "reference_number"=>$this->input->post('reference_number'),
             "transaction_date"=>$tdate,
@@ -96,7 +102,9 @@ class Sales extends CI_Controller {
             "billing_to"=>$billingt,
             "due_date"=>$due,
             "user_id"=>$_SESSION['user_id'],
-            "create_date"=>date("Y-m-d H:i:s")
+            "create_date"=>date("Y-m-d H:i:s"),
+            "adjustment"=>$adjustment
+
         );
         $sales_id = $this->super_model->insert_return_id("sales_transaction_head",$data);
 
