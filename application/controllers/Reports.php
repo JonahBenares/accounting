@@ -1011,36 +1011,28 @@ class Reports extends CI_Controller {
     }
 
 
-        public function ignore_or(){
-            $or_no=$this->uri->segment(3);
+    public function ignore_or(){
+        $or_no=$this->input->post('or_no');
+        $participant=$this->input->post('participant');
+        $date_from=$this->input->post('date_from');
+        $date_to=$this->input->post('date_to');
+        $ignore_or = array(
+           "or_no"=>$or_no,
+           "remarks"=>'Ignored',
+        );
+        $this->super_model->insert_into("or_remarks", $ignore_or);
+    }
 
-                 $ignore_or = array(
-                   "or_no"=>$or_no,
-                   "remarks"=>'Ignored',
-                );
-                $this->super_model->insert_into("or_remarks", $ignore_or);
-
-            ?>
-            <script>alert('Successfully Ignored the OR.'); 
-            window.location='<?php echo base_url(); ?>index.php/reports/or_summary/'
-            </script> 
-            <?php
-        }
-
-        public function cancel_or(){
-        $or_no=$this->uri->segment(3);
-
-             $cancel_or = array(
-               "or_no"=>$or_no,
-               "remarks"=>'Cancelled',
-            );
-            $this->super_model->insert_into("or_remarks", $cancel_or);
-
-        ?>
-        <script>alert('Successfully Cancelled the OR.'); 
-        window.location='<?php echo base_url(); ?>index.php/reports/or_summary/'
-        </script> 
-        <?php
+    public function cancel_or(){
+        $or_no=$this->input->post('or_no');
+        $participant=$this->input->post('participant');
+        $date_from=$this->input->post('date_from');
+        $date_to=$this->input->post('date_to');
+        $cancel_or = array(
+           "or_no"=>$or_no,
+           "remarks"=>'Cancelled',
+        );
+        $this->super_model->insert_into("or_remarks", $cancel_or);
     }
 
 
@@ -1051,7 +1043,9 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
+        $settlement_id=$this->super_model->select_column_where("participant","settlement_id","settlement_id",$participant);
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['settlement_id'] = $settlement_id;
         $data['part'] = $part;
         $data['date_from'] = $date_from;
         $data['date_to'] = $date_to;
@@ -1067,11 +1061,18 @@ class Reports extends CI_Controller {
         //$max = $this->super_model->get_max_where("collection_details cd", "series_number","series_number != '' AND ".$query."");
         $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
         $data['max'] = $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
-        //foreach (range($min, $max) as $number) {
 
-       
+        foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' ORDER BY cd.series_number ASC") AS $not){
+                $data['not_or'][]=array(
+                    "date"=>$not->collection_date,
+                    "or_no"=>$not->series_number,
+                    "stl_id"=>$not->settlement_id,
+                    "amount"=>$not->total,
+                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$not->series_number),
+                    "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
+                );
+        }
         foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
-
 
             $data['or_summary'][]=array(
                     "date"=>$or->collection_date,
@@ -1114,7 +1115,8 @@ class Reports extends CI_Controller {
                 );
               
             }*/
-        } 
+        }
+
 
         /* foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query."  ORDER BY cd.series_number ASC") AS $or){*/
  

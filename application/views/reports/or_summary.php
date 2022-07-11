@@ -50,7 +50,7 @@
                             $ors=array();
                             $consolidated=array();
                             $missing=array();
-                            if(!empty($participant) || !empty($date_from) || !empty($date_to)){
+                            if(!empty($part) || !empty($date_from) || !empty($date_to)){
                             ?>
                             <table class="table" width="100%">
                                 <tr>
@@ -86,6 +86,8 @@
                                 $asize = count($or_summary);
                                 for($x=0;$x<$asize;$x++){ 
                                     $y=$x-1;
+
+                                    echo $asize;
                                     if($y>=0){ 
                                         if($or_summary[$y]['or_no'] == $or_summary[$x]['or_no']){
                                             $ors[]=$or_summary[$x]['or_no'];
@@ -121,9 +123,10 @@
                                         "stl_id"=>"",
                                         "company_name"=>"",
                                         "amount"=>"",
-                                        "remarks"=>"",
+                                        "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$r),
                                     );
                                 }
+
                                 if(!empty($missing) && !empty($consolidated)){
                                     $all = array_merge($missing,$consolidated);
                                 } else {
@@ -133,7 +136,15 @@
                                 array_multisort($columns, SORT_ASC, $all);
                                 ?>
                                 <tbody>
-                                    <?php foreach($all AS $a){ ?>
+                                    <?php 
+                                        /*$or_no='';
+                                        foreach($not_or AS $b){
+                                            $or_no.=$b['or_no'].", ";
+                                        }*/
+                                        /*if (strpos($str, $substr) === false) {*/
+                                    foreach($all AS $a){ 
+                                        //if ($a['or_no']!=$r) {
+                                        ?>
                                         <tr>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo $a['date']; ?></td>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo $a['or_no']; ?></td>
@@ -141,16 +152,16 @@
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['company_name']); ?></td>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['amount']); ?></td>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['remarks']); ?></td>
-                                            <?php if(empty($a['date'])){ ?>
+                                            <?php if(empty($a['date']) && empty($a['remarks'])){ ?>
                                                 <td style="border-bottom: 1px solid #e5e5e5;" align="center" class="left-col-1 ">
-                                                    <a href="<?php echo base_url(); ?>index.php/reports/ignore_or/<?php echo $a['or_no']; ?>" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')" data-toggle="tooltip" data-placement="bottom" title="Ignore" data-original-title="Ignore"><span class="fas fa-ban ml-0"></span></a>
-                                                    <a href="<?php echo base_url(); ?>index.php/reports/cancel_or/<?php echo $a['or_no']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this OR?')" data-toggle="tooltip" data-placement="bottom" title="Cancel" data-original-title="Cancel"><span class="fas fa-times ml-1 mr-1 "></span></a>
+                                                    <a href='#' onclick="ignoreOR('<?php echo base_url(); ?>','<?php echo $a['or_no']; ?>','<?php echo $settlement_id; ?>','<?php echo $date_from; ?>','<?php echo $date_to; ?>')" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')" data-toggle="tooltip" data-placement="bottom" title="Ignore" data-original-title="Ignore"><span class="fas fa-ban ml-0"></span></a>
+                                                    <a href='#' onclick="cancelOR('<?php echo base_url(); ?>','<?php echo $a['or_no']; ?>','<?php echo $settlement_id; ?>','<?php echo $date_from; ?>','<?php echo $date_to; ?>')" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Cancel" data-original-title="Cancel"><span class="fas fa-times ml-1 mr-1 "></span></a>
                                                 </td>
                                             <?php } else { ?>
                                                 <td style="border-bottom: 1px solid #e5e5e5;"></td>
                                             <?php } ?>
                                         </tr>
-                                    <?php } ?>
+                                    <?php } //} ?>
                                 </tbody>
                                 </table>
                             </div>
