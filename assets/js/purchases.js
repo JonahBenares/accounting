@@ -467,6 +467,11 @@ function downloadbulk2307(baseurl,refno){
 
     //contents = output.find(".canvas_div_pdf").first();
     //console.log(contents.height());
+          
+        
+   console.log(output);
+    /*contents = output.find(".canvas_div_pdf").first();
+    console.log(contents.height());*/
     //alert(contents.height());
   
       

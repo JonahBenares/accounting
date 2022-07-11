@@ -23,19 +23,11 @@
                                             <label>Date</label>
                                             <input type="date" class="form-control" name='transaction_date' id="transaction_date" value="<?php echo (!empty($purchase_id) ? $transaction_date : ''); ?>" required <?php echo $readonly; ?> >
                                         </div>
-                                        <div class="form-group">
-                                            <label>Reference Number</label>
-                                            <input type="text" class="form-control" name="reference_number" id="reference_number"  value="<?php echo (!empty($purchase_id) ? $reference_number : ''); ?>" required <?php echo $readonly; ?>>
-                                        </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label>Billing Period (From)</label>
                                             <input type="date" class="form-control" name='billing_from' id="billing_from" value="<?php echo (!empty($purchase_id) ? $billing_from : ''); ?>" required <?php echo $readonly; ?>>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Due Date</label>
-                                            <input type="date" class="form-control" name='due_date' id="due_date" value="<?php echo (!empty($purchase_id) ? $due_date : ''); ?>" required <?php echo $readonly; ?>>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
@@ -43,18 +35,46 @@
                                             <label>Billing Period (To)</label>
                                             <input type="date" class="form-control" name='billing_to' id="billing_to" value="<?php echo (!empty($purchase_id) ? $billing_to : ''); ?>" required <?php echo $readonly; ?>>
                                         </div>
+                                    </div>
+                                </div>  
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Reference Number</label>
+                                            <input type="text" class="form-control" name="reference_number" id="reference_number"  value="<?php echo (!empty($purchase_id) ? $reference_number : ''); ?>" required <?php echo $readonly; ?>>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Due Date</label>
+                                            <input type="date" class="form-control" name='due_date' id="due_date" value="<?php echo (!empty($purchase_id) ? $due_date : ''); ?>" required <?php echo $readonly; ?>>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label><br></label>
+                                            <div class="form-group mb-2">
+                                                <div class="pretty p-icon p-curve p-jelly">
+                                                    <input type="checkbox" name="vat_zerorated" value="Yes" >
+                                                    <div class="state p-warning">
+                                                        <i class="icon material-icons">done</i>
+                                                        <label>Adjustment</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
                                         <div class="form-group">
                                             <label><br></label>
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
                                             <?php if(empty($purchase_id)){ ?>
-                                                <input type='button' class="btn btn-block btn-primary" id='save_head_button' type="button" onclick="proceed_btn()" value="Proceed">
-                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancelPurchase()" value="Cancel Transaction" style='display: none;'>
+                                                <input type='button' class="btn btn-primary" id='save_head_button' type="button" onclick="proceed_btn()" value="Proceed" style="width:100%">
+                                                 <input type='button' class="btn btn-danger" id="cancel" onclick="cancelPurchase()" value="Cancel Transaction" style='display: none;width:100%'>
                                              <?php } else { ?>
-                                                 <input type='button' class="btn btn-block btn-danger" id="cancel" onclick="cancelPurchase()" value="Cancel Transaction">
+                                                 <input type='button' class="btn btn-danger" id="cancel" onclick="cancelPurchase()" value="Cancel Transaction" style="width:100%">
                                             <?php } ?>
                                         </div>
                                     </div>
-                                </div>   
+                                </div> 
                             </form>
                             <form method="POST" id="upload_wesm">
                                 <div id="upload" <?php echo (empty($purchase_id) ? 'style="display:none"' : ''); ?>>
