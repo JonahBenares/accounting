@@ -13,7 +13,7 @@
                                     <h4>Summary of Adjustment Billing Statement - <b>Sales</b></h4>
                                 </div>
                                 <div class="col-4">
-                                    <a href="<?php echo base_url(); ?>reports/adjustment_purchases_print" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
+                                    <a href="<?php echo base_url(); ?>reports/adjustment_sales_print" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
                                 </div>
                             </div>
                         </div>
@@ -50,24 +50,22 @@
                             <table class="table-bordsered" width="100%">
                                 <tr>
                                     <td width="3%"></td>
-                                    <td width="13%"><b>Date Prepared:</b></td>
-                                    <td width="25%"></td>
                                     <td width="13%"><b>Month & Year:</b></td>
+                                    <td width="25%"></td>
+                                    <td width="13%"><b>Reference Number:</b></td>
                                     <td width="41%"></td>
                                     <td width="3%"></td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><b>Invoice Date:</b></td>
+                                    <td><b>Date Prepared:</b></td>
                                     <td></td>
-                                    <td><b>Reference Number:</b></td>
+                                    <td><b>Invoice Date:</b></td>
                                     <td></td>
                                     <td></td>
                                 </tr>
                             </table>
-                            
                             <hr class="m-b-0">
-                            
                             <table class="table table-bordered table-hover mb-0" style="width:100%;font-size: 13px;">
                                 <thead>
                                     <tr>
@@ -79,7 +77,7 @@
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Net Sale (Php)</td>     
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Vat on Energy </td> 
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >EWT</td>
-                                        <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" width="10%">Total Amount Due</td>
+                                        <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" width="10%">Total Amount Due (Php)</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -139,7 +137,7 @@
                                         <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>264.69</b></td>
                                     </tr>
                                     <tr>
-                                        <td class="pt-2 pb-2 td-yellow" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, JUNE 25, 2022 &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
+                                        <td class="pt-2 pb-2 td-yellow" colspan="8" align="left">TOTAL AMOUNT RECEIVABLE on or before, JUNE 25, 2022 &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
                                         <td class="pt-2 pb-2 td-yellow" align="right"><b>(6,228.42)</b></td>
                                     </tr>
                                 </tfoot>   

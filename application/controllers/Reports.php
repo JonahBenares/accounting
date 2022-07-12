@@ -1091,4 +1091,14 @@ class Reports extends CI_Controller {
         $this->load->view('reports/adjustment_purchases');
         $this->load->view('template/footer');
     }
+    public function adjustment_sales_print(){
+        $this->load->view('template/print_head');
+        $this->load->view('reports/adjustment_sales_print');
+    }
+
+    public function adjustment_purchases_print(){
+        $this->load->view('template/print_head');
+        $this->load->view('reports/adjustment_purchases_print');
+    }
+
 }

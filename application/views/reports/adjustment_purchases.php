@@ -50,24 +50,22 @@
                             <table class="table-bordsered" width="100%">
                                 <tr>
                                     <td width="3%"></td>
-                                    <td width="13%"><b>Date Prepared:</b></td>
-                                    <td width="25%"></td>
                                     <td width="13%"><b>Month & Year:</b></td>
+                                    <td width="25%"></td>
+                                    <td width="13%"><b>Reference Number:</b></td>
                                     <td width="41%"></td>
                                     <td width="3%"></td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><b>Invoice Date:</b></td>
+                                    <td><b>Date Prepared:</b></td>
                                     <td></td>
-                                    <td><b>Reference Number:</b></td>
+                                    <td><b>Invoice Date:</b></td>
                                     <td></td>
                                     <td></td>
                                 </tr>
                             </table>
-                            
                             <hr class="m-b-0">
-                            
                             <table class="table table-bordered table-hover mb-0" style="width:100%;font-size: 13px;">
                                 <thead>
                                     <tr>
@@ -79,7 +77,7 @@
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Net Purchase (Php)</td>     
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Vat on Energy </td> 
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >EWT</td>
-                                        <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" width="10%">Total Amount Due</td>
+                                        <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" width="10%">Total Amount Due (Php)</td>
                                     </tr>
                                 </thead>
                                 <tbody>
