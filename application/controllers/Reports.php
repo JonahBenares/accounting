@@ -1116,9 +1116,6 @@ class Reports extends CI_Controller {
               
             }*/
         }
-
-
-        /* foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query."  ORDER BY cd.series_number ASC") AS $or){*/
  
         $this->load->view('reports/or_summary',$data);
         $this->load->view('template/footer');
