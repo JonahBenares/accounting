@@ -250,13 +250,32 @@ function cancelOR(baseurl,or_no,participant,date_from,date_to){
     var redirect = baseurl+"reports/cancel_or";
     var conf = confirm('Are you sure you want to cancel this OR?');
     if(conf){
+            if(participant!=''){
+                var participant=participant;
+            }else{
+                var participant='null';
+            }
+
+
+            if(date_from){
+                var date_from=date_from;
+            }else{
+                var date_from='null';
+            }
+
+
+            if(date_to){
+                var date_to=date_to;
+            }else{
+                var date_to='null';
+            }
         $.ajax({
             data: "or_no="+or_no+"&participant="+participant+"&date_from="+date_from+"&date_to="+date_to,
             type: "POST",
             url: redirect,
             success: function(output){
                 alert('Successfully cancelled the OR.');
-                window.location=baseurl+'reports/or_summary/'+participant+'/'+date_from+'/'+date_to; 
+                window.location=baseurl+'reports/or_summary/'+participant+'/'+date_from+'/'+date_to;
             }
         });
     }
@@ -266,13 +285,32 @@ function ignoreOR(baseurl,or_no,participant,date_from,date_to){
     var redirect = baseurl+"reports/ignore_or";
     var conf = confirm('Are you sure you want to ignore this OR?');
     if(conf){
+            if(participant!=''){
+                var participant=participant;
+            }else{
+                var participant='null';
+            }
+
+
+            if(date_from){
+                var date_from=date_from;
+            }else{
+                var date_from='null';
+            }
+
+
+            if(date_to){
+                var date_to=date_to;
+            }else{
+                var date_to='null';
+            }
         $.ajax({
             data: "or_no="+or_no+"&participant="+participant+"&date_from="+date_from+"&date_to="+date_to,
             type: "POST",
             url: redirect,
             success: function(output){
                 alert('Successfully ignored the OR.');
-                window.location=baseurl+'reports/or_summary/'+participant+'/'+date_from+'/'+date_to; 
+                window.location=baseurl+'reports/or_summary/'+participant+'/'+date_from+'/'+date_to;
             }
         });
     }

@@ -150,7 +150,11 @@
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>", $a['stl_id']); ?></td>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['company_name']); ?></td>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['amount']); ?></td>
+                                            <?php if(empty($a['date'])){ ?>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['remarks']); ?></td>
+                                            <?php } else { ?>
+                                                <td style="border-bottom: 1px solid #e5e5e5;"></td>
+                                            <?php } ?>
                                             <?php if(empty($a['date']) && empty($a['remarks'])){ ?>
                                                 <td style="border-bottom: 1px solid #e5e5e5;" align="center" class="left-col-1 ">
                                                     <a href='#' onclick="ignoreOR('<?php echo base_url(); ?>','<?php echo $a['or_no']; ?>','<?php echo $settlement_id; ?>','<?php echo $date_from; ?>','<?php echo $date_to; ?>')" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to ignore this OR?')" data-toggle="tooltip" data-placement="bottom" title="Ignore" data-original-title="Ignore"><span class="fas fa-ban ml-0"></span></a>
