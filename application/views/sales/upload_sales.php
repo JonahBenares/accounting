@@ -162,17 +162,17 @@ if(!empty($sales_id)){
                                                 <td><?php echo $d['short_name'];?></td>
                                                 <td><?php echo $d['billing_id'];?></td>
                                                 <td><?php echo $d['company_name'];?></td>
-                                                <td><?php echo $d['facility_type'];?></td>
-                                                <td><?php echo $d['wht_agent'];?></td>
-                                                <td><?php echo $d['ith_tag'];?></td>
-                                                <td><?php echo $d['non_vatable'];?></td>
-                                                <td><?php echo $d['zero_rated'];?></td>
-                                                <td><?php echo $d['vatable_sales'];?></td>
-                                                <td><?php echo $d['zero_rated_sales'];?></td>
-                                                <td><?php echo $d['zero_rated_ecozones'];?></td>
-                                                <td><?php echo $d['vat_on_sales'];?></td>
-                                                <td><?php echo $d['ewt'];?></td>
-                                                <td><?php echo $d['total_amount'];?></td>
+                                                <td align="center"><?php echo $d['facility_type'];?></td>
+                                                <td align="center"><?php echo $d['wht_agent'];?></td>
+                                                <td align="center"><?php echo $d['ith_tag'];?></td>
+                                                <td align="center"><?php echo $d['non_vatable'];?></td>
+                                                <td align="center"><?php echo $d['zero_rated'];?></td>
+                                                <td align="right"><?php echo $d['vatable_sales'];?></td>
+                                                <td align="right"><?php echo $d['zero_rated_sales'];?></td>
+                                                <td align="right"><?php echo $d['zero_rated_ecozones'];?></td>
+                                                <td align="right"><?php echo $d['vat_on_sales'];?></td>
+                                                <td align="right">(<?php echo $d['ewt'];?>)</td>
+                                                <td align="right"><?php echo $d['total_amount'];?></td>
                                             </tr>
                                             <?php } } ?>
                                         </tbody>
