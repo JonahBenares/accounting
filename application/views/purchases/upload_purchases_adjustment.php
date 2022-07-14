@@ -103,8 +103,17 @@ if(!empty($sales_id)){
                             </form>   
                             <div class="table-responsive" >
                                 <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
+                                <table width="100%">
+                                    <tr>
+                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                </table>
+                                <br>
                                 <table class="table-bordered table table-hover" style="width:200%;">
                                     <thead>
                                         <tr>    
@@ -165,26 +174,37 @@ if(!empty($sales_id)){
                             </div>
                             <div class="table-responsive" >
                                 <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
+                                <table width="100%">
+                                    <tr>
+                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                </table>
+                                <br>
                                 <table class="table-bordered table table-hover" style="width:200%;">
                                     <thead>
-                                        <tr>
+                                        <tr>    
                                             <th class="p-2" width="5%" align="center" style="background:rgb(245 245 245)">
                                                 <center><span class="fas fa-bars"></span></center>
-                                            </th>
-                                            <th class="p-2">Item No.</th>
+                                            </th>    
+                                            <th class="p-2">Item No</th>                                        
+                                            <th class="p-2">Series No.</th>
                                             <th class="p-2">STL ID / TPShort Name</th>
                                             <th class="p-2">Billing ID</th>
+                                            <th class="p-2">Trading Participant Name</th>
                                             <th class="p-2">Facility Type </th>
                                             <th class="p-2">WHT Agent Tag</th>
                                             <th class="p-2">ITH Tag</th>
                                             <th class="p-2">Non Vatable Tag</th>
                                             <th class="p-2">Zero-rated Tag</th>
-                                            <th class="p-2">Vatable Purchases</th>
-                                            <th class="p-2">Zero Rated Purchases</th>
-                                            <th class="p-2">Zero Rated EcoZones Purchases </th>
-                                            <th class="p-2">Vat On Purchases</th>
+                                            <th class="p-2">Vatable Sales</th>
+                                            <th class="p-2">Zero Rated Sales</th>
+                                            <th class="p-2">Zero Rated EcoZones Sales</th>
+                                            <th class="p-2">Vat On Sales</th>
                                             <th class="p-2">EWT</th>
                                             <th class="p-2">Total Amount</th>
                                         </tr>
@@ -225,206 +245,37 @@ if(!empty($sales_id)){
                             </div>
                             <div class="table-responsive" >
                                 <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
-                                <table class="table-bordered table table-hover" style="width:200%;">
-                                    <thead>
-                                        <tr>
-                                            <th class="p-2" width="5%" align="center" style="background:rgb(245 245 245)">
-                                                <center><span class="fas fa-bars"></span></center>
-                                            </th>
-                                            <th class="p-2">Item No.</th>
-                                            <th class="p-2">STL ID / TPShort Name</th>
-                                            <th class="p-2">Billing ID</th>
-                                            <th class="p-2">Facility Type </th>
-                                            <th class="p-2">WHT Agent Tag</th>
-                                            <th class="p-2">ITH Tag</th>
-                                            <th class="p-2">Non Vatable Tag</th>
-                                            <th class="p-2">Zero-rated Tag</th>
-                                            <th class="p-2">Vatable Purchases</th>
-                                            <th class="p-2">Zero Rated Purchases</th>
-                                            <th class="p-2">Zero Rated EcoZones Purchases </th>
-                                            <th class="p-2">Vat On Purchases</th>
-                                            <th class="p-2">EWT</th>
-                                            <th class="p-2">Total Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="p-2" align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_details_BS('','')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                        <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"></span>
-                                                    </a>
-                                                </div>
-                                                <!-- <div class="btn-group mb-0">
-                                                    <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/" target="_blank" onclick = "countPrint('')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                        <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent">1</span>
-                                                    </a>
-                                                </div> -->
-                                            </td>
-                                            <td class="p-2"><center></center></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right"></td>
-                                            <td class="p-2" align="right">></td>
-                                        </tr>
-                                    </tbody>
+                                <table width="100%">
+                                    <tr>
+                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
                                 </table>
-                            </div>
-                            <div class="table-responsive" >
-                                <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
+                                <br>
                                 <table class="table-bordered table table-hover" style="width:200%;">
                                     <thead>
-                                        <tr>
+                                        <tr>    
                                             <th class="p-2" width="5%" align="center" style="background:rgb(245 245 245)">
                                                 <center><span class="fas fa-bars"></span></center>
-                                            </th>
-                                            <th class="p-2">Item No.</th>
+                                            </th>    
+                                            <th class="p-2">Item No</th>                                        
+                                            <th class="p-2">Series No.</th>
                                             <th class="p-2">STL ID / TPShort Name</th>
                                             <th class="p-2">Billing ID</th>
+                                            <th class="p-2">Trading Participant Name</th>
                                             <th class="p-2">Facility Type </th>
                                             <th class="p-2">WHT Agent Tag</th>
                                             <th class="p-2">ITH Tag</th>
                                             <th class="p-2">Non Vatable Tag</th>
                                             <th class="p-2">Zero-rated Tag</th>
-                                            <th class="p-2">Vatable Purchases</th>
-                                            <th class="p-2">Zero Rated Purchases</th>
-                                            <th class="p-2">Zero Rated EcoZones Purchases </th>
-                                            <th class="p-2">Vat On Purchases</th>
-                                            <th class="p-2">EWT</th>
-                                            <th class="p-2">Total Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="p-2" align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_details_BS('','')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                        <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"></span>
-                                                    </a>
-                                                </div>
-                                                <!-- <div class="btn-group mb-0">
-                                                    <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/" target="_blank" onclick = "countPrint('')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                        <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent">1</span>
-                                                    </a>
-                                                </div> -->
-                                            </td>
-                                            <td class="p-2"><center></center></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right"></td>
-                                            <td class="p-2" align="right">></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="table-responsive" >
-                                <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
-                                <table class="table-bordered table table-hover" style="width:200%;">
-                                    <thead>
-                                        <tr>
-                                            <th class="p-2" width="5%" align="center" style="background:rgb(245 245 245)">
-                                                <center><span class="fas fa-bars"></span></center>
-                                            </th>
-                                            <th class="p-2">Item No.</th>
-                                            <th class="p-2">STL ID / TPShort Name</th>
-                                            <th class="p-2">Billing ID</th>
-                                            <th class="p-2">Facility Type </th>
-                                            <th class="p-2">WHT Agent Tag</th>
-                                            <th class="p-2">ITH Tag</th>
-                                            <th class="p-2">Non Vatable Tag</th>
-                                            <th class="p-2">Zero-rated Tag</th>
-                                            <th class="p-2">Vatable Purchases</th>
-                                            <th class="p-2">Zero Rated Purchases</th>
-                                            <th class="p-2">Zero Rated EcoZones Purchases </th>
-                                            <th class="p-2">Vat On Purchases</th>
-                                            <th class="p-2">EWT</th>
-                                            <th class="p-2">Total Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="p-2" align="center" style="background: #fff;">
-                                                <div class="btn-group mb-0">
-                                                    <a style="color:#fff" onclick="add_details_BS('','')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                        <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"></span>
-                                                    </a>
-                                                </div>
-                                                <!-- <div class="btn-group mb-0">
-                                                    <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/" target="_blank" onclick = "countPrint('')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                        <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent">1</span>
-                                                    </a>
-                                                </div> -->
-                                            </td>
-                                            <td class="p-2"><center></center></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2"></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="center">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right">></td>
-                                            <td class="p-2" align="right"></td>
-                                            <td class="p-2" align="right">></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="table-responsive" >
-                                <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
-                                <table class="table-bordered table table-hover" style="width:200%;">
-                                    <thead>
-                                        <tr>
-                                            <th class="p-2" width="5%" align="center" style="background:rgb(245 245 245)">
-                                                <center><span class="fas fa-bars"></span></center>
-                                            </th>
-                                            <th class="p-2">Item No.</th>
-                                            <th class="p-2">STL ID / TPShort Name</th>
-                                            <th class="p-2">Billing ID</th>
-                                            <th class="p-2">Facility Type </th>
-                                            <th class="p-2">WHT Agent Tag</th>
-                                            <th class="p-2">ITH Tag</th>
-                                            <th class="p-2">Non Vatable Tag</th>
-                                            <th class="p-2">Zero-rated Tag</th>
-                                            <th class="p-2">Vatable Purchases</th>
-                                            <th class="p-2">Zero Rated Purchases</th>
-                                            <th class="p-2">Zero Rated EcoZones Purchases </th>
-                                            <th class="p-2">Vat On Purchases</th>
+                                            <th class="p-2">Vatable Sales</th>
+                                            <th class="p-2">Zero Rated Sales</th>
+                                            <th class="p-2">Zero Rated EcoZones Sales</th>
+                                            <th class="p-2">Vat On Sales</th>
                                             <th class="p-2">EWT</th>
                                             <th class="p-2">Total Amount</th>
                                         </tr>

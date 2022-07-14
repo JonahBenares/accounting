@@ -103,8 +103,18 @@ if(!empty($sales_id)){
                             </form>   
                             <div class="table-responsive" >
                                 <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
+                                <table width="100%">
+                                    <tr>
+                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                </table>
+                                <br>
+                                
                                 <table class="table-bordered table table-hover" style="width:200%;">
                                     <thead>
                                         <tr>    
@@ -165,8 +175,18 @@ if(!empty($sales_id)){
                             </div>
                             <div class="table-responsive" >
                                 <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
+                                <table width="100%">
+                                    <tr>
+                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                </table>
+                                <br>
+                                
                                 <table class="table-bordered table table-hover" style="width:200%;">
                                     <thead>
                                         <tr>    
@@ -227,8 +247,18 @@ if(!empty($sales_id)){
                             </div>
                             <div class="table-responsive" >
                                 <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
+                                <table width="100%">
+                                    <tr>
+                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                </table>
+                                <br>
+                                
                                 <table class="table-bordered table table-hover" style="width:200%;">
                                     <thead>
                                         <tr>    
@@ -289,8 +319,18 @@ if(!empty($sales_id)){
                             </div>
                             <div class="table-responsive" >
                                 <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
+                                <table width="100%">
+                                    <tr>
+                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                </table>
+                                <br>
+                                
                                 <table class="table-bordered table table-hover" style="width:200%;">
                                     <thead>
                                         <tr>    
@@ -351,8 +391,18 @@ if(!empty($sales_id)){
                             </div>
                             <div class="table-responsive" >
                                 <hr>
-                                <label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label><br>
-                                <label><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label>
+                                <table width="100%">
+                                    <tr>
+                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                    </tr>
+                                </table>
+                                <br>
+                                
                                 <table class="table-bordered table table-hover" style="width:200%;">
                                     <thead>
                                         <tr>    
@@ -411,6 +461,7 @@ if(!empty($sales_id)){
                                     </tbody>
                                 </table>
                             </div>
+                            
                         </div>
                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save">
                     </div>
