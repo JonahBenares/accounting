@@ -401,6 +401,7 @@ class Masterfile extends CI_Controller {
             $contact_email = trim($objPHPExcel->getActiveSheet()->getCell('P'.$x)->getValue());
             $region = trim($objPHPExcel->getActiveSheet()->getCell('Q'.$x)->getValue());
             $status = trim($objPHPExcel->getActiveSheet()->getCell('R'.$x)->getValue());
+            $zip_code = trim($objPHPExcel->getActiveSheet()->getCell('S'.$x)->getValue());
 
 
             $data_customer = array(
@@ -423,6 +424,7 @@ class Masterfile extends CI_Controller {
                 'contact_email'=>$contact_email,
                 'region'=>$region,
                 'status'=>$status,
+                'zip_code'=>$zip_code,
                 'date_imported'=>date('Y-m-d H:i:s'),
                 'imported_by'=>$_SESSION['user_id'],
             );
