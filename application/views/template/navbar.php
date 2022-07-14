@@ -167,10 +167,14 @@
             </li>
             <li class="menu-header">Sales</li>
             <li class="dropdown">
-                <a href="<?php echo base_url(); ?>sales/upload_sales" class="nav-link">
-                    <i data-feather="upload"></i>
-                    <span>Upload WESM Transaction</span>
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>Upload WESM <br>Transaction</span>
                 </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales_adjustment">Adjustment</a></li>
+                </ul>
             </li>
             <li class="dropdown">
                 <a href="<?php echo base_url(); ?>sales/collection_list" class="nav-link">
@@ -192,10 +196,14 @@
             </li>
             <li class="menu-header">Purchases</li>
             <li class="dropdown">
-                <a href="<?php echo base_url(); ?>purchases/upload_purchases" class="nav-link">
-                    <i data-feather="upload"></i>
-                    <span>Upload WESM Transaction</span>
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>Upload WESM <br>Transaction</span>
                 </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/upload_purchases">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/upload_purchases_adjustment">Adjustment</a></li>
+                </ul>
             </li>
             <li class="dropdown">
                 <a href="<?php echo base_url(); ?>purchases/payment_list" class="nav-link">

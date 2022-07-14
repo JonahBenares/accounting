@@ -56,14 +56,14 @@
                                     <td width="41%"></td>
                                     <td width="3%"></td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td></td>
                                     <td><b>Date Prepared:</b></td>
                                     <td></td>
                                     <td><b>Invoice Date:</b></td>
                                     <td></td>
                                     <td></td>
-                                </tr>
+                                </tr> -->
                             </table>
                             <hr class="m-b-0">
                             <table class="table table-bordered table-hover mb-0" style="width:100%;font-size: 13px;">

@@ -1202,6 +1202,14 @@ class Sales extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function upload_sales_adjustment()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/upload_sales_adjustment');
+        $this->load->view('template/footer');
+    }
+
 
 
     

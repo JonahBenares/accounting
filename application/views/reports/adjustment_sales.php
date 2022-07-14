@@ -19,20 +19,20 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-10 col-md-10 col-sm-10 offset-lg-1 offset-md-1 offset-sm-1">
                                     <table width="100%">
                                         <tr>
-                                            <td width="20%">
+                                            <td width="22%">
                                                 <select class="form-control select2" name="ref_no" id="ref_no">
-                                                    <option value="">-- Select Month --</option>
+                                                    <option value="">-- Select Year From --</option>
                                                 </select>
                                             </td>
-                                            <td width="20%">
+                                            <td width="22%">
                                                 <select class="form-control select2" name="ref_no" id="ref_no">
-                                                    <option value="">-- Select Year --</option>
+                                                    <option value="">-- Select Year To--</option>
                                                 </select>
                                             </td>
-                                            <td width="50%">
+                                            <td width="46%">
                                                 <!-- <input placeholder="Reference Number" class="form-control" type="text" id="ref_no" name="ref_no"> -->
                                                 <select class="form-control select2" name="ref_no" id="ref_no">
                                                     <option value="">-- Select Reference Number --</option>
@@ -50,20 +50,20 @@
                             <table class="table-bordsered" width="100%">
                                 <tr>
                                     <td width="3%"></td>
-                                    <td width="13%"><b>Month & Year:</b></td>
-                                    <td width="25%"></td>
+                                    <td width="4%"><b>Year:</b></td>
+                                    <td width="25%">2016 - 2022</td>
                                     <td width="13%"><b>Reference Number:</b></td>
                                     <td width="41%"></td>
                                     <td width="3%"></td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td></td>
                                     <td><b>Date Prepared:</b></td>
                                     <td></td>
                                     <td><b>Invoice Date:</b></td>
                                     <td></td>
                                     <td></td>
-                                </tr>
+                                </tr> -->
                             </table>
                             <hr class="m-b-0">
                             <table class="table table-bordered table-hover mb-0" style="width:100%;font-size: 13px;">
@@ -81,6 +81,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td class="pt-1 pb-1" colspan="9" style="border-bottom:0px solid #fff">
+                                            <b>RECEIVABLES</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1" colspan="9">
+                                            <br>
+                                            <u>Year 2016-2017</u>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td class="pt-1 pb-1">Adjustment</td>
                                         <td class="pt-1 pb-1">TS-WAD-170F5-0000050</td>
@@ -125,8 +136,56 @@
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
                                     </tr>
-                                </tbody>
-                                <tfoot>
+                                    <tr>
+                                        <td class="pt-1 pb-1" colspan="9">
+                                            <br>
+                                            <u>Year 2016-2017</u>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1">Adjustment</td>
+                                        <td class="pt-1 pb-1">TS-WAD-170F5-0000050</td>
+                                        <td class="pt-1 pb-1">Jul 26 - Aug 25, 2020</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">-</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1">Addcom - MOT </td>
+                                        <td class="pt-1 pb-1">TS-WAC-181F10-0000001</td>
+                                        <td class="pt-1 pb-1">June 26 - Jul 25, 2021</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1">Addcom - AP </td>
+                                        <td class="pt-1 pb-1">TS-WAC-186F9-0000001</td>
+                                        <td class="pt-1 pb-1">Nov 26 - Dec 25, 2021</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1">Addcom - SEC </td>
+                                        <td class="pt-1 pb-1">TS-WAC-186F9-0000001</td>
+                                        <td class="pt-1 pb-1">Nov 26 - Dec 25, 2021</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                    </tr>
                                     <tr>
                                         <td class="pt-2 pb-2 td-yellow" colspan="3" align="right">Sub Total</td>
                                         <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>7,145.85</b></td>
@@ -140,7 +199,7 @@
                                         <td class="pt-2 pb-2 td-yellow" colspan="8" align="left">TOTAL AMOUNT RECEIVABLE on or before, JUNE 25, 2022 &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
                                         <td class="pt-2 pb-2 td-yellow" align="right"><b>(6,228.42)</b></td>
                                     </tr>
-                                </tfoot>   
+                                </tbody>   
                             </table>
                         </div>
                     </div>

@@ -50,19 +50,7 @@
                                             <input type="date" class="form-control" name='due_date' id="due_date" value="<?php echo (!empty($purchase_id) ? $due_date : ''); ?>" required <?php echo $readonly; ?>>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                            <label><br></label>
-                                            <div class="form-group mb-2">
-                                                <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="checkbox" name="adjustment" <?php echo (!empty($purchase_id)) ? (($adjustment==1) ? 'checked' : '') : ''; ?> value="1">
-                                                    <div class="state p-warning">
-                                                        <i class="icon material-icons">done</i>
-                                                        <label>Adjustment</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label><br></label>
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>

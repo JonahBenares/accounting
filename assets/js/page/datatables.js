@@ -47,10 +47,9 @@ $("#table-3").dataTable({
     { "width": "1%", "targets": 1 }
   ]
 });
-// $("#table-4").dataTable({
-//   "scrollX": true,
-//   fixedHeader: true,
-// });
+$("#table-4").dataTable({
+  "scrollX": true,
+});
 
 
 $('#save-stage').DataTable({
@@ -73,6 +72,6 @@ $('#tableExport').DataTable({
   ]
 });
 
-$("#table-4").dataTable({
-  order: [[1, 'asc']],
-});
+// $("#table-4").dataTable({
+//   order: [[1, 'asc']],
+// });
