@@ -69,16 +69,16 @@
         font-size: 12px;
     }
     .tin1{
-        left: 275px;
-        top: 175px;
-        position: absolute;
-        letter-spacing: 0.86em;
+        left: 275px!important;
+        top: 175px!important;
+        position: absolute!important;
+        letter-spacing: 0.86em!important;
     }
     .tin2{
-        left: 275px;
-        top: 335px;
-        position: absolute;
-        letter-spacing: 0.86em;
+        left: 275px!important;
+        top: 335px!important;
+        position: absolute!important;
+        letter-spacing: 0.86em!important;
     }
     .last1{
         margin-left:5px ;

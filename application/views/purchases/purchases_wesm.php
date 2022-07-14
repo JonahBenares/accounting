@@ -1,4 +1,7 @@
-<script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>   
+<script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>   
 <script type="text/javascript">
 /*function onClick() {
   var pdf = new jsPDF('p', 'pt', 'letter');
@@ -74,10 +77,12 @@ element.addEventListener("click", onClick);*/
                                         <td>Due Date</td>
                                         <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
                                     </tr>
-                                     <tr>
+                                    <!--  <tr>
                                         <td colspan="4"><center><button type="button" onclick="downloadbulk2307('<?php echo base_url(); ?>','<?php echo $reference_number; ?>');" class="btn btn-primary btn-block">Download Bulk 2307</button>
-                                            <!-- <button type="button" onclick="onClick()" class="btn btn-primary btn-block">Download Bulk 2307</button> -->
                                         </center></td>
+                                    </tr> -->
+                                    <tr>
+                                        <td id="append"></td>
                                     </tr>
                                 </table>
                                 <br>
@@ -153,9 +158,5 @@ element.addEventListener("click", onClick);*/
     </section>
 </div>
 
-
-                
-                     <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>                  
+            
          
