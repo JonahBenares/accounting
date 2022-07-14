@@ -71,18 +71,6 @@
                                 </tr>
                             </table>
                             <hr class="m-b-0">
-                            <!-- <table class="table-borsdered" width="100%" style="background-color:#fffaf4">
-                                <tr>
-                                    <td class="p-t-10 p-b-10" width="10%"></td>
-                                    <td class="p-t-10 p-b-10" width="10%">Total Amount</td>
-                                    <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_amount!=0)? number_format($total_amount,2) : '0.00'; ?></b></td>
-                                    <td class="p-t-10 p-b-10" width="10%">Total Paid</td>
-                                    <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_paid!=0)? number_format($total_paid,2) : '0.00'; ?></b></td>
-                                    <td class="p-t-10 p-b-10" width="10%">Balance</td>
-                                    <td class="p-t-10 p-b-10 font-blue">:&nbsp;<b><?php echo ($total_balance!=0)? number_format($total_balance,2) : '0.00'; ?></b></td>
-                                </tr>
-                            </table>
-                            <hr class="m-t-0"> -->
                             <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
                                 <thead>
                                     <tr>

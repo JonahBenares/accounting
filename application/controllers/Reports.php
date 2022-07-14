@@ -844,8 +844,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function ss_ledger()
-    {
+    public function ss_ledger(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
@@ -1011,36 +1010,28 @@ class Reports extends CI_Controller {
     }
 
 
-        public function ignore_or(){
-            $or_no=$this->uri->segment(3);
+    public function ignore_or(){
+        $or_no=$this->input->post('or_no');
+        $participant=$this->input->post('participant');
+        $date_from=$this->input->post('date_from');
+        $date_to=$this->input->post('date_to');
+        $ignore_or = array(
+           "or_no"=>$or_no,
+           "remarks"=>'Ignored',
+        );
+        $this->super_model->insert_into("or_remarks", $ignore_or);
+    }
 
-                 $ignore_or = array(
-                   "or_no"=>$or_no,
-                   "remarks"=>'Ignored',
-                );
-                $this->super_model->insert_into("or_remarks", $ignore_or);
-
-            ?>
-            <script>alert('Successfully Ignored the OR.'); 
-            window.location='<?php echo base_url(); ?>index.php/reports/or_summary/'
-            </script> 
-            <?php
-        }
-
-        public function cancel_or(){
-        $or_no=$this->uri->segment(3);
-
-             $cancel_or = array(
-               "or_no"=>$or_no,
-               "remarks"=>'Cancelled',
-            );
-            $this->super_model->insert_into("or_remarks", $cancel_or);
-
-        ?>
-        <script>alert('Successfully Cancelled the OR.'); 
-        window.location='<?php echo base_url(); ?>index.php/reports/or_summary/'
-        </script> 
-        <?php
+    public function cancel_or(){
+        $or_no=$this->input->post('or_no');
+        $participant=$this->input->post('participant');
+        $date_from=$this->input->post('date_from');
+        $date_to=$this->input->post('date_to');
+        $cancel_or = array(
+           "or_no"=>$or_no,
+           "remarks"=>'Cancelled',
+        );
+        $this->super_model->insert_into("or_remarks", $cancel_or);
     }
 
 
@@ -1051,7 +1042,9 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
+        $settlement_id=$this->super_model->select_column_where("participant","settlement_id","settlement_id",$participant);
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['settlement_id'] = $settlement_id;
         $data['part'] = $part;
         $data['date_from'] = $date_from;
         $data['date_to'] = $date_to;
@@ -1064,63 +1057,48 @@ class Reports extends CI_Controller {
         }
         $query=substr($sql,0,-4);
         $data['or_summary']=array();
-        //$max = $this->super_model->get_max_where("collection_details cd", "series_number","series_number != '' AND ".$query."");
         $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
         $data['max'] = $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
-        //foreach (range($min, $max) as $number) {
 
-       
         foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
 
-
             $data['or_summary'][]=array(
-                    "date"=>$or->collection_date,
-                    "or_no"=>$or->series_number,
-                    "stl_id"=>$or->settlement_id,
-                    "amount"=>$or->total,
-                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
-                    "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
-                );
+                "date"=>$or->collection_date,
+                "or_no"=>$or->series_number,
+                "stl_id"=>$or->settlement_id,
+                "amount"=>$or->total,
+                "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
+                "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
+            );
 
-        /*    $orno=$this->super_model->select_column_custom_where("collection_details","series_number","series_number != '$or->series_number' AND series_number != '' ");*/
-
-            //echo $orno."<br>";
-         /*   $min++;
-            if($or->series_number==$min){
-                $data['or_summary'][]=array(
-                    "date"=>$or->collection_date,
-                    "or_no"=>$or->series_number,
-                    "stl_id"=>$or->settlement_id,
-                    "amount"=>$or->total,
-                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
-                    "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
-                );
-            }else if($or->series_number!=$min){
-                $data['or_summary'][]=array(
-                    "date"=>$or->collection_date,
-                    "or_no"=>$or->series_number,
-                    "stl_id"=>$or->settlement_id,
-                    "amount"=>$or->total,
-                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
-                    "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
-                );
-                $data['or_summary'][]=array(
-                    "date"=>'',
-                    "or_no"=>$min,
-                    "stl_id"=>'',
-                    "amount"=>'',
-                    "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$min),
-                    "company_name"=>'',
-                );
-              
-            }*/
-        } 
-
-        /* foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query."  ORDER BY cd.series_number ASC") AS $or){*/
+        }
  
         $this->load->view('reports/or_summary',$data);
         $this->load->view('template/footer');
     
-}
-    
+    }
+
+    public function adjustment_sales(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/adjustment_sales');
+        $this->load->view('template/footer');
+    }
+
+    public function adjustment_purchases(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/adjustment_purchases');
+        $this->load->view('template/footer');
+    }
+    public function adjustment_sales_print(){
+        $this->load->view('template/print_head');
+        $this->load->view('reports/adjustment_sales_print');
+    }
+
+    public function adjustment_purchases_print(){
+        $this->load->view('template/print_head');
+        $this->load->view('reports/adjustment_purchases_print');
+    }
+
 }
