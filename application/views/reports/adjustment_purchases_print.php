@@ -120,45 +120,45 @@
                             <td class="font-11 p-l-5 p-r-5">Adjustment</td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAD-170F5-0000050</td>
                             <td class="font-11 p-l-5 p-r-5">Jul 26 - Aug 25, 2020</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">-</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">28.88</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(4.81)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">264.69</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(-)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
                         </tr>
                         <tr>
                             <td class="font-11 p-l-5 p-r-5">Addcom - MOT </td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-181F10-0000001</td>
                             <td class="font-11 p-l-5 p-r-5">June 26 - Jul 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">7,145.85</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">609.41</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">28.88</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(4.81)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">264.69</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
                         </tr>
                         <tr>
                             <td class="font-11 p-l-5 p-r-5">Addcom - AP </td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-186F9-0000001</td>
                             <td class="font-11 p-l-5 p-r-5">Nov 26 - Dec 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">7,145.85</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">609.41</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">28.88</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(4.81)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">264.69</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
                         </tr>
                         <tr>
                             <td class="font-11 p-l-5 p-r-5">Addcom - SEC </td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-186F9-0000001</td>
                             <td class="font-11 p-l-5 p-r-5">Nov 26 - Dec 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">7,145.85</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">609.41</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">28.88</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(4.81)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">264.69</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
                         </tr>
                         <tr>
                             <td class="font-12 p-l-5 p-r-5" colspan="9">
@@ -170,45 +170,45 @@
                             <td class="font-11 p-l-5 p-r-5">Adjustment</td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAD-170F5-0000050</td>
                             <td class="font-11 p-l-5 p-r-5">Jul 26 - Aug 25, 2020</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">-</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">28.88</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(4.81)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">264.69</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(-)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
                         </tr>
                         <tr>
                             <td class="font-11 p-l-5 p-r-5">Addcom - MOT </td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-181F10-0000001</td>
                             <td class="font-11 p-l-5 p-r-5">June 26 - Jul 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">7,145.85</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">609.41</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">28.88</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(4.81)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">264.69</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
                         </tr>
                         <tr>
                             <td class="font-11 p-l-5 p-r-5">Addcom - AP </td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-186F9-0000001</td>
                             <td class="font-11 p-l-5 p-r-5">Nov 26 - Dec 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">7,145.85</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">609.41</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">28.88</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(4.81)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">264.69</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
                         </tr>
                         <tr>
                             <td class="font-11 p-l-5 p-r-5">Addcom - SEC </td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-186F9-0000001</td>
                             <td class="font-11 p-l-5 p-r-5">Nov 26 - Dec 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">7,145.85</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">609.41</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">240.62</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">28.88</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(4.81)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">264.69</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
                         </tr>
 
                         <tr>
