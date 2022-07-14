@@ -165,6 +165,7 @@
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
                                                     <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onchange="updateSeries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input Series Number'>
+                                                    <span hidden><?php echo $log['series_number'];?></span>
                                                     <!-- <input type="" name="collection_id" id="collection_id<?php echo $x; ?>" value='<?php echo $log['collection_id'];?>'>
                                                     <input type="" name="settlement_id_single" id="settlement_id_single<?php echo $x; ?>" value='<?php echo $log['settlement_id_single'];?>'>
                                                     <input type="" name="reference_no_single" id="reference_no_single<?php echo $x; ?>" value='<?php echo $log['reference_no_single'];?>'>-->
