@@ -142,7 +142,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html"> 
+            <a href="<?php echo base_url(); ?>masterfile/dashboard"> 
                 <img alt="image" src="<?php echo base_url(); ?>assets/img/logo.png" class="header-logo" /> 
                 <span class="logo-name">FEBA SYSTEM</span>
             </a>
