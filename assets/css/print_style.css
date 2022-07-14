@@ -2572,3 +2572,18 @@ table td{
     align-content: center;
     z-index: 999;
 }
+.td-yellow{
+    background: #f1f1f1!important;
+}
+.td-blue{
+    background: #9cc2e5!important;
+}
+.td-gray{
+    background:#9cc2e5;
+    border: 1px solid #000;
+}
+.td-green{
+    background:green;
+    border: 1px solid #000;
+    color: #fff;
+}

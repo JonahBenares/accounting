@@ -82,6 +82,17 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td class="pt-1 pb-1" colspan="9" style="border-bottom:0px solid #fff">
+                                            <b>PAYABLES</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1" colspan="9">
+                                            <br>
+                                            <u>Year 2016-2017</u>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="pt-1 pb-1">Adjustment</td>
                                         <td class="pt-1 pb-1">TS-WAD-170F5-0000050</td>
                                         <td class="pt-1 pb-1">Jul 26 - Aug 25, 2020</td>
@@ -125,8 +136,56 @@
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
                                     </tr>
-                                </tbody>
-                                <tfoot>
+                                    <tr>
+                                        <td class="pt-1 pb-1" colspan="9">
+                                            <br>
+                                            <u>Year 2016-2017</u>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1">Adjustment</td>
+                                        <td class="pt-1 pb-1">TS-WAD-170F5-0000050</td>
+                                        <td class="pt-1 pb-1">Jul 26 - Aug 25, 2020</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">-</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1">Addcom - MOT </td>
+                                        <td class="pt-1 pb-1">TS-WAC-181F10-0000001</td>
+                                        <td class="pt-1 pb-1">June 26 - Jul 25, 2021</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1">Addcom - AP </td>
+                                        <td class="pt-1 pb-1">TS-WAC-186F9-0000001</td>
+                                        <td class="pt-1 pb-1">Nov 26 - Dec 25, 2021</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-1 pb-1">Addcom - SEC </td>
+                                        <td class="pt-1 pb-1">TS-WAC-186F9-0000001</td>
+                                        <td class="pt-1 pb-1">Nov 26 - Dec 25, 2021</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                    </tr>
                                     <tr>
                                         <td class="pt-2 pb-2 td-yellow" colspan="3" align="right">Sub Total</td>
                                         <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>7,145.85</b></td>
@@ -140,7 +199,7 @@
                                         <td class="pt-2 pb-2 td-yellow" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, JUNE 25, 2022 &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
                                         <td class="pt-2 pb-2 td-yellow" align="right"><b>(6,228.42)</b></td>
                                     </tr>
-                                </tfoot>   
+                                </tbody>   
                             </table>
                         </div>
                     </div>
