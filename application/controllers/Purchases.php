@@ -1227,7 +1227,9 @@ class Purchases extends CI_Controller {
                 $thirdmonth = "-"; 
             }
             /**/
-           $str= '<script src="'.base_url().'assets/js/jquery-1.12.4.js"></script><script src="'.base_url().'assets/js/jspdf.min.js"></script><script src="'.base_url().'assets/js/html2canvas.js"></script><script src="'.base_url().'assets/js/purchases.js"></script> <link rel="stylesheet" href="'.base_url().'assets/css/print2307-style.css"><script> document.getElementsByClassName("button_click")[0].click();</script><button onclick="getDownload()" type="button" class="button_click" hidden>DONWLOAD</button><div id="contentPDF" ><page size="Long" id="printableArea" class="canvas_div_pdf"><img class="img2307" src="'.base_url().'assets/img/form2307.jpg" style="width: 100%;"><label class="period_from ">'.$period_from.'</label><label class="period_to">'. $period_to.'</label>';
+            $billing_month = date('my',strtotime($billing_to));
+            $timestamp=date('Ymd');
+            $str= '<script src="'.base_url().'assets/js/jquery-1.12.4.js"></script><script src="'.base_url().'assets/js/jspdf.min.js"></script><script src="'.base_url().'assets/js/html2canvas.js"></script><script src="'.base_url().'assets/js/purchases.js"></script> <link rel="stylesheet" href="'.base_url().'assets/css/print2307-style.css"><script> document.getElementsByClassName("button_click")[0].click();</script><button onclick="getDownload()" type="button" class="button_click" hidden>DONWLOAD</button><input type="hidden" class="shortname" value="'.$det->short_name.'"><input type="hidden" class="ref_no" value="'.$refno.'"><input type="hidden" class="billing_month" value="'.$billing_month.'"><input type="hidden" class="timestamp" value="'.$timestamp.'"><div id="contentPDF" ><page size="Long" id="printableArea" class="canvas_div_pdf"><img class="img2307" src="'.base_url().'assets/img/form2307.jpg" style="width: 100%;"><label class="period_from ">'.$period_from.'</label><label class="period_to">'. $period_to.'</label>';
                 if(!empty($tin[1])){ 
                     $str.='<div class="tin1"><label class="">'.$tin[0].'</label><label class="">'.$tin[1].'</label><label class="">'.$tin[2].'</label><label class="last1">0000</label> </div>';
                 } else {
@@ -1245,14 +1247,6 @@ class Purchases extends CI_Controller {
     public function download_page()
     {   
         $this->load->view('purchases/download_page');
-    }
-
-    public function upload_purchases_adjustment()
-    {
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $this->load->view('purchases/upload_purchases_adjustment');
-        $this->load->view('template/footer');
     }
 
 }

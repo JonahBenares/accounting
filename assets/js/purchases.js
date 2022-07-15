@@ -459,6 +459,10 @@ function getDownload(){
     
     for(var i =0;i<x.length;i++){
         //alert(i);
+        var shortname=document.getElementsByClassName('shortname')[i].value;
+        var refno=document.getElementsByClassName('ref_no')[i].value;
+        var billing_month=document.getElementsByClassName('billing_month')[i].value;
+        var timestamp=document.getElementsByClassName('timestamp')[i].value;
         html2canvas($(".canvas_div_pdf")[i],{allowTaint:true, 
             useCORS: true,
             logging: false,
@@ -473,7 +477,8 @@ function getDownload(){
                 pdf.addPage(PDF_Width, PDF_Height);
                 pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
             //}
-             pdf.save("BIR2307 CENPRI.pdf");
+             //pdf.save("BIR2307 CENPRI.pdf");
+             pdf.save("BIR2307 CENPRI "+shortname+" "+refno+" "+billing_month+" "+timestamp+".pdf");
             
         });
     }
