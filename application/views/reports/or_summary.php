@@ -85,7 +85,7 @@
                                 }
                                 $asize = count($or_summary);
                                 for($x=0;$x<$asize;$x++){ 
-                                    $y=$x<1;
+                                    $y=$x-1;
 
                                     if($y>=0){ 
                                         if($or_summary[$y]['or_no'] == $or_summary[$x]['or_no']){
