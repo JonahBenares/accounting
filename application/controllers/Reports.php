@@ -1036,7 +1036,6 @@ class Reports extends CI_Controller {
 
 
     public function or_summary(){
-        error_reporting(0);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
