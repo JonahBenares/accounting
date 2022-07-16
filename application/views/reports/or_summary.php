@@ -65,7 +65,7 @@
                             </table>
                             <br>
                             <div>
-                                <table class="table table-bordered table-hover" id='table-4'>
+                                <table class="table table-bordered table-hover" id='table-4' width="100%">
                                     <thead>
                                         <tr>
                                             <td style="vertical-align:middle!important; border-bottom:1px solid #000" class="td-30 td-head" align="center">Date</td>
@@ -85,7 +85,7 @@
                                 }
                                 $asize = count($or_summary);
                                 for($x=0;$x<$asize;$x++){ 
-                                    $y=$x<1;
+                                    $y=$x-1;
 
                                     if($y>=0){ 
                                         if($or_summary[$y]['or_no'] == $or_summary[$x]['or_no']){

@@ -1036,7 +1036,6 @@ class Reports extends CI_Controller {
 
 
     public function or_summary(){
-        error_reporting(0);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
@@ -1069,7 +1068,7 @@ class Reports extends CI_Controller {
                 "stl_id"=>$or->settlement_id,
                 "amount"=>$or->total,
                 "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
-                "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant),
+                "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$or->settlement_id),
             );
 
         }
