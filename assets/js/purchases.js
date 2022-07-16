@@ -529,3 +529,43 @@ function getDownload(){
 
             //pdf.save("BIR2307 CENPRI "+shortname+" "+refno+" "+billing_month+" "+timestamp+".pdf");
     }
+
+async function upload_adjust_btn() {
+    var count_file = document.getElementById("count").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"purchases/upload_purchase_adjust";
+    var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+        var form = document.querySelector('#uploadadjust');
+        var formData = new FormData(form);
+        for (var i=1;i<=count_file;i++) { 
+            fileupload = document.querySelector('input[name="fileupload[]"]').files[0];
+            adjust_identifier = document.getElementById("adjust_identifier").value;
+            count = document.getElementById("count").value;
+            remarks= document.querySelector('input[name="remarks[]"]').value;
+            formData.append('fileupload'+[i], fileupload);
+            formData.append('remarks'+[i], remarks);
+            formData.append('count', count);
+            formData.append('adjust_identifier', adjust_identifier);
+        }
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("button_adjust").disabled = true;
+                //document.getElementById("cancel").disabled = true;
+                //$("#table-wesm").hide(); 
+            },
+            success: function(output){
+                //alert(output);
+                $("#alt").hide(); 
+                window.location=loc+'purchases/upload_purchases_adjustment/'+output;
+            }
+        });
+        
+    }
+}

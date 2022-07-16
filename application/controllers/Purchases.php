@@ -1244,9 +1244,129 @@ class Purchases extends CI_Controller {
         }
     }
 
-    public function download_page()
-    {   
-        $this->load->view('purchases/download_page');
+    public function upload_purchases_adjustment(){
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $data['identifier']=$this->uri->segment(3);
+        $identifier=$this->uri->segment(3);
+        $data['saved']=$this->super_model->select_column_where("purchase_transaction_head","saved","adjust_identifier",$identifier);
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('purchases/upload_purchases_adjustment',$data);
+        $this->load->view('template/footer');
     }
 
+    public function upload_purchase_adjust(){
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $count = $this->input->post('count');
+        $adjust_identifier = $this->input->post('adjust_identifier');
+        for($x=0;$x<$count;$x++){
+            //$remarks = $this->input->post('remarks['.$x.']');
+            $fileupload = $this->input->post('fileupload['.$x.']');
+            $dest= realpath(APPPATH . '../uploads/excel/');
+            $error_ext=0;
+            if(!empty($_FILES['fileupload']['name'][$x])){
+                $exc= basename($_FILES['fileupload']['name'][$x]);
+                $exc=explode('.',$exc);
+                $ext1=$exc[1];
+                if($ext1=='php' || $ext1!='xlsx'){
+                    $error_ext++;
+                }else {
+                    $filename1='wesm_purchases_adjust'.$x.".".$ext1;
+                    if(move_uploaded_file($_FILES["fileupload"]['tmp_name'][$x], $dest.'/'.$filename1)){
+                        for($a=0;$a<$count;$a++){
+                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases_adjust'.$a.'.xlsx');
+                            try {
+                                $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+                                $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                            
+                       
+                                $objPHPExcel = $objReader->load($inputFileName);
+                            } 
+                            catch(Exception $e) {
+                                die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                            }
+                            $objPHPExcel->setActiveSheetIndex(2);
+
+                            $reference_number = trim($objPHPExcel->getActiveSheet()->getCell('A2')->getFormattedValue());
+                            $transaction_date = trim($objPHPExcel->getActiveSheet()->getCell('B2')->getFormattedValue());
+                            $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
+                            $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
+                            $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
+                            $remarks = $this->input->post('remarks['.$a.']');
+                            $data_insert=array(
+                                'reference_number'=>$reference_number,
+                                'transaction_date'=>$transaction_date,
+                                'billing_from'=>$billing_from,
+                                'billing_to'=>$billing_to,
+                                'due_date'=>$due_date,
+                                'user_id'=>$_SESSION['user_id'],
+                                'saved'=>0,
+                                'adjustment'=>1,
+                                'adjust_identifier'=>$adjust_identifier,
+                                'adjustment_remarks'=>$remarks,
+                            );
+                            $this->super_model->insert_into("purchase_transaction_head", $data_insert);
+
+                            $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+                            $highestRow = $highestRow-1;
+                            $y=1;
+                            for($x=4;$x<$highestRow;$x++){
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+                                $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue(),'()');
+                                $vatables_purchases = trim($vatables_purchases,"-");
+                                $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue(),'()');
+                                 $zero_rated_purchases = trim($zero_rated_purchases,"-");
+                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                 $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
+                                $vat_on_purchases = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
+                                $vat_on_purchases = trim($vat_on_purchases,"-");
+                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
+                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getOldCalculatedValue(),'()');
+                                $total_amount = trim($total_amount,"-");
+                                //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
+                                $count_max=$this->super_model->count_rows("purchase_transaction_head");
+                                if($count_max==0){
+                                    $purchase_id=1;
+                                }else{
+                                    $purchase_id = $this->super_model->get_max("purchase_transaction_head", "purchase_id");
+                                }
+                                $data_purchase = array(
+                                    'purchase_id'=>$purchase_id,
+                                    'item_no'=>$y,
+                                    'short_name'=>$shortname,
+                                    'billing_id'=>$billing_id,
+                                    'facility_type'=>$fac_type,
+                                    'wht_agent'=>$wht_agent,
+                                    'ith_tag'=>$ith,
+                                    'non_vatable'=>$non_vatable,
+                                    'zero_rated'=>$zero_rated,
+                                    'vatables_purchases'=>$vatables_purchases,
+                                    'vat_on_purchases'=>$vat_on_purchases,
+                                    'zero_rated_purchases'=>$zero_rated_purchases,
+                                    'zero_rated_ecozones'=>$zero_rated_ecozone,
+                                    'ewt'=>$ewt,
+                                    'total_amount'=>$total_amount,
+                                    'balance'=>$total_amount
+                                    //'balance'=>$total_amount
+                                );
+                                $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
+                                $y++;
+                            }
+                        }
+                        //$this->readExcel_adjust($adjust_identifier,$x,$remarks);
+                    } 
+                }
+            }
+        }
+        echo $adjust_identifier;
+    }
 }
