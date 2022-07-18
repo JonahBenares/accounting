@@ -1290,7 +1290,8 @@ class Purchases extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
         $adjust_identifier = $this->input->post('adjust_identifier');
-        for($x=0;$x<$count;$x++){
+        for($x=1;$x<=$count;$x++){
+            //echo $x;
             //$remarks = $this->input->post('remarks['.$x.']');
             $fileupload = $this->input->post('fileupload['.$x.']');
             $dest= realpath(APPPATH . '../uploads/excel/');
@@ -1314,7 +1315,7 @@ class Purchases extends CI_Controller {
                                 $objPHPExcel = $objReader->load($inputFileName);
                             } 
                             catch(Exception $e) {
-                                die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                                //die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
                             }
                             $objPHPExcel->setActiveSheetIndex(2);
 
@@ -1396,6 +1397,6 @@ class Purchases extends CI_Controller {
                 }
             }
         }
-        echo $adjust_identifier;
+        //echo $adjust_identifier;
     }
 }
