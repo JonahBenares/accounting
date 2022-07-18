@@ -431,3 +431,39 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 
 }
 
+async function upload_sales_adjust_btn() {
+    var count_file = document.getElementById("count").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/upload_sales_adjust";
+    var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+        var form = document.querySelector('#uploadsalesadjust');
+        var formData = new FormData(form);
+        for (var i=1;i<=count_file;i++) { 
+            fileupload = document.querySelector('input[name="fileupload[]"]').files[0];
+            count = document.getElementById("count").value;
+            remarks= document.querySelector('input[name="remarks[]"]').value;
+            formData.append('fileupload'+[i], fileupload);
+            formData.append('remarks'+[i], remarks);
+            formData.append('count', count);
+        }
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("button_adjust").disabled = true;
+            },
+            success: function(output){
+            	alert(output);
+                //$("#alt").hide(); 
+                //window.location=loc+'sales/upload_sales_adjustment/';
+            }
+        });
+        
+    }
+}
+
