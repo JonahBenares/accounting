@@ -53,13 +53,13 @@ if(!empty($sales_id)){
                                 </div>
                             </form> 
                             <?php if(!empty($identifier) && !empty($details)){ ?>  
-                            <div class="table-responsive" >
+                            <div class="table-responssive" >
                                 <?php $x=1; foreach($head AS $h){ ?>
                                 <hr>
                                 <table width="100%">
                                     <tr>
                                         <td><label class="m-0"><b>Reference Number</b>: <?php echo $h->reference_number; ?></label></td>
-                                        <td><label class="m-0"><b>Billing Period</b>: <?php echo date("F d,Y",strtotime($h->billing_from)); ?> - <?php echo date("F d,Y",strtotime($h->billing_from)); ?> </label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: <?php echo date("F d",strtotime($h->billing_from)); ?> - <?php echo date("F d,Y",strtotime($h->billing_to)); ?> </label></td>
                                     </tr>
                                     <tr>
                                         <td><label class="m-0"><b>Date</b>: <?php echo date("F d,Y",strtotime($h->transaction_date)); ?> </label></td>
@@ -99,7 +99,7 @@ if(!empty($sales_id)){
                                             <td align="center" style="background: #fff;">
                                                 <?php if($saved==1){ ?>
                                                <div class="btn-group mb-0">
-                                                    <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                    <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $h->purchase_id; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                         <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo "".$d['print_counter'].""; ?></span>
                                                     </a>
                                                 </div>
@@ -130,7 +130,8 @@ if(!empty($sales_id)){
                         </div>
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
                         <div id='alt' style="font-weight:bold"></div>
-                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save">
+                        <input type="hidden" name="saveadjust_identifier" id="saveadjust_identifier" value="<?php echo $identifier;?>">
+                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAlladjust();" value="Save">
                         <?php } } ?>
                     </div>
                 </div>
@@ -164,6 +165,7 @@ if(!empty($sales_id)){
         for(var a=1;a<=counter;a++){
             $("#adjust-"+a).dataTable({
                 order: [[2, 'asc']],
+                "scrollX": true,
             });
         }
     }

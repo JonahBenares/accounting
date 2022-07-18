@@ -22,25 +22,12 @@
                                 <div class="col-lg-12">
                                     <table width="100%">
                                         <tr>
-                                            <td width="20%">
-                                                <select class="form-control select2" name="ref_no" id="ref_no">
-                                                    <option value="">-- Select Month --</option>
-                                                </select>
-                                            </td>
-                                            <td width="20%">
-                                                <select class="form-control select2" name="ref_no" id="ref_no">
-                                                    <option value="">-- Select Year --</option>
-                                                </select>
-                                            </td>
-                                            <td width="50%">
-                                                <!-- <input placeholder="Reference Number" class="form-control" type="text" id="ref_no" name="ref_no"> -->
-                                                <select class="form-control select2" name="ref_no" id="ref_no">
-                                                    <option value="">-- Select Reference Number --</option>
-                                                </select>
+                                            <td width="99%">
+                                                <input type="date" name="transaction_date" id="transaction_date" class="form-control">
                                             </td>
                                             <td width="1%">
                                                 <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                                                <input type='button' class="btn btn-primary"  onclick="filter_sales()" value="Filter">
+                                                <input type='button' class="btn btn-primary"  onclick="adjustment_purchases_filter()" value="Filter">
                                             </td>
                                         </tr>
                                     </table>
@@ -50,11 +37,11 @@
                             <table class="table-bordsered" width="100%">
                                 <tr>
                                     <td width="3%"></td>
-                                    <td width="13%"><b>Month & Year:</b></td>
+                                    <td width="13%"><b>Invoice Date:</b></td>
                                     <td width="25%"></td>
-                                    <td width="13%"><b>Reference Number:</b></td>
+                                    <!-- <td width="13%"><b>Reference Number:</b></td>
                                     <td width="41%"></td>
-                                    <td width="3%"></td>
+                                    <td width="3%"></td> -->
                                 </tr>
                                 <!-- <tr>
                                     <td></td>
@@ -86,119 +73,64 @@
                                             <b>PAYABLES</b>
                                         </td>
                                     </tr>
+                                    <?php 
+                                        if(!empty($adjust)){
+                                        $data2 = array();
+                                        foreach($adjust as $ads) {
+                                            $key = date("Y",strtotime($ads['billing_to']));
+                                            if(!isset($data2[$key])) {
+                                                $data2[$key] = array(
+                                                    'particular'=>array(),
+                                                    'participant'=>array(),
+                                                    'billing_from'=>array(),
+                                                    'billing_from_single'=>$ads['billing_from'],
+                                                    'billing_to'=>array(),
+                                                    'billing_to_single'=>$ads['billing_to'],
+                                                    'vatables_purchases'=>array(),
+                                                    'vat_on_purchases'=>array(),
+                                                    'ewt'=>array(),
+                                                    'zero_rated'=>array(),
+                                                    'net'=>array(),
+                                                    'total'=>array(),
+                                                    'total_single'=>$ads['total'],
+                                                );
+                                            }
+                                            $data2[$key]['particular'][] = $ads['particular'];
+                                            $data2[$key]['participant'][] = $ads['participant'];
+                                            $data2[$key]['billing_from'][] = $ads['billing_from'];
+                                            $data2[$key]['billing_to'][] = $ads['billing_to'];
+                                            $data2[$key]['vatables_purchases'][] = number_format($ads['vatables_purchases'],2);
+                                            $data2[$key]['vat_on_purchases'][] = number_format($ads['vat_on_purchases'],2);
+                                            $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
+                                            $data2[$key]['zero_rated'][] = number_format($ads['zero_rated'],2);
+                                            $data2[$key]['net'][] = number_format($ads['net'],2);
+                                            $data2[$key]['total'][] = number_format($ads['total'],2);
+                                        }
+                                        foreach($data2 AS $ad){ 
+                                    ?>
                                     <tr>
                                         <td class="pt-1 pb-1" colspan="9">
                                             <br>
-                                            <u>Year 2016-2017</u>
+                                            <u>Year <?php echo date("Y",strtotime($ad['billing_to_single'])); ?></u>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="pt-1 pb-1">Adjustment</td>
-                                        <td class="pt-1 pb-1">TS-WAD-170F5-0000050</td>
-                                        <td class="pt-1 pb-1">Jul 26 - Aug 25, 2020</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">-</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                        <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
+                                        <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['participant']);?></td>
+                                        <td class="pt-1 pb-1"><?php echo date("F d",strtotime($ad['billing_from_single']));?> - <?php echo date("F d,Y",strtotime($ad['billing_to_single']));?></td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['vatables_purchases']);?></td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['net']);?></td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['vat_on_purchases']);?></td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['ewt']); ?></td>
+                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['total']);?></td>
                                     </tr>
+                                    <?php } ?>
                                     <tr>
-                                        <td class="pt-1 pb-1">Addcom - MOT </td>
-                                        <td class="pt-1 pb-1">TS-WAC-181F10-0000001</td>
-                                        <td class="pt-1 pb-1">June 26 - Jul 25, 2021</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
+                                        <td class="pt-2 pb-2 td-yellow" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, <?php echo date('F d,Y',strtotime($due_date))?> &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
+                                        <td class="pt-2 pb-2 td-yellow" align="right"><b>(<?php echo number_format($total_sum,2);?>)</b></td>
                                     </tr>
-                                    <tr>
-                                        <td class="pt-1 pb-1">Addcom - AP </td>
-                                        <td class="pt-1 pb-1">TS-WAC-186F9-0000001</td>
-                                        <td class="pt-1 pb-1">Nov 26 - Dec 25, 2021</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pt-1 pb-1">Addcom - SEC </td>
-                                        <td class="pt-1 pb-1">TS-WAC-186F9-0000001</td>
-                                        <td class="pt-1 pb-1">Nov 26 - Dec 25, 2021</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pt-1 pb-1" colspan="9">
-                                            <br>
-                                            <u>Year 2016-2017</u>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pt-1 pb-1">Adjustment</td>
-                                        <td class="pt-1 pb-1">TS-WAD-170F5-0000050</td>
-                                        <td class="pt-1 pb-1">Jul 26 - Aug 25, 2020</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">-</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pt-1 pb-1">Addcom - MOT </td>
-                                        <td class="pt-1 pb-1">TS-WAC-181F10-0000001</td>
-                                        <td class="pt-1 pb-1">June 26 - Jul 25, 2021</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pt-1 pb-1">Addcom - AP </td>
-                                        <td class="pt-1 pb-1">TS-WAC-186F9-0000001</td>
-                                        <td class="pt-1 pb-1">Nov 26 - Dec 25, 2021</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pt-1 pb-1">Addcom - SEC </td>
-                                        <td class="pt-1 pb-1">TS-WAC-186F9-0000001</td>
-                                        <td class="pt-1 pb-1">Nov 26 - Dec 25, 2021</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">7,145.85</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">609.41</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">240.62</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">28.88</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">(4.81)</td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;">264.69</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pt-2 pb-2 td-yellow" colspan="3" align="right">Sub Total</td>
-                                        <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>7,145.85</b></td>
-                                        <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>609.41</b></td>
-                                        <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>240.62</b></td>
-                                        <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>28.88</b></td>
-                                        <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>(4.81)</b></td>
-                                        <td class="pt-2 pb-2 td-yellow" align="right" style="font-size: 12px;"><b>264.69</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pt-2 pb-2 td-yellow" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, JUNE 25, 2022 &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
-                                        <td class="pt-2 pb-2 td-yellow" align="right"><b>(6,228.42)</b></td>
-                                    </tr>
+                                    <?php } ?>
                                 </tbody>   
                             </table>
                         </div>

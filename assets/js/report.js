@@ -324,4 +324,9 @@ function filter_adjusted_sales(){
       var loc= document.getElementById("baseurl").value;
       window.location=loc+'reports/adjustment_sales/'+date;
   }
+
+function adjustment_purchases_filter() {
+    var transaction_date= document.getElementById("transaction_date").value;
+    var loc= document.getElementById("baseurl").value;
+    window.location=loc+'reports/adjustment_purchases/'+transaction_date; 
 }
