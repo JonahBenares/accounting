@@ -1085,15 +1085,45 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function adjustment_purchases(){
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $this->load->view('reports/adjustment_purchases');
-        $this->load->view('template/footer');
-    }
     public function adjustment_sales_print(){
         $this->load->view('template/print_head');
         $this->load->view('reports/adjustment_sales_print');
+    }
+
+    public function adjustment_purchases(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $transaction_date=$this->uri->segment(3);
+        $year=date("Y",strtotime($transaction_date));
+        $total_sum[]=0;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ad){
+            $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
+            $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
+            $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");
+            $vat_on_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vat_on_purchases","purchase_id='$ad->purchase_id'");
+            $ewt=$this->super_model->select_sum_where("purchase_transaction_details","ewt","purchase_id='$ad->purchase_id'");
+            $zero_rated=$zero_rated_purchases+$zero_rated_ecozones;
+            $net=$vatables_purchases+$zero_rated;
+            $total=($vatables_purchases+$zero_rated+$vat_on_purchases)-$ewt;
+            $data['due_date']=$ad->due_date;
+            $total_sum[]=$total;
+            $data['adjust'][]=array(
+                'adjust_identifier'=>$ad->adjust_identifier,
+                'particular'=>$ad->adjustment_remarks,
+                'participant'=>$ad->reference_number,
+                'billing_from'=>$ad->billing_from,
+                'billing_to'=>$ad->billing_to,
+                'vatables_purchases'=>$vatables_purchases,
+                'vat_on_purchases'=>$vat_on_purchases,
+                'ewt'=>$ewt,
+                'zero_rated'=>$zero_rated,
+                'net'=>$net,
+                'total'=>$total,
+            );
+        }
+        $data['total_sum']=array_sum($total_sum);
+        $this->load->view('reports/adjustment_purchases',$data);
+        $this->load->view('template/footer');
     }
 
     public function adjustment_purchases_print(){

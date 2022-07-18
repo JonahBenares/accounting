@@ -1315,7 +1315,7 @@ class Purchases extends CI_Controller {
                                 $objPHPExcel = $objReader->load($inputFileName);
                             } 
                             catch(Exception $e) {
-                                //die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                                die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
                             }
                             $objPHPExcel->setActiveSheetIndex(2);
 
@@ -1397,6 +1397,15 @@ class Purchases extends CI_Controller {
                 }
             }
         }
-        //echo $adjust_identifier;
+        echo $adjust_identifier;
+    }
+
+    public function save_alladjust(){
+        $adjust_identifier = $this->input->post('adjust_identifier');
+        $data_head = array(
+            'saved'=>1
+        );
+        $this->super_model->update_where("purchase_transaction_head",$data_head, "adjust_identifier", $adjust_identifier);
+        echo $adjust_identifier;
     }
 }
