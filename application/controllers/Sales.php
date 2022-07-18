@@ -1204,11 +1204,162 @@ class Sales extends CI_Controller {
 
     public function upload_sales_adjustment()
     {
+        $id=$this->uri->segment(3);
+        $data['sales_adjustment_id'] = $id;
+
+        if(!empty($id)){
+            foreach($this->super_model->select_row_where("sales_adjustment_head", "sales_adjustment_id",$id) AS $h){
+                foreach($this->super_model->select_row_where("sales_adjustment_details","sales_adjustment_id",$h->sales_adjustment_id) AS $d){
+                    $data['details'][]=array(
+                        'transaction_date'=>$h->transaction_date,
+                        'billing_from'=>$h->billing_from,
+                        'billing_to'=>$h->billing_to,
+                        'reference_number'=>$h->reference_number,
+                        'due_date'=>$h->due_date,
+                        'saved'=>$h->saved,
+                        'adjustment_detail_id'=>$d->adjustment_detail_id,
+                        'sales_adjustment_id'=>$d->sales_adjustment_id,
+                        'item_no'=>$d->item_no,
+                        'short_name'=>$d->short_name,
+                        'billing_id'=>$d->billing_id,
+                        'company_name'=>$d->company_name,
+                        'facility_type'=>$d->facility_type,
+                        'wht_agent'=>$d->wht_agent,
+                        'ith_tag'=>$d->ith_tag,
+                        'non_vatable'=>$d->non_vatable,
+                        'zero_rated'=>$d->zero_rated,
+                        'vatable_sales'=>$d->vatable_sales,
+                        'vat_on_sales'=>$d->vat_on_sales,
+                        'zero_rated_sales'=>$d->zero_rated_sales,
+                        'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                        'ewt'=>$d->ewt,
+                        'serial_no'=>$d->serial_no,
+                        'total_amount'=>$d->total_amount,
+                        'print_counter'=>$d->print_counter
+                    );
+                }
+            }
+        }else{
+            $data['details'] = array();
+        }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('sales/upload_sales_adjustment');
+        $this->load->view('sales/upload_sales_adjustment',$data);
         $this->load->view('template/footer');
     }
+
+        public function upload_sales_adjust(){
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $count = $this->input->post('count');
+        for($x=0;$x<$count;$x++){
+            $fileupload = $this->input->post('fileupload['.$x.']');
+            $dest= realpath(APPPATH . '../uploads/excel/');
+            $error_ext=0;
+            if(!empty($_FILES['fileupload']['name'][$x])){
+                $exc= basename($_FILES['fileupload']['name'][$x]);
+                $exc=explode('.',$exc);
+                $ext1=$exc[1];
+                if($ext1=='php' || $ext1!='xlsx'){
+                    $error_ext++;
+                }else {
+                    $filename1='wesm_sales_adjust'.$x.".".$ext1;
+                    echo $x."*";
+                    if(move_uploaded_file($_FILES["fileupload"]['tmp_name'][$x], $dest.'/'.$filename1)){
+                        for($a=0;$a<$count;$a++){
+                            echo $a."**";
+                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales_adjust'.$a.'.xlsx');
+                            try {
+                                $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+                                $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                            
+                       
+                                $objPHPExcel = $objReader->load($inputFileName);
+                            } 
+                            catch(Exception $e) {
+                                //die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                            }
+                            $objPHPExcel->setActiveSheetIndex(2);
+
+                            $reference_number = trim($objPHPExcel->getActiveSheet()->getCell('A2')->getFormattedValue());
+                            $transaction_date = trim($objPHPExcel->getActiveSheet()->getCell('B2')->getFormattedValue());
+                            $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
+                            $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
+                            $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
+                            $remarks = $this->input->post('remarks['.$a.']');
+                            $data_insert=array(
+                                'reference_number'=>$reference_number,
+                                'transaction_date'=>$transaction_date,
+                                'billing_from'=>$billing_from,
+                                'billing_to'=>$billing_to,
+                                'due_date'=>$due_date,
+                                'user_id'=>$_SESSION['user_id'],
+                                "create_date"=>date("Y-m-d H:i:s"),
+                                'remarks'=>$remarks,
+                            );
+                            $this->super_model->insert_into("sales_adjustment_head", $data_insert);
+
+                            $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+                            $highestRow = $highestRow-1;
+                            $y=1;
+                            for($x=4;$x<$highestRow;$x++){
+                                
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
+                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getOldCalculatedValue());
+                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
+                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
+                                $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                $vatable_sales = trim($vatable_sales,"-");
+                                $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                $zero_rated_sales = trim($zero_rated_sales,"-");
+                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
+                                $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
+                                $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
+                                $vat_on_sales = trim($vat_on_sales,"-");
+                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
+                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue(),'()');
+                                $total_amount = trim($total_amount,"-");
+
+                                $count_max=$this->super_model->count_rows("sales_adjustment_head");
+                                if($count_max==0){
+                                    $sales_adjustment_id=1;
+                                }else{
+                                    $sales_adjustment_id = $this->super_model->get_max("sales_adjustment_head", "sales_adjustment_id");
+                                }
+                                $data_sales = array(
+                                    'sales_adjustment_id'=>$sales_adjustment_id,
+                                    'item_no'=>$y,
+                                    'short_name'=>$shortname,
+                                    'billing_id'=>$billing_id,
+                                    'company_name'=>$company_name,
+                                    'facility_type'=>$fac_type,
+                                    'wht_agent'=>$wht_agent,
+                                    'ith_tag'=>$ith,
+                                    'non_vatable'=>$non_vatable,
+                                    'zero_rated'=>$zero_rated,
+                                    'vatable_sales'=>$vatable_sales,
+                                    'vat_on_sales'=>$vat_on_sales,
+                                    'zero_rated_ecozones'=>$zero_rated_ecozone,
+                                    'ewt'=>$ewt,
+                                    'total_amount'=>$total_amount,
+                                    'balance'=>$total_amount
+                                );
+                                $this->super_model->insert_into("sales_adjustment_details", $data_sales);
+                                $y++;
+                            }
+                        }
+                    } 
+                }
+            }
+        //echo $sales_adjustment_id;
+    }
+}
 
 
 
