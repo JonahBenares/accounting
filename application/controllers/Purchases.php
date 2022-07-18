@@ -1250,6 +1250,35 @@ class Purchases extends CI_Controller {
         $data['identifier']=$this->uri->segment(3);
         $identifier=$this->uri->segment(3);
         $data['saved']=$this->super_model->select_column_where("purchase_transaction_head","saved","adjust_identifier",$identifier);
+        $data['head']=$this->super_model->select_row_where("purchase_transaction_head","adjust_identifier",$identifier);
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier'") AS $d){
+            $data['details'][]=array(
+                'purchase_detail_id'=>$d->purchase_detail_id,
+                'purchase_id'=>$d->purchase_id,
+                'item_no'=>$d->item_no,
+                'short_name'=>$d->short_name,
+                'billing_id'=>$d->billing_id,
+                'facility_type'=>$d->facility_type,
+                'wht_agent'=>$d->wht_agent,
+                'ith_tag'=>$d->ith_tag,
+                'non_vatable'=>$d->non_vatable,
+                'zero_rated'=>$d->zero_rated,
+                'vatables_purchases'=>$d->vatables_purchases,
+                'vat_on_purchases'=>$d->vat_on_purchases,
+                'zero_rated_purchases'=>$d->zero_rated_purchases,
+                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                'ewt'=>$d->ewt,
+                'serial_no'=>$d->serial_no,
+                'total_amount'=>$d->total_amount,
+                'print_counter'=>$d->print_counter,
+                'reference_number'=>$d->reference_number,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'transaction_date'=>$d->transaction_date,
+                'due_date'=>$d->due_date,
+                'remarks'=>$d->adjustment_remarks,
+            );
+        }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('purchases/upload_purchases_adjustment',$data);

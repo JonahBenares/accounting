@@ -52,13 +52,14 @@ if(!empty($sales_id)){
                                     </div>
                                 </div>
                             </form> 
-                            <?php if(!empty($identifier)){ ?>  
+                            <?php if(!empty($identifier) && !empty($details)){ ?>  
                             <div class="table-responsive" >
                                 <hr>
+                                <?php foreach($head AS $h){ ?>
                                 <table width="100%">
                                     <tr>
-                                        <td><label class="m-0"><b>Reference Number</b>: TWTW-277772-1991</label></td>
-                                        <td><label class="m-0"><b>Billing Period</b>: May 25, 2022 - June 25, 2022 </label></td>
+                                        <td><label class="m-0"><b>Reference Number</b>: <?php echo $h->reference_number; ?></label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: <?php echo date("F d,Y",strtotime($h->billing_from)); ?> - <?php echo date("F d,Y",strtotime($h->billing_from)); ?> </label></td>
                                     </tr>
                                     <tr>
                                         <td><label class="m-0"><b>Date</b>: May 25, 2022 - June 25, 2022 </label></td>
@@ -122,6 +123,7 @@ if(!empty($sales_id)){
                                         </tr>
                                     </tbody>
                                 </table>
+                                <?php } ?>
                             </div>
                             <?php } ?>
                         </div>
