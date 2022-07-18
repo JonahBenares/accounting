@@ -1202,6 +1202,15 @@ class Sales extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function save_all_adjust(){
+        $identifier = $this->input->post('identifier1');
+        $data_head = array(
+            'saved'=>1,
+        );
+        $this->super_model->update_where("sales_adjustment_head",$data_head, "adjust_identifier", $identifier);
+        echo $identifier;
+    }
+
     public function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -1219,7 +1228,8 @@ class Sales extends CI_Controller {
         $identifier=$this->uri->segment(3);
         $data['saved']=$this->super_model->select_column_where("sales_adjustment_head","saved","adjust_identifier",$identifier);
         $data['head']=$this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$identifier);
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
+        $ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE reference_number='$ref_no'") AS $d){
                     $data['details'][]=array(
                         // 'transaction_date'=>$h->transaction_date,
                         // 'billing_from'=>$h->billing_from,
@@ -1259,7 +1269,7 @@ class Sales extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
         $adjust_identifier = $this->input->post('adjust_identifier');
-        for($x=1;$x<=$count;$x++){
+        for($x=0;$x<$count;$x++){
             $fileupload = $this->input->post('fileupload['.$x.']');
             $dest= realpath(APPPATH . '../uploads/excel/');
             $error_ext=0;
@@ -1272,8 +1282,8 @@ class Sales extends CI_Controller {
                 }else {
                     $filename1='wesm_sales_adjust'.$x.".".$ext1;
                     if(move_uploaded_file($_FILES["fileupload"]['tmp_name'][$x], $dest.'/'.$filename1)){
-                        for($a=0;$a<$count;$a++){
-                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales_adjust'.$a.'.xlsx');
+                        //for($a=0;$a<$count;$a++){
+                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales_adjust'.$x.'.xlsx');
                             try {
                                 $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
                                 $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -1291,7 +1301,7 @@ class Sales extends CI_Controller {
                             $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
                             $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
                             $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
-                            $remarks = $this->input->post('remarks['.$a.']');
+                            $remarks = $this->input->post('remarks['.$x.']');
                             $data_insert=array(
                                 'reference_number'=>$reference_number,
                                 'transaction_date'=>$transaction_date,
@@ -1308,28 +1318,28 @@ class Sales extends CI_Controller {
                             $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
                             $highestRow = $highestRow-1;
                             $y=1;
-                            for($x=4;$x<$highestRow;$x++){
+                            for($z=4;$z<$highestRow;$z++){
                                 
-                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
-                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
-                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
-                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getOldCalculatedValue());
-                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
-                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
-                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
-                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
-                                $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getOldCalculatedValue());
+                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
+                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
+                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
+                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
+                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
+                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
+                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
+                                $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
                                 $vatable_sales = trim($vatable_sales,"-");
-                                $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
                                 $zero_rated_sales = trim($zero_rated_sales,"-");
-                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
+                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue(),'()');
                                 $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
-                                $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
+                                $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
                                 $vat_on_sales = trim($vat_on_sales,"-");
-                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
-                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue(),'()');
+                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue(),'()');
+                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue(),'()');
                                 $total_amount = trim($total_amount,"-");
 
                                 $count_max=$this->super_model->count_rows("sales_adjustment_head");
@@ -1358,13 +1368,13 @@ class Sales extends CI_Controller {
                                 );
                                 $this->super_model->insert_into("sales_adjustment_details", $data_sales);
                                 $y++;
-                            }
+                            //}
                         }
                     } 
                 }
             }
-        echo $adjust_identifier;
-    }
+        }
+    echo $adjust_identifier;
 }
 
 

@@ -13,6 +13,10 @@ function add_details_BS(baseurl,sales_details_id) {
 	document.getElementById("clicksBS").innerHTML = '('+clicksBS+')';*/
 }
 
+function add_adjust_details_BS(baseurl,adjustment_detail_id) {
+	window.open(baseurl+"sales/add_adjust_details_BS/"+adjustment_detail_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+}
+
 function countPrint(baseurl,sales_details_id){
 	var redirect = baseurl+"sales/count_print";
 	$.ajax({
@@ -461,11 +465,32 @@ async function upload_sales_adjust_btn() {
             },
             success: function(output){
             	//alert(output);
-                $("#alt").hide(); 
+                $("#alt").hide();
                 window.location=loc+'sales/upload_sales_adjustment/'+output;
             }
         });
         
     }
+}
+
+function saveAllAdjust(){
+	var data = $("#uploadsalesadjust").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/save_all_adjust";
+    var conf = confirm('Are you sure you want to save this adjusted sales?');
+    if(conf){
+	    $.ajax({
+	        data: data,
+	        type: "POST",
+	        url: redirect,
+	        beforeSend: function(){
+	        	document.getElementById('alt1').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#submitdata").hide(); 
+	        },
+	        success: function(output){
+	        	window.location=loc+'sales/upload_sales_adjustment/'+output;  
+	        }
+	    }); 
+    }	 
 }
 

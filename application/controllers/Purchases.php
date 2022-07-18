@@ -1251,7 +1251,8 @@ class Purchases extends CI_Controller {
         $identifier=$this->uri->segment(3);
         $data['saved']=$this->super_model->select_column_where("purchase_transaction_head","saved","adjust_identifier",$identifier);
         $data['head']=$this->super_model->select_row_where("purchase_transaction_head","adjust_identifier",$identifier);
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier'") AS $d){
+        $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number", "adjust_identifier" ,$identifier);
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number='$ref_no'") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
@@ -1315,7 +1316,7 @@ class Purchases extends CI_Controller {
                                 $objPHPExcel = $objReader->load($inputFileName);
                             } 
                             catch(Exception $e) {
-                                //die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                                die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
                             }
                             $objPHPExcel->setActiveSheetIndex(2);
 
@@ -1397,6 +1398,6 @@ class Purchases extends CI_Controller {
                 }
             }
         }
-        //echo $adjust_identifier;
+        echo $adjust_identifier;
     }
 }
