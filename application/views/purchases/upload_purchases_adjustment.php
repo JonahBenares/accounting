@@ -125,8 +125,8 @@ if(!empty($sales_id)){
                                 </table>
                                 <?php $x++; } ?>
                             </div>
-                            <?php } ?>
                             <input type="hidden" id="counter" value="<?php echo $x; ?>">
+                            <?php } ?>
                         </div>
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
                         <div id='alt' style="font-weight:bold"></div>
