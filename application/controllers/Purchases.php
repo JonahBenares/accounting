@@ -1290,7 +1290,7 @@ class Purchases extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
         $adjust_identifier = $this->input->post('adjust_identifier');
-        for($x=1;$x<=$count;$x++){
+        for($x=0;$x<$count;$x++){
             //echo $x;
             //$remarks = $this->input->post('remarks['.$x.']');
             $fileupload = $this->input->post('fileupload['.$x.']');
@@ -1305,8 +1305,8 @@ class Purchases extends CI_Controller {
                 }else {
                     $filename1='wesm_purchases_adjust'.$x.".".$ext1;
                     if(move_uploaded_file($_FILES["fileupload"]['tmp_name'][$x], $dest.'/'.$filename1)){
-                        for($a=0;$a<$count;$a++){
-                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases_adjust'.$a.'.xlsx');
+                        //for($a=0;$a<$count;$a++){
+                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases_adjust'.$x.'.xlsx');
                             try {
                                 $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
                                 $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -1324,7 +1324,7 @@ class Purchases extends CI_Controller {
                             $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
                             $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
                             $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
-                            $remarks = $this->input->post('remarks['.$a.']');
+                            $remarks = $this->input->post('remarks['.$x.']');
                             $data_insert=array(
                                 'reference_number'=>$reference_number,
                                 'transaction_date'=>$transaction_date,
@@ -1342,25 +1342,25 @@ class Purchases extends CI_Controller {
                             $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
                             $highestRow = $highestRow-1;
                             $y=1;
-                            for($x=4;$x<$highestRow;$x++){
-                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
-                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
-                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
-                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
-                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
-                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
-                                $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue(),'()');
+                            for($z=4;$z<$highestRow;$z++){
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getOldCalculatedValue());
+                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
+                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
+                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
+                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
+                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
+                                $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue(),'()');
                                 $vatables_purchases = trim($vatables_purchases,"-");
-                                $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue(),'()');
+                                $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                  $zero_rated_purchases = trim($zero_rated_purchases,"-");
-                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
                                  $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
-                                $vat_on_purchases = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
+                                $vat_on_purchases = trim($objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue(),'()');
                                 $vat_on_purchases = trim($vat_on_purchases,"-");
-                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
-                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getOldCalculatedValue(),'()');
+                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
+                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$z)->getOldCalculatedValue(),'()');
                                 $total_amount = trim($total_amount,"-");
                                 //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
                                 $count_max=$this->super_model->count_rows("purchase_transaction_head");
@@ -1391,7 +1391,7 @@ class Purchases extends CI_Controller {
                                 $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
                                 $y++;
                             }
-                        }
+                        //}
                         //$this->readExcel_adjust($adjust_identifier,$x,$remarks);
                     } 
                 }

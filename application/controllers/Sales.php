@@ -1259,7 +1259,7 @@ class Sales extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
         $adjust_identifier = $this->input->post('adjust_identifier');
-        for($x=0;$x<$count;$x++){
+        for($x=1;$x<=$count;$x++){
             $fileupload = $this->input->post('fileupload['.$x.']');
             $dest= realpath(APPPATH . '../uploads/excel/');
             $error_ext=0;
@@ -1358,7 +1358,6 @@ class Sales extends CI_Controller {
                                 );
                                 $this->super_model->insert_into("sales_adjustment_details", $data_sales);
                                 $y++;
-                                }
                             }
                         }
                     } 

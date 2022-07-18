@@ -55,7 +55,7 @@ if(!empty($sales_id)){
                             <?php if(!empty($identifier) && !empty($details)){ ?>      
                             <div class="table-responsive" >
                                 <hr>
-                                <?php foreach($head AS $h){ ?>
+                                <?php $x=1; foreach($head AS $h){ ?>
                                <table width="100%">
                                     <tr>
                                         <td><label class="m-0"><b>Reference Number</b>: <?php echo $h->reference_number;?></label></td>
@@ -72,7 +72,7 @@ if(!empty($sales_id)){
                                 </table>
                                 <br>
                                 
-                                <table class="table-bordered table table-hover" style="width:200%;">
+                                <table class="table-bordered table table-hover " id="adjust-<?php echo $x; ?>" style="width:200%;">
                                     <thead>
                                         <tr>    
                                             <th class="p-2" width="5%" align="center" style="background:rgb(245 245 245)">
@@ -131,8 +131,9 @@ if(!empty($sales_id)){
                                     </tbody>
                                     <?php } ?>
                                 </table>
-                                <?php } ?>
+                                <?php  $x++; } ?>
                             </div>
+                            <input type="hidden" id="counter" value="<?php echo $x; ?>">
                             <?php } ?>
                         </div>
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
@@ -164,6 +165,15 @@ if(!empty($sales_id)){
     $("body").on("click", ".remUpload", function() {
         $(this).parents('.append').remove();
     });
+
+    window.onload = function(){
+        var counter = document.getElementById("counter").value;
+        for(var a=1;a<=counter;a++){
+            $("#adjust-"+a).dataTable({
+                order: [[2, 'asc']],
+            });
+        }
+    }
 </script>
 
                 
