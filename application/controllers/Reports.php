@@ -1081,7 +1081,34 @@ class Reports extends CI_Controller {
     public function adjustment_sales(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/adjustment_sales');
+        $date1=$this->uri->segment(3);
+        $data['date1']= date("F d,Y",strtotime($date1));
+        $data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
+        $sql='';
+        if($date1!=''){
+            $sql.= "transaction_date = '$date1' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        $ad_qu = "saved = '1' AND ".$query;
+        foreach($this->super_model->select_innerjoin_where("sales_adjustment_details","sales_adjustment_head", $ad_qu,"sales_adjustment_id","reference_number") AS $ad){
+            $zero_rated = $ad->zero_rated_sales + $ad->zero_rated_ecozones;
+            $net_sale = $ad->vatable_sales + $zero_rated;
+
+            $data['adjustment'][]=array(
+                "billing_from"=>$ad->billing_from,
+                "billing_to"=>$ad->billing_to,
+                "reference_number"=>$ad->reference_number,
+                "remarks"=>$ad->remarks,
+                "vat_on_sales"=>$ad->vat_on_sales,
+                "vatable_sales"=>$ad->vatable_sales,
+                "ewt"=>$ad->ewt,
+                "total_amount"=>$ad->total_amount,
+                "zero_rated"=>$zero_rated,
+                "net_sale"=>$net_sale,
+            );
+        }
+        $this->load->view('reports/adjustment_sales', $data);
         $this->load->view('template/footer');
     }
 
