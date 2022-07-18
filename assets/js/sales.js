@@ -441,11 +441,13 @@ async function upload_sales_adjust_btn() {
         var formData = new FormData(form);
         for (var i=1;i<=count_file;i++) { 
             fileupload = document.querySelector('input[name="fileupload[]"]').files[0];
+            adjust_identifier = document.getElementById("adjust_identifier").value;
             count = document.getElementById("count").value;
             remarks= document.querySelector('input[name="remarks[]"]').value;
             formData.append('fileupload'+[i], fileupload);
             formData.append('remarks'+[i], remarks);
             formData.append('count', count);
+            formData.append('adjust_identifier', adjust_identifier);
         }
         $.ajax({
             type: "POST",
@@ -458,9 +460,9 @@ async function upload_sales_adjust_btn() {
                 document.getElementById("button_adjust").disabled = true;
             },
             success: function(output){
-            	alert(output);
-                //$("#alt").hide(); 
-                //window.location=loc+'sales/upload_sales_adjustment/';
+            	//alert(output);
+                $("#alt").hide(); 
+                window.location=loc+'sales/upload_sales_adjustment/'+output;
             }
         });
         

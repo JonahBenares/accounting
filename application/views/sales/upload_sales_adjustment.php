@@ -34,6 +34,7 @@ if(!empty($sales_id)){
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group m-t-35 addmoreupload">
+                                            <input type="hidden" name="adjust_identifier" id="adjust_identifier" value="<?php echo $identifier_code;?>">
                                             <button class="btn btn-primary btn-sm addUpload"><span class="fas fa-plus"></span></button>
                                             <!-- <button class="btn btn-danger btn-sm"><span class="fas fa-times"></span></button> -->
                                         </div>
@@ -44,30 +45,28 @@ if(!empty($sales_id)){
                                     <div class="col-lg-4 col-md-4 col-sm-4  offset-lg-4 offset-md-4 offset-sm-4">
                                         <div class="form-group">
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                            <input type='text' name='count' id='count' value='1'>
+                                            <input type='hidden' name='count' id='count' value='1'>
                                             <button type="button" id="button_adjust" class="btn btn-primary btn-block btn-md" onclick="upload_sales_adjust_btn()">Upload</button>
                                             <center><span id="alt"></span></center>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-                            <?php 
-                                foreach($details AS $d){ 
-                                    if(!empty($details)){ 
-                            ?>      
+                            <?php if(!empty($identifier) && !empty($details)){ ?>      
                             <div class="table-responsive" >
                                 <hr>
+                                <?php foreach($head AS $h){ ?>
                                <table width="100%">
                                     <tr>
-                                        <td><label class="m-0"><b>Reference Number</b>: <?php echo $d['reference_number'];?></label></td>
-                                        <td><label class="m-0"><b>Billing Period</b>: <?php echo $d['billing_from'];?> - <?php echo $d['billing_to'];?> </label></td>
+                                        <td><label class="m-0"><b>Reference Number</b>: <?php echo $h->reference_number;?></label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: <?php echo date("F d,Y",strtotime($h->billing_from)); ?> - <?php echo date("F d,Y",strtotime($h->billing_from)); ?> </label></td>
                                     </tr>
                                     <tr>
-                                        <td><label class="m-0"><b>Date</b>: <?php echo $d['transaction_date'];?> </label></td>
-                                        <td><label class="m-0"><b>Due Date</b>: <?php echo $d['due_date'];?> </label></td>
+                                        <td><label class="m-0"><b>Date</b>: <?php echo date("F d,Y",strtotime($h->transaction_date));?> </label></td>
+                                        <td><label class="m-0"><b>Due Date</b>: <?php echo date("F d,Y",strtotime($h->due_date));?> </label></td>
                                     </tr>
                                     <tr>
-                                        <td><label class="m-0"><b>Remarks</b>: <?php echo $d['remarks'];?> </label></td>
+                                        <td><label class="m-0"><b>Remarks</b>: <?php echo $h->remarks;?> </label></td>
                                         <td></td>
                                     </tr>
                                 </table>
@@ -97,6 +96,7 @@ if(!empty($sales_id)){
                                             <th class="p-2">Total Amount</th>
                                         </tr>
                                     </thead>
+                                    <?php foreach($details AS $d){ ?>
                                     <tbody>
                                         <tr>
                                             <td class="p-2" align="center" style="background: #fff;">
@@ -111,7 +111,7 @@ if(!empty($sales_id)){
                                                     </a>
                                                 </div> -->
                                             </td>
-                                             <td><center><?php echo $d['item_no'];?></center></td>
+                                            <td><center><?php echo $d['item_no'];?></center></td>
                                             <td><?php echo $d['serial_no'];?></td>
                                             <td><?php echo $d['short_name'];?></td>
                                             <td><?php echo $d['billing_id'];?></td>
@@ -129,11 +129,13 @@ if(!empty($sales_id)){
                                             <td align="right"><?php echo $d['total_amount'];?></td>
                                         </tr>
                                     </tbody>
+                                    <?php } ?>
                                 </table>
+                                <?php } ?>
                             </div>
-                            <?php } } ?>
+                            <?php } ?>
                         </div>
-                        <?php if(!empty($details)){ if($saved==0){ ?>
+                        <?php if(!empty($identifier)){ if($saved==0){ ?>
                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save">
                         <?php } } ?>
                     </div>

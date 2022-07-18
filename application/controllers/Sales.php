@@ -1202,21 +1202,31 @@ class Sales extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function upload_sales_adjustment()
-    {
-        $id=$this->uri->segment(3);
-        $data['sales_adjustment_id'] = $id;
+    public function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 
-        if(!empty($id)){
-            foreach($this->super_model->select_row_where("sales_adjustment_head", "sales_adjustment_id",$id) AS $h){
-                foreach($this->super_model->select_row_where("sales_adjustment_details","sales_adjustment_id",$h->sales_adjustment_id) AS $d){
+    public function upload_sales_adjustment(){
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $data['identifier']=$this->uri->segment(3);
+        $identifier=$this->uri->segment(3);
+        $data['saved']=$this->super_model->select_column_where("sales_adjustment_head","saved","adjust_identifier",$identifier);
+        $data['head']=$this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$identifier);
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
                     $data['details'][]=array(
-                        'transaction_date'=>$h->transaction_date,
-                        'billing_from'=>$h->billing_from,
-                        'billing_to'=>$h->billing_to,
-                        'reference_number'=>$h->reference_number,
-                        'due_date'=>$h->due_date,
-                        'saved'=>$h->saved,
+                        // 'transaction_date'=>$h->transaction_date,
+                        // 'billing_from'=>$h->billing_from,
+                        // 'billing_to'=>$h->billing_to,
+                        // 'reference_number'=>$h->reference_number,
+                        // 'due_date'=>$h->due_date,
+                        // 'saved'=>$h->saved,
                         'adjustment_detail_id'=>$d->adjustment_detail_id,
                         'sales_adjustment_id'=>$d->sales_adjustment_id,
                         'item_no'=>$d->item_no,
@@ -1238,10 +1248,6 @@ class Sales extends CI_Controller {
                         'print_counter'=>$d->print_counter
                     );
                 }
-            }
-        }else{
-            $data['details'] = array();
-        }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/upload_sales_adjustment',$data);
@@ -1252,6 +1258,7 @@ class Sales extends CI_Controller {
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
+        $adjust_identifier = $this->input->post('adjust_identifier');
         for($x=0;$x<$count;$x++){
             $fileupload = $this->input->post('fileupload['.$x.']');
             $dest= realpath(APPPATH . '../uploads/excel/');
@@ -1264,10 +1271,8 @@ class Sales extends CI_Controller {
                     $error_ext++;
                 }else {
                     $filename1='wesm_sales_adjust'.$x.".".$ext1;
-                    echo $x."*";
                     if(move_uploaded_file($_FILES["fileupload"]['tmp_name'][$x], $dest.'/'.$filename1)){
                         for($a=0;$a<$count;$a++){
-                            echo $a."**";
                             $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales_adjust'.$a.'.xlsx');
                             try {
                                 $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
@@ -1277,7 +1282,7 @@ class Sales extends CI_Controller {
                                 $objPHPExcel = $objReader->load($inputFileName);
                             } 
                             catch(Exception $e) {
-                                //die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                                die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
                             }
                             $objPHPExcel->setActiveSheetIndex(2);
 
@@ -1295,6 +1300,7 @@ class Sales extends CI_Controller {
                                 'due_date'=>$due_date,
                                 'user_id'=>$_SESSION['user_id'],
                                 "create_date"=>date("Y-m-d H:i:s"),
+                                'adjust_identifier'=>$adjust_identifier,
                                 'remarks'=>$remarks,
                             );
                             $this->super_model->insert_into("sales_adjustment_head", $data_insert);
@@ -1348,16 +1354,17 @@ class Sales extends CI_Controller {
                                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                                     'ewt'=>$ewt,
                                     'total_amount'=>$total_amount,
-                                    'balance'=>$total_amount
+                                    'balance'=>$total_amount,
                                 );
                                 $this->super_model->insert_into("sales_adjustment_details", $data_sales);
                                 $y++;
+                                }
                             }
                         }
                     } 
                 }
             }
-        //echo $sales_adjustment_id;
+        echo $adjust_identifier;
     }
 }
 
