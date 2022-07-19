@@ -1081,40 +1081,75 @@ class Reports extends CI_Controller {
     public function adjustment_sales(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $date1=$this->uri->segment(3);
-        $data['date1']= date("F d,Y",strtotime($date1));
-        $data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
-        $sql='';
-        if($date1!=''){
-            $sql.= "transaction_date = '$date1' AND "; 
-        }
+        $transaction_date=$this->uri->segment(3);
+        $year=date("Y",strtotime($transaction_date));
+        $total_sum[]=0;
+        //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
+            $vatable_sales=$this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $zero_rated_sales=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $zero_rated_ecozones=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $vat_on_sales=$this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $ewt=$this->super_model->select_sum_where("sales_adjustment_details","ewt","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $zero_rated=$zero_rated_sales+$zero_rated_ecozones;
+            $net=$vatable_sales+$zero_rated;
+            $total=($vatable_sales+$zero_rated+$vat_on_sales)-$ewt;
+            $total_sum[]=$total;
 
-        $query=substr($sql,0,-4);
-        $ad_qu = "saved = '1' AND ".$query;
-        foreach($this->super_model->select_innerjoin_where("sales_adjustment_details","sales_adjustment_head", $ad_qu,"sales_adjustment_id","reference_number") AS $ad){
-            $zero_rated = $ad->zero_rated_sales + $ad->zero_rated_ecozones;
-            $net_sale = $ad->vatable_sales + $zero_rated;
-
+            $data['due_date']=$ads->due_date;
             $data['adjustment'][]=array(
-                "billing_from"=>$ad->billing_from,
-                "billing_to"=>$ad->billing_to,
-                "reference_number"=>$ad->reference_number,
-                "remarks"=>$ad->remarks,
-                "vat_on_sales"=>$ad->vat_on_sales,
-                "vatable_sales"=>$ad->vatable_sales,
-                "ewt"=>$ad->ewt,
-                "total_amount"=>$ad->total_amount,
-                "zero_rated"=>$zero_rated,
-                "net_sale"=>$net_sale,
+                'adjust_identifier'=>$ads->adjust_identifier,
+                'particular'=>$ads->remarks,
+                'reference_number'=>$ads->reference_number,
+                'billing_from'=>$ads->billing_from,
+                'billing_to'=>$ads->billing_to,
+                'vatable_sales'=>$vatable_sales,
+                'vat_on_sales'=>$vat_on_sales,
+                'ewt'=>$ewt,
+                'zero_rated'=>$zero_rated,
+                'net'=>$net,
+                'total'=>$total,
             );
         }
+        $data['total_sum']=array_sum($total_sum);
         $this->load->view('reports/adjustment_sales', $data);
         $this->load->view('template/footer');
     }
 
     public function adjustment_sales_print(){
+        $transaction_date=$this->uri->segment(3);
+        $year=date("Y",strtotime($transaction_date));
+        $total_sum[]=0;
+        //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
+            $vatable_sales=$this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $zero_rated_sales=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $zero_rated_ecozones=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $vat_on_sales=$this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $ewt=$this->super_model->select_sum_where("sales_adjustment_details","ewt","sales_adjustment_id='$ads->sales_adjustment_id'");
+            $zero_rated=$zero_rated_sales+$zero_rated_ecozones;
+            $net=$vatable_sales+$zero_rated;
+            $total=($vatable_sales+$zero_rated+$vat_on_sales)-$ewt;
+            $total_sum[]=$total;
+
+            $data['due_date']=$ads->due_date;
+            $data['adjustment'][]=array(
+                'adjust_identifier'=>$ads->adjust_identifier,
+                'particular'=>$ads->remarks,
+                'reference_number'=>$ads->reference_number,
+                'billing_from'=>$ads->billing_from,
+                'billing_to'=>$ads->billing_to,
+                'vatable_sales'=>$vatable_sales,
+                'vat_on_sales'=>$vat_on_sales,
+                'ewt'=>$ewt,
+                'zero_rated'=>$zero_rated,
+                'net'=>$net,
+                'total'=>$total,
+            );
+        }
+        $data['total_sum']=array_sum($total_sum);
         $this->load->view('template/print_head');
-        $this->load->view('reports/adjustment_sales_print');
+        $this->load->view('reports/adjustment_sales_print',$data);
     }
 
     public function adjustment_purchases(){
