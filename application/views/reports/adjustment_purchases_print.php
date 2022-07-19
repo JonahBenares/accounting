@@ -97,7 +97,7 @@
                         </tr>
                         <tr>
                             <td class="font-11 td-gray p-l-5 p-r-5" align="left" width="12%"><b>Particular</b></td>
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="left" width="19%"><b>Participant's Name</b></td>  
+                            <td class="font-11 td-gray p-l-5 p-r-5" align="left" width="19%"><b>Reference No.</b></td>  
                             <td class="font-11 td-gray p-l-5 p-r-5" align="left" width="15%"><b>Billing Period</b></td> 
                             <td class="font-11 td-gray p-l-5 p-r-5" align="center" width="8%"><b>Vatable Amount</b></td> 
                             <td class="font-11 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Zero Rated Amount</b></td>     
