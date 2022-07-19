@@ -311,7 +311,7 @@ class Sales extends CI_Controller {
             $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             if($count_series>=1){
                 $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            }else if($count_series<=2){
+            }if($count_series<=2){
                 $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
             }else{
                 $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
@@ -1114,19 +1114,17 @@ class Sales extends CI_Controller {
         $a=1;
        for($x=7;$x<=$highestRow;$x++){
 
-             if($a==1){
+           
                 $no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
-             } else {
-                 $no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-             }
+            
             if($no!='' ){
 
                
-                   // if($a==1){
+                  /* if($a==1){*/
                     $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
-                 // } else {
-                 //     $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-                 //     }
+              /*   } else {
+                     $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+                     }*/
                
                 $remarks = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
                 $particulars = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
@@ -1228,9 +1226,8 @@ class Sales extends CI_Controller {
         $identifier=$this->uri->segment(3);
         $data['saved']=$this->super_model->select_column_where("sales_adjustment_head","saved","adjust_identifier",$identifier);
         $data['head']=$this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$identifier);
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
-                //$ref_no = $this->super_model->select_column_where("sales_adjustment_head", "reference_number", "reference_number", $d->reference_number);
-                //echo $ref_no."<br>";
+        $ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE reference_number='$ref_no'") AS $d){
                     $data['details'][]=array(
                         // 'transaction_date'=>$h->transaction_date,
                         // 'billing_from'=>$h->billing_from,
@@ -1256,10 +1253,9 @@ class Sales extends CI_Controller {
                         'ewt'=>$d->ewt,
                         'serial_no'=>$d->serial_no,
                         'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter,
-                        'reference_number'=>$d->reference_number,
+                        'print_counter'=>$d->print_counter
                     );
-            }
+                }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/upload_sales_adjustment',$data);
