@@ -1114,19 +1114,17 @@ class Sales extends CI_Controller {
         $a=1;
        for($x=7;$x<=$highestRow;$x++){
 
-             if($a==1){
+           
                 $no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
-             } else {
-                 $no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-             }
+            
             if($no!='' ){
 
                
-                   if($a==1){
+                  /* if($a==1){*/
                     $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
-                 } else {
+              /*   } else {
                      $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-                     }
+                     }*/
                
                 $remarks = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
                 $particulars = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
