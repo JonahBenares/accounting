@@ -1324,6 +1324,7 @@ class Sales extends CI_Controller {
                                 
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getOldCalculatedValue());
                                 $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                if($shortname!="" || !empty($shortname)){
                                 $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
                                 $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
                                 $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
@@ -1370,7 +1371,7 @@ class Sales extends CI_Controller {
                                 );
                                 $this->super_model->insert_into("sales_adjustment_details", $data_sales);
                                 $y++;
-                            //}
+                            }
                         }
                     } 
                 }
