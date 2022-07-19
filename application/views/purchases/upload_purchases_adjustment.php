@@ -94,7 +94,10 @@ if(!empty($sales_id)){
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach($details AS $d){ ?>
+                                        <?php 
+                                            foreach($details AS $d){ 
+                                                if($d['reference_number']==$h->reference_number){
+                                        ?>
                                         <tr>
                                             <td align="center" style="background: #fff;">
                                                 <?php if($saved==1){ ?>
@@ -120,7 +123,7 @@ if(!empty($sales_id)){
                                             <td align="right"><?php echo $d['ewt']; ?></td>
                                             <td align="right">(<?php echo $d['total_amount']; ?>)</td>
                                         </tr>
-                                        <?php } ?>
+                                        <?php } } ?>
                                     </tbody>
                                 </table>
                                 <?php $x++; } ?>

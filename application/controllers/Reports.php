@@ -1174,7 +1174,7 @@ class Reports extends CI_Controller {
         $data['transaction_date']=$transaction_date;
         $year=date("Y",strtotime($transaction_date));
         $total_sum[]=0;
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ad){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
             $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
             $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");
@@ -1210,7 +1210,7 @@ class Reports extends CI_Controller {
         $year=date("Y",strtotime($transaction_date));
         $data['invoice_date']=date("F d,Y",strtotime($transaction_date));
         $total_sum[]=0;
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ad){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
             $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
             $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");
