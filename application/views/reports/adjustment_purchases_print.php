@@ -14,7 +14,8 @@
 <div style="margin-top:10px" id="printbutton">
     <center>
         <button onclick="goBack()" class="btn btn-warning ">Back</button>
-        <button href="#" class="btn btn-success " onclick="window.print()">Save & Print</button>
+        <button href="#" class="btn btn-success " onclick="window.print()">Print</button>
+        <!-- <button href="#" class="btn btn-success " onclick="window.print()">Save & Print</button> -->
         <br>
         <br>
     </center>
@@ -70,13 +71,13 @@
             </tr>
             <tr>
                 <td colspan="3">Date Prepared:</td>
-                <td colspan="9" class="bor-btm"><input type="date" name="" style="width: 100%;border: 0px;"></td>
+                <td colspan="9" class="bor-btm"><span><?php echo date('F d,Y'); ?></span></td>
                 <td colspan="3"></td>
                 <td colspan="5"></td>
             </tr>
             <tr>
                 <td colspan="3">Invoice Date:</td>
-                <td colspan="9" class="bor-btm"><input type="date" name="" style="width: 100%;border: 0px;"></td>
+                <td colspan="9" class="bor-btm"><span><?php echo $invoice_date; ?></span></td>
                 <td colspan="3"></td>
                 <td colspan="5"></td>
             </tr>
@@ -91,7 +92,7 @@
                         <tr>
                             <td class="td-green p-t-5 p-b-5" colspan="9" align="center">
                                 <b>SUMMARY OF ADJUSTMENT BILLING STATEMENT - PURCHASES
-                                <br>For the Month of June 2022</b> 
+                                <br>For the Month of <?php echo date("F Y",strtotime($due_date));?></b> 
                             </td>
                         </tr>
                         <tr>
@@ -110,126 +111,79 @@
                                 <b>PAYABLES</b>
                             </td>
                         </tr>
+                        <?php 
+                            if(!empty($adjust)){
+                            $data2 = array();
+                            foreach($adjust as $ads) {
+                                $key = date("Y",strtotime($ads['billing_to']));
+                                if(!isset($data2[$key])) {
+                                    $data2[$key] = array(
+                                        'particular'=>array(),
+                                        'participant'=>array(),
+                                        'billing_from'=>array(),
+                                        'billing_from_single'=>$ads['billing_from'],
+                                        'billing_to'=>array(),
+                                        'billing_to_single'=>$ads['billing_to'],
+                                        'vatables_purchases'=>array(),
+                                        'vat_on_purchases'=>array(),
+                                        'ewt'=>array(),
+                                        'zero_rated'=>array(),
+                                        'net'=>array(),
+                                        'total'=>array(),
+                                        'total_single'=>$ads['total'],
+                                    );
+                                }
+                                $data2[$key]['particular'][] = $ads['particular'];
+                                $data2[$key]['participant'][] = $ads['participant'];
+                                $data2[$key]['billing_from'][] = $ads['billing_from'];
+                                $data2[$key]['billing_to'][] = $ads['billing_to'];
+                                $data2[$key]['vatables_purchases'][] = number_format($ads['vatables_purchases'],2);
+                                $data2[$key]['vat_on_purchases'][] = number_format($ads['vat_on_purchases'],2);
+                                $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
+                                $data2[$key]['zero_rated'][] = number_format($ads['zero_rated'],2);
+                                $data2[$key]['net'][] = number_format($ads['net'],2);
+                                $data2[$key]['total'][] = number_format($ads['total'],2);
+                            }
+                            foreach($data2 AS $ad){ 
+                        ?>
                         <tr>
                             <td class="font-12 p-l-5 p-r-5" colspan="9">
                                 <br>
-                                <u>Year 2016-2017</u>
+                                <u>Year <?php echo date("Y",strtotime($ad['billing_to_single'])); ?></u>
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-11 p-l-5 p-r-5">Adjustment</td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAD-170F5-0000050</td>
-                            <td class="font-11 p-l-5 p-r-5">Jul 26 - Aug 25, 2020</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(-)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
+                            <td class="font-11 p-l-5 p-r-5"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
+                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center"><?php echo implode("<br /><br />",$ad['participant']);?></td>
+                            <td class="font-11 p-l-5 p-r-5"><?php echo date("F d",strtotime($ad['billing_from_single']));?> - <?php echo date("F d,Y",strtotime($ad['billing_to_single']));?></td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['vatables_purchases']);?></td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['net']);?></td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['vat_on_purchases']);?></td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['ewt']);?></td>
+                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['total']);?></td>
                         </tr>
-                        <tr>
-                            <td class="font-11 p-l-5 p-r-5">Addcom - MOT </td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-181F10-0000001</td>
-                            <td class="font-11 p-l-5 p-r-5">June 26 - Jul 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
-                        </tr>
-                        <tr>
-                            <td class="font-11 p-l-5 p-r-5">Addcom - AP </td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-186F9-0000001</td>
-                            <td class="font-11 p-l-5 p-r-5">Nov 26 - Dec 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
-                        </tr>
-                        <tr>
-                            <td class="font-11 p-l-5 p-r-5">Addcom - SEC </td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-186F9-0000001</td>
-                            <td class="font-11 p-l-5 p-r-5">Nov 26 - Dec 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
-                        </tr>
-                        <tr>
-                            <td class="font-12 p-l-5 p-r-5" colspan="9">
-                                <br>
-                                <u>Year 2016-2017</u>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-11 p-l-5 p-r-5">Adjustment</td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAD-170F5-0000050</td>
-                            <td class="font-11 p-l-5 p-r-5">Jul 26 - Aug 25, 2020</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(-)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
-                        </tr>
-                        <tr>
-                            <td class="font-11 p-l-5 p-r-5">Addcom - MOT </td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-181F10-0000001</td>
-                            <td class="font-11 p-l-5 p-r-5">June 26 - Jul 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
-                        </tr>
-                        <tr>
-                            <td class="font-11 p-l-5 p-r-5">Addcom - AP </td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-186F9-0000001</td>
-                            <td class="font-11 p-l-5 p-r-5">Nov 26 - Dec 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
-                        </tr>
-                        <tr>
-                            <td class="font-11 p-l-5 p-r-5">Addcom - SEC </td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center">TS-WAC-186F9-0000001</td>
-                            <td class="font-11 p-l-5 p-r-5">Nov 26 - Dec 25, 2021</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(7,145.85)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(609.41)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(240.62)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(28.88)</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">4.81</td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style="">(264.69)</td>
-                        </tr>
-
+                        <?php } ?>
                         <tr>
                             <td colspan="9"><br></td>
                         </tr>
                         <tr>
                             <td class="font-11 td-yellow p-l-5 p-r-5" colspan="3" align="right">Sub Total</td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>7,145.85</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>609.41</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>240.62</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>28.88</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>(4.81)</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style="border-top: 1px solid #000;"><b>264.69</b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vatables_purchases,2);?></b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_zero_rated,2);?></b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_net,2);?></b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vat_on_purchase,2);?></b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_ewt,2);?>)</b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style="border-top: 1px solid #000;"><b><?php echo number_format($total_sum,2);?></b></td>
                         </tr>
                         <tr>
                             <td colspan="9"><br></td>
                         </tr>
                         <tr>
-                            <td class="font-12 p-l-5 p-r-5 td-blue" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, JUNE 25, 2022 &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
-                            <td class="font-12 p-l-5 p-r-5 td-blue" align="right"><b>(6,228.42)</b></td>
+                            <td class="font-12 p-l-5 p-r-5 td-blue" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, <?php echo date('F d,Y',strtotime($due_date))?> &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
+                            <td class="font-12 p-l-5 p-r-5 td-blue" align="right"><b><?php echo number_format($total_sum,2);?></b></td>
                         </tr> 
+                        <?php } ?>
                     </table>
                 </td>
             </tr>
