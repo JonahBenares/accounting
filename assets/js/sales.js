@@ -474,23 +474,24 @@ async function upload_sales_adjust_btn() {
 }
 
 function saveAllAdjust(){
-	var data = $("#uploadsalesadjust").serialize();
-	var loc= document.getElementById("baseurl").value;
+    var loc= document.getElementById("baseurl").value;
+    var saveadjust_identifier= document.getElementById("save_sales_adjustment").value;
     var redirect = loc+"sales/save_all_adjust";
-    var conf = confirm('Are you sure you want to save this adjusted sales?');
+    var conf = confirm('Are you sure you want to save this Sales?');
     if(conf){
-	    $.ajax({
-	        data: data,
-	        type: "POST",
-	        url: redirect,
-	        beforeSend: function(){
-	        	document.getElementById('alt1').innerHTML='<b>Please wait, Saving Data...</b>'; 
+        $.ajax({
+            data: 'adjust_identifier='+saveadjust_identifier,
+            type: "POST",
+            url: redirect,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
                 $("#submitdata").hide(); 
-	        },
-	        success: function(output){
-	        	window.location=loc+'sales/upload_sales_adjustment/'+output;  
-	        }
-	    }); 
-    }	 
+            },
+            success: function(output){
+                $("#alt").hide();
+                window.location=loc+'sales/upload_sales_adjustment/'+output;  
+            }
+        }); 
+    }    
 }
 

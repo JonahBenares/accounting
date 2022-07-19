@@ -1203,12 +1203,12 @@ class Sales extends CI_Controller {
     }
 
     public function save_all_adjust(){
-        $identifier = $this->input->post('identifier1');
+        $adjust_identifier = $this->input->post('adjust_identifier');
         $data_head = array(
             'saved'=>1,
         );
-        $this->super_model->update_where("sales_adjustment_head",$data_head, "adjust_identifier", $identifier);
-        echo $identifier;
+        $this->super_model->update_where("sales_adjustment_head",$data_head, "adjust_identifier", $adjust_identifier);
+        echo $adjust_identifier;
     }
 
     public function generateRandomString($length = 10) {

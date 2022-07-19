@@ -45,7 +45,7 @@ if(!empty($sales_id)){
                                     <div class="col-lg-4 col-md-4 col-sm-4  offset-lg-4 offset-md-4 offset-sm-4">
                                         <div class="form-group">
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                            <input type="hidden" name="identifier1" id="identifier1" value="<?php echo $identifier;?>">
+                                            <!-- <input type="hidden" name="identifier1" id="identifier1" value="<?php echo $identifier;?>"> -->
                                             <input type='hidden' name='count' id='count' value='1'>
                                             <button type="button" id="button_adjust" class="btn btn-primary btn-block btn-md" onclick="upload_sales_adjust_btn()">Upload</button>
                                             <center><span id="alt"></span></center>
@@ -150,6 +150,7 @@ if(!empty($sales_id)){
                         </div>
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
                         <div id='alt1' style="font-weight:bold"></div>
+                        <input type="hidden" name="save_sales_adjustment" id="save_sales_adjustment" value="<?php echo $identifier;?>">
                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAllAdjust();" value="Save">
                         <?php } } ?>
                     </div>
@@ -184,6 +185,7 @@ if(!empty($sales_id)){
         for(var a=1;a<=counter;a++){
             $("#adjust-"+a).dataTable({
                 order: [[2, 'asc']],
+                "scrollX": true,
             });
         }
     }
