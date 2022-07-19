@@ -1397,6 +1397,6 @@ class Purchases extends CI_Controller {
                 }
             }
         }
-        //echo $adjust_identifier;
+        echo $adjust_identifier;
     }
 }
