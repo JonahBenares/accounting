@@ -37,7 +37,7 @@
                             <table class="table-bordsered" width="100%">
                                 <tr>
                                     <td width="3%"></td>
-                                    <td width="13%"><b>Invoice Date:</b></td>
+                                    <td width="13%"><b>Invoice Date: <?php echo $transaction_date; ?></b></td>
                                     <td width="25%"></td>
                                     <!-- <td width="13%"><b>Reference Number:</b></td>
                                     <td width="41%"></td>
@@ -57,7 +57,7 @@
                                 <thead>
                                     <tr>
                                         <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="12%">Particular</td>
-                                        <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="20%">Participant's Name</td>  
+                                        <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="20%">Reference No.</td>  
                                         <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="18%">Billing Period</td> 
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Vatable Amount</td> 
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Zero Rated Amount</td>     
