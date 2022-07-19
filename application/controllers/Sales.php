@@ -856,6 +856,7 @@ class Sales extends CI_Controller {
             $data['company_name']=$p->company_name;
             $data['serial_no']=$p->serial_no;
             $data['settlement']=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+            $data['transaction_date']=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
             $data['billing_from']=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
             $data['billing_to']=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
             $data['due_date']=$this->super_model->select_column_where("sales_transaction_head","due_date","sales_id",$p->sales_id);
