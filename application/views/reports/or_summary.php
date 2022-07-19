@@ -88,7 +88,11 @@
                                     $y=$x-1;
 
                                     if($y>=0){ 
+
+                                       // echo $or_summary[$y]['or_no'] ." == ". $or_summary[$x]['or_no'] . "<br>";
                                         if($or_summary[$y]['or_no'] == $or_summary[$x]['or_no']){
+                                           // echo "equal <br>";
+
                                             $ors[]=$or_summary[$x]['or_no'];
                                             $consolidated[]=array(
                                                 "date"=>$or_summary[$x]['date'],
@@ -99,22 +103,34 @@
                                                 "remarks"=>$or_summary[$y]['remarks'] . " - " . $or_summary[$x]['remarks'],
                                             );
                                         ?>
-                                        <?php $y=$x;
+                                        <?php 
+                                        //$y=$x;
                                             } else { 
-                                            $ors[]=$or_summary[$x]['or_no'];
-                                            $consolidated[]=array(
-                                                "date"=>$or_summary[$x]['date'],
-                                                "or_no"=>$or_summary[$x]['or_no'],
-                                                "stl_id"=>$or_summary[$x]['stl_id'],
-                                                "company_name"=>$or_summary[$x]['company_name'],
-                                                "amount"=>$or_summary[$x]['amount'],
-                                                "remarks"=>$or_summary[$x]['remarks'],
-                                            );
+                                                  //echo "not equal <br>";
+
+                                                  $z = $x+1;
+                                                  $z1 = $x+2;
+                                                  
+                                            if($z<$asize){
+                                                if($or_summary[$z]['or_no'] == $or_summary[$z1]['or_no']){
+                                                    $ors[]=$or_summary[$x]['or_no'];
+                                                    $consolidated[]=array(
+                                                        "date"=>$or_summary[$x]['date'],
+                                                        "or_no"=>$or_summary[$x]['or_no'],
+                                                        "stl_id"=>$or_summary[$x]['stl_id'],
+                                                        "company_name"=>$or_summary[$x]['company_name'],
+                                                        "amount"=>$or_summary[$x]['amount'],
+                                                        "remarks"=>$or_summary[$x]['remarks'],
+                                                    );
+                                                }
+                                            }
                                             ?>
                                         <?php }
                                     } 
                                 } 
                                 $result= array_diff($series,$ors); 
+
+
                                 foreach($result AS $r){
                                     $missing[] = array(
                                         "date"=>"",
@@ -126,6 +142,8 @@
                                     );
                                 }
 
+
+
                                 if(!empty($missing) && !empty($consolidated)){
                                     $all = array_merge($missing,$consolidated);
                                 } else {
@@ -133,6 +151,7 @@
                                 }
                                 $columns = array_column($all, 'or_no');
                                 array_multisort($columns, SORT_ASC, $all);
+                                  //print_r($all);
                                 ?>
                                 <tbody>
                                     <?php 
