@@ -1135,7 +1135,6 @@ class Reports extends CI_Controller {
             $total_sum[]=$total;
             $data['due_date']=$ads->due_date;
 
-            $total_sum[]=$total;
             $total_vatable_sales[]=$vatable_sales;
             $total_zero_rated[]=$zero_rated;
             $total_net[]=$net;
