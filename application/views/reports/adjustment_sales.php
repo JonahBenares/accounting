@@ -46,7 +46,7 @@
                                     <td width="3%"></td>
                                     <td width="25%"></td>
                                     <td width="13%"><b>Transaction Date:</b></td>
-                                    <td width="41%"><?php //echo $transaction_date ?></td>
+                                    <td width="41%"><?php echo $transaction_date ?></td>
                                     <td width="3%"></td>
                                 </tr>
                                 <!-- <tr>

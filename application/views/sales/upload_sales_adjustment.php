@@ -60,7 +60,7 @@ if(!empty($sales_id)){
                                <table width="100%">
                                     <tr>
                                         <td><label class="m-0"><b>Reference Number</b>: <?php echo $h->reference_number;?></label></td>
-                                        <td><label class="m-0"><b>Billing Period</b>: <?php echo date("F d,Y",strtotime($h->billing_from)); ?> - <?php echo date("F d,Y",strtotime($h->billing_from)); ?> </label></td>
+                                        <td><label class="m-0"><b>Billing Period</b>: <?php echo date("F d,Y",strtotime($h->billing_from)); ?> - <?php echo date("F d,Y",strtotime($h->billing_to)); ?> </label></td>
                                     </tr>
                                     <tr>
                                         <td><label class="m-0"><b>Date</b>: <?php echo date("F d,Y",strtotime($h->transaction_date));?> </label></td>
