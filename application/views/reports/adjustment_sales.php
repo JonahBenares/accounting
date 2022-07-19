@@ -12,7 +12,7 @@
                                     <h4>Summary of Adjustment Billing Statement - <b>Sales</b></h4>
                                 </div>
                                 <div class="col-4">
-                                    <a href="<?php echo base_url(); ?>reports/adjustment_sales_print" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
+                                    <a href="<?php echo base_url(); ?>reports/adjustment_sales_print/<?php echo $transaction_date; ?>" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,9 @@
                                                     <?php } ?>
                                                 </select>
                                             </td> -->
+                                             <td width="99%">
                                             <input type="date" name="transaction_date" id="transaction_date" class="form-control">
+                                            </td>
                                             <td width="1%">
                                                 <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
                                                 <input type='button' class="btn btn-primary"  onclick="filter_adjusted_sales()" value="Filter">

@@ -14,7 +14,8 @@
 <div style="margin-top:10px" id="printbutton">
     <center>
         <button onclick="goBack()" class="btn btn-warning ">Back</button>
-        <button href="#" class="btn btn-success " onclick="window.print()">Save & Print</button>
+        <button href="#" class="btn btn-success " onclick="window.print()">Print</button>
+        <!-- <button href="#" class="btn btn-success " onclick="window.print()">Save & Print</button> -->
         <br>
         <br>
     </center>
@@ -70,13 +71,15 @@
             </tr>
             <tr>
                 <td colspan="3">Date Prepared:</td>
-                <td colspan="9" class="bor-btm"><input type="date" name="" style="width: 100%;border: 0px;"></td>
+                <td colspan="9" class="bor-btm"><span><?php echo date('F d,Y'); ?></span></td>
+               <!--  <td colspan="9" class="bor-btm"><input type="date" name="" style="width: 100%;border: 0px;"></td> -->
                 <td colspan="3"></td>
                 <td colspan="5"></td>
             </tr>
             <tr>
                 <td colspan="3">Invoice Date:</td>
-                <td colspan="9" class="bor-btm"><input type="date" name="" style="width: 100%;border: 0px;"></td>
+                <td colspan="9" class="bor-btm"><span><?php echo $invoice_date; ?></span></td>
+                <!-- <td colspan="9" class="bor-btm"><input type="date" name="" style="width: 100%;border: 0px;"></td> -->
                 <td colspan="3"></td>
                 <td colspan="5"></td>
             </tr>
@@ -91,7 +94,7 @@
                         <tr>
                             <td class="td-green p-t-5 p-b-5" colspan="9" align="center">
                                 <b>SUMMARY OF ADJUSTMENT BILLING STATEMENT - SALES
-                                <br>For the Month of June 2022</b> 
+                                <br>For the Month of <?php echo date("F Y",strtotime($due_date));?></b> 
                             </td>
                         </tr>
                         <tr>
@@ -168,12 +171,12 @@
                         </tr>
                         <tr>
                             <td class="font-11 td-yellow p-l-5 p-r-5" colspan="3" align="right">Sub Total</td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>7,145.85</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>609.41</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>240.62</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>28.88</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>(4.81)</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style="border-top: 1px solid #000;"><b>264.69</b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vatable_sales,2);?></b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_zero_rated,2);?></b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_net,2);?></b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vat_on_sales,2);?></b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_ewt,2);?>)</b></td>
+                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style="border-top: 1px solid #000;"><b><?php echo number_format($total_sum,2);?></b></td>
                         </tr>
                         <tr>
                             <td colspan="9"><br></td>

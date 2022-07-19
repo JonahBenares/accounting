@@ -1082,6 +1082,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $transaction_date=$this->uri->segment(3);
+        $data['transaction_date']=$transaction_date;
         $year=date("Y",strtotime($transaction_date));
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
@@ -1119,6 +1120,7 @@ class Reports extends CI_Controller {
     public function adjustment_sales_print(){
         $transaction_date=$this->uri->segment(3);
         $year=date("Y",strtotime($transaction_date));
+        $data['invoice_date']=date("F d,Y",strtotime($transaction_date));
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
         foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
@@ -1131,6 +1133,14 @@ class Reports extends CI_Controller {
             $net=$vatable_sales+$zero_rated;
             $total=($vatable_sales+$zero_rated+$vat_on_sales)-$ewt;
             $total_sum[]=$total;
+            $data['due_date']=$ads->due_date;
+
+            $total_sum[]=$total;
+            $total_vatable_sales[]=$vatable_sales;
+            $total_zero_rated[]=$zero_rated;
+            $total_net[]=$net;
+            $total_vat_on_sales[]=$vat_on_sales;
+            $total_ewt[]=$ewt;
 
             $data['due_date']=$ads->due_date;
             $data['adjustment'][]=array(
@@ -1148,6 +1158,11 @@ class Reports extends CI_Controller {
             );
         }
         $data['total_sum']=array_sum($total_sum);
+        $data['total_vatable_sales']=array_sum($total_vatable_sales);
+        $data['total_zero_rated']=array_sum($total_zero_rated);
+        $data['total_net']=array_sum($total_net);
+        $data['total_vat_on_sales']=array_sum($total_vat_on_sales);
+        $data['total_ewt']=array_sum($total_ewt);
         $this->load->view('template/print_head');
         $this->load->view('reports/adjustment_sales_print',$data);
     }
