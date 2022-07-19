@@ -41,7 +41,7 @@ class Sales extends CI_Controller {
                 $data['reference_number']=$h->reference_number;
                 $data['due_date']=$h->due_date;
                 $data['saved']=$h->saved;
-                $data['adjustment']=$h->adjustment;
+                //$data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_detail_id,
@@ -90,11 +90,11 @@ class Sales extends CI_Controller {
         $billingf=date("Y-m-d", strtotime($this->input->post('billing_from')));
         $billingt=date("Y-m-d", strtotime($this->input->post('billing_to')));
         $due=date("Y-m-d", strtotime($this->input->post('due_date')));
-        if(!empty($this->input->post('adjustment'))){
+        /*if(!empty($this->input->post('adjustment'))){
             $adjustment=$this->input->post('adjustment');
         }else{
             $adjustment=0;
-        }
+        }*/
         $data=array(
             "reference_number"=>$this->input->post('reference_number'),
             "transaction_date"=>$tdate,
@@ -103,7 +103,7 @@ class Sales extends CI_Controller {
             "due_date"=>$due,
             "user_id"=>$_SESSION['user_id'],
             "create_date"=>date("Y-m-d H:i:s"),
-            "adjustment"=>$adjustment
+            //"adjustment"=>$adjustment
 
         );
         $sales_id = $this->super_model->insert_return_id("sales_transaction_head",$data);
@@ -1202,21 +1202,42 @@ class Sales extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function upload_sales_adjustment()
-    {
-        $id=$this->uri->segment(3);
-        $data['sales_adjustment_id'] = $id;
+    public function save_all_adjust(){
+        $adjust_identifier = $this->input->post('adjust_identifier');
+        $data_head = array(
+            'saved'=>1,
+        );
+        $this->super_model->update_where("sales_adjustment_head",$data_head, "adjust_identifier", $adjust_identifier);
+        echo $adjust_identifier;
+    }
 
-        if(!empty($id)){
-            foreach($this->super_model->select_row_where("sales_adjustment_head", "sales_adjustment_id",$id) AS $h){
-                foreach($this->super_model->select_row_where("sales_adjustment_details","sales_adjustment_id",$h->sales_adjustment_id) AS $d){
+    public function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    public function upload_sales_adjustment(){
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $data['identifier']=$this->uri->segment(3);
+        $identifier=$this->uri->segment(3);
+        $data['saved']=$this->super_model->select_column_where("sales_adjustment_head","saved","adjust_identifier",$identifier);
+        $data['head']=$this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$identifier);
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
+                //$ref_no = $this->super_model->select_column_where("sales_adjustment_head", "reference_number", "reference_number", $d->reference_number);
+                //echo $ref_no."<br>";
                     $data['details'][]=array(
-                        'transaction_date'=>$h->transaction_date,
-                        'billing_from'=>$h->billing_from,
-                        'billing_to'=>$h->billing_to,
-                        'reference_number'=>$h->reference_number,
-                        'due_date'=>$h->due_date,
-                        'saved'=>$h->saved,
+                        // 'transaction_date'=>$h->transaction_date,
+                        // 'billing_from'=>$h->billing_from,
+                        // 'billing_to'=>$h->billing_to,
+                        // 'reference_number'=>$h->reference_number,
+                        // 'due_date'=>$h->due_date,
+                        // 'saved'=>$h->saved,
                         'adjustment_detail_id'=>$d->adjustment_detail_id,
                         'sales_adjustment_id'=>$d->sales_adjustment_id,
                         'item_no'=>$d->item_no,
@@ -1235,13 +1256,10 @@ class Sales extends CI_Controller {
                         'ewt'=>$d->ewt,
                         'serial_no'=>$d->serial_no,
                         'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter
+                        'print_counter'=>$d->print_counter,
+                        'reference_number'=>$d->reference_number,
                     );
-                }
             }
-        }else{
-            $data['details'] = array();
-        }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/upload_sales_adjustment',$data);
@@ -1252,6 +1270,7 @@ class Sales extends CI_Controller {
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
+        $adjust_identifier = $this->input->post('adjust_identifier');
         for($x=0;$x<$count;$x++){
             $fileupload = $this->input->post('fileupload['.$x.']');
             $dest= realpath(APPPATH . '../uploads/excel/');
@@ -1264,11 +1283,9 @@ class Sales extends CI_Controller {
                     $error_ext++;
                 }else {
                     $filename1='wesm_sales_adjust'.$x.".".$ext1;
-                    echo $x."*";
                     if(move_uploaded_file($_FILES["fileupload"]['tmp_name'][$x], $dest.'/'.$filename1)){
-                        for($a=0;$a<$count;$a++){
-                            echo $a."**";
-                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales_adjust'.$a.'.xlsx');
+                        //for($a=0;$a<$count;$a++){
+                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales_adjust'.$x.'.xlsx');
                             try {
                                 $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
                                 $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -1277,7 +1294,7 @@ class Sales extends CI_Controller {
                                 $objPHPExcel = $objReader->load($inputFileName);
                             } 
                             catch(Exception $e) {
-                                //die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                                die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
                             }
                             $objPHPExcel->setActiveSheetIndex(2);
 
@@ -1286,7 +1303,7 @@ class Sales extends CI_Controller {
                             $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
                             $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
                             $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
-                            $remarks = $this->input->post('remarks['.$a.']');
+                            $remarks = $this->input->post('remarks['.$x.']');
                             $data_insert=array(
                                 'reference_number'=>$reference_number,
                                 'transaction_date'=>$transaction_date,
@@ -1295,6 +1312,7 @@ class Sales extends CI_Controller {
                                 'due_date'=>$due_date,
                                 'user_id'=>$_SESSION['user_id'],
                                 "create_date"=>date("Y-m-d H:i:s"),
+                                'adjust_identifier'=>$adjust_identifier,
                                 'remarks'=>$remarks,
                             );
                             $this->super_model->insert_into("sales_adjustment_head", $data_insert);
@@ -1302,28 +1320,28 @@ class Sales extends CI_Controller {
                             $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
                             $highestRow = $highestRow-1;
                             $y=1;
-                            for($x=4;$x<$highestRow;$x++){
+                            for($z=4;$z<$highestRow;$z++){
                                 
-                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
-                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
-                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
-                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getOldCalculatedValue());
-                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
-                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
-                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
-                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
-                                $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getOldCalculatedValue());
+                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
+                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
+                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
+                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
+                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
+                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
+                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
+                                $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
                                 $vatable_sales = trim($vatable_sales,"-");
-                                $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
                                 $zero_rated_sales = trim($zero_rated_sales,"-");
-                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
+                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue(),'()');
                                 $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
-                                $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
+                                $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
                                 $vat_on_sales = trim($vat_on_sales,"-");
-                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue(),'()');
-                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue(),'()');
+                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue(),'()');
+                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue(),'()');
                                 $total_amount = trim($total_amount,"-");
 
                                 $count_max=$this->super_model->count_rows("sales_adjustment_head");
@@ -1348,17 +1366,17 @@ class Sales extends CI_Controller {
                                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                                     'ewt'=>$ewt,
                                     'total_amount'=>$total_amount,
-                                    'balance'=>$total_amount
+                                    'balance'=>$total_amount,
                                 );
                                 $this->super_model->insert_into("sales_adjustment_details", $data_sales);
                                 $y++;
-                            }
+                            //}
                         }
                     } 
                 }
             }
-        //echo $sales_adjustment_id;
-    }
+        }
+    echo $adjust_identifier;
 }
 
 

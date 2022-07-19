@@ -1229,7 +1229,7 @@ class Purchases extends CI_Controller {
             /**/
             $billing_month = date('my',strtotime($billing_to));
             $timestamp=date('Ymd');
-            $str= '<script src="'.base_url().'assets/js/jquery-1.12.4.js"></script><script src="'.base_url().'assets/js/jspdf.min.js"></script><script src="'.base_url().'assets/js/html2canvas.js"></script><script src="'.base_url().'assets/js/purchases.js"></script> <link rel="stylesheet" href="'.base_url().'assets/css/print2307-style.css"><script> document.getElementsByClassName("button_click")[0].click();</script><button onclick="getDownload()" type="button" class="button_click" hidden>DONWLOAD</button><input type="hidden" class="shortname" value="'.$det->short_name.'"><input type="hidden" class="ref_no" value="'.$refno.'"><input type="hidden" class="billing_month" value="'.$billing_month.'"><input type="hidden" class="timestamp" value="'.$timestamp.'"><div id="contentPDF" ><page size="Long" id="printableArea" class="canvas_div_pdf"><img class="img2307" src="'.base_url().'assets/img/form2307.jpg" style="width: 100%;"><label class="period_from ">'.$period_from.'</label><label class="period_to">'. $period_to.'</label>';
+            $str= '<script src="'.base_url().'assets/js/jquery-1.12.4.js"></script><script src="'.base_url().'assets/js/jspdf.min.js"></script><script src="'.base_url().'assets/js/html2canvas.js"></script><script src="'.base_url().'assets/js/purchases.js"></script> <link rel="stylesheet" href="'.base_url().'assets/css/print2307-style.css"><input type="hidden" class="shortname" value="'.$det->short_name.'"><input type="hidden" class="ref_no" value="'.$refno.'"><input type="hidden" class="billing_month" value="'.$billing_month.'"><input type="hidden" class="timestamp" value="'.$timestamp.'"><div id="contentPDF" ><page size="Long" id="printableArea" class="canvas_div_pdf"><img class="img2307" src="'.base_url().'assets/img/form2307.jpg" style="width: 100%;"><label class="period_from ">'.$period_from.'</label><label class="period_to">'. $period_to.'</label>';
                 if(!empty($tin[1])){ 
                     $str.='<div class="tin1"><label class="">'.$tin[0].'</label><label class="">'.$tin[1].'</label><label class="">'.$tin[2].'</label><label class="last1">0000</label> </div>';
                 } else {
@@ -1240,8 +1240,11 @@ class Purchases extends CI_Controller {
                 $str.='<label class="payee">'.$name.'</label><label class="address1">'.$address.'</label><label class="zip1">'.$zip.'</label><label class="address2"></label><div class="tin2"><label class="">008</label><label class="">691</label><label class="">287</label><label class="last1">0000</label></div><label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label><label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label><label class="zip2">6100</label><label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label><label class="row1-col2">WC160</label><label class="row1-col3">'. (($firstmonth=="-") ? "-" : number_format($firstmonth,2)).'</label><label class="row1-col4">'. (($secondmonth=="-") ? "-" : number_format($secondmonth,2)).'</label><label class="row1-col5">'.(($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)).'</label><label class="row1-col6">'. number_format($total,2).'</label><label class="row1-col7">'.number_format($det->ewt,2) .'<span class="hey">&nbsp;&nbsp;</span></label><label class="row2-col3">'.(($firstmonth=="-") ? "-" : number_format($firstmonth,2)).'</label><label class="row2-col4">'. (($secondmonth=="-") ? "-" : number_format($secondmonth,2)).'</label><label class="row2-col5">'. (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)).'</label><label class="row2-col6">'. number_format($total,2).'</label><label class="row2-col7">'. number_format($det->ewt,2) .'<span>&nbsp;&nbsp;</span></label><label class="row2-col8"> Reference Number: <b>'. $refno.'</b></label><label class="row2-col9"> Item Number: <b>'. $det->item_no.'</b></label></page></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
 
             echo $str;
+            $str_download='<script> document.getElementsByClassName("button_click")[0].click();</script><button onclick="getDownload()" type="button" class="button_click" hidden>DONWLOAD</button>';
+            echo $str_download;
             $x++;
         }
+
     }
 
     public function upload_purchases_adjustment(){
@@ -1251,7 +1254,10 @@ class Purchases extends CI_Controller {
         $identifier=$this->uri->segment(3);
         $data['saved']=$this->super_model->select_column_where("purchase_transaction_head","saved","adjust_identifier",$identifier);
         $data['head']=$this->super_model->select_row_where("purchase_transaction_head","adjust_identifier",$identifier);
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier'") AS $d){
+        $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number", "adjust_identifier" ,$identifier);
+        //echo $ref_no;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier' AND adjustment='1'") AS $d){
+
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
@@ -1280,7 +1286,7 @@ class Purchases extends CI_Controller {
             );
         }
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        //$this->load->view('template/navbar');
         $this->load->view('purchases/upload_purchases_adjustment',$data);
         $this->load->view('template/footer');
     }
@@ -1290,7 +1296,7 @@ class Purchases extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
         $adjust_identifier = $this->input->post('adjust_identifier');
-        for($x=1;$x<=$count;$x++){
+        for($x=0;$x<$count;$x++){
             //echo $x;
             //$remarks = $this->input->post('remarks['.$x.']');
             $fileupload = $this->input->post('fileupload['.$x.']');
@@ -1305,8 +1311,8 @@ class Purchases extends CI_Controller {
                 }else {
                     $filename1='wesm_purchases_adjust'.$x.".".$ext1;
                     if(move_uploaded_file($_FILES["fileupload"]['tmp_name'][$x], $dest.'/'.$filename1)){
-                        for($a=0;$a<$count;$a++){
-                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases_adjust'.$a.'.xlsx');
+                        //for($a=0;$a<$count;$a++){
+                            $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases_adjust'.$x.'.xlsx');
                             try {
                                 $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
                                 $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -1315,7 +1321,7 @@ class Purchases extends CI_Controller {
                                 $objPHPExcel = $objReader->load($inputFileName);
                             } 
                             catch(Exception $e) {
-                                //die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                                die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
                             }
                             $objPHPExcel->setActiveSheetIndex(2);
 
@@ -1324,7 +1330,7 @@ class Purchases extends CI_Controller {
                             $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
                             $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
                             $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
-                            $remarks = $this->input->post('remarks['.$a.']');
+                            $remarks = $this->input->post('remarks['.$x.']');
                             $data_insert=array(
                                 'reference_number'=>$reference_number,
                                 'transaction_date'=>$transaction_date,
@@ -1333,6 +1339,7 @@ class Purchases extends CI_Controller {
                                 'due_date'=>$due_date,
                                 'user_id'=>$_SESSION['user_id'],
                                 'saved'=>0,
+                                'create_date'=>date('Y-m-d H:i:s'),
                                 'adjustment'=>1,
                                 'adjust_identifier'=>$adjust_identifier,
                                 'adjustment_remarks'=>$remarks,
@@ -1342,25 +1349,25 @@ class Purchases extends CI_Controller {
                             $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
                             $highestRow = $highestRow-1;
                             $y=1;
-                            for($x=4;$x<$highestRow;$x++){
-                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
-                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
-                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
-                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
-                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
-                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
-                                $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue(),'()');
+                            for($z=4;$z<$highestRow;$z++){
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getOldCalculatedValue());
+                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
+                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
+                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
+                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
+                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
+                                $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue(),'()');
                                 $vatables_purchases = trim($vatables_purchases,"-");
-                                $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue(),'()');
+                                $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                  $zero_rated_purchases = trim($zero_rated_purchases,"-");
-                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue(),'()');
+                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
                                  $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
-                                $vat_on_purchases = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue(),'()');
+                                $vat_on_purchases = trim($objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue(),'()');
                                 $vat_on_purchases = trim($vat_on_purchases,"-");
-                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue(),'()');
-                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getOldCalculatedValue(),'()');
+                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
+                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$z)->getOldCalculatedValue(),'()');
                                 $total_amount = trim($total_amount,"-");
                                 //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
                                 $count_max=$this->super_model->count_rows("purchase_transaction_head");
@@ -1391,12 +1398,21 @@ class Purchases extends CI_Controller {
                                 $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
                                 $y++;
                             }
-                        }
+                        //}
                         //$this->readExcel_adjust($adjust_identifier,$x,$remarks);
                     } 
                 }
             }
         }
+        echo $adjust_identifier;
+    }
+
+    public function save_alladjust(){
+        $adjust_identifier = $this->input->post('adjust_identifier');
+        $data_head = array(
+            'saved'=>1
+        );
+        $this->super_model->update_where("purchase_transaction_head",$data_head, "adjust_identifier", $adjust_identifier);
         echo $adjust_identifier;
     }
 }

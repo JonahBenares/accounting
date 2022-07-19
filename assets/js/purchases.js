@@ -569,3 +569,25 @@ async function upload_adjust_btn() {
         
     }
 }
+
+ function saveAlladjust(){
+    var loc= document.getElementById("baseurl").value;
+    var saveadjust_identifier= document.getElementById("saveadjust_identifier").value;
+    var redirect = loc+"purchases/save_alladjust";
+    var conf = confirm('Are you sure you want to save this Purchases?');
+    if(conf){
+        $.ajax({
+            data: 'adjust_identifier='+saveadjust_identifier,
+            type: "POST",
+            url: redirect,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#submitdata").hide(); 
+            },
+            success: function(output){
+                $("#alt").hide();
+                window.location=loc+'purchases/upload_purchases_adjustment/'+output;  
+            }
+        }); 
+    }    
+}

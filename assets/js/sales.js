@@ -13,6 +13,10 @@ function add_details_BS(baseurl,sales_details_id) {
 	document.getElementById("clicksBS").innerHTML = '('+clicksBS+')';*/
 }
 
+function add_adjust_details_BS(baseurl,adjustment_detail_id) {
+	window.open(baseurl+"sales/add_adjust_details_BS/"+adjustment_detail_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=350,width=700,height=600");
+}
+
 function countPrint(baseurl,sales_details_id){
 	var redirect = baseurl+"sales/count_print";
 	$.ajax({
@@ -441,11 +445,13 @@ async function upload_sales_adjust_btn() {
         var formData = new FormData(form);
         for (var i=1;i<=count_file;i++) { 
             fileupload = document.querySelector('input[name="fileupload[]"]').files[0];
+            adjust_identifier = document.getElementById("adjust_identifier").value;
             count = document.getElementById("count").value;
             remarks= document.querySelector('input[name="remarks[]"]').value;
             formData.append('fileupload'+[i], fileupload);
             formData.append('remarks'+[i], remarks);
             formData.append('count', count);
+            formData.append('adjust_identifier', adjust_identifier);
         }
         $.ajax({
             type: "POST",
@@ -458,12 +464,34 @@ async function upload_sales_adjust_btn() {
                 document.getElementById("button_adjust").disabled = true;
             },
             success: function(output){
-            	alert(output);
-                //$("#alt").hide(); 
-                //window.location=loc+'sales/upload_sales_adjustment/';
+            	//alert(output);
+                $("#alt").hide();
+                window.location=loc+'sales/upload_sales_adjustment/'+output;
             }
         });
         
     }
+}
+
+function saveAllAdjust(){
+    var loc= document.getElementById("baseurl").value;
+    var saveadjust_identifier= document.getElementById("save_sales_adjustment").value;
+    var redirect = loc+"sales/save_all_adjust";
+    var conf = confirm('Are you sure you want to save this Sales?');
+    if(conf){
+        $.ajax({
+            data: 'adjust_identifier='+saveadjust_identifier,
+            type: "POST",
+            url: redirect,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#submitdata").hide(); 
+            },
+            success: function(output){
+                $("#alt").hide();
+                window.location=loc+'sales/upload_sales_adjustment/'+output;  
+            }
+        }); 
+    }    
 }
 
