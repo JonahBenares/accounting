@@ -197,7 +197,8 @@ class Sales extends CI_Controller {
             $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
           
 
-             $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue());
+            $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue());
+            $series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$x)->getFormattedValue();
             
   
    /*
@@ -247,7 +248,7 @@ class Sales extends CI_Controller {
                     'zero_rated'=>$zero_rated,
                     'vatable_sales'=>$vatable_sales,
                     'vat_on_sales'=>$vat_on_sales,
-              
+                    'serial_no'=>$series_no,
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
