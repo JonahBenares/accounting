@@ -97,7 +97,8 @@
                 </td>
                 <td></td>
                 <td colspan="3">Statement Date:</td>
-                <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td>
+                <!-- <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td> -->
+                <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($transaction_date));?></td>
             </tr>
             <tr>
                 <td></td>
@@ -390,7 +391,8 @@
                 <td></td>
                 <td colspan="3">Statement Date:</td>
 
-                <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td>
+                <!-- <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td> -->
+                <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($transaction_date));?></td>
 
             </tr>
             <tr>

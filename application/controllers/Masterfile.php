@@ -112,6 +112,7 @@ class Masterfile extends CI_Controller {
                     $data['sub_participant'][]=array(
                         "participant_id"=>$s->participant_id,
                         "subparticipant_name"=>$subparticipant_name,
+                        "billing_id"=>$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant),
                     );
                 }
             }
@@ -132,6 +133,7 @@ class Masterfile extends CI_Controller {
             foreach($this->super_model->select_custom_where("subparticipant", "participant_id = '$id'") AS $sub){
             $data['subparticipant'][] = array(
                 'participant_name'=>$this->super_model->select_column_where("participant","participant_name","participant_id", $sub->sub_participant),
+                'billing_id'=>$this->super_model->select_column_where("participant","billing_id","participant_id", $sub->sub_participant),
                 'participant_id'=>$id,
             ); 
                 
