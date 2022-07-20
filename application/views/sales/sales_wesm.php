@@ -65,13 +65,13 @@
                                 </table>
                                 <br>
                                 <div class="table-responsive">
-                                    <hr>
                                     <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
                                         <thead>
                                             <tr>    
-                                                <th width="6%" align="center" style="background:rgb(245 245 245)">
-                                                    <center><span class="fas fa-bars"></span></center>
-                                                </th>                                            
+                                                <th width="2%" align="center" style="background:rgb(245 245 245)">
+                                                    <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a>
+                                                </th>      
+                                                <th width="2%"></th>
                                                 <th>Item No</th>
                                                 <th>BS No.</th>
                                                 <th>OR No.</th>
@@ -98,8 +98,9 @@
                                                 foreach($details AS $s){ 
                                             ?>
                                             <tr>
-                                                <td align="center" style="background: #fff;">
-                                                    <?php 
+                                                <td align="center">
+                                                    <input type="checkbox" class="form-control" name=""style="width: 25px;">
+                                                    <!-- <?php 
                                                         if($s['serial_no']=='' && $s['print_counter']==0){
                                                     ?>
                                                         <div class="btn-group mb-0">
@@ -115,7 +116,10 @@
                                                                 <span class="m-0 fas fa-indent"></span><span class="badge badge-transparent" id="clicksBS"><?php echo $s['print_counter']; ?></span>
                                                             </a>
                                                         </div>
-                                                    <?php } ?>
+                                                    <?php } ?> -->
+                                                        
+                                                </td>
+                                                <td>
                                                     <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="BSupdate" data-toggle="modal" data-target="#updateSerial" data-series="<?php echo $s['serial_no']; ?>" data-id="<?php echo $s['sales_detail_id'];?>">
                                                         <span class="m-0 fas fa-edit"></span>
                                                     </button>
