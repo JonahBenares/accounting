@@ -1340,7 +1340,7 @@ class Sales extends CI_Controller {
                                 $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
                                 $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
                                 $vat_on_sales = trim($vat_on_sales,"-");
-                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue(),'()');
+                                $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
                                 $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue(),'()');
                                 $total_amount = trim($total_amount,"-");
 
