@@ -81,7 +81,7 @@ if(!empty($sales_id)){
                             </form>   
                             <form method="POST" id="upload_wesm">        
                                 <div id="upload" <?php echo (empty($sales_id) ? 'style="display:none"' : ''); ?>>
-                                    <hr>
+                                    <br>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
                                                 <div class="form-group mb-0">
@@ -106,19 +106,19 @@ if(!empty($sales_id)){
                                 <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
                                     <thead>
                                         <tr>    
-                                            <th width="5%" align="center" style="background:rgb(245 245 245)">
-                                                <center><span class="fas fa-bars"></span></center>
+                                            <th width="3%" align="center" style="background:rgb(245 245 245)">
+                                                <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a>
                                             </th>    
-                                            <th>Item No</th>                                        
+                                            <th width="1%">Item No</th>                                        
                                             <th>Series No.</th>
                                             <th>STL ID / TPShort Name</th>
                                             <th>Billing ID</th>
-                                            <th>Trading Participant Name</th>
+                                            <th width="15%">Trading Participant Name</th>
                                             <th>Facility Type </th>
-                                            <th>WHT Agent Tag</th>
-                                            <th>ITH Tag</th>
-                                            <th>Non Vatable Tag</th>
-                                            <th>Zero-rated Tag</th>
+                                            <th width="3%">WHT Agent Tag</th>
+                                            <th width="3%">ITH Tag</th>
+                                            <th width="3%">Non Vatable Tag</th>
+                                            <th width="3%">Zero-rated Tag</th>
                                             <th>Vatable Sales</th>
                                             <th>Zero Rated Sales</th>
                                             <th>Zero Rated EcoZones Sales</th>
@@ -135,8 +135,9 @@ if(!empty($sales_id)){
                                         ?>
                                         <tr>
                                             
-                                            <td align="center" style="background: #fff;">
-                                                <?php 
+                                            <td align="center" >
+                                                <input type="checkbox" class="form-control" name=""style="width: 25px;">
+                                                <!-- <?php 
                                                     if($saved==1){ 
                                                         if($d['serial_no']=='' && $d['print_counter']==0){
                                                 ?>
@@ -156,7 +157,7 @@ if(!empty($sales_id)){
                                                 <?php       
                                                         } 
                                                     }
-                                                ?>
+                                                ?> -->
                                             </td>
                                             <td><center><?php echo $d['item_no'];?></center></td>
                                             <td><?php echo $d['serial_no'];?></td>
