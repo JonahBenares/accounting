@@ -1120,7 +1120,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $transaction_date=$this->uri->segment(3);
-        $data['transaction_date']=date("F d,Y",strtotime($transaction_date));
+        $data['transaction_date']=$transaction_date;
         $year=date("Y",strtotime($transaction_date));
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");

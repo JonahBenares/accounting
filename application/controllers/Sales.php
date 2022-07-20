@@ -197,7 +197,8 @@ class Sales extends CI_Controller {
             $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
           
 
-             $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue());
+            $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue());
+            $series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$x)->getFormattedValue();
             
   
    /*
@@ -247,7 +248,7 @@ class Sales extends CI_Controller {
                     'zero_rated'=>$zero_rated,
                     'vatable_sales'=>$vatable_sales,
                     'vat_on_sales'=>$vat_on_sales,
-              
+                    'serial_no'=>$series_no,
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
@@ -856,6 +857,7 @@ class Sales extends CI_Controller {
             $data['company_name']=$p->company_name;
             $data['serial_no']=$p->serial_no;
             $data['settlement']=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+            $data['transaction_date']=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
             $data['billing_from']=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
             $data['billing_to']=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
             $data['due_date']=$this->super_model->select_column_where("sales_transaction_head","due_date","sales_id",$p->sales_id);
@@ -1226,8 +1228,8 @@ class Sales extends CI_Controller {
         $identifier=$this->uri->segment(3);
         $data['saved']=$this->super_model->select_column_where("sales_adjustment_head","saved","adjust_identifier",$identifier);
         $data['head']=$this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$identifier);
-        $ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE reference_number='$ref_no'") AS $d){
+        //$ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
                     $data['details'][]=array(
                         // 'transaction_date'=>$h->transaction_date,
                         // 'billing_from'=>$h->billing_from,
@@ -1253,7 +1255,8 @@ class Sales extends CI_Controller {
                         'ewt'=>$d->ewt,
                         'serial_no'=>$d->serial_no,
                         'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter
+                        'print_counter'=>$d->print_counter,
+                        'reference_number'=>$d->reference_number
                     );
                 }
         $this->load->view('template/header');
@@ -1337,7 +1340,7 @@ class Sales extends CI_Controller {
                                 $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
                                 $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
                                 $vat_on_sales = trim($vat_on_sales,"-");
-                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue(),'()');
+                                $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
                                 $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue(),'()');
                                 $total_amount = trim($total_amount,"-");
 

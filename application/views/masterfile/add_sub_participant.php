@@ -18,7 +18,7 @@
                             if(!empty($subparticipant)){
                             foreach($subparticipant AS $sp){ ?>
                         <tr >
-                            <td><?php echo $sp['participant_name'];?></td>
+                            <td><?php echo $sp['billing_id'];?> - <?php echo $sp['participant_name'];?></td>
                         </tr>
                     </tbody>
                     <?php } } else { ?>
@@ -39,7 +39,7 @@
                         <option value='' selected></option>
                         <?php foreach($sub_participant as $sp) {
                         //if ($sp->participant_id != $id) { ?>
-                            <option value='<?php echo $sp->participant_id; ?>'><?php echo $sp->participant_name; ?></option>
+                            <option value='<?php echo $sp->participant_id; ?>'><?php echo $sp->billing_id; ?></option>
                         <?php } //}?>
                     </select>
                 </td>

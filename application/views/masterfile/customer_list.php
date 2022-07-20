@@ -59,7 +59,7 @@
                                                                         if($p['participant_id']==$s['participant_id']){
                                                                 ?>
                                                                 <tr>
-                                                                    <td class="p-0"><?php echo $s['subparticipant_name']; ?></td>
+                                                                    <td class="p-0"><?php echo $s['billing_id']; ?> - <?php echo $s['subparticipant_name']; ?></td>
                                                                 </tr>
                                                                 <?php } } } ?>
                                                                 <!-- <tr>

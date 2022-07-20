@@ -1286,7 +1286,7 @@ class Purchases extends CI_Controller {
             );
         }
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $this->load->view('purchases/upload_purchases_adjustment',$data);
         $this->load->view('template/footer');
     }
