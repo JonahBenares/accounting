@@ -446,24 +446,35 @@ function downloadbulk2307(baseurl,refno){
 }
 
 /*<script> document.getElementsByClassName("button_click")[0].click();</script>*/
-function getDownload(){
-    var x = document.getElementsByClassName("canvas_div_pdf");
-    var HTML_Width = $(".canvas_div_pdf").width();
-    var HTML_Height = $(".canvas_div_pdf").height();
+function getDownload(ct){
+    //var x = document.getElementById("canvas_div_pdf");
+     var x = document.getElementById("printableArea"+ct);
+    /*var HTML_Width = $(".canvas_div_pdf").width();
+    var HTML_Height = $(".canvas_div_pdf").height();*/
+
+    var HTML_Width = $("#printableArea"+ct).width();
+    var HTML_Height = $("#printableArea"+ct).height();
+
     var top_left_margin = 10;
     var PDF_Width = HTML_Width+(top_left_margin*2);
     var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
     var canvas_image_width = HTML_Width;
     var canvas_image_height = HTML_Height;
     var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
-    
-    for(var i =0;i<x.length;i++){
+   
+    //for(var i =0;i<x.length;i++){
         //alert(i);
-        var shortname=document.getElementsByClassName('shortname')[i].value;
+        /*var shortname=document.getElementsByClassName('shortname')[i].value;
         var refno=document.getElementsByClassName('ref_no')[i].value;
         var billing_month=document.getElementsByClassName('billing_month')[i].value;
-        var timestamp=document.getElementsByClassName('timestamp')[i].value;
-        html2canvas($(".canvas_div_pdf")[i],{allowTaint:true, 
+        var timestamp=document.getElementsByClassName('timestamp')[i].value;*/
+
+        var shortname=document.getElementById('shortname'+ct).value;
+        var refno=document.getElementById('ref_no'+ct).value;
+        var billing_month=document.getElementById('billing_month'+ct).value;
+        var timestamp=document.getElementById('timestamp'+ct).value;
+
+        html2canvas($("#canvas_div_pdf")[ct],{allowTaint:true, 
             useCORS: true,
             logging: false,
             height: window.outerHeight + window.innerHeight,
@@ -481,7 +492,7 @@ function getDownload(){
              pdf.save("BIR2307 CENPRI "+shortname+" "+refno+" "+billing_month+" "+timestamp+".pdf");
             
         });
-    }
+    //}
     
 }
 
