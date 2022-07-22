@@ -150,16 +150,6 @@ class Sales extends CI_Controller {
 
                 $data['sub'][]=array(
                     "participant_id"=>$participant_id,
-                    "company_name"=>$p->company_name,
-                    "serial_no"=>$p->serial_no,
-                    "settlement"=>$settlement,
-                    "transaction_date"=>$transaction_date,
-                    "billing_from"=>$billing_from,
-                    "billing_to"=>$billing_to,
-                    "due_date"=>$due_date,
-                    "address"=>$address,
-                    "tin"=>$tin,
-                    "reference_number"=>$reference_number,
                     "sub_participant"=>$p->billing_id,
                     "vatable_sales"=>$p->vatable_sales,
                     "zero_rated_sales"=>$zero_rated,
@@ -167,7 +157,6 @@ class Sales extends CI_Controller {
                     "vat_on_sales"=>$p->vat_on_sales,
                     "ewt"=>$p->ewt,
                     "overall_total"=>$overall_total,
-                    //"zero_rated"=>$zero_rated,
                 );
                 if($count_sub >=1 || $count_sub>=4){
                     $h=0;
@@ -195,16 +184,6 @@ class Sales extends CI_Controller {
                         //if($participant_id==$s->participant_id){
                             $data['sub_part'][]=array(
                                 "participant_id"=>$s->participant_id,
-                                "company_name"=>$company_name,
-                                "serial_no"=>$serial_no,
-                                "settlement"=>$settlement,
-                                "transaction_date"=>$transaction_date,
-                                "billing_from"=>$billing_from,
-                                "billing_to"=>$billing_to,
-                                "due_date"=>$due_date,
-                                "address"=>$address,
-                                "tin"=>$tin,
-                                "reference_number"=>$reference_number,
                                 "sub_participant"=>$subparticipant,
                                 "vatable_sales"=>$vatable_sales,
                                 "zero_rated_sales"=>$zero_rated,
@@ -223,15 +202,30 @@ class Sales extends CI_Controller {
 
                 if($count_sub>=5){
                     $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
+                    $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
+
+                    $data['sub_participant'][$x]=$p->billing_id;
+                    $data['vatable_sales'][$x]=$p->vatable_sales;
+                    $data['vat_on_sales'][$x]=$p->vat_on_sales;
+                    $data['zero_rated_sales'][$x]=$zero_rated;
+                    $data['total_amount'][$x]=$total_amount;
+                    $data['ewt'][$x]=$p->ewt;
+                    $data['overall_total'][$x]=$overall_total;
+                    $data['participant_id'][$x]=$participant_id;
+
                     $data['sub_second'][]=array(
+                        "participant_id"=>$participant_id,
                         "sub_participant"=>$p->billing_id,
                         "vatable_sales"=>$p->vatable_sales,
                         "zero_rated_sales"=>$p->zero_rated_sales,
                         "total_amount"=>$total_amount,
                         "vat_on_sales"=>$p->vat_on_sales,
                         "ewt"=>$p->ewt,
+                        "overall_total"=>$overall_total,
                     );
+                    $z=0;
                     foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
+
                         $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                         $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                         $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
@@ -240,22 +234,33 @@ class Sales extends CI_Controller {
                         //$total_amount=$this->super_model->select_column_custom_where("sales_transaction_details","total_amount","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
                         $vat_on_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
                         $ewt=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
-                           $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
+                        $zero_rated= $zero_rated_sales + $zero_rated_ecozones;
+                        $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                         //$zero_rated= $vat_on_sales - $ewt;
-                           $zero_rated= $zero_rated_sales + $zero_rated_ecozones;
-                        $data['sub_second'][]=array(
+                        $overall_total= ($total_amount + $vat_on_sales) - $ewt;
+                        $data['sub_participant_sub'][$z]=$subparticipant;
+                        $data['vatable_sales_sub'][$z]=$vatable_sales;
+                        $data['vat_on_sales_sub'][$z]=$vat_on_sales;
+                        $data['zero_rated_sales_sub'][$z]=$zero_rated;
+                        $data['total_amount_sub'][$z]=$total_amount;
+                        $data['ewt_s'][$z]=$ewt;
+                        $data['overall_total_sub'][$z]=$overall_total;
+                        $data['participant_id_sub'][$z]=$s->participant_id;
+                        $data['sub_part_second'][]=array(
+                            "participant_id"=>$s->participant_id,
                             "sub_participant"=>$subparticipant,
                             "vatable_sales"=>$vatable_sales,
                             "zero_rated_sales"=>$zero_rated,
                             "total_amount"=>$total_amount,
                             "vat_on_sales"=>$vat_on_sales,
                             "ewt"=>$ewt,
+                            "overall_total"=>$overall_total,
                             //"zero_rated"=>$zero_rated,
                         );
+                        $z++;
                     }
                 }
             }
-            //$data['sum_total']=array_sum($sum_total);
         }
         $this->load->view('template/print_head');
         $this->load->view('sales/print_BS_multiple',$data);
