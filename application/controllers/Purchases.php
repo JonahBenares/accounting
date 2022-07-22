@@ -1360,7 +1360,7 @@ class Purchases extends CI_Controller {
                                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
                                 $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
                                 $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
-                                $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
+                                $vatables_purchases = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
                                 $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                  $zero_rated_purchases = trim($zero_rated_purchases,"-");
                                 $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
