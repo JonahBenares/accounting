@@ -12,7 +12,7 @@
                                     <h4>Summary of Adjustment Billing Statement - <b>Sales</b></h4>
                                 </div>
                                 <div class="col-4">
-                                    <a href="<?php echo base_url(); ?>reports/adjustment_sales_print/<?php echo $transaction_date; ?>" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
+                                    <a href="<?php echo base_url(); ?>reports/adjustment_sales_print/<?php echo $transaction_date; ?>" target="_blank" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                                         if(!empty($adjustment)){
                                         $data2 = array();
                                         foreach($adjustment as $ads) {
-                                            $key = date("Y",strtotime($ads['billing_to']));
+                                            $key = date("Y",strtotime($ads['billing_to'])).date("Y",strtotime($ads['billing_from']));
                                             if(!isset($data2[$key])) {
                                                 $data2[$key] = array(
                                                     'particular'=>array(),

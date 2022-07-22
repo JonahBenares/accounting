@@ -84,6 +84,13 @@
                 <td colspan="5"></td>
             </tr>
             <tr>
+                <td colspan="3"></td>
+                <td colspan="9"><i><span>Note: Advisory was emailed on <?php echo date("F d, Y",strtotime($invoice_date)); ?></span></i></td>
+                <!-- <td colspan="9" class="bor-btm"><input type="date" name="" style="width: 100%;border: 0px;"></td> -->
+                <td colspan="3"></td>
+                <td colspan="5"></td>
+            </tr>
+            <tr>
                 <td colspan="20">
                     <br>
                 </td>
@@ -94,7 +101,7 @@
                         <tr>
                             <td class="td-green p-t-5 p-b-5" colspan="9" align="center">
                                 <b>SUMMARY OF ADJUSTMENT BILLING STATEMENT - SALES
-                                <br>For the Month of <?php echo date("F Y",strtotime($due_date));?></b> 
+                                <br>For the Month of <?php echo date("F Y",strtotime($due_date));?></b>
                             </td>
                         </tr>
                         <tr>
@@ -183,7 +190,7 @@
                         </tr>
                         <tr>
                             <td class="font-12 p-l-5 p-r-5 td-blue" colspan="8" align="left">TOTAL AMOUNT RECEIVABLE on or before, <?php echo date('F d,Y',strtotime($due_date))?> &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
-                            <td class="font-12 p-l-5 p-r-5 td-blue" align="right"><b>(<?php echo number_format($total_sum,2);?>)</b></td>
+                            <td class="font-12 p-l-5 p-r-5 td-blue" align="right"><b><?php echo number_format($total_sum,2);?></b></td>
                         </tr>
                         <?php } ?> 
                     </table>

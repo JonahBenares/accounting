@@ -1015,9 +1015,12 @@ class Reports extends CI_Controller {
         $participant=$this->input->post('participant');
         $date_from=$this->input->post('date_from');
         $date_to=$this->input->post('date_to');
+        $now = date("Y-m-d H:i:s");
         $ignore_or = array(
            "or_no"=>$or_no,
            "remarks"=>'Ignored',
+           "create_date"=>$now,
+           "user_id"=>$_SESSION['user_id'],
         );
         $this->super_model->insert_into("or_remarks", $ignore_or);
     }
@@ -1027,9 +1030,12 @@ class Reports extends CI_Controller {
         $participant=$this->input->post('participant');
         $date_from=$this->input->post('date_from');
         $date_to=$this->input->post('date_to');
+        $now = date("Y-m-d H:i:s");
         $cancel_or = array(
            "or_no"=>$or_no,
            "remarks"=>'Cancelled',
+           "create_date"=>$now,
+           "user_id"=>$_SESSION['user_id'],
         );
         $this->super_model->insert_into("or_remarks", $cancel_or);
     }
@@ -1038,6 +1044,7 @@ class Reports extends CI_Controller {
     public function or_summary(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
+        $series_number=array();
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $participant=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
@@ -1058,21 +1065,56 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
         $data['or_summary']=array();
         $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
-        $data['max'] = $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
 
-        foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
+        $data['max']= $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
 
-            $data['or_summary'][]=array(
-                "date"=>$or->collection_date,
-                "or_no"=>$or->series_number,
-                "stl_id"=>$or->settlement_id,
-                "amount"=>$or->total,
-                "remarks"=>$this->super_model->select_column_where("or_remarks","remarks","or_no",$or->series_number),
-                "company_name"=>$this->super_model->select_column_where("participant","participant_name","settlement_id",$or->settlement_id),
-            );
+       
 
+        foreach($this->super_model->custom_query("SELECT DISTINCT series_number FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
+
+            $series_number[] = $or->series_number;
+  
         }
- 
+
+        
+
+       foreach($series_number AS $or){
+            $stl_id="";
+            $company_name="";
+            $amount="";
+            $remarks="";
+
+                foreach($this->super_model->select_row_where("collection_details", "series_number", $or) AS $o){
+                    $settle=$o->settlement_id;
+                    $name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$settle);
+                    
+                   
+                    $or_date = $this->super_model->select_column_where("collection_head","collection_date","collection_id",$o->collection_id);
+                    $or_no = $o->series_number;
+                    $stl_id .= $settle."<br>";
+                    $company_name .= $name."<br>";
+                    $amount .= number_format($o->total,2)."<br>";
+                    $remarks .= $this->super_model->select_column_where("or_remarks","remarks","or_no",$o->series_number)."<br>";
+                    
+
+                }
+
+                 $data['or_summary'][]=array(
+                    "date"=>$or_date,
+                    "or_no"=>$or_no,
+                    "stl_id"=>$stl_id,
+                    "amount"=>$amount,
+                    "remarks"=>$remarks,
+                    "company_name"=>$company_name,
+                );
+
+                
+            
+
+            
+       }
+
+
         $this->load->view('reports/or_summary',$data);
         $this->load->view('template/footer');
     
@@ -1082,7 +1124,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $transaction_date=$this->uri->segment(3);
-        $data['transaction_date']=date("F d,Y",strtotime($transaction_date));
+        $data['transaction_date']=$transaction_date;
         $year=date("Y",strtotime($transaction_date));
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
@@ -1096,6 +1138,8 @@ class Reports extends CI_Controller {
             $net=$vatable_sales+$zero_rated;
             $total=($vatable_sales+$zero_rated+$vat_on_sales)-$ewt;
             $total_sum[]=$total;
+
+            echo $vatable_sales;
 
             $data['due_date']=$ads->due_date;
             $data['adjustment'][]=array(

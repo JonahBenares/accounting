@@ -501,7 +501,7 @@ class Sales extends CI_Controller {
             $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             if($count_series>=1){
                 $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            }else if($count_series<=2){
+            }if($count_series<=2){
                 $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
             }else{
                 $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
@@ -803,231 +803,129 @@ class Sales extends CI_Controller {
         echo $sales_detail_id;
     }
 
-    public function convertNumber(float $amount)
-    {
-
-
-           $amount_after_decimal = round($amount - ($num = floor($amount)), 2) * 100;
-
-   // Check if there is any number after decimal
-
-   $amt_hundred = null;
-
-   $count_length = strlen($num);
-
-   $x = 0;
-
-   $string = array();
-
-   $change_words = array(0 => '', 1 => 'One', 2 => 'Two',
-
-     3 => 'Three', 4 => 'Four', 5 => 'Five', 6 => 'Six',
-
-     7 => 'Seven', 8 => 'Eight', 9 => 'Nine',
-
-     10 => 'Ten', 11 => 'Eleven', 12 => 'Twelve',
-
-     13 => 'Thirteen', 14 => 'Fourteen', 15 => 'Fifteen',
-
-     16 => 'Sixteen', 17 => 'Seventeen', 18 => 'Eighteen',
-
-     19 => 'Nineteen', 20 => 'Twenty', 30 => 'Thirty',
-
-     40 => 'Forty', 50 => 'Fifty', 60 => 'Sixty',
-
-     70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety');
-
-  //$here_digits = array('', 'Hundred','Thousand','Lakh', 'Crore');
-  $here_digits = array('', 'Hundred','Thousand');
-
-  while( $x < $count_length ) {
-
-       $get_divider = ($x == 2) ? 10 : 100;
-
-       $amount = floor($num % $get_divider);
-
-       $num = floor($num / $get_divider);
-
-       $x += $get_divider == 10 ? 1 : 2;
-
-       if ($amount) {
-
-         $add_plural = (($counter = count($string)) && $amount > 9) ? 's' : null;
-
-         $amt_hundred = ($counter == 1 && $string[0]) ? ' and ' : null;
-
-         $string [] = ($amount < 21) ? $change_words[$amount].' '. $here_digits[$counter]. $add_plural.' 
-
-         '.$amt_hundred:$change_words[floor($amount / 10) * 10].' '.$change_words[$amount % 10]. ' 
-
-         '.$here_digits[$counter].$add_plural.' '.$amt_hundred;
-
-         }else $string[] = null;
-
-       }
-
-   $implode_to_Rupees = implode('', array_reverse($string));
-
-   /*$get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " 
-
-   " . $change_words[$amount_after_decimal % 10]) . ' centavos' : '';*/
-
-            $ones = array( 
-            0 => "zero", 
-            1 => "one", 
-            2 => "two", 
-            3 => "three", 
-            4 => "four", 
-            5 => "five", 
-            6 => "six", 
-            7 => "seven", 
-            8 => "eight", 
-            9 => "nine", 
-            10 => "ten", 
-            11 => "eleven", 
-            12 => "twelve", 
-            13 => "thirteen", 
-            14 => "fourteen", 
-            15 => "fifteen", 
-            16 => "sixteen", 
-            17 => "seventeen", 
-            18 => "eighteen", 
-            19 => "nineteen" 
-            ); 
-            $tens = array( 
-            1 => "ten",
-            2 => "twenty", 
-            3 => "thirty", 
-            4 => "forty", 
-            5 => "fifty", 
-            6 => "sixty", 
-            7 => "seventy", 
-            8 => "eighty", 
-            9 => "ninety" 
-            ); 
-            $hundreds = array( 
-            "hundred", 
-            "thousand", 
-            "million", 
-            "billion", 
-            "trillion", 
-            "quadrillion" 
-            );
-
-    if($amount_after_decimal > 0){
-    $Dn = floor($amount_after_decimal / 10);
-    /* Tens (deca) */
-    $n = $amount_after_decimal % 10;
-            /* Ones */
-                
-                if ($Dn || $n) {
-        if (!empty($res)) {
-            $res .= " And ";
-        }
-        if ($Dn < 2) {
-            $res .= $ones[$Dn * 10 + $n];
-        } else {
-            $res .= $tens[$Dn];
-            if ($n) {
-                $res .= "-" . $ones[$n];
-            }
-        }
-                    $res .= " centavos";
-    }
-            
-            }
-
-   $get_peso = ($amount == 1) ? 'peso ' : 'pesos ';
-
-   return ($implode_to_Rupees ? $implode_to_Rupees .''.$get_peso : '') .'And '. $res;
-
-
-
-
-         $ones = array( 
-            0 => "zero", 
-            1 => "one", 
-            2 => "two", 
-            3 => "three", 
-            4 => "four", 
-            5 => "five", 
-            6 => "six", 
-            7 => "seven", 
-            8 => "eight", 
-            9 => "nine", 
-            10 => "ten", 
-            11 => "eleven", 
-            12 => "twelve", 
-            13 => "thirteen", 
-            14 => "fourteen", 
-            15 => "fifteen", 
-            16 => "sixteen", 
-            17 => "seventeen", 
-            18 => "eighteen", 
-            19 => "nineteen" 
-            ); 
-            $tens = array( 
-            1 => "ten",
-            2 => "twenty", 
-            3 => "thirty", 
-            4 => "forty", 
-            5 => "fifty", 
-            6 => "sixty", 
-            7 => "seventy", 
-            8 => "eighty", 
-            9 => "ninety" 
-            ); 
-            $hundreds = array( 
-            "hundred", 
-            "thousand", 
-            "million", 
-            "billion", 
-            "trillion", 
-            "quadrillion" 
-            ); //limit t quadrillion 
-            $num = number_format($num,2,".",","); 
-            $num_arr = explode(".",$num); 
-            $wholenum = $num_arr[0]; 
-            $decnum = $num_arr[1]; 
-            $whole_arr = array_reverse(explode(",",$wholenum)); 
-            krsort($whole_arr); 
-            $rettxt = ""; 
-            foreach($whole_arr as $key => $i){ 
+    public function convertNumber(float $amount){
+        $decones = array( 
+                    01 => "One", 
+                    02 => "Two", 
+                    03 => "Three", 
+                    04 => "Four", 
+                    05 => "Five", 
+                    06 => "Six", 
+                    07 => "Seven", 
+                    08 => "Eight", 
+                    09 => "Nine", 
+                    10 => "Ten", 
+                    11 => "Eleven", 
+                    12 => "Twelve", 
+                    13 => "Thirteen", 
+                    14 => "Fourteen", 
+                    15 => "Fifteen", 
+                    16 => "Sixteen", 
+                    17 => "Seventeen", 
+                    18 => "Eighteen", 
+                    19 => "Nineteen" 
+                    );
+        $ones = array( 
+                    0 => "Zero",
+                    1 => "One",     
+                    2 => "Two", 
+                    3 => "Three", 
+                    4 => "Four", 
+                    5 => "Five", 
+                    6 => "Six", 
+                    7 => "Seven", 
+                    8 => "Eight", 
+                    9 => "Nine", 
+                    10 => "Ten", 
+                    11 => "Eleven", 
+                    12 => "Twelve", 
+                    13 => "Thirteen", 
+                    14 => "Fourteen", 
+                    15 => "Fifteen", 
+                    16 => "Sixteen", 
+                    17 => "Seventeen", 
+                    18 => "Eighteen", 
+                    19 => "Nineteen" 
+                    ); 
+        $tens = array( 
+                    0 => "",
+                    2 => "Twenty", 
+                    3 => "Thirty", 
+                    4 => "Forty", 
+                    5 => "Fifty", 
+                    6 => "Sixty", 
+                    7 => "Seventy", 
+                    8 => "Eighty", 
+                    9 => "Ninety" 
+                    ); 
+        $hundreds = array( 
+                    "Hundred", 
+                    "Thousand", 
+                    "Million", 
+                    "Billion", 
+                    "Trillion", 
+                    "Quadrillion" 
+                    ); //limit t quadrillion 
+        $amount = number_format($amount,2,".",","); 
+        $num_arr = explode(".",$amount); 
+        $wholenum = $num_arr[0]; 
+        $decnum = $num_arr[1]; 
+        $whole_arr = array_reverse(explode(",",$wholenum)); 
+        krsort($whole_arr); 
+        $rettxt = ""; 
+        foreach($whole_arr as $key => $i){ 
             if($i < 20){ 
-            $rettxt .= $ones[$i]; 
-            }elseif($i < 100){ 
-            $rettxt .= $tens[substr($i,0,1)]; 
-            $rettxt .= " ".$ones[substr($i,1,1)]; 
-            }else{ 
-            $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]; 
-            $rettxt .= " ".$tens[substr($i,1,1)] ; 
-            $rettxt .= " ".$ones[substr($i,2,1)]; 
-            } 
-            if($key > 0){ 
-            $rettxt .= " ".$hundreds[$key]. " "; 
-            } 
-            } 
-            if($decnum > 0){ 
-            $rettxt .= " and "; 
-            if($decnum == 1){ 
-            $rettxt .= $ones[$decnum] . " centavos";
-            if($decnum < 20){ 
-            $rettxt .= $ones[$decnum] . " centavos"; 
-            }elseif($decnum < 100){ 
-            $rettxt .= $tens[substr($decnum,0,1)]; 
-            $rettxt .= " ".$ones[substr($decnum,1,1)] . " centavos";  
-            } 
+                $rettxt .= $ones[$i]; 
             }
+            elseif($i < 100){ 
+                $rettxt .= $tens[substr($i,0,1)]; 
+                $rettxt .= " ".$ones[substr($i,1,1)]; 
+            }
+            else{ 
+                //$rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]." ".$ones[substr($i,1)]; 
+                $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]; 
+                $rettxt .= " ".$tens[substr($i,1,1)]; 
+                $rettxt .= " ".$ones[substr($i,2,1)]; 
+            } 
+            if($key > 0 && $i > 0){ 
+                $rettxt .= " ".$hundreds[$key]." "; 
             } 
 
-            if (strpos($rettxt, 'centavos') !== false) {
-                $rettxt=$rettxt;
-            } else {
-                $rettxt = $rettxt." PESOS ONLY";
-            }
-
-            return $rettxt; 
+        }
+        if($decnum > 0 && $i > 1){ 
+        $rettxt = $rettxt." pesos";
+        }elseif($decnum > 0 && $i == 1){
+        $rettxt = $rettxt." peso";
+        }elseif($decnum == 0 && $i != 1){
+        $rettxt = $rettxt." pesos only";
+        }elseif($decnum == 0 && $i == 1){
+        $rettxt = $rettxt." peso only";
     }
+
+        if($decnum > 0 && $i != 1){
+            $rettxt .= " and ";
+            if($decnum < 20){ 
+                $rettxt .= $decones[$decnum]; 
+            }
+            elseif($decnum < 100){ 
+                $rettxt .= $tens[substr($decnum,0,1)]; 
+                $rettxt .= " ".$ones[substr($decnum,1,1)]; 
+            }
+                $rettxt = $rettxt." centavos only"; 
+        }elseif($decnum > 0 && $i == 0){
+            if($decnum < 20){ 
+                $rettxt .= $decones[$decnum]; 
+            }
+            elseif($decnum < 100){ 
+                $rettxt .= $tens[substr($decnum,0,1)]; 
+                $rettxt .= " ".$ones[substr($decnum,1,1)]; 
+            }
+                $rettxt = $rettxt." centavos only";
+        }
+
+
+        return $rettxt;
+        }
 
     public function print_BS(){
         $sales_detail_id = $this->uri->segment(3);
@@ -1416,8 +1314,8 @@ class Sales extends CI_Controller {
         $identifier=$this->uri->segment(3);
         $data['saved']=$this->super_model->select_column_where("sales_adjustment_head","saved","adjust_identifier",$identifier);
         $data['head']=$this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$identifier);
-        $ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE reference_number='$ref_no'") AS $d){
+        //$ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
                     $data['details'][]=array(
                         // 'transaction_date'=>$h->transaction_date,
                         // 'billing_from'=>$h->billing_from,
@@ -1443,7 +1341,8 @@ class Sales extends CI_Controller {
                         'ewt'=>$d->ewt,
                         'serial_no'=>$d->serial_no,
                         'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter
+                        'print_counter'=>$d->print_counter,
+                        'reference_number'=>$d->reference_number
                     );
                 }
         $this->load->view('template/header');
@@ -1519,15 +1418,14 @@ class Sales extends CI_Controller {
                                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
                                 $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
                                 $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
-                                $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
-                                $vatable_sales = trim($vatable_sales,"-");
+                                $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue());
                                 $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
                                 $zero_rated_sales = trim($zero_rated_sales,"-");
                                 $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue(),'()');
                                 $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
                                 $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
                                 $vat_on_sales = trim($vat_on_sales,"-");
-                                $ewt = trim($objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue(),'()');
+                                $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
                                 $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue(),'()');
                                 $total_amount = trim($total_amount,"-");
 

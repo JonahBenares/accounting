@@ -84,8 +84,8 @@
                                             <tr>
                                                 <th width="2%"><center><span class="fas fa-bars"></span></center></th>
                                                 <th width="10%">OR#</th>
-                                                <th width="10%">Billing Remarks</th>
-                                                <th>Particulars</th>
+                                                <th width="5%">Billing Remarks</th>
+                                                <th width="7%">Particulars</th>
                                                 <th>STL ID</th>
                                                 <th>Participant Name</th>
                                                 <th>Reference No</th>

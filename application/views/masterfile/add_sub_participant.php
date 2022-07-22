@@ -35,7 +35,7 @@
             <table class="m-b-10 append" width="100%">
             <tr>
                 <td width="90%">
-                    <select class="form-control" name="sub_participant[]" id="sub_participant">
+                    <select class="form-control select2" name="sub_participant[]" id="sub_participant">
                         <option value='' selected></option>
                         <?php foreach($sub_participant as $sp) {
                         //if ($sp->participant_id != $id) { ?>
