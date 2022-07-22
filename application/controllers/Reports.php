@@ -1139,8 +1139,6 @@ class Reports extends CI_Controller {
             $total=($vatable_sales+$zero_rated+$vat_on_sales)-$ewt;
             $total_sum[]=$total;
 
-            echo $vatable_sales;
-
             $data['due_date']=$ads->due_date;
             $data['adjustment'][]=array(
                 'adjust_identifier'=>$ads->adjust_identifier,

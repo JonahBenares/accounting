@@ -685,18 +685,24 @@ class Sales extends CI_Controller {
         krsort($whole_arr); 
         $rettxt = ""; 
         foreach($whole_arr as $key => $i){ 
+
+        while(substr($i,0,1)=="0")
+            $i=substr($i,1,5);
+
             if($i < 20){ 
                 $rettxt .= $ones[$i]; 
             }
             elseif($i < 100){ 
-                $rettxt .= $tens[substr($i,0,1)]; 
-                $rettxt .= " ".$ones[substr($i,1,1)]; 
+                if(substr($i,0,1)!="0")  $rettxt .= $tens[substr($i,0,1)]; 
+                if(substr($i,1,1)!="0") $rettxt .= " ".$ones[substr($i,1,1)]; 
             }
             else{ 
                 //$rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]." ".$ones[substr($i,1)]; 
-                $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]; 
-                $rettxt .= " ".$tens[substr($i,1,1)]; 
-                $rettxt .= " ".$ones[substr($i,2,1)]; 
+                if(substr($i,0,1)!="0") $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]." ".$ones[substr($i,1)];
+                if(substr($i,1,1)!="0")$rettxt .= " ".$tens[substr($i,1,1)];
+                //if(substr($i,1)!="0")$rettxt .= " ".$ones[substr($i,1)];
+                //if(substr($i,2,1)!="0")$rettxt .= " ".$ones[substr($i,2,1)]; 
+                  
             } 
             if($key > 0 && $i > 0){ 
                 $rettxt .= " ".$hundreds[$key]." "; 
