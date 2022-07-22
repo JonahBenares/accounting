@@ -1229,7 +1229,7 @@ class Purchases extends CI_Controller {
             /**/
             $billing_month = date('my',strtotime($billing_to));
             $timestamp=date('Ymd');
-            $str= '<script src="'.base_url().'assets/js/jquery-1.12.4.js"></script><script src="'.base_url().'assets/js/jspdf.min.js"></script><script src="'.base_url().'assets/js/html2canvas.js"></script><script src="'.base_url().'assets/js/purchases.js"></script> <link rel="stylesheet" href="'.base_url().'assets/css/print2307-style.css"><input type="hidden" class="shortname" value="'.$name.'"><input type="hidden" class="ref_no" value="'.$refno.'"><input type="hidden" class="billing_month" value="'.$billing_month.'"><input type="hidden" class="timestamp" value="'.$timestamp.'"><div id="contentPDF" ><page size="Long" id="printableArea" class="canvas_div_pdf"><img class="img2307" src="'.base_url().'assets/img/form2307.jpg" style="width: 100%;"><label class="period_from ">'.$period_from.'</label><label class="period_to">'. $period_to.'</label>';
+            $str= '<script src="'.base_url().'assets/js/jquery-1.12.4.js"></script><script src="'.base_url().'assets/js/jspdf.min.js"></script><script src="'.base_url().'assets/js/html2canvas.js"></script><script src="'.base_url().'assets/js/purchases.js"></script> <link rel="stylesheet" href="'.base_url().'assets/css/print2307-style.css"><input type="hidden" class="shortname" value="'.$det->short_name.'"><input type="hidden" class="ref_no" value="'.$refno.'"><input type="hidden" class="billing_month" value="'.$billing_month.'"><input type="hidden" class="timestamp" value="'.$timestamp.'"><div id="contentPDF" ><page size="Long" id="printableArea" class="canvas_div_pdf"><img class="img2307" src="'.base_url().'assets/img/form2307.jpg" style="width: 100%;"><label class="period_from ">'.$period_from.'</label><label class="period_to">'. $period_to.'</label>';
                 if(!empty($tin[1])){ 
                     $str.='<div class="tin1"><label class="">'.$tin[0].'</label><label class="">'.$tin[1].'</label><label class="">'.$tin[2].'</label><label class="last1">0000</label> </div>';
                 } else {
@@ -1240,7 +1240,7 @@ class Purchases extends CI_Controller {
                 $str.='<label class="payee">'.$name.'</label><label class="address1">'.$address.'</label><label class="zip1">'.$zip.'</label><label class="address2"></label><div class="tin2"><label class="">008</label><label class="">691</label><label class="">287</label><label class="last1">0000</label></div><label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label><label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label><label class="zip2">6100</label><label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label><label class="row1-col2">WC160</label><label class="row1-col3">'. (($firstmonth=="-") ? "-" : number_format($firstmonth,2)).'</label><label class="row1-col4">'. (($secondmonth=="-") ? "-" : number_format($secondmonth,2)).'</label><label class="row1-col5">'.(($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)).'</label><label class="row1-col6">'. number_format($total,2).'</label><label class="row1-col7">'.number_format($det->ewt,2) .'<span class="hey">&nbsp;&nbsp;</span></label><label class="row2-col3">'.(($firstmonth=="-") ? "-" : number_format($firstmonth,2)).'</label><label class="row2-col4">'. (($secondmonth=="-") ? "-" : number_format($secondmonth,2)).'</label><label class="row2-col5">'. (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)).'</label><label class="row2-col6">'. number_format($total,2).'</label><label class="row2-col7">'. number_format($det->ewt,2) .'<span>&nbsp;&nbsp;</span></label><label class="row2-col8"> Reference Number: <b>'. $refno.'</b></label><label class="row2-col9"> Item Number: <b>'. $det->item_no.'</b></label></page></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
 
             echo $str;
-            $str_download='<script> document.getElementsByClassName("button_click")[0].click();</script><button onclick="getDownload()" type="button" class="button_click" hidden>DOWNLOAD</button>';
+            $str_download='<script> document.getElementsByClassName("button_click")[0].click();</script><button onclick="getDownload()" type="button" class="button_click" hidden>DONWLOAD</button>';
             echo $str_download;
             $x++;
         }
@@ -1248,6 +1248,7 @@ class Purchases extends CI_Controller {
     }
 
     public function upload_purchases_adjustment(){
+
         $identifier_code=$this->generateRandomString();
         $data['identifier_code']=$identifier_code;
         $data['identifier']=$this->uri->segment(3);
@@ -1292,6 +1293,7 @@ class Purchases extends CI_Controller {
     }
 
     public function upload_purchase_adjust(){
+        
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');

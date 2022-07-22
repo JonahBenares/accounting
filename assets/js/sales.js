@@ -495,3 +495,31 @@ function saveAllAdjust(){
     }    
 }
 
+function printMultiple(){
+	var x = document.getElementsByClassName("multiple_print");
+	var loc= document.getElementById("baseurl").value;
+ 	var redirect = loc+"sales/print_multiple";
+ 	var form = document.querySelector('#print_mult');
+    var formData = new FormData(form);
+	for(var i =0;i<x.length;i++){
+		if(document.getElementsByClassName('multiple_print')[i].checked){
+			multiple_print= document.querySelector('input[name="multiple_print[]"]').value;
+			formData.append('multiple_print'+[i], multiple_print);
+			//formData.append('count', i);
+		}
+    }
+    $.ajax({
+        type: "POST",
+        url: redirect,
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(output){
+            //alert(output);
+            /*$("#alt").hide(); */
+            var exp=output.split(",");
+           	window.location=loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2];
+        }
+    });
+}
+
