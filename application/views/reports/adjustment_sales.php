@@ -123,7 +123,7 @@
                                     <tr>
                                         <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
                                         <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['reference_number']);?></td>
-                                        <td class="pt-1 pb-1"><?php echo date("F d",strtotime(implode("<br /><br />",$ad['billing_from'])));?> - <?php echo date("F d,Y",strtotime(implode("<br /><br />",$ad['billing_to'])));?></td>
+                                        <td class="pt-1 pb-1"><?php echo date("F d",strtotime($ad['billing_from_single']));?> - <?php echo date("F d,Y",strtotime($ad['billing_to_single']));?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['vatable_sales']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['net']);?></td>
