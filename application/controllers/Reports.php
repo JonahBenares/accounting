@@ -1119,7 +1119,7 @@ class Reports extends CI_Controller {
 
     public function adjustment_sales(){
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        //$this->load->view('template/navbar');
         $transaction_date=$this->uri->segment(3);
         $data['transaction_date']=$transaction_date;
         $year=date("Y",strtotime($transaction_date));
@@ -1135,6 +1135,8 @@ class Reports extends CI_Controller {
             $net=$vatable_sales+$zero_rated;
             $total=($vatable_sales+$zero_rated+$vat_on_sales)-$ewt;
             $total_sum[]=$total;
+
+            echo $vatable_sales;
 
             $data['due_date']=$ads->due_date;
             $data['adjustment'][]=array(
