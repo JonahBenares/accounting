@@ -875,9 +875,6 @@ class Sales extends CI_Controller {
         $rettxt = ""; 
         foreach($whole_arr as $key => $i){ 
 
-        while(substr($i,0,1)=="0")
-            $i=substr($i,1,5);
-
             if($i < 20){ 
                 $rettxt .= $ones[$i]; 
             }
@@ -887,10 +884,13 @@ class Sales extends CI_Controller {
             }
             else{ 
                 //$rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]." ".$ones[substr($i,1)]; 
-                if(substr($i,0,1)!="0") $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]." ".$ones[substr($i,1)];
+                if(substr($i,0,1)!="0") $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0];
+                if(substr($i,1)!="0")$rettxt .= " ".$ones[substr($i,1)];
                 if(substr($i,1,1)!="0")$rettxt .= " ".$tens[substr($i,1,1)];
-                //if(substr($i,1)!="0")$rettxt .= " ".$ones[substr($i,1)];
-                //if(substr($i,2,1)!="0")$rettxt .= " ".$ones[substr($i,2,1)]; 
+                if(substr($i,2,1)!="0")$rettxt .= " ".$ones[substr($i,2,1)]; 
+
+               /* $r = substr($i,0,1);
+                    echo $r;*/
                   
             } 
             if($key > 0 && $i > 0){ 

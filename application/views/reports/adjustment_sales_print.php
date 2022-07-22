@@ -144,8 +144,9 @@
                                             }
                                             $data2[$key]['particular'][] = $ads['particular'];
                                             $data2[$key]['reference_number'][] = $ads['reference_number'];
-                                            $data2[$key]['billing_from'][] = $ads['billing_from'];
-                                            $data2[$key]['billing_to'][] = $ads['billing_to'];
+                                            $data2[$key]['billing_from'][] = date("F d",strtotime($ads['billing_from']));
+                                            $data2[$key]['billing_to'][] = date("F d",strtotime($ads['billing_to']));
+                                            $data2[$key]['billing_fromto'][] = date("F d,Y",strtotime($ads['billing_from']))." - ".date("F d,Y",strtotime($ads['billing_to']));
                                             $data2[$key]['vatable_sales'][] = number_format($ads['vatable_sales'],2);
                                             $data2[$key]['vat_on_sales'][] = number_format($ads['vat_on_sales'],2);
                                             $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
@@ -164,7 +165,7 @@
                         <tr>
                             <td class="font-11 p-l-5 p-r-5"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
                             <td class="font-11 p-l-5 p-r-5 bor-btm" align="center"><?php echo implode("<br /><br />",$ad['reference_number']);?></td>
-                            <td class="font-11 p-l-5 p-r-5"><?php echo date("F d",strtotime($ad['billing_from_single']));?> - <?php echo date("F d,Y",strtotime($ad['billing_to_single']));?></td>
+                            <td class="font-11 p-l-5 p-r-5"><?php echo implode("<br /><br />",$ad['billing_fromto']);?></td>
                             <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['vatable_sales']);?></td>
                             <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
                             <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['net']);?></td>
@@ -225,7 +226,7 @@
                         <tr>
                             <td width="19" align="center">Billing</td>
                             <td width="1%"></td>
-                            <td width="19" align="center">EMG Supervisor</td>
+                            <td width="19" align="center">EMG</td>
                             <td width="1%"></td>
                             <td width="19" align="center">Accounting</td>
                             <td width="1%"></td>

@@ -93,6 +93,7 @@
                                                     'billing_to'=>array(),
                                                     'billing_to_single'=>$ads['billing_to'],
                                                     'vatable_sales'=>array(),
+                                                    'billing_fromto'=>array(),
                                                     'vat_on_sales'=>array(),
                                                     'ewt'=>array(),
                                                     'zero_rated'=>array(),
@@ -105,6 +106,7 @@
                                             $data2[$key]['reference_number'][] = $ads['reference_number'];
                                             $data2[$key]['billing_from'][] = date("F d",strtotime($ads['billing_from']));
                                             $data2[$key]['billing_to'][] = date("F d,Y",strtotime($ads['billing_to']));
+                                            $data2[$key]['billing_fromto'][] = date("F d,Y",strtotime($ads['billing_from']))." - ".date("F d,Y",strtotime($ads['billing_to']));
                                             $data2[$key]['vatable_sales'][] = number_format($ads['vatable_sales'],2);
                                             $data2[$key]['vat_on_sales'][] = number_format($ads['vat_on_sales'],2);
                                             $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
@@ -123,7 +125,7 @@
                                     <tr>
                                         <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
                                         <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['reference_number']);?></td>
-                                        <td class="pt-1 pb-1"><?php echo $ad['billing_from_single'];?> - <?php echo $ad['billing_to_single'];?></td>
+                                        <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['billing_fromto']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['vatable_sales']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['net']);?></td>
