@@ -1030,9 +1030,12 @@ class Reports extends CI_Controller {
         $participant=$this->input->post('participant');
         $date_from=$this->input->post('date_from');
         $date_to=$this->input->post('date_to');
+        $now = date("Y-m-d H:i:s");
         $cancel_or = array(
            "or_no"=>$or_no,
            "remarks"=>'Cancelled',
+           "create_date"=>$now,
+           "user_id"=>$_SESSION['user_id'],
         );
         $this->super_model->insert_into("or_remarks", $cancel_or);
     }
