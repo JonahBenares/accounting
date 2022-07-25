@@ -18,22 +18,30 @@ if(!empty($sales_id)){
                             <h4 style="line-height: 1.3;" class="p-0">Upload WESM Transaction - Sales <br><small style="letter-spacing:2px">ADJUSTMENT</small></h4>
                         </div>
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-5 offset-lg-1 offset-md-1 offset-sm-1">
+                                    <label>File</label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>Remarks</label>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                </div>
+                            </div>
                             <form id='uploadsalesadjust'>
                                 <div class="row append">
                                     <div class="col-lg-5 col-md-5 col-sm-5 offset-lg-1 offset-md-1 offset-sm-1">
                                         <div class="form-group">
-                                            <label>File</label>
                                             <input type="file" class="form-control fileupload" name='fileupload[]' id="fileupload1" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
-                                            <label>Remarks</label>
                                             <input type="text" class="form-control" name='remarks[]' id="remarks1">
                                         </div>
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
-                                        <div class="form-group m-t-35 addmoreupload">
+                                        <div class="form-group m-t-5 addmoreupload">
                                             <input type="hidden" name="adjust_identifier" id="adjust_identifier" value="<?php echo $identifier_code;?>">
                                             <button type="button" class="btn btn-primary btn-sm addUpload"><span class="fas fa-plus"></span></button>
                                             <!-- <button class="btn btn-danger btn-sm"><span class="fas fa-times"></span></button> -->
@@ -73,28 +81,28 @@ if(!empty($sales_id)){
                                 </table>
                                 <br>
                                 
-                                <table class="table-bordered table table-hover " id="adjust-<?php echo $x; ?>" style="width:200%;">
+                                <table class="table-bordered table table-hover " id="adjust-<?php echo $x; ?>" style="width:180%;">
                                     <thead>
                                         <tr>    
                                             <!-- <th width="5%" align="center" style="background:rgb(245 245 245)">
                                                 <center><span class="fas fa-bars"></span></center>
                                             </th>  -->   
-                                            <th class="p-2">Item No</th>                                        
-                                            <!-- <th class="p-2">Series No.</th> -->
-                                            <th class="p-2">STL ID / TPShort Name</th>
-                                            <th class="p-2">Billing ID</th>
-                                            <th class="p-2">Trading Participant Name</th>
-                                            <th class="p-2">Facility Type </th>
-                                            <th class="p-2">WHT Agent Tag</th>
-                                            <th class="p-2">ITH Tag</th>
-                                            <th class="p-2">Non Vatable Tag</th>
-                                            <th class="p-2">Zero-rated Tag</th>
-                                            <th class="p-2">Vatable Sales</th>
-                                            <th class="p-2">Zero Rated Sales</th>
-                                            <th class="p-2">Zero Rated EcoZones Sales</th>
-                                            <th class="p-2">Vat On Sales</th>
-                                            <th class="p-2">EWT</th>
-                                            <th class="p-2">Total Amount</th>
+                                            <th >Item #</th>                                        
+                                            <!-- <th >Series No.</th> -->
+                                            <th >STL ID / TPShort Name</th>
+                                            <th >Billing ID</th>
+                                            <th >Trading Participant Name</th>
+                                            <th >Facility Type </th>
+                                            <th >WHT Agent Tag</th>
+                                            <th >ITH Tag</th>
+                                            <th >Non Vatable Tag</th>
+                                            <th >Zero-rated Tag</th>
+                                            <th >Vatable Sales</th>
+                                            <th >Zero Rated Sales</th>
+                                            <th >Zero Rated EcoZones Sales</th>
+                                            <th >Vat On Sales</th>
+                                            <th >EWT</th>
+                                            <th >Total Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -124,26 +132,27 @@ if(!empty($sales_id)){
                                                     }
                                                 ?>
                                             </td> -->
-                                            <td><center><?php echo $d['item_no'];?></center></td>
-                                           <!--  <td><?php echo $d['serial_no'];?></td> -->
-                                            <td><?php echo $d['short_name'];?></td>
-                                            <td><?php echo $d['billing_id'];?></td>
-                                            <td><?php echo $d['company_name'];?></td>
-                                            <td align="center"><?php echo $d['facility_type'];?></td>
-                                            <td align="center"><?php echo $d['wht_agent'];?></td>
-                                            <td align="center"><?php echo $d['ith_tag'];?></td>
-                                            <td align="center"><?php echo $d['non_vatable'];?></td>
-                                            <td align="center"><?php echo $d['zero_rated'];?></td>
-                                            <td align="right"><?php echo $d['vatable_sales'];?></td>
-                                            <td align="right"><?php echo $d['zero_rated_sales'];?></td>
-                                            <td align="right"><?php echo $d['zero_rated_ecozones'];?></td>
-                                            <td align="right"><?php echo $d['vat_on_sales'];?></td>
-                                            <td align="right">(<?php echo $d['ewt'];?>)</td>
-                                            <td align="right"><?php echo $d['total_amount'];?></td>
+                                            <td class="p-2"><center><?php echo $d['item_no'];?></center></td>
+                                           <!--  <td class="p-2"><?php echo $d['serial_no'];?></td> -->
+                                            <td class="p-2"><?php echo $d['short_name'];?></td>
+                                            <td class="p-2"><?php echo $d['billing_id'];?></td>
+                                            <td class="p-2"><?php echo $d['company_name'];?></td>
+                                            <td class="p-2" align="center"><?php echo $d['facility_type'];?></td>
+                                            <td class="p-2" align="center"><?php echo $d['wht_agent'];?></td>
+                                            <td class="p-2" align="center"><?php echo $d['ith_tag'];?></td>
+                                            <td class="p-2" align="center"><?php echo $d['non_vatable'];?></td>
+                                            <td class="p-2" align="center"><?php echo $d['zero_rated'];?></td>
+                                            <td class="p-2" align="right"><?php echo $d['vatable_sales'];?></td>
+                                            <td class="p-2" align="right"><?php echo $d['zero_rated_sales'];?></td>
+                                            <td class="p-2" align="right"><?php echo $d['zero_rated_ecozones'];?></td>
+                                            <td class="p-2" align="right"><?php echo $d['vat_on_sales'];?></td>
+                                            <td class="p-2" align="right">(<?php echo $d['ewt'];?>)</td>
+                                            <td class="p-2" align="right"><?php echo $d['total_amount'];?></td>
                                         </tr>
                                         <?php } }?>
                                     </tbody>
                                 </table>
+                                <hr>
                                 <?php  $x++; } ?>
                             </div>
                             <input type="hidden" id="counter" value="<?php echo $x; ?>">
@@ -185,8 +194,9 @@ if(!empty($sales_id)){
         var counter = document.getElementById("counter").value;
         for(var a=1;a<=counter;a++){
             $("#adjust-"+a).dataTable({
-                order: [[2, 'asc']],
                 "scrollX": true,
+                // order: [[2, 'asc']],
+                // "scrollX": true,
             });
         }
     }

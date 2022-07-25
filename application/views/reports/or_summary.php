@@ -65,7 +65,7 @@
                             </table>
                             <br>
                             <div>
-                                <table class="table table-bordered table-hover" id='table-4' width="100%">
+                                <table class="table table-bordered table-hover" id='table-3' width="100%">
                                     <thead>
                                         <tr>
                                             <td style="vertical-align:middle!important; border-bottom:1px solid #000" class="td-30 td-head" align="center">Date</td>
@@ -78,10 +78,16 @@
                                         </tr>
                                     </thead>
                                   
-                                <?php 
-                               
+                                <?php
+
+                                $count = count($or_summary);
+                                if($count == 1){
+                                    $max++;
+                                }
+                                
                                 for($a=$min;$a<=$max;$a++){
                                     $series[] = $a;
+
                                 }
                               
                                 foreach($or_summary AS $o){
@@ -102,22 +108,24 @@
                                     );
                                 }
 
-
-
-                                if(!empty($missing) && !empty($or_summary)){
+                                if($count > 1){
+                                    if(!empty($missing) && !empty($or_summary)){
                                     $all = array_merge($missing,$or_summary);
-                                } else {
+                                    } else {
                                     $all=array();
+                                    }
+                                }else{
+                                    $all = $or_summary;
                                 }
+                                
                                 $columns = array_column($all, 'or_no');
                                 array_multisort($columns, SORT_ASC, $all);
-                                 
+
                                 ?>
                                 <tbody>
                                     <?php 
                                      
                                     foreach($all AS $a){ 
-                                      
                                         ?>
                                         <tr>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo $a['date']; ?></td>

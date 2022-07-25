@@ -28,11 +28,32 @@ class Sales extends CI_Controller {
         }
     } 
 
+    public function print_multiple(){
+        $identifier=$this->input->post('multiple_print');
+        //$count=$this->input->post('count');
+        $count=count($identifier);
+        $sales_detail_disp='';
+        for($x=0;$x<$count;$x++){
+            //echo $x;
+            //echo $identifier[$x];
+            $exp_identifier=explode(",",$identifier[$x]);
+            $identifier_code=$exp_identifier[0];
+            $sales_detail_id=$exp_identifier[1];
+            $sales_detail_disp.=$exp_identifier[1]."-";
+            $reference_number=$exp_identifier[2];
+            $data_head = array(
+                'print_identifier'=>$identifier_code
+            );
+            $this->super_model->update_where("sales_transaction_details",$data_head, "sales_detail_id", $sales_detail_id);
+        }
+        echo $sales_detail_disp.",".$identifier_code.",".$count;
+    }
+
     public function upload_sales()
     {
         $id=$this->uri->segment(3);
         $data['sales_id'] = $id;
-
+        $data['identifier_code']=$this->generateRandomString();
         if(!empty($id)){
             foreach($this->super_model->select_row_where("sales_transaction_head", "sales_id",$id) AS $h){
                 $data['transaction_date']=$h->transaction_date;
@@ -71,6 +92,269 @@ class Sales extends CI_Controller {
         $this->load->view('template/navbar');
         $this->load->view('sales/upload_sales',$data);
         $this->load->view('template/footer');
+    }
+
+    public function print_BS_multiple(){
+        /*$sales_detail_id = $this->uri->segment(3);
+        $data['sales_detail_id']=$sales_detail_id;*/
+        $sales_details_id = $this->uri->segment(3);
+        $print_identifier = $this->uri->segment(4);
+        $count = $this->uri->segment(5);
+        $data['count']=$count;
+        $sales_det_exp=explode("-",$sales_details_id);
+        $data['sales_detail_id']=$print_identifier;
+        $data['address']='';
+        $data['tin']='';
+        $data['company_name']='';
+        $data['settlement']='';
+        $data['billing_from']='';
+        $data['billing_to']='';
+        $data['due_date']='';
+        $data['reference_number']='';
+        for($x=0;$x<$count;$x++){
+            foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
+                $data['address'][$x]=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+                $address=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+                $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                $tin=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                $data['company_name'][$x]=$p->company_name;
+                $company_name=$p->company_name;
+                $data['serial_no'][$x]=$p->serial_no;
+                $serial_no=$p->serial_no;
+                $data['settlement'][$x]=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                $settlement=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
+                $transaction_date=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
+                $data['billing_from'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
+                $billing_from=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
+                $data['billing_to'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
+                $billing_to=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
+                $data['due_date'][$x]=$this->super_model->select_column_where("sales_transaction_head","due_date","sales_id",$p->sales_id);
+                $due_date=$this->super_model->select_column_where("sales_transaction_head","due_date","sales_id",$p->sales_id);
+                $data['reference_number'][$x]=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$p->sales_id);
+                $reference_number=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$p->sales_id);
+                $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+                $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
+                $zero_rated= $p->zero_rated_sales + $p->zero_rated_ecozones;
+                $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
+                $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
+
+                $data['sub_participant'][$x]=$p->billing_id;
+                $data['vatable_sales'][$x]=$p->vatable_sales;
+                $data['vat_on_sales'][$x]=$p->vat_on_sales;
+                $data['zero_rated_sales'][$x]=$zero_rated;
+                $data['total_amount'][$x]=$total_amount;
+                $data['ewt'][$x]=$p->ewt;
+                $data['overall_total'][$x]=$overall_total;
+                $data['participant_id'][$x]=$participant_id;
+
+                $data['sub'][]=array(
+                    "participant_id"=>$participant_id,
+                    "sub_participant"=>$p->billing_id,
+                    "vatable_sales"=>$p->vatable_sales,
+                    "zero_rated_sales"=>$zero_rated,
+                    "total_amount"=>$total_amount,
+                    "vat_on_sales"=>$p->vat_on_sales,
+                    "ewt"=>$p->ewt,
+                    "overall_total"=>$overall_total,
+                );
+                if($count_sub >=1 || $count_sub>=4){
+                    $h=0;
+                    foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
+                        $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                        $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+
+                        $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $zero_rated_sales=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $zero_rated_ecozones=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        //$total_amount=$this->super_model->select_column_custom_where("sales_transaction_details","total_amount","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $vat_on_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $ewt=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $zero_rated= $zero_rated_sales + $zero_rated_ecozones;
+                        $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
+                        $overall_total= ($total_amount + $vat_on_sales) - $ewt;
+                        $data['sub_participant_sub'][$h]=$subparticipant;
+                        $data['vatable_sales_sub'][$h]=$vatable_sales;
+                        $data['vat_on_sales_sub'][$h]=$vat_on_sales;
+                        $data['zero_rated_sales_sub'][$h]=$zero_rated;
+                        $data['total_amount_sub'][$h]=$total_amount;
+                        $data['ewt_s'][$h]=$ewt;
+                        $data['overall_total_sub'][$h]=$overall_total;
+                        $data['participant_id_sub'][$h]=$s->participant_id;
+                        //if($participant_id==$s->participant_id){
+                            $data['sub_part'][]=array(
+                                "participant_id"=>$s->participant_id,
+                                "sub_participant"=>$subparticipant,
+                                "vatable_sales"=>$vatable_sales,
+                                "zero_rated_sales"=>$zero_rated,
+                                "zero_rated_ecozones"=>$zero_rated_ecozones,
+                                "total_amount"=>$total_amount,
+                                "vat_on_sales"=>$vat_on_sales,
+                                "ewt"=>$ewt,
+                                "overall_total"=>$overall_total,
+                                //"zero_rated"=>$zero_rated,
+                            );
+                        //}
+                        $h++;
+                    }
+                }
+
+
+                if($count_sub>=5){
+                    $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
+                    $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
+
+                    $data['sub_participant'][$x]=$p->billing_id;
+                    $data['vatable_sales'][$x]=$p->vatable_sales;
+                    $data['vat_on_sales'][$x]=$p->vat_on_sales;
+                    $data['zero_rated_sales'][$x]=$zero_rated;
+                    $data['total_amount'][$x]=$total_amount;
+                    $data['ewt'][$x]=$p->ewt;
+                    $data['overall_total'][$x]=$overall_total;
+                    $data['participant_id'][$x]=$participant_id;
+
+                    $data['sub_second'][]=array(
+                        "participant_id"=>$participant_id,
+                        "sub_participant"=>$p->billing_id,
+                        "vatable_sales"=>$p->vatable_sales,
+                        "zero_rated_sales"=>$p->zero_rated_sales,
+                        "total_amount"=>$total_amount,
+                        "vat_on_sales"=>$p->vat_on_sales,
+                        "ewt"=>$p->ewt,
+                        "overall_total"=>$overall_total,
+                    );
+                    $z=0;
+                    foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
+
+                        $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                        $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+                        $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $zero_rated_sales=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $zero_rated_ecozones=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        //$total_amount=$this->super_model->select_column_custom_where("sales_transaction_details","total_amount","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $vat_on_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $ewt=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
+                        $zero_rated= $zero_rated_sales + $zero_rated_ecozones;
+                        $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
+                        //$zero_rated= $vat_on_sales - $ewt;
+                        $overall_total= ($total_amount + $vat_on_sales) - $ewt;
+                        $data['sub_participant_sub'][$z]=$subparticipant;
+                        $data['vatable_sales_sub'][$z]=$vatable_sales;
+                        $data['vat_on_sales_sub'][$z]=$vat_on_sales;
+                        $data['zero_rated_sales_sub'][$z]=$zero_rated;
+                        $data['total_amount_sub'][$z]=$total_amount;
+                        $data['ewt_s'][$z]=$ewt;
+                        $data['overall_total_sub'][$z]=$overall_total;
+                        $data['participant_id_sub'][$z]=$s->participant_id;
+                        $data['sub_part_second'][]=array(
+                            "participant_id"=>$s->participant_id,
+                            "sub_participant"=>$subparticipant,
+                            "vatable_sales"=>$vatable_sales,
+                            "zero_rated_sales"=>$zero_rated,
+                            "total_amount"=>$total_amount,
+                            "vat_on_sales"=>$vat_on_sales,
+                            "ewt"=>$ewt,
+                            "overall_total"=>$overall_total,
+                            //"zero_rated"=>$zero_rated,
+                        );
+                        $z++;
+                    }
+                }
+            }
+        }
+        $this->load->view('template/print_head');
+        $this->load->view('sales/print_BS_multiple',$data);
+    }
+
+    public function print_invoice_multiple(){
+        error_reporting(0);
+        $sales_detail_id = $this->uri->segment(3);
+        // $this->load->view('template/header');
+        //$this->load->view('template/navbar');
+        foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
+            $data['address']=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+            $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+            $data['company_name']=$p->company_name;
+            $data['billing_from']=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
+            $data['billing_to']=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
+
+            $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+            foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
+                $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
+
+
+                $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+                $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+                $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+                $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+
+              
+                $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+                $sum_vatable_sales=array_sum($vatable_sales_bs);
+                $sum_vs_exp = explode(".", $sum_vatable_sales);
+                $sum_vatable_sales_peso=$sum_vs_exp[0];
+                $sum_vatable_sales_cents=$sum_vs_exp[1];
+
+                $sum_zero_rated_ecozone=array_sum($zero_rated_ecozone_bs);
+                $sum_zre_exp=explode(".", $sum_zero_rated_ecozone);
+                $sum_zero_rated_ecozone_peso=$sum_zre_exp[0];
+                $sum_zero_rated_ecozone_cents=$sum_zre_exp[1];
+
+                $sum_vat_on_sales=array_sum($vat_on_sales_bs);
+                $sum_vos_exp=explode(".", $sum_vat_on_sales);
+                $sum_vat_on_sales_peso=$sum_vos_exp[0];
+                $sum_vat_on_sales_cents=$sum_vos_exp[1];
+
+                $sum_ewt=array_sum($ewt_bs);
+                $sum_e_exp=explode(".", $sum_ewt);
+                $sum_ewt_peso=$sum_e_exp[0];
+                $sum_ewt_cents=$sum_e_exp[1];
+
+                $sum_zero_rated=array_sum($zero_rated_bs);
+                $sum_zr_exp=explode(".", $sum_zero_rated);
+                $sum_zero_rated_peso=$sum_zr_exp[0];
+                $sum_zero_rated_cents=$sum_zr_exp[1];
+            }
+
+                //$ewt=str_replace("-", '', $p->ewt);
+                
+                $total_vs=$p->vatable_sales + $sum_vatable_sales;
+                $vatable_sales = explode(".",$total_vs);
+                $data['vat_sales_peso'] = $vatable_sales[0];
+                $data['vat_sales_cents'] = $vatable_sales[1];
+
+                $total_zr=$p->zero_rated_sales + $sum_zero_rated;
+                $zero_rated_sales = explode(".",$total_zr);
+                $data['zero_rated_peso'] = $zero_rated_sales[0];
+                $data['zero_rated_cents'] = $zero_rated_sales[1];
+
+                $total_vos=$p->vat_on_sales + $sum_vat_on_sales;
+                $vat_on_sales = explode(".",$total_vos);
+                $data['vat_peso'] = $vat_on_sales[0];
+                $data['vat_cents'] = $vat_on_sales[1];
+
+                $total_ewt=$p->ewt + $sum_ewt;
+                $ewt_exp=explode(".", $total_ewt);
+                $data['ewt_peso']=$ewt_exp[0];
+                $data['ewt_cents']=$ewt_exp[1];
+
+                $total_zra=$p->zero_rated_ecozones + $sum_zero_rated_ecozone;
+                $zero_rated_ecozones_exp=explode(".", $total_zra);
+                $data['zero_rated_ecozones_peso']=$zero_rated_ecozones_exp[0];
+                $data['zero_rated_ecozones_cents']=$zero_rated_ecozones_exp[1];
+
+                $total= ($p->vatable_sales + $p->vat_on_sales + $p->zero_rated_ecozones + $p->zero_rated_sales) - $p->ewt;
+                $total_sub= ($sum_vatable_sales + $sum_vat_on_sales + $sum_zero_rated_ecozone + $sum_zero_rated) - $sum_ewt;
+                $total_amount=$total + $total_sub;
+                $data['total_amount']=$total_amount;
+                $data['amount_words']=strtoupper($this->convertNumber($total_amount));
+                $total_exp=explode(".", $total_amount);
+                $data['total_peso']=$total_exp[0];
+                $data['total_cents']=$total_exp[1];
+           
+        }
+        $this->load->view('template/print_head');
+        $this->load->view('sales/print_invoice_multiple',$data);
     }
 
     public function count_print(){
@@ -614,231 +898,135 @@ class Sales extends CI_Controller {
         echo $sales_detail_id;
     }
 
-    public function convertNumber(float $amount)
-    {
+    public function convertNumber(float $amount){
+        $decones = array( 
+                    01 => "One", 
+                    02 => "Two", 
+                    03 => "Three", 
+                    04 => "Four", 
+                    05 => "Five", 
+                    06 => "Six", 
+                    07 => "Seven", 
+                    08 => "Eight", 
+                    09 => "Nine", 
+                    10 => "Ten", 
+                    11 => "Eleven", 
+                    12 => "Twelve", 
+                    13 => "Thirteen", 
+                    14 => "Fourteen", 
+                    15 => "Fifteen", 
+                    16 => "Sixteen", 
+                    17 => "Seventeen", 
+                    18 => "Eighteen", 
+                    19 => "Nineteen" 
+                    );
+        $ones = array( 
+                    0 => "Zero",
+                    1 => "One",     
+                    2 => "Two", 
+                    3 => "Three", 
+                    4 => "Four", 
+                    5 => "Five", 
+                    6 => "Six", 
+                    7 => "Seven", 
+                    8 => "Eight", 
+                    9 => "Nine", 
+                    10 => "Ten", 
+                    11 => "Eleven", 
+                    12 => "Twelve", 
+                    13 => "Thirteen", 
+                    14 => "Fourteen", 
+                    15 => "Fifteen", 
+                    16 => "Sixteen", 
+                    17 => "Seventeen", 
+                    18 => "Eighteen", 
+                    19 => "Nineteen" 
+                    ); 
+        $tens = array( 
+                    0 => "",
+                    2 => "Twenty", 
+                    3 => "Thirty", 
+                    4 => "Forty", 
+                    5 => "Fifty", 
+                    6 => "Sixty", 
+                    7 => "Seventy", 
+                    8 => "Eighty", 
+                    9 => "Ninety" 
+                    ); 
+        $hundreds = array( 
+                    "Hundred", 
+                    "Thousand", 
+                    "Million", 
+                    "Billion", 
+                    "Trillion", 
+                    "Quadrillion" 
+                    ); //limit t quadrillion 
+        $amount = number_format($amount,2,".",","); 
+        $num_arr = explode(".",$amount); 
+        $wholenum = $num_arr[0]; 
+        $decnum = $num_arr[1]; 
+        $whole_arr = array_reverse(explode(",",$wholenum)); 
+        krsort($whole_arr); 
+        $rettxt = ""; 
+        foreach($whole_arr as $key => $i){ 
 
-
-           $amount_after_decimal = round($amount - ($num = floor($amount)), 2) * 100;
-
-   // Check if there is any number after decimal
-
-   $amt_hundred = null;
-
-   $count_length = strlen($num);
-
-   $x = 0;
-
-   $string = array();
-
-   $change_words = array(0 => '', 1 => 'One', 2 => 'Two',
-
-     3 => 'Three', 4 => 'Four', 5 => 'Five', 6 => 'Six',
-
-     7 => 'Seven', 8 => 'Eight', 9 => 'Nine',
-
-     10 => 'Ten', 11 => 'Eleven', 12 => 'Twelve',
-
-     13 => 'Thirteen', 14 => 'Fourteen', 15 => 'Fifteen',
-
-     16 => 'Sixteen', 17 => 'Seventeen', 18 => 'Eighteen',
-
-     19 => 'Nineteen', 20 => 'Twenty', 30 => 'Thirty',
-
-     40 => 'Forty', 50 => 'Fifty', 60 => 'Sixty',
-
-     70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety');
-
-  //$here_digits = array('', 'Hundred','Thousand','Lakh', 'Crore');
-  $here_digits = array('', 'Hundred','Thousand');
-
-  while( $x < $count_length ) {
-
-       $get_divider = ($x == 2) ? 10 : 100;
-
-       $amount = floor($num % $get_divider);
-
-       $num = floor($num / $get_divider);
-
-       $x += $get_divider == 10 ? 1 : 2;
-
-       if ($amount) {
-
-         $add_plural = (($counter = count($string)) && $amount > 9) ? 's' : null;
-
-         $amt_hundred = ($counter == 1 && $string[0]) ? ' and ' : null;
-
-         $string [] = ($amount < 21) ? $change_words[$amount].' '. $here_digits[$counter]. $add_plural.' 
-
-         '.$amt_hundred:$change_words[floor($amount / 10) * 10].' '.$change_words[$amount % 10]. ' 
-
-         '.$here_digits[$counter].$add_plural.' '.$amt_hundred;
-
-         }else $string[] = null;
-
-       }
-
-   $implode_to_Rupees = implode('', array_reverse($string));
-
-   /*$get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " 
-
-   " . $change_words[$amount_after_decimal % 10]) . ' centavos' : '';*/
-
-            $ones = array( 
-            0 => "zero", 
-            1 => "one", 
-            2 => "two", 
-            3 => "three", 
-            4 => "four", 
-            5 => "five", 
-            6 => "six", 
-            7 => "seven", 
-            8 => "eight", 
-            9 => "nine", 
-            10 => "ten", 
-            11 => "eleven", 
-            12 => "twelve", 
-            13 => "thirteen", 
-            14 => "fourteen", 
-            15 => "fifteen", 
-            16 => "sixteen", 
-            17 => "seventeen", 
-            18 => "eighteen", 
-            19 => "nineteen" 
-            ); 
-            $tens = array( 
-            1 => "ten",
-            2 => "twenty", 
-            3 => "thirty", 
-            4 => "forty", 
-            5 => "fifty", 
-            6 => "sixty", 
-            7 => "seventy", 
-            8 => "eighty", 
-            9 => "ninety" 
-            ); 
-            $hundreds = array( 
-            "hundred", 
-            "thousand", 
-            "million", 
-            "billion", 
-            "trillion", 
-            "quadrillion" 
-            );
-
-    if($amount_after_decimal > 0){
-    $Dn = floor($amount_after_decimal / 10);
-    /* Tens (deca) */
-    $n = $amount_after_decimal % 10;
-            /* Ones */
-                
-                if ($Dn || $n) {
-        if (!empty($res)) {
-            $res .= " And ";
-        }
-        if ($Dn < 2) {
-            $res .= $ones[$Dn * 10 + $n];
-        } else {
-            $res .= $tens[$Dn];
-            if ($n) {
-                $res .= "-" . $ones[$n];
-            }
-        }
-                    $res .= " centavos";
-    }
-            
-            }
-
-   $get_peso = ($amount == 1) ? 'peso ' : 'pesos ';
-
-   return ($implode_to_Rupees ? $implode_to_Rupees .''.$get_peso : '') .'And '. $res;
-
-
-
-
-         $ones = array( 
-            0 => "zero", 
-            1 => "one", 
-            2 => "two", 
-            3 => "three", 
-            4 => "four", 
-            5 => "five", 
-            6 => "six", 
-            7 => "seven", 
-            8 => "eight", 
-            9 => "nine", 
-            10 => "ten", 
-            11 => "eleven", 
-            12 => "twelve", 
-            13 => "thirteen", 
-            14 => "fourteen", 
-            15 => "fifteen", 
-            16 => "sixteen", 
-            17 => "seventeen", 
-            18 => "eighteen", 
-            19 => "nineteen" 
-            ); 
-            $tens = array( 
-            1 => "ten",
-            2 => "twenty", 
-            3 => "thirty", 
-            4 => "forty", 
-            5 => "fifty", 
-            6 => "sixty", 
-            7 => "seventy", 
-            8 => "eighty", 
-            9 => "ninety" 
-            ); 
-            $hundreds = array( 
-            "hundred", 
-            "thousand", 
-            "million", 
-            "billion", 
-            "trillion", 
-            "quadrillion" 
-            ); //limit t quadrillion 
-            $num = number_format($num,2,".",","); 
-            $num_arr = explode(".",$num); 
-            $wholenum = $num_arr[0]; 
-            $decnum = $num_arr[1]; 
-            $whole_arr = array_reverse(explode(",",$wholenum)); 
-            krsort($whole_arr); 
-            $rettxt = ""; 
-            foreach($whole_arr as $key => $i){ 
             if($i < 20){ 
-            $rettxt .= $ones[$i]; 
-            }elseif($i < 100){ 
-            $rettxt .= $tens[substr($i,0,1)]; 
-            $rettxt .= " ".$ones[substr($i,1,1)]; 
-            }else{ 
-            $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]; 
-            $rettxt .= " ".$tens[substr($i,1,1)] ; 
-            $rettxt .= " ".$ones[substr($i,2,1)]; 
-            } 
-            if($key > 0){ 
-            $rettxt .= " ".$hundreds[$key]. " "; 
-            } 
-            } 
-            if($decnum > 0){ 
-            $rettxt .= " and "; 
-            if($decnum == 1){ 
-            $rettxt .= $ones[$decnum] . " centavos";
-            if($decnum < 20){ 
-            $rettxt .= $ones[$decnum] . " centavos"; 
-            }elseif($decnum < 100){ 
-            $rettxt .= $tens[substr($decnum,0,1)]; 
-            $rettxt .= " ".$ones[substr($decnum,1,1)] . " centavos";  
-            } 
+                $rettxt .= $ones[$i]; 
             }
+            elseif($i < 100){ 
+                if(substr($i,0,1)!="0")  $rettxt .= $tens[substr($i,0,1)]; 
+                if(substr($i,1,1)!="0") $rettxt .= " ".$ones[substr($i,1,1)]; 
+            }
+            else{ 
+                //$rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]." ".$ones[substr($i,1)]; 
+                if(substr($i,0,1)!="0") $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0];
+                if(substr($i,1)!="0")$rettxt .= " ".$ones[substr($i,1)];
+                if(substr($i,1,1)!="0")$rettxt .= " ".$tens[substr($i,1,1)];
+                if(substr($i,2,1)!="0")$rettxt .= " ".$ones[substr($i,2,1)]; 
+
+               /* $r = substr($i,0,1);
+                    echo $r;*/
+                  
+            } 
+            if($key > 0 && $i > 0){ 
+                $rettxt .= " ".$hundreds[$key]." "; 
             } 
 
-            if (strpos($rettxt, 'centavos') !== false) {
-                $rettxt=$rettxt;
-            } else {
-                $rettxt = $rettxt." PESOS ONLY";
-            }
-
-            return $rettxt; 
+        }
+        if($decnum > 0 && $i > 1){ 
+        $rettxt = $rettxt." pesos";
+        }elseif($decnum > 0 && $i == 1){
+        $rettxt = $rettxt." peso";
+        }elseif($decnum == 0 && $i != 1){
+        $rettxt = $rettxt." pesos only";
+        }elseif($decnum == 0 && $i == 1){
+        $rettxt = $rettxt." peso only";
     }
+
+        if($decnum > 0 && $i != 1){
+            $rettxt .= " and ";
+            if($decnum < 20){ 
+                $rettxt .= $decones[$decnum]; 
+            }
+            elseif($decnum < 100){ 
+                $rettxt .= $tens[substr($decnum,0,1)]; 
+                $rettxt .= " ".$ones[substr($decnum,1,1)]; 
+            }
+                $rettxt = $rettxt." centavos only"; 
+        }elseif($decnum > 0 && $i == 0){
+            if($decnum < 20){ 
+                $rettxt .= $decones[$decnum]; 
+            }
+            elseif($decnum < 100){ 
+                $rettxt .= $tens[substr($decnum,0,1)]; 
+                $rettxt .= " ".$ones[substr($decnum,1,1)]; 
+            }
+                $rettxt = $rettxt." centavos only";
+        }
+
+
+        return $rettxt;
+        }
 
     public function print_BS(){
         $sales_detail_id = $this->uri->segment(3);
@@ -875,7 +1063,7 @@ class Sales extends CI_Controller {
                 "ewt"=>$p->ewt,
                 //"zero_rated"=>$zero_rated,
             );
-            if($count_sub >=1 || $count_sub>=5){
+            if($count_sub >=1 || $count_sub>=4){
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
@@ -901,8 +1089,7 @@ class Sales extends CI_Controller {
                 }
             }
 
-
-            if($count_sub>=6){
+            if($count_sub>=5){
                 $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
                 $data['sub_second'][]=array(
                     "sub_participant"=>$p->billing_id,
@@ -1332,8 +1519,7 @@ class Sales extends CI_Controller {
                                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
                                 $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
                                 $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
-                                $vatable_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
-                                $vatable_sales = trim($vatable_sales,"-");
+                                $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue());
                                 $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
                                 $zero_rated_sales = trim($zero_rated_sales,"-");
                                 $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue(),'()');

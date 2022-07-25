@@ -1249,6 +1249,7 @@ class Purchases extends CI_Controller {
     }
 
     public function upload_purchases_adjustment(){
+
         $identifier_code=$this->generateRandomString();
         $data['identifier_code']=$identifier_code;
         $data['identifier']=$this->uri->segment(3);
@@ -1293,6 +1294,7 @@ class Purchases extends CI_Controller {
     }
 
     public function upload_purchase_adjust(){
+        
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
@@ -1359,8 +1361,7 @@ class Purchases extends CI_Controller {
                                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
                                 $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
                                 $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
-                                $vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue(),'()');
-                                $vatables_purchases = trim($vatables_purchases,"-");
+                                $vatables_purchases = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
                                 $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                  $zero_rated_purchases = trim($zero_rated_purchases,"-");
                                 $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');

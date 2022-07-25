@@ -85,6 +85,7 @@
                                                     'billing_from'=>array(),
                                                     'billing_from_single'=>$ads['billing_from'],
                                                     'billing_to'=>array(),
+                                                    'billing_fromto'=>array(),
                                                     'billing_to_single'=>$ads['billing_to'],
                                                     'vatables_purchases'=>array(),
                                                     'vat_on_purchases'=>array(),
@@ -97,8 +98,9 @@
                                             }
                                             $data2[$key]['particular'][] = $ads['particular'];
                                             $data2[$key]['participant'][] = $ads['participant'];
-                                            $data2[$key]['billing_from'][] = $ads['billing_from'];
-                                            $data2[$key]['billing_to'][] = $ads['billing_to'];
+                                            $data2[$key]['billing_from'][] = date("F d",strtotime($ads['billing_from']));
+                                            $data2[$key]['billing_to'][] = date("F d, Y",strtotime($ads['billing_to']));
+                                            $data2[$key]['billing_fromto'][] = date("F d",strtotime($ads['billing_from']))." - ".date("F d, Y",strtotime($ads['billing_to']));
                                             $data2[$key]['vatables_purchases'][] = number_format($ads['vatables_purchases'],2);
                                             $data2[$key]['vat_on_purchases'][] = number_format($ads['vat_on_purchases'],2);
                                             $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
@@ -117,7 +119,7 @@
                                     <tr>
                                         <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
                                         <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['participant']);?></td>
-                                        <td class="pt-1 pb-1"><?php echo date("F d",strtotime($ad['billing_from_single']));?> - <?php echo date("F d,Y",strtotime($ad['billing_to_single']));?></td>
+                                        <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['billing_fromto']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['vatables_purchases']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['net']);?></td>
