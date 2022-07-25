@@ -77,10 +77,10 @@ element.addEventListener("click", onClick);*/
                                         <td>Due Date</td>
                                         <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="4"><center><button type="button" onclick="downloadbulk2307('<?php echo base_url(); ?>','<?php echo $reference_number; ?>');" class="btn btn-primary btn-block">Download Bulk 2307</button>
+                                  <!--   <tr>
+                                        <td colspan="4"><center><a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
                                         </center></td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td id="append"></td>
                                     </tr>

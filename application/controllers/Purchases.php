@@ -1158,7 +1158,8 @@ class Purchases extends CI_Controller {
     }
 
     public function download_bulk(){
-        $refno = $this->input->post('refno');
+        
+        $refno =  $this->uri->segment(3);
         $purchase_id = $this->super_model->select_column_where('purchase_transaction_head', 'purchase_id', 'reference_number', $refno);
         $billing_to = $this->super_model->select_column_where('purchase_transaction_head', 'billing_to', 'reference_number', $refno);
           $month= date("n",strtotime($billing_to));
@@ -1181,22 +1182,15 @@ class Purchases extends CI_Controller {
                 $period_to = "1231".date("Y");
             }
 
+            $data['period_from']=$period_from;
+            $data['period_to'] = $period_to;
+            $data['reference_no']=$refno;
+
            
         $x=0;
         foreach($this->super_model->select_row_where('purchase_transaction_details', 'purchase_id', $purchase_id) AS $det){ 
-            $tin=$this->super_model->select_column_where("participant", "tin", "billing_id", $det->billing_id);
-            if(!empty($tin)){
-              $tin=explode("-",$tin);
-            } else {
-              $tin2='000-000-000-000';
-              $tin=explode("-",$tin2);
-            }
-
-
-            $name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id);
-            $address=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id);
-            $zip=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id);
-
+           
+           
              if($det->vatables_purchases != 0){
                 $amount=$det->vatables_purchases;
             }
@@ -1226,25 +1220,32 @@ class Purchases extends CI_Controller {
             } else {
                 $thirdmonth = "-"; 
             }
-            /**/
-            $billing_month = date('my',strtotime($billing_to));
-            $timestamp=date('Ymd');
-            $str= '<script src="'.base_url().'assets/js/jquery-1.12.4.js"></script><script src="'.base_url().'assets/js/jspdf.min.js"></script><script src="'.base_url().'assets/js/html2canvas.js"></script><script src="'.base_url().'assets/js/purchases.js"></script> <link rel="stylesheet" href="'.base_url().'assets/css/print2307-style.css"><input type="hidden" class="shortname" value="'.$det->short_name.'" id="shortname'.$x.'"><input type="hidden" class="ref_no" id="ref_no'.$x.'" value="'.$refno.'"><input type="hidden" class="billing_month" id="billing_month'.$x.'" value="'.$billing_month.'"><input type="hidden" class="timestamp"  id="timestamp'.$x.'" value="'.$timestamp.'"><div id="contentPDF" ><page size="Long" id="printableArea'.$x.'" class="canvas_div_pdf"><img class="img2307" src="'.base_url().'assets/img/form2307.jpg" style="width: 100%;"><label class="period_from ">'.$period_from.'</label><label class="period_to">'. $period_to.'</label>';
-                if(!empty($tin[1])){ 
-                    $str.='<div class="tin1"><label class="">'.$tin[0].'</label><label class="">'.$tin[1].'</label><label class="">'.$tin[2].'</label><label class="last1">0000</label> </div>';
-                } else {
 
-                   $str.='<div class="tin1"><label class=""></label><label class=""></label><label class=""></label><label class="last1">0000</label></div>';
-                }
+            $data['billing_month'] = date('my',strtotime($billing_to));
+            $data['timestamp']=date('Ymd');
 
-                $str.='<label class="payee">'.$name.'</label><label class="address1">'.$address.'</label><label class="zip1">'.$zip.'</label><label class="address2"></label><div class="tin2"><label class="">008</label><label class="">691</label><label class="">287</label><label class="last1">0000</label></div><label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label><label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label><label class="zip2">6100</label><label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label><label class="row1-col2">WC160</label><label class="row1-col3">'. (($firstmonth=="-") ? "-" : number_format($firstmonth,2)).'</label><label class="row1-col4">'. (($secondmonth=="-") ? "-" : number_format($secondmonth,2)).'</label><label class="row1-col5">'.(($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)).'</label><label class="row1-col6">'. number_format($total,2).'</label><label class="row1-col7">'.number_format($det->ewt,2) .'<span class="hey">&nbsp;&nbsp;</span></label><label class="row2-col3">'.(($firstmonth=="-") ? "-" : number_format($firstmonth,2)).'</label><label class="row2-col4">'. (($secondmonth=="-") ? "-" : number_format($secondmonth,2)).'</label><label class="row2-col5">'. (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)).'</label><label class="row2-col6">'. number_format($total,2).'</label><label class="row2-col7">'. number_format($det->ewt,2) .'<span>&nbsp;&nbsp;</span></label><label class="row2-col8"> Reference Number: <b>'. $refno.'</b></label><label class="row2-col9"> Item Number: <b>'. $det->item_no.'</b></label></page></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>';
+            $count=$this->super_model->count_custom_where("participant","billing_id='$det->billing_id'");
+            if($count>0){
+                $tin=$this->super_model->select_column_where("participant", "tin", "billing_id", $det->billing_id);
+            } else {
+                $tin='000-000-000';
+            }
+            $data['details'][] = array(
+                'tin'=>$tin,
+                'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
+                'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
+                'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
+                'total'=>$amount,
+                'ewt'=>$det->ewt,
+                'firstmonth'=>$firstmonth,
+                'secondmonth'=>$secondmonth,
+                'thirdmonth'=>$thirdmonth,
+                'item_no'=>$det->item_no,
+                'shortname'=>$det->short_name,
+            );
 
-            echo $str;
-            $str_download='<script> document.getElementsByClassName("button_click")[0].click();</script><button onclick=getDownload('.$x.') type="button" class="button_click" hidden>DONWLOAD</button>';
-            echo $str_download;
-            $x++;
         }
-
+        $this->load->view('purchases/download_bulk',$data);
     }
 
     public function upload_purchases_adjustment(){

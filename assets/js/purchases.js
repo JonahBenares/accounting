@@ -407,53 +407,30 @@ function savePaymentall(){
       });
 }
 
-function downloadbulk2307(baseurl,refno){
+/*function downloadbulk2307(baseurl,refno){
     var redirect = baseurl+"purchases/download_bulk";
     $.ajax({
         type: "POST",
         url: redirect,
         data: 'refno='+refno,
         success: function(output){
-           /* var pdf = new jsPDF('p', 'pt', 'letter');
-            pdf.canvas.height = 72 * 11;
-            pdf.canvas.width = 72 * 8.5;
-            pdf.fromHTML(output);
-            pdf.save('test.pdf');*/
-
-
-            //$('#append').append(output);
-            //var OpenWindow = window.open(baseurl+'purchases/download_page','_blank','width=335,height=330,resizable=1').document.write(output);
-            /*$(OpenWindow.document.body).append('<p>hi</p>');*/
-            var OpenWindow = window.open().document.write(output);
-
-           // document.getElementsByClassName("button_click")[0].click();
-
-
-        //contents = output.find(".canvas_div_pdf").first();
-        //console.log(contents.height());
-              
-            
-       //console.log(output);
-        /*contents = output.find(".canvas_div_pdf").first();
-        console.log(contents.height());*/
-        //alert(contents.height());
-  
-           //getPDF(output.innerHTML);
-           //getDownload().click();
+         
 
         }
     });
-}
+}*/
 
 /*<script> document.getElementsByClassName("button_click")[0].click();</script>*/
-function getDownload(ct){
+function getDownload(){
     //var x = document.getElementById("canvas_div_pdf");
-     var x = document.getElementById("printableArea"+ct);
+     for(var i =0;i<400;i++){
+     var x = document.getElementById("printableArea"+i);
     /*var HTML_Width = $(".canvas_div_pdf").width();
     var HTML_Height = $(".canvas_div_pdf").height();*/
 
-    var HTML_Width = $("#printableArea"+ct).width();
-    var HTML_Height = $("#printableArea"+ct).height();
+    var HTML_Width = $("#printableArea"+i).width();
+    var HTML_Height = $("#printableArea"+i).height();
+
 
     var top_left_margin = 10;
     var PDF_Width = HTML_Width+(top_left_margin*2);
@@ -462,19 +439,22 @@ function getDownload(ct){
     var canvas_image_height = HTML_Height;
     var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
    
-    //for(var i =0;i<x.length;i++){
+   
         //alert(i);
         /*var shortname=document.getElementsByClassName('shortname')[i].value;
         var refno=document.getElementsByClassName('ref_no')[i].value;
         var billing_month=document.getElementsByClassName('billing_month')[i].value;
         var timestamp=document.getElementsByClassName('timestamp')[i].value;*/
 
-        var shortname=document.getElementById('shortname'+ct).value;
-        var refno=document.getElementById('ref_no'+ct).value;
-        var billing_month=document.getElementById('billing_month'+ct).value;
-        var timestamp=document.getElementById('timestamp'+ct).value;
 
-        html2canvas($("#canvas_div_pdf")[ct],{allowTaint:true, 
+        var shortname=document.getElementById('shortname'+i).value;
+       
+        var refno=document.getElementById('ref_no'+i).value;
+        var billing_month=document.getElementById('billing_month'+i).value;
+        var timestamp=document.getElementById('timestamp'+i).value;
+
+        
+        html2canvas($(".canvas_div_pdf"+i)[0],{allowTaint:true, 
             useCORS: true,
             logging: false,
             height: window.outerHeight + window.innerHeight,
@@ -483,16 +463,17 @@ function getDownload(ct){
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
             var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
             pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-            //for (var i = 1; i <=totalPDFPages; i++) { 
+           // for (var x = 1; x <=totalPDFPages; x++) { 
                 //pdf.fromHTML(output);
                 pdf.addPage(PDF_Width, PDF_Height);
                 pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-            //}
+           // }
+             console.log(shortname);
              //pdf.save("BIR2307 CENPRI.pdf");
              pdf.save("BIR2307 CENPRI "+shortname+" "+refno+" "+billing_month+" "+timestamp+".pdf");
             
         });
-    //}
+    }
     
 }
 
