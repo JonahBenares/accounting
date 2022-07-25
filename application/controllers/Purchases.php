@@ -1188,7 +1188,7 @@ class Purchases extends CI_Controller {
 
            
         $x=0;
-        foreach($this->super_model->select_row_where('purchase_transaction_details', 'purchase_id', $purchase_id) AS $det){ 
+        foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id='$purchase_id' and bulk_print_flag = '0' LIMIT 50" ) AS $det){ 
            
            
              if($det->vatables_purchases != 0){
@@ -1220,6 +1220,14 @@ class Purchases extends CI_Controller {
             } else {
                 $thirdmonth = "-"; 
             }
+
+
+            $data_update = array(
+                "bulk_print_flag"=>1
+
+            );
+
+            $this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id", $det->purchase_detail_id);
 
             $data['billing_month'] = date('my',strtotime($billing_to));
             $data['timestamp']=date('Ymd');
