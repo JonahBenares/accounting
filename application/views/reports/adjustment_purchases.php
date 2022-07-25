@@ -119,7 +119,7 @@
                                     <tr>
                                         <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
                                         <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['participant']);?></td>
-                                        <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['billing_fromto']);?></td>
+                                        <td class="pt-1 pb-1" style="font-size: 11.5px"><?php echo implode("<br /><br />",$ad['billing_fromto']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['vatables_purchases']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
                                         <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['net']);?></td>
