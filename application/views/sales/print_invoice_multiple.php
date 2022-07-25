@@ -14,6 +14,7 @@
         <br>
     </center>
 </div>
+<?php for($x=0;$x<$count;$x++){ ?>
 <page size="BS">
     <table class="table-bordersed" width="100%" style="font-size:13px">
         <tr>
@@ -54,7 +55,7 @@
         </tr>
         <tr>
             <td colspan="3">Billed to:</td>
-            <td colspan="12" class="bor-btm pl-2"><?php echo $company_name; ?></td>
+            <td colspan="12" class="bor-btm pl-2"><?php echo $company_name[$x]; ?></td>
             <td></td>
             <td>Date:</td>
             <td colspan="3" class="bor-btm  pl-2"><?php echo date("F d,Y");?></td>
@@ -62,12 +63,12 @@
         <tr>
             <td colspan="3">Business Style:</td>
             <td colspan="9" class="bor-btm pl-2"></td>
-            <td>TIN</td>
-            <td colspan="3" class="bor-btm pl-2"><?php echo $tin; ?></td>
+            <td>TIN:</td>
+            <td colspan="3" class="bor-btm pl-2"><?php echo $tin[$x]; ?></td>
         </tr>
         <tr>
             <td colspan="3">Address:</td>
-            <td colspan="13" class="bor-btm pl-2"><?php echo $address;?></td>
+            <td colspan="13" class="bor-btm pl-2"><?php echo $address[$x];?></td>
         </tr>
         <tr>
             <td colspan="20">
@@ -100,45 +101,96 @@
                         <td colspan="5" align="center"><b>AMOUNT</b></td>
                     </tr>
                     <tr>
-                        <td colspan="15" align="center"><?php echo "Billing Charges for ".date("M d,Y",strtotime($billing_from))." to ".date("M d,Y",strtotime($billing_to))?></td>
+                        <td colspan="15" align="center"><?php echo "Billing Charges for ".date("M d,Y",strtotime($billing_from[$x]))." to ".date("M d,Y",strtotime($billing_to[$x]))?></td>
                         <td colspan="4"></td>
                         <td colspan="1"></td>
                     </tr>
 
                     <tr>
                         <td colspan="15" align="right">Vatable Sales</td>
-                        <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_sales_peso,0); ?></td>
-                        <td colspan="1"><?php echo $vat_sales_cents; ?></td>
+                        <?php if($participant_id[$x]==$participant_id_sub[$x]){ ?>
+                        <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_sales_peso_sub[$x],0); ?></td>
+                        <td colspan="1"><?php echo $vat_sales_cents_sub[$x]; ?></td>
+                        <?php }else{ ?>
+                        <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_sales_peso[$x],0); ?></td>
+                        <td colspan="1"><?php echo $vat_sales_cents[$x]; ?></td>
+                        <?php } ?>
                     </tr>
 
-                    <?php if($zero_rated_peso!=0 || $zero_rated_cents != 0) { ?>
-                     <tr>
+                    <?php 
+                        if($zero_rated_peso[$x]!=0 || $zero_rated_cents[$x] != 0) { 
+                            if($participant_id[$x]!=$participant_id_sub[$x]){
+                    ?>
+                    <tr>
                         <td colspan="15" align="right">Zero Rated</td>
-                        <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_peso,0); ?></td>
-                        <td colspan="1"><?php echo $zero_rated_cents; ?></td>
+                        <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_peso[$x],0); ?></td>
+                        <td colspan="1"><?php echo $zero_rated_cents[$x]; ?></td>
                     </tr>
-                    <?php } ?>
-                    <?php if($zero_rated_ecozones_peso!=0 ||$zero_rated_ecozones_cents != 0) { ?>
+                    <?php } } if($zero_rated_peso_sub[$x]!=0 || $zero_rated_cents_sub[$x] != 0){ 
+                        if($participant_id[$x]==$participant_id_sub[$x]){
+                    ?>
+                    <tr>
+                        <td colspan="15" align="right">Zero Rated</td>
+                        <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_peso_sub[$x],0); ?></td>
+                        <td colspan="1"><?php echo $zero_rated_cents_sub[$x]; ?></td>
+                    </tr>
+                    <?php } } ?>
+                    <?php 
+                        if($zero_rated_ecozones_peso[$x]!=0 || $zero_rated_ecozones_cents[$x] != 0) { 
+                            if($participant_id[$x]!=$participant_id_sub[$x]){
+                    ?>
                     <tr>
                         <td colspan="15" align="right">Zero Rated Ecozones Sales</td>
-                        <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_ecozones_peso,0); ?></td>
-                        <td colspan="1"><?php echo $zero_rated_ecozones_cents; ?></td>
+                        <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_ecozones_peso[$x],0); ?></td>
+                        <td colspan="1"><?php echo $zero_rated_ecozones_cents[$x]; ?></td>
                     </tr>
-                    <?php } 
-                    if($vat_peso!=0  || $vat_cents != 0) { ?>
+                    <?php } } if($zero_rated_ecozones_peso_sub[$x]!=0 || $zero_rated_ecozones_cents_sub[$x] != 0){ 
+                        if($participant_id[$x]==$participant_id_sub[$x]){
+                    ?>
+                    <tr>
+                        <td colspan="15" align="right">Zero Rated Ecozones Sales</td>
+                        <td colspan="4" align="center"><?php echo "₱ ".number_format($zero_rated_ecozones_peso_sub[$x],0); ?></td>
+                        <td colspan="1"><?php echo $zero_rated_ecozones_cents_sub[$x]; ?></td>
+                    </tr>
+                    <?php 
+                        } }
+                    ?>
+                    <?php
+                        if($vat_peso[$x]!=0  || $vat_cents[$x]!=0) { 
+                            if($participant_id[$x]!=$participant_id_sub[$x]){
+                    ?>
                      <tr>
                         <td colspan="15" align="right">VAT</td>
-                        <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_peso,0); ?></td>
-                        <td colspan="1"><?php echo $vat_cents; ?></td>
+                        <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_peso[$x],0); ?></td>
+                        <td colspan="1"><?php echo $vat_cents[$x]; ?></td>
                     </tr>
-                    <?php }
-                    if($ewt_peso!=0 || $ewt_cents != 0) { ?>
+                    <?php } } if($vat_peso_sub[$x]!=0  || $vat_cents_sub[$x] != 0){ 
+                        if($participant_id[$x]==$participant_id_sub[$x]){
+                    ?>
+                    <tr>
+                        <td colspan="15" align="right">VAT</td>
+                        <td colspan="4" align="center"><?php echo "₱ ".number_format($vat_peso_sub[$x],0); ?></td>
+                        <td colspan="1"><?php echo $vat_cents_sub[$x]; ?></td>
+                    </tr>
+                    <?php } } ?>
+                    <?php 
+                        if($ewt_peso[$x]!=0 || $ewt_cents[$x] != 0) { 
+                            if($participant_id[$x]!=$participant_id_sub[$x]){
+                    ?>
                     <tr>
                         <td colspan="15" align="right">EWT</td>
-                        <td colspan="4" align="center"><?php echo "₱ (".number_format($ewt_peso,0).")"; ?></td>
-                        <td colspan="1"><?php echo "(".$ewt_cents.")"; ?></td>
+                        <td colspan="4" align="center"><?php echo "₱ (".number_format($ewt_peso[$x],0).")"; ?></td>
+                        <td colspan="1"><?php echo "(".$ewt_cents[$x].")"; ?></td>
                     </tr>
-                    <?php } ?>
+                    <?php } } if($ewt_peso_sub[$x]!=0 || $ewt_cents_sub[$x] != 0){ 
+                        if($participant_id[$x]==$participant_id_sub[$x]){
+                    ?>
+                    <tr>
+                        <td colspan="15" align="right">EWT</td>
+                        <td colspan="4" align="center"><?php echo "₱ (".number_format($ewt_peso_sub[$x],0).")"; ?></td>
+                        <td colspan="1"><?php echo "(".$ewt_cents_sub[$x].")"; ?></td>
+                    </tr>
+                    <?php } } ?>
                     <tr>
                         <td colspan="15"><br></td>
                         <td colspan="4"></td>
@@ -163,15 +215,24 @@
                         <td colspan="15" align="right" class="pr-2">
                             <b>TOTAL AMOUNT DUE</b>
                         </td>
-                        <td colspan="4" align="center"><?php echo "₱ ".number_format($total_peso,0); ?></td>
-                        <td colspan="1"><?php echo $total_cents; ?></td>
+                        <?php if($participant_id[$x]!=$participant_id_sub[$x]){ ?>
+                            <td colspan="4" align="center"><?php echo "₱ ".number_format($total_peso[$x],0); ?></td>
+                            <td colspan="1"><?php echo $total_cents[$x]; ?></td>
+                        <?php } else{ ?>
+                            <td colspan="4" align="center"><?php echo "₱ ".number_format($total_peso_sub[$x],0); ?></td>
+                            <td colspan="1"><?php echo $total_cents_sub[$x]; ?></td>
+                        <?php } ?>
                     </tr>
                 </table>
             </td>
         </tr>
         <tr>
             <td colspan="4"><b>AMOUNT IN WORDS:</b></td>
-            <td colspan="16" class="bor-btm"><?php echo ($total_amount!=0) ? $amount_words : ''; ?></td>
+            <?php if($participant_id[$x]!=$participant_id_sub[$x]){ ?>
+            <td colspan="16" class="bor-btm"><?php echo ($total_amount[$x]!=0) ? $amount_words[$x] : ''; ?></td>
+            <?php } else { ?>
+            <td colspan="16" class="bor-btm"><?php echo ($total_amount_sub[$x]!=0) ? $amount_words_sub[$x] : ''; ?></td>
+            <?php } ?>
         </tr>
         <tr>
             <td colspan="14"></td>
@@ -193,3 +254,4 @@
         </tr>
     </table>
 </page>
+<?php } ?>
