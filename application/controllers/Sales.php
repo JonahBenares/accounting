@@ -804,6 +804,98 @@ class Sales extends CI_Controller {
     }
 
     public function convertNumber(float $amount){
+
+    $hyphen = ' ';
+    $conjunction = ' and ';
+    $separator = ' ';
+    $negative = 'negative ';
+    $decimal = ' and ';
+    $dictionary = array(
+        0 => 'Zero',
+        1 => 'One',
+        2 => 'Two',
+        3 => 'Three',
+        4 => 'Four',
+        5 => 'Five',
+        6 => 'Six',
+        7 => 'Seven',
+        8 => 'Eight',
+        9 => 'Nine',
+        10 => 'Ten',
+        11 => 'Eleven',
+        12 => 'Twelve',
+        13 => 'Thirteen',
+        14 => 'Fourteen',
+        15 => 'Fifteen',
+        16 => 'Sixteen',
+        17 => 'Seventeen',
+        18 => 'Eighteen',
+        19 => 'Nineteen',
+        20 => 'Twenty',
+        30 => 'Thirty',
+        40 => 'Fourty',
+        50 => 'Fifty',
+        60 => 'Sixty',
+        70 => 'Seventy',
+        80 => 'Eighty',
+        90 => 'Ninety',
+        100 => 'Hundred',
+        1000 => 'Thousand',
+        1000000 => 'Million',
+    );
+
+    if (!is_numeric($amount)) {
+        return false;
+    }
+
+    if ($amount < 0) {
+        return $negative . $this->convertNumber(abs($amount));
+    }
+
+    $string = $fraction = null;
+
+    if (strpos($amount, '.') !== false) {
+        list($amount, $fraction) = explode('.', $amount);
+    }
+
+    switch (true) {
+        case $amount < 20:
+            if($amount == 1 && $fraction == 0){
+                    $string = $dictionary[$amount]." PESO ONLY";
+                }elseif($amount == 1 && $fraction != 0){
+                    $string = $dictionary[$amount]." PESO";
+                }else{
+                    $string = $dictionary[$amount];
+                }
+            break;
+        case $amount < 100:
+            $tens = ((int)($amount / 10)) * 10;
+            $units = $amount % 10;
+            $string = $dictionary[$tens];
+            if ($units) {
+                $string .= $hyphen . $dictionary[$units];
+            }
+            break;
+        case $amount < 1000:
+            $hundreds = $amount / 100;
+            $remainder = $amount % 100;
+            $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
+            if ($remainder) {
+                $string .= $conjunction . $this->convertNumber($remainder);
+            }
+            break;
+        default:
+            $baseUnit = pow(1000, floor(log($amount, 1000)));
+            $numBaseUnits = (int)($amount / $baseUnit);
+            $remainder = $amount % $baseUnit;
+            $string = $this->convertNumber($numBaseUnits) . ' ' . $dictionary[$baseUnit];
+            if ($remainder) {
+                $string .= $remainder < 100 ? $conjunction : $separator;
+                $string .= $this->convertNumber($remainder)." PESOS";
+            }
+            break;
+    }
+
         $decones = array( 
                     01 => "One", 
                     02 => "Two", 
@@ -858,80 +950,30 @@ class Sales extends CI_Controller {
                     8 => "Eighty", 
                     9 => "Ninety" 
                     ); 
-        $hundreds = array( 
-                    "Hundred", 
-                    "Thousand", 
-                    "Million", 
-                    "Billion", 
-                    "Trillion", 
-                    "Quadrillion" 
-                    ); //limit t quadrillion 
-        $amount = number_format($amount,2,".",","); 
-        $num_arr = explode(".",$amount); 
-        $wholenum = $num_arr[0]; 
-        $decnum = $num_arr[1]; 
-        $whole_arr = array_reverse(explode(",",$wholenum)); 
-        krsort($whole_arr); 
-        $rettxt = ""; 
-        foreach($whole_arr as $key => $i){ 
 
-            if($i < 20){ 
-                $rettxt .= $ones[$i]; 
+    if (null !== $fraction && is_numeric($fraction)) {
+        if($fraction > 0){
+            $string .= " and ";
+            if($fraction < 20){ 
+                $string .= $decones[$fraction]; 
             }
-            elseif($i < 100){ 
-                if(substr($i,0,1)!="0")  $rettxt .= $tens[substr($i,0,1)]; 
-                if(substr($i,1,1)!="0") $rettxt .= " ".$ones[substr($i,1,1)]; 
+            elseif($fraction == 0){ 
+                $string .= $string." pesos only";  
             }
-            else{ 
-                //$rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]." ".$ones[substr($i,1)]; 
-                if(substr($i,0,1)!="0") $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0];
-                if(substr($i,1)!="0")$rettxt .= " ".$ones[substr($i,1)];
-                if(substr($i,1,1)!="0")$rettxt .= " ".$tens[substr($i,1,1)];
-                if(substr($i,2,1)!="0")$rettxt .= " ".$ones[substr($i,2,1)]; 
-
-               /* $r = substr($i,0,1);
-                    echo $r;*/
-                  
-            } 
-            if($key > 0 && $i > 0){ 
-                $rettxt .= " ".$hundreds[$key]." "; 
-            } 
-
-        }
-        if($decnum > 0 && $i > 1){ 
-        $rettxt = $rettxt." pesos";
-        }elseif($decnum > 0 && $i == 1){
-        $rettxt = $rettxt." peso";
-        }elseif($decnum == 0 && $i != 1){
-        $rettxt = $rettxt." pesos only";
-        }elseif($decnum == 0 && $i == 1){
-        $rettxt = $rettxt." peso only";
+            elseif($fraction == 1){ 
+                $string .= $string." centavo only";  
+            }
+            elseif($fraction < 100){ 
+                $string .= $tens[substr($fraction,0,1)]; 
+                $string .= " ".$ones[substr($fraction,1,1)]; 
+            }
+                $string = $string." centavos only"; 
     }
+}
 
-        if($decnum > 0 && $i != 1){
-            $rettxt .= " and ";
-            if($decnum < 20){ 
-                $rettxt .= $decones[$decnum]; 
-            }
-            elseif($decnum < 100){ 
-                $rettxt .= $tens[substr($decnum,0,1)]; 
-                $rettxt .= " ".$ones[substr($decnum,1,1)]; 
-            }
-                $rettxt = $rettxt." centavos only"; 
-        }elseif($decnum > 0 && $i == 0){
-            if($decnum < 20){ 
-                $rettxt .= $decones[$decnum]; 
-            }
-            elseif($decnum < 100){ 
-                $rettxt .= $tens[substr($decnum,0,1)]; 
-                $rettxt .= " ".$ones[substr($decnum,1,1)]; 
-            }
-                $rettxt = $rettxt." centavos only";
-        }
+    return $string;
 
-
-        return $rettxt;
-        }
+}
 
     public function print_BS(){
         $sales_detail_id = $this->uri->segment(3);
