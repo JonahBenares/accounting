@@ -386,13 +386,16 @@ class Sales extends CI_Controller {
             $data['ewt_peso_sub'][$x]=$ewt_exp_sub[0];
             $data['ewt_cents_sub'][$x]=$ewt_exp_sub[1];
             $total= ($p->vatable_sales + $p->vat_on_sales + $p->zero_rated_ecozones + $p->zero_rated_sales) - $p->ewt;
+
+            
             $total_sub= ($sum_vatable_sales + $sum_vat_on_sales + $sum_zero_rated_ecozone + $sum_zero_rated) - $sum_ewt;
-            $total_amount=$total;
+            $total_amount=str_replace(',','',number_format($total,2));
+           
             $total_amount_sub=$total + $total_sub;
             $data['total_amount'][$x]=$total_amount;
             $data['total_amount_sub'][$x]=$total_amount_sub;
             $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
-            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber($total_amount_sub));
+            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber(str_replace(',','',number_format($total_amount_sub,2))));
             $total_exp=explode(".", $total_amount);
             $data['total_peso'][$x]=$total_exp[0];
             $data['total_cents'][$x]=$total_exp[1];
