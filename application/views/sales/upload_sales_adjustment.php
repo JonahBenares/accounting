@@ -57,9 +57,12 @@ if(!empty($sales_id)){
                                             <input type='hidden' name='count' id='count' value='1'>
                                             <?php if(empty($identifier)){ ?>
                                             <button type="button" id="button_adjust" class="btn btn-primary btn-block btn-md" onclick="upload_sales_adjust_btn()">Upload</button>
-                                            <?php } else{ ?>
+                                            <?php 
+                                                } else{ 
+                                                    if($saved==0){
+                                            ?>
                                             <input type='button' class="btn btn-danger" id="cancel" onclick="cancelmultipleSales()" value="Cancel Transaction" style="width: 100%;">
-                                            <?php } ?>
+                                            <?php } } ?>
                                             <center><span id="alt"></span></center>
                                         </div>
                                     </div>
