@@ -518,7 +518,8 @@ function printMultiple(){
             //alert(output);
             /*$("#alt").hide(); */
             var exp=output.split(",");
-           	window.location=loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2];
+            window.open(loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
+           	//window.location=loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2];
         }
     });
 }

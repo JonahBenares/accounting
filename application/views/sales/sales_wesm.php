@@ -65,94 +65,97 @@
                                 </table>
                                 <br>
                                 <div class="table-responsive">
-                                    <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
-                                        <thead>
-                                            <tr>    
-                                                <th width="2%" align="center" style="background:rgb(245 245 245)">
-                                                    <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a>
-                                                </th>      
-                                                <th width="2%"></th>
-                                                <th>Item No</th>
-                                                <th>BS No.</th>
-                                                <th>OR No.</th>
-                                                <th>STL ID / TPShort Name</th>
-                                                <th>Billing ID</th>
-                                                <th>Trading Participant Name</th>
-                                                <th>Facility Type </th>
-                                                <th>WHT Agent Tag</th>
-                                                <th>ITH Tag</th>
-                                                <th>Non Vatable Tag</th>
-                                                <th>Zero-rated Tag</th>
-                                                <th>Vatable Sales</th>
-                                                <th>Zero Rated Sales</th>
-                                                <th>Zero Rated EcoZones Sales</th>
-                                                <th>Vat On Sales</th>
-                                                <th>EWT</th>
-                                                <th>Total Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                                //$x=1;
-                                                if(!empty($details)){
-                                                foreach($details AS $s){ 
-                                            ?>
-                                            <tr>
-                                                <td align="center">
-                                                    <input type="checkbox" class="form-control" name=""style="width: 25px;">
-                                                    <!-- <?php 
-                                                        if($s['serial_no']=='' && $s['print_counter']==0){
-                                                    ?>
-                                                        <div class="btn-group mb-0">
-                                                            <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span><span class="badge badge-transparent" id="clicksBS"><?php echo $s['print_counter']; ?></span>
-                                                            </a>
-                                                        </div>
-                                                    <?php 
-                                                        }else{
-                                                    ?>
-                                                        <div class="btn-group mb-0">
-                                                            <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/<?php echo $s['sales_detail_id']; ?>" target='_blank' onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                                <span class="m-0 fas fa-indent"></span><span class="badge badge-transparent" id="clicksBS"><?php echo $s['print_counter']; ?></span>
-                                                            </a>
-                                                        </div>
-                                                    <?php } ?> -->
-                                                        
-                                                </td>
-                                                <td>
-                                                    <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="BSupdate" data-toggle="modal" data-target="#updateSerial" data-series="<?php echo $s['serial_no']; ?>" data-id="<?php echo $s['sales_detail_id'];?>">
-                                                        <span class="m-0 fas fa-edit"></span>
-                                                    </button>
-                                                </td>
-                                                <td><center><?php echo $s['item_no'];?></center></td>
-                                                <?php if(!empty($s['old_series_no'])) {?>
-                                                <td width="7%"><a href="" data-toggle="modal" id="BSNo" data-target="#olSeries" data-bs="<?php echo $s['serial_no']; ?>" data-old-bs="<?php echo $s['old_series_no'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
-                                                <?php }else{ ?>
-                                                <td><?php echo $s['serial_no'];?></td>
-                                                <?php } ?>
-                                                <?php if(!empty($s['old_series_no_col'])) {?>
-                                                <td width="7%"><a href="" data-toggle="modal" id="ORNo" data-target="#oldOR" data-series-col="<?php echo $s['series_number']; ?>" data-old-series-col="<?php echo $s['old_series_no_col'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
-                                                <?php }else{ ?>
-                                                <td><?php echo $s['series_number'];?></td>
-                                                <?php } ?>
-                                                <td><?php echo $s['short_name'];?></td>
-                                                <td><?php echo $s['billing_id'];?></td>
-                                                <td><?php echo $s['company_name'];?></td>
-                                                <td align="center"><?php echo $s['facility_type'];?></td>
-                                                <td align="center"><?php echo $s['wht_agent'];?></td>
-                                                <td align="center"><?php echo $s['ith_tag'];?></td>
-                                                <td align="center"><?php echo $s['non_vatable'];?></td>
-                                                <td align="center"><?php echo $s['zero_rated'];?></td>
-                                                <td align="right"><?php echo $s['vatable_sales'];?></td>
-                                                <td align="right"><?php echo $s['zero_rated_sales'];?></td>
-                                                <td align="right"><?php echo $s['zero_rated_ecozones'];?></td>
-                                                <td align="right"><?php echo $s['vat_on_sales'];?></td>
-                                                <td align="right">(<?php echo $s['ewt'];?>)</td>
-                                                <td align="right"><?php echo $s['total_amount'];?></td>
-                                            </tr>
-                                            <?php } } ?>
-                                        </tbody>
-                                    </table>
+                                    <form method="POST" id="print_mult">
+                                        <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
+                                            <thead>
+                                                <tr>    
+                                                    <th width="2%" align="center" style="background:rgb(245 245 245)">
+                                                        <!-- <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a> -->
+                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button>
+                                                    </th>      
+                                                    <th width="2%"></th>
+                                                    <th>Item No</th>
+                                                    <th>BS No.</th>
+                                                    <th>OR No.</th>
+                                                    <th>STL ID / TPShort Name</th>
+                                                    <th>Billing ID</th>
+                                                    <th>Trading Participant Name</th>
+                                                    <th>Facility Type </th>
+                                                    <th>WHT Agent Tag</th>
+                                                    <th>ITH Tag</th>
+                                                    <th>Non Vatable Tag</th>
+                                                    <th>Zero-rated Tag</th>
+                                                    <th>Vatable Sales</th>
+                                                    <th>Zero Rated Sales</th>
+                                                    <th>Zero Rated EcoZones Sales</th>
+                                                    <th>Vat On Sales</th>
+                                                    <th>EWT</th>
+                                                    <th>Total Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                    //$x=1;
+                                                    if(!empty($details)){
+                                                    foreach($details AS $s){ 
+                                                ?>
+                                                <tr>
+                                                    <td align="center">
+                                                        <input type="checkbox" class="form-control multiple_print" name="multiple_print[]" id="print_checked" style="width: 25px;" value="<?php echo $identifier_code.','.$s['sales_detail_id'].','.$ref_no; ?>">
+                                                        <!-- <?php 
+                                                            if($s['serial_no']=='' && $s['print_counter']==0){
+                                                        ?>
+                                                            <div class="btn-group mb-0">
+                                                                <a style="color:#fff" onclick="add_details_BS('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
+                                                                    <span class="m-0 fas fa-indent"></span><span class="badge badge-transparent" id="clicksBS"><?php echo $s['print_counter']; ?></span>
+                                                                </a>
+                                                            </div>
+                                                        <?php 
+                                                            }else{
+                                                        ?>
+                                                            <div class="btn-group mb-0">
+                                                                <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/<?php echo $s['sales_detail_id']; ?>" target='_blank' onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $s['sales_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
+                                                                    <span class="m-0 fas fa-indent"></span><span class="badge badge-transparent" id="clicksBS"><?php echo $s['print_counter']; ?></span>
+                                                                </a>
+                                                            </div>
+                                                        <?php } ?> -->
+                                                            
+                                                    </td>
+                                                    <td>
+                                                        <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="BSupdate" data-toggle="modal" data-target="#updateSerial" data-series="<?php echo $s['serial_no']; ?>" data-id="<?php echo $s['sales_detail_id'];?>">
+                                                            <span class="m-0 fas fa-edit"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td><center><?php echo $s['item_no'];?></center></td>
+                                                    <?php if(!empty($s['old_series_no'])) {?>
+                                                    <td width="7%"><a href="" data-toggle="modal" id="BSNo" data-target="#olSeries" data-bs="<?php echo $s['serial_no']; ?>" data-old-bs="<?php echo $s['old_series_no'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
+                                                    <?php }else{ ?>
+                                                    <td><?php echo $s['serial_no'];?></td>
+                                                    <?php } ?>
+                                                    <?php if(!empty($s['old_series_no_col'])) {?>
+                                                    <td width="7%"><a href="" data-toggle="modal" id="ORNo" data-target="#oldOR" data-series-col="<?php echo $s['series_number']; ?>" data-old-series-col="<?php echo $s['old_series_no_col'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
+                                                    <?php }else{ ?>
+                                                    <td><?php echo $s['series_number'];?></td>
+                                                    <?php } ?>
+                                                    <td><?php echo $s['short_name'];?></td>
+                                                    <td><?php echo $s['billing_id'];?></td>
+                                                    <td><?php echo $s['company_name'];?></td>
+                                                    <td align="center"><?php echo $s['facility_type'];?></td>
+                                                    <td align="center"><?php echo $s['wht_agent'];?></td>
+                                                    <td align="center"><?php echo $s['ith_tag'];?></td>
+                                                    <td align="center"><?php echo $s['non_vatable'];?></td>
+                                                    <td align="center"><?php echo $s['zero_rated'];?></td>
+                                                    <td align="right"><?php echo $s['vatable_sales'];?></td>
+                                                    <td align="right"><?php echo $s['zero_rated_sales'];?></td>
+                                                    <td align="right"><?php echo $s['zero_rated_ecozones'];?></td>
+                                                    <td align="right"><?php echo $s['vat_on_sales'];?></td>
+                                                    <td align="right">(<?php echo $s['ewt'];?>)</td>
+                                                    <td align="right"><?php echo $s['total_amount'];?></td>
+                                                </tr>
+                                                <?php } } ?>
+                                            </tbody>
+                                        </table>
+                                    </form>
                                 </div>
                                 <?php }else{ ?>
                                     <div><center><b>No Available Data...</b></center></div>

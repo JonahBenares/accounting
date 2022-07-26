@@ -865,6 +865,7 @@ class Sales extends CI_Controller {
     public function sales_wesm(){
         $ref_no=$this->uri->segment(3);
         $data['ref_no']=$ref_no;
+        $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
