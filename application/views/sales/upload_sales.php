@@ -110,7 +110,9 @@ if(!empty($sales_id)){
                                             <tr>    
                                                 <th width="3%" align="center" style="background:rgb(245 245 245)">
                                                     <!-- <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a> -->
+                                                    <?php if($saved==1){ ?>
                                                     <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button>
+                                                    <?php } ?>
                                                 </th>    
                                                 <th width="1%">Item No</th>                                        
                                                 <th>Series No.</th>
@@ -139,7 +141,9 @@ if(!empty($sales_id)){
                                             <tr>
                                                 
                                                 <td align="center" >
+                                                    <?php if($saved==1){ ?>
                                                     <input type="checkbox" class="form-control multiple_print" name="multiple_print[]" id="print_checked" style="width: 25px;" value="<?php echo $identifier_code.','.$d['sales_detail_id'].','.$reference_number; ?>">
+                                                    <?php } ?>
                                                     <!-- <?php 
                                                         if($saved==1){ 
                                                             if($d['serial_no']=='' && $d['print_counter']==0){
