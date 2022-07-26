@@ -955,7 +955,6 @@ class Sales extends CI_Controller {
     $negative = 'negative ';
     $decimal = ' and ';
     $dictionary = array(
-        0 => 'Zero',
         1 => 'One',
         2 => 'Two',
         3 => 'Three',
@@ -1004,13 +1003,13 @@ class Sales extends CI_Controller {
 
     switch (true) {
         case $amount < 20:
-            if($amount == 1 && $fraction == 0){
-                    $string = $dictionary[$amount]." PESO ONLY";
-                }elseif($amount == 1 && $fraction != 0){
-                    $string = $dictionary[$amount]." PESO";
-                }else{
+            // if($amount == 1 && $fraction == 0){
                     $string = $dictionary[$amount];
-                }
+                // }elseif($amount == 1 && $fraction != 0){
+                //     $string = $dictionary[$amount]." PESO";
+                // }elseif($amount > 1){
+                //     $string = $dictionary[$amount];
+                // }
             break;
         case $amount < 100:
             $tens = ((int)($amount / 10)) * 10;
@@ -1035,7 +1034,7 @@ class Sales extends CI_Controller {
             $string = $this->convertNumber($numBaseUnits) . ' ' . $dictionary[$baseUnit];
             if ($remainder) {
                 $string .= $remainder < 100 ? $conjunction : $separator;
-                $string .= $this->convertNumber($remainder)." PESOS";
+                $string .= $this->convertNumber($remainder);
             }
             break;
     }
@@ -1062,7 +1061,6 @@ class Sales extends CI_Controller {
                     "19" => "Nineteen" 
                     );
         $ones = array( 
-                    "0" => "Zero",
                     "1" => "One",     
                     "2" => "Two", 
                     "3" => "Three", 
@@ -1097,7 +1095,11 @@ class Sales extends CI_Controller {
 
     if (null !== $fraction && is_numeric($fraction)) {
         if($fraction > 0){
-            $string .= " and ";
+            if($amount == 0  && $fraction != 0){
+                $string .= "";
+            }else{
+                $string .= " pesos and ";
+            }
             if($fraction < 20){ 
                 $string .= $decones[$fraction]; 
             }
