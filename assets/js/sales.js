@@ -464,8 +464,8 @@ async function upload_sales_adjust_btn() {
                 document.getElementById("button_adjust").disabled = true;
             },
             success: function(output){
-            	//alert(output);
-                $("#alt").hide();
+            	/*alert(output);*/
+               $("#alt").hide();
                 window.location=loc+'sales/upload_sales_adjustment/'+output;
             }
         });
