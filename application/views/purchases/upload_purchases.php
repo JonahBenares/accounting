@@ -133,12 +133,12 @@
                                             <td align="center"><?php echo $d['ith_tag']; ?></td>
                                             <td align="center"><?php echo $d['non_vatable']; ?></td>
                                             <td align="center"><?php echo $d['zero_rated']; ?></td>
-                                            <td align="right">(<?php echo $d['vatables_purchases']; ?>)</td>
-                                            <td align="right">(<?php echo $d['zero_rated_purchases']; ?>)</td>
-                                            <td align="right">(<?php echo $d['zero_rated_ecozones']; ?>)</td>
-                                            <td align="right">(<?php echo $d['vat_on_purchases']; ?>)</td>
-                                            <td align="right"><?php echo $d['ewt']; ?></td>
-                                            <td align="right">(<?php echo $d['total_amount']; ?>)</td>
+                                            <td align="right">(<?php echo number_format($d['vatables_purchases'],2); ?>)</td>
+                                            <td align="right">(<?php echo number_format($d['zero_rated_purchases'],2); ?>)</td>
+                                            <td align="right">(<?php echo number_format($d['zero_rated_ecozones'],2); ?>)</td>
+                                            <td align="right">(<?php echo number_format($d['vat_on_purchases'],2); ?>)</td>
+                                            <td align="right"><?php echo number_format($d['ewt'],2); ?></td>
+                                            <td align="right">(<?php echo number_format($d['total_amount'],2); ?>)</td>
                                         </tr>
                                         <?php } } ?>
                                     </tbody>

@@ -1369,7 +1369,7 @@ class Purchases extends CI_Controller {
                                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
                                 $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
                                 $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
-                                $vatables_purchases = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
+                                $vatables_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
                                 $zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                  $zero_rated_purchases = trim($zero_rated_purchases,"-");
                                 $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
@@ -1424,5 +1424,13 @@ class Purchases extends CI_Controller {
         );
         $this->super_model->update_where("purchase_transaction_head",$data_head, "adjust_identifier", $adjust_identifier);
         echo $adjust_identifier;
+    }
+
+    public function cancel_multiple_purchase(){
+        $adjust_identifier = $this->input->post('saveadjust_identifier');
+        foreach($this->super_model->select_row_where("purchase_transaction_head","adjust_identifier",$adjust_identifier) AS $del){
+            $this->super_model->delete_where("purchase_transaction_head", "purchase_id", $del->purchase_id);
+            $this->super_model->delete_where("purchase_transaction_details", "purchase_id", $del->purchase_id);
+        }
     }
 }
