@@ -1656,7 +1656,13 @@ class Sales extends CI_Controller {
     echo $adjust_identifier;
 }
 
-
+public function cancel_multiple_sales(){
+    $adjust_identifier = $this->input->post('save_sales_adjustment');
+    foreach($this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$adjust_identifier) AS $del){
+        $this->super_model->delete_where("sales_adjustment_head", "sales_adjustment_id", $del->sales_adjustment_id);
+        $this->super_model->delete_where("sales_adjustment_details", "sales_adjustment_id", $del->sales_adjustment_id);
+    }
+}
 
     
 }
