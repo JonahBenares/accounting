@@ -104,14 +104,14 @@ class Sales extends CI_Controller {
         $sales_det_exp=explode("-",$sales_details_id);
         $data['sales_detail_id']=$sales_details_id;
         $data['print_identifier']=$print_identifier;
-        $data['address']='';
-        $data['tin']='';
-        $data['company_name']='';
-        $data['settlement']='';
-        $data['billing_from']='';
-        $data['billing_to']='';
-        $data['due_date']='';
-        $data['reference_number']='';
+        $data['address'][]='';
+        $data['tin'][]='';
+        $data['company_name'][]='';
+        $data['settlement'][]='';
+        $data['billing_from'][]='';
+        $data['billing_to'][]='';
+        $data['due_date'][]='';
+        $data['reference_number'][]='';
         for($x=0;$x<$count;$x++){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                 $data['address'][$x]=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
