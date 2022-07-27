@@ -10,6 +10,13 @@
         display: none;
         -webkit-appearance: none;
     }
+    .hr{
+        margin:3px 0px;
+        border-top:0px solid #000;
+        border-bottom: 0px solid rgb(0 0 0 / 5%);
+        border-right :0px solid rgb(0 0 0 / 5%);
+        border-left :0px solid rgb(0 0 0 / 5%);
+    }
 </style>
 <div style="margin-top:10px" id="printbutton">
     <center>
@@ -50,14 +57,15 @@
                 <td colspan="4">
                     <img class="logo-print" src="<?php echo base_url().LOGO;?>">   
                 </td>
-                <td colspan="11" align="center" style="padding-left:10px">
+                <td colspan="10" align="center" class="font-11" style="padding-left:10px">
                     <h3 style="margin:0px;margin-top:5px;font-size: 15px"><?php echo COMPANY_NAME;?></h3>
                     <?php echo ADDRESS;?> <br>
-                    <?php echo TELFAX;?> <br>
+                    <?php echo TELFAX;?>, 
                     <?php echo TIN;?> <br>
                     <?php echo ADDRESS_2;?> <br>
                 </td>
                 <td colspan="4"></td>           
+                <td colspan="1"></td>           
             </tr>
             <tr>
                 <td colspan="20">
@@ -96,15 +104,15 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="left" width="12%"><b>Particular</b></td>
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="left" width="19%"><b>Reference No.</b></td>  
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="left" width="15%"><b>Billing Period</b></td> 
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="center" width="8%"><b>Vatable Amount</b></td> 
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Zero Rated Amount</b></td>     
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Net Purchase (Php)</b></td>     
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Vat on Energy </b></td> 
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="center" width="5%"><b>EWT</b></td>
-                            <td class="font-11 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Total Amount Due (Php)</b></td>
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="left" width="14%"><b>Particular</b></td>
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="22%"><b>Reference Number</b></td>  
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="27%"><b>Billing Period</b></td> 
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="8%"><b>Vatable Amount</b></td> 
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Zero Rated Amount</b></td>     
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Net Purchase (Php)</b></td>     
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Vat on Energy </b></td> 
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="5%"><b>EWT</b></td>
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Total Amount Due (Php)</b></td>
                         </tr>
                         <tr>
                             <td class="font-12 p-l-5 p-r-5" colspan="9" style="border-bottom:0px solid #fff!important">
@@ -137,7 +145,7 @@
                                 $data2[$key]['participant'][] = $ads['participant'];
                                 $data2[$key]['billing_from'][] = $ads['billing_from'];
                                 $data2[$key]['billing_to'][] = $ads['billing_to'];
-                                $data2[$key]['billing_fromto'][] = date("F d",strtotime($ads['billing_from']))." - ".date("F d, Y",strtotime($ads['billing_to']));
+                                $data2[$key]['billing_fromto'][] = date("M. d, Y",strtotime($ads['billing_from']))." - ".date("M. d, Y",strtotime($ads['billing_to']));
                                 $data2[$key]['vatables_purchases'][] = number_format($ads['vatables_purchases'],2);
                                 $data2[$key]['vat_on_purchases'][] = number_format($ads['vat_on_purchases'],2);
                                 $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
@@ -154,42 +162,42 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-11 p-l-5 p-r-5"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
-                            <td class="font-11 p-l-5 p-r-5 bor-btm" align="center"><?php echo implode("<br /><br />",$ad['participant']);?></td>
-                            <td class="font-11 p-l-5 p-r-5"><?php echo implode("<br /><br />",$ad['billing_fromto']);?></td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['vatables_purchases']);?></td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['net']);?></td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['vat_on_purchases']);?></td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['ewt']);?></td>
-                            <td class="font-11 p-l-5 p-r-5" align="right" style=""><?php echo implode("<br /><br />",$ad['total']);?></td>
+                            <td class="font-10 p-l-5 p-r-5"><?php echo implode("<hr class='hr'>",$ad['particular']); ?></td>
+                            <td class="font-10 p-l-5 p-r-5 bor-btm" align="center"><?php echo implode("<hr class='hr'>",$ad['participant']);?></td>
+                            <td class="font-10 p-l-5 p-r-5" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
+                            <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['vatables_purchases']);?></td>
+                            <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['zero_rated']);?></td>
+                            <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['net']);?></td>
+                            <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['vat_on_purchases']);?></td>
+                            <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['ewt']);?></td>
+                            <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['total']);?></td>
                         </tr>
                         <?php } ?>
                         <tr>
                             <td colspan="9"><br></td>
                         </tr>
                         <tr>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" colspan="3" align="right">Sub Total</td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vatables_purchases,2);?></b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_zero_rated,2);?></b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_net,2);?></b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vat_on_purchase,2);?></b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_ewt,2);?>)</b></td>
-                            <td class="font-11 td-yellow p-l-5 p-r-5" align="right" style="border-top: 1px solid #000;"><b><?php echo number_format($total_sum,2);?></b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" colspan="3" align="right">Sub Total</td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vatables_purchases,2);?></b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_zero_rated,2);?></b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_net,2);?></b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vat_on_purchase,2);?></b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_ewt,2);?>)</b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style="border-top: 1px solid #000;"><b><?php echo number_format($total_sum,2);?></b></td>
                         </tr>
                         <tr>
                             <td colspan="9"><br></td>
                         </tr>
                         <tr>
-                            <td class="font-12 p-l-5 p-r-5 td-blue" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, <?php echo date('F d,Y',strtotime($due_date))?> &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
-                            <td class="font-12 p-l-5 p-r-5 td-blue" align="right"><b><?php echo number_format($total_sum,2);?></b></td>
+                            <td class="font-10 p-l-5 p-r-5 td-blue" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, <?php echo date('F d,Y',strtotime($due_date))?> &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
+                            <td class="font-10 p-l-5 p-r-5 td-blue" align="right"><b><?php echo number_format($total_sum,2);?></b></td>
                         </tr> 
                         <?php } ?>
                     </table>
                 </td>
             </tr>
             <tr>
-                <td colspan="20"><br><br><br></td>
+                <td colspan="20"><br><br></td>
             </tr>
             <tr>
                 <td colspan="20">
@@ -203,27 +211,27 @@
                             <td colspan="20"><br><br></td>
                         </tr>
                         <tr>
-                            <td width="19" align="center" class="bor-btm font-12 "><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <td width="19%" align="center" class="bor-btm font-11 "><?php echo strtoupper($_SESSION['fullname']);?></td>
                             <td width="1%"></td>
-                            <td width="19" align="center" class="bor-btm font-12 ">JEOMAR DELOS SANTOS</td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">JEOMAR DELOS SANTOS</td>
                             <td width="1%"></td>
-                            <td width="19" align="center" class="bor-btm font-12 ">CRISTY CESAR</td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">CRISTY CESAR</td>
                             <td width="1%"></td>
-                            <td width="19" align="center" class="bor-btm font-12 ">ZYNDYRYN PASTERA</td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">ZYNDYRYN PASTERA</td>
                             <td width="1%"></td>
-                            <td width="19" align="center" class="bor-btm font-12 ">MILA ARANA</td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">MILA ARANA</td>
                             <td width="1%"></td>
                         </tr>
                         <tr>
-                            <td width="19" align="center">Billing</td>
+                            <td width="19%" align="center" class="font-11">Billing</td>
                             <td width="1%"></td>
-                            <td width="19" align="center">EMG Supervisor</td>
+                            <td width="19%" align="center" class="font-11">EMG Supervisor</td>
                             <td width="1%"></td>
-                            <td width="19" align="center">Accounting</td>
+                            <td width="19%" align="center" class="font-11">Accounting</td>
                             <td width="1%"></td>
-                            <td width="19" align="center">Finance</td>
+                            <td width="19%" align="center" class="font-11">Finance</td>
                             <td width="1%"></td>
-                            <td width="19" align="center">General Manager</td>
+                            <td width="19%" align="center" class="font-11">General Manager</td>
                             <td width="1%"></td>
                         </tr>
                     </table>
