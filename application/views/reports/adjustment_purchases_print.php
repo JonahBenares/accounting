@@ -164,7 +164,7 @@
                         <tr>
                             <td class="font-10 p-l-5 p-r-5"><?php echo implode("<hr class='hr'>",$ad['particular']); ?></td>
                             <td class="font-10 p-l-5 p-r-5 bor-btm" align="center"><?php echo implode("<hr class='hr'>",$ad['participant']);?></td>
-                            <td class="font-10 p-l-5 p-r-5" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
+                            <td class="font-9 p-l-5 p-r-5" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
                             <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['vatables_purchases']);?></td>
                             <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['zero_rated']);?></td>
                             <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['net']);?></td>
