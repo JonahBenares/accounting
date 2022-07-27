@@ -211,16 +211,23 @@
                         <td colspan="4"></td>
                         <td colspan="1"></td>
                     </tr>
+                    <?php if($total_cents_sub[$x] < 10 || $total_cents[$x] < 10){
+                        $cents_sub = str_pad($total_cents_sub[$x], '2', '0', STR_PAD_LEFT);
+                        $cents = str_pad($total_cents[$x], '2', '0', STR_PAD_LEFT);
+                    } else {
+                        $cents_sub = str_pad($total_cents_sub[$x], '2', '0', STR_PAD_RIGHT);
+                        $cents = str_pad($total_cents[$x], '2', '0', STR_PAD_RIGHT);
+                    } ?>
                     <tr>
                         <td colspan="15" align="right" class="pr-2">
                             <b>TOTAL AMOUNT DUE</b>
                         </td>
                         <?php if($participant_id[$x]!=$participant_id_sub[$x]){ ?>
                             <td colspan="4" align="center"><?php echo "₱ ".number_format($total_peso[$x],0); ?></td>
-                            <td colspan="1"><?php echo $total_cents[$x]; ?></td>
+                            <td colspan="1"><?php echo $cents; ?></td>
                         <?php } else{ ?>
                             <td colspan="4" align="center"><?php echo "₱ ".number_format($total_peso_sub[$x],0); ?></td>
-                            <td colspan="1"><?php echo $total_cents_sub[$x]; ?></td>
+                            <td colspan="1"><?php echo $cents_sub; ?></td>
                         <?php } ?>
                     </tr>
                 </table>
