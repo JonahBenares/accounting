@@ -35,8 +35,8 @@
             <table class="m-b-10 append" width="100%">
             <tr>
                 <td width="90%">
-                    <select class="form-control select2" name="sub_participant[]" id="sub_participant">
-                        <option value='' selected></option>
+                    <select class="form-control select2" name="sub_participant[]" id="sub_participant" multiple="multiple">
+                        
                         <?php foreach($sub_participant as $sp) {
                         //if ($sp->participant_id != $id) { ?>
                             <option value='<?php echo $sp->participant_id; ?>'><?php echo $sp->billing_id; ?></option>
@@ -44,10 +44,10 @@
                     </select>
                 </td>
                 <td>
-                    <div class="btn-group addmoresub">
+                    <!-- <div class="btn-group addmoresub">
                         <button type="button" id="btnsub" class="btn btn-sm btn-primary addSub"><span class="fa fa-plus"></span></button>
-                        <!-- <button class="btn btn-sm btn-danger"><span class="fa fa-times"></span></button> -->
-                    </div>
+                        <button class="btn btn-sm btn-danger"><span class="fa fa-times"></span></button>
+                    </div> -->
                 </td>
             </tr>
             </table>
@@ -56,29 +56,38 @@
             <input type='hidden' name='participant_id' value='<?php echo $id; ?>'>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.close();">Close</button>
             </div>
             </form>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    var  z = 1;
-        $("body").on("click", ".addSub", function() {
-            z++;
-            var $append = $(this).parents('.append');
-            var nextHtml = $append.clone().find("input").val("").end();
-            nextHtml.attr('id', 'append' + z);
-            var hasRmBtn = $('.remSub', nextHtml).length > 0;
-            if (!hasRmBtn) {
-                var rm = "<button class='btn-danger btn-sm btn-fill remSub' style='color:white'><span class='fa fa-times'></span></button>"
-                $('.addmoresub', nextHtml).append(rm);
-            }
-            $append.after(nextHtml); 
+    // var  z = 1;
+    //     $("body").on("click", ".addSub", function() {
+    //         z++;
+    //         var $append = $(this).parents('.append');
+    //         var nextHtml = $append.clone().find("input").val("").end();
+    //         nextHtml.attr('id', 'append' + z);
+    //         var hasRmBtn = $('.remSub', nextHtml).length > 0;
+    //         if (!hasRmBtn) {
+    //             var rm = "<button class='btn-danger btn-sm btn-fill remSub' style='color:white'><span class='fa fa-times'></span></button>"
+    //             $('.addmoresub', nextHtml).append(rm);
+    //         }
+    //         $append.after(nextHtml); 
 
-        });
+    //     });
 
-        $("body").on("click", ".remSub", function() {
-            $(this).parents('.append').remove();
+    //     $("body").on("click", ".remSub", function() {
+    //         $(this).parents('.append').remove();
+    //     });
+
+        $( document ).ready(function() {
+            $('.select2').select2({
+                tokenSeparators: [','],
+                tags: true,
+                multiple: true,
+                maximumSelectionLength: 0,
+            });
         });
 </script>
