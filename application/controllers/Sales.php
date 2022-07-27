@@ -1618,6 +1618,7 @@ class Sales extends CI_Controller {
                                     $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                     $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
                                     $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue());
+                                    $series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$z)->getFormattedValue();
 
 
                                     $count_max=$this->super_model->count_rows("sales_adjustment_head");
@@ -1643,6 +1644,7 @@ class Sales extends CI_Controller {
                                         'ewt'=>$ewt,
                                         'total_amount'=>$total_amount,
                                         'balance'=>$total_amount,
+                                        'serial_no'=>$series_no,
                                     );
                                     $this->super_model->insert_into("sales_adjustment_details", $data_sales);
                                     $y++;
