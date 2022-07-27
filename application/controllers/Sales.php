@@ -386,13 +386,16 @@ class Sales extends CI_Controller {
             $data['ewt_peso_sub'][$x]=$ewt_exp_sub[0];
             $data['ewt_cents_sub'][$x]=$ewt_exp_sub[1];
             $total= ($p->vatable_sales + $p->vat_on_sales + $p->zero_rated_ecozones + $p->zero_rated_sales) - $p->ewt;
+
+            
             $total_sub= ($sum_vatable_sales + $sum_vat_on_sales + $sum_zero_rated_ecozone + $sum_zero_rated) - $sum_ewt;
-            $total_amount=$total;
+            $total_amount=str_replace(',','',number_format($total,2));
+           
             $total_amount_sub=$total + $total_sub;
             $data['total_amount'][$x]=$total_amount;
             $data['total_amount_sub'][$x]=$total_amount_sub;
             $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
-            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber($total_amount_sub));
+            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber(str_replace(',','',number_format($total_amount_sub,2))));
             $total_exp=explode(".", $total_amount);
             $data['total_peso'][$x]=$total_exp[0];
             $data['total_cents'][$x]=$total_exp[1];
@@ -1613,15 +1616,13 @@ class Sales extends CI_Controller {
                                     $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
                                     $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
                                     $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue());
-                                    $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
-                                    $zero_rated_sales = trim($zero_rated_sales,"-");
-                                    $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue(),'()');
-                                    $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
-                                    $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
-                                    $vat_on_sales = trim($vat_on_sales,"-");
+                                    $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue();
+                                    $zero_rated_ecozone = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue());
+                                    $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                     $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
-                                    $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue(),'()');
-                                    $total_amount = trim($total_amount,"-");
+                                    $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue());
+                                    $series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$z)->getFormattedValue();
+
 
                                     $count_max=$this->super_model->count_rows("sales_adjustment_head");
                                     if($count_max==0){
@@ -1646,6 +1647,7 @@ class Sales extends CI_Controller {
                                         'ewt'=>$ewt,
                                         'total_amount'=>$total_amount,
                                         'balance'=>$total_amount,
+                                        'serial_no'=>$series_no,
                                     );
                                     $this->super_model->insert_into("sales_adjustment_details", $data_sales);
                                     $y++;

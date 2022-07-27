@@ -95,7 +95,7 @@ if(!empty($sales_id)){
                                                 <center><span class="fas fa-bars"></span></center>
                                             </th>  -->   
                                             <th >Item #</th>                                        
-                                            <!-- <th >Series No.</th> -->
+                                            <th >Series No.</th>
                                             <th >STL ID / TPShort Name</th>
                                             <th >Billing ID</th>
                                             <th >Trading Participant Name</th>
@@ -140,7 +140,7 @@ if(!empty($sales_id)){
                                                 ?>
                                             </td> -->
                                             <td class="p-2"><center><?php echo $d['item_no'];?></center></td>
-                                           <!--  <td class="p-2"><?php echo $d['serial_no'];?></td> -->
+                                            <td class="p-2"><?php echo $d['serial_no'];?></td>
                                             <td class="p-2"><?php echo $d['short_name'];?></td>
                                             <td class="p-2"><?php echo $d['billing_id'];?></td>
                                             <td class="p-2"><?php echo $d['company_name'];?></td>
