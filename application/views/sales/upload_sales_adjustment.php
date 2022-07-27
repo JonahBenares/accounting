@@ -55,7 +55,14 @@ if(!empty($sales_id)){
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
                                             <!-- <input type="hidden" name="identifier1" id="identifier1" value="<?php echo $identifier;?>"> -->
                                             <input type='hidden' name='count' id='count' value='1'>
+                                            <?php if(empty($identifier)){ ?>
                                             <button type="button" id="button_adjust" class="btn btn-primary btn-block btn-md" onclick="upload_sales_adjust_btn()">Upload</button>
+                                            <?php 
+                                                } else{ 
+                                                    if($saved==0){
+                                            ?>
+                                            <input type='button' class="btn btn-danger" id="cancel" onclick="cancelmultipleSales()" value="Cancel Transaction" style="width: 100%;">
+                                            <?php } } ?>
                                             <center><span id="alt"></span></center>
                                         </div>
                                     </div>
@@ -88,7 +95,7 @@ if(!empty($sales_id)){
                                                 <center><span class="fas fa-bars"></span></center>
                                             </th>  -->   
                                             <th >Item #</th>                                        
-                                            <!-- <th >Series No.</th> -->
+                                            <th >Series No.</th>
                                             <th >STL ID / TPShort Name</th>
                                             <th >Billing ID</th>
                                             <th >Trading Participant Name</th>
@@ -133,7 +140,7 @@ if(!empty($sales_id)){
                                                 ?>
                                             </td> -->
                                             <td class="p-2"><center><?php echo $d['item_no'];?></center></td>
-                                           <!--  <td class="p-2"><?php echo $d['serial_no'];?></td> -->
+                                            <td class="p-2"><?php echo $d['serial_no'];?></td>
                                             <td class="p-2"><?php echo $d['short_name'];?></td>
                                             <td class="p-2"><?php echo $d['billing_id'];?></td>
                                             <td class="p-2"><?php echo $d['company_name'];?></td>

@@ -583,3 +583,20 @@ async function upload_adjust_btn() {
         }); 
     }    
 }
+
+function cancelmultiplePurchase(){
+    var saveadjust_identifier = document.getElementById("saveadjust_identifier").value; 
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"purchases/cancel_multiple_purchase";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+        $.ajax({
+            data: "saveadjust_identifier="+saveadjust_identifier,
+            type: "POST",
+            url: redirect,
+            success: function(response){
+                window.location=loc+'purchases/upload_purchases_adjustment/';
+            }
+        });
+    }
+}

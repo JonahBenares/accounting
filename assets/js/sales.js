@@ -464,8 +464,8 @@ async function upload_sales_adjust_btn() {
                 document.getElementById("button_adjust").disabled = true;
             },
             success: function(output){
-            	//alert(output);
-                $("#alt").hide();
+            	/*alert(output);*/
+               $("#alt").hide();
                 window.location=loc+'sales/upload_sales_adjustment/'+output;
             }
         });
@@ -524,3 +524,19 @@ function printMultiple(){
     });
 }
 
+function cancelmultipleSales(){
+    var save_sales_adjustment = document.getElementById("save_sales_adjustment").value; 
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/cancel_multiple_sales";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+		$.ajax({
+			data: "save_sales_adjustment="+save_sales_adjustment,
+			type: "POST",
+			url: redirect,
+			success: function(response){
+			    window.location=loc+'sales/upload_sales_adjustment/';
+			}
+		});
+    }
+}

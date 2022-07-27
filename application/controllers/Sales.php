@@ -104,14 +104,14 @@ class Sales extends CI_Controller {
         $sales_det_exp=explode("-",$sales_details_id);
         $data['sales_detail_id']=$sales_details_id;
         $data['print_identifier']=$print_identifier;
-        $data['address']='';
-        $data['tin']='';
-        $data['company_name']='';
-        $data['settlement']='';
-        $data['billing_from']='';
-        $data['billing_to']='';
-        $data['due_date']='';
-        $data['reference_number']='';
+        $data['address'][]='';
+        $data['tin'][]='';
+        $data['company_name'][]='';
+        $data['settlement'][]='';
+        $data['billing_from'][]='';
+        $data['billing_to'][]='';
+        $data['due_date'][]='';
+        $data['reference_number'][]='';
         for($x=0;$x<$count;$x++){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                 $data['address'][$x]=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
@@ -386,13 +386,16 @@ class Sales extends CI_Controller {
             $data['ewt_peso_sub'][$x]=$ewt_exp_sub[0];
             $data['ewt_cents_sub'][$x]=$ewt_exp_sub[1];
             $total= ($p->vatable_sales + $p->vat_on_sales + $p->zero_rated_ecozones + $p->zero_rated_sales) - $p->ewt;
+
+            
             $total_sub= ($sum_vatable_sales + $sum_vat_on_sales + $sum_zero_rated_ecozone + $sum_zero_rated) - $sum_ewt;
-            $total_amount=$total;
+            $total_amount=str_replace(',','',number_format($total,2));
+           
             $total_amount_sub=$total + $total_sub;
             $data['total_amount'][$x]=$total_amount;
             $data['total_amount_sub'][$x]=$total_amount_sub;
             $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
-            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber($total_amount_sub));
+            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber(str_replace(',','',number_format($total_amount_sub,2))));
             $total_exp=explode(".", $total_amount);
             $data['total_peso'][$x]=$total_exp[0];
             $data['total_cents'][$x]=$total_exp[1];
@@ -955,7 +958,6 @@ class Sales extends CI_Controller {
     $negative = 'negative ';
     $decimal = ' and ';
     $dictionary = array(
-        0 => 'Zero',
         1 => 'One',
         2 => 'Two',
         3 => 'Three',
@@ -1004,13 +1006,13 @@ class Sales extends CI_Controller {
 
     switch (true) {
         case $amount < 20:
-            if($amount == 1 && $fraction == 0){
-                    $string = $dictionary[$amount]." PESO ONLY";
-                }elseif($amount == 1 && $fraction != 0){
-                    $string = $dictionary[$amount]." PESO";
-                }else{
+            // if($amount == 1 && $fraction == 0){
                     $string = $dictionary[$amount];
-                }
+                // }elseif($amount == 1 && $fraction != 0){
+                //     $string = $dictionary[$amount]." PESO";
+                // }elseif($amount > 1){
+                //     $string = $dictionary[$amount];
+                // }
             break;
         case $amount < 100:
             $tens = ((int)($amount / 10)) * 10;
@@ -1035,69 +1037,72 @@ class Sales extends CI_Controller {
             $string = $this->convertNumber($numBaseUnits) . ' ' . $dictionary[$baseUnit];
             if ($remainder) {
                 $string .= $remainder < 100 ? $conjunction : $separator;
-                $string .= $this->convertNumber($remainder)." PESOS";
+                $string .= $this->convertNumber($remainder);
             }
             break;
     }
 
         $decones = array( 
-                    01 => "One", 
-                    02 => "Two", 
-                    03 => "Three", 
-                    04 => "Four", 
-                    05 => "Five", 
-                    06 => "Six", 
-                    07 => "Seven", 
-                    08 => "Eight", 
-                    09 => "Nine", 
-                    10 => "Ten", 
-                    11 => "Eleven", 
-                    12 => "Twelve", 
-                    13 => "Thirteen", 
-                    14 => "Fourteen", 
-                    15 => "Fifteen", 
-                    16 => "Sixteen", 
-                    17 => "Seventeen", 
-                    18 => "Eighteen", 
-                    19 => "Nineteen" 
+                    "01" => "One", 
+                    "02" => "Two", 
+                    "03" => "Three", 
+                    "04" => "Four", 
+                    "05" => "Five", 
+                    "06" => "Six", 
+                    "07" => "Seven", 
+                    "08" => "Eight", 
+                    "09" => "Nine", 
+                    "10" => "Ten", 
+                    "11" => "Eleven", 
+                    "12" => "Twelve", 
+                    "13" => "Thirteen", 
+                    "14" => "Fourteen", 
+                    "15" => "Fifteen", 
+                    "16" => "Sixteen", 
+                    "17" => "Seventeen", 
+                    "18" => "Eighteen", 
+                    "19" => "Nineteen" 
                     );
         $ones = array( 
-                    0 => "Zero",
-                    1 => "One",     
-                    2 => "Two", 
-                    3 => "Three", 
-                    4 => "Four", 
-                    5 => "Five", 
-                    6 => "Six", 
-                    7 => "Seven", 
-                    8 => "Eight", 
-                    9 => "Nine", 
-                    10 => "Ten", 
-                    11 => "Eleven", 
-                    12 => "Twelve", 
-                    13 => "Thirteen", 
-                    14 => "Fourteen", 
-                    15 => "Fifteen", 
-                    16 => "Sixteen", 
-                    17 => "Seventeen", 
-                    18 => "Eighteen", 
-                    19 => "Nineteen" 
+                    "1" => "One",     
+                    "2" => "Two", 
+                    "3" => "Three", 
+                    "4" => "Four",
+                    "5" => "Five", 
+                    "6"=> "Six", 
+                    "7" => "Seven", 
+                    "8" => "Eight", 
+                    "9" => "Nine", 
+                    "10" => "Ten", 
+                    "11" => "Eleven", 
+                    "12" => "Twelve", 
+                    "13" => "Thirteen", 
+                    "14" => "Fourteen", 
+                    "15" => "Fifteen", 
+                    "16" => "Sixteen", 
+                    "17" => "Seventeen", 
+                    "18" => "Eighteen", 
+                    "19" => "Nineteen" 
                     ); 
         $tens = array( 
-                    0 => "",
-                    2 => "Twenty", 
-                    3 => "Thirty", 
-                    4 => "Forty", 
-                    5 => "Fifty", 
-                    6 => "Sixty", 
-                    7 => "Seventy", 
-                    8 => "Eighty", 
-                    9 => "Ninety" 
+                    "0" => "",
+                    "2" => "Twenty", 
+                    "3" => "Thirty", 
+                    "4" => "Forty", 
+                    "5" => "Fifty", 
+                    "6" => "Sixty", 
+                    "7" => "Seventy", 
+                    "8" => "Eighty", 
+                    "9"=> "Ninety" 
                     ); 
 
     if (null !== $fraction && is_numeric($fraction)) {
         if($fraction > 0){
-            $string .= " and ";
+            if($amount == 0  && $fraction != 0){
+                $string .= "";
+            }else{
+                $string .= " pesos and ";
+            }
             if($fraction < 20){ 
                 $string .= $decones[$fraction]; 
             }
@@ -1599,55 +1604,54 @@ class Sales extends CI_Controller {
                             $y=1;
                             for($z=4;$z<$highestRow;$z++){
                                 
-                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getOldCalculatedValue());
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
                                 $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 if($shortname!="" || !empty($shortname)){
-                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
-                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
-                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
-                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
-                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
-                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
-                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
-                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
-                                $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue());
-                                $zero_rated_sales = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
-                                $zero_rated_sales = trim($zero_rated_sales,"-");
-                                $zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue(),'()');
-                                $zero_rated_ecozone = trim($zero_rated_ecozone,"-");
-                                $vat_on_sales = trim($objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue(),'()');
-                                $vat_on_sales = trim($vat_on_sales,"-");
-                                $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
-                                $total_amount = trim($objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue(),'()');
-                                $total_amount = trim($total_amount,"-");
+                                    $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                    $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue());
+                                    $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getOldCalculatedValue());
+                                    $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
+                                    $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
+                                    $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
+                                    $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
+                                    $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
+                                    $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue());
+                                    $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue();
+                                    $zero_rated_ecozone = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue());
+                                    $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
+                                    $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
+                                    $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue());
+                                    $series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$z)->getFormattedValue();
 
-                                $count_max=$this->super_model->count_rows("sales_adjustment_head");
-                                if($count_max==0){
-                                    $sales_adjustment_id=1;
-                                }else{
-                                    $sales_adjustment_id = $this->super_model->get_max("sales_adjustment_head", "sales_adjustment_id");
+
+                                    $count_max=$this->super_model->count_rows("sales_adjustment_head");
+                                    if($count_max==0){
+                                        $sales_adjustment_id=1;
+                                    }else{
+                                        $sales_adjustment_id = $this->super_model->get_max("sales_adjustment_head", "sales_adjustment_id");
+                                    }
+                                    $data_sales = array(
+                                        'sales_adjustment_id'=>$sales_adjustment_id,
+                                        'item_no'=>$y,
+                                        'short_name'=>$shortname,
+                                        'billing_id'=>$billing_id,
+                                        'company_name'=>$company_name,
+                                        'facility_type'=>$fac_type,
+                                        'wht_agent'=>$wht_agent,
+                                        'ith_tag'=>$ith,
+                                        'non_vatable'=>$non_vatable,
+                                        'zero_rated'=>$zero_rated,
+                                        'vatable_sales'=>$vatable_sales,
+                                        'vat_on_sales'=>$vat_on_sales,
+                                        'zero_rated_ecozones'=>$zero_rated_ecozone,
+                                        'ewt'=>$ewt,
+                                        'total_amount'=>$total_amount,
+                                        'balance'=>$total_amount,
+                                        'serial_no'=>$series_no,
+                                    );
+                                    $this->super_model->insert_into("sales_adjustment_details", $data_sales);
+                                    $y++;
                                 }
-                                $data_sales = array(
-                                    'sales_adjustment_id'=>$sales_adjustment_id,
-                                    'item_no'=>$y,
-                                    'short_name'=>$shortname,
-                                    'billing_id'=>$billing_id,
-                                    'company_name'=>$company_name,
-                                    'facility_type'=>$fac_type,
-                                    'wht_agent'=>$wht_agent,
-                                    'ith_tag'=>$ith,
-                                    'non_vatable'=>$non_vatable,
-                                    'zero_rated'=>$zero_rated,
-                                    'vatable_sales'=>$vatable_sales,
-                                    'vat_on_sales'=>$vat_on_sales,
-                                    'zero_rated_ecozones'=>$zero_rated_ecozone,
-                                    'ewt'=>$ewt,
-                                    'total_amount'=>$total_amount,
-                                    'balance'=>$total_amount,
-                                );
-                                $this->super_model->insert_into("sales_adjustment_details", $data_sales);
-                                $y++;
-                            }
                         }
                     } 
                 }
@@ -1656,7 +1660,13 @@ class Sales extends CI_Controller {
     echo $adjust_identifier;
 }
 
-
+public function cancel_multiple_sales(){
+    $adjust_identifier = $this->input->post('save_sales_adjustment');
+    foreach($this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$adjust_identifier) AS $del){
+        $this->super_model->delete_where("sales_adjustment_head", "sales_adjustment_id", $del->sales_adjustment_id);
+        $this->super_model->delete_where("sales_adjustment_details", "sales_adjustment_id", $del->sales_adjustment_id);
+    }
+}
 
     
 }

@@ -34,7 +34,9 @@
         </div>
     </div>
 </div>
-<?php $y=0; foreach($sub AS $as){  //for($f=0;$f<$count;$f++){ ?>
+<?php $y=0; 
+//print_r($company_name);
+foreach($sub AS $as){  //for($f=0;$f<$count;$f++){ ?>
 <page size="A4">
     <div style="padding:30px">
         <table width="100%" class="table-bor table-bordsered" style="border-collapse: collapse;">
