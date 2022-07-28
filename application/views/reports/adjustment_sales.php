@@ -1,5 +1,11 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/report.js"></script>
+<style type="text/css">
+    .hr{
+        margin:2px 0px;
+        border-top:1px solid rgb(0 0 0 / 5%);
+    }
+</style>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -63,19 +69,19 @@
                                 <thead>
                                     <tr>
                                         <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="12%">Particular</td>
-                                        <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="20%">Reference Number</td>  
-                                        <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="18%">Billing Period</td> 
+                                        <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="20%">Reference No.</td>  
+                                        <td class="td-head pt-2 pb-2" align="left" style="vertical-align: bottom;" width="23%">Billing Period</td> 
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Vatable Amount</td> 
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Zero Rated Amount</td>     
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Net Sale (Php)</td>     
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >Vat on Energy </td> 
                                         <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" >EWT</td>
-                                        <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" width="10%">Total Amount Due (Php)</td>
+                                        <td class="td-head pt-2 pb-2" align="center" style="vertical-align: bottom;font-size: 12px;" width="5%">Total Amount Due (Php)</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="pt-1 pb-1" colspan="9" style="border-bottom:0px solid #fff">
+                                        <td class="pt-1 pb-1 pl-0" colspan="9" style="border-bottom:0px solid #fff;font-size:12px">
                                             <b>RECEIVABLES</b>
                                         </td>
                                     </tr>
@@ -106,7 +112,7 @@
                                             $data2[$key]['reference_number'][] = $ads['reference_number'];
                                             $data2[$key]['billing_from'][] = date("F d",strtotime($ads['billing_from']));
                                             $data2[$key]['billing_to'][] = date("F d,Y",strtotime($ads['billing_to']));
-                                            $data2[$key]['billing_fromto'][] = date("F d,Y",strtotime($ads['billing_from']))." - ".date("F d,Y",strtotime($ads['billing_to']));
+                                            $data2[$key]['billing_fromto'][] = date("M. d,Y",strtotime($ads['billing_from']))." - ".date("M. d,Y",strtotime($ads['billing_to']));
                                             $data2[$key]['vatable_sales'][] = number_format($ads['vatable_sales'],2);
                                             $data2[$key]['vat_on_sales'][] = number_format($ads['vat_on_sales'],2);
                                             $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
@@ -117,26 +123,25 @@
                                         foreach($data2 AS $ad){ 
                                     ?>
                                     <tr>
-                                        <td class="pt-1 pb-1" colspan="9">
-                                            <br>
+                                        <td class="pt-3 pb-1 pr-0 pl-0" colspan="9">
                                             <u>Year <?php echo date("Y",strtotime($ad['billing_to_single'])); ?></u>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['particular']); ?></td>
-                                        <td class="pt-1 pb-1"><?php echo implode("<br /><br />",$ad['reference_number']);?></td>
-                                        <td class="pt-1 pb-1" style="font-size:12px"><?php echo implode("<br /><br />",$ad['billing_fromto']);?></td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['vatable_sales']);?></td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['zero_rated']);?></td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['net']);?></td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['vat_on_sales']);?></td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['ewt']); ?></td>
-                                        <td class="pt-1 pb-1" align="right" style="font-size: 12px;"><?php echo implode("<br /><br />",$ad['total']);?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['particular']); ?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" style="font-size: 12px;" align="center"><?php echo implode("<hr class='hr'>",$ad['reference_number']);?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" style="font-size:12px" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['vatable_sales']);?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['zero_rated']);?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['net']);?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['vat_on_sales']);?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['ewt']); ?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['total']);?></td>
                                     </tr>
                                     <?php } ?>
                                     <tr>
-                                        <td class="pt-2 pb-2 td-yellow" colspan="8" align="left">TOTAL AMOUNT RECEIVABLE on or before, <?php echo date('F d,Y',strtotime($due_date))?> &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
-                                        <td class="pt-2 pb-2 td-yellow" align="right"><b>(<?php echo number_format($total_sum,2);?>)</b></td>
+                                        <td class="pt-2 pb-2 td-yellow" colspan="8" align="left" style="font-size:12px">TOTAL AMOUNT RECEIVABLE on or before, <?php echo date('F d,Y',strtotime($due_date))?> &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
+                                        <td class="pt-2 pb-2 td-yellow" align="right" style="font-size:12px"><b>(<?php echo number_format($total_sum,2);?>)</b></td>
                                     </tr>
                                     <?php } ?>
                                 </tbody>   

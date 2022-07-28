@@ -163,7 +163,8 @@ class Purchases extends CI_Controller {
         $highestRow = $highestRow-1;
         $y=1;
         for($x=3;$x<$highestRow;$x++){
-            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+            //$itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
+            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
             if($shortname!="" || !empty($shortname)){
                 $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
