@@ -1485,6 +1485,48 @@ class Sales extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function sales_wesm_adjustment(){
+        $ref_no=$this->uri->segment(3);
+        $data['ref_no']=$ref_no;
+        //$data['identifier_code']=$this->generateRandomString();
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_adjustment_head WHERE reference_number!=''");
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
+            $data['details'][]=array(
+                'sales_detail_id'=>$d->adjustment_detail_id,
+                'sales_adjustment_id'=>$d->sales_adjustment_id,
+                'item_no'=>$d->item_no,
+                //'series_number'=>$d->series_number,
+                //'old_series_no_col'=>$old_series_no,
+                'old_series_no'=>$d->old_series_no,
+                'short_name'=>$d->short_name,
+                'billing_id'=>$d->billing_id,
+                'company_name'=>$d->company_name,
+                'facility_type'=>$d->facility_type,
+                'wht_agent'=>$d->wht_agent,
+                'ith_tag'=>$d->ith_tag,
+                'non_vatable'=>$d->non_vatable,
+                'zero_rated'=>$d->zero_rated,
+                'vatable_sales'=>$d->vatable_sales,
+                'vat_on_sales'=>$d->vat_on_sales,
+                'zero_rated_sales'=>$d->zero_rated_sales,
+                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                'ewt'=>$d->ewt,
+                'serial_no'=>$d->serial_no,
+                'total_amount'=>$d->total_amount,
+                'reference_number'=>$d->reference_number,
+                'transaction_date'=>$d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'due_date'=>$d->due_date,
+                'print_counter'=>$d->print_counter
+            );
+        }
+        $this->load->view('sales/sales_wesm_adjustment',$data);
+        $this->load->view('template/footer');
+    }
+
     public function save_all_adjust(){
         $adjust_identifier = $this->input->post('adjust_identifier');
         $data_head = array(
@@ -1667,6 +1709,7 @@ public function cancel_multiple_sales(){
         $this->super_model->delete_where("sales_adjustment_details", "sales_adjustment_id", $del->sales_adjustment_id);
     }
 }
+
 
     
 }

@@ -267,6 +267,12 @@ function filterSales(){
 	window.location=loc+'sales/sales_wesm/'+ref_no;          
 }
 
+function filterSalesAdjustment(){
+	var ref_no= document.getElementById("ref_no").value;
+	var loc= document.getElementById("baseurl").value;
+	window.location=loc+'sales/sales_wesm_adjustment/'+ref_no;          
+}
+
 
 $(document).on("click", "#seriesupdate", function () {
 	 var collection_id = $(this).attr("data-id");
