@@ -127,7 +127,7 @@ class Masterfile extends CI_Controller {
         $data['id']=$id;
         //$data['sub_participant'] = $this->super_model->select_custom_where("participant", "participant_id != '$id'");
         //$data['sub_participant']=$this->super_model->select_all_order_by("participant","participant_name","participant_id = '$id'","ASC");
-       $data['sub_participant'] = $this->super_model->custom_query("SELECT DISTINCT * FROM participant p WHERE p.participant_id!='$id' GROUP BY participant_name ORDER BY p.participant_name ASC");
+       $data['sub_participant'] = $this->super_model->custom_query("SELECT DISTINCT * FROM participant p WHERE p.participant_id!='$id' GROUP BY billing_id ORDER BY p.participant_name ASC");
         $rows = $this->super_model->count_rows("subparticipant");
         if($rows!=0){
             foreach($this->super_model->select_custom_where("subparticipant", "participant_id = '$id'") AS $sub){
