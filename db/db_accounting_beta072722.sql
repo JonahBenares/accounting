@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2022 at 01:05 AM
+-- Generation Time: Jul 14, 2022 at 03:28 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `db_accounting`
+-- Database: `db_purchasing_test`
 --
 
 -- --------------------------------------------------------
@@ -76,11 +76,9 @@ CREATE TABLE IF NOT EXISTS `company` (
 --
 
 CREATE TABLE IF NOT EXISTS `or_remarks` (
-`or_remarks_id` int(11) NOT NULL,
-  `or_no` varchar(50) NOT NULL,
-  `remarks` varchar(50) NOT NULL,
-  `create_date` varchar(20) DEFAULT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0'
+  `or_no` varchar(50) DEFAULT NULL,
+  `remarks` varchar(50) DEFAULT NULL,
+`or_remarks_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -163,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `payment_details` (
   `vat` decimal(10,2) NOT NULL DEFAULT '0.00',
   `ewt` decimal(10,2) NOT NULL DEFAULT '0.00',
   `total_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `short_name` varchar(100) NOT NULL
+  `short_name` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -218,8 +216,7 @@ CREATE TABLE IF NOT EXISTS `purchase_transaction_details` (
   `print_counter` int(11) NOT NULL DEFAULT '0',
   `serial_no` text,
   `balance` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `item_no` int(11) NOT NULL,
-  `bulk_print_flag` int(11) NOT NULL DEFAULT '0'
+  `item_no` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -238,60 +235,7 @@ CREATE TABLE IF NOT EXISTS `purchase_transaction_head` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `create_date` varchar(20) DEFAULT NULL,
   `saved` int(11) NOT NULL DEFAULT '0',
-  `adjustment` int(11) NOT NULL DEFAULT '0',
-  `adjust_identifier` text,
-  `adjustment_remarks` varchar(150) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sales_adjustment_details`
---
-
-CREATE TABLE IF NOT EXISTS `sales_adjustment_details` (
-`adjustment_detail_id` int(11) NOT NULL,
-  `sales_adjustment_id` int(11) NOT NULL DEFAULT '0',
-  `participant_id` int(11) NOT NULL DEFAULT '0',
-  `short_name` varchar(50) DEFAULT NULL,
-  `facility_type` varchar(50) DEFAULT NULL,
-  `wht_agent` varchar(20) DEFAULT NULL,
-  `non_vatable` varchar(20) DEFAULT NULL,
-  `zero_rated` varchar(20) DEFAULT NULL,
-  `vatable_sales` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `zero_rated_sales` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `zero_rated_ecozones` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vat_on_sales` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `ewt` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `total_amount` float(10,2) NOT NULL DEFAULT '0.00',
-  `company_name` text,
-  `ith_tag` varchar(100) DEFAULT NULL,
-  `billing_id` varchar(100) DEFAULT NULL,
-  `serial_no` text,
-  `print_counter` int(11) NOT NULL DEFAULT '0',
-  `balance` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `item_no` int(11) NOT NULL,
-  `old_series_no` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sales_adjustment_head`
---
-
-CREATE TABLE IF NOT EXISTS `sales_adjustment_head` (
-`sales_adjustment_id` int(11) NOT NULL,
-  `reference_number` varchar(100) DEFAULT NULL,
-  `transaction_date` varchar(20) DEFAULT NULL,
-  `billing_from` varchar(20) DEFAULT NULL,
-  `billing_to` varchar(20) DEFAULT NULL,
-  `due_date` varchar(20) DEFAULT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `create_date` varchar(20) DEFAULT NULL,
-  `saved` int(11) NOT NULL DEFAULT '0',
-  `remarks` varchar(150) NOT NULL,
-  `adjust_identifier` text
+  `adjustment` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -314,16 +258,15 @@ CREATE TABLE IF NOT EXISTS `sales_transaction_details` (
   `zero_rated_ecozones` decimal(10,2) NOT NULL DEFAULT '0.00',
   `vat_on_sales` decimal(10,2) NOT NULL DEFAULT '0.00',
   `ewt` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `total_amount` float(10,2) NOT NULL DEFAULT '0.00',
+  `total_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `company_name` text,
   `ith_tag` varchar(100) DEFAULT NULL,
   `billing_id` varchar(100) DEFAULT NULL,
   `serial_no` text,
   `print_counter` int(11) NOT NULL DEFAULT '0',
   `balance` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `item_no` int(11) NOT NULL,
-  `old_series_no` text,
-  `print_identifier` text
+  `item_no` int(11) NOT NULL DEFAULT '0',
+  `old_series_no` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -341,7 +284,8 @@ CREATE TABLE IF NOT EXISTS `sales_transaction_head` (
   `due_date` varchar(20) DEFAULT NULL,
   `user_id` int(11) NOT NULL DEFAULT '0',
   `create_date` varchar(20) DEFAULT NULL,
-  `saved` int(11) NOT NULL DEFAULT '0'
+  `saved` int(11) NOT NULL DEFAULT '0',
+  `adjustment` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -369,14 +313,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `position` varchar(100) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `department` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `username`, `fullname`, `position`, `password`, `department`) VALUES
-(1, 'admin', 'admin', 'admin', 'admin', 'billing');
+(1, 'admin', 'Admin', 'admin', 'admin', 'billing');
 
 --
 -- Indexes for dumped tables
@@ -441,18 +385,6 @@ ALTER TABLE `purchase_transaction_details`
 --
 ALTER TABLE `purchase_transaction_head`
  ADD PRIMARY KEY (`purchase_id`);
-
---
--- Indexes for table `sales_adjustment_details`
---
-ALTER TABLE `sales_adjustment_details`
- ADD PRIMARY KEY (`adjustment_detail_id`);
-
---
--- Indexes for table `sales_adjustment_head`
---
-ALTER TABLE `sales_adjustment_head`
- ADD PRIMARY KEY (`sales_adjustment_id`);
 
 --
 -- Indexes for table `sales_transaction_details`
@@ -533,16 +465,6 @@ MODIFY `purchase_detail_id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `purchase_transaction_head`
 MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `sales_adjustment_details`
---
-ALTER TABLE `sales_adjustment_details`
-MODIFY `adjustment_detail_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `sales_adjustment_head`
---
-ALTER TABLE `sales_adjustment_head`
-MODIFY `sales_adjustment_id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `sales_transaction_details`
 --
 ALTER TABLE `sales_transaction_details`
@@ -561,7 +483,7 @@ MODIFY `subparticipant_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

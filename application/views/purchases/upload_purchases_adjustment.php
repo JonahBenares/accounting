@@ -19,21 +19,29 @@ if(!empty($sales_id)){
                         </div>
                         <div class="card-body">
                             <form id='uploadadjust'>
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-5 col-sm-5 offset-lg-1 offset-md-1 offset-sm-1">
+                                        <label>File</label>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Remarks</label>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                    </div>
+                                </div>
                                 <div class="row append">
                                     <div class="col-lg-5 col-md-5 col-sm-5 offset-lg-1 offset-md-1 offset-sm-1">
                                         <div class="form-group">
-                                            <label>File</label>
                                             <input type="file" class="form-control fileupload" name='fileupload[]' id="fileupload1" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
-                                            <label>Remarks</label>
                                             <input type="text" class="form-control" name='remarks[]' id="remarks1">
                                         </div>
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
-                                        <div class="form-group m-t-35 addmoreupload">
+                                        <div class="form-group m-t-5 addmoreupload">
                                             <input type="hidden" name="adjust_identifier" id="adjust_identifier" value="<?php echo $identifier_code;?>">
                                             <button type="button" class="btn btn-primary btn-sm addUpload"><span class="fas fa-plus"></span></button>
                                             <!-- <button class="btn btn-danger btn-sm"><span class="fas fa-times"></span></button> -->

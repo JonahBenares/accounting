@@ -2350,6 +2350,10 @@ page[size="A4"] {
     width: 21cm;
     height: 29.7cm; 
 }
+page[size="Legal"][layout="landscape"] {  
+    width:35.56cm;
+    height: 22cm; 
+}
 page[size="Legal"] {  
     width: 22cm;
     height: 35.56cm; 
@@ -2427,6 +2431,10 @@ page[size="A5"][layout="landscape"] {
     page[size="Legal"] {  
         width: 22cm;
         height: 35.56cm; 
+    }
+    page[size="Legal"][layout="landscape"] {  
+        width:35.56cm;
+        height: 22cm; 
     }
     page[size="BS"] {
       background: white;
