@@ -129,9 +129,10 @@ class Masterfile extends CI_Controller {
         //$data['sub_participant']=$this->super_model->select_all_order_by("participant","participant_name","participant_id = '$id'","ASC");
         //$data['sub_participant'] = $this->super_model->custom_query("SELECT DISTINCT * FROM participant p WHERE p.participant_id!='$id' GROUP BY participant_name ORDER BY p.participant_name ASC");
         $rows = $this->super_model->count_rows("subparticipant");
+        $data['sub_participant'] = $this->super_model->custom_query(" SELECT * FROM participant a WHERE NOT EXISTS (SELECT 1 FROM subparticipant b WHERE a.participant_id = b.sub_participant) AND a.participant_id!='$id' ORDER BY a.participant_name ASC");
         if($rows!=0){
                 foreach($this->super_model->select_custom_where("subparticipant", "participant_id = '$id'") AS $sub){
-                    $data['sub_participant'] = $this->super_model->custom_query(" SELECT * FROM participant a WHERE NOT EXISTS (SELECT 1 FROM subparticipant b WHERE a.participant_id = b.sub_participant AND b.participant_id='$sub->participant_id') AND a.participant_id!='$id' ORDER BY a.participant_name ASC");
+                    //$data['sub_participant'] = $this->super_model->custom_query(" SELECT * FROM participant a WHERE NOT EXISTS (SELECT 1 FROM subparticipant b WHERE a.participant_id = b.sub_participant AND b.participant_id='$sub->participant_id') AND a.participant_id!='$id' ORDER BY a.participant_name ASC");
                     $data['subparticipant'][] = array(
                         'participant_name'=>$this->super_model->select_column_where("participant","participant_name","participant_id", $sub->sub_participant),
                         'billing_id'=>$this->super_model->select_column_where("participant","billing_id","participant_id", $sub->sub_participant),
