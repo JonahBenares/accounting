@@ -524,7 +524,8 @@ function printMultiple(){
             //alert(output);
             /*$("#alt").hide(); */
             var exp=output.split(",");
-            window.open(loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
+            //window.open(loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
+            window.open(loc+'sales/print_BS_new/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
            	//window.location=loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2];
         }
     });

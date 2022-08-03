@@ -333,7 +333,7 @@ class Sales extends CI_Controller {
                     "ewt"=>$p->ewt,
                     "overall_total"=>$overall_total,
                 );
-                if($count_sub >=1 || $count_sub>=4){
+                if($count_sub >=1 || $count_sub>=14){
                     $h=0;
                     foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                         $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
@@ -375,7 +375,7 @@ class Sales extends CI_Controller {
                 }
 
 
-                if($count_sub>=5){
+                if($count_sub>=15){
                     $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
                     $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
 
