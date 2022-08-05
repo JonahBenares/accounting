@@ -234,7 +234,7 @@
                         <tr>
                             <td width="19%" align="center" class="font-11">Billing</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">EMG Supervisor</td>
+                            <td width="19%" align="center" class="font-11">EMG</td>
                             <td width="1%"></td>
                             <td width="19%" align="center" class="font-11">Accounting</td>
                             <td width="1%"></td>

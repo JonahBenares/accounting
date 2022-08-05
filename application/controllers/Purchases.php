@@ -1350,7 +1350,8 @@ class Purchases extends CI_Controller {
                             $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
                             $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
                             $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
-                            $remarks = $this->input->post('remarks['.$x.']');
+                            $remarks = trim($objPHPExcel->getActiveSheet()->getCell('F2')->getFormattedValue());
+                            //$remarks = $this->input->post('remarks['.$x.']');
                             $data_insert=array(
                                 'reference_number'=>$reference_number,
                                 'transaction_date'=>$transaction_date,

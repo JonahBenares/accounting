@@ -19,17 +19,25 @@
                                     <h4>Summary of Adjustment Billing Statement - <b>Purchases</b></h4>
                                 </div>
                                 <div class="col-4">
-                                    <a href="<?php echo base_url(); ?>reports/adjustment_purchases_print/<?php echo $transaction_date; ?>" target="_blank" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
+                                    <a href="<?php echo base_url(); ?>reports/adjustment_purchases_print/<?php echo $billing_month; ?>" target="_blank" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-10 col-md-10 col-sm-10 offset-lg-1 offset-md-1 offset-sm-1">
                                     <table width="100%">
                                         <tr>
-                                            <td width="99%">
-                                                <input type="date" name="transaction_date" id="transaction_date" class="form-control">
+                                            <!-- <td width="99%">
+                                                <input type="month" name="transaction_date" id="transaction_date" class="form-control">
+                                            </td> -->
+                                            <td width="22%">
+                                                <select class="form-control select2" name="billing_month" id="billing_month">
+                                                    <option value="">-- Select Billing Month --</option>
+                                                    <?php foreach($date AS $d){ ?>
+                                                        <option value="<?php echo date("Y-m",strtotime($d->billing_to));?>"><?php echo date("F Y",strtotime($d->billing_to));?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </td>
                                             <td width="1%">
                                                 <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
@@ -43,11 +51,13 @@
                             <table class="table-bordsered" width="100%">
                                 <tr>
                                     <td width="3%"></td>
-                                    <td width="13%"><b>Invoice Date: <?php echo $transaction_date; ?></b></td>
                                     <td width="25%"></td>
-                                    <!-- <td width="13%"><b>Reference Number:</b></td>
+                                    <td width="13%"><b>Billing Month:</b></td>
+                                    <?php if(!empty($billing_month)){ ?>
+                                      <td width="41%"><?php echo date("F Y",strtotime($billing_month)); ?></td>  
+                                    <?php } else ?>
                                     <td width="41%"></td>
-                                    <td width="3%"></td> -->
+                                    <td width="3%"></td>
                                 </tr>
                                 <!-- <tr>
                                     <td></td>
