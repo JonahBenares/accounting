@@ -1123,12 +1123,16 @@ class Reports extends CI_Controller {
     public function adjustment_sales(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $transaction_date=$this->uri->segment(3);
-        $data['transaction_date']=$transaction_date;
-        $year=date("Y",strtotime($transaction_date));
+        //$transaction_date=$this->uri->segment(3);
+        //$data['transaction_date']=$transaction_date;
+        $billing_month=$this->uri->segment(3);
+        $data['billing_month']=$billing_month;
+        $year=date("Y",strtotime($billing_month));
+        $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
-        //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
+        $data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY MONTH(billing_to), YEAR(billing_to)");
+        //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month'") AS $ads){
             $vatable_sales=$this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_sales=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","sales_adjustment_id='$ads->sales_adjustment_id'");
@@ -1160,12 +1164,17 @@ class Reports extends CI_Controller {
     }
 
     public function adjustment_sales_print(){
-        $transaction_date=$this->uri->segment(3);
+        $billing_month=$this->uri->segment(3);
+        $data['billing_month']=$billing_month;
+        $year=date("Y",strtotime($billing_month));
+        $month=date("m",strtotime($billing_month));
+        /*$transaction_date=$this->uri->segment(3);
         $year=date("Y",strtotime($transaction_date));
-        $data['invoice_date']=date("F d,Y",strtotime($transaction_date));
+        $data['invoice_date']=date("F d,Y",strtotime($transaction_date));*/
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
+        //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month'") AS $ads){
             $vatable_sales=$this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_sales=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","sales_adjustment_id='$ads->sales_adjustment_id'");
@@ -1176,6 +1185,7 @@ class Reports extends CI_Controller {
             $total=($vatable_sales+$zero_rated+$vat_on_sales)-$ewt;
             $total_sum[]=$total;
             $data['due_date']=$ads->due_date;
+            $data['invoice_date']=date("F d,Y",strtotime($ads->transaction_date));
 
             $total_vatable_sales[]=$vatable_sales;
             $total_zero_rated[]=$zero_rated;
@@ -1211,11 +1221,17 @@ class Reports extends CI_Controller {
     public function adjustment_purchases(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $transaction_date=$this->uri->segment(3);
-        $data['transaction_date']=$transaction_date;
-        $year=date("Y",strtotime($transaction_date));
+        // $transaction_date=$this->uri->segment(3);
+        // $data['transaction_date']=$transaction_date;
+        // $year=date("Y",strtotime($transaction_date));
+        $billing_month=$this->uri->segment(3);
+        $data['billing_month']=$billing_month;
+        $year=date("Y",strtotime($billing_month));
+        $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
+        $data['date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE adjustment='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
+        //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND adjustment='1'") AS $ad){
             $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
             $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");
@@ -1247,11 +1263,16 @@ class Reports extends CI_Controller {
 
     public function adjustment_purchases_print(){
         $this->load->view('template/print_head');
-        $transaction_date=$this->uri->segment(3);
-        $year=date("Y",strtotime($transaction_date));
-        $data['invoice_date']=date("F d,Y",strtotime($transaction_date));
+        // $transaction_date=$this->uri->segment(3);
+        // $year=date("Y",strtotime($transaction_date));
+        // $data['invoice_date']=date("F d,Y",strtotime($transaction_date));
+        $billing_month=$this->uri->segment(3);
+        $data['billing_month']=$billing_month;
+        $year=date("Y",strtotime($billing_month));
+        $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
+        //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND adjustment='1'") AS $ad){
             $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
             $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");
@@ -1261,6 +1282,7 @@ class Reports extends CI_Controller {
             $net=$vatables_purchases+$zero_rated;
             $total=($vatables_purchases+$zero_rated+$vat_on_purchases)-$ewt;
             $data['due_date']=$ad->due_date;
+            $data['invoice_date']=date("F d,Y",strtotime($ad->transaction_date));
 
             $total_sum[]=$total;
             $total_vatables_purchases[]=$vatables_purchases;
