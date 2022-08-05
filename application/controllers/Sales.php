@@ -1942,7 +1942,8 @@ class Sales extends CI_Controller {
                             $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
                             $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
                             $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
-                            $remarks = $this->input->post('remarks['.$x.']');
+                            $remarks = trim($objPHPExcel->getActiveSheet()->getCell('F2')->getFormattedValue());
+                            //$remarks = $this->input->post('remarks['.$x.']');
                             $data_insert=array(
                                 'reference_number'=>$reference_number,
                                 'transaction_date'=>$transaction_date,
@@ -1978,7 +1979,7 @@ class Sales extends CI_Controller {
                                     $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                     $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
                                     $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue());
-                                    $series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$z)->getFormattedValue();
+                                    //$series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$z)->getFormattedValue();
 
 
                                     $count_max=$this->super_model->count_rows("sales_adjustment_head");
@@ -2004,7 +2005,7 @@ class Sales extends CI_Controller {
                                         'ewt'=>$ewt,
                                         'total_amount'=>$total_amount,
                                         'balance'=>$total_amount,
-                                        'serial_no'=>$series_no,
+                                        //'serial_no'=>$series_no,
                                     );
                                     $this->super_model->insert_into("sales_adjustment_details", $data_sales);
                                     $y++;
