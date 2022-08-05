@@ -534,9 +534,9 @@ async function upload_adjust_btn() {
             fileupload = document.querySelector('input[name="fileupload[]"]').files[0];
             adjust_identifier = document.getElementById("adjust_identifier").value;
             count = document.getElementById("count").value;
-            remarks= document.querySelector('input[name="remarks[]"]').value;
+            //remarks= document.querySelector('input[name="remarks[]"]').value;
             formData.append('fileupload'+[i], fileupload);
-            formData.append('remarks'+[i], remarks);
+            //formData.append('remarks'+[i], remarks);
             formData.append('count', count);
             formData.append('adjust_identifier', adjust_identifier);
         }
