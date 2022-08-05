@@ -159,7 +159,7 @@
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($as['vatable_sales'],2);?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($as['zero_rated_sales'],2);?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($as['vat_on_sales'],2);?></td>
-                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($as['ewt'],2);?></td>
+                            <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($as['ewt'],2);?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($as['overall_total'],2);?></b></td>
                         </tr> 
                         <?php
@@ -181,16 +181,16 @@
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($vatable_sales_sub[$h],2); ?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($zero_rated_sales_sub[$h],2); ?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($vat_on_sales_sub[$h],2); ?></td>
-                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($ewt_s[$h],2); ?></td>
+                            <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($ewt_s[$h],2); ?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($overall_total_sub[$h],2); ?></b></td>
                         </tr> 
-                        <?php } } $x++; $h++; } } ?>
+                        <?php }  $h++; } $x++; } } ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><b>TOTAL AMOUNT</b></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($vatable,2); ?></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($zero,2); ?></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($vat,2); ?></td>
-                            <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($ewt_arr,2); ?></td>
+                            <td class="p-r-10 p-b-5 bor-btm" align="right">(<?php echo number_format($ewt_arr,2); ?>)</td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><b><?php echo number_format($overall_totals,2); ?></b></td>
                         </tr>
                         <?php } ?>
@@ -407,7 +407,7 @@
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($ewt_s[$h],2); ?></td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($overall_total_sub[$h],2); ?></b></td>
                         </tr> 
-                        <?php } } $x++; $h++; } } ?>
+                        <?php } $h++; } $x++; } } ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><b>TOTAL AMOUNT</b></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($vatable,2); ?></td>
