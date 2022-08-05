@@ -19,27 +19,27 @@ if(!empty($sales_id)){
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-5 col-md-5 col-sm-5 offset-lg-1 offset-md-1 offset-sm-1">
+                                <div class="col-lg-10 col-md-10 col-sm-10 offset-lg-1 offset-md-1 offset-sm-1">
                                     <label>File</label>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                <!-- <div class="col-lg-4 col-md-4 col-sm-4">
                                     <label>Remarks</label>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                 </div>
                             </div>
                             <form id='uploadsalesadjust'>
                                 <div class="row append">
-                                    <div class="col-lg-5 col-md-5 col-sm-5 offset-lg-1 offset-md-1 offset-sm-1">
+                                    <div class="col-lg-10 col-md-10 col-sm-10 offset-lg-1 offset-md-1 offset-sm-1">
                                         <div class="form-group">
                                             <input type="file" class="form-control fileupload" name='fileupload[]' id="fileupload1" required>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <!-- <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <input type="text" class="form-control" name='remarks[]' id="remarks1">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group m-t-5 addmoreupload">
                                             <input type="hidden" name="adjust_identifier" id="adjust_identifier" value="<?php echo $identifier_code;?>">
@@ -95,7 +95,7 @@ if(!empty($sales_id)){
                                                 <center><span class="fas fa-bars"></span></center>
                                             </th>  -->   
                                             <th >Item #</th>                                        
-                                            <th >Series No.</th>
+                                            <!-- <th >Series No.</th> -->
                                             <th >STL ID / TPShort Name</th>
                                             <th >Billing ID</th>
                                             <th >Trading Participant Name</th>
@@ -140,7 +140,7 @@ if(!empty($sales_id)){
                                                 ?>
                                             </td> -->
                                             <td class="p-2"><center><?php echo $d['item_no'];?></center></td>
-                                            <td class="p-2"><?php echo $d['serial_no'];?></td>
+                                            <!-- <td class="p-2"><?php echo $d['serial_no'];?></td> -->
                                             <td class="p-2"><?php echo $d['short_name'];?></td>
                                             <td class="p-2"><?php echo $d['billing_id'];?></td>
                                             <td class="p-2"><?php echo $d['company_name'];?></td>
