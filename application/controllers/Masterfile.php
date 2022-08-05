@@ -173,7 +173,8 @@ class Masterfile extends CI_Controller {
                 $this->super_model->insert_into("subparticipant", $data_sub);
             }
 
-            echo "<script>alert('Successfully Saved!'); window.opener.location ='".base_url()."Masterfile/customer_list';window.close(); </script>";
+            //echo "<script>alert('Successfully Saved!'); window.opener.location ='".base_url()."Masterfile/customer_list';window.close(); </script>";
+            echo "<script>alert('Successfully Added!'); window.opener.location.reload();window.location = '".base_url()."masterfile/add_sub_participant/$participant_id';</script>";
         }
 
     public function save_customer(){
