@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+    if (isset($_SESSION['user_id'])) {
+        echo "<script>window.location ='".base_url()."index.php/masterfile/dashboard'; </script>";
+    } 
+?>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
