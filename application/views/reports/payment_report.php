@@ -60,11 +60,7 @@
                             <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
                                 <thead>
                                     <tr>
-                                        <td>Date of Payment</td>
-                                        <td>Invoice No.</td> 
-                                        <td>Energy</td>  
-                                        <td>VAT on Energy</td> 
-                                        <td>Market Fees</td>    
+                                        <td>Date of Payment</td>  
                                         <td>TOTAL</td>
                                         <td></td>
                                     </tr>
@@ -73,10 +69,6 @@
                                      <?php foreach($payment AS $pay){ ?>
                                     <tr>                                        
                                         <td><?php echo date("F d,Y",strtotime($pay['transaction_date']));?></td>
-                                        <td><?php echo $pay['reference_number'];?></td>
-                                        <td>(<?php echo number_format($pay['energy'],2);?>)</td>
-                                        <td>(<?php echo number_format($pay['vat_on_purchases'],2);?>)</td>
-                                        <td><?php echo number_format($pay['ewt'],2);?></td>
                                         <td>(<?php echo number_format($pay['total_amount'],2);?>)</td>
                                         <td>
                                             <a class="btn btn-primary btn-sm" title="View" data-original-title="View" target="_blank" href="<?php echo base_url(); ?>reports/payment_form/<?php echo $pay['payment_identifier'];?>"><span class="fas fa-eye m-0"></span></a>
