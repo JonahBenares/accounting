@@ -1321,8 +1321,8 @@ class Reports extends CI_Controller {
         //$data['date']=$this->super_model->select_all_order_by("payment_head","payment_date","ASC");
         $data['date']=$this->super_model->custom_query("SELECT DISTINCT payment_date FROM payment_head WHERE payment_date!=''");
         foreach($this->super_model->custom_query("SELECT * FROM payment_head WHERE payment_date='$payment_date' GROUP BY payment_identifier") AS $p){
-            $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
             $payment_identifier= $this->super_model->select_column_where("payment_head", "payment_identifier", "purchase_id", $p->purchase_id);
+            $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "payment_identifier", $payment_identifier);
             $data['payment'][]=array(
                 "transaction_date"=>$p->payment_date,
                 "total_amount"=>$total_amount,
