@@ -542,8 +542,77 @@ function cancelmultipleSales(){
 			type: "POST",
 			url: redirect,
 			success: function(response){
+				document.getElementById("selectfile").disabled = false;
 			    window.location=loc+'sales/upload_sales_adjustment/';
 			}
 		});
     }
 }
+
+$(document).ready(function() {
+	$("#ddArea").on("dragover", function() {
+		$(this).addClass("drag_over");
+		return false;
+	});
+
+	$("#ddArea").on("dragleave", function() {
+		$(this).removeClass("drag_over");
+		return false;
+	});
+
+	$("#ddArea").on("click", function(e) {
+		file_explorer();
+	});
+
+	$("#ddArea").on("drop", function(e) {
+		e.preventDefault();
+		$(this).removeClass("drag_over");
+		var formData = new FormData();
+		var files = e.originalEvent.dataTransfer.files;
+		adjust_identifier = document.getElementById("adjust_identifier").value;
+		for (var i = 0; i < files.length; i++) {
+			formData.append("file[]", files[i]);
+			formData.append('adjust_identifier', adjust_identifier);
+		}
+		uploadmultipleFiles(formData); 
+	});
+
+	function file_explorer() {
+		document.getElementById("selectfile").click();
+		document.getElementById("selectfile").onchange = function() {
+			files = document.getElementById("selectfile").files;
+			adjust_identifier = document.getElementById("adjust_identifier").value;
+			var formData = new FormData();
+			for (var i = 0; i < files.length; i++) {
+				formData.append("file[]", files[i]);
+				formData.append('adjust_identifier', adjust_identifier);
+			}
+			uploadmultipleFiles(formData); 
+		};
+	}
+
+	function uploadmultipleFiles(form_data) {
+		$(".loading").removeClass("d-none").addClass("d-block");
+		var loc= document.getElementById("baseurl").value;
+		var identifier= document.getElementById("adjust_identifier").value;
+		var redirect = loc+"sales/display_upload_adjust";
+		$.ajax({
+			url: redirect,
+			method: "POST",
+			data: form_data,
+			contentType: false,
+			cache: false,
+			processData: false,
+			beforeSend: function(){
+				document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+				document.getElementById("selectfile").disabled = true;
+			},
+			success: function(output) {
+				$(".loading").removeClass("d-block").addClass("d-none");
+				//$("#showThumb").append(data);
+				$("#alt").hide();
+				window.location=loc+'sales/upload_sales_adjustment/'+output;
+			}
+		});
+	}
+});

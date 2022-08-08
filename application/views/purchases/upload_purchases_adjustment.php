@@ -19,20 +19,28 @@ if(!empty($sales_id)){
                         </div>
                         <div class="card-body">
                             <form id='uploadadjust'>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-lg-5 col-md-5 col-sm-5 offset-lg-1 offset-md-1 offset-sm-1">
                                         <label>File</label>
                                     </div>
-                                    <!-- <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                         <label>Remarks</label>
-                                    </div> -->
+                                    </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row append">
                                     <div class="col-lg-10 col-md-10 col-sm-10 offset-lg-1 offset-md-1 offset-sm-1">
                                         <div class="form-group">
-                                            <input type="file" class="form-control fileupload" name='fileupload[]' id="fileupload1" required>
+                                        <div id="ddArea">
+                                            Drag and Drop Files Here or
+                                            <a class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                                                Select File(s)
+                                            </a>
+                                        </div>
+                                        <div id="showThumb"></div>
+                                        <input type="file" class="d-none" id="selectfile" multiple />
+                                            <!-- <input type="file" class="form-control fileupload" name='fileupload[]' id="fileupload1" required> -->
                                         </div>
                                     </div>
                                     <!-- <div class="col-lg-4 col-md-4 col-sm-4">
@@ -43,7 +51,7 @@ if(!empty($sales_id)){
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group m-t-5 addmoreupload">
                                             <input type="hidden" name="adjust_identifier" id="adjust_identifier" value="<?php echo $identifier_code;?>">
-                                            <button type="button" class="btn btn-primary btn-sm addUpload"><span class="fas fa-plus"></span></button>
+                                            <!-- <button type="button" class="btn btn-primary btn-sm addUpload"><span class="fas fa-plus"></span></button> -->
                                             <!-- <button class="btn btn-danger btn-sm"><span class="fas fa-times"></span></button> -->
                                         </div>
                                     </div>
@@ -53,9 +61,9 @@ if(!empty($sales_id)){
                                     <div class="col-lg-4 col-md-4 col-sm-4  offset-lg-4 offset-md-4 offset-sm-4">
                                         <div class="form-group">
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                            <input type='hidden' name='count' id='count' value='1'>
+                                            <!-- <input type='hidden' name='count' id='count' value='1'> -->
                                             <?php if(empty($identifier)){ ?>
-                                            <button type="button" id="button_adjust" class="btn btn-primary btn-block btn-md" onclick="upload_adjust_btn()">Upload</button>
+                                            <!-- <button type="button" id="button_adjust" class="btn btn-primary btn-block btn-md" onclick="upload_adjust_btn()">Upload</button> -->
                                             <?php 
                                                 } else{ 
                                                     if($saved==0){
@@ -186,6 +194,7 @@ if(!empty($sales_id)){
                 "scrollX": true,
             });
         }
+        document.getElementById("selectfile").disabled = true;
     }
 </script>      
                                        

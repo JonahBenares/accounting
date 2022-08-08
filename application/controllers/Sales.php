@@ -2027,5 +2027,151 @@ public function cancel_multiple_sales(){
 }
 
 
-    
+public function upload_sales_adjustment_test(){
+    $identifier_code=$this->generateRandomString();
+    $data['identifier_code']=$identifier_code;
+    $data['identifier']=$this->uri->segment(3);
+    $identifier=$this->uri->segment(3);
+    $data['saved']=$this->super_model->select_column_where("sales_adjustment_head","saved","adjust_identifier",$identifier);
+    $data['head']=$this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$identifier);
+    //$ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
+                $data['details'][]=array(
+                    // 'transaction_date'=>$h->transaction_date,
+                    // 'billing_from'=>$h->billing_from,
+                    // 'billing_to'=>$h->billing_to,
+                    // 'reference_number'=>$h->reference_number,
+                    // 'due_date'=>$h->due_date,
+                    // 'saved'=>$h->saved,
+                    'adjustment_detail_id'=>$d->adjustment_detail_id,
+                    'sales_adjustment_id'=>$d->sales_adjustment_id,
+                    'item_no'=>$d->item_no,
+                    'short_name'=>$d->short_name,
+                    'billing_id'=>$d->billing_id,
+                    'company_name'=>$d->company_name,
+                    'facility_type'=>$d->facility_type,
+                    'wht_agent'=>$d->wht_agent,
+                    'ith_tag'=>$d->ith_tag,
+                    'non_vatable'=>$d->non_vatable,
+                    'zero_rated'=>$d->zero_rated,
+                    'vatable_sales'=>$d->vatable_sales,
+                    'vat_on_sales'=>$d->vat_on_sales,
+                    'zero_rated_sales'=>$d->zero_rated_sales,
+                    'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                    'ewt'=>$d->ewt,
+                    'serial_no'=>$d->serial_no,
+                    'total_amount'=>$d->total_amount,
+                    'print_counter'=>$d->print_counter,
+                    'reference_number'=>$d->reference_number
+                );
+            }
+    $this->load->view('template/header');
+    $this->load->view('template/navbar');
+    $this->load->view('sales/upload_sales_adjustment_test',$data);
+    $this->load->view('template/footer');
+}
+
+    public function display_upload_adjust(){
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $imageData = '';
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $adjust_identifier = $this->input->post('adjust_identifier');
+        $x=0;
+        foreach ($_FILES['file']['name'] as $keys => $values) {
+            $error_ext=0;
+            if(!empty($_FILES['file']['name'][$keys])){
+                $exc= basename($_FILES['file']['name'][$keys]);
+                $exc=explode('.',$exc);
+                $ext1=$exc[1];
+                if($ext1=='php' || $ext1!='xlsx'){
+                    $error_ext++;
+                }else {
+                    $filename1='wesm_sales_adjust'.$x.".".$ext1;
+                    if (move_uploaded_file($_FILES['file']['tmp_name'][$keys], $dest.'/'.$filename1)) {
+                        $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_sales_adjust'.$x.'.xlsx');
+                        try {
+                            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+                            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                            $objPHPExcel = $objReader->load($inputFileName);
+                        } 
+                        catch(Exception $e) {
+                            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+                        }
+                        $objPHPExcel->setActiveSheetIndex(2);
+                        $reference_number = trim($objPHPExcel->getActiveSheet()->getCell('A2')->getFormattedValue());
+                        $transaction_date = trim($objPHPExcel->getActiveSheet()->getCell('B2')->getFormattedValue());
+                        $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
+                        $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
+                        $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
+                        $remarks = trim($objPHPExcel->getActiveSheet()->getCell('F2')->getFormattedValue());
+                        $data_insert=array(
+                            'reference_number'=>$reference_number,
+                            'transaction_date'=>$transaction_date,
+                            'billing_from'=>$billing_from,
+                            'billing_to'=>$billing_to,
+                            'due_date'=>$due_date,
+                            'user_id'=>$_SESSION['user_id'],
+                            "create_date"=>date("Y-m-d H:i:s"),
+                            'adjust_identifier'=>$adjust_identifier,
+                            'remarks'=>$remarks,
+                        );
+                        $this->super_model->insert_into("sales_adjustment_head", $data_insert);
+                        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+                        $highestRow = $highestRow-1;
+                        $y=1;
+                        for($z=4;$z<$highestRow;$z++){
+                            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
+                            $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                            if($shortname!="" || !empty($shortname)){
+                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue());
+                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getOldCalculatedValue());
+                                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
+                                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
+                                $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
+                                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
+                                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
+                                $vatable_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue());
+                                $zero_rated_sales = $objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue();
+                                $zero_rated_ecozone = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue());
+                                $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
+                                $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
+                                $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue());
+                                $count_max=$this->super_model->count_rows("sales_adjustment_head");
+                                if($count_max==0){
+                                    $sales_adjustment_id=1;
+                                }else{
+                                    $sales_adjustment_id = $this->super_model->get_max("sales_adjustment_head", "sales_adjustment_id");
+                                }
+                                $data_sales = array(
+                                    'sales_adjustment_id'=>$sales_adjustment_id,
+                                    'item_no'=>$y,
+                                    'short_name'=>$shortname,
+                                    'billing_id'=>$billing_id,
+                                    'company_name'=>$company_name,
+                                    'facility_type'=>$fac_type,
+                                    'wht_agent'=>$wht_agent,
+                                    'ith_tag'=>$ith,
+                                    'non_vatable'=>$non_vatable,
+                                    'zero_rated'=>$zero_rated,
+                                    'vatable_sales'=>$vatable_sales,
+                                    'vat_on_sales'=>$vat_on_sales,
+                                    'zero_rated_ecozones'=>$zero_rated_ecozone,
+                                    'ewt'=>$ewt,
+                                    'total_amount'=>$total_amount,
+                                    'balance'=>$total_amount,
+                                );
+                                $this->super_model->insert_into("sales_adjustment_details", $data_sales);
+                                $y++;
+                            }
+                        }
+                        $x++;
+                    }
+                    
+                }
+            }
+        }
+        echo $adjust_identifier;
+    }
 }
