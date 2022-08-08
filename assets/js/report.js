@@ -327,3 +327,9 @@ function adjustment_purchases_filter() {
     var loc= document.getElementById("baseurl").value;
     window.location=loc+'reports/adjustment_purchases/'+billing_month; 
 }
+
+function filter_payment_form(){
+    var payment_date= document.getElementById("payment_date").value;
+    var loc= document.getElementById("baseurl").value;
+    window.location=loc+'reports/payment_report/'+payment_date; 
+}
