@@ -1125,14 +1125,16 @@ class Reports extends CI_Controller {
         $this->load->view('template/navbar');
         //$transaction_date=$this->uri->segment(3);
         //$data['transaction_date']=$transaction_date;
-        $billing_month=$this->uri->segment(3);
-        $data['billing_month']=$billing_month;
-        $year=date("Y",strtotime($billing_month));
-        $month=date("m",strtotime($billing_month));
+        $due_date=$this->uri->segment(3);
+        $data['due_date']=$due_date;
+        // $year=date("Y",strtotime($billing_month));
+        // $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
-        $data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
+        //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
+        $data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved='1' GROUP BY due_date");
         //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND saved='1'") AS $ads){
+        //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND saved='1'") AS $ads){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE due_date='$due_date' AND saved='1'") AS $ads){
             $vatable_sales=$this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_sales=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","sales_adjustment_id='$ads->sales_adjustment_id'");
@@ -1164,17 +1166,17 @@ class Reports extends CI_Controller {
     }
 
     public function adjustment_sales_print(){
-        $billing_month=$this->uri->segment(3);
-        $data['billing_month']=$billing_month;
-        $year=date("Y",strtotime($billing_month));
-        $month=date("m",strtotime($billing_month));
+        $due_date=$this->uri->segment(3);
+        $data['due_date']=$due_date;
+        // $year=date("Y",strtotime($billing_month));
+        // $month=date("m",strtotime($billing_month));
         /*$transaction_date=$this->uri->segment(3);
         $year=date("Y",strtotime($transaction_date));
         $data['invoice_date']=date("F d,Y",strtotime($transaction_date));*/
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
         //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND saved='1'") AS $ads){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE due_date='$due_date' AND saved='1'") AS $ads){
             $vatable_sales=$this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_sales=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","sales_adjustment_id='$ads->sales_adjustment_id'");
@@ -1224,14 +1226,16 @@ class Reports extends CI_Controller {
         // $transaction_date=$this->uri->segment(3);
         // $data['transaction_date']=$transaction_date;
         // $year=date("Y",strtotime($transaction_date));
-        $billing_month=$this->uri->segment(3);
-        $data['billing_month']=$billing_month;
-        $year=date("Y",strtotime($billing_month));
-        $month=date("m",strtotime($billing_month));
+        $due_date=$this->uri->segment(3);
+        $data['due_date']=$due_date;
+        // $year=date("Y",strtotime($billing_month));
+        // $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
-        $data['date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE adjustment='1' AND saved='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
+        $data['date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE adjustment='1' AND saved='1' GROUP BY due_date");
+        //$data['date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE adjustment='1' AND saved='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
         //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND adjustment='1' AND saved='1'") AS $ad){
+        //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND adjustment='1' AND saved='1'") AS $ad){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE due_date='$due_date' AND adjustment='1' AND saved='1'") AS $ad){
             $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
             $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");
@@ -1266,13 +1270,13 @@ class Reports extends CI_Controller {
         // $transaction_date=$this->uri->segment(3);
         // $year=date("Y",strtotime($transaction_date));
         // $data['invoice_date']=date("F d,Y",strtotime($transaction_date));
-        $billing_month=$this->uri->segment(3);
-        $data['billing_month']=$billing_month;
-        $year=date("Y",strtotime($billing_month));
-        $month=date("m",strtotime($billing_month));
+        $due_date=$this->uri->segment(3);
+        $data['due_date']=$due_date;
+        // $year=date("Y",strtotime($billing_month));
+        // $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
         //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND adjustment='1' AND saved='1'") AS $ad){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE due_date='$due_date' AND adjustment='1' AND saved='1'") AS $ad){
             $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
             $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");

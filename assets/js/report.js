@@ -317,15 +317,15 @@ function ignoreOR(baseurl,or_no,participant,date_from,date_to){
 }
 
 function filter_adjusted_sales(){
-    var billing_month= document.getElementById("billing_month").value;
+    var due_date= document.getElementById("due_date").value;
     var loc= document.getElementById("baseurl").value;
-    window.location=loc+'reports/adjustment_sales/'+billing_month; 
+    window.location=loc+'reports/adjustment_sales/'+due_date; 
 }
 
 function adjustment_purchases_filter() {
-    var billing_month= document.getElementById("billing_month").value;
+    var due_date= document.getElementById("due_date").value;
     var loc= document.getElementById("baseurl").value;
-    window.location=loc+'reports/adjustment_purchases/'+billing_month; 
+    window.location=loc+'reports/adjustment_purchases/'+due_date; 
 }
 
 function filter_payment_form(){

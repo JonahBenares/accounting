@@ -19,7 +19,7 @@
                                     <h4>Summary of Adjustment Billing Statement - <b>Purchases</b></h4>
                                 </div>
                                 <div class="col-4">
-                                    <a href="<?php echo base_url(); ?>reports/adjustment_purchases_print/<?php echo $billing_month; ?>" target="_blank" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
+                                    <a href="<?php echo base_url(); ?>reports/adjustment_purchases_print/<?php echo $due_date; ?>" target="_blank" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</a>
                                 </div>
                             </div>
                         </div>
@@ -32,10 +32,10 @@
                                                 <input type="month" name="transaction_date" id="transaction_date" class="form-control">
                                             </td> -->
                                             <td width="22%">
-                                                <select class="form-control select2" name="billing_month" id="billing_month">
-                                                    <option value="">-- Select Billing Month --</option>
+                                                <select class="form-control select2" name="due_date" id="due_date">
+                                                    <option value="">-- Select Due Date --</option>
                                                     <?php foreach($date AS $d){ ?>
-                                                        <option value="<?php echo date("Y-m",strtotime($d->billing_to));?>"><?php echo date("F Y",strtotime($d->billing_to));?></option>
+                                                        <option value="<?php echo $d->due_date;?>"><?php echo date("F d,Y",strtotime($d->due_date));?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -52,9 +52,9 @@
                                 <tr>
                                     <td width="3%"></td>
                                     <td width="25%"></td>
-                                    <td width="13%"><b>Billing Month:</b></td>
-                                    <?php if(!empty($billing_month)){ ?>
-                                      <td width="41%"><?php echo date("F Y",strtotime($billing_month)); ?></td>  
+                                    <td width="13%"><b>Due Date:</b></td>
+                                    <?php if(!empty($due_date)){ ?>
+                                      <td width="41%"><?php echo date("F d,Y",strtotime($due_date)); ?></td>  
                                     <?php } else ?>
                                     <td width="41%"></td>
                                     <td width="3%"></td>
