@@ -581,8 +581,10 @@ class Purchases extends CI_Controller {
         $this->load->view('template/navbar');
         $ref_no=$this->uri->segment(3);
         $participant=$this->uri->segment(4);
+        $due_date=$this->uri->segment(5);
         $data['ref_no']=$ref_no;
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!=''");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql="";
@@ -591,6 +593,9 @@ class Purchases extends CI_Controller {
         } 
         if($ref_no!='null'){
             $sql.= "pth.reference_number = '$ref_no' AND ";
+        }
+        if($due_date!='null'){
+            $sql.= "pth.due_date = '$due_date' AND ";
         }
 
         $query=substr($sql,0,-4);
@@ -869,11 +874,14 @@ class Purchases extends CI_Controller {
 
     public function purchases_wesm(){
         $ref_no=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
         $data['ref_no']=$ref_no;
+        $data['due_date']=$due_date;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!=''");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,

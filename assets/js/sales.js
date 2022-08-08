@@ -263,14 +263,38 @@ function saveBS(){
 
 function filterSales(){
 	var ref_no= document.getElementById("ref_no").value;
+	var due_date= document.getElementById("due_date").value;
 	var loc= document.getElementById("baseurl").value;
-	window.location=loc+'sales/sales_wesm/'+ref_no;          
+	if(ref_no!=''){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+	window.location=loc+'sales/sales_wesm/'+ref+'/'+due;          
 }
 
 function filterSalesAdjustment(){
 	var ref_no= document.getElementById("ref_no").value;
+	var due_date= document.getElementById("due_date").value;
 	var loc= document.getElementById("baseurl").value;
-	window.location=loc+'sales/sales_wesm_adjustment/'+ref_no;          
+	if(ref_no!=''){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+	window.location=loc+'sales/sales_wesm_adjustment/'+ref+'/'+due;          
 }
 
 

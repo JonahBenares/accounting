@@ -18,7 +18,7 @@
                                     <div class="col-lg-12">
                                         <table width="100%">
                                             <tr>
-                                                <td width="5%"></td>
+                                                <td width="2%"></td>
                                                 <td width="45%">
                                                     <select class="form-control select2" name="participant" id="participant">
                                                         <option value="">-- Select Participant --</option>
@@ -27,11 +27,19 @@
                                                         <?php } ?>
                                                     </select>
                                                 </td>
-                                                <td width="44%">
+                                                <td width="30%">
                                                     <select class="form-control select2" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Reference Number --</option>
                                                         <?php foreach($head AS $r){ ?>
                                                             <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td width="20%">
+                                                    <select class="form-control select2" name="due_date" id="due_date">
+                                                        <option value="">-- Select Due Date --</option>
+                                                        <?php foreach($date AS $d){ ?>
+                                                            <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
