@@ -25,6 +25,14 @@
                                                             <?php } ?>
                                                         </select>
                                                     </td>
+                                                    <td>
+                                                        <select class="form-control select2" name="due_date" id="due_date">
+                                                            <option value="">-- Select Due Date --</option>
+                                                            <?php foreach($date AS $d){ ?>
+                                                                <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </td>
                                                     <td  width="1%"><button type="button" onclick="filterSalesAdjustment();" class="btn btn-primary btn-block">Filter</button></td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                 </tr>
@@ -33,7 +41,7 @@
                                     </div>
                                 </form>
                                 <hr>
-                               <?php if(!empty($details) && !empty($ref_no)){ ?>
+                               <?php if(!empty($details) && (!empty($ref_no) || !empty($due_date))){ ?>
                                 <table class="table-bsordered" width="100%">
                                     <?php 
                                         foreach($details AS $d){ 

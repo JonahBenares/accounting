@@ -174,8 +174,20 @@ function saveBS(){
 
 function filterPurchase(){
     var ref_no= document.getElementById("ref_no").value;
+    var due_date= document.getElementById("due_date").value;
     var loc= document.getElementById("baseurl").value;
-    window.location=loc+'purchases/purchases_wesm/'+ref_no;          
+    if(ref_no!=''){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'purchases/purchases_wesm/'+ref+'/'+due;          
 }
 
 
@@ -188,6 +200,7 @@ function payment_filter() {
 function paid_filter() {
     var ref_no= document.getElementById("reference_number").value;
     var participant= document.getElementById("participant").value;
+    var due_date= document.getElementById("due_date").value;
     var loc= document.getElementById("baseurl").value;
     if(ref_no!=''){
         var ref=ref_no;
@@ -200,7 +213,13 @@ function paid_filter() {
     }else{
         var par='null';
     }
-    window.location=loc+'purchases/paid_list/'+ref+'/'+par; 
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'purchases/paid_list/'+ref+'/'+par+'/'+due; 
 }
 
 function savePayment(){
