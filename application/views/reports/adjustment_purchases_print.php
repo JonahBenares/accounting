@@ -178,19 +178,19 @@
                         </tr>
                         <tr>
                             <td class="font-10 td-yellow p-l-5 p-r-5" colspan="3" align="right">Sub Total</td>
-                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vatables_purchases,2);?></b></td>
-                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_zero_rated,2);?></b></td>
-                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_net,2);?></b></td>
-                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_vat_on_purchase,2);?></b></td>
-                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_ewt,2);?>)</b></td>
-                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style="border-top: 1px solid #000;"><b><?php echo number_format($total_sum,2);?></b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_vatables_purchases,2);?>)</b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_zero_rated,2);?>)</b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_net,2);?>)</b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b>(<?php echo number_format($total_vat_on_purchase,2);?>)</b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style=""><b><?php echo number_format($total_ewt,2);?></b></td>
+                            <td class="font-10 td-yellow p-l-5 p-r-5" align="right" style="border-top: 1px solid #000;"><b>(<?php echo number_format($total_sum,2);?>)</b></td>
                         </tr>
                         <tr>
                             <td colspan="9"><br></td>
                         </tr>
                         <tr>
                             <td class="font-10 p-l-5 p-r-5 td-blue" colspan="8" align="left">TOTAL AMOUNT PAYABLE on or before, <?php echo date('F d,Y',strtotime($due_date))?> &nbsp; &nbsp;&nbsp;        ------------------------------->>>></td>
-                            <td class="font-10 p-l-5 p-r-5 td-blue" align="right"><b><?php echo number_format($total_sum,2);?></b></td>
+                            <td class="font-10 p-l-5 p-r-5 td-blue" align="right"><b>(<?php echo number_format($total_sum,2);?>)</b></td>
                         </tr> 
                         <?php } ?>
                     </table>
