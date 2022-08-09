@@ -117,12 +117,12 @@
                                             $data2[$key]['billing_from'][] = date("F d",strtotime($ads['billing_from']));
                                             $data2[$key]['billing_to'][] = date("F d, Y",strtotime($ads['billing_to']));
                                             $data2[$key]['billing_fromto'][] = date("M. d, Y",strtotime($ads['billing_from']))." - ".date("M. d, Y",strtotime($ads['billing_to']));
-                                            $data2[$key]['vatables_purchases'][] = number_format($ads['vatables_purchases'],2);
-                                            $data2[$key]['vat_on_purchases'][] = number_format($ads['vat_on_purchases'],2);
-                                            $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
-                                            $data2[$key]['zero_rated'][] = number_format($ads['zero_rated'],2);
-                                            $data2[$key]['net'][] = number_format($ads['net'],2);
-                                            $data2[$key]['total'][] = number_format($ads['total'],2);
+                                            $data2[$key]['vatables_purchases'][] = "(".number_format($ads['vatables_purchases'],2).")";
+                                            $data2[$key]['vat_on_purchases'][] = "(".number_format($ads['vat_on_purchases'],2).")";
+                                            $data2[$key]['ewt'][] = number_format($ads['ewt'],2);
+                                            $data2[$key]['zero_rated'][] = "(".number_format($ads['zero_rated'],2).")";
+                                            $data2[$key]['net'][] = "(".number_format($ads['net'],2).")";
+                                            $data2[$key]['total'][] = "(".number_format($ads['total'],2).")";
                                         }
                                         foreach($data2 AS $ad){ 
                                     ?>
