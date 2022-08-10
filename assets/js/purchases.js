@@ -688,3 +688,14 @@ $(document).ready(function() {
 		});
 	}
 });
+
+function filterDue(){
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'purchases/payment_list/'+due;          
+}

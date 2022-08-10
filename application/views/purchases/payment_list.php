@@ -16,13 +16,34 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-10 offset-lg-1">
+                                        <table class='' width='100%'>
+                                            <tr>
+                                                <td>
+                                                    <select class="form-control select2" name="due_date" id="due_date">
+                                                        <option value="">-- Due date --</option>
+                                                        <?php foreach($due_date AS $d){ ?>    
+                                                        <option value="<?php echo $d->due_date;?>" <?php echo ($d->due_date==$due) ? 'selected' : ''; ?>><?php echo date("F d,Y",strtotime($d->due_date));?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td width="1%">
+                                                    <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
+                                                    <button class="btn btn-primary" type="button" onclick="filterDue()">Filter</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-10 offset-lg-1">
                                         <table width="100%" class="table-bordsered">
                                             <tr>
                                                 <td>
                                                     <select class="form-control select2" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Reference Number --</option>
                                                         <?php foreach($head AS $r){ ?>
-                                                            <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?> - <?php echo date("F d, Y",strtotime($r->due_date)); ?></option>
+                                                            <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>

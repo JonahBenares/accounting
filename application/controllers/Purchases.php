@@ -512,14 +512,16 @@ class Purchases extends CI_Controller {
     public function payment_list(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $ref_no=$this->uri->segment(3);
+        $due_date=$this->uri->segment(3);
+        $data['due']=$due_date;
+        $ref_no=$this->uri->segment(4);
         $data['ref_no']=$ref_no;
         $data['purchase_id'] =$this->super_model->select_column_where("purchase_transaction_head","purchase_id","reference_number",$ref_no);
-       /* $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd WHERE reference_number!='' AND balance!='0'");*/
-        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id,pth.due_date FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number!='' AND balance!='0'");
+        /* $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd WHERE reference_number!='' AND balance!='0'");*/
+        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id,pth.due_date FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number!='' AND balance!='0' AND due_date='$due_date'");
+        $data['due_date']=$this->super_model->select_all_order_by("purchase_transaction_head","due_date","ASC");
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
-        
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
