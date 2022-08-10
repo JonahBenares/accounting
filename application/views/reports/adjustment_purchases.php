@@ -133,7 +133,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="pt-1 pb-1 pr-0 pl-0" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['particular']); ?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['particular'])."<br>"; ?></td>
                                         <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['participant']);?></td>
                                         <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
                                         <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['vatables_purchases']);?></td>
