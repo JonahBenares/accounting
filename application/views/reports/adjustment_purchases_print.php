@@ -28,7 +28,7 @@
     </center>
 </div>
 <page size="Legal" >
-    <div style="padding:30px">
+    <div style="padding:10px">
         <table width="100%" class="table-bor table-bordsered" style="border-collapse: collapse;">
             <tr>
                 <td width="5%"></td>
@@ -162,9 +162,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-10 p-l-5 p-r-5"><?php echo implode("<hr class='hr'>",$ad['particular']); ?></td>
+                            <td class="font-10 p-l-5 p-r-5"><?php echo implode("<hr class='hr'>",$ad['particular'])."<br>"; ?></td>
                             <td class="font-10 p-l-5 p-r-5 bor-btm" align="center"><?php echo implode("<hr class='hr'>",$ad['participant']);?></td>
-                            <td class="font-9 p-l-5 p-r-5" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
+                            <td class="font-10 p-l-5 p-r-5" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
                             <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['vatables_purchases']);?></td>
                             <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['zero_rated']);?></td>
                             <td class="font-10 p-l-5 p-r-5" align="right" style=""><?php echo implode("<hr class='hr'>",$ad['net']);?></td>

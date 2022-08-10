@@ -110,9 +110,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-10 td-gray p-l-5 p-r-5" align="left" width="14%"><b>Particular</b></td>
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="left" width="16%"><b>Particular</b></td>
                             <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="22%"><b>Reference Number</b></td>  
-                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="27%"><b>Billing Period</b></td> 
+                            <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="25%"><b>Billing Period</b></td> 
                             <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="8%"><b>Vatable Amount</b></td> 
                             <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Zero Rated Amount</b></td>     
                             <td class="font-10 td-gray p-l-5 p-r-5" align="center" width="9%"><b>Net Sale (Php)</b></td>     
@@ -168,7 +168,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-10 p-l-0 p-r-0"><?php echo implode("<hr class='hr'>",$ad['particular']); ?></td>
+                            <td class="font-10 p-l-0 p-r-0"><?php echo implode("<hr class='hr'>",$ad['particular'])."<br>"; ?></td>
                             <td class="font-10 p-l-0 p-r-0 bor-btm" align="center"><?php echo implode("<hr class='hr'>",$ad['reference_number']);?></td>
                             <td class="font-9 p-l-0 p-r-0" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
                             <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['vatable_sales']);?></td>

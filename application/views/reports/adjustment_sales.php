@@ -139,7 +139,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="pt-1 pb-1 pr-0 pl-0" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['particular']); ?></td>
+                                        <td class="pt-1 pb-1 pr-0 pl-0" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['particular'])."<br>"; ?></td>
                                         <td class="pt-1 pb-1 pr-0 pl-0" style="font-size: 12px;" align="center"><?php echo implode("<hr class='hr'>",$ad['reference_number']);?></td>
                                         <td class="pt-1 pb-1 pr-0 pl-0" style="font-size:12px" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
                                         <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$ad['vatable_sales']);?></td>
