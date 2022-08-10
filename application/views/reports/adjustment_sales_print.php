@@ -168,7 +168,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-10 p-l-0 p-r-0"><?php echo implode("<hr class='hr'>",$ad['particular']); ?></td>
+                            <td class="font-10 p-l-0 p-r-0"><?php echo implode("<hr class='hr'>",$ad['particular'])."<br>"; ?></td>
                             <td class="font-10 p-l-0 p-r-0 bor-btm" align="center"><?php echo implode("<hr class='hr'>",$ad['reference_number']);?></td>
                             <td class="font-9 p-l-0 p-r-0" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
                             <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['vatable_sales']);?></td>
