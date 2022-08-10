@@ -22,7 +22,7 @@
                                                     <select class="form-control select2" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Reference Number --</option>
                                                         <?php foreach($head AS $r){ ?>
-                                                            <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                            <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?> - <?php echo date("F d, Y",strtotime($r->due_date)); ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
