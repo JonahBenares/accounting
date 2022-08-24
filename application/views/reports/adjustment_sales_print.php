@@ -222,7 +222,7 @@
                         <tr>
                             <td width="19%" align="center" class="bor-btm font-11 "><?php echo strtoupper($_SESSION['fullname']);?></td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">JEOMAR DELOS SANTOS</td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">JOEMAR DELOS SANTOS</td>
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-11 ">CRISTY CESAR</td>
                             <td width="1%"></td>
