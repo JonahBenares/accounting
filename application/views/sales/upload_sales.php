@@ -107,7 +107,9 @@ if(!empty($sales_id)){
                                 <form method="POST" id="print_mult">
                                     <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
                                         <thead>
-                                            <tr>    
+                                            <tr>
+                                            <th width="2%"><input class="form-control" type="checkbox" id="select-all"></th>
+                                                    <th width="2%" hidden=""><input class="form-control" type="checkbox" id="select-all"></th>    
                                                 <th width="3%" align="center" style="background:rgb(245 245 245)">
                                                     <!-- <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a> -->
                                                     <?php if($saved==1){ ?>
@@ -166,6 +168,7 @@ if(!empty($sales_id)){
                                                         }
                                                     ?> -->
                                                 </td>
+                                                <td hidden=""></td>
                                                 <td><center><?php echo $d['item_no'];?></center></td>
                                                 <td><?php echo $d['serial_no'];?></td>
                                                 <td><?php echo $d['short_name'];?></td>
@@ -200,6 +203,16 @@ if(!empty($sales_id)){
         </div>
     </section>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#select-all').click(function() {
+        var checked = this.checked;
+        $('input[type="checkbox"]').each(function() {
+        this.checked = checked;
+    });
+    })
+});
+</script>
 
 
                 
