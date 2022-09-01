@@ -247,7 +247,7 @@
                     <td width="5%"></td>
                     <td width="5%"></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td colspan="6"></td>
                     <td colspan="8" align="center">
                         <img class="logo-print m-t-10" src="<?php echo base_url().LOGO_IEMOP;?>">   
@@ -271,10 +271,10 @@
                     <td colspan="5">Market Participant ID No.:</td>
                     <td colspan="10" class="bor-btm" align="center">1580</td>
                     <td colspan="5"></td>
-                </tr>
+                </tr>-->
                 <tr>
                     <td colspan="20"><br></td>
-                </tr>
+                </tr> 
                 <tr>
                     <td colspan="20">
                         <table class="table-bordered font10" width="100%" >
