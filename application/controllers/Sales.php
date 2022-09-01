@@ -183,7 +183,6 @@ class Sales extends CI_Controller {
                         $data['overall_total_sub'][$h]=$overall_total;
                         $data['participant_id_sub'][$h]=$s->participant_id;
                         //if($participant_id==$s->participant_id){
-                        if($vatable_sales!=0 && $zero_rated_sales!=0 && $zero_rated_ecozones!=0 && $vat_on_sales!=0 && $ewt !=0 && $total_amount !=0){
                             $data['sub_part'][]=array(
                                 "participant_id"=>$s->participant_id,
                                 "sub_participant"=>$subparticipant,
@@ -197,7 +196,6 @@ class Sales extends CI_Controller {
                                 //"zero_rated"=>$zero_rated,
                             );
                         //}
-                            }
                         $h++;
                     }
                 }
@@ -241,7 +239,6 @@ class Sales extends CI_Controller {
                         $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                         //$zero_rated= $vat_on_sales - $ewt;
                         $overall_total= ($total_amount + $vat_on_sales) - $ewt;
-                        if($vatable_sales!=0 && $zero_rated_sales!=0 && $zero_rated_ecozones!=0 && $vat_on_sales!=0 && $ewt !=0 && $total_amount !=0){
                         $data['sub_participant_sub'][$z]=$subparticipant;
                         $data['vatable_sales_sub'][$z]=$vatable_sales;
                         $data['vat_on_sales_sub'][$z]=$vat_on_sales;
@@ -262,7 +259,6 @@ class Sales extends CI_Controller {
                             //"zero_rated"=>$zero_rated,
                         );
                         $z++;
-                        }
                     }
                 }
             }
@@ -361,6 +357,7 @@ class Sales extends CI_Controller {
                         $data['overall_total_sub'][$h]=$overall_total;
                         $data['participant_id_sub'][$h]=$s->participant_id;
                         //if($participant_id==$s->participant_id){
+                        if($vatable_sales!=0 && $zero_rated_sales!=0 && $zero_rated_ecozones!=0 && $vat_on_sales!=0 && $ewt !=0 && $total_amount !=0){
                             $data['sub_part'][]=array(
                                 "participant_id"=>$s->participant_id,
                                 "sub_participant"=>$subparticipant,
@@ -374,6 +371,7 @@ class Sales extends CI_Controller {
                                 //"zero_rated"=>$zero_rated,
                             );
                         //}
+                            }
                         $h++;
                     }
                 }
@@ -417,6 +415,7 @@ class Sales extends CI_Controller {
                         $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                         //$zero_rated= $vat_on_sales - $ewt;
                         $overall_total= ($total_amount + $vat_on_sales) - $ewt;
+                        if($vatable_sales!=0 && $zero_rated_sales!=0 && $zero_rated_ecozones!=0 && $vat_on_sales!=0 && $ewt !=0 && $total_amount !=0){
                         $data['sub_participant_sub'][$z]=$subparticipant;
                         $data['vatable_sales_sub'][$z]=$vatable_sales;
                         $data['vat_on_sales_sub'][$z]=$vat_on_sales;
@@ -437,6 +436,7 @@ class Sales extends CI_Controller {
                             //"zero_rated"=>$zero_rated,
                         );
                         $z++;
+                        }
                     }
                 }
             }
