@@ -35,6 +35,7 @@
                                                     </td>
                                                     <td>
                                                         <select class="form-control" name="in_ex_sub" id="in_ex_sub">
+                                                            <option value="">-- Select Include or Exlcude Sub-participant--</option>
                                                                 <option value="0">Include Sub-participant</option>
                                                                 <option value="1">Exclude Sub-participant</option>
                                                         </select>
@@ -72,8 +73,8 @@
                                         <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
                                     </tr>                                    
                                     <tr>
-                                        <td>Due Date</td>
-                                        <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
+                                        <td>Billing Period (To)</td>
+                                        <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
                                     </tr>
                                 
                                 </table>

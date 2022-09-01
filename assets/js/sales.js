@@ -289,6 +289,7 @@ function filterSales(){
 function filterSalesAdjustment(){
 	var ref_no= document.getElementById("ref_no").value;
 	var due_date= document.getElementById("due_date").value;
+	var in_ex_sub= document.getElementById("in_ex_sub").value;
 	var loc= document.getElementById("baseurl").value;
 	if(ref_no!=''){
         var ref=ref_no;
@@ -301,7 +302,13 @@ function filterSalesAdjustment(){
     }else{
         var due='null';
     }
-	window.location=loc+'sales/sales_wesm_adjustment/'+ref+'/'+due;          
+
+    if(in_ex_sub!=''){
+        var sub=in_ex_sub;
+    }else{
+        var sub='null';
+    }
+	window.location=loc+'sales/sales_wesm_adjustment/'+ref+'/'+due+'/'+sub;          
 }
 
 
