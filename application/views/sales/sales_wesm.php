@@ -74,14 +74,15 @@
                                 <br>
                                 <div class="table-responsive">
                                     <form method="POST" id="print_mult">
-                                        <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
+                                        <table class="table-bordered table table-hover " id="table-5" style="width:200%;">
                                             <thead>
-                                                <tr>    
+                                                <tr>         
+                                                    <th width="2%"><input class="form-control" type="checkbox" id="select-all"></th>
+                                                    <th width="2%" hidden=""><input class="form-control" type="checkbox" id="select-all"></th>
                                                     <th width="2%" align="center" style="background:rgb(245 245 245)">
                                                         <!-- <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a> -->
                                                         <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button>
-                                                    </th>      
-                                                    <th width="2%"></th>
+                                                    </th>
                                                     <th>Item No</th>
                                                     <th>BS No.</th>
                                                     <th>OR No.</th>
@@ -129,6 +130,7 @@
                                                         <?php } ?> -->
                                                             
                                                     </td>
+                                                    <td hidden=""></td>
                                                     <td>
                                                         <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="BSupdate" data-toggle="modal" data-target="#updateSerial" data-series="<?php echo $s['serial_no']; ?>" data-id="<?php echo $s['sales_detail_id'];?>">
                                                             <span class="m-0 fas fa-edit"></span>
@@ -254,4 +256,15 @@
             </div>
         </div>
     </div>
-</div>                             
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#select-all').click(function() {
+        var checked = this.checked;
+        $('input[type="checkbox"]').each(function() {
+        this.checked = checked;
+    });
+    })
+});
+</script>                             

@@ -148,7 +148,7 @@ class Sales extends CI_Controller {
                 $data['ewt'][$x]=$p->ewt;
                 $data['overall_total'][$x]=$overall_total;
                 $data['participant_id'][$x]=$participant_id;
-
+                
                 $data['sub'][]=array(
                     "participant_id"=>$participant_id,
                     "sub_participant"=>$p->billing_id,
