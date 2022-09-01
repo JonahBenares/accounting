@@ -1161,6 +1161,7 @@ class Purchases extends CI_Controller {
             $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
             $total_amount_disp= $this->super_model->select_sum("payment_head", "total_amount", "payment_identifier", $p->payment_identifier);
             //$total_amount=($energy + $vat_on_purchases) - $ewt;
+            $data['count']=$this->super_model->count_custom_where("payment_head","payment_identifier='$payment_identifier'");
             $data['total']=$total_amount_disp;
             $data['energy']=$energy_total;
             $data['vat_on_purchases']=$vat_on_purchases_total;
