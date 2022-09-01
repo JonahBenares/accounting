@@ -264,6 +264,7 @@ function saveBS(){
 function filterSales(){
 	var ref_no= document.getElementById("ref_no").value;
 	var due_date= document.getElementById("due_date").value;
+	var in_ex_sub= document.getElementById("in_ex_sub").value;
 	var loc= document.getElementById("baseurl").value;
 	if(ref_no!=''){
         var ref=ref_no;
@@ -276,7 +277,13 @@ function filterSales(){
     }else{
         var due='null';
     }
-	window.location=loc+'sales/sales_wesm/'+ref+'/'+due;          
+
+    if(in_ex_sub!=''){
+        var sub=in_ex_sub;
+    }else{
+        var sub='null';
+    }
+	window.location=loc+'sales/sales_wesm/'+ref+'/'+due+'/'+sub;          
 }
 
 function filterSalesAdjustment(){
