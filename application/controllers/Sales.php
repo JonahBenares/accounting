@@ -1194,80 +1194,76 @@ class Sales extends CI_Controller {
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE due_date!=''");
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        if($in_ex_sub == '0'){
+        //$this->load->view('template/navbar');
+        if($in_ex_sub==0){
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
-            $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
-            $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
-            $data['details'][]=array(
-                'sales_detail_id'=>$d->sales_detail_id,
-                'sales_id'=>$d->sales_id,
-                'item_no'=>$d->item_no,
-                'series_number'=>$series_number,
-                'old_series_no_col'=>$old_series_no,
-                'old_series_no'=>$d->old_series_no,
-                'short_name'=>$d->short_name,
-                'billing_id'=>$d->billing_id,
-                'company_name'=>$d->company_name,
-                'facility_type'=>$d->facility_type,
-                'wht_agent'=>$d->wht_agent,
-                'ith_tag'=>$d->ith_tag,
-                'non_vatable'=>$d->non_vatable,
-                'zero_rated'=>$d->zero_rated,
-                'vatable_sales'=>$d->vatable_sales,
-                'vat_on_sales'=>$d->vat_on_sales,
-                'zero_rated_sales'=>$d->zero_rated_sales,
-                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
-                'ewt'=>$d->ewt,
-                'serial_no'=>$d->serial_no,
-                'total_amount'=>$d->total_amount,
-                'reference_number'=>$d->reference_number,
-                'transaction_date'=>$d->transaction_date,
-                'billing_from'=>$d->billing_from,
-                'billing_to'=>$d->billing_to,
-                'due_date'=>$d->due_date,
-                'print_counter'=>$d->print_counter
-            );
+                $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                $data['details'][]=array(
+                    'sales_detail_id'=>$d->sales_detail_id,
+                    'sales_id'=>$d->sales_id,
+                    'item_no'=>$d->item_no,
+                    'series_number'=>$series_number,
+                    'old_series_no_col'=>$old_series_no,
+                    'old_series_no'=>$d->old_series_no,
+                    'short_name'=>$d->short_name,
+                    'billing_id'=>$d->billing_id,
+                    'company_name'=>$d->company_name,
+                    'facility_type'=>$d->facility_type,
+                    'wht_agent'=>$d->wht_agent,
+                    'ith_tag'=>$d->ith_tag,
+                    'non_vatable'=>$d->non_vatable,
+                    'zero_rated'=>$d->zero_rated,
+                    'vatable_sales'=>$d->vatable_sales,
+                    'vat_on_sales'=>$d->vat_on_sales,
+                    'zero_rated_sales'=>$d->zero_rated_sales,
+                    'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                    'ewt'=>$d->ewt,
+                    'serial_no'=>$d->serial_no,
+                    'total_amount'=>$d->total_amount,
+                    'reference_number'=>$d->reference_number,
+                    'transaction_date'=>$d->transaction_date,
+                    'billing_from'=>$d->billing_from,
+                    'billing_to'=>$d->billing_to,
+                    'due_date'=>$d->due_date,
+                    'print_counter'=>$d->print_counter
+                );
             }
-        } else if($in_ex_sub == '1'){
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
-                $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$d->billing_id);
-                $subpartcipant = $this->super_model->select_column_where("subpartcipant","sub_participant","participant_id",$participant_id);
-            $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
-            $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
-            if($subpartcipant != $participant_id){
-            $data['details'][]=array(
-                'sales_detail_id'=>$d->sales_detail_id,
-                'sales_id'=>$d->sales_id,
-                'item_no'=>$d->item_no,
-                'series_number'=>$series_number,
-                'old_series_no_col'=>$old_series_no,
-                'old_series_no'=>$d->old_series_no,
-                'short_name'=>$d->short_name,
-                'billing_id'=>$d->billing_id,
-                'company_name'=>$d->company_name,
-                'facility_type'=>$d->facility_type,
-                'wht_agent'=>$d->wht_agent,
-                'ith_tag'=>$d->ith_tag,
-                'non_vatable'=>$d->non_vatable,
-                'zero_rated'=>$d->zero_rated,
-                'vatable_sales'=>$d->vatable_sales,
-                'vat_on_sales'=>$d->vat_on_sales,
-                'zero_rated_sales'=>$d->zero_rated_sales,
-                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
-                'ewt'=>$d->ewt,
-                'serial_no'=>$d->serial_no,
-                'total_amount'=>$d->total_amount,
-                'reference_number'=>$d->reference_number,
-                'transaction_date'=>$d->transaction_date,
-                'billing_from'=>$d->billing_from,
-                'billing_to'=>$d->billing_to,
-                'due_date'=>$d->due_date,
-                'print_counter'=>$d->print_counter
-            );
-                    }
-                }
+        }else{
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id INNER JOIN participant p ON sd.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id WHERE p.participant_id!=sp.sub_participant AND saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
+                $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                $data['details'][]=array(
+                    'sales_detail_id'=>$d->sales_detail_id,
+                    'sales_id'=>$d->sales_id,
+                    'item_no'=>$d->item_no,
+                    'series_number'=>$series_number,
+                    'old_series_no_col'=>$old_series_no,
+                    'old_series_no'=>$d->old_series_no,
+                    'short_name'=>$d->short_name,
+                    'billing_id'=>$d->billing_id,
+                    'company_name'=>$d->company_name,
+                    'facility_type'=>$d->facility_type,
+                    'wht_agent'=>$d->wht_agent,
+                    'ith_tag'=>$d->ith_tag,
+                    'non_vatable'=>$d->non_vatable,
+                    'zero_rated'=>$d->zero_rated,
+                    'vatable_sales'=>$d->vatable_sales,
+                    'vat_on_sales'=>$d->vat_on_sales,
+                    'zero_rated_sales'=>$d->zero_rated_sales,
+                    'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                    'ewt'=>$d->ewt,
+                    'serial_no'=>$d->serial_no,
+                    'total_amount'=>$d->total_amount,
+                    'reference_number'=>$d->reference_number,
+                    'transaction_date'=>$d->transaction_date,
+                    'billing_from'=>$d->billing_from,
+                    'billing_to'=>$d->billing_to,
+                    'due_date'=>$d->due_date,
+                    'print_counter'=>$d->print_counter
+                );
             }
+        }
         $this->load->view('sales/sales_wesm',$data);
         $this->load->view('template/footer');
     }
