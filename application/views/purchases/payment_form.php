@@ -446,7 +446,7 @@
         var canvas_image_width = HTML_Width;
         var canvas_image_height = HTML_Height;
         var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
-        html2canvas($(".canvas_div_pdf:eq(0)")[0],{allowTaint:true, 
+        html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
             useCORS: true,
             logging: false,
             height: window.outerHeight + window.innerHeight,
@@ -459,20 +459,25 @@
                 pdf.addPage(PDF_Width, PDF_Height);
                 pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
             }
-            html2canvas($(".canvas_div_pdf:eq(1)")[0],{allowTaint:true, 
-                useCORS: true,
-                logging: false,
-                height: window.outerHeight + window.innerHeight,
-                windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
-                canvas.getContext('2d');
-                var imgData = canvas.toDataURL("image/jpeg", 1.0);
-                pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-                for (var i = 1; i <= totalPDFPages; i++) { 
-                    pdf.addPage(PDF_Width, PDF_Height);
-                    pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-                }
+            var check = document.getElementsByClassName('canvas_div_pdf');
+            if (check.length > 1) {
+                html2canvas($(".canvas_div_pdf")[1],{allowTaint:true, 
+                    useCORS: true,
+                    logging: false,
+                    height: window.outerHeight + window.innerHeight,
+                    windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
+                    canvas.getContext('2d');
+                    var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+                    for (var i = 1; i <= totalPDFPages; i++) { 
+                        pdf.addPage(PDF_Width, PDF_Height);
+                        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+                    }
+                    pdf.save("Payment Form"+".pdf");
+                });
+            }else{
                 pdf.save("Payment Form"+".pdf");
-            });
+            }
         });
     };
 </script>
