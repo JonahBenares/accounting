@@ -177,12 +177,12 @@
                                         $overall_totals+=$overall_total_sub[$h];
                         ?>
                         <tr>
-                            <td class="p-r-10 p-b-5"><?php echo $sub_participant_sub[$h];?></td>
-                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($vatable_sales_sub[$h],2); ?></td>
-                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($zero_rated_sales_sub[$h],2); ?></td>
-                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($vat_on_sales_sub[$h],2); ?></td>
-                            <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($ewt_s[$h],2); ?>)</td>
-                            <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($overall_total_sub[$h],2); ?></b></td>
+                            <td class="p-r-10 p-b-5"><?php echo $sps['sub_participant'];?></td>
+                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($sps['vatable_sales'],2); ?></td>
+                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($sps['zero_rated_sales'],2); ?></td>
+                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($sps['vat_on_sales'],2); ?></td>
+                            <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($sps['ewt'],2); ?>)</td>
+                            <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($sps['overall_total'],2); ?></b></td>
                         </tr> 
                         <?php }  $h++; } $x++; } } ?>
                         <tr>
@@ -400,12 +400,18 @@
                                         $overall_totals+=$overall_total_sub[$h];
                         ?>
                         <tr>
-                            <td class="p-r-10 p-b-5"><?php echo $sub_participant_sub[$h];?></td>
+                            <!-- <td class="p-r-10 p-b-5"><?php echo $sub_participant_sub[$h];?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($vatable_sales_sub[$h],2); ?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($zero_rated_sales_sub[$h],2); ?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($vat_on_sales_sub[$h],2); ?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($ewt_s[$h],2); ?></td>
-                            <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($overall_total_sub[$h],2); ?></b></td>
+                            <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($overall_total_sub[$h],2); ?></b></td> -->
+                            <td class="p-r-10 p-b-5"><?php echo $sps['sub_participant'];?></td>
+                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($sps['vatable_sales'],2); ?></td>
+                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($sps['zero_rated_sales'],2); ?></td>
+                            <td class="p-r-10 p-b-5" align="right"><?php echo number_format($sps['vat_on_sales'],2); ?></td>
+                            <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($sps['ewt'],2); ?>)</td>
+                            <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($sps['overall_total'],2); ?></b></td>
                         </tr> 
                         <?php } $h++; } $x++; } } ?>
                         <tr>
