@@ -357,7 +357,7 @@ class Sales extends CI_Controller {
                         $data['overall_total_sub'][$h]=$overall_total;
                         $data['participant_id_sub'][$h]=$s->participant_id;
                         //if($participant_id==$s->participant_id){
-                        if($vatable_sales!=0 && $zero_rated_sales!=0 && $zero_rated_ecozones!=0 && $vat_on_sales!=0 && $ewt !=0 && $total_amount !=0){
+                        if($total_amount !=0){
                             $data['sub_part'][]=array(
                                 "participant_id"=>$s->participant_id,
                                 "sub_participant"=>$subparticipant,
@@ -415,7 +415,7 @@ class Sales extends CI_Controller {
                         $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                         //$zero_rated= $vat_on_sales - $ewt;
                         $overall_total= ($total_amount + $vat_on_sales) - $ewt;
-                        if($vatable_sales!=0 && $zero_rated_sales!=0 && $zero_rated_ecozones!=0 && $vat_on_sales!=0 && $ewt !=0 && $total_amount !=0){
+                        if($total_amount !=0){
                         $data['sub_participant_sub'][$z]=$subparticipant;
                         $data['vatable_sales_sub'][$z]=$vatable_sales;
                         $data['vat_on_sales_sub'][$z]=$vat_on_sales;
@@ -1230,7 +1230,7 @@ class Sales extends CI_Controller {
                 );
             }
         }else if($in_ex_sub==1){
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id INNER JOIN participant p ON sd.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id WHERE p.participant_id!=sp.sub_participant AND saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id INNER JOIN participant p ON sd.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id WHERE p.participant_id!=sp.sub_participant AND saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date') GROUP BY p.participant_id") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $data['details'][]=array(
