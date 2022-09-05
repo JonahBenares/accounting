@@ -1890,7 +1890,7 @@ class Sales extends CI_Controller {
             );
         }
         }else if($in_ex_sub==1){
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id WHERE p.participant_id!=sp.sub_participant AND saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id WHERE p.participant_id!=sp.sub_participant AND saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date') GROUP BY p.participant_id") AS $d){
             $data['details'][]=array(
                 'sales_detail_id'=>$d->adjustment_detail_id,
                 'sales_adjustment_id'=>$d->sales_adjustment_id,
