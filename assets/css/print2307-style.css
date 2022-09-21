@@ -61,6 +61,7 @@
         top: 215px;
         position: absolute;
         font-size: 12px;
+        text-transform: uppercase;
     }
     .payor{
         left: 35px; 
@@ -89,7 +90,7 @@
         top: 254px;
         position: absolute;
         font-size: 11px;
-        
+        text-transform: uppercase;
     }
     .address2{
         left: 35px; 
