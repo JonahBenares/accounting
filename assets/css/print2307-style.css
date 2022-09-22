@@ -87,10 +87,12 @@
     }
     .address1{
         left: 35px; 
-        top: 254px;
+        top: 250px;
         position: absolute;
         font-size: 11px;
         text-transform: uppercase;
+        text-align: initial;
+        width: 675px;
     }
     .address2{
         left: 35px; 
@@ -363,9 +365,11 @@
         }
         .address1{
             left:40px; 
-            top: 335px;
+            top: 326px;
             position: absolute;
             font-size: 15px;
+            text-align: initial;
+            width: 890px;
         }
         .address2{
             left:40px; 
