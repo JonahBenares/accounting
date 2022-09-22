@@ -1241,7 +1241,6 @@ class Sales extends CI_Controller {
                 );
             }
         }else if($in_ex_sub==1){
-            // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id INNER JOIN participant p ON sd.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id WHERE p.participant_id!=sp.sub_participant AND saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date') GROUP BY p.participant_id") AS $d){
             $sql='';
             if($ref_no!='null'){
                 $sql.= "sh.reference_number = '$ref_no' AND ";
@@ -1251,10 +1250,14 @@ class Sales extends CI_Controller {
                 $sql.= "sh.due_date = '$due_date' AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE p.participant_id!=sp.sub_participant AND saved='1' AND ".$query;
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id INNER JOIN participant p ON sd.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){
+            $qu = " WHERE saved='1' AND ".$query;
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu") AS $d){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
+                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                //echo $sub_participant. "<br>";
+                if($participant_id != $sub_participant){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_detail_id,
                     'sales_id'=>$d->sales_id,
@@ -1284,6 +1287,7 @@ class Sales extends CI_Controller {
                     'due_date'=>$d->due_date,
                     'print_counter'=>$d->print_counter
                 );
+                }
             }
         }
         $this->load->view('sales/sales_wesm',$data);
@@ -1931,8 +1935,13 @@ class Sales extends CI_Controller {
                 $sql.= "sah.due_date = '$due_date' AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE p.participant_id!=sp.sub_participant AND saved='1' AND ".$query;
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){
+            $qu = " WHERE saved='1' AND ".$query;
+            /*foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){*/
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu") AS $d){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
+                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                //echo $sub_participant. "<br>";
+                if($participant_id != $sub_participant){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->adjustment_detail_id,
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
@@ -1962,6 +1971,7 @@ class Sales extends CI_Controller {
                     'due_date'=>$d->due_date,
                     'print_counter'=>$d->print_counter
                 );
+                }
             }
         }
         $this->load->view('sales/sales_wesm_adjustment',$data);
