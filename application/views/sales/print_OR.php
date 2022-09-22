@@ -76,7 +76,7 @@
                 <td colspan="5"></td>
             </tr> -->
             <tr>
-                <td colspan="20" style="padding-top: 7px;">
+                <td colspan="20" style="padding-top: 0px;">
                     <table width="100%" class="table-bordsered" >
                         <tr>
                             <td style="padding: 0px;" width="5%"></td>
@@ -216,7 +216,7 @@
 
                                       <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 12px;" width="60%"> VATABLE (V) </td>
-                                        <td width="40%" align="right" style="font-size: 11px;padding-top:3px;"><?php echo number_format($sum_amount,2); ?></td>
+                                        <td width="40%" align="right" style="font-size: 11px;padding-top:5px;"><?php echo number_format($sum_amount,2); ?></td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 10px;">VAT EXEMPT (E)</td>
