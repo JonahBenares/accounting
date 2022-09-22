@@ -33,6 +33,13 @@
                                                             <?php } ?>
                                                         </select>
                                                     </td>
+                                                    <td>
+                                                        <select class="form-control" name="in_ex_sub" id="in_ex_sub">
+                                                            <option value="">-- Select Include or Exlcude Sub-participant--</option>
+                                                                <option value="0">Include Sub-participant</option>
+                                                                <option value="1">Exclude Sub-participant</option>
+                                                        </select>
+                                                    </td>
                                                     <td  width="1%"><button type="button" onclick="filterSalesAdjustment();" class="btn btn-primary btn-block">Filter</button></td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                 </tr>

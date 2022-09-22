@@ -519,7 +519,8 @@ class Purchases extends CI_Controller {
         $data['purchase_id'] =$this->super_model->select_column_where("purchase_transaction_head","purchase_id","reference_number",$ref_no);
         /* $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd WHERE reference_number!='' AND balance!='0'");*/
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id,pth.due_date FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number!='' AND balance!='0' AND due_date='$due_date'");
-        $data['due_date']=$this->super_model->select_all_order_by("purchase_transaction_head","due_date","ASC");
+        //$data['due_date']=$this->super_model->select_all_order_by("purchase_transaction_head","due_date","ASC");
+        $data['due_date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE purchase_id NOT IN (SELECT purchase_id FROM payment_head) GROUP BY due_date");
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
             $data['details'][]=array(
@@ -1160,6 +1161,7 @@ class Purchases extends CI_Controller {
             $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
             $total_amount_disp= $this->super_model->select_sum("payment_head", "total_amount", "payment_identifier", $p->payment_identifier);
             //$total_amount=($energy + $vat_on_purchases) - $ewt;
+            $data['count']=$this->super_model->count_custom_where("payment_head","payment_identifier='$payment_identifier'");
             $data['total']=$total_amount_disp;
             $data['energy']=$energy_total;
             $data['vat_on_purchases']=$vat_on_purchases_total;

@@ -39,7 +39,8 @@
            <label class=""><?php echo $tin[0]; ?></label> 
            <label class=""><?php echo $tin[1]; ?></label> 
            <label class=""><?php echo $tin[2]; ?></label> 
-           <label class="last1">0000</label> 
+           <label class="last1"><?php echo (!empty($tin[3])) ? $tin[3] : ''; ?></label> 
+           <!-- <label class="last1">0000</label>  -->
         </div>
         <label class="payee"><?php echo $name; ?></label>
         <label class="address1"><?php echo $address; ?></label>
@@ -49,10 +50,10 @@
            <label class="">008</label> 
            <label class="">691</label> 
            <label class="">287</label> 
-           <label class="last1">0000</label> 
+           <label class="last1">000</label> 
         </div>
         <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
-        <label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label>
+        <label class="address3">#88 ELOISA Q'S BLDG. COR. RIZAL-MABINI STS, BRGY. 22, BACOLOD CITY</label>
         <label class="zip2">6100</label>
         <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label>
         <label class="row1-col2">WC160</label>
