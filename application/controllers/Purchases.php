@@ -950,6 +950,10 @@ class Purchases extends CI_Controller {
         $purchase_id = $this->uri->segment(3);
         $purchase_detail_id = $this->uri->segment(4);
         $data['purchase_detail_id']=$purchase_detail_id;
+        $data['purchase_id']=$purchase_id;
+
+        $data['prev_purchase_details_id'] = $this->super_model->custom_query("SELECT purchase_detail_id FROM purchase_transaction_details WHERE purchase_detail_id < $purchase_detail_id AND purchase_id='$purchase_id' ORDER BY purchase_detail_id DESC LIMIT 1");
+        $data['next_purchase_details_id'] = $this->super_model->custom_query("SELECT purchase_detail_id FROM purchase_transaction_details WHERE purchase_detail_id > $purchase_detail_id AND purchase_id='$purchase_id' ORDER BY purchase_detail_id ASC LIMIT 1");
 
         $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
 

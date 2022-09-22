@@ -18,10 +18,15 @@
 
 <div class="" id="printbutton">
     <center>
+        <?php foreach($prev_purchase_details_id AS $prev){ ?>
+        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $prev->purchase_detail_id; ?>" class="btn btn-info">Previous</a>
+        <?php } ?>
         <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
-
         <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo $billing_month; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
+        <?php foreach($next_purchase_details_id AS $next){ ?>
+        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $next->purchase_detail_id; ?>" class="btn btn-primary">Next</a>
+        <?php } ?>
 
 
     </center>
@@ -53,7 +58,7 @@
            <label class="last1">000</label> 
         </div>
         <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
-        <label class="address3">#88 ELOISA Q'S BLDG. COR. RIZAL-MABINI STS, BRGY. 22, BACOLOD CITY</label>
+        <label class="address3">#88 ELOISA Q'S BLDG. COR. RIZAL-MABINI STS., BRGY. 22, BACOLOD CITY</label>
         <label class="zip2">6100</label>
         <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label>
         <label class="row1-col2">WC160</label>
