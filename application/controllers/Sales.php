@@ -52,7 +52,9 @@ class Sales extends CI_Controller {
     public function upload_sales()
     {
         $id=$this->uri->segment(3);
+        $sub=$this->uri->segment(4);
         $data['sales_id'] = $id;
+        $data['sub'] = $sub;
         $data['identifier_code']=$this->generateRandomString();
         if(!empty($id)){
             foreach($this->super_model->select_row_where("sales_transaction_head", "sales_id",$id) AS $h){
@@ -63,6 +65,7 @@ class Sales extends CI_Controller {
                 $data['due_date']=$h->due_date;
                 $data['saved']=$h->saved;
                 //$data['adjustment']=$h->adjustment;
+            if($sub==0 ||  $sub=='null'){
                 foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_detail_id,
@@ -86,7 +89,37 @@ class Sales extends CI_Controller {
                         'print_counter'=>$d->print_counter
                     );
                 }
+        }else if($sub==1){
+            foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
+                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                if($participant_id != $sub_participant){
+                    $data['details'][]=array(
+                        'sales_detail_id'=>$d->sales_detail_id,
+                        'sales_id'=>$d->sales_id,
+                        'item_no'=>$d->item_no,
+                        'short_name'=>$d->short_name,
+                        'billing_id'=>$d->billing_id,
+                        'company_name'=>$d->company_name,
+                        'facility_type'=>$d->facility_type,
+                        'wht_agent'=>$d->wht_agent,
+                        'ith_tag'=>$d->ith_tag,
+                        'non_vatable'=>$d->non_vatable,
+                        'zero_rated'=>$d->zero_rated,
+                        'vatable_sales'=>$d->vatable_sales,
+                        'vat_on_sales'=>$d->vat_on_sales,
+                        'zero_rated_sales'=>$d->zero_rated_sales,
+                        'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                        'ewt'=>$d->ewt,
+                        'serial_no'=>$d->serial_no,
+                        'total_amount'=>$d->total_amount,
+                        'print_counter'=>$d->print_counter
+                    );
+                        }
+                    }
+                }
             }
+
         }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -1241,7 +1274,6 @@ class Sales extends CI_Controller {
                 );
             }
         }else if($in_ex_sub==1){
-            // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id INNER JOIN participant p ON sd.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id WHERE p.participant_id!=sp.sub_participant AND saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date') GROUP BY p.participant_id") AS $d){
             $sql='';
             if($ref_no!='null'){
                 $sql.= "sh.reference_number = '$ref_no' AND ";
@@ -1251,10 +1283,14 @@ class Sales extends CI_Controller {
                 $sql.= "sh.due_date = '$due_date' AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE p.participant_id!=sp.sub_participant AND saved='1' AND ".$query;
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id INNER JOIN participant p ON sd.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){
+            $qu = " WHERE saved='1' AND ".$query;
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu") AS $d){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
+                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                //echo $sub_participant. "<br>";
+                if($participant_id != $sub_participant){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_detail_id,
                     'sales_id'=>$d->sales_id,
@@ -1284,6 +1320,7 @@ class Sales extends CI_Controller {
                     'due_date'=>$d->due_date,
                     'print_counter'=>$d->print_counter
                 );
+                }
             }
         }
         $this->load->view('sales/sales_wesm',$data);
@@ -1931,8 +1968,13 @@ class Sales extends CI_Controller {
                 $sql.= "sah.due_date = '$due_date' AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE p.participant_id!=sp.sub_participant AND saved='1' AND ".$query;
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){
+            $qu = " WHERE saved='1' AND ".$query;
+            /*foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){*/
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu") AS $d){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
+                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                //echo $sub_participant. "<br>";
+                if($participant_id != $sub_participant){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->adjustment_detail_id,
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
@@ -1962,6 +2004,7 @@ class Sales extends CI_Controller {
                     'due_date'=>$d->due_date,
                     'print_counter'=>$d->print_counter
                 );
+                }
             }
         }
         $this->load->view('sales/sales_wesm_adjustment',$data);
