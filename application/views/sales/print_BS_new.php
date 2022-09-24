@@ -169,12 +169,18 @@
                                 foreach($sub_part AS $sps){ 
                                     if($sps['participant_id']==$as['participant_id']){
                                         if($x <= 14){ 
-                                        $vatable+=$vatable_sales_sub[$h]; 
-                                        $zero+=$zero_rated_sales_sub[$h]; 
-                                        $total+=$total_amount_sub[$h]; 
-                                        $vat+=$vat_on_sales_sub[$h]; 
-                                        $ewt_arr+=$ewt_s[$h];
-                                        $overall_totals+=$overall_total_sub[$h];
+                                        // $vatable+=$vatable_sales_sub[$h]; 
+                                        // $zero+=$zero_rated_sales_sub[$h]; 
+                                        // $total+=$total_amount_sub[$h]; 
+                                        // $vat+=$vat_on_sales_sub[$h]; 
+                                        // $ewt_arr+=$ewt_s[$h];
+                                        // $overall_totals+=$overall_total_sub[$h];
+                                        $vatable+=$sps['vatable_sales']; 
+                                        $zero+=$sps['zero_rated_sales']; 
+                                        //$total+=$sps['overall_total']; 
+                                        $vat+=$sps['vat_on_sales']; 
+                                        $ewt_arr+=$sps['ewt'];
+                                        $overall_totals+=$sps['overall_total'];
                         ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><?php echo $sps['sub_participant'];?></td>
@@ -392,12 +398,18 @@
                                 foreach($sub_part_second AS $sps){ 
                                     if($sps['participant_id']==$sec['participant_id']){
                                         if($x >= 15){ 
-                                        $vatable+=$vatable_sales_sub[$h]; 
-                                        $zero+=$zero_rated_sales_sub[$h]; 
-                                        $total+=$total_amount_sub[$h]; 
-                                        $vat+=$vat_on_sales_sub[$h]; 
-                                        $ewt_arr+=$ewt_s[$h];
-                                        $overall_totals+=$overall_total_sub[$h];
+                                        // $vatable+=$vatable_sales_sub[$h]; 
+                                        // $zero+=$zero_rated_sales_sub[$h]; 
+                                        // $total+=$total_amount_sub[$h]; 
+                                        // $vat+=$vat_on_sales_sub[$h]; 
+                                        // $ewt_arr+=$ewt_s[$h];
+                                        // $overall_totals+=$overall_total_sub[$h];
+                                        $vatable+=$sps['vatable_sales']; 
+                                        $zero+=$sps['zero_rated_sales']; 
+                                        //$total+=$sps['overall_total']; 
+                                        $vat+=$sps['vat_on_sales']; 
+                                        $ewt_arr+=$sps['ewt'];
+                                        $overall_totals+=$sps['overall_total'];
                         ?>
                         <tr>
                             <!-- <td class="p-r-10 p-b-5"><?php echo $sub_participant_sub[$h];?></td>
