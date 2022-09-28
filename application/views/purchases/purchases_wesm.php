@@ -131,7 +131,6 @@ element.addEventListener("click", onClick);*/
                                                                 <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                             </a>
                                                         </div>
-                                                        <a /a>
                                                  
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
