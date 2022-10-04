@@ -699,3 +699,37 @@ function filterDue(){
     }
     window.location=loc+'purchases/payment_list/'+due;          
 }
+
+function updatePurchases(baseurl,count,purchase_detail_id,purchase_id,billing_id){
+    var redirect = baseurl+"purchases/update_details";
+    var or_no=document.getElementById("or_no"+count).value;
+    var total_update=document.getElementById("total_update"+count).value;
+    var orig_yes=document.getElementById("orig_yes"+count);
+    if(orig_yes.checked){
+        var original_copy=1;
+    }
+    var orig_no=document.getElementById("orig_no"+count);
+    if(orig_no.checked){
+        var original_copy=2;
+    }
+    var scanned_yes=document.getElementById("scanned_yes"+count);
+    if(scanned_yes.checked){
+        var scanned_copy=1;
+    }
+    var scanned_no=document.getElementById("scanned_no"+count);
+    if(scanned_no.checked){
+        var scanned_copy=2;
+    }
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'purchase_detail_id='+purchase_detail_id+'&purchase_id='+purchase_id+'&billing_id='+billing_id+'&or_no='+or_no+'&total_update='+total_update+'&original_copy='+original_copy+'&scanned_copy='+scanned_copy,
+        dataType: "json",
+		success: function(response){
+			document.getElementById("or_no"+count).value=response.or_no;
+			document.getElementById("total_update"+count).value=response.total_update;
+		}
+	});
+	
+
+}

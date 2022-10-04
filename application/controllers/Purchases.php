@@ -61,7 +61,11 @@ class Purchases extends CI_Controller {
                         'ewt'=>$d->ewt,
                         'serial_no'=>$d->serial_no,
                         'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter
+                        'print_counter'=>$d->print_counter,
+                        'or_no'=>$d->or_no,
+                        'total_update'=>$d->total_update,
+                        'original_copy'=>$d->original_copy,
+                        'scanned_copy'=>$d->scanned_copy,
                     );
                 }
             }
@@ -919,7 +923,12 @@ class Purchases extends CI_Controller {
                 'billing_from'=>$d->billing_from,
                 'billing_to'=>$d->billing_to,
                 'due_date'=>$d->due_date,
-                'print_counter'=>$d->print_counter
+                'print_counter'=>$d->print_counter,
+                'or_no'=>$d->or_no,
+                'total_update'=>$d->total_update,
+                'amount_update'=>$d->amount_update,
+                'original_copy'=>$d->original_copy,
+                'scanned_copy'=>$d->scanned_copy,
             );
         }
         $this->load->view('purchases/purchases_wesm',$data);
@@ -1598,5 +1607,27 @@ class Purchases extends CI_Controller {
             }
         }
         echo $adjust_identifier;
+    }
+
+    public function update_details(){
+        $purchase_detail_id=$this->input->post('purchase_detail_id');
+        $purchase_id=$this->input->post('purchase_id');
+        $billing_id=$this->input->post('billing_id');
+        $or_no=$this->input->post('or_no');
+        $total_update=$this->input->post('total_update');
+        $original_copy=$this->input->post('original_copy');
+        $scanned_copy=$this->input->post('scanned_copy');
+        $data_update=array(
+            "or_no"=>$or_no,
+            "total_update"=>$total_update,
+            "original_copy"=>$original_copy,
+            "scanned_copy"=>$scanned_copy,
+        );
+        if($this->super_model->update_custom_where("purchase_transaction_details", $data_update, "purchase_detail_id='$purchase_detail_id' AND purchase_id='$purchase_id' AND billing_id='$billing_id'")){
+            foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_detail_id='$purchase_detail_id' AND purchase_id='$purchase_id' AND billing_id='$billing_id'") AS $latest_data){
+                $return = array('or_no'=>$latest_data->or_no, 'total_update'=>$latest_data->total_update, 'original_copy'=>$latest_data->original_copy, 'scanned_copy'=>$latest_data->scanned_copy);
+            }
+            echo json_encode($return);
+        }
     }
 }

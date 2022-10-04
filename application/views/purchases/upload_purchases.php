@@ -107,11 +107,15 @@
                                             <th>Vat On Purchases</th>
                                             <th>EWT</th>
                                             <th>Total Amount</th>
+                                            <th>OR Number</th>
+                                            <th>Total Amount</th>
+                                            <th>Original Copy</th>
+                                            <th>Scanned Copy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            //$x=1;
+                                            $x=1;
                                             foreach($details AS $d){ 
                                                 if(!empty($d['purchase_id'])){ 
                                         ?>
@@ -139,8 +143,34 @@
                                             <td align="right">(<?php echo number_format($d['vat_on_purchases'],2); ?>)</td>
                                             <td align="right"><?php echo number_format($d['ewt'],2); ?></td>
                                             <td align="right">(<?php echo number_format($d['total_amount'],2); ?>)</td>
+                                            <td align="right" style="padding:0px">
+                                                <input type="text" class="form-control" onblur="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="or_no" id="or_no<?php echo $x; ?>" value="<?php echo $d['or_no'];?>" <?php echo ($saved==1) ? 'readonly' : ''; ?>>
+                                            </td>
+                                            <td align="right" style="padding:0px">
+                                                <input type="text" class="form-control" onblur="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="total_update" id="total_update<?php echo $x; ?>" value="<?php echo $d['total_update']; ?>" <?php echo ($saved==1) ? 'readonly' : ''; ?>>
+                                            </td>
+                                            <td align="center">
+                                                <label style="width:20px">
+                                                    Yes
+                                                    <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_yes<?php echo $x; ?>" value='1' <?php echo ($d['original_copy']=='1') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                </label>
+                                                <label style="width:20px">
+                                                    No
+                                                    <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='2') ? 'checked' : ''; ?>  <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                </label>
+                                            </td>
+                                            <td align="center">
+                                                <label style="width:20px">
+                                                    Yes
+                                                    <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_yes<?php echo $x; ?>" value='1' <?php echo ($d['scanned_copy']=='1') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                </label>
+                                                <label style="width:20px">
+                                                    No
+                                                    <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='2') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                </label>
+                                            </td>
                                         </tr>
-                                        <?php } } ?>
+                                        <?php } $x++; } ?>
                                     </tbody>
                                 </table>
                             </div>
