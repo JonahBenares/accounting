@@ -95,10 +95,10 @@ element.addEventListener("click", onClick);*/
                                 </table>
                                 <br>
                                 <div class="table-responsive">
-                                    <table class="table-bordered table table-hover " id="table-1" style="width:170%;">
+                                    <table class="table-bordered table table-hover " id="table-1" style="width:300%;">
                                         <thead>
                                             <tr>
-                                                <th width="5%" align="center" style="background:rgb(245 245 245)">
+                                                <th width="3%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
                                                 <th>Item No.</th>
@@ -115,6 +115,15 @@ element.addEventListener("click", onClick);*/
                                                 <th>Vat On Purchases</th>
                                                 <th>EWT</th>
                                                 <th>Total Amount</th>
+                                                <th>OR Number</th>
+                                                <th>Total Amount</th>
+                                                <th>Php</th>
+                                                <th>Original Cop</th>
+                                                <th>Scanned Cop</th>
+                                                <th width="2%" align="center" style="background:rgb(245 245 245)">
+                                                    <center><span class="fas fa-bars"></span></center>
+                                                </th>
+
                                                 
                                             </tr>
                                         </thead>
@@ -124,15 +133,12 @@ element.addEventListener("click", onClick);*/
                                                     if(!empty($d['purchase_id'])){ 
                                             ?>
                                             <tr>
-                                                <td align="center" style="background: #fff;">
-                                                 
-                                                        <div class="btn-group mb-0">
-                                                             <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
-                                                                <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
-                                                            </a>
-                                                        </div>
-                                                        <a /a>
-                                                 
+                                                <td align="center" style="background: #fff;">                                                 
+                                                    <div class="btn-group mb-0">
+                                                         <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                            <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
+                                                        </a>
+                                                    </div>                                           
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
                                                 <td><?php echo $d['short_name'];?></td>
@@ -148,6 +154,26 @@ element.addEventListener("click", onClick);*/
                                                 <td align="right">(<?php echo $d['vat_on_purchases']; ?>)</td>
                                                 <td align="right"><?php echo $d['ewt']; ?></td>
                                                 <td align="right">(<?php echo $d['total_amount']; ?>)</td>
+                                                <td align="right" style="padding:0px">
+                                                    <input type="text" class="form-control" name="">
+                                                </td>
+                                                <td align="right" style="padding:0px">
+                                                    <input type="text" class="form-control" name="">
+                                                </td>
+                                                <td align="right" style="padding:0px">
+                                                    <input type="text" class="form-control" name="">
+                                                </td>
+                                                <td align="right" style="padding:0px">
+                                                    <input type="text" class="form-control" name="">
+                                                </td>
+                                                <td align="right" style="padding:0px">
+                                                    <input type="text" class="form-control" name="">
+                                                </td>
+                                                <td align="center">
+                                                    <a href="<?php echo base_url(); ?>" target="_blank" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit">
+                                                            <span class="m-0 fas fa-pen"></span>
+                                                        </a>
+                                                </td>
                                             </tr>
                                             <?php } } ?>
                                         </tbody>
