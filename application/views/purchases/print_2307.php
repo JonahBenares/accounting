@@ -18,10 +18,15 @@
 
 <div class="" id="printbutton">
     <center>
+        <?php foreach($prev_purchase_details_id AS $prev){ ?>
+        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $prev->purchase_detail_id; ?>" class="btn btn-info">Previous</a>
+        <?php } ?>
         <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
-
         <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo $billing_month; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
+        <?php foreach($next_purchase_details_id AS $next){ ?>
+        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $next->purchase_detail_id; ?>" class="btn btn-primary">Next</a>
+        <?php } ?>
 
 
     </center>

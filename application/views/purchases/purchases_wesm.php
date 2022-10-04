@@ -138,7 +138,7 @@ element.addEventListener("click", onClick);*/
                                                          <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                             <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                         </a>
-                                                    </div>                                           
+                                                    </div>
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
                                                 <td><?php echo $d['short_name'];?></td>
