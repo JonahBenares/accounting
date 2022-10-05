@@ -926,7 +926,6 @@ class Purchases extends CI_Controller {
                 'print_counter'=>$d->print_counter,
                 'or_no'=>$d->or_no,
                 'total_update'=>$d->total_update,
-                'amount_update'=>$d->amount_update,
                 'original_copy'=>$d->original_copy,
                 'scanned_copy'=>$d->scanned_copy,
             );
