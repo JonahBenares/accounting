@@ -1629,4 +1629,121 @@ class Purchases extends CI_Controller {
             echo json_encode($return);
         }
     }
+
+    public function export_purchasetrans(){
+        $reference_number=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $exportfilename="Purchase Wesm Transcation.xlsx";
+        $sql='';
+        if($reference_number!='null'){
+            $sql.= "reference_number = '$reference_number' AND ";
+        }
+
+        if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
+        }
+        $query=substr($sql,0,-4);
+        $qu = " WHERE saved='1' AND ".$query;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
+            $transaction_date=date("F d,Y",strtotime($head->transaction_date));
+            $billing_from=date("F d,Y",strtotime($head->billing_from));
+            $billing_to=date("F d,Y",strtotime($head->billing_to));
+            $due_dates=date("F d,Y",strtotime($head->due_date));
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Reference Number: $head->reference_number");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "Date: $transaction_date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3', "Due Date: $due_dates");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G1', "Billing Period (From): $billing_from");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G2', "Billing Period (To): $billing_to");
+            $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
+            $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
+            $objPHPExcel->getActiveSheet()->mergeCells('A3:E3');
+            $objPHPExcel->getActiveSheet()->mergeCells('G1:J1');
+            $objPHPExcel->getActiveSheet()->mergeCells('G2:J2');
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                    )
+                )
+            );
+            foreach(range('A','R') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', "Item No.");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', "STL ID/TPShort Name");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D5', "Facility Type");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E5', "WHT Agent Tag");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F5', "ITH Tag");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "Non Vatable Tag");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H5', "Zero-rated Tag");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I5', "Vatable Purchases");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J5', "Zero Rated Purchases");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K5', "Zero Rated EcoZones Purchases");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L5', "Vat On Purchases");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M5', "EWT");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N5', "Total Amount");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O5', "OR Number");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P5', "Total Amount");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Original Copy");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R5', "Scanned Copy");
+            $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
+            $num=6;
+            $x=1;
+            foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id'") AS $re){
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $re->facility_type);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $re->wht_agent);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $re->ith_tag);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $re->non_vatable);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $re->zero_rated);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $re->vatables_purchases);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$num, $re->zero_rated_purchases);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, $re->zero_rated_ecozones);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $re->vat_on_purchases);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, $re->ewt);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $re->total_amount);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $re->or_no);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $re->total_update);
+                if($re->original_copy==1){
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "Yes");
+                }else if($re->original_copy==2){
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "No");
+                }else{
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "");
+                }
+                if($re->scanned_copy==1){
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "Yes");
+                }else if($re->scanned_copy==2){
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "No");
+                }else{
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "");
+                }
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $num++;
+                $x++;
+            }
+            $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        }
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        if (file_exists($exportfilename))
+        unlink($exportfilename);
+        $objWriter->save($exportfilename);
+        unset($objPHPExcel);
+        unset($objWriter);   
+        ob_end_clean();
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Purchase Wesm Transcation.xlsx"');
+        readfile($exportfilename);
+    }
 }
