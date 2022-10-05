@@ -161,21 +161,21 @@ element.addEventListener("click", onClick);*/
                                                     <input type="text" class="form-control" onblur="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="total_update" id="total_update<?php echo $x; ?>" value="<?php echo $d['total_update']; ?>">
                                                 </td>
                                                 <td align="center">
-                                                    <label style="width:20px">
+                                                    <label style="width:20px;margin: 0px 6px;">
                                                         Yes
                                                         <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_yes<?php echo $x; ?>" value='1' <?php echo ($d['original_copy']=='1') ? 'checked' : ''; ?>>
                                                     </label>
-                                                    <label style="width:20px">
+                                                    <label style="width:20px;margin: 0px 6px;">
                                                         No
                                                         <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='2') ? 'checked' : ''; ?>>
                                                     </label>
                                                 </td>
                                                 <td align="center">
-                                                    <label style="width:20px">
+                                                    <label style="width:20px;margin: 0px 6px;">
                                                         Yes
                                                         <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_yes<?php echo $x; ?>" value='1' <?php echo ($d['scanned_copy']=='1') ? 'checked' : ''; ?>>
                                                     </label>
-                                                    <label style="width:20px">
+                                                    <label style="width:20px;margin: 0px 6px;">
                                                         No
                                                         <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='2') ? 'checked' : ''; ?>>
                                                     </label>
