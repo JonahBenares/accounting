@@ -65,7 +65,7 @@ element.addEventListener("click", onClick);*/
                                             $transaction_date=date("F d,Y",strtotime($d['transaction_date']));
                                             $billing_from=date("F d,Y",strtotime($d['billing_from']));
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
-                                            $due_date=date("F d,Y",strtotime($d['due_date']));
+                                            $due_dates=date("F d,Y",strtotime($d['due_date']));
                                         }
 
                                     ?>
@@ -83,7 +83,7 @@ element.addEventListener("click", onClick);*/
                                     </tr>                                    
                                     <tr>
                                         <td>Due Date</td>
-                                        <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
+                                        <td>: <?php echo (!empty($due_dates)) ? $due_dates : ''; ?></td>
                                     </tr>
                                     <tr>
                                         <td colspan="4"><center><a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
@@ -100,6 +100,9 @@ element.addEventListener("click", onClick);*/
                                         padding:0px 5px;
                                     }
                                 </style>
+                                <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-success btn-md pull-right">Export</a>
+                                <br>
+                                <br>
                                 <div class="table-responsive">
                                     <table class="table-bordered table table-hover " id="table-6" style="width:300%;">
                                         <thead>
@@ -141,7 +144,7 @@ element.addEventListener("click", onClick);*/
                                             <tr>
                                                 <td align="center" style="background: #fff;">                                                 
                                                     <div class="btn-group mb-0">
-                                                         <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                             <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                         </a>
                                                     </div>
