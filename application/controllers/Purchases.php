@@ -61,7 +61,11 @@ class Purchases extends CI_Controller {
                         'ewt'=>$d->ewt,
                         'serial_no'=>$d->serial_no,
                         'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter
+                        'print_counter'=>$d->print_counter,
+                        'or_no'=>$d->or_no,
+                        'total_update'=>$d->total_update,
+                        'original_copy'=>$d->original_copy,
+                        'scanned_copy'=>$d->scanned_copy,
                     );
                 }
             }
@@ -884,7 +888,18 @@ class Purchases extends CI_Controller {
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!=''");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
+        $sql='';
+        if($ref_no!='null'){
+            $sql.= "ph.reference_number = '$ref_no' AND ";
+        }
+
+        if($due_date!='null'){
+            $sql.= "ph.due_date = '$due_date' AND ";
+        }
+        $query=substr($sql,0,-4);
+        $qu = " WHERE saved='1' AND ".$query;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
+        // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
@@ -908,7 +923,11 @@ class Purchases extends CI_Controller {
                 'billing_from'=>$d->billing_from,
                 'billing_to'=>$d->billing_to,
                 'due_date'=>$d->due_date,
-                'print_counter'=>$d->print_counter
+                'print_counter'=>$d->print_counter,
+                'or_no'=>$d->or_no,
+                'total_update'=>$d->total_update,
+                'original_copy'=>$d->original_copy,
+                'scanned_copy'=>$d->scanned_copy,
             );
         }
         $this->load->view('purchases/purchases_wesm',$data);
@@ -939,6 +958,10 @@ class Purchases extends CI_Controller {
         $purchase_id = $this->uri->segment(3);
         $purchase_detail_id = $this->uri->segment(4);
         $data['purchase_detail_id']=$purchase_detail_id;
+        $data['purchase_id']=$purchase_id;
+
+        $data['prev_purchase_details_id'] = $this->super_model->custom_query("SELECT purchase_detail_id FROM purchase_transaction_details WHERE purchase_detail_id < $purchase_detail_id AND purchase_id='$purchase_id' ORDER BY purchase_detail_id DESC LIMIT 1");
+        $data['next_purchase_details_id'] = $this->super_model->custom_query("SELECT purchase_detail_id FROM purchase_transaction_details WHERE purchase_detail_id > $purchase_detail_id AND purchase_id='$purchase_id' ORDER BY purchase_detail_id ASC LIMIT 1");
 
         $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
 
@@ -1583,5 +1606,27 @@ class Purchases extends CI_Controller {
             }
         }
         echo $adjust_identifier;
+    }
+
+    public function update_details(){
+        $purchase_detail_id=$this->input->post('purchase_detail_id');
+        $purchase_id=$this->input->post('purchase_id');
+        $billing_id=$this->input->post('billing_id');
+        $or_no=$this->input->post('or_no');
+        $total_update=$this->input->post('total_update');
+        $original_copy=$this->input->post('original_copy');
+        $scanned_copy=$this->input->post('scanned_copy');
+        $data_update=array(
+            "or_no"=>$or_no,
+            "total_update"=>$total_update,
+            "original_copy"=>$original_copy,
+            "scanned_copy"=>$scanned_copy,
+        );
+        if($this->super_model->update_custom_where("purchase_transaction_details", $data_update, "purchase_detail_id='$purchase_detail_id' AND purchase_id='$purchase_id' AND billing_id='$billing_id'")){
+            foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_detail_id='$purchase_detail_id' AND purchase_id='$purchase_id' AND billing_id='$billing_id'") AS $latest_data){
+                $return = array('or_no'=>$latest_data->or_no, 'total_update'=>$latest_data->total_update, 'original_copy'=>$latest_data->original_copy, 'scanned_copy'=>$latest_data->scanned_copy);
+            }
+            echo json_encode($return);
+        }
     }
 }

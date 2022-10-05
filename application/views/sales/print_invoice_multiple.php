@@ -59,7 +59,7 @@
                 <td></td>
                 <td></td>
                 <td style="color:#fff">Date:</td>
-                <td colspan="3" class="  pl-2"><?php echo date("F d,Y");?></td>
+                <td colspan="3" class="  pl-2"><?php echo date("M d,Y");?></td>
             </tr>
             <tr>
                 <td colspan="3" style="color:#fff">Business Style:</td>

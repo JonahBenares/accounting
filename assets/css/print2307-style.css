@@ -61,6 +61,7 @@
         top: 215px;
         position: absolute;
         font-size: 12px;
+        text-transform: uppercase;
     }
     .payor{
         left: 35px; 
@@ -69,16 +70,16 @@
         font-size: 12px;
     }
     .tin1{
-        left: 275px!important;
-        top: 175px!important;
-        position: absolute!important;
-        letter-spacing: 0.86em!important;
+        left: 275px;
+        top: 175px;
+        position: absolute;
+        letter-spacing: 0.86em;
     }
     .tin2{
-        left: 275px!important;
-        top: 335px!important;
-        position: absolute!important;
-        letter-spacing: 0.86em!important;
+        left: 275px;
+        top: 335px;
+        position: absolute;
+        letter-spacing: 0.86em;
     }
     .last1{
         margin-left:5px ;
@@ -86,10 +87,12 @@
     }
     .address1{
         left: 35px; 
-        top: 254px;
+        top: 250px;
         position: absolute;
         font-size: 11px;
-        
+        text-transform: uppercase;
+        text-align: initial;
+        width: 675px;
     }
     .address2{
         left: 35px; 
@@ -362,9 +365,11 @@
         }
         .address1{
             left:40px; 
-            top: 335px;
+            top: 326px;
             position: absolute;
             font-size: 15px;
+            text-align: initial;
+            width: 890px;
         }
         .address2{
             left:40px; 

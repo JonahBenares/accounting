@@ -261,6 +261,18 @@ function saveBS(){
     }
 }
 
+function filterUploadSales(){
+	var sales_id= document.getElementById("sales_id").value;
+	var in_ex_sub= document.getElementById("in_ex_sub").value;
+	var loc= document.getElementById("baseurl").value;
+    if(in_ex_sub!=''){
+        var sub=in_ex_sub;
+    }else{
+        var sub='null';
+    }
+	window.location=loc+'sales/upload_sales/'+sales_id+'/'+sub;          
+}
+
 function filterSales(){
 	var ref_no= document.getElementById("ref_no").value;
 	var due_date= document.getElementById("due_date").value;

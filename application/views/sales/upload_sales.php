@@ -104,6 +104,26 @@ if(!empty($sales_id)){
                             <?php if(!empty($details)){ ?>
                             <div class="table-responsive"  id="table-wesm">
                                 <hr>
+                            <form method="POST">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
+                                            <table class="table-borderded" width="100%">
+                                                <tr>
+                                                    <td>
+                                                        <select class="form-control" name="in_ex_sub" id="in_ex_sub">
+                                                            <option value="">-- Select Include or Exlcude Sub-participant--</option>
+                                                                <option value="0">Include Sub-participant</option>
+                                                                <option value="1">Exclude Sub-participant</option>
+                                                        </select>
+                                                    </td>
+                                                    <input type='hidden' name='sales_id' id='sales_id'  value="<?php echo (!empty($sales_id) ? $sales_id : ''); ?>">
+                                                    <td  width="1%"><button type="button" onclick="filterUploadSales();" class="btn btn-primary btn-block">Filter</button></td>
+                                                    <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
                                 <form method="POST" id="print_mult">
                                     <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
                                         <thead>

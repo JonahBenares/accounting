@@ -57,7 +57,7 @@
             <td colspan="12" class="bor-btm pl-2"><?php echo $company_name; ?></td>
             <td></td>
             <td>Date:</td>
-            <td colspan="3" class="bor-btm  pl-2"><?php echo date("F d,Y");?></td>
+            <td colspan="3" class="bor-btm  pl-2"><?php echo date("M d,Y");?></td>
         </tr>
         <tr>
             <td colspan="3">Business Style:</td>
