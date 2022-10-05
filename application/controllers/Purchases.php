@@ -1629,4 +1629,12 @@ class Purchases extends CI_Controller {
             echo json_encode($return);
         }
     }
+
+
+    public function or_bulk(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('purchases/or_bulk');
+        $this->load->view('template/footer');
+    }
 }
