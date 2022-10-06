@@ -1532,7 +1532,7 @@ class Sales extends CI_Controller {
                 $string .= $string." peso only";  
             }
             elseif($fraction == 1){ 
-                $string .= $string;  
+                $string .= $string." only";  
                 //$string .= $fraction."/100" ." centavo only";  
             }
             elseif($fraction < 100){ 
@@ -1540,7 +1540,7 @@ class Sales extends CI_Controller {
                 //$string .= " ".$ones[substr($fraction,1,1)]; 
                 $string .= " ".$fraction."/100"; 
             }
-                $string = $string; 
+                $string = $string." only"; 
                 //$string = $fraction."/100" ." centavos only"; 
     }
 }
