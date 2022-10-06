@@ -882,6 +882,13 @@ class Purchases extends CI_Controller {
     public function purchases_wesm(){
         $ref_no=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
+        $or_no=$this->uri->segment(5);
+        $original_copy=$this->uri->segment(6);
+        $scanned_copy=$this->uri->segment(7);
+        $ors=str_replace("%5E","",$or_no);
+        $data['or_no']=$or_no;
+        $data['original_copy']=$original_copy;
+        $data['scanned_copy']=$scanned_copy;
         $data['ref_no']=$ref_no;
         $data['due_date']=$due_date;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
@@ -896,9 +903,24 @@ class Purchases extends CI_Controller {
         if($due_date!='null'){
             $sql.= "ph.due_date = '$due_date' AND ";
         }
+
+        if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+            $sql.= "pd.or_no = '$ors' AND ";
+        }else if($or_no=="%5E"){
+            $sql.= "(pd.or_no='' OR pd.or_no IS NULL) AND ";
+        }
+
+        if($original_copy!='null' && isset($original_copy)){
+            $sql.= "pd.original_copy = '$original_copy' AND ";
+        }
+
+        if($scanned_copy!='null' && isset($scanned_copy)){
+            $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
+        }
         $query=substr($sql,0,-4);
         $qu = " WHERE saved='1' AND ".$query;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
+            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' ORDER BY or_no ASC");
         // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
@@ -933,6 +955,7 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/purchases_wesm',$data);
         $this->load->view('template/footer');
     }
+    
     public function add_details_wesm()
     {
         $purchase_detail_id = $this->uri->segment(3);
@@ -1713,14 +1736,14 @@ class Purchases extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $re->total_update);
                 if($re->original_copy==1){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "Yes");
-                }else if($re->original_copy==2){
+                }else if($re->original_copy==0){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "");
                 }
                 if($re->scanned_copy==1){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "Yes");
-                }else if($re->scanned_copy==2){
+                }else if($re->scanned_copy==0){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "");

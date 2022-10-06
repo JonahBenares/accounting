@@ -710,7 +710,7 @@ function updatePurchases(baseurl,count,purchase_detail_id,purchase_id,billing_id
     }
     var orig_no=document.getElementById("orig_no"+count);
     if(orig_no.checked){
-        var original_copy=2;
+        var original_copy=0;
     }
     var scanned_yes=document.getElementById("scanned_yes"+count);
     if(scanned_yes.checked){
@@ -718,7 +718,7 @@ function updatePurchases(baseurl,count,purchase_detail_id,purchase_id,billing_id
     }
     var scanned_no=document.getElementById("scanned_no"+count);
     if(scanned_no.checked){
-        var scanned_copy=2;
+        var scanned_copy=0;
     }
 	$.ajax({
 		type: "POST",
@@ -730,6 +730,57 @@ function updatePurchases(baseurl,count,purchase_detail_id,purchase_id,billing_id
 			document.getElementById("total_update"+count).value=response.total_update;
 		}
 	});
-	
+}
 
+function filterPurchases(){
+    var ref_no= document.getElementById("reference_no").value;
+    var due_date= document.getElementById("due_datefilt").value;
+    var or_no= document.getElementById("or_no").value;
+    // if(or_no!='-'){
+    //     var or_filt=or_no;
+    // }else if(or_no=='-'){
+    //     var or_filt='^';
+    // }
+    var original_yes= document.getElementById("original_yes");
+    var original_no= document.getElementById("original_no");
+    var scanned_yes= document.getElementById("scanned_yes");
+    var scanned_no= document.getElementById("scanned_no");
+
+    var loc= document.getElementById("base_url").value;
+    if(ref_no!='null'){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(due_date!='null'){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+
+    if(or_no!='^' && or_no!='-'){
+        var or=or_no;
+    }else if(or_no=='-'){ 
+        var or="^";
+    }else{
+        var or='null';
+    }
+
+    if(original_yes.checked){
+        var orig=1;
+    }else if(original_no.checked){
+        var orig=0;
+    }else{
+        var orig='null';
+    }
+
+    if(scanned_yes.checked){
+        var scanned=1;
+    }else if(scanned_no.checked){
+        var scanned=0;
+    }else{
+        var scanned='null';
+    }
+    window.location=loc+'purchases/purchases_wesm/'+ref+"/"+due+"/"+or+"/"+orig+"/"+scanned;          
 }
