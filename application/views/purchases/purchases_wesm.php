@@ -111,8 +111,8 @@ element.addEventListener("click", onClick);*/
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
                                                 <th>Item No.</th>
-                                                <th style="position:sticky; left:0; z-index: 10;background: rgb(240 240 240);">STL ID / TPShort Name</th>
-                                                <th style="position:sticky; left:200px; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
+                                                <th  style="position:sticky;min-width: 100px; left:0; z-index: 10;background: rgb(240 240 240);">STL ID / TPShort Name</th>
+                                                <th  style="position:sticky; left:245px;min-width: 90px; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
                                                 <th>Facility Type </th>
                                                 <th>WHT Agent Tag</th>
                                                 <th>ITH Tag</th>
@@ -150,8 +150,8 @@ element.addEventListener("click", onClick);*/
                                                     </div>
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
-                                                <td style="position:sticky; left:0; z-index: 10;background: #fff"><?php echo $d['short_name'];?></td>
-                                                <td style="position:sticky; left:200px; z-index: 10;background: #fff;"><?php echo $d['billing_id']; ?></td>
+                                                <td style="position:sticky;min-width: 100px; left:0; z-index: 10;background: #fff"><?php echo $d['short_name'];?></td>
+                                                <td style="position:sticky; left:245px;min-width: 90px; z-index: 10;background: #fff"><?php echo $d['billing_id']; ?></td>
                                                 <td align="center"><?php echo $d['facility_type']; ?></td>
                                                 <td align="center"><?php echo $d['wht_agent']; ?></td>
                                                 <td align="center"><?php echo $d['ith_tag']; ?></td>
