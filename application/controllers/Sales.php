@@ -1514,8 +1514,6 @@ class Sales extends CI_Controller {
                     "9"=> "Ninety" 
                     );*/ 
 
-                    
-
     if (null !== $fraction && is_numeric($fraction)) {
         if($fraction > 0){
             if($amount == 0  && $fraction != 0){
@@ -1534,7 +1532,7 @@ class Sales extends CI_Controller {
                 $string .= $string." peso only";  
             }
             elseif($fraction == 1){ 
-                $string .= $string." centavo only";  
+                $string .= $string;  
                 //$string .= $fraction."/100" ." centavo only";  
             }
             elseif($fraction < 100){ 
@@ -1542,7 +1540,7 @@ class Sales extends CI_Controller {
                 //$string .= " ".$ones[substr($fraction,1,1)]; 
                 $string .= " ".$fraction."/100"; 
             }
-                $string = $string." centavos only"; 
+                $string = $string; 
                 //$string = $fraction."/100" ." centavos only"; 
     }
 }
