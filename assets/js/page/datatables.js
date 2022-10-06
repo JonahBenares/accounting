@@ -63,6 +63,14 @@ $('#save-stage').DataTable({
   stateSave: true
 });
 
+
+$("#table-6").dataTable({
+  order: [[2, 'asc']],
+  "scrollX": true,
+  
+});
+
+
 var table = $('#example').DataTable( {
     scrollX:        true,
     scrollCollapse: true,

@@ -1460,7 +1460,7 @@ class Sales extends CI_Controller {
             break;
     }
 
-        $decones = array( 
+/*        $decones = array( 
                     "01" => "One", 
                     "02" => "Two", 
                     "03" => "Three", 
@@ -1512,7 +1512,7 @@ class Sales extends CI_Controller {
                     "7" => "Seventy", 
                     "8" => "Eighty", 
                     "9"=> "Ninety" 
-                    ); 
+                    );*/ 
 
     if (null !== $fraction && is_numeric($fraction)) {
         if($fraction > 0){
@@ -1522,19 +1522,26 @@ class Sales extends CI_Controller {
                 $string .= " pesos and ";
             }
             if($fraction < 20){ 
-                $string .= $decones[$fraction]; 
+                //$string .= $decones[$fraction]; 
+                $string .= $fraction."/100"; 
             }
-            elseif($fraction == 0){ 
+            elseif($amount != 0  && $fraction == 0){ 
                 $string .= $string." pesos only";  
             }
+            elseif($amount == 1  && $fraction == 0){ 
+                $string .= $string." peso only";  
+            }
             elseif($fraction == 1){ 
-                $string .= $string." centavo only";  
+                $string .= $string." only";  
+                //$string .= $fraction."/100" ." centavo only";  
             }
             elseif($fraction < 100){ 
-                $string .= $tens[substr($fraction,0,1)]; 
-                $string .= " ".$ones[substr($fraction,1,1)]; 
+                //$string .= $tens[substr($fraction,0,1)]; 
+                //$string .= " ".$ones[substr($fraction,1,1)]; 
+                $string .= " ".$fraction."/100"; 
             }
-                $string = $string." centavos only"; 
+                $string = $string." only"; 
+                //$string = $fraction."/100" ." centavos only"; 
     }
 }
 

@@ -1653,6 +1653,14 @@ class Purchases extends CI_Controller {
         }
     }
 
+
+    public function or_bulk(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('purchases/or_bulk');
+        $this->load->view('template/footer');
+    }
+    
     public function export_purchasetrans(){
         $reference_number=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
