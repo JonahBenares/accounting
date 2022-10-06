@@ -1630,14 +1630,14 @@ class Purchases extends CI_Controller {
         }
     }
 
-<<<<<<< HEAD
 
     public function or_bulk(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('purchases/or_bulk');
         $this->load->view('template/footer');
-=======
+    }
+    
     public function export_purchasetrans(){
         $reference_number=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
@@ -1753,6 +1753,5 @@ class Purchases extends CI_Controller {
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="Purchase Wesm Transcation.xlsx"');
         readfile($exportfilename);
->>>>>>> ad97d3029b94b4a873cf2da15655cefaa57db630
     }
 }
