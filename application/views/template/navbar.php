@@ -228,6 +228,12 @@
                 </a>
             </li>
             <li class="dropdown">
+                <a href="<?php echo base_url(); ?>purchases/or_bulk" class="nav-link">
+                    <i data-feather="edit"></i>
+                    <span>Bulk OR Update</span>
+                </a>
+            </li>
+            <li class="dropdown">
                 <a href="<?php echo base_url(); ?>purchases/purchases_wesm" class="nav-link">
                     <i data-feather="list"></i>
                     <span>WESM Transaction</span>

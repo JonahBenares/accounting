@@ -65,7 +65,7 @@ element.addEventListener("click", onClick);*/
                                             $transaction_date=date("F d,Y",strtotime($d['transaction_date']));
                                             $billing_from=date("F d,Y",strtotime($d['billing_from']));
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
-                                            $due_date=date("F d,Y",strtotime($d['due_date']));
+                                            $due_dates=date("F d,Y",strtotime($d['due_date']));
                                         }
 
                                     ?>
@@ -83,7 +83,7 @@ element.addEventListener("click", onClick);*/
                                     </tr>                                    
                                     <tr>
                                         <td>Due Date</td>
-                                        <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
+                                        <td>: <?php echo (!empty($due_dates)) ? $due_dates : ''; ?></td>
                                     </tr>
                                     <tr>
                                         <td colspan="4"><center><a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
@@ -94,16 +94,25 @@ element.addEventListener("click", onClick);*/
                                     </tr>
                                 </table>
                                 <br>
+                                <style type="text/css">
+                                    table#table-6 tr td{
+                                        border: 1px solid #efefef;
+                                        padding:0px 5px;
+                                    }
+                                </style>
+                                <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-success btn-md pull-right">Export</a>
+                                <br>
+                                <br>
                                 <div class="table-responsive">
-                                    <table class="table-bordered table table-hover " id="table-1" style="width:300%;">
+                                    <table class="table-bordered table table-hover " id="table-6" style="width:300%;">
                                         <thead>
                                             <tr>
                                                 <th width="3%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
                                                 <th>Item No.</th>
-                                                <th>STL ID / TPShort Name</th>
-                                                <th>Billing ID</th>
+                                                <th  style="position:sticky;min-width: 100px; left:0; z-index: 10;background: rgb(240 240 240);">STL ID / TPShort Name</th>
+                                                <th  style="position:sticky; left:245px;min-width: 90px; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
                                                 <th>Facility Type </th>
                                                 <th>WHT Agent Tag</th>
                                                 <th>ITH Tag</th>
@@ -135,14 +144,14 @@ element.addEventListener("click", onClick);*/
                                             <tr>
                                                 <td align="center" style="background: #fff;">                                                 
                                                     <div class="btn-group mb-0">
-                                                         <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
+                                                        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
                                                             <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                         </a>
                                                     </div>
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
-                                                <td><?php echo $d['short_name'];?></td>
-                                                <td><?php echo $d['billing_id']; ?></td>
+                                                <td style="position:sticky;min-width: 100px; left:0; z-index: 10;background: #fff"><?php echo $d['short_name'];?></td>
+                                                <td style="position:sticky; left:245px;min-width: 90px; z-index: 10;background: #fff"><?php echo $d['billing_id']; ?></td>
                                                 <td align="center"><?php echo $d['facility_type']; ?></td>
                                                 <td align="center"><?php echo $d['wht_agent']; ?></td>
                                                 <td align="center"><?php echo $d['ith_tag']; ?></td>
@@ -161,23 +170,23 @@ element.addEventListener("click", onClick);*/
                                                     <input type="text" class="form-control" onblur="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="total_update" id="total_update<?php echo $x; ?>" value="<?php echo $d['total_update']; ?>">
                                                 </td>
                                                 <td align="center">
-                                                    <label style="width:20px">
-                                                        Yes
-                                                        <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_yes<?php echo $x; ?>" value='1' <?php echo ($d['original_copy']=='1') ? 'checked' : ''; ?>>
+                                                    <span class="m-b-10">Yes</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio"  onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_yes<?php echo $x; ?>" value='1' <?php echo ($d['original_copy']=='1') ? 'checked' : ''; ?>>
                                                     </label>
-                                                    <label style="width:20px">
-                                                        No
-                                                        <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='2') ? 'checked' : ''; ?>>
+                                                    <span class="m-b-10">No</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio"  onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='2') ? 'checked' : ''; ?>>
                                                     </label>
                                                 </td>
                                                 <td align="center">
-                                                    <label style="width:20px">
-                                                        Yes
-                                                        <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_yes<?php echo $x; ?>" value='1' <?php echo ($d['scanned_copy']=='1') ? 'checked' : ''; ?>>
+                                                    <span class="m-b-10">Yes</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio"  onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_yes<?php echo $x; ?>" value='1' <?php echo ($d['scanned_copy']=='1') ? 'checked' : ''; ?>>
                                                     </label>
-                                                    <label style="width:20px">
-                                                        No
-                                                        <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='2') ? 'checked' : ''; ?>>
+                                                    <span class="m-b-10">No</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio"  onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='2') ? 'checked' : ''; ?>>
                                                     </label>
                                                 </td>
                                                 <!-- <td align="center">

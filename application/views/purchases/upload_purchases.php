@@ -84,18 +84,24 @@
                                 <input type='hidden' name='purchase_id' id='purchase_id'  value="<?php echo (!empty($purchase_id) ? $purchase_id : ''); ?>">
                             </form>
                             <center><span id="alt"></span></center>
+                            <style type="text/css">
+                                table#table-6 tr td{
+                                    border: 1px solid #efefef;
+                                    padding:0px 5px;
+                                }
+                            </style>
                             <?php if(!empty($details)){ ?>
                             <div class="table-responsive" id="table-wesm" >
                                 <hr>
-                                <table class="table-bordered table table-hover " id="table-1" style="width:170%;">
+                                <table class="table-bordered table table-hover " id="table-6" style="width:300%;">
                                     <thead>
                                         <tr>
                                             <th width="5%" align="center" style="background:rgb(245 245 245)">
                                                 <center><span class="fas fa-bars"></span></center>
                                             </th>
                                             <th>Item No.</th>
-                                            <th>STL ID / TPShort Name</th>
-                                            <th>Billing ID</th>
+                                            <th  style="position:sticky; left:0; z-index: 10;background: rgb(240 240 240);">STL ID / TPShort Name</th>
+                                            <th style="position:sticky; left:200px; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
                                             <th>Facility Type </th>
                                             <th>WHT Agent Tag</th>
                                             <th>ITH Tag</th>
@@ -130,8 +136,8 @@
                                             <?php } ?>
                                             </td>
                                             <td><?php echo $d['item_no'];?></td>
-                                            <td><?php echo $d['short_name'];?></td>
-                                            <td><?php echo $d['billing_id']; ?></td>
+                                            <td style="position:sticky; left:0; z-index: 10;background: #fff"><?php echo $d['short_name'];?></td>
+                                            <td style="position:sticky; left:200px; z-index: 10;background: #fff;"><?php echo $d['billing_id']; ?></td>
                                             <td align="center"><?php echo $d['facility_type']; ?></td>
                                             <td align="center"><?php echo $d['wht_agent']; ?></td>
                                             <td align="center"><?php echo $d['ith_tag']; ?></td>
@@ -150,23 +156,23 @@
                                                 <input type="text" class="form-control" onblur="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="total_update" id="total_update<?php echo $x; ?>" value="<?php echo $d['total_update']; ?>" <?php echo ($saved==1) ? 'readonly' : ''; ?>>
                                             </td>
                                             <td align="center">
-                                                <label style="width:20px">
-                                                    Yes
-                                                    <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_yes<?php echo $x; ?>" value='1' <?php echo ($d['original_copy']=='1') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                <span class="m-b-10">Yes</span>
+                                                <label style="width:20px;margin: 0px 6px;">
+                                                    <input type="radio" class="" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_yes<?php echo $x; ?>" value='1' <?php echo ($d['original_copy']=='1') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
                                                 </label>
-                                                <label style="width:20px">
-                                                    No
-                                                    <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='2') ? 'checked' : ''; ?>  <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                <span class="m-b-10">No</span>
+                                                <label style="width:20px;margin: 0px 6px;">
+                                                    <input type="radio" class="" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='2') ? 'checked' : ''; ?>  <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
                                                 </label>
                                             </td>
                                             <td align="center">
-                                                <label style="width:20px">
-                                                    Yes
-                                                    <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_yes<?php echo $x; ?>" value='1' <?php echo ($d['scanned_copy']=='1') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                <span class="m-b-10">Yes</span>
+                                                <label style="width:20px;margin: 0px 6px;">
+                                                    <input type="radio" class="" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_yes<?php echo $x; ?>" value='1' <?php echo ($d['scanned_copy']=='1') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
                                                 </label>
-                                                <label style="width:20px">
-                                                    No
-                                                    <input type="radio" class="form-control" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='2') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                <span class="m-b-10">No</span>
+                                                <label style="width:20px;margin: 0px 6px;">
+                                                    <input type="radio" class="" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='2') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
                                                 </label>
                                             </td>
                                         </tr>

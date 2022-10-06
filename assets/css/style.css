@@ -1299,7 +1299,11 @@ body.layout-3 .main-footer{padding-left:0;padding-right:0}
 .main-sidebar .sidebar-menu li ul.dropdown-menu li.active>a:before{color:#6777ef;font-weight:600}
 .main-sidebar .sidebar-menu li ul.dropdown-menu li a i{margin-top:1px;text-align:center}
 .main-sidebar .sidebar-menu li ul.dropdown-menu li ul.dropdown-menu{padding-left:10px}
-.main-content{padding-left:280px;padding-right:30px;padding-top:130px;width:100%;position:relative}
+.main-content{padding-left: 270px;
+    padding-right: 15px;
+    padding-top: 95px;
+    width: 100%;
+    position: relative;}
 .main-content-2{padding-left:280px;padding-right:280px;padding-top:130px;width:100%;position:relative}
 .main-footer{padding:20px 30px 20px 280px;margin-top:40px;color:#98a6ad;border-top:1px solid #e3eaef;display:inline-block;background:#ffffff;font-weight:600;text-transform:uppercase;font-size:11px;width:100%}
 .main-footer .footer-left{float:left}
