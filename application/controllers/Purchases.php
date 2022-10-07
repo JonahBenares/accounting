@@ -1630,12 +1630,114 @@ class Purchases extends CI_Controller {
         }
     }
 
+    public function save_bulk_or(){
+        $purchase_id = $this->input->post('purchase_id');
+        $or_identifier = $this->input->post('or_identifier');
+        $data_head = array(
+            'saved_or_bulk'=>1
+        );
+        $this->super_model->update_custom_where("purchase_transaction_details", $data_head, "purchase_id='$purchase_id' AND or_bulk_identifier='$or_identifier'");
+    }
+
+    public function cancel_bulk_or(){
+        $purchase_id = $this->input->post('purchase_id');
+        $or_identifier = $this->input->post('or_identifier');
+            $data_or = array(
+                'or_no'=>Null,
+                'total_update'=>'',
+                'original_copy'=>0,
+                'scanned_copy'=>0,
+                'or_bulk_identifier'=>Null,
+            );
+           $this->super_model->update_custom_where("purchase_transaction_details", $data_or, "purchase_id='$purchase_id' AND or_bulk_identifier='$or_identifier'");
+        }
+
 
     public function or_bulk(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/or_bulk');
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $purchaseid=$this->uri->segment(3);
+        $data['purchase_id'] = $purchaseid;
+        $identifier=$this->uri->segment(4);
+        $data['identifier']=$this->uri->segment(4);
+        $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$purchaseid);
+        $data['refno']=$ref_no;
+        $data['saved']=$this->super_model->select_column_where("purchase_transaction_details","saved_or_bulk","or_bulk_identifier",$identifier);
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,purchase_id FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0' ");
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number='$ref_no' AND adjustment='0' AND or_bulk_identifier ='$identifier'") AS $d){
+            $data['details'][]=array(
+                'purchase_detail_id'=>$d->purchase_detail_id,
+                'purchase_id'=>$d->purchase_id,
+                'total_update'=>$d->total_update,
+                'original_copy'=>$d->original_copy,
+                'scanned_copy'=>$d->scanned_copy,
+                'or_no'=>$d->or_no,
+                'billing_id'=>$d->billing_id,
+            );
+        }
+        $this->load->view('purchases/or_bulk', $data);
         $this->load->view('template/footer');
+    }
+
+    public function upload_or_bulk(){
+        $purchase_id = $this->input->post('purchase_id');
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $error_ext=0;
+        if(!empty($_FILES['doc']['name'])){
+            $exc= basename($_FILES['doc']['name']);
+            $exc=explode('.',$exc);
+            $ext1=$exc[1];
+            if($ext1=='php' || $ext1!='xlsx'){
+                $error_ext++;
+            }else {
+                $filename1='bulk_updates_of_OR.'.$ext1;
+                if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
+                     $this->readExcel_or($purchase_id);
+                } 
+            }
+        }
+    }
+
+    public function readExcel_or($purchase_id){
+
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+
+        $inputFileName =realpath(APPPATH.'../uploads/excel/bulk_updates_of_OR.xlsx');
+
+       try {
+            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        
+   
+            $objPHPExcel = $objReader->load($inputFileName);
+        } 
+        catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+        //$objPHPExcel->setActiveSheetIndex(0);
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+        //$highestRow = $highestRow-1;
+        for($x=2;$x<=$highestRow;$x++){
+            $identifier = $this->input->post('identifier');
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());   
+            $or_no = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            //$total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getOldCalculatedValue());
+            $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+     
+            $data_or = array(
+                'or_no'=>$or_no,
+                'total_update'=>$total_amount,
+                'original_copy'=>$original_copy,
+                'scanned_copy'=>$scanned_copy,
+                'or_bulk_identifier'=>$identifier,
+            );
+           $this->super_model->update_custom_where("purchase_transaction_details", $data_or, "purchase_id='$purchase_id' AND billing_id='$billing_id'");
+        }
     }
     
     public function export_purchasetrans(){
