@@ -49,7 +49,7 @@
                                                         <span style="background:#fff;right: 0;position: absolute;">
                                                             <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" data-original-title="View" href=""><span class="fas fa-eye m-0"></span></a>
                                                             <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update" data-original-title="Update" href=""><span class="far fa-edit m-0"></span></a>
-                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete" data-original-title="Delete" href="" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash m-0"></span></a>
+                                                           <!--  <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete" data-original-title="Delete" href="" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash m-0"></span></a> -->
                                                         </span>
                                                     </div>
                                                 </div> 

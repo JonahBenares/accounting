@@ -86,8 +86,8 @@ function proceed_or_bulk() {
         alert('Reference number must not be empty!');
     }  else {
     var redirect=loc+"purchases/or_bulk/";
-    var conf = confirm('Are you sure you want to proceed?');
-    if(conf){
+    /*var conf = confirm('Are you sure you want to proceed?');
+    if(conf){*/
         $.ajax({
             type: "POST",
             url: redirect,
@@ -112,7 +112,7 @@ function proceed_or_bulk() {
             }
         });
         }  
-    }
+    //}
 }
 
 async function upload_btn() {
