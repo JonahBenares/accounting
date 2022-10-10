@@ -886,21 +886,9 @@ class Purchases extends CI_Controller {
         $original_copy=$this->uri->segment(6);
         $scanned_copy=$this->uri->segment(7);
         $ors=str_replace("%5E","",$or_no);
-        if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
-            $data['or_nos']=$or_no;
-        }else{
-            $data['or_nos']='null';
-        }
-        if($original_copy!='null' && isset($original_copy)){
-            $data['original_copy']=$original_copy;
-        }else{
-            $data['original_copy']='null';
-        }
-        if($scanned_copy!='null' && isset($scanned_copy)){
-            $data['scanned_copy']=$scanned_copy;
-        }else{
-            $data['scanned_copy']='null';
-        }
+        $data['or_nos']=$or_no;
+        $data['original_copy']=$original_copy;
+        $data['scanned_copy']=$scanned_copy;
         $data['ref_no']=$ref_no;
         $data['due_date']=$due_date;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
@@ -1807,7 +1795,7 @@ class Purchases extends CI_Controller {
         }
         $query=substr($sql,0,-4);
         $qu = " WHERE saved='1' AND ".$query;
-
+        
         $query_filter=substr($sql1,0,-4);
         if($query_filter!=''){
             $qufilt = " AND ".$query_filter;
