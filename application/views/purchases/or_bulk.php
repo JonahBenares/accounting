@@ -98,12 +98,12 @@
                                             <?php if ($d['original_copy'] == 1) { ?>
                                                 <td align="center"><span class="fas fa-check" style="color:green"></span></td>
                                             <?php }else{ ?>
-                                                <td align="center"><span class="fas fa-times" style="color:green"></td>
+                                                <td align="center"><span class="fas fa-times" style="color:red"></td>
                                             <?php } ?>
                                     		 <?php if ($d['scanned_copy'] == 1) { ?>
                                                 <td align="center"><span class="fas fa-check" style="color:green"></span></td>
                                             <?php }else{ ?>
-                                                <td align="center"><span class="fas fa-times" style="color:green"></td>
+                                                <td align="center"><span class="fas fa-times" style="color:red"></td>
                                             <?php } ?>
                                     	</tr>
                                      <?php } } ?>
