@@ -94,14 +94,66 @@ element.addEventListener("click", onClick);*/
                                     </tr>
                                 </table>
                                 <br>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="20%" rowspan="2"></td>
+                                        <td width="30%">OR Number</td>
+                                        <td width="10%" align="center">Original Copy</td>
+                                        <td width="10%" align="center">Scanned Copy</td>
+                                        <td width="5%" align="center"></td>
+                                        <td width="10%" align="center"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            
+                                            <select name="or_no" class="form-control select2" id="or_no">
+                                                <option value="^">--Select OR No.--</option>
+                                                <?php foreach($or_no AS $o){ ?>
+                                                    <option value="<?php echo ($o->or_no!='') ? $o->or_no : '-'; ?>"><?php echo ($o->or_no!='') ? $o->or_no : '-'; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </td>
+                                        <td align="center">
+                                            <label for="">
+                                                    <span style="vertical-align:middle;padding:0px">Yes</span>
+                                                    <input type="radio" class="form-control m-b-0" name="original_copy" id="original_yes" value="1" style="width:20px">
+                                            </label>
+                                            <label for="">
+                                                    <span style="vertical-align:middle;padding: 0px">No</span>
+                                                    <input type="radio" class="form-control m-b-0" name="original_copy" id="original_no" value="0" style="width:20px">
+                                            </label>
+                                        </td>
+                                        <td align="center">
+                                            <label for="">
+                                                    <span style="vertical-align:middle;padding: 0px">Yes</span>
+                                                    <input type="radio" class="form-control m-b-0" name="scanned_copy" id="scanned_yes" value="1" style="width:20px">
+                                            </label>
+                                            <label for="">
+                                                    <span style="vertical-align:middle;padding: 0px">No</span>
+                                                    <input type="radio" class="form-control m-b-0" name="scanned_copy" id="scanned_no" value="0" style="width:20px">
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="ref_no" id="reference_no" value="<?php echo $ref_no; ?>">
+                                            <input type="hidden" name="due_date" id="due_datefilt" value="<?php echo $due_date; ?>">
+                                            <input name="baseurl" id="base_url" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
+                                            <button type="button" class="btn btn-primary btn-md" onclick="filterPurchases()">Filter</button>
+                                        </td>
+                                        <td>
+                                            <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-md">Remove Filter</a>
+                                        </td>
+                                        <td>
+                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <style type="text/css">
                                     table#table-6 tr td{
                                         border: 1px solid #efefef;
                                         padding:0px 5px;
                                     }
                                 </style>
-                                <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-success btn-md pull-right">Export</a>
-                                <br>
                                 <br>
                                 <div class="table-responsive">
                                     <table class="table-bordered table table-hover " id="table-6" style="width:300%;">
@@ -176,7 +228,7 @@ element.addEventListener("click", onClick);*/
                                                     </label>
                                                     <span class="m-b-10">No</span>
                                                     <label style="width:20px;margin: 0px 6px;">
-                                                        <input type="radio"  onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='2') ? 'checked' : ''; ?>>
+                                                        <input type="radio" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='0') ? 'checked' : ''; ?>>
                                                     </label>
                                                 </td>
                                                 <td align="center">
@@ -186,7 +238,7 @@ element.addEventListener("click", onClick);*/
                                                     </label>
                                                     <span class="m-b-10">No</span>
                                                     <label style="width:20px;margin: 0px 6px;">
-                                                        <input type="radio"  onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='2') ? 'checked' : ''; ?>>
+                                                        <input type="radio" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='0') ? 'checked' : ''; ?>>
                                                     </label>
                                                 </td>
                                                 <!-- <td align="center">
@@ -201,6 +253,9 @@ element.addEventListener("click", onClick);*/
                                 </div>
                                 <?php }else{ ?>
                                     <div><center><b>No Available Data...</b></center></div>
+                                    <?php if(isset($or_no) && isset($original_copy) && isset($scanned_copy)){ ?>
+                                        <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-block">Remove Filter</a>
+                                    <?php } ?>
                                 <?php } ?>
                             </div>
 

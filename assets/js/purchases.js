@@ -77,6 +77,44 @@ function proceed_btn() {
     }  
 }
 
+function proceed_or_bulk() {
+    var data = $("#orbulk").serialize();
+    
+    var loc= document.getElementById("baseurl").value;
+    var purchase_id= document.getElementById("purchase_id").value;
+    if(purchase_id==""){
+        alert('Reference number must not be empty!');
+    }  else {
+    var redirect=loc+"purchases/or_bulk/";
+    var conf = confirm('Are you sure you want to proceed?');
+    if(conf){
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: data,
+            success: function(output){
+                window.location=loc+'purchases/or_bulk/'+purchase_id;
+                var redirect = redirect+output;
+                var save = document.getElementById("save_or_button");
+                var cancel = document.getElementById("cancel_or");
+                document.getElementById('ref_no').readOnly = true;
+                var x = document.getElementById("upload_or");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+
+                        save.style.display = "none";
+                        cancel.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                    save.style.display = "block";
+                    cancel.style.display = "none";
+                }
+            }
+        });
+        }  
+    }
+}
+
 async function upload_btn() {
     //var sales_doc = document.getElementById("WESM_sales").value;
     var purchase_id = document.getElementById("purchase_id").value;
@@ -110,6 +148,41 @@ async function upload_btn() {
     }
 }
 
+async function upload_or() {
+    //var sales_doc = document.getElementById("WESM_sales").value;
+    var purchase_id = document.getElementById("purchase_id").value;
+    var identifier = document.getElementById("identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"purchases/upload_or_bulk";
+    let doc = document.getElementById("or_bulk").files[0];
+    let formData = new FormData();
+         
+    formData.append("doc", doc);
+    formData.append("purchase_id", purchase_id);
+    formData.append("identifier", identifier);
+    var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("proceed_or").disabled = true;
+                document.getElementById("cancel_or").disabled = true;
+                $("#table-or").hide(); 
+            },
+            success: function(output){
+                $("#alt").hide(); 
+              
+                window.location=loc+'purchases/or_bulk/'+purchase_id+'/'+identifier;
+            }
+        });
+    }
+}
+
 function cancelPurchase(){
     var purchase_id = document.getElementById("purchase_id").value; 
     var loc= document.getElementById("baseurl").value;
@@ -122,6 +195,47 @@ function cancelPurchase(){
             url: redirect,
             success: function(response){
                 window.location=loc+'purchases/upload_purchases/';
+            }
+        });
+    }
+}
+
+function cancelBulkor(){
+    var purchase_id = document.getElementById("purchase_id").value;
+    var or_identifier = document.getElementById("or_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"purchases/cancel_bulk_or";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+        $.ajax({
+            data: 'purchase_id='+purchase_id+'&or_identifier='+or_identifier,
+            type: "POST",
+            url: redirect,
+            success: function(response){
+                window.location=loc+'purchases/or_bulk/';
+            }
+        });
+    }
+}
+
+function saveOR(){
+    var data = $("#upload_bulkor").serialize();
+    var purchase_id = document.getElementById("purchase_id").value;
+    var or_identifier = document.getElementById("or_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"purchases/save_bulk_or";
+    var conf = confirm('Are you sure you want to save this Bulk OR?');
+    if(conf){
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: redirect,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#submitor").hide(); 
+            },
+            success: function(output){
+                window.location=loc+'purchases/or_bulk/'+purchase_id+'/'+or_identifier;
             }
         });
     }
@@ -710,7 +824,7 @@ function updatePurchases(baseurl,count,purchase_detail_id,purchase_id,billing_id
     }
     var orig_no=document.getElementById("orig_no"+count);
     if(orig_no.checked){
-        var original_copy=2;
+        var original_copy=0;
     }
     var scanned_yes=document.getElementById("scanned_yes"+count);
     if(scanned_yes.checked){
@@ -718,7 +832,7 @@ function updatePurchases(baseurl,count,purchase_detail_id,purchase_id,billing_id
     }
     var scanned_no=document.getElementById("scanned_no"+count);
     if(scanned_no.checked){
-        var scanned_copy=2;
+        var scanned_copy=0;
     }
 	$.ajax({
 		type: "POST",
@@ -730,6 +844,57 @@ function updatePurchases(baseurl,count,purchase_detail_id,purchase_id,billing_id
 			document.getElementById("total_update"+count).value=response.total_update;
 		}
 	});
-	
+}
 
+function filterPurchases(){
+    var ref_no= document.getElementById("reference_no").value;
+    var due_date= document.getElementById("due_datefilt").value;
+    var or_no= document.getElementById("or_no").value;
+    // if(or_no!='-'){
+    //     var or_filt=or_no;
+    // }else if(or_no=='-'){
+    //     var or_filt='^';
+    // }
+    var original_yes= document.getElementById("original_yes");
+    var original_no= document.getElementById("original_no");
+    var scanned_yes= document.getElementById("scanned_yes");
+    var scanned_no= document.getElementById("scanned_no");
+
+    var loc= document.getElementById("base_url").value;
+    if(ref_no!='null'){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(due_date!='null'){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+
+    if(or_no!='^' && or_no!='-'){
+        var or=or_no;
+    }else if(or_no=='-'){ 
+        var or="^";
+    }else{
+        var or='null';
+    }
+
+    if(original_yes.checked){
+        var orig=1;
+    }else if(original_no.checked){
+        var orig=0;
+    }else{
+        var orig='null';
+    }
+
+    if(scanned_yes.checked){
+        var scanned=1;
+    }else if(scanned_no.checked){
+        var scanned=0;
+    }else{
+        var scanned='null';
+    }
+    window.location=loc+'purchases/purchases_wesm/'+ref+"/"+due+"/"+or+"/"+orig+"/"+scanned;          
 }
