@@ -321,7 +321,7 @@ class Sales extends CI_Controller {
         $data['reference_number'][]='';
         for($x=0;$x<$count;$x++){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
-                $data['address'][$x]=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+                $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $address=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                 $tin=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
