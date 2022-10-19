@@ -168,7 +168,7 @@
                                 $x=1;
                                 foreach($sub_part AS $sps){ 
                                     if($sps['participant_id']==$as['participant_id']){
-                                        if($x <= 14){ 
+                                        if($x >=1 || $x<=14){ 
                                         // $vatable+=$vatable_sales_sub[$h]; 
                                         // $zero+=$zero_rated_sales_sub[$h]; 
                                         // $total+=$total_amount_sub[$h]; 
