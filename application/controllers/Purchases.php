@@ -886,7 +886,7 @@ class Purchases extends CI_Controller {
         $original_copy=$this->uri->segment(6);
         $scanned_copy=$this->uri->segment(7);
         $ors=str_replace("%5E","",$or_no);
-        $data['or_no']=$or_no;
+        $data['or_nos']=$or_no;
         $data['original_copy']=$original_copy;
         $data['scanned_copy']=$scanned_copy;
         $data['ref_no']=$ref_no;
@@ -1766,19 +1766,40 @@ class Purchases extends CI_Controller {
     public function export_purchasetrans(){
         $reference_number=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
+        $or_no=$this->uri->segment(5);
+        $original_copy=$this->uri->segment(6);
+        $scanned_copy=$this->uri->segment(7);
+        $ors=str_replace("%5E","",$or_no);
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="Purchase Wesm Transcation.xlsx";
         $sql='';
+        $sql1='';
         if($reference_number!='null'){
             $sql.= "reference_number = '$reference_number' AND ";
         }
-
         if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         }
+
+        if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+            $sql1.= "or_no = '$ors' AND ";
+        }else if($or_no=="%5E"){
+            $sql1.= "(or_no='' OR pd.or_no IS NULL) AND ";
+        }
+        if($original_copy!='null' && isset($original_copy)){
+            $sql1.= "original_copy = '$original_copy' AND ";
+        }
+        if($scanned_copy!='null' && isset($scanned_copy)){
+            $sql1.= "scanned_copy = '$scanned_copy' AND ";
+        }
         $query=substr($sql,0,-4);
         $qu = " WHERE saved='1' AND ".$query;
+        
+        $query_filter=substr($sql1,0,-4);
+        if($query_filter!=''){
+            $qufilt = " AND ".$query_filter;
+        }
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
             $transaction_date=date("F d,Y",strtotime($head->transaction_date));
             $billing_from=date("F d,Y",strtotime($head->billing_from));
@@ -1827,7 +1848,7 @@ class Purchases extends CI_Controller {
             $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
             $num=6;
             $x=1;
-            foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id'") AS $re){
+            foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);

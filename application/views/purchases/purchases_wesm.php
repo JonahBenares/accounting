@@ -144,7 +144,7 @@ element.addEventListener("click", onClick);*/
                                             <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-md">Remove Filter</a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
+                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -253,7 +253,7 @@ element.addEventListener("click", onClick);*/
                                 </div>
                                 <?php }else{ ?>
                                     <div><center><b>No Available Data...</b></center></div>
-                                    <?php if(isset($or_no) && isset($original_copy) && isset($scanned_copy)){ ?>
+                                    <?php if(isset($or_nos) && isset($original_copy) && isset($scanned_copy)){ ?>
                                         <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-block">Remove Filter</a>
                                     <?php } ?>
                                 <?php } ?>
