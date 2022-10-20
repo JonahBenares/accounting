@@ -989,8 +989,9 @@ class Purchases extends CI_Controller {
         $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
 
         $reference_number = $this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
-        $billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
-        $data['billing_month'] = date('my',strtotime($billing_to));
+        //$billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        $due_date = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $purchase_id);
+        $data['billing_month'] = date('my',strtotime($due_date));
         $data['refno'] =preg_replace("/[^0-9]/", "", $reference_number);
         
 
@@ -1000,11 +1001,11 @@ class Purchases extends CI_Controller {
         $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
         $data['zip']=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $billing_id);
-        $billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        //$due_date=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
         $data['reference_no']=$this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
         $data['item_no']=$this->super_model->select_column_where("purchase_transaction_details", "item_no", "purchase_detail_id", $purchase_detail_id);
 
-        $month= date("n",strtotime($billing_to));
+        $month= date("n",strtotime($due_date));
         $yearQuarter = ceil($month / 3);
         $first = array(1,4,7,10);
         $second = array(2,5,8,11);
@@ -1077,8 +1078,9 @@ class Purchases extends CI_Controller {
         $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
 
         $reference_number = $this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
-        $billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
-        $data['billing_month'] = date('my',strtotime($billing_to));
+        //$billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        $due_date = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $purchase_id);
+        $data['billing_month'] = date('my',strtotime($due_date));
         $data['refno'] =preg_replace("/[^0-9]/", "", $reference_number);
         
 
@@ -1088,11 +1090,11 @@ class Purchases extends CI_Controller {
         $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
         $data['zip']=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $billing_id);
-        $billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        //$billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
         $data['reference_no']=$this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
         $data['item_no']=$this->super_model->select_column_where("purchase_transaction_details", "item_no", "purchase_detail_id", $purchase_detail_id);
 
-        $month= date("n",strtotime($billing_to));
+        $month= date("n",strtotime($due_date));
         $yearQuarter = ceil($month / 3);
         $first = array(1,4,7,10);
         $second = array(2,5,8,11);
