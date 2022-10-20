@@ -196,7 +196,7 @@ element.addEventListener("click", onClick);*/
                                             <tr>
                                                 <td align="center" style="background: #fff;">                                                 
                                                     <div class="btn-group mb-0">
-                                                        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm"  title="Print BIR Form No.2307">
+                                                        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-placement="bottom" title="Print BIR Form No.2307">
                                                             <span class="m-0 fas fa-print"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
                                                         </a>
                                                     </div>
