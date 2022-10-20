@@ -304,6 +304,30 @@ function filterPurchase(){
     window.location=loc+'purchases/purchases_wesm/'+ref+'/'+due;          
 }
 
+function filterPurchaseAdj(){
+    var ref_no= document.getElementById("ref_no").value;
+    var due_date= document.getElementById("due_date").value;
+    var in_ex_sub= document.getElementById("in_ex_sub").value;
+    var loc= document.getElementById("baseurl").value;
+    if(ref_no!=''){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+
+    if(in_ex_sub!=''){
+        var inex=in_ex_sub;
+    }else{
+        var inex='null';
+    }
+    window.location=loc+'purchases/purchases_wesm_adjustment/'+ref+'/'+due+'/'+inex;          
+}
 
 function payment_filter() {
 	var ref_no= document.getElementById("reference_number").value;
@@ -897,4 +921,64 @@ function filterPurchases(){
         var scanned='null';
     }
     window.location=loc+'purchases/purchases_wesm/'+ref+"/"+due+"/"+or+"/"+orig+"/"+scanned;          
+}
+
+function filterPurchasesAdj(){
+    var ref_no= document.getElementById("reference_no").value;
+    var due_date= document.getElementById("due_datefilt").value;
+    var or_no= document.getElementById("or_no").value;
+    var in_ex_sub= document.getElementById("in_ex_subfilt").value;
+    // if(or_no!='-'){
+    //     var or_filt=or_no;
+    // }else if(or_no=='-'){
+    //     var or_filt='^';
+    // }
+    var original_yes= document.getElementById("original_yes");
+    var original_no= document.getElementById("original_no");
+    var scanned_yes= document.getElementById("scanned_yes");
+    var scanned_no= document.getElementById("scanned_no");
+
+    var loc= document.getElementById("base_url").value;
+    if(ref_no!='null'){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(due_date!='null'){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+
+    if(in_ex_sub!='null'){
+        var inex=in_ex_sub;
+    }else{
+        var inex='null';
+    }
+
+    if(or_no!='^' && or_no!='-'){
+        var or=or_no;
+    }else if(or_no=='-'){ 
+        var or="^";
+    }else{
+        var or='null';
+    }
+
+    if(original_yes.checked){
+        var orig=1;
+    }else if(original_no.checked){
+        var orig=0;
+    }else{
+        var orig='null';
+    }
+
+    if(scanned_yes.checked){
+        var scanned=1;
+    }else if(scanned_no.checked){
+        var scanned=0;
+    }else{
+        var scanned='null';
+    }
+    window.location=loc+'purchases/purchases_wesm_adjustment/'+ref+"/"+due+"/"+inex+"/"+or+"/"+orig+"/"+scanned;          
 }

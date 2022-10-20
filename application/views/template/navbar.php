@@ -234,10 +234,14 @@
                 </a>
             </li>
             <li class="dropdown">
-                <a href="<?php echo base_url(); ?>purchases/purchases_wesm" class="nav-link">
-                    <i data-feather="list"></i>
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
                     <span>WESM Transaction</span>
                 </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment">Adjustment</a></li>
+                </ul>
             </li>
             <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">

@@ -891,8 +891,8 @@ class Purchases extends CI_Controller {
         $data['scanned_copy']=$scanned_copy;
         $data['ref_no']=$ref_no;
         $data['due_date']=$due_date;
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!=''");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $sql='';
@@ -918,9 +918,9 @@ class Purchases extends CI_Controller {
             $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = " WHERE saved='1' AND ".$query;
+        $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
-            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' ORDER BY or_no ASC");
+            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='0' ORDER BY or_no ASC");
         // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
@@ -955,6 +955,149 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/purchases_wesm',$data);
         $this->load->view('template/footer');
     }
+
+    public function purchases_wesm_adjustment(){
+        $ref_no=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        $in_ex_sub=$this->uri->segment(5);
+        $or_no=$this->uri->segment(6);
+        $original_copy=$this->uri->segment(7);
+        $scanned_copy=$this->uri->segment(8);
+        $ors=str_replace("%5E","",$or_no);
+        $data['or_nos']=$or_no;
+        $data['original_copy']=$original_copy;
+        $data['scanned_copy']=$scanned_copy;
+        $data['ref_no']=$ref_no;
+        $data['due_date']=$due_date;
+        $data['in_ex_sub']=$in_ex_sub;
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1'");
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        if($in_ex_sub==0 || $in_ex_sub=='null'){
+            $sql='';
+            if($ref_no!='null'){
+                $sql.= "ph.reference_number = '$ref_no' AND ";
+            }
+
+            if($due_date!='null'){
+                $sql.= "ph.due_date = '$due_date' AND ";
+            }
+
+            if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+                $sql.= "pd.or_no = '$ors' AND ";
+            }else if($or_no=="%5E"){
+                $sql.= "(pd.or_no='' OR pd.or_no IS NULL) AND ";
+            }
+
+            if($original_copy!='null' && isset($original_copy)){
+                $sql.= "pd.original_copy = '$original_copy' AND ";
+            }
+
+            if($scanned_copy!='null' && isset($scanned_copy)){
+                $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
+            }
+            $query=substr($sql,0,-4);
+            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
+                $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
+            // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
+                $data['details'][]=array(
+                    'purchase_detail_id'=>$d->purchase_detail_id,
+                    'purchase_id'=>$d->purchase_id,
+                    'item_no'=>$d->item_no,
+                    'short_name'=>$d->short_name,
+                    'billing_id'=>$d->billing_id,
+                    'facility_type'=>$d->facility_type,
+                    'wht_agent'=>$d->wht_agent,
+                    'ith_tag'=>$d->ith_tag,
+                    'non_vatable'=>$d->non_vatable,
+                    'zero_rated'=>$d->zero_rated,
+                    'vatables_purchases'=>$d->vatables_purchases,
+                    'vat_on_purchases'=>$d->vat_on_purchases,
+                    'zero_rated_purchases'=>$d->zero_rated_purchases,
+                    'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                    'ewt'=>$d->ewt,
+                    'serial_no'=>$d->serial_no,
+                    'total_amount'=>$d->total_amount,
+                    'reference_number'=>$d->reference_number,
+                    'transaction_date'=>$d->transaction_date,
+                    'billing_from'=>$d->billing_from,
+                    'billing_to'=>$d->billing_to,
+                    'due_date'=>$d->due_date,
+                    'print_counter'=>$d->print_counter,
+                    'or_no'=>$d->or_no,
+                    'total_update'=>$d->total_update,
+                    'original_copy'=>$d->original_copy,
+                    'scanned_copy'=>$d->scanned_copy,
+                );
+            }
+        }else if($in_ex_sub==1){
+            $sql='';
+            if($ref_no!='null'){
+                $sql.= "ph.reference_number = '$ref_no' AND ";
+            }
+
+            if($due_date!='null'){
+                $sql.= "ph.due_date = '$due_date' AND ";
+            }
+
+            if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+                $sql.= "pd.or_no = '$ors' AND ";
+            }else if($or_no=="%5E"){
+                $sql.= "(pd.or_no='' OR pd.or_no IS NULL) AND ";
+            }
+
+            if($original_copy!='null' && isset($original_copy)){
+                $sql.= "pd.original_copy = '$original_copy' AND ";
+            }
+
+            if($scanned_copy!='null' && isset($scanned_copy)){
+                $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
+            }
+            $query=substr($sql,0,-4);
+            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
+                $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
+                // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
+                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                if($participant_id != $sub_participant){
+                    $data['details'][]=array(
+                        'purchase_detail_id'=>$d->purchase_detail_id,
+                        'purchase_id'=>$d->purchase_id,
+                        'item_no'=>$d->item_no,
+                        'short_name'=>$d->short_name,
+                        'billing_id'=>$d->billing_id,
+                        'facility_type'=>$d->facility_type,
+                        'wht_agent'=>$d->wht_agent,
+                        'ith_tag'=>$d->ith_tag,
+                        'non_vatable'=>$d->non_vatable,
+                        'zero_rated'=>$d->zero_rated,
+                        'vatables_purchases'=>$d->vatables_purchases,
+                        'vat_on_purchases'=>$d->vat_on_purchases,
+                        'zero_rated_purchases'=>$d->zero_rated_purchases,
+                        'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                        'ewt'=>$d->ewt,
+                        'serial_no'=>$d->serial_no,
+                        'total_amount'=>$d->total_amount,
+                        'reference_number'=>$d->reference_number,
+                        'transaction_date'=>$d->transaction_date,
+                        'billing_from'=>$d->billing_from,
+                        'billing_to'=>$d->billing_to,
+                        'due_date'=>$d->due_date,
+                        'print_counter'=>$d->print_counter,
+                        'or_no'=>$d->or_no,
+                        'total_update'=>$d->total_update,
+                        'original_copy'=>$d->original_copy,
+                        'scanned_copy'=>$d->scanned_copy,
+                    );
+                }
+            }
+        }
+        $this->load->view('purchases/purchases_wesm_adjustment',$data);
+        $this->load->view('template/footer');
+    }
     
     public function add_details_wesm()
     {
@@ -985,13 +1128,15 @@ class Purchases extends CI_Controller {
 
         $data['prev_purchase_details_id'] = $this->super_model->custom_query("SELECT purchase_detail_id FROM purchase_transaction_details WHERE purchase_detail_id < $purchase_detail_id AND purchase_id='$purchase_id' ORDER BY purchase_detail_id DESC LIMIT 1");
         $data['next_purchase_details_id'] = $this->super_model->custom_query("SELECT purchase_detail_id FROM purchase_transaction_details WHERE purchase_detail_id > $purchase_detail_id AND purchase_id='$purchase_id' ORDER BY purchase_detail_id ASC LIMIT 1");
-
         $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
-
+        $adjustment_flag = $this->super_model->select_column_where("purchase_transaction_head", "adjustment", "purchase_id", $purchase_id);
         $reference_number = $this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
-        //$billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
-        $due_date = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $purchase_id);
-        $data['billing_month'] = date('my',strtotime($due_date));
+        if($adjustment_flag==0){
+            $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        }else{ 
+            $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $purchase_id);
+        }
+        $data['billing_month'] = date('my',strtotime($date_ref));
         $data['refno'] =preg_replace("/[^0-9]/", "", $reference_number);
         
 
@@ -1005,7 +1150,7 @@ class Purchases extends CI_Controller {
         $data['reference_no']=$this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
         $data['item_no']=$this->super_model->select_column_where("purchase_transaction_details", "item_no", "purchase_detail_id", $purchase_detail_id);
 
-        $month= date("n",strtotime($due_date));
+        $month= date("n",strtotime($date_ref));
         $yearQuarter = ceil($month / 3);
         $first = array(1,4,7,10);
         $second = array(2,5,8,11);
