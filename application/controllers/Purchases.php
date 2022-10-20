@@ -1947,6 +1947,8 @@ class Purchases extends CI_Controller {
         if($query_filter!=''){
             $qufilt = " AND ".$query_filter;
         }
+        $num=6;
+        $x=1;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
             $transaction_date=date("F d,Y",strtotime($head->transaction_date));
             $billing_from=date("F d,Y",strtotime($head->billing_from));
@@ -1993,8 +1995,6 @@ class Purchases extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Original Copy");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R5', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
-            $num=6;
-            $x=1;
             foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
@@ -2058,7 +2058,7 @@ class Purchases extends CI_Controller {
         $ors=str_replace("%5E","",$or_no);
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
-        $exportfilename="Purchase Wesm Transcation.xlsx";
+        $exportfilename="Purchase Wesm Transcation Adjustment.xlsx";
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
             $sql='';
             $sql1='';
@@ -2084,9 +2084,13 @@ class Purchases extends CI_Controller {
             $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
             
             $query_filter=substr($sql1,0,-4);
+            $qufilt='';
             if($query_filter!=''){
                 $qufilt = " AND ".$query_filter;
             }
+            //echo $qu;
+            $num=6;
+            $x=1;
             foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
                 $transaction_date=date("F d,Y",strtotime($head->transaction_date));
                 $billing_from=date("F d,Y",strtotime($head->billing_from));
@@ -2133,9 +2137,9 @@ class Purchases extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Original Copy");
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R5', "Scanned Copy");
                 $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
-                $num=6;
-                $x=1;
+                
                 foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
+                    echo $x."<br>";
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
@@ -2201,9 +2205,12 @@ class Purchases extends CI_Controller {
             $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
             
             $query_filter=substr($sql1,0,-4);
+            $qufilt='';
             if($query_filter!=''){
                 $qufilt = " AND ".$query_filter;
             }
+            $num=6;
+            $x=1;
             foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
                 $transaction_date=date("F d,Y",strtotime($head->transaction_date));
                 $billing_from=date("F d,Y",strtotime($head->billing_from));
@@ -2250,8 +2257,6 @@ class Purchases extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Original Copy");
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R5', "Scanned Copy");
                 $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
-                $num=6;
-                $x=1;
                 foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
                     $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$re->billing_id'");
                     $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
@@ -2306,7 +2311,7 @@ class Purchases extends CI_Controller {
         unset($objWriter);   
         ob_end_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Purchase Wesm Transcation.xlsx"');
+        header('Content-Disposition: attachment; filename="Purchase Wesm Transcation Adjustment.xlsx"');
         readfile($exportfilename);
     }
 }
