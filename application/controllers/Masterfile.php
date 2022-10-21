@@ -472,6 +472,28 @@ class Masterfile extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function change_password(){
+        $newpassword = md5($this->input->post('newpass'));
+        $data = array(
+            'password'=> $newpassword
+        );
+        $userid = $this->input->post('userid');
+
+        $password = $this->super_model->select_column_where("users", "password", "user_id", $userid);
+
+        $oldpassword = ($this->input->post('oldpass'));
+        $oldpasswordmd5 = md5($this->input->post('oldpass'));
+
+        if($oldpassword == $password){
+            $this->super_model->update_where("users", $data, "user_id" , $userid );echo "<script>alert('Successfully Updated'); location.replace(document.referrer); </script>"; 
+        }else if(md5($oldpasswordmd5) == md5($password)) {
+            $this->super_model->update_where("users", $data,"user_id" , $userid  );echo "<script>alert('Successfully Updated'); location.replace(document.referrer); </script>";
+        }
+        else{
+            echo "<script>alert('Incorrect old password!'); location.replace(document.referrer); </script>";
+        }
+    }
+
     public function insert_employee(){
         $username = $this->input->post('username');
         $fullname = $this->input->post('fullname');
