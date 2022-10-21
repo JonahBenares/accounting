@@ -104,7 +104,21 @@
         <link href="<?php echo base_url(); ?>assets/css/select2.min.css" rel="stylesheet" />
         <script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
         <script>
-            $('.select2').select2();
+          $('.select2').select2();
+          $(document).on("click", "#editEmp", function () {
+            var user_id = $(this).attr("data-id");
+            var username = $(this).attr("data-username");
+            var fullname = $(this).attr("data-fullname");
+            var department = $(this).attr("data-dept");
+            var position = $(this).attr("data-position");
+            var e_signature = $(this).attr("data-signature");
+            $("#user_id").val(user_id);
+            $("#username").val(username);
+            $("#fullname").val(fullname);
+            $("#department").val(department);
+            $("#position").val(position);
+            $("#e_signature").val(e_signature);
+          });
         </script>
     </body>
 </html>

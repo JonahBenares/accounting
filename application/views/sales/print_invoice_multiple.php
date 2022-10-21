@@ -253,7 +253,7 @@
                 <?php } ?>
             </tr>
             <tr>
-                <td colspan="14"></td>
+                <td colspan="14"><img class="thumbnail" src="<?php echo base_url()."uploads/".$_SESSION['user_signature']; ?>"></td>
                 <td colspan="6"><br></td>
             </tr>
            <!--  <tr>
