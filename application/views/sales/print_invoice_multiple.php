@@ -219,13 +219,17 @@
                             <td colspan="4"></td>
                             <td colspan="1"></td>
                         </tr>
-                        <?php if($total_cents_sub[$x] < 10 || $total_cents[$x] < 10){
+                        <?php /*if($total_cents_sub[$x] < 10 || $total_cents[$x] < 10){
                             $cents_sub = str_pad($total_cents_sub[$x], '2', '0', STR_PAD_LEFT);
                             $cents = str_pad($total_cents[$x], '2', '0', STR_PAD_LEFT);
                         } else {
                             $cents_sub = str_pad($total_cents_sub[$x], '2', '0', STR_PAD_RIGHT);
                             $cents = str_pad($total_cents[$x], '2', '0', STR_PAD_RIGHT);
-                        } ?>
+                        } */ 
+
+                        $cents_sub = str_pad($total_cents_sub[$x], '2', '0', STR_PAD_RIGHT);
+                            $cents = str_pad($total_cents[$x], '2', '0', STR_PAD_RIGHT);
+                            ?>
                         <tr>
                             <td colspan="15" align="right"  class="pr-2" style="color:#fff"> 
                                 <b>TOTAL AMOUNT DUE</b>
