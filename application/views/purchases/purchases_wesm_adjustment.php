@@ -25,7 +25,7 @@ element.addEventListener("click", onClick);*/
                     <div class="card">
                         <form>
                             <div class="card-header">
-                                <h4>WESM Transaction - Purchases</h4>
+                                <h4>WESM Transaction - Purchases Adjustment</h4>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -50,7 +50,14 @@ element.addEventListener("click", onClick);*/
                                                         <?php } ?>
                                                     </select>
                                                 </td>
-                                                <td  width="1%"><button type="button" onclick="filterPurchase();" class="btn btn-primary btn-block">Filter</button></td>
+                                                <td>
+                                                    <select class="form-control" name="in_ex_sub" id="in_ex_sub">
+                                                        <option value="">-- Select Include or Exlcude Sub-participant--</option>
+                                                            <option value="0">Include Sub-participant</option>
+                                                            <option value="1">Exclude Sub-participant</option>
+                                                    </select>
+                                                </td>
+                                                <td  width="1%"><button type="button" onclick="filterPurchaseAdj();" class="btn btn-primary btn-block">Filter</button></td>
                                                 <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                             </tr>
                                         </table>
@@ -137,14 +144,15 @@ element.addEventListener("click", onClick);*/
                                         <td>
                                             <input type="hidden" name="ref_no" id="reference_no" value="<?php echo $ref_no; ?>">
                                             <input type="hidden" name="due_date" id="due_datefilt" value="<?php echo $due_date; ?>">
+                                            <input type="hidden" name="in_ex_sub" id="in_ex_subfilt" value="<?php echo $in_ex_sub; ?>">
                                             <input name="baseurl" id="base_url" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
-                                            <button type="button" class="btn btn-primary btn-md" onclick="filterPurchases()">Filter</button>
+                                            <button type="button" class="btn btn-primary btn-md" onclick="filterPurchasesAdj()">Filter</button>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-md">Remove Filter</a>
+                                            <a href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $in_ex_sub; ?>" class="btn btn-warning btn-md">Remove Filter</a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
+                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetransadjust/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $in_ex_sub; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -254,7 +262,7 @@ element.addEventListener("click", onClick);*/
                                 <?php }else{ ?>
                                     <div><center><b>No Available Data...</b></center></div>
                                     <?php if(isset($or_nos) && isset($original_copy) && isset($scanned_copy)){ ?>
-                                        <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-block">Remove Filter</a>
+                                        <a href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $in_ex_sub; ?>" class="btn btn-warning btn-block">Remove Filter</a>
                                     <?php } ?>
                                 <?php } ?>
                             </div>

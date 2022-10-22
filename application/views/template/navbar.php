@@ -1,4 +1,19 @@
 <div class="navbar-bg"></div>
+<script>
+    function val_cpass() {
+        var password = $("#newpass").val();
+        var confirm_password = $("#renewpass").val();
+        if(password != confirm_password) {
+            $("#cpass_msg").show();
+            $("#cpass_msg").html("Confirm password not match!");
+            $("#submit_pass").hide();
+        }
+        else{
+            $("#cpass_msg").hide();
+            $("#submit_pass").show();
+        }
+    }
+</script>
 <nav class="navbar navbar-expand-lg main-navbar sticky">
     <div class="form-inline mr-auto">
         <ul class="navbar-nav mr-3">
@@ -132,6 +147,9 @@
                     <i class="fas fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-divider"></div> -->
+                <a data-toggle="modal" data-target="#changePass" class="dropdown-item has-icon text-danger"> 
+                    <i class="fas fa-lock"></i> Change Password
+                </a>
                 <a href="<?php echo base_url(); ?>index.php/masterfile/user_logout" class="dropdown-item has-icon text-danger"> 
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
@@ -139,6 +157,42 @@
         </li>
     </ul>
 </nav>
+<div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="<?php echo base_url(); ?>masterfile/change_password">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Old Password</label>
+                        <input type="password" name = "oldpass" id="oldpass" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" name = "newpass" id = "newpass" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" onchange="val_cpass()" name = "renewpass" id="renewpass" class="form-control" required>
+                    </div>
+                    <div class="alert alert-danger alert-shake" id="cpass_msg" style = "display:none;">
+                        <center>Confirm Password not Match!</center>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type='hidden' name='userid' value="<?php echo $_SESSION['user_id']; ?>">
+                    <input type="submit" class="btn btn-primary" id="submit_pass" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
@@ -234,10 +288,14 @@
                 </a>
             </li>
             <li class="dropdown">
-                <a href="<?php echo base_url(); ?>purchases/purchases_wesm" class="nav-link">
-                    <i data-feather="list"></i>
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
                     <span>WESM Transaction</span>
                 </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment">Adjustment</a></li>
+                </ul>
             </li>
             <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">

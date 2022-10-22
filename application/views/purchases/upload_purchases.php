@@ -162,7 +162,7 @@
                                                 </label>
                                                 <span class="m-b-10">No</span>
                                                 <label style="width:20px;margin: 0px 6px;">
-                                                    <input type="radio" class="" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='2') ? 'checked' : ''; ?>  <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                    <input type="radio" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='0') ? 'checked' : ''; ?>  <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
                                                 </label>
                                             </td>
                                             <td align="center">
@@ -172,7 +172,7 @@
                                                 </label>
                                                 <span class="m-b-10">No</span>
                                                 <label style="width:20px;margin: 0px 6px;">
-                                                    <input type="radio" class="" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='2') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
+                                                    <input type="radio" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='0') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
                                                 </label>
                                             </td>
                                         </tr>

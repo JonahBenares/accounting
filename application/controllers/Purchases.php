@@ -882,10 +882,17 @@ class Purchases extends CI_Controller {
     public function purchases_wesm(){
         $ref_no=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
+        $or_no=$this->uri->segment(5);
+        $original_copy=$this->uri->segment(6);
+        $scanned_copy=$this->uri->segment(7);
+        $ors=str_replace("%5E","",$or_no);
+        $data['or_nos']=$or_no;
+        $data['original_copy']=$original_copy;
+        $data['scanned_copy']=$scanned_copy;
         $data['ref_no']=$ref_no;
         $data['due_date']=$due_date;
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!=''");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $sql='';
@@ -896,9 +903,24 @@ class Purchases extends CI_Controller {
         if($due_date!='null'){
             $sql.= "ph.due_date = '$due_date' AND ";
         }
+
+        if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+            $sql.= "pd.or_no = '$ors' AND ";
+        }else if($or_no=="%5E"){
+            $sql.= "(pd.or_no='' OR pd.or_no IS NULL) AND ";
+        }
+
+        if($original_copy!='null' && isset($original_copy)){
+            $sql.= "pd.original_copy = '$original_copy' AND ";
+        }
+
+        if($scanned_copy!='null' && isset($scanned_copy)){
+            $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
+        }
         $query=substr($sql,0,-4);
-        $qu = " WHERE saved='1' AND ".$query;
+        $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
+            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='0' ORDER BY or_no ASC");
         // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
@@ -933,6 +955,150 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/purchases_wesm',$data);
         $this->load->view('template/footer');
     }
+
+    public function purchases_wesm_adjustment(){
+        $ref_no=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        $in_ex_sub=$this->uri->segment(5);
+        $or_no=$this->uri->segment(6);
+        $original_copy=$this->uri->segment(7);
+        $scanned_copy=$this->uri->segment(8);
+        $ors=str_replace("%5E","",$or_no);
+        $data['or_nos']=$or_no;
+        $data['original_copy']=$original_copy;
+        $data['scanned_copy']=$scanned_copy;
+        $data['ref_no']=$ref_no;
+        $data['due_date']=$due_date;
+        $data['in_ex_sub']=$in_ex_sub;
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1'");
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        if($in_ex_sub==0 || $in_ex_sub=='null'){
+            $sql='';
+            if($ref_no!='null'){
+                $sql.= "ph.reference_number = '$ref_no' AND ";
+            }
+
+            if($due_date!='null'){
+                $sql.= "ph.due_date = '$due_date' AND ";
+            }
+
+            if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+                $sql.= "pd.or_no = '$ors' AND ";
+            }else if($or_no=="%5E"){
+                $sql.= "(pd.or_no='' OR pd.or_no IS NULL) AND ";
+            }
+
+            if($original_copy!='null' && isset($original_copy)){
+                $sql.= "pd.original_copy = '$original_copy' AND ";
+            }
+
+            if($scanned_copy!='null' && isset($scanned_copy)){
+                $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
+            }
+            $query=substr($sql,0,-4);
+            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
+                $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
+            // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
+                $data['details'][]=array(
+                    'purchase_detail_id'=>$d->purchase_detail_id,
+                    'purchase_id'=>$d->purchase_id,
+                    'item_no'=>$d->item_no,
+                    'short_name'=>$d->short_name,
+                    'billing_id'=>$d->billing_id,
+                    'facility_type'=>$d->facility_type,
+                    'wht_agent'=>$d->wht_agent,
+                    'ith_tag'=>$d->ith_tag,
+                    'non_vatable'=>$d->non_vatable,
+                    'zero_rated'=>$d->zero_rated,
+                    'vatables_purchases'=>$d->vatables_purchases,
+                    'vat_on_purchases'=>$d->vat_on_purchases,
+                    'zero_rated_purchases'=>$d->zero_rated_purchases,
+                    'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                    'ewt'=>$d->ewt,
+                    'serial_no'=>$d->serial_no,
+                    'total_amount'=>$d->total_amount,
+                    'reference_number'=>$d->reference_number,
+                    'transaction_date'=>$d->transaction_date,
+                    'billing_from'=>$d->billing_from,
+                    'billing_to'=>$d->billing_to,
+                    'due_date'=>$d->due_date,
+                    'print_counter'=>$d->print_counter,
+                    'or_no'=>$d->or_no,
+                    'total_update'=>$d->total_update,
+                    'original_copy'=>$d->original_copy,
+                    'scanned_copy'=>$d->scanned_copy,
+                );
+            }
+        }else if($in_ex_sub==1){
+            $sql='';
+            if($ref_no!='null'){
+                $sql.= "ph.reference_number = '$ref_no' AND ";
+            }
+
+            if($due_date!='null'){
+                $sql.= "ph.due_date = '$due_date' AND ";
+            }
+
+            if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+                $sql.= "pd.or_no = '$ors' AND ";
+            }else if($or_no=="%5E"){
+                $sql.= "(pd.or_no='' OR pd.or_no IS NULL) AND ";
+            }
+
+            if($original_copy!='null' && isset($original_copy)){
+                $sql.= "pd.original_copy = '$original_copy' AND ";
+            }
+
+            if($scanned_copy!='null' && isset($scanned_copy)){
+                $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
+            }
+            $query=substr($sql,0,-4);
+            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
+                $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
+                // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
+                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                if($participant_id != $sub_participant){
+                    $data['details'][]=array(
+                        'purchase_detail_id'=>$d->purchase_detail_id,
+                        'purchase_id'=>$d->purchase_id,
+                        'item_no'=>$d->item_no,
+                        'short_name'=>$d->short_name,
+                        'billing_id'=>$d->billing_id,
+                        'facility_type'=>$d->facility_type,
+                        'wht_agent'=>$d->wht_agent,
+                        'ith_tag'=>$d->ith_tag,
+                        'non_vatable'=>$d->non_vatable,
+                        'zero_rated'=>$d->zero_rated,
+                        'vatables_purchases'=>$d->vatables_purchases,
+                        'vat_on_purchases'=>$d->vat_on_purchases,
+                        'zero_rated_purchases'=>$d->zero_rated_purchases,
+                        'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                        'ewt'=>$d->ewt,
+                        'serial_no'=>$d->serial_no,
+                        'total_amount'=>$d->total_amount,
+                        'reference_number'=>$d->reference_number,
+                        'transaction_date'=>$d->transaction_date,
+                        'billing_from'=>$d->billing_from,
+                        'billing_to'=>$d->billing_to,
+                        'due_date'=>$d->due_date,
+                        'print_counter'=>$d->print_counter,
+                        'or_no'=>$d->or_no,
+                        'total_update'=>$d->total_update,
+                        'original_copy'=>$d->original_copy,
+                        'scanned_copy'=>$d->scanned_copy,
+                    );
+                }
+            }
+        }
+        $this->load->view('purchases/purchases_wesm_adjustment',$data);
+        $this->load->view('template/footer');
+    }
+    
     public function add_details_wesm()
     {
         $purchase_detail_id = $this->uri->segment(3);
@@ -962,12 +1128,15 @@ class Purchases extends CI_Controller {
 
         $data['prev_purchase_details_id'] = $this->super_model->custom_query("SELECT purchase_detail_id FROM purchase_transaction_details WHERE purchase_detail_id < $purchase_detail_id AND purchase_id='$purchase_id' ORDER BY purchase_detail_id DESC LIMIT 1");
         $data['next_purchase_details_id'] = $this->super_model->custom_query("SELECT purchase_detail_id FROM purchase_transaction_details WHERE purchase_detail_id > $purchase_detail_id AND purchase_id='$purchase_id' ORDER BY purchase_detail_id ASC LIMIT 1");
-
         $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
-
+        $adjustment_flag = $this->super_model->select_column_where("purchase_transaction_head", "adjustment", "purchase_id", $purchase_id);
         $reference_number = $this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
-        $billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
-        $data['billing_month'] = date('my',strtotime($billing_to));
+        if($adjustment_flag==0){
+            $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        }else{ 
+            $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $purchase_id);
+        }
+        $data['billing_month'] = date('my',strtotime($date_ref));
         $data['refno'] =preg_replace("/[^0-9]/", "", $reference_number);
         
 
@@ -977,11 +1146,11 @@ class Purchases extends CI_Controller {
         $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
         $data['zip']=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $billing_id);
-        $billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        //$due_date=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
         $data['reference_no']=$this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
         $data['item_no']=$this->super_model->select_column_where("purchase_transaction_details", "item_no", "purchase_detail_id", $purchase_detail_id);
 
-        $month= date("n",strtotime($billing_to));
+        $month= date("n",strtotime($date_ref));
         $yearQuarter = ceil($month / 3);
         $first = array(1,4,7,10);
         $second = array(2,5,8,11);
@@ -1054,8 +1223,9 @@ class Purchases extends CI_Controller {
         $data['short_name'] = $this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $purchase_detail_id);
 
         $reference_number = $this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
-        $billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
-        $data['billing_month'] = date('my',strtotime($billing_to));
+        //$billing_to = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        $due_date = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $purchase_id);
+        $data['billing_month'] = date('my',strtotime($due_date));
         $data['refno'] =preg_replace("/[^0-9]/", "", $reference_number);
         
 
@@ -1065,11 +1235,11 @@ class Purchases extends CI_Controller {
         $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
         $data['zip']=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $billing_id);
-        $billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
+        //$billing_to=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
         $data['reference_no']=$this->super_model->select_column_where("purchase_transaction_head", "reference_number", "purchase_id", $purchase_id);
         $data['item_no']=$this->super_model->select_column_where("purchase_transaction_details", "item_no", "purchase_detail_id", $purchase_detail_id);
 
-        $month= date("n",strtotime($billing_to));
+        $month= date("n",strtotime($due_date));
         $yearQuarter = ceil($month / 3);
         $first = array(1,4,7,10);
         $second = array(2,5,8,11);
@@ -1630,30 +1800,155 @@ class Purchases extends CI_Controller {
         }
     }
 
+    public function save_bulk_or(){
+        $purchase_id = $this->input->post('purchase_id');
+        $or_identifier = $this->input->post('or_identifier');
+        $data_head = array(
+            'saved_or_bulk'=>1
+        );
+        $this->super_model->update_custom_where("purchase_transaction_details", $data_head, "purchase_id='$purchase_id' AND or_bulk_identifier='$or_identifier'");
+    }
+
+    public function cancel_bulk_or(){
+        $purchase_id = $this->input->post('purchase_id');
+        $or_identifier = $this->input->post('or_identifier');
+            $data_or = array(
+                'or_no'=>Null,
+                'total_update'=>'',
+                'original_copy'=>0,
+                'scanned_copy'=>0,
+                'or_bulk_identifier'=>Null,
+            );
+           $this->super_model->update_custom_where("purchase_transaction_details", $data_or, "purchase_id='$purchase_id' AND or_bulk_identifier='$or_identifier'");
+        }
+
 
     public function or_bulk(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('purchases/or_bulk');
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $purchaseid=$this->uri->segment(3);
+        $data['purchase_id'] = $purchaseid;
+        $identifier=$this->uri->segment(4);
+        $data['identifier']=$this->uri->segment(4);
+        $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$purchaseid);
+        $data['refno']=$ref_no;
+        $data['saved']=$this->super_model->select_column_where("purchase_transaction_details","saved_or_bulk","or_bulk_identifier",$identifier);
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,purchase_id FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0' ");
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number='$ref_no' AND adjustment='0' AND or_bulk_identifier ='$identifier'") AS $d){
+            $data['details'][]=array(
+                'purchase_detail_id'=>$d->purchase_detail_id,
+                'purchase_id'=>$d->purchase_id,
+                'total_update'=>$d->total_update,
+                'original_copy'=>$d->original_copy,
+                'scanned_copy'=>$d->scanned_copy,
+                'or_no'=>$d->or_no,
+                'billing_id'=>$d->billing_id,
+            );
+        }
+        $this->load->view('purchases/or_bulk', $data);
         $this->load->view('template/footer');
+    }
+
+    public function upload_or_bulk(){
+        $purchase_id = $this->input->post('purchase_id');
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $error_ext=0;
+        if(!empty($_FILES['doc']['name'])){
+            $exc= basename($_FILES['doc']['name']);
+            $exc=explode('.',$exc);
+            $ext1=$exc[1];
+            if($ext1=='php' || $ext1!='xlsx'){
+                $error_ext++;
+            }else {
+                $filename1='bulk_updates_of_OR.'.$ext1;
+                if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
+                     $this->readExcel_or($purchase_id);
+                } 
+            }
+        }
+    }
+
+    public function readExcel_or($purchase_id){
+
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+
+        $inputFileName =realpath(APPPATH.'../uploads/excel/bulk_updates_of_OR.xlsx');
+
+       try {
+            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        
+   
+            $objPHPExcel = $objReader->load($inputFileName);
+        } 
+        catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+        //$objPHPExcel->setActiveSheetIndex(0);
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+        //$highestRow = $highestRow-1;
+        for($x=2;$x<=$highestRow;$x++){
+            $identifier = $this->input->post('identifier');
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());   
+            $or_no = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            //$total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getOldCalculatedValue());
+            $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+     
+            $data_or = array(
+                'or_no'=>$or_no,
+                'total_update'=>$total_amount,
+                'original_copy'=>$original_copy,
+                'scanned_copy'=>$scanned_copy,
+                'or_bulk_identifier'=>$identifier,
+            );
+           $this->super_model->update_custom_where("purchase_transaction_details", $data_or, "purchase_id='$purchase_id' AND billing_id='$billing_id'");
+        }
     }
     
     public function export_purchasetrans(){
         $reference_number=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
+        $or_no=$this->uri->segment(5);
+        $original_copy=$this->uri->segment(6);
+        $scanned_copy=$this->uri->segment(7);
+        $ors=str_replace("%5E","",$or_no);
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="Purchase Wesm Transcation.xlsx";
         $sql='';
+        $sql1='';
         if($reference_number!='null'){
             $sql.= "reference_number = '$reference_number' AND ";
         }
-
         if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         }
+
+        if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+            $sql1.= "or_no = '$ors' AND ";
+        }else if($or_no=="%5E"){
+            $sql1.= "(or_no='' OR pd.or_no IS NULL) AND ";
+        }
+        if($original_copy!='null' && isset($original_copy)){
+            $sql1.= "original_copy = '$original_copy' AND ";
+        }
+        if($scanned_copy!='null' && isset($scanned_copy)){
+            $sql1.= "scanned_copy = '$scanned_copy' AND ";
+        }
         $query=substr($sql,0,-4);
-        $qu = " WHERE saved='1' AND ".$query;
+        $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
+        
+        $query_filter=substr($sql1,0,-4);
+        if($query_filter!=''){
+            $qufilt = " AND ".$query_filter;
+        }
+        $num=6;
+        $x=1;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
             $transaction_date=date("F d,Y",strtotime($head->transaction_date));
             $billing_from=date("F d,Y",strtotime($head->billing_from));
@@ -1700,9 +1995,7 @@ class Purchases extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Original Copy");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R5', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
-            $num=6;
-            $x=1;
-            foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id'") AS $re){
+            foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
@@ -1721,14 +2014,14 @@ class Purchases extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $re->total_update);
                 if($re->original_copy==1){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "Yes");
-                }else if($re->original_copy==2){
+                }else if($re->original_copy==0){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "");
                 }
                 if($re->scanned_copy==1){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "Yes");
-                }else if($re->scanned_copy==2){
+                }else if($re->scanned_copy==0){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "");
@@ -1752,6 +2045,273 @@ class Purchases extends CI_Controller {
         ob_end_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="Purchase Wesm Transcation.xlsx"');
+        readfile($exportfilename);
+    }
+
+    public function export_purchasetransadjust(){
+        $reference_number=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        $in_ex_sub=$this->uri->segment(5);
+        $or_no=$this->uri->segment(6);
+        $original_copy=$this->uri->segment(7);
+        $scanned_copy=$this->uri->segment(8);
+        $ors=str_replace("%5E","",$or_no);
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $exportfilename="Purchase Wesm Transcation Adjustment.xlsx";
+        if($in_ex_sub==0 ||  $in_ex_sub=='null'){
+            $sql='';
+            $sql1='';
+            if($reference_number!='null'){
+                $sql.= "reference_number = '$reference_number' AND ";
+            }
+            if($due_date!='null'){
+                $sql.= "due_date = '$due_date' AND ";
+            }
+
+            if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+                $sql1.= "or_no = '$ors' AND ";
+            }else if($or_no=="%5E"){
+                $sql1.= "(or_no='' OR pd.or_no IS NULL) AND ";
+            }
+            if($original_copy!='null' && isset($original_copy)){
+                $sql1.= "original_copy = '$original_copy' AND ";
+            }
+            if($scanned_copy!='null' && isset($scanned_copy)){
+                $sql1.= "scanned_copy = '$scanned_copy' AND ";
+            }
+            $query=substr($sql,0,-4);
+            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            
+            $query_filter=substr($sql1,0,-4);
+            $qufilt='';
+            if($query_filter!=''){
+                $qufilt = " AND ".$query_filter;
+            }
+            //echo $qu;
+            $num=6;
+            $x=1;
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
+                $transaction_date=date("F d,Y",strtotime($head->transaction_date));
+                $billing_from=date("F d,Y",strtotime($head->billing_from));
+                $billing_to=date("F d,Y",strtotime($head->billing_to));
+                $due_dates=date("F d,Y",strtotime($head->due_date));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Reference Number: $head->reference_number");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "Date: $transaction_date");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3', "Due Date: $due_dates");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G1', "Billing Period (From): $billing_from");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G2', "Billing Period (To): $billing_to");
+                $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
+                $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
+                $objPHPExcel->getActiveSheet()->mergeCells('A3:E3');
+                $objPHPExcel->getActiveSheet()->mergeCells('G1:J1');
+                $objPHPExcel->getActiveSheet()->mergeCells('G2:J2');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+                $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN
+                        )
+                    )
+                );
+                foreach(range('A','R') as $columnID){
+                    $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+                }
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', "Item No.");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', "STL ID/TPShort Name");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "Billing ID");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D5', "Facility Type");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E5', "WHT Agent Tag");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F5', "ITH Tag");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "Non Vatable Tag");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H5', "Zero-rated Tag");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I5', "Vatable Purchases");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J5', "Zero Rated Purchases");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K5', "Zero Rated EcoZones Purchases");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L5', "Vat On Purchases");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M5', "EWT");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N5', "Total Amount");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O5', "OR Number");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P5', "Total Amount");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Original Copy");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R5', "Scanned Copy");
+                $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
+                
+                foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
+                    echo $x."<br>";
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $re->facility_type);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $re->wht_agent);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $re->ith_tag);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $re->non_vatable);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $re->zero_rated);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $re->vatables_purchases);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$num, $re->zero_rated_purchases);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, $re->zero_rated_ecozones);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $re->vat_on_purchases);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, $re->ewt);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $re->total_amount);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $re->or_no);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $re->total_update);
+                    if($re->original_copy==1){
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "Yes");
+                    }else if($re->original_copy==0){
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "No");
+                    }else{
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "");
+                    }
+                    if($re->scanned_copy==1){
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "Yes");
+                    }else if($re->scanned_copy==0){
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "No");
+                    }else{
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "");
+                    }
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $num++;
+                    $x++;
+                }
+                $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            }
+        }else if($in_ex_sub==1){
+            $sql='';
+            $sql1='';
+            if($reference_number!='null'){
+                $sql.= "reference_number = '$reference_number' AND ";
+            }
+            if($due_date!='null'){
+                $sql.= "due_date = '$due_date' AND ";
+            }
+
+            if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
+                $sql1.= "or_no = '$ors' AND ";
+            }else if($or_no=="%5E"){
+                $sql1.= "(or_no='' OR pd.or_no IS NULL) AND ";
+            }
+            if($original_copy!='null' && isset($original_copy)){
+                $sql1.= "original_copy = '$original_copy' AND ";
+            }
+            if($scanned_copy!='null' && isset($scanned_copy)){
+                $sql1.= "scanned_copy = '$scanned_copy' AND ";
+            }
+            $query=substr($sql,0,-4);
+            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            
+            $query_filter=substr($sql1,0,-4);
+            $qufilt='';
+            if($query_filter!=''){
+                $qufilt = " AND ".$query_filter;
+            }
+            $num=6;
+            $x=1;
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
+                $transaction_date=date("F d,Y",strtotime($head->transaction_date));
+                $billing_from=date("F d,Y",strtotime($head->billing_from));
+                $billing_to=date("F d,Y",strtotime($head->billing_to));
+                $due_dates=date("F d,Y",strtotime($head->due_date));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Reference Number: $head->reference_number");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "Date: $transaction_date");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3', "Due Date: $due_dates");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G1', "Billing Period (From): $billing_from");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G2', "Billing Period (To): $billing_to");
+                $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
+                $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
+                $objPHPExcel->getActiveSheet()->mergeCells('A3:E3');
+                $objPHPExcel->getActiveSheet()->mergeCells('G1:J1');
+                $objPHPExcel->getActiveSheet()->mergeCells('G2:J2');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+                $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN
+                        )
+                    )
+                );
+                foreach(range('A','R') as $columnID){
+                    $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+                }
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', "Item No.");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', "STL ID/TPShort Name");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "Billing ID");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D5', "Facility Type");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E5', "WHT Agent Tag");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F5', "ITH Tag");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "Non Vatable Tag");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H5', "Zero-rated Tag");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I5', "Vatable Purchases");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J5', "Zero Rated Purchases");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K5', "Zero Rated EcoZones Purchases");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L5', "Vat On Purchases");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M5', "EWT");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N5', "Total Amount");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O5', "OR Number");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P5', "Total Amount");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Original Copy");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R5', "Scanned Copy");
+                $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
+                foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
+                    $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$re->billing_id'");
+                    $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                    if($participant_id != $sub_participant){
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $re->facility_type);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $re->wht_agent);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $re->ith_tag);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $re->non_vatable);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $re->zero_rated);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $re->vatables_purchases);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$num, $re->zero_rated_purchases);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, $re->zero_rated_ecozones);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $re->vat_on_purchases);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, $re->ewt);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $re->total_amount);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $re->or_no);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $re->total_update);
+                        if($re->original_copy==1){
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "Yes");
+                        }else if($re->original_copy==0){
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "No");
+                        }else{
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, "");
+                        }
+                        if($re->scanned_copy==1){
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "Yes");
+                        }else if($re->scanned_copy==0){
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "No");
+                        }else{
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "");
+                        }
+                        $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
+                        $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                        $num++;
+                        $x++;
+                    }
+                }
+                $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            }
+        }
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        if (file_exists($exportfilename))
+        unlink($exportfilename);
+        $objWriter->save($exportfilename);
+        unset($objPHPExcel);
+        unset($objWriter);   
+        ob_end_clean();
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Purchase Wesm Transcation Adjustment.xlsx"');
         readfile($exportfilename);
     }
 }

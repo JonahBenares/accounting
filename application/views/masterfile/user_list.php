@@ -7,7 +7,7 @@
                         <div class="card-header">                        
                             <div class="row">
                                 <div class="col-6">
-                                    <h4>User List</h4>
+                                    <h4>Users List</h4>
                                 </div>
                                 <div class="col-6">
                                     <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#basicModal">
@@ -25,6 +25,7 @@
                                             <th>Department</th>
                                             <th>Positon</th>
                                             <th>Username</th>
+                                            <th>E-Signature</th>
                                             <th width="1%" align="center">
                                                 <center><span class="fas fa-bars"></span></center>
                                             </th>
@@ -39,20 +40,14 @@
                                             <td><?php echo $u['department'];?></td>
                                             <td><?php echo $u['position'];?></td>
                                             <td><?php echo $u['username'];?></td>
+                                            <td>
+                                                <?php if(!empty($u['user_signature'])) { ?>
+                                                <img class="thumbnail" src="<?php echo "../uploads/".$u['user_signature'];?>">
+                                                <?php } ?>
+                                            </td>
                                             <td align="center">
-                                                <div class="btn-group mb-0 dropleft">
-                                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                        <span class="fas fa-bars">
-                                                    </button>
-                                                    <div class="dropdown-menu dropleft p-0" style="width:0px!important;text-align:center;box-shadow: 0 0 0 rgba(0,0,0,0)!important;background: #fff0;">
-                                                        <span style="background:#fff;right: 0;position: absolute;">
-                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" data-original-title="View" href=""><span class="fas fa-eye m-0"></span></a>
-                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Update" data-original-title="Update" href=""><span class="far fa-edit m-0"></span></a>
-                                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete" data-original-title="Delete" href="" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash m-0"></span></a>
-                                                        </span>
-                                                    </div>
-                                                </div> 
+                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateEmp" data-placement="bottom" title="Update" data-original-title="Update" data-id="<?php echo $u['user_id'];?>" data-username="<?php echo $u['username'];?>" data-fullname="<?php echo $u['fullname'];?>" data-position="<?php echo $u['position'];?>" data-dept="<?php echo $u['department'];?>" data-signature="<?php echo $u['user_signature'];?>" id="editEmp"><span class="far fa-edit m-0"></span></button>
+                                                <!--  <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete" data-original-title="Delete" href="" onclick="confirmationDelete(this);return false;"><span class="fas fa-trash m-0"></span></a> -->
                                             </td>
                                         </tr>
                                         <?php } } else { ?>
@@ -73,23 +68,84 @@
 
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add user</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>user</label>
-                    <input type="text" class="form-control">
+        <form method="POST" action="<?php echo base_url(); ?>masterfile/insert_employee" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>E-Signature</label>
+                        <input type="file" name="signature" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Fullname</label>
+                        <input type="text" name="fullname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <input type="text" name="department" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text" name="position" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type="submit" class="btn btn-primary" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="updateEmp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="<?php echo base_url(); ?>masterfile/edit_user" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>E-Signature</label>
+                        <input type="file" name="signature" id="signature" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" id="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Fullname</label>
+                        <input type="text" name="fullname" id="fullname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <input type="text" name="department" id="department" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text" name="position" id="position" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type="hidden" name="e_signature" id="e_signature" class="form-control">
+                    <input type="hidden" name="user_id" id="user_id" class="form-control">
+                    <input type="submit" class="btn btn-primary" value="Save Changes">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>

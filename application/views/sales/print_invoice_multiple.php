@@ -260,7 +260,11 @@
                 <?php } ?>
             </tr>
             <tr>
-                <td colspan="14"></td>
+                <td colspan="14">
+                    <?php if(!empty($_SESSION['user_signature'])){ ?>
+                    <img class="thumbnail" src="<?php echo base_url()."uploads/".$_SESSION['user_signature']; ?>">
+                    <?php } ?>
+                </td>
                 <td colspan="6"><br></td>
             </tr>
            <!--  <tr>

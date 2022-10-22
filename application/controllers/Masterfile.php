@@ -46,6 +46,7 @@ class Masterfile extends CI_Controller {
                 $username = $d->username;
                 $fullname = $d->fullname;
                 $department = $d->department;
+                $user_signature = $d->user_signature;
             }
             $newdata = array(
                'user_id'=> $userid,
@@ -53,6 +54,7 @@ class Masterfile extends CI_Controller {
                'username'=> $username,
                'fullname'=> $fullname,
                'department'=> $department,
+               'user_signature'=> $user_signature,
                'logged_in'=> TRUE
             );
             $this->session->set_userdata($newdata);
@@ -448,8 +450,8 @@ class Masterfile extends CI_Controller {
         $this->load->view('masterfile/supplier_list');
         $this->load->view('template/footer');
     }
-    public function user_list()
-    {
+
+    public function user_list(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $rows = $this->super_model->count_rows("users");
@@ -462,11 +464,105 @@ class Masterfile extends CI_Controller {
                     'fullname'=>$user->fullname,
                     'position'=>$user->position,
                     'department'=>$user->department,
+                    'user_signature'=>$user->user_signature,
                 ); 
             }
         }
         $this->load->view('masterfile/user_list',$data);
         $this->load->view('template/footer');
+    }
+
+    public function change_password(){
+        $newpassword = md5($this->input->post('newpass'));
+        $data = array(
+            'password'=> $newpassword
+        );
+        $userid = $this->input->post('userid');
+
+        $password = $this->super_model->select_column_where("users", "password", "user_id", $userid);
+
+        $oldpassword = ($this->input->post('oldpass'));
+        $oldpasswordmd5 = md5($this->input->post('oldpass'));
+
+        if($oldpassword == $password){
+            $this->super_model->update_where("users", $data, "user_id" , $userid );echo "<script>alert('Successfully Updated'); location.replace(document.referrer); </script>"; 
+        }else if(md5($oldpasswordmd5) == md5($password)) {
+            $this->super_model->update_where("users", $data,"user_id" , $userid  );echo "<script>alert('Successfully Updated'); location.replace(document.referrer); </script>";
+        }
+        else{
+            echo "<script>alert('Incorrect old password!'); location.replace(document.referrer); </script>";
+        }
+    }
+
+    public function insert_employee(){
+        $username = $this->input->post('username');
+        $fullname = $this->input->post('fullname');
+        $position = $this->input->post('position');
+        $department = $this->input->post('department');
+        $error_ext=0;
+        $dest= realpath(APPPATH . '../uploads/');
+        if(!empty($_FILES['signature']['name'])){
+             $e_signature= basename($_FILES['signature']['name']);
+             $e_signature=explode('.',$e_signature);
+             $ext1=$e_signature[1];
+            
+            if($ext1=='php' || ($ext1!='png' && $ext1!='PNG' && $ext1 != 'jpg' && $ext1 != 'JPG' && $ext1!='jpeg' && $ext1!='JPEG')){
+                $error_ext++;
+            } else {
+                 $signature=$username.'1.'.$ext1;
+                 move_uploaded_file($_FILES["signature"]['tmp_name'], $dest.'/'.$signature);
+            }
+
+        } else {
+            $signature="";
+        }
+        $data_user = array(
+            'username'=>$username,
+            'fullname'=>$fullname,
+            'position'=>$position,
+            'department'=>$department,
+            'password'=>'1234',
+            'user_signature'=>$signature
+        );
+        if($this->super_model->insert_into("users", $data_user)){
+            echo "<script>alert('Successfully Added!'); window.location = '".base_url()."masterfile/user_list';</script>";
+        }
+    }
+
+    public function edit_user(){
+        $user_id = $this->input->post('user_id');
+        $username = $this->input->post('username');
+        $fullname = $this->input->post('fullname');
+        $position = $this->input->post('position');
+        $department = $this->input->post('department');
+        $error_ext=0;
+        $dest= realpath(APPPATH . '../uploads/');
+        if(!empty($_FILES['signature']['name'])){
+             $e_signature= basename($_FILES['signature']['name']);
+             $e_signature=explode('.',$e_signature);
+             $ext1=$e_signature[1];
+            
+            if($ext1=='php' || ($ext1!='png' && $ext1!='PNG' && $ext1 != 'jpg' && $ext1 != 'JPG' && $ext1!='jpeg' && $ext1!='JPEG')){
+                $error_ext++;
+            } else {
+                 $signature=$username.'1.'.$ext1;
+                 move_uploaded_file($_FILES["signature"]['tmp_name'], $dest.'/'.$signature);
+            }
+
+        } else {
+            $signature=$this->input->post('e_signature');
+        }
+        $data_user = array(
+            'username'=>$username,
+            'fullname'=>$fullname,
+            'position'=>$position,
+            'department'=>$department,
+            'user_signature'=>$signature
+        );
+     
+        if($this->super_model->update_where("users", $data_user, "user_id", $user_id)){
+            echo "<script>alert('Successfully Updated!'); window.location = '".base_url()."masterfile/user_list';</script>";
+        }
     }
     
 }

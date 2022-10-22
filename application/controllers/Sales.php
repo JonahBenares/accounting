@@ -321,7 +321,7 @@ class Sales extends CI_Controller {
         $data['reference_number'][]='';
         for($x=0;$x<$count;$x++){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
-                $data['address'][$x]=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+                $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $address=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                 $tin=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
@@ -366,7 +366,7 @@ class Sales extends CI_Controller {
                     "ewt"=>$p->ewt,
                     "overall_total"=>$overall_total,
                 );
-                if($count_sub >=1 || $count_sub>=14){
+                if($count_sub >=1 || $count_sub<=14){
                     $h=0;
                     foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                         $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
@@ -490,12 +490,12 @@ class Sales extends CI_Controller {
         for($x=0;$x<$count;$x++){
             //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
-                $data['address'][$x]=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+                $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                 $data['company_name'][$x]=$p->company_name;
                 $data['billing_from'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
                 $data['billing_to'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
-
+                $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                 $data['participant_id'][$x] = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                  //echo $participant_id."<br>";
@@ -1460,7 +1460,7 @@ class Sales extends CI_Controller {
             break;
     }
 
-        $decones = array( 
+/*        $decones = array( 
                     "01" => "One", 
                     "02" => "Two", 
                     "03" => "Three", 
@@ -1512,7 +1512,7 @@ class Sales extends CI_Controller {
                     "7" => "Seventy", 
                     "8" => "Eighty", 
                     "9"=> "Ninety" 
-                    ); 
+                    );*/ 
 
     if (null !== $fraction && is_numeric($fraction)) {
         if($fraction > 0){
@@ -1522,19 +1522,26 @@ class Sales extends CI_Controller {
                 $string .= " pesos and ";
             }
             if($fraction < 20){ 
-                $string .= $decones[$fraction]; 
+                //$string .= $decones[$fraction]; 
+                $string .= $fraction."/100"; 
             }
-            elseif($fraction == 0){ 
+            elseif($amount != 0  && $fraction == 0){ 
                 $string .= $string." pesos only";  
             }
+            elseif($amount == 1  && $fraction == 0){ 
+                $string .= $string." peso only";  
+            }
             elseif($fraction == 1){ 
-                $string .= $string." centavo only";  
+                $string .= $string." only";  
+                //$string .= $fraction."/100" ." centavo only";  
             }
             elseif($fraction < 100){ 
-                $string .= $tens[substr($fraction,0,1)]; 
-                $string .= " ".$ones[substr($fraction,1,1)]; 
+                //$string .= $tens[substr($fraction,0,1)]; 
+                //$string .= " ".$ones[substr($fraction,1,1)]; 
+                $string .= " ".$fraction."/100"; 
             }
-                $string = $string." centavos only"; 
+                $string = $string." only"; 
+                //$string = $fraction."/100" ." centavos only"; 
     }
 }
 
