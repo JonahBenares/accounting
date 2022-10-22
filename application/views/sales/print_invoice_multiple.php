@@ -259,14 +259,14 @@
                 <td colspan="15" class="" style="font-size: 10px; padding-top: 5px;"><?php echo ($total_amount_sub[$x]!=0) ? $amount_words_sub[$x] : ''; ?></td>
                 <?php } ?>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td colspan="14">
                     <?php if(!empty($_SESSION['user_signature'])){ ?>
                     <img class="thumbnail" src="<?php echo base_url()."uploads/".$_SESSION['user_signature']; ?>">
                     <?php } ?>
                 </td>
                 <td colspan="6"><br></td>
-            </tr>
+            </tr> -->
            <!--  <tr>
                 <td colspan="14"></td>
                 <td colspan="6">Certified Correct:</td>
@@ -282,6 +282,12 @@
                 <td colspan="1"></td>
             </tr> -->
         </table>
+        <?php if(!empty($_SESSION['user_signature'])){ ?>
+            <div style="right:400px;position: absolute;margin-top:30px">
+                <img src="<?php echo base_url()."uploads/".$_SESSION['user_signature']; ?>" style="width:100px">
+            </div>
+        <?php } ?>
+
     </div>
 </page>
 <?php } ?>
