@@ -2472,6 +2472,16 @@ page[size="A5"][layout="landscape"] {
         width: 21cm;
         height: 14.8cm;  
     }
+    .esig{
+        left:600px!important;
+        position: absolute;
+        margin-top:30px
+    }
+}
+.esig{
+    right:400px;
+    position: absolute;
+    margin-top:30px
 }
 .table-bordered td {
     border: 1px solid #000!important;

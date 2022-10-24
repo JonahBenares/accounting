@@ -283,7 +283,7 @@
             </tr> -->
         </table>
         <?php //if(!empty($_SESSION['user_signature'])){ ?>
-            <div style="right:400px;position: absolute;margin-top:30px">
+            <div class="esig">
                 <img src="<?php echo base_url()."uploads/".$user_signature; ?>" style="width:100px">
             </div>
         <?php //} ?>
