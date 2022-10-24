@@ -282,11 +282,11 @@
                 <td colspan="1"></td>
             </tr> -->
         </table>
-        <?php if(!empty($_SESSION['user_signature'])){ ?>
+        <?php //if(!empty($_SESSION['user_signature'])){ ?>
             <div style="right:400px;position: absolute;margin-top:30px">
-                <img src="<?php echo base_url()."uploads/".$_SESSION['user_signature']; ?>" style="width:100px">
+                <img src="<?php echo base_url()."uploads/".$user_signature; ?>" style="width:100px">
             </div>
-        <?php } ?>
+        <?php //} ?>
 
     </div>
 </page>

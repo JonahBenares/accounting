@@ -485,6 +485,7 @@ class Sales extends CI_Controller {
         $count = $this->uri->segment(5);
         $sales_det_exp=explode("-",$sales_details_id);
         $data['count']=$count;
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         // $this->load->view('template/header');
         //$this->load->view('template/navbar');
         for($x=0;$x<$count;$x++){
