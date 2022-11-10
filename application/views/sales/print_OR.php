@@ -36,7 +36,7 @@
 </div>
 <page size="A4" style="">
     <div style="margin-left: 20px;margin-right: 80px;">
-        <table class="page-OR table-bordssered" width="100%">
+        <table class="page-OR table-bordsered" width="100%">
             <tr>
                 <td style="padding:3px;" width="5%"></td>
                 <td style="padding:3px;" width="5%"></td>
@@ -100,11 +100,17 @@
                             <td style="padding: 0px;" width="5%"></td>
                             <td style="padding: 0px;" width="5%"></td>
                         </tr>
-                        <?php if(!empty($client)){ foreach($client AS $c){ ?>
+                        <?php 
+
+                            if(!empty($client)){ foreach($client AS $c){ 
+                                $str = $c->participant_name;
+                            if( strlen($str)>40){
+                        ?>
+
                         <tr>
                             <td colspan="3" rowspan="2" style="font-size:11px;color: #fff; vertical-align: text-top;">CUSTOMER NAME:</td>
                             <td colspan="7" rowspan="2" class="p-l-15" style="font-size:11px; vertical-align: text-top;">
-                                <span ><?php echo $c->participant_name; ?></span>
+                                <span ><?php echo $c->participant_name;?> </span>
                             </td>
                             <td colspan="10" style="font-size:11px;" class="p-l-30">
                                 <span style="font-size:11px;color: #fff;">DATE:</span>
@@ -118,14 +124,6 @@
                                 <span class="pl-2"><?php echo $c->registered_address; ?></span>
                             </td>
                         </tr>
-                        <!-- <tr>
-                            <td colspan="10" rowspan="2" style="font-size:11px"><b>CUSTOMER NAME:<span class="pl-2"><?php echo $c->participant_name; ?></span></b></td>
-                            <td colspan="10" style="font-size:11px"><b>DATE:<span class="pl-2"><?php echo date("F j, Y", strtotime($date)); ?></span></b> </td>
-                        </tr>   
-                        <tr>
-                            
-                            <td colspan="10" style="font-size:11px"><b>ADDRESS:<span class="pl-2"><?php echo $c->registered_address; ?></span></b> </td>
-                        </tr> -->
                         <tr>
                             <td colspan="15" style="font-size:11px;color: #fff;"><b>BUSINESS STYLE:</b></td>
                             <td colspan="5" class="p-l-5">
@@ -133,7 +131,34 @@
                                 <span style="font-size:11px;"><?php echo $c->tin; ?></span>
                             </td>
                         </tr>
-                        <?php } }else{ ?>
+                        <?php }else{ ?>
+
+                        <tr>
+                            <td colspan="3" rowspan="2" style="font-size:11px;color: #fff; vertical-align: text-top;">CUSTOMER NAME:</td>
+                            <td colspan="7"  class="p-l-15" >
+                                
+                            </td>
+                            <td colspan="10" style="font-size:11px;" class="p-l-30">
+                                <span style="font-size:11px;color: #fff;">DATE:</span>
+                                <span ><?php echo date("F j, Y", strtotime($date)); ?></span>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td colspan="7" class="p-l-15" style="font-size:11px; vertical-align: text-top;"> 
+                                <span ><?php echo $c->participant_name; ?></span></td>
+                            <td colspan="10" style="font-size:11px" >
+                                <span style="font-size:11px;color: #fff;">ADDRESS:</span>
+                                <span class="pl-2"><?php echo $c->registered_address; ?></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="15" style="font-size:11px;color: #fff;"><b>BUSINESS STYLE:</b></td>
+                            <td colspan="5" class="p-l-5">
+                                <span style="color:#fff">TIN:</span>
+                                <span style="font-size:11px;"><?php echo $c->tin; ?></span>
+                            </td>
+                        </tr>
+                        <?php } } }else{ ?>
                         <tr>
                             <td colspan="10" style="font-size:11px;color: #fff;"><b>CUSTOMER NAME:<span class="pl-2"></span></b></td>
                             <td colspan="10" style="font-size:11px;color: #fff;"><b>ADDRESS:<span class="pl-2"></span></b></td>
