@@ -1337,34 +1337,48 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-        public function payment_form(){
-        $payment_identifier = $this->uri->segment(3);
-        $this->load->view('template/print_head');
-        foreach($this->super_model->custom_query("SELECT * FROM payment_head WHERE payment_identifier='$payment_identifier' GROUP BY purchase_id") AS $p){
-            $vatable_purchase= $this->super_model->select_sum("payment_head", "total_purchase", "purchase_id", $p->purchase_id);
-            $energy=$vatable_purchase;
-            $energy_total= $this->super_model->select_sum("payment_head", "total_purchase", "payment_identifier", $p->payment_identifier);
-            $vat_on_purchases= $this->super_model->select_sum("payment_head", "total_vat", "purchase_id", $p->purchase_id);
-            $vat_on_purchases_total= $this->super_model->select_sum("payment_head", "total_vat", "payment_identifier", $p->payment_identifier);
-            $ewt= $this->super_model->select_sum("payment_head", "total_ewt", "purchase_id", $p->purchase_id);
-            $ewt_total= $this->super_model->select_sum("payment_head", "total_ewt", "payment_identifier", $p->payment_identifier);
-            $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
-            $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
-            $total_amount_disp= $this->super_model->select_sum("payment_head", "total_amount", "payment_identifier", $p->payment_identifier);
-            $data['total']=$total_amount_disp;
-            $data['energy']=$energy_total;
-            $data['vat_on_purchases']=$vat_on_purchases_total;
-            $data['ewt']=$ewt_total;
-            $data['payment'][]=array(
-                "transaction_date"=>$p->payment_date,
-                "reference_number"=>$reference_number,
-                "energy"=>$energy,
-                "vat_on_purchases"=>$vat_on_purchases,
-                "ewt"=>$ewt,
-                "total_amount"=>$total_amount,
-            );
-        }
+    public function payment_form(){
+            $payment_identifier = $this->uri->segment(3);
+            $this->load->view('template/print_head');
+            foreach($this->super_model->custom_query("SELECT * FROM payment_head WHERE payment_identifier='$payment_identifier' GROUP BY purchase_id") AS $p){
+                $vatable_purchase= $this->super_model->select_sum("payment_head", "total_purchase", "purchase_id", $p->purchase_id);
+                $energy=$vatable_purchase;
+                $energy_total= $this->super_model->select_sum("payment_head", "total_purchase", "payment_identifier", $p->payment_identifier);
+                $vat_on_purchases= $this->super_model->select_sum("payment_head", "total_vat", "purchase_id", $p->purchase_id);
+                $vat_on_purchases_total= $this->super_model->select_sum("payment_head", "total_vat", "payment_identifier", $p->payment_identifier);
+                $ewt= $this->super_model->select_sum("payment_head", "total_ewt", "purchase_id", $p->purchase_id);
+                $ewt_total= $this->super_model->select_sum("payment_head", "total_ewt", "payment_identifier", $p->payment_identifier);
+                $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
+                $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
+                $total_amount_disp= $this->super_model->select_sum("payment_head", "total_amount", "payment_identifier", $p->payment_identifier);
+                $data['total']=$total_amount_disp;
+                $data['energy']=$energy_total;
+                $data['vat_on_purchases']=$vat_on_purchases_total;
+                $data['ewt']=$ewt_total;
+                $data['payment'][]=array(
+                    "transaction_date"=>$p->payment_date,
+                    "reference_number"=>$reference_number,
+                    "energy"=>$energy,
+                    "vat_on_purchases"=>$vat_on_purchases,
+                    "ewt"=>$ewt,
+                    "total_amount"=>$total_amount,
+                );
+            }
         $this->load->view('reports/payment_form',$data);
     }
 
+
+    public function purchases_all(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/purchases_all');
+        $this->load->view('template/footer');
+    }
+
+    public function sales_all(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/sales_all');
+        $this->load->view('template/footer');
+    }
 }

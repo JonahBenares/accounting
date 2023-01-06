@@ -2477,9 +2477,20 @@ page[size="A5"][layout="landscape"] {
         position: absolute;
         margin-top:30px
     }
+    .particulars{
+        text-align: center;
+        position: absolute!important;
+        right:-909px!important;
+        top:50px!important;
+    }
+}
+.particulars{
+    position: absolute;
+    left:300px;
+    top:300px
 }
 .esig{
-    right:400px;
+    right:-150px;
     position: absolute;
     margin-top:30px
 }
