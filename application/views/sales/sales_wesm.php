@@ -94,8 +94,8 @@
                                                     <th>BS No.</th>
                                                     <th>OR No.</th>
                                                     <th>STL ID / TPShort Name</th>
-                                                    <th>Billing ID</th>
-                                                    <th>Trading Participant Name</th>
+                                                    <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
+                                                    <th style="position: sticky;left:140px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
                                                     <th>Facility Type </th>
                                                     <th>WHT Agent Tag</th>
                                                     <th>ITH Tag</th>
@@ -107,6 +107,8 @@
                                                     <th>Vat On Sales</th>
                                                     <th>EWT</th>
                                                     <th>Total Amount</th>
+                                                    <th width="3%">Original Copy</th>
+                                                    <th width="3%">Scanned Copy</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -155,8 +157,8 @@
                                                     <td><?php echo $s['series_number'];?></td>
                                                     <?php } ?>
                                                     <td><?php echo $s['short_name'];?></td>
-                                                    <td><?php echo $s['billing_id'];?></td>
-                                                    <td><?php echo $s['company_name'];?></td>
+                                                    <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $s['billing_id'];?></td>
+                                                    <td style="position: sticky;left:140px;background:#fff;z-index: 999;"><?php echo $s['company_name'];?></td>
                                                     <td align="center"><?php echo $s['facility_type'];?></td>
                                                     <td align="center"><?php echo $s['wht_agent'];?></td>
                                                     <td align="center"><?php echo $s['ith_tag'];?></td>
@@ -168,6 +170,8 @@
                                                     <td align="right"><?php echo $s['vat_on_sales'];?></td>
                                                     <td align="right">(<?php echo $s['ewt'];?>)</td>
                                                     <td align="right"><?php echo $s['total_amount'];?></td>
+                                                    <td align="center">No</td>
+                                                    <td align="center">No</td>
                                                 </tr>
                                                 <?php } } ?>
                                             </tbody>

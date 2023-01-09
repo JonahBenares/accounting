@@ -102,7 +102,7 @@ if(!empty($sales_id)){
                                             </th>
                                             <th>Item No.</th>
                                             <th>STL ID / TPShort Name</th>
-                                            <th>Billing ID</th>
+                                            <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
                                             <th>Facility Type </th>
                                             <th>WHT Agent Tag</th>
                                             <th>ITH Tag</th>
@@ -114,6 +114,8 @@ if(!empty($sales_id)){
                                             <th>Vat On Purchases</th>
                                             <th>EWT</th>
                                             <th>Total Amount</th>
+                                            <th>Original Copy</th>
+                                            <th>Scanned Copy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -133,7 +135,7 @@ if(!empty($sales_id)){
                                             </td>
                                             <td><?php echo $d['item_no'];?></td>
                                             <td><?php echo $d['short_name'];?></td>
-                                            <td><?php echo $d['billing_id']; ?></td>
+                                            <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['billing_id']; ?></td>
                                             <td align="center"><?php echo $d['facility_type']; ?></td>
                                             <td align="center"><?php echo $d['wht_agent']; ?></td>
                                             <td align="center"><?php echo $d['ith_tag']; ?></td>
@@ -144,7 +146,38 @@ if(!empty($sales_id)){
                                             <td align="right">(<?php echo number_format($d['zero_rated_ecozones'],2); ?>)</td>
                                             <td align="right">(<?php echo number_format($d['vat_on_purchases'],2); ?>)</td>
                                             <td align="right"><?php echo number_format($d['ewt'],2); ?></td>
-                                            <td align="right">(<?php echo number_format($d['total_amount'],2); ?>)</td>
+                                            <!-- <td align="right">(<?php echo number_format($d['total_amount'],2); ?>)</td> -->
+                                            <td align="right" style="padding:0px">
+                                                <input type="text" class="form-control"  name="total_update" id="total_update" value="(<?php echo number_format($d['total_amount'],2); ?>)" readonly>
+                                            </td>
+                                            <td align="right" >
+                                                <div>
+                                                    <span class="m-b-10">Yes</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio" class="" name="orig_copy" id="orig_yes" value='1' checked>
+                                                    </label>
+                                                </div>  
+                                                <div>
+                                                    <span class="m-b-10">No</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio" name="orig_copy" id="orig_no" value='2'>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td align="right">
+                                                <div>   
+                                                    <span class="m-b-10">Yes</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio" class="" name="scanned_copy" id="scanned_yes" value='1'>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <span class="m-b-10">No</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio"  name="scanned_copy" id="scanned_no" value='2' checked>
+                                                    </label>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <?php } } ?>
                                     </tbody>

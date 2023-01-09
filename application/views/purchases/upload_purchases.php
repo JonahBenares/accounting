@@ -155,7 +155,7 @@
                                             <td align="right" style="padding:0px">
                                                 <input type="text" class="form-control" onblur="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="total_update" id="total_update<?php echo $x; ?>" value="<?php echo $d['total_update']; ?>" <?php echo ($saved==1) ? 'readonly' : ''; ?>>
                                             </td>
-                                            <td align="center">
+                                            <td align="right">
                                                 <span class="m-b-10">Yes</span>
                                                 <label style="width:20px;margin: 0px 6px;">
                                                     <input type="radio" class="" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_yes<?php echo $x; ?>" value='1' <?php echo ($d['original_copy']=='1') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
@@ -165,7 +165,7 @@
                                                     <input type="radio" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($d['original_copy']=='0') ? 'checked' : ''; ?>  <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
                                                 </label>
                                             </td>
-                                            <td align="center">
+                                            <td align="right">
                                                 <span class="m-b-10">Yes</span>
                                                 <label style="width:20px;margin: 0px 6px;">
                                                     <input type="radio" class="" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_yes<?php echo $x; ?>" value='1' <?php echo ($d['scanned_copy']=='1') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>

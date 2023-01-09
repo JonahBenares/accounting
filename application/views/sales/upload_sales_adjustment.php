@@ -96,7 +96,7 @@ if(!empty($sales_id)){
                                 </table>
                                 <br>
                                 
-                                <table class="table-bordered table table-hover " id="adjust-<?php echo $x; ?>" style="width:180%;">
+                                <table class="table-bordered table table-hover " id="adjust-<?php echo $x; ?>" style="width:190%;">
                                     <thead>
                                         <tr>    
                                             <!-- <th width="5%" align="center" style="background:rgb(245 245 245)">
@@ -105,8 +105,8 @@ if(!empty($sales_id)){
                                             <th >Item #</th>                                        
                                             <!-- <th >Series No.</th> -->
                                             <th >STL ID / TPShort Name</th>
-                                            <th >Billing ID</th>
-                                            <th >Trading Participant Name</th>
+                                            <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
+                                            <th style="position: sticky;left:125px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
                                             <th >Facility Type </th>
                                             <th >WHT Agent Tag</th>
                                             <th >ITH Tag</th>
@@ -118,6 +118,8 @@ if(!empty($sales_id)){
                                             <th >Vat On Sales</th>
                                             <th >EWT</th>
                                             <th >Total Amount</th>
+                                            <th width="20%">Original Copy</th>
+                                            <th width="20%">Scanned Copy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -150,8 +152,8 @@ if(!empty($sales_id)){
                                             <td class="p-2"><center><?php echo $d['item_no'];?></center></td>
                                             <!-- <td class="p-2"><?php echo $d['serial_no'];?></td> -->
                                             <td class="p-2"><?php echo $d['short_name'];?></td>
-                                            <td class="p-2"><?php echo $d['billing_id'];?></td>
-                                            <td class="p-2"><?php echo $d['company_name'];?></td>
+                                            <td class="p-2" style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['billing_id'];?></td>
+                                            <td class="p-2" style="position: sticky;left:125px;background:#fff;z-index: 999;"><?php echo $d['company_name'];?></td>
                                             <td class="p-2" align="center"><?php echo $d['facility_type'];?></td>
                                             <td class="p-2" align="center"><?php echo $d['wht_agent'];?></td>
                                             <td class="p-2" align="center"><?php echo $d['ith_tag'];?></td>
@@ -162,7 +164,37 @@ if(!empty($sales_id)){
                                             <td class="p-2" align="right"><?php echo $d['zero_rated_ecozones'];?></td>
                                             <td class="p-2" align="right"><?php echo $d['vat_on_sales'];?></td>
                                             <td class="p-2" align="right">(<?php echo $d['ewt'];?>)</td>
-                                            <td class="p-2" align="right"><?php echo $d['total_amount'];?></td>
+                                            <td align="right" style="padding:0px">
+                                                <input type="text" class="form-control"  name="total_update" id="total_update" value="<?php echo $d['total_amount'];?>" readonly>
+                                            </td>
+                                            <td align="right" >
+                                                <div>
+                                                    <span class="m-b-10">Yes</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio" class="" name="orig_copy" id="orig_yes" value='1' checked>
+                                                    </label>
+                                                </div>  
+                                                <div>
+                                                    <span class="m-b-10">No</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio" name="orig_copy" id="orig_no" value='2'>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td align="right">
+                                                <div>   
+                                                    <span class="m-b-10">Yes</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio" class="" name="scanned_copy" id="scanned_yes" value='1'>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <span class="m-b-10">No</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio"  name="scanned_copy" id="scanned_no" value='2' checked>
+                                                    </label>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <?php } }?>
                                     </tbody>
