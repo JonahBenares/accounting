@@ -10,7 +10,7 @@
                         <div class="card-header">                        
                             <div class="row">
                                 <div class="col-8">
-                                    <h4>Consolidation/Summary of all Purchases Transaction</h4>
+                                    <h4>Consolidation/Summary of all Sales Adjustment Transaction</h4>
                                 </div>
                                 <div class="col-4">
                                     <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
@@ -39,15 +39,16 @@
                             </div>
                             <br>
                             <div class="table-responsive" id="table-wesm" >
-                                <table class="table table-bordered table-hover" id="save-stage" style="width:150%;">
+                                <table class="table table-s table-bordered table-hover" id="save-stage" style="width:150%;">
                                     <thead>
                                         <tr>
                                             <th>Billing Period</th>
                                             <th width="15%" style="position:sticky; left:0; z-index: 10;background: rgb(245 245 245);">BIlling ID</th> 
                                             <th width="15%" style="position:sticky; left:231px; z-index: 10;background: rgb(245 245 245);">Company Name</th>  
-                                            <th>Vatable Purchases</th> 
-                                            <th>VAT on Purchases</th>    
-                                            <th>EWT</th>    
+                                            <th>Vatable Sales</th> 
+                                            <th>Zero-Rated Ecozones</th>     
+                                            <th>VAT on Sales</th>   
+                                            <th>EWT Sales</th>    
                                             <th>Total</th> 
                                             <th width="2%">Original Copy</th>
                                             <th width="2%">Scanned Copy</th>
@@ -56,11 +57,24 @@
                                     <tbody>
                                         <tr>
                                             <td>Billing Period</td>
-                                            <td width="15%" style="position:sticky; left:0; z-index: 10;background: #fff;">BIlling ID</td> 
-                                            <td width="15%" style="position:sticky; left:231px; z-index: 10;background: #fff;">Company Name</td>  
-                                            <td>Vatable Purchases</td> 
-                                            <td>VAT on Purchases</td>    
-                                            <td>EWT</td>    
+                                            <td style="position:sticky; left:0; z-index: 10;background: #fff;">BIlling ID</td> 
+                                            <td style="position:sticky; left:231px; z-index: 10;background: #fff;">Company Name</td>  
+                                            <td>Vatable Sales</td> 
+                                            <td>Zero-Rated Ecozones</td>     
+                                            <td>VAT on Sales</td>   
+                                            <td>EWT Sales</td>    
+                                            <td>Total</td> 
+                                            <td>Yes</td> 
+                                            <td>No</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>Billing Period</td>
+                                            <td style="position:sticky; left:0; z-index: 10;background: #fff;">BIlling ID</td> 
+                                            <td style="position:sticky; left:231px; z-index: 10;background: #fff;">Company Name</td>  
+                                            <td>Vatable Sales</td> 
+                                            <td>Zero-Rated Ecozones</td>     
+                                            <td>VAT on Sales</td>   
+                                            <td>EWT Sales</td>    
                                             <td>Total</td> 
                                             <td>No</td> 
                                             <td>Yes</td> 
@@ -93,7 +107,7 @@
                             <input type="date" name="signature" class="form-control">
                         </div>
                         <div class="form-group col-lg-6">
-                            <label>Billing Date to</label>
+                            <label>Billing Date To</label>
                             <input type="date" name="signature" class="form-control">
                         </div>
                     </div>
@@ -112,3 +126,4 @@
         </form>
     </div>
 </div>
+

@@ -10,7 +10,7 @@
                         <div class="card-header">                        
                             <div class="row">
                                 <div class="col-8">
-                                    <h4>Consolidation/Summary of all Purchases Transaction</h4>
+                                    <h4>Consolidation/Summary of all Purchases Adjustment Transaction</h4>
                                 </div>
                                 <div class="col-4">
                                     <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
@@ -93,7 +93,7 @@
                             <input type="date" name="signature" class="form-control">
                         </div>
                         <div class="form-group col-lg-6">
-                            <label>Billing Date to</label>
+                            <label>Billing Date To</label>
                             <input type="date" name="signature" class="form-control">
                         </div>
                     </div>
