@@ -25,6 +25,12 @@
                                     <table width="100%">
                                         <tr>
                                             <td width="30%">
+                                                <input type="date" class="form-control" name="">
+                                            </td>
+                                            <td width="30%">
+                                                <input type="date" class="form-control" name="">
+                                            </td>
+                                            <td width="30%">
                                                 <select class="form-control select2" name="ref_no" id="ref_no">
                                                     <option value="">-- Select Company --</option>
                                                 </select>
@@ -38,6 +44,8 @@
                                 </div>
                             </div>
                             <br>
+
+                            <!-- <br>
                             <div class="table-responsive" id="table-wesm" >
                                 <table class="table table-bordered table-hover" id="save-stage" style="width:150%;">
                                     <thead>
@@ -68,6 +76,79 @@
                                     </tbody>
                                 </table>
                             </div>  
+                            <br> -->
+                            <!-- s -->
+                            
+                            <!-- <hr class="m-b-0"> -->
+                            <br>
+                            <div class="table-responsive" id="table-wesm" >
+                                <table class="table table-bordered table-hover" id="save-stage" style="width:150%;">
+                                    <thead>
+                                        <tr>
+                                            <th width="15%" style="position:sticky; left:0; z-index: 10;background: rgb(245 245 245);">BIlling ID</th> 
+                                            <th width="15%" style="position:sticky; left:231px; z-index: 10;background: rgb(245 245 245);">Company Name</th>  
+                                            <th>Vatable Purchases</th> 
+                                            <th>VAT on Purchases</th>    
+                                            <th>EWT</th>    
+                                            <th>Total</th> 
+                                            <th>Total Amount</th> 
+                                            <th>Original Copy</th>
+                                            <th>Scanned Copy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                            if(!empty($purchasead_all)){
+                                            $data2 = array();
+                                            foreach($purchasead_all as $pal) {
+                                                $key = date("M. d,Y",strtotime($pal['billing_to'])).date("M. d,Y",strtotime($pal['billing_from']));
+                                                if(!isset($data2[$key])) {
+                                                    $data2[$key] = array(
+                                                        'particular'=>array(),
+                                                        'participant_name'=>array(),
+                                                        'billing_id'=>array(),
+                                                        'billing'=>date("M. d, Y",strtotime($pal['billing_from']))." - ".date("M. d, Y",strtotime($pal['billing_to'])),
+                                                        'vatables_purchases'=>array(),
+                                                        'vat_on_purchases'=>array(),
+                                                        'ewt'=>array(),
+                                                        'total'=>array(),
+                                                        'total_update'=>array(),
+                                                        'original_copy'=>array(),
+                                                        'scanned_copy'=>array(),
+                                                    );
+                                                }
+                                                $data2[$key]['participant_name'][] = $pal['participant_name'];
+                                                $data2[$key]['billing_id'][] = $pal['billing_id'];
+                                                $data2[$key]['vatables_purchases'][] = number_format($pal['vatables_purchases'],2);
+                                                $data2[$key]['vat_on_purchases'][] = number_format($pal['vat_on_purchases'],2);
+                                                $data2[$key]['ewt'][] = "(".number_format($pal['ewt'],2).")";
+                                                $data2[$key]['total'][] = number_format($pal['total'],2);
+                                                $data2[$key]['total_update'][] = number_format($pal['total_update'],2);
+                                                $data2[$key]['original_copy'][] =($pal['original_copy']=='0') ? 'NO' : 'YES';
+                                                $data2[$key]['scanned_copy'][] = ($pal['scanned_copy']=='0') ? 'NO' : 'YES';
+                                            }
+                                            foreach($data2 AS $pa){
+                                        ?>
+                                        <tr>
+                                            <td class="pt-3 pb-1 pr-0 pl-0" colspan="10">
+                                                <u><?php echo $pa['billing']; ?></u>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['billing_id']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['participant_name']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vatables_purchases']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vat_on_purchases']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['ewt']); ?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total_update']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['original_copy']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['scanned_copy']);?></td>
+                                        </tr>
+                                        <?php } } ?>
+                                    </tbody>
+                                </table>
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -93,7 +174,7 @@
                             <input type="date" name="signature" class="form-control">
                         </div>
                         <div class="form-group col-lg-6">
-                            <label>Billing Date To</label>
+                            <label>Billing Date to</label>
                             <input type="date" name="signature" class="form-control">
                         </div>
                     </div>

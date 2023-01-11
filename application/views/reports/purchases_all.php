@@ -25,6 +25,12 @@
                                     <table width="100%">
                                         <tr>
                                             <td width="30%">
+                                                <input type="date" class="form-control" name="">
+                                            </td>
+                                            <td width="30%">
+                                                <input type="date" class="form-control" name="">
+                                            </td>
+                                            <td width="30%">
                                                 <select class="form-control select2" name="ref_no" id="ref_no">
                                                     <option value="">-- Select Company --</option>
                                                 </select>
@@ -37,6 +43,7 @@
                                     </table>
                                 </div>
                             </div>
+                            <br>
 
                             <!-- <br>
                             <div class="table-responsive" id="table-wesm" >
@@ -78,15 +85,15 @@
                                 <table class="table table-bordered table-hover" id="save-stage" style="width:150%;">
                                     <thead>
                                         <tr>
-                                            <th>Billing Period</th>
                                             <th width="15%" style="position:sticky; left:0; z-index: 10;background: rgb(245 245 245);">BIlling ID</th> 
                                             <th width="15%" style="position:sticky; left:231px; z-index: 10;background: rgb(245 245 245);">Company Name</th>  
                                             <th>Vatable Purchases</th> 
                                             <th>VAT on Purchases</th>    
                                             <th>EWT</th>    
                                             <th>Total</th> 
-                                            <th width="2%">Original Copy</th>
-                                            <th width="2%">Scanned Copy</th>
+                                            <th>Total Amount</th> 
+                                            <th>Original Copy</th>
+                                            <th>Scanned Copy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -105,6 +112,9 @@
                                                         'vat_on_purchases'=>array(),
                                                         'ewt'=>array(),
                                                         'total'=>array(),
+                                                        'total_update'=>array(),
+                                                        'original_copy'=>array(),
+                                                        'scanned_copy'=>array(),
                                                     );
                                                 }
                                                 $data2[$key]['participant_name'][] = $pal['participant_name'];
@@ -113,19 +123,27 @@
                                                 $data2[$key]['vat_on_purchases'][] = number_format($pal['vat_on_purchases'],2);
                                                 $data2[$key]['ewt'][] = "(".number_format($pal['ewt'],2).")";
                                                 $data2[$key]['total'][] = number_format($pal['total'],2);
+                                                $data2[$key]['total_update'][] = number_format($pal['total_update'],2);
+                                                $data2[$key]['original_copy'][] =($pal['original_copy']=='0') ? 'NO' : 'YES';
+                                                $data2[$key]['scanned_copy'][] = ($pal['scanned_copy']=='0') ? 'NO' : 'YES';
                                             }
                                             foreach($data2 AS $pa){
                                         ?>
                                         <tr>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo $pa['billing'];?></td>
-                                            <td width="15%" style="position:sticky; left:0; z-index: 10;background: #fff;" class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['billing_id']);?></td>
-                                            <td width="15%" style="position:sticky; left:231px; z-index: 10;background: #fff;" class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['participant_name']);?></td>
+                                            <td class="pt-3 pb-1 pr-0 pl-0" colspan="9">
+                                                <u><?php echo $pa['billing']; ?></u>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['billing_id']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['participant_name']);?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vatables_purchases']);?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vat_on_purchases']);?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['ewt']); ?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total']);?></td>
-                                            <td>No</td> 
-                                            <td>Yes</td> 
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total_update']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['original_copy']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['scanned_copy']);?></td>
                                         </tr>
                                         <?php } } ?>
                                     </tbody>

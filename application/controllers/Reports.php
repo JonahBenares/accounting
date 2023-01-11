@@ -1372,11 +1372,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE saved='1' AND adjustment !='1' ORDER BY billing_to ASC") AS $pth){
-            //$billing_id=$this->super_model->select_column_where("purchase_transaction_details","billing_id","purchase_id",$pth->purchase_id);
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
-            // $vatables_purchases=$this->super_model->select_column_where("purchase_transaction_details","vatables_purchases","purchase_id",$pth->purchase_id);
-            // $vat_on_purchases=$this->super_model->select_column_where("purchase_transaction_details","vat_on_purchases","purchase_id",$pth->purchase_id);
-            // $ewt=$this->super_model->select_column_where("purchase_transaction_details","ewt","purchase_id",$pth->purchase_id);
             $total=($pth->vatables_purchases+$pth->vat_on_purchases)-$pth->ewt;
             $total_sum[]=$total;
 
@@ -1388,6 +1384,9 @@ class Reports extends CI_Controller {
                 'vatables_purchases'=>$pth->vatables_purchases,
                 'vat_on_purchases'=>$pth->vat_on_purchases,
                 'ewt'=>$pth->ewt,
+                'total_update'=>$pth->total_update,
+                'original_copy'=>$pth->original_copy,
+                'scanned_copy'=>$pth->scanned_copy,
                 'total'=>$total,
             );
         }
@@ -1401,11 +1400,6 @@ class Reports extends CI_Controller {
         $this->load->view('template/navbar');
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE saved='1' ORDER BY billing_to ASC") AS $sth){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
-            // $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","sales_id",$sth->sales_id);
-            // $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","sales_id",$sth->sales_id);
-            // $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","sales_id",$sth->sales_id);
-            // $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","sales_id",$sth->sales_id);
-            // $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","sales_id",$sth->sales_id);
             $zero_rated=$sth->zero_rated_sales+$sth->zero_rated_ecozones;
             $total=($sth->vatable_sales+$zero_rated+$sth->vat_on_sales)-$sth->ewt;
             $total_sum[]=$total;
@@ -1434,14 +1428,57 @@ class Reports extends CI_Controller {
     public function purchases_all_adjustment(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/purchases_all_adjustment');
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE saved='1' AND adjustment ='1' ORDER BY billing_to ASC") AS $pth){
+            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
+            $total=($pth->vatables_purchases+$pth->vat_on_purchases)-$pth->ewt;
+            $total_sum[]=$total;
+
+            $data['purchasead_all'][]=array(
+                'participant_name'=>$participant_name,
+                'billing_id'=>$pth->billing_id,
+                'billing_from'=>$pth->billing_from,
+                'billing_to'=>$pth->billing_to,
+                'vatables_purchases'=>$pth->vatables_purchases,
+                'vat_on_purchases'=>$pth->vat_on_purchases,
+                'ewt'=>$pth->ewt,
+                'total_update'=>$pth->total_update,
+                'original_copy'=>$pth->original_copy,
+                'scanned_copy'=>$pth->scanned_copy,
+                'total'=>$total,
+            );
+        }
+        $data['total_sum']=array_sum($total_sum);
+        $this->load->view('reports/purchases_all_adjustment',$data);
         $this->load->view('template/footer');
     }
 
     public function sales_all_adjustment(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('reports/sales_all_adjustment');
+                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE saved='1' ORDER BY billing_to ASC") AS $sah){
+            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
+            $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
+            $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
+            $total_sum[]=$total;
+
+            $data['salesad_all'][]=array(
+                'participant_name'=>$participant_name,
+                'billing_id'=>$sah->billing_id,
+                'adjustment_detail_id'=>$sah->adjustment_detail_id,
+                'billing_from'=>$sah->billing_from,
+                'billing_to'=>$sah->billing_to,
+                'vatable_sales'=>$sah->vatable_sales,
+                'vat_on_sales'=>$sah->vat_on_sales,
+                'ewt'=>$sah->ewt,
+                'ewt_amount'=>$sah->ewt_amount,
+                'original_copy'=>$sah->original_copy,
+                'scanned_copy'=>$sah->scanned_copy,
+                'zero_rated'=>$zero_rated,
+                'total'=>$total,
+            );
+        }
+        $data['total_sum']=array_sum($total_sum);
+        $this->load->view('reports/sales_all_adjustment',$data);
         $this->load->view('template/footer');
     }
 }
