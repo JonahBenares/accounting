@@ -666,3 +666,63 @@ $(document).ready(function() {
 		});
 	}
 });
+
+function updateSales(baseurl,count,sales_detail_id,sales_id,billing_id){
+    var redirect = baseurl+"sales/update_details";
+    var ewt_amount=document.getElementById("ewt_amount"+count).value;
+    var orig_yes=document.getElementById("orig_yes"+count);
+    if(orig_yes.checked){
+        var original_copy=1;
+    }
+    var orig_no=document.getElementById("orig_no"+count);
+    if(orig_no.checked){
+        var original_copy=0;
+    }
+    var scanned_yes=document.getElementById("scanned_yes"+count);
+    if(scanned_yes.checked){
+        var scanned_copy=1;
+    }
+    var scanned_no=document.getElementById("scanned_no"+count);
+    if(scanned_no.checked){
+        var scanned_copy=0;
+    }
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'sales_detail_id='+sales_detail_id+'&sales_id='+sales_id+'&billing_id='+billing_id+'&ewt_amount='+ewt_amount+'&original_copy='+original_copy+'&scanned_copy='+scanned_copy,
+        dataType: "json",
+		success: function(response){
+			document.getElementById("ewt_amount"+count).value=response.ewt_amount;
+		}
+	});
+}
+
+function updateSalesAdjustment(baseurl,count,sales_detail_id,sales_adjustment_id,billing_id){
+    var redirect = baseurl+"sales/update_adjustment_details";
+    var ewt_amount=document.getElementById("ewt_amount"+count).value;
+    var orig_yes=document.getElementById("orig_yes"+count);
+    if(orig_yes.checked){
+        var original_copy=1;
+    }
+    var orig_no=document.getElementById("orig_no"+count);
+    if(orig_no.checked){
+        var original_copy=0;
+    }
+    var scanned_yes=document.getElementById("scanned_yes"+count);
+    if(scanned_yes.checked){
+        var scanned_copy=1;
+    }
+    var scanned_no=document.getElementById("scanned_no"+count);
+    if(scanned_no.checked){
+        var scanned_copy=0;
+    }
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'sales_detail_id='+sales_detail_id+'&sales_adjustment_id='+sales_adjustment_id+'&billing_id='+billing_id+'&ewt_amount='+ewt_amount+'&original_copy='+original_copy+'&scanned_copy='+scanned_copy,
+        dataType: "json",
+		success: function(response){
+			document.getElementById("ewt_amount"+count).value=response.ewt_amount;
+		}
+	});
+}

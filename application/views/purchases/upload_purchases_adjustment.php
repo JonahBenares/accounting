@@ -114,8 +114,8 @@ if(!empty($sales_id)){
                                             <th>Vat On Purchases</th>
                                             <th>EWT</th>
                                             <th>Total Amount</th>
-                                            <th>Original Copy</th>
-                                            <th>Scanned Copy</th>
+                                            <!-- <th>Original Copy</th>
+                                            <th>Scanned Copy</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -146,8 +146,8 @@ if(!empty($sales_id)){
                                             <td align="right">(<?php echo number_format($d['zero_rated_ecozones'],2); ?>)</td>
                                             <td align="right">(<?php echo number_format($d['vat_on_purchases'],2); ?>)</td>
                                             <td align="right"><?php echo number_format($d['ewt'],2); ?></td>
-                                            <!-- <td align="right">(<?php echo number_format($d['total_amount'],2); ?>)</td> -->
-                                            <td align="right" style="padding:0px">
+                                            <td align="right">(<?php echo number_format($d['total_amount'],2); ?>)</td>
+                                            <!-- <td align="right" style="padding:0px">
                                                 <input type="text" class="form-control"  name="total_update" id="total_update" value="(<?php echo number_format($d['total_amount'],2); ?>)" readonly>
                                             </td>
                                             <td align="right" >
@@ -177,7 +177,7 @@ if(!empty($sales_id)){
                                                         <input type="radio"  name="scanned_copy" id="scanned_no" value='2' checked>
                                                     </label>
                                                 </div>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                         <?php } } ?>
                                     </tbody>

@@ -1419,6 +1419,9 @@ class Reports extends CI_Controller {
                 'vatable_sales'=>$sth->vatable_sales,
                 'vat_on_sales'=>$sth->vat_on_sales,
                 'ewt'=>$sth->ewt,
+                'ewt_amount'=>$sth->ewt_amount,
+                'original_copy'=>$sth->original_copy,
+                'scanned_copy'=>$sth->scanned_copy,
                 'zero_rated'=>$zero_rated,
                 'total'=>$total,
             );

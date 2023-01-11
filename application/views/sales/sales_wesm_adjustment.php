@@ -101,13 +101,14 @@
                                                     <th>Vat On Sales</th>
                                                     <th>EWT</th>
                                                     <th>Total Amount</th>
-                                                    <th width="3%">Original Copy</th>
-                                                    <th width="3%">Scanned Copy</th>
+                                                    <th>EWT Amount</th>
+                                                    <th>Original Copy</th>
+                                                    <th>Scanned Copy</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
-                                                    //$x=1;
+                                                    $x=1;
                                                     if(!empty($details)){
                                                     foreach($details AS $s){ 
                                                 ?>
@@ -138,14 +139,31 @@
                                                     <td align="right"><?php echo $s['vat_on_sales'];?></td>
                                                     <td align="right">(<?php echo $s['ewt'];?>)</td>
                                                     <td align="right" style="padding:0px"><?php echo $d['total_amount'];?></td>
-                                                    <td align="center">
-                                                        <span class="m-b-10">Yes</span>
+                                                   <td align="right" style="padding:0px">
+                                                    <input type="text" class="form-control" onblur="updateSalesAdjustment('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['sales_adjustment_id']; ?>','<?php echo $s['billing_id']; ?>')" name="ewt_amount" id="ewt_amount<?php echo $x; ?>" value="<?php echo $s['ewt_amount']; ?>">
                                                     </td>
                                                     <td align="center">
-                                                        <span class="m-b-10">No</span>
-                                                    </td>
+                                                    <span class="m-b-10">Yes</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio"  onchange="updateSalesAdjustment('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['sales_adjustment_id']; ?>','<?php echo $s['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_yes<?php echo $x; ?>" value='1' <?php echo ($s['original_copy']=='1') ? 'checked' : ''; ?>>
+                                                    </label>
+                                                    <span class="m-b-10">No</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio" onchange="updateSalesAdjustment('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['sales_adjustment_id']; ?>','<?php echo $s['billing_id']; ?>')" name="orig_copy<?php echo $x; ?>" id="orig_no<?php echo $x; ?>" value='2' <?php echo ($s['original_copy']=='0') ? 'checked' : ''; ?>>
+                                                    </label>
+                                                </td>
+                                                <td align="center">
+                                                    <span class="m-b-10">Yes</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio"  onchange="updateSalesAdjustment('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['sales_adjustment_id']; ?>','<?php echo $s['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_yes<?php echo $x; ?>" value='1' <?php echo ($s['scanned_copy']=='1') ? 'checked' : ''; ?>>
+                                                    </label>
+                                                    <span class="m-b-10">No</span>
+                                                    <label style="width:20px;margin: 0px 6px;">
+                                                        <input type="radio" onchange="updateSalesAdjustment('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['sales_adjustment_id']; ?>','<?php echo $s['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($s['scanned_copy']=='0') ? 'checked' : ''; ?>>
+                                                    </label>
+                                                </td>
                                                 </tr>
-                                                <?php } } ?>
+                                                <?php $x++; } } ?>
                                             </tbody>
                                         </table>
                                     </form>

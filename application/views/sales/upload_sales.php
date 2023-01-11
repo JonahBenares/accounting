@@ -157,8 +157,8 @@ if(!empty($sales_id)){
                                                 <th>Vat On Sales</th>
                                                 <th>EWT</th>
                                                 <th>Total Amount</th>
-                                                <th width="3%">Original Copy</th>
-                                                <th width="3%">Scanned Copy</th>
+                                                <!-- <th width="3%">Original Copy</th>
+                                                <th width="3%">Scanned Copy</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -210,8 +210,8 @@ if(!empty($sales_id)){
                                                 <td align="right"><?php echo $d['zero_rated_ecozones'];?></td>
                                                 <td align="right"><?php echo $d['vat_on_sales'];?></td>
                                                 <td align="right">(<?php echo $d['ewt'];?>)</td>
-                                                <!-- <td align="right"><?php echo $d['total_amount'];?></td> -->
-                                                <td align="right" style="padding:0px">
+                                                <td align="right"><?php echo $d['total_amount'];?></td> 
+                                                <!-- <td align="right" style="padding:0px">
                                                     <input type="text" class="form-control"  name="total_update" id="total_update" value="<?php echo $d['total_amount'];?>" readonly>
                                                 </td>
                                                 <td align="right">
@@ -233,7 +233,7 @@ if(!empty($sales_id)){
                                                     <label style="width:20px;margin: 0px 6px;">
                                                         <input type="radio"  name="scanned_copy" id="scanned_no" value='2' checked>
                                                     </label>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                             <?php } } ?>
                                         </tbody>

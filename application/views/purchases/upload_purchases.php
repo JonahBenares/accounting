@@ -115,8 +115,6 @@
                                             <th>Total Amount</th>
                                             <th>OR Number</th>
                                             <th>Total Amount</th>
-                                            <th>Original Copy</th>
-                                            <th>Scanned Copy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -149,7 +147,7 @@
                                             <td align="right">(<?php echo number_format($d['vat_on_purchases'],2); ?>)</td>
                                             <td align="right"><?php echo number_format($d['ewt'],2); ?></td>
                                             <td align="right">(<?php echo number_format($d['total_amount'],2); ?>)</td>
-                                            <td align="right" style="padding:0px">
+                                            <!-- <td align="right" style="padding:0px">
                                                 <input type="text" class="form-control" onblur="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="or_no" id="or_no<?php echo $x; ?>" value="<?php echo $d['or_no'];?>" <?php echo ($saved==1) ? 'readonly' : ''; ?>>
                                             </td>
                                             <td align="right" style="padding:0px">
@@ -174,7 +172,7 @@
                                                 <label style="width:20px;margin: 0px 6px;">
                                                     <input type="radio" onchange="updatePurchases('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $d['purchase_detail_id']; ?>','<?php echo $d['purchase_id']; ?>','<?php echo $d['billing_id']; ?>')" name="scanned_copy<?php echo $x; ?>" id="scanned_no<?php echo $x; ?>" value='2' <?php echo ($d['scanned_copy']=='0') ? 'checked' : ''; ?> <?php echo ($saved==1) ? 'onclick="javascript: return false;"' : ''; ?>>
                                                 </label>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                         <?php } $x++; } ?>
                                     </tbody>

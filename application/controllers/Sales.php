@@ -49,6 +49,46 @@ class Sales extends CI_Controller {
         echo $sales_detail_disp.",".$identifier_code.",".$count;
     }
 
+    public function update_details(){
+        $sales_detail_id=$this->input->post('sales_detail_id');
+        $sales_id=$this->input->post('sales_id');
+        $billing_id=$this->input->post('billing_id');
+        $ewt_amount=$this->input->post('ewt_amount');
+        $original_copy=$this->input->post('original_copy');
+        $scanned_copy=$this->input->post('scanned_copy');
+        $data_update=array(
+            "ewt_amount"=>$ewt_amount,
+            "original_copy"=>$original_copy,
+            "scanned_copy"=>$scanned_copy,
+        );
+        if($this->super_model->update_custom_where("sales_transaction_details", $data_update, "sales_detail_id='$sales_detail_id' AND sales_id='$sales_id' AND billing_id='$billing_id'")){
+            foreach($this->super_model->select_custom_where("sales_transaction_details","sales_detail_id='$sales_detail_id' AND sales_id='$sales_id' AND billing_id='$billing_id'") AS $latest_data){
+                $return = array('ewt_amount'=>$latest_data->ewt_amount, 'original_copy'=>$latest_data->original_copy, 'scanned_copy'=>$latest_data->scanned_copy);
+            }
+            echo json_encode($return);
+        }
+    }
+
+    public function update_adjustment_details(){
+        $sales_detail_id=$this->input->post('sales_detail_id');
+        $sales_adjustment_id=$this->input->post('sales_adjustment_id');
+        $billing_id=$this->input->post('billing_id');
+        $ewt_amount=$this->input->post('ewt_amount');
+        $original_copy=$this->input->post('original_copy');
+        $scanned_copy=$this->input->post('scanned_copy');
+        $data_update=array(
+            "ewt_amount"=>$ewt_amount,
+            "original_copy"=>$original_copy,
+            "scanned_copy"=>$scanned_copy,
+        );
+        if($this->super_model->update_custom_where("sales_adjustment_details", $data_update, "adjustment_detail_id='$sales_detail_id' AND sales_adjustment_id='$sales_adjustment_id' AND billing_id='$billing_id'")){
+            foreach($this->super_model->select_custom_where("sales_adjustment_details","adjustment_detail_id='$adjustment_detail_id' AND sales_adjustment_id='$sales_adjustment_id' AND billing_id='$billing_id'") AS $latest_data){
+                $return = array('ewt_amount'=>$latest_data->ewt_amount, 'original_copy'=>$latest_data->original_copy, 'scanned_copy'=>$latest_data->scanned_copy);
+            }
+            echo json_encode($return);
+        }
+    }
+
     public function upload_sales()
     {
         $id=$this->uri->segment(3);
@@ -1271,7 +1311,10 @@ class Sales extends CI_Controller {
                     'billing_from'=>$d->billing_from,
                     'billing_to'=>$d->billing_to,
                     'due_date'=>$d->due_date,
-                    'print_counter'=>$d->print_counter
+                    'print_counter'=>$d->print_counter,
+                    'ewt_amount'=>$d->ewt_amount,
+                    'original_copy'=>$d->original_copy,
+                    'scanned_copy'=>$d->scanned_copy
                 );
             }
         }else if($in_ex_sub==1){
@@ -1319,7 +1362,10 @@ class Sales extends CI_Controller {
                     'billing_from'=>$d->billing_from,
                     'billing_to'=>$d->billing_to,
                     'due_date'=>$d->due_date,
-                    'print_counter'=>$d->print_counter
+                    'print_counter'=>$d->print_counter,
+                    'ewt_amount'=>$d->ewt_amount,
+                    'original_copy'=>$d->original_copy,
+                    'scanned_copy'=>$d->scanned_copy
                 );
                 }
             }
@@ -1963,7 +2009,10 @@ class Sales extends CI_Controller {
                     'billing_from'=>$d->billing_from,
                     'billing_to'=>$d->billing_to,
                     'due_date'=>$d->due_date,
-                    'print_counter'=>$d->print_counter
+                    'print_counter'=>$d->print_counter,
+                    'ewt_amount'=>$d->ewt_amount,
+                    'original_copy'=>$d->original_copy,
+                    'scanned_copy'=>$d->scanned_copy
                 );
             }
         }else if($in_ex_sub==1){
@@ -2010,7 +2059,10 @@ class Sales extends CI_Controller {
                     'billing_from'=>$d->billing_from,
                     'billing_to'=>$d->billing_to,
                     'due_date'=>$d->due_date,
-                    'print_counter'=>$d->print_counter
+                    'print_counter'=>$d->print_counter,
+                    'ewt_amount'=>$d->ewt_amount,
+                    'original_copy'=>$d->original_copy,
+                    'scanned_copy'=>$d->scanned_copy
                 );
                 }
             }
