@@ -20,6 +20,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-12">
+                                    <form method="POST">
                                     <table width="100%">
                                         <tr>
                                             <td width="15%">

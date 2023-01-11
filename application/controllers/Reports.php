@@ -1371,7 +1371,28 @@ class Reports extends CI_Controller {
     public function purchases_all(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE saved='1' AND adjustment !='1' ORDER BY billing_to ASC") AS $pth){
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
+
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $sql="";
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        } if($participant!='null'){
+             $sql.= "short_name = '$participant' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND adjustment !='1' AND ".$query;
+
+        $total_sum[]=0;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE $qu ORDER BY billing_to ASC") AS $pth){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
             $total=($pth->vatables_purchases+$pth->vat_on_purchases)-$pth->ewt;
             $total_sum[]=$total;
@@ -1398,7 +1419,28 @@ class Reports extends CI_Controller {
     public function sales_all(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE saved='1' ORDER BY billing_to ASC") AS $sth){
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
+
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $sql="";
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        } if($participant!='null'){
+             $sql.= "short_name = '$participant' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND ".$query;
+
+        $total_sum[]=0;
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu ORDER BY sales_detail_id ASC") AS $sth){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
             $zero_rated=$sth->zero_rated_sales+$sth->zero_rated_ecozones;
             $total=($sth->vatable_sales+$zero_rated+$sth->vat_on_sales)-$sth->ewt;
@@ -1428,7 +1470,28 @@ class Reports extends CI_Controller {
     public function purchases_all_adjustment(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE saved='1' AND adjustment ='1' ORDER BY billing_to ASC") AS $pth){
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
+
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $sql="";
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        } if($participant!='null'){
+             $sql.= "short_name = '$participant' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND adjustment ='1' AND ".$query;
+
+        $total_sum[]=0;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE $qu ORDER BY billing_to ASC") AS $pth){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
             $total=($pth->vatables_purchases+$pth->vat_on_purchases)-$pth->ewt;
             $total_sum[]=$total;
@@ -1455,7 +1518,28 @@ class Reports extends CI_Controller {
     public function sales_all_adjustment(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE saved='1' ORDER BY billing_to ASC") AS $sah){
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $part;
+
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $sql="";
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        } if($participant!='null'){
+             $sql.= "short_name = '$participant' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND ".$query;
+
+        $total_sum[]=0;
+                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE $qu ORDER BY billing_to ASC") AS $sah){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
             $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
             $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;

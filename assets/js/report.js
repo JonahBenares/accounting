@@ -333,3 +333,115 @@ function filter_payment_form(){
     var loc= document.getElementById("baseurl").value;
     window.location=loc+'reports/payment_report/'+payment_date; 
 }
+
+function filter_sales_all() { 
+     var from = document.getElementById("from").value; 
+     var to = document.getElementById("to").value;
+     var participant = document.getElementById("participant").value;
+
+    if(from!=''){
+        from=from;
+    }else{
+        from='null';
+    }
+
+    if(to!=''){
+        to=to;
+    }else{
+        to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/sales_all/'+part+'/'+from+'/'+to;
+
+}
+
+function filter_purchases_all() { 
+     var from = document.getElementById("from").value; 
+     var to = document.getElementById("to").value;
+     var participant = document.getElementById("participant").value;
+
+    if(from!=''){
+        from=from;
+    }else{
+        from='null';
+    }
+
+    if(to!=''){
+        to=to;
+    }else{
+        to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/purchases_all/'+part+'/'+from+'/'+to;
+
+}
+
+function filter_sales_adjustment_all() { 
+     var from = document.getElementById("from").value; 
+     var to = document.getElementById("to").value;
+     var participant = document.getElementById("participant").value;
+
+    if(from!=''){
+        from=from;
+    }else{
+        from='null';
+    }
+
+    if(to!=''){
+        to=to;
+    }else{
+        to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/sales_all_adjustment/'+part+'/'+from+'/'+to;
+
+}
+
+function filter_purchases_adjustment_all() { 
+     var from = document.getElementById("from").value; 
+     var to = document.getElementById("to").value;
+     var participant = document.getElementById("participant").value;
+
+    if(from!=''){
+        from=from;
+    }else{
+        from='null';
+    }
+
+    if(to!=''){
+        to=to;
+    }else{
+        to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/purchases_all_adjustment/'+part+'/'+from+'/'+to;
+
+}

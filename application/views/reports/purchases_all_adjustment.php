@@ -22,27 +22,55 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-6 offset-lg-3">
-                                    <table width="100%">
-                                        <tr>
-                                            <td width="30%">
-                                                <input type="date" class="form-control" name="">
-                                            </td>
-                                            <td width="30%">
-                                                <input type="date" class="form-control" name="">
-                                            </td>
-                                            <td width="30%">
-                                                <select class="form-control select2" name="ref_no" id="ref_no">
-                                                    <option value="">-- Select Company --</option>
+                                    <form method="POST">
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="30%">
+                                                    <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
+                                                </td>
+                                                <td width="30%">
+                                                    <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
+                                                </td>
+                                                <td width="30%">
+                                                     <select class="form-control select2" name="participant" id="participant">
+                                                    <option value="">-- Select Participant --</option>
+                                                    <?php foreach($participant AS $p){ ?>
+                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->settlement_id." - ".$p->participant_name;?></option>
+                                                    <?php } ?>
                                                 </select>
-                                            </td>
-                                            <td width="1%">
-                                                <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                                                <input type='button' class="btn btn-primary"  value="Filter">
-                                            </td>
-                                        </tr>
-                                    </table>
+                                                </td>
+                                                <td width="1%">
+                                                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
+                                                <input type='button' class="btn btn-primary"  onclick="filter_purchases_adjustment_all()" value="Filter">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
                                 </div>
                             </div>
+                            <br>
+
+                        <?php 
+                            if(!empty($part) || !empty($date_from) || !empty($date_to)){
+                            ?>
+                            <table class="table-bordsered" width="100%">
+                                <tr>
+                                    <td width="3%"></td>
+                                    <td width="13%"><b>Date From:</b></td>
+                                    <td width="25%"><?php echo $from ?></td>
+                                    <td width="13%"></td>
+                                    <td width="41%"></td>
+                                    <td width="3%"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>Date To:</b></td>
+                                    <td><?php echo $to ?></td>
+                                    <td><b>Participant Name:</b></td>
+                                    <td><?php echo $part ?></td>
+                                    <td></td>
+                                </tr>
+                            </table>
                             <br>
 
                             <!-- <br>
@@ -135,17 +163,17 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['billing_id']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['participant_name']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vatables_purchases']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vat_on_purchases']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['ewt']); ?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total_update']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['original_copy']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="right" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['scanned_copy']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="left" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['billing_id']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="left" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['participant_name']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vatables_purchases']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vat_on_purchases']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['ewt']); ?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total_update']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['original_copy']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['scanned_copy']);?></td>
                                         </tr>
-                                        <?php } } ?>
+                                        <?php } } }?>
                                     </tbody>
                                 </table>
                             </div>  
