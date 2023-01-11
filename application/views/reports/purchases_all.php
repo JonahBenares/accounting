@@ -50,7 +50,7 @@
                             </div>
                             <br>
                             <?php 
-                            if(!empty($part) || !empty($date_from) || !empty($date_to)){
+                            if(!empty($part) || !empty($from) || !empty($to)){
                             ?>
                             <table class="table-bordsered" width="100%">
                                 <tr>

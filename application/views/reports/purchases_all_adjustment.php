@@ -51,7 +51,7 @@
                             <br>
 
                         <?php 
-                            if(!empty($part) || !empty($date_from) || !empty($date_to)){
+                            if(!empty($part) || !empty($from) || !empty($to)){
                             ?>
                             <table class="table-bordsered" width="100%">
                                 <tr>
@@ -72,6 +72,7 @@
                                 </tr>
                             </table>
                             <br>
+                        <?php } ?>
 
                             <!-- <br>
                             <div class="table-responsive" id="table-wesm" >
@@ -173,7 +174,7 @@
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['original_copy']);?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['scanned_copy']);?></td>
                                         </tr>
-                                        <?php } } }?>
+                                        <?php } } ?>
                                     </tbody>
                                 </table>
                             </div>  
