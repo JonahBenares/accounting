@@ -118,6 +118,7 @@
                                             <th>VAT on Purchases</th>    
                                             <th>EWT</th>    
                                             <th>Total</th> 
+                                            <th>OR Number</th> 
                                             <th>Total Amount</th> 
                                             <th>Original Copy</th>
                                             <th>Scanned Copy</th>
@@ -139,6 +140,7 @@
                                                         'vat_on_purchases'=>array(),
                                                         'ewt'=>array(),
                                                         'total'=>array(),
+                                                        'or_no'=>array(),
                                                         'total_update'=>array(),
                                                         'original_copy'=>array(),
                                                         'scanned_copy'=>array(),
@@ -150,6 +152,7 @@
                                                 $data2[$key]['vat_on_purchases'][] = number_format($pal['vat_on_purchases'],2);
                                                 $data2[$key]['ewt'][] = "(".number_format($pal['ewt'],2).")";
                                                 $data2[$key]['total'][] = number_format($pal['total'],2);
+                                                $data2[$key]['or_no'][] = $pal['or_no'];
                                                 $data2[$key]['total_update'][] = number_format($pal['total_update'],2);
                                                 $data2[$key]['original_copy'][] =($pal['original_copy']=='0') ? 'NO' : 'YES';
                                                 $data2[$key]['scanned_copy'][] = ($pal['scanned_copy']=='0') ? 'NO' : 'YES';
@@ -168,6 +171,7 @@
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['vat_on_purchases']);?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['ewt']); ?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total']);?></td>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['or_no']);?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['total_update']);?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['original_copy']);?></td>
                                             <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$pa['scanned_copy']);?></td>
