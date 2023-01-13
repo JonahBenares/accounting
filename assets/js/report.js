@@ -338,6 +338,8 @@ function filter_sales_all() {
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
      var participant = document.getElementById("participant").value;
+     var original = document.getElementById("og_copy").value;
+     var scanned = document.getElementById("s_copy").value;
 
     if(from!=''){
         from=from;
@@ -357,15 +359,27 @@ function filter_sales_all() {
         part='null';
     }
 
+    if(original!=''){
+        original=original;
+    }else{
+        original='null';
+    }
+
+    if(scanned!=''){
+        scanned=scanned;
+    }else{
+        scanned='null';
+    }
+
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/sales_all/'+part+'/'+from+'/'+to;
+      window.location=loc+'reports/sales_all/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
 
 }
 
 function export_sales_all() { 
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
-     var participant = document.getElementById("participant").value;
+     var participant = document.getElementById("participant1").value;
 
     if(from!=''){
         from=from;
@@ -394,6 +408,8 @@ function filter_purchases_all() {
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
      var participant = document.getElementById("participant").value;
+     var original = document.getElementById("og_copy").value;
+     var scanned = document.getElementById("s_copy").value;
 
     if(from!=''){
         from=from;
@@ -413,8 +429,20 @@ function filter_purchases_all() {
         part='null';
     }
 
+    if(original!=''){
+        original=original;
+    }else{
+        original='null';
+    }
+
+    if(scanned!=''){
+        scanned=scanned;
+    }else{
+        scanned='null';
+    }
+
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/purchases_all/'+part+'/'+from+'/'+to;
+      window.location=loc+'reports/purchases_all/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
 
 }
 
@@ -422,6 +450,8 @@ function filter_sales_adjustment_all() {
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
      var participant = document.getElementById("participant").value;
+     var original = document.getElementById("og_copy").value;
+     var scanned = document.getElementById("s_copy").value;
 
     if(from!=''){
         from=from;
@@ -441,8 +471,20 @@ function filter_sales_adjustment_all() {
         part='null';
     }
 
+    if(original!=''){
+        original=original;
+    }else{
+        original='null';
+    }
+
+    if(scanned!=''){
+        scanned=scanned;
+    }else{
+        scanned='null';
+    }
+
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/sales_all_adjustment/'+part+'/'+from+'/'+to;
+      window.location=loc+'reports/sales_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
 
 }
 
@@ -450,6 +492,8 @@ function filter_purchases_adjustment_all() {
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
      var participant = document.getElementById("participant").value;
+     var original = document.getElementById("og_copy").value;
+     var scanned = document.getElementById("s_copy").value;
 
     if(from!=''){
         from=from;
@@ -469,7 +513,19 @@ function filter_purchases_adjustment_all() {
         part='null';
     }
 
+    if(original!=''){
+        original=original;
+    }else{
+        original='null';
+    }
+
+    if(scanned!=''){
+        scanned=scanned;
+    }else{
+        scanned='null';
+    }
+
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/purchases_all_adjustment/'+part+'/'+from+'/'+to;
+      window.location=loc+'reports/purchases_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
 
 }

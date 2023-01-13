@@ -1,4 +1,3 @@
-
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/report.js"></script>
 <div class="main-content">
@@ -21,17 +20,17 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-6 offset-lg-3">
+                                <div class="col-lg-8 offset-lg-2">
                                     <form method="POST">
                                         <table width="100%">
                                             <tr>
-                                                <td width="30%">
+                                                <td width="20%">
                                                     <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
-                                                <td width="30%">
+                                                <td width="20%">
                                                     <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
-                                                <td width="30%">
+                                                <td width="20%">
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
@@ -39,7 +38,21 @@
                                                     <?php } ?>
                                                 </select>
                                                 </td>
-                                                <td width="1%">
+                                                <td width="10%">
+                                                <select class="form-control" name="og_copy" id="og_copy">
+                                                    <option value="">Original Copy</option>
+                                                    <option value="1">YES</option>
+                                                    <option value="0">NO</option>
+                                                </select>
+                                                </td>
+                                                <td  width="10%">
+                                                <select class="form-control" name="s_copy" id="s_copy">
+                                                    <option value="">Scanned Copy</option>
+                                                    <option value="1">YES</option>
+                                                    <option value="0">NO</option>
+                                                </select>
+                                                </td>
+                                                <td  width="10%">
                                                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
                                                 <input type='button' class="btn btn-primary"  onclick="filter_sales_all()" value="Filter">
                                                 </td>
@@ -65,8 +78,24 @@
                                     <td></td>
                                     <td><b>Date To:</b></td>
                                     <td><?php echo $to ?></td>
+                                    <td><b>Original Copy:</b></td>
+                                    <?php if($original != 'null'){ ?>
+                                        <td><?php echo ($original=='0') ? 'NO' : 'YES'; ?></td>
+                                    <?php }else{ ?>
+                                        <td><?php echo $original; ?></td>
+                                    <?php } ?>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
                                     <td><b>Participant Name:</b></td>
                                     <td><?php echo $part ?></td>
+                                    <td><b>Scanned Copy:</b></td>
+                                     <?php if($scanned != 'null'){ ?>
+                                        <td><?php echo ($scanned=='0') ? 'NO' : 'YES'; ?></td>
+                                    <?php }else{ ?>
+                                        <td><?php echo $scanned; ?></td>
+                                    <?php } ?>
                                     <td></td>
                                 </tr>
                             </table>
@@ -177,7 +206,7 @@
                     </div>
                     <div class="form-group">
                         <label>Company</label>
-                        <select class="form-control select2" name="participant" id="participant">
+                        <select class="form-control select2" name="participant1" id="participant1">
                                 <option value="">-- Select Participant --</option>
                             <?php foreach($participant AS $p){ ?>
                                 <option value="<?php echo $p->settlement_id;?>"><?php echo $p->settlement_id." - ".$p->participant_name;?></option>
