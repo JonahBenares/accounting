@@ -72,7 +72,7 @@
                             </table>
                             <br>
                             <div class="table-responsive" id="table-wesm" >
-                                <table class="table table-bordered" id="save-stage" style="width:150%;">
+                                <table class="table table-bordered"  style="width:150%;">
                                     <thead>
                                         <tr>
                                             <td>BIlling ID</td> 
@@ -125,8 +125,8 @@
                                             foreach($data2 AS $sa){
                                         ?>
                                         <tr>
-                                            <td class="pt-3 pb-1 pr-0 pl-0" colspan="9">
-                                                <u><?php echo $sa['billing']; ?></u>
+                                            <td class="pt-1 pb-1 pr-0 pl-0" colspan="10">
+                                                <b><?php echo $sa['billing']; ?></b>
                                             </td>
                                         </tr>
                                         <tr>
