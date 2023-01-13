@@ -1592,18 +1592,23 @@ class Reports extends CI_Controller {
         $to=$this->uri->segment(5);
         $original=$this->uri->segment(6);
         $scanned=$this->uri->segment(7);
+        $due_date=$this->uri->segment(8);
         $data['from'] = $from;
         $data['to'] = $to;
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
         $data['part'] = $part;
         $data['original'] = $original;
         $data['scanned'] = $scanned;
+        $data['due'] = $due_date;
 
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND saved = '1'");
         $sql="";
 
         if($from!='null' && $to != 'null'){
             $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        }if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -1649,18 +1654,23 @@ class Reports extends CI_Controller {
         $to=$this->uri->segment(5);
         $original=$this->uri->segment(6);
         $scanned=$this->uri->segment(7);
+        $due_date=$this->uri->segment(8);
         $data['from'] = $from;
         $data['to'] = $to;
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
         $data['part'] = $part;
         $data['original'] = $original;
         $data['scanned'] = $scanned;
+        $data['due'] = $due_date;
 
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!='' AND saved = '1'");
         $sql="";
 
         if($from!='null' && $to != 'null'){
             $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        }if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($original!='null' && isset($original)){

@@ -449,6 +449,7 @@ function filter_purchases_all() {
 function filter_sales_adjustment_all() { 
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
+     var due = document.getElementById("due_date").value;
      var participant = document.getElementById("participant").value;
      var original = document.getElementById("og_copy").value;
      var scanned = document.getElementById("s_copy").value;
@@ -463,6 +464,12 @@ function filter_sales_adjustment_all() {
         to=to;
     }else{
         to='null';
+    }
+
+    if(due!=''){
+        due=due;
+    }else{
+        due='null';
     }
 
     if(participant!=''){
@@ -484,13 +491,14 @@ function filter_sales_adjustment_all() {
     }
 
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/sales_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
+      window.location=loc+'reports/sales_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned+'/'+due;
 
 }
 
 function filter_purchases_adjustment_all() { 
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
+     var due = document.getElementById("due_date").value;
      var participant = document.getElementById("participant").value;
      var original = document.getElementById("og_copy").value;
      var scanned = document.getElementById("s_copy").value;
@@ -505,6 +513,12 @@ function filter_purchases_adjustment_all() {
         to=to;
     }else{
         to='null';
+    }
+
+    if(due!=''){
+        due=due;
+    }else{
+        due='null';
     }
 
     if(participant!=''){
@@ -526,6 +540,6 @@ function filter_purchases_adjustment_all() {
     }
 
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/purchases_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
+      window.location=loc+'reports/purchases_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned+'/'+due;
 
 }

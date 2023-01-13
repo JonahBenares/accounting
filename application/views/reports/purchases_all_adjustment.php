@@ -31,6 +31,14 @@
                                                 <td width="20%">
                                                     <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
+                                                <td>
+                                                    <select class="form-control select2" name="due_date" id="due_date">
+                                                        <option value="">-- Select Due Date --</option>
+                                                        <?php foreach($date AS $d){ ?>
+                                                            <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
                                                 <td width="20%">
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
@@ -72,19 +80,23 @@
                                     <td width="3%"></td>
                                     <td width="13%"><b>Date From:</b></td>
                                     <td width="25%"><?php echo $from ?></td>
-                                    <td width="13%"></td>
-                                    <td width="41%"></td>
+                                    <td width="13%"><b>Original Copy:</b></td>
+                                    <?php if($original != 'null'){ ?>
+                                        <td><?php echo ($original=='0') ? 'NO' : 'YES'; ?></td>
+                                    <?php }else{ ?>
+                                        <td><?php echo $original; ?></td>
+                                    <?php } ?>
                                     <td width="3%"></td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td><b>Date To:</b></td>
                                     <td><?php echo $to ?></td>
-                                    <td><b>Original Copy:</b></td>
-                                    <?php if($original != 'null'){ ?>
-                                        <td><?php echo ($original=='0') ? 'NO' : 'YES'; ?></td>
+                                    <td><b>Scanned Copy:</b></td>
+                                    <?php if($scanned != 'null'){ ?>
+                                        <td><?php echo ($scanned=='0') ? 'NO' : 'YES'; ?></td>
                                     <?php }else{ ?>
-                                        <td><?php echo $original; ?></td>
+                                        <td><?php echo $scanned; ?></td>
                                     <?php } ?>
                                     <td></td>
                                 </tr>
@@ -92,12 +104,8 @@
                                     <td></td>
                                     <td><b>Participant Name:</b></td>
                                     <td><?php echo $part ?></td>
-                                    <td><b>Scanned Copy:</b></td>
-                                     <?php if($scanned != 'null'){ ?>
-                                        <td><?php echo ($scanned=='0') ? 'NO' : 'YES'; ?></td>
-                                    <?php }else{ ?>
-                                        <td><?php echo $scanned; ?></td>
-                                    <?php } ?>
+                                    <td><b>Due Date:</b></td>
+                                    <td><?php echo $due; ?></td>
                                     <td></td>
                                 </tr>
                             </table>
