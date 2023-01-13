@@ -840,6 +840,7 @@
 .table:not(.table-sm) thead th{border-bottom:none;background-color:rgba(0,0,0,0.04);color:#666;padding-top:15px;padding-bottom:15px}
 .table.table-md th,.table.table-md td{padding:10px 15px}
 .table.table-bordered td,.table.table-bordered th{border-color:#f6f6f6}
+
 .table .team-member{position:relative;width:30px;white-space:nowrap;border-radius:1000px;vertical-align:bottom;display:inline-block}
 .table .team-member img{width:100%;max-width:100%;height:auto;border:0;border-radius:1000px}
 .table .team-member-sm{width:32px;-webkit-transition:all 0.25s ease;-o-transition:all 0.25s ease;-moz-transition:all 0.25s ease;transition:all 0.25s ease}

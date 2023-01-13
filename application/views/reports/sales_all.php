@@ -1,5 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/report.js"></script>
+<style type="text/css">
+    .table_td{border:1px solid #ddd!important}
+</style>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -20,17 +23,17 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-8 offset-lg-2">
+                                <div class="col-lg-12">
                                     <form method="POST">
                                         <table width="100%">
                                             <tr>
-                                                <td width="20%">
+                                                <td width="15%">
                                                     <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
-                                                <td width="20%">
+                                                <td width="15%">
                                                     <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
-                                                <td width="20%">
+                                                <td width="30%">
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
@@ -38,21 +41,21 @@
                                                     <?php } ?>
                                                 </select>
                                                 </td>
-                                                <td width="10%">
+                                                <td width="15%">
                                                 <select class="form-control" name="og_copy" id="og_copy">
                                                     <option value="">Original Copy</option>
                                                     <option value="1">YES</option>
                                                     <option value="0">NO</option>
                                                 </select>
                                                 </td>
-                                                <td  width="10%">
+                                                <td  width="15%">
                                                 <select class="form-control" name="s_copy" id="s_copy">
                                                     <option value="">Scanned Copy</option>
                                                     <option value="1">YES</option>
                                                     <option value="0">NO</option>
                                                 </select>
                                                 </td>
-                                                <td  width="10%">
+                                                <td  width="5%">
                                                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
                                                 <input type='button' class="btn btn-primary"  onclick="filter_sales_all()" value="Filter">
                                                 </td>
@@ -65,31 +68,28 @@
                             <?php 
                             if(!empty($part) || !empty($from) || !empty($to)){
                             ?>
-                            <table class="table-bordsered" width="100%">
+                            <table class="table-bordesred" width="100%">
+                                <tr>
+                                    <td></td>
+                                    <td><b>Participant Name:</b></td>
+                                    <td colspan="4"><?php echo $part ?></td>
+                                </tr>
                                 <tr>
                                     <td width="3%"></td>
                                     <td width="13%"><b>Date From:</b></td>
                                     <td width="25%"><?php echo $from ?></td>
-                                    <td width="13%"></td>
-                                    <td width="41%"></td>
-                                    <td width="3%"></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td><b>Date To:</b></td>
-                                    <td><?php echo $to ?></td>
                                     <td><b>Original Copy:</b></td>
                                     <?php if($original != 'null'){ ?>
                                         <td><?php echo ($original=='0') ? 'NO' : 'YES'; ?></td>
                                     <?php }else{ ?>
                                         <td><?php echo $original; ?></td>
                                     <?php } ?>
-                                    <td></td>
+                                    <td width="41%"></td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><b>Participant Name:</b></td>
-                                    <td><?php echo $part ?></td>
+                                    <td><b>Date To:</b></td>
+                                    <td><?php echo $to ?></td>
                                     <td><b>Scanned Copy:</b></td>
                                      <?php if($scanned != 'null'){ ?>
                                         <td><?php echo ($scanned=='0') ? 'NO' : 'YES'; ?></td>
@@ -101,19 +101,19 @@
                             </table>
                             <br>
                             <div class="table-responsive" id="table-wesm" >
-                                <table class="table table-bordered"  style="width:150%;">
+                                <table class="table table-bordered2"  style="width:120%;">
                                     <thead>
                                         <tr>
-                                            <td>BIlling ID</td> 
-                                            <td width="20%">Company Name</td>  
-                                            <td>Vatable Sales</td> 
-                                            <td>Zero-Rated Ecozones</td>     
-                                            <td>VAT on Sales</td>   
-                                            <td>EWT Sales</td>    
-                                            <td>Total</td>
-                                            <td>EWT Amount</td>
-                                            <td>Original Copy</td>
-                                            <td>Scanned Copy</td>
+                                            <th class="table_td" style="font-size: 12px;" width="10%">BIlling ID</th> 
+                                            <th class="table_td" style="font-size: 12px;" width="30%">Company Name</th>  
+                                            <th class="table_td" style="font-size: 12px;" width="5%">Vatable Sales</th> 
+                                            <th class="table_td" style="font-size: 12px;" width="5%">Zero-Rated Ecozones</th>     
+                                            <th class="table_td" style="font-size: 12px;" width="5%">VAT on Sales</th>   
+                                            <th class="table_td" style="font-size: 12px;" width="5%">EWT Sales</th>    
+                                            <th class="table_td" style="font-size: 12px;" width="5%">Total</th>
+                                            <th class="table_td" style="font-size: 12px;" width="5%">EWT Amount</th>
+                                            <th class="table_td" style="font-size: 12px;" width="5%">Original Copy</th>
+                                            <th class="table_td" style="font-size: 12px;" width="5%">Scanned Copy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -154,21 +154,41 @@
                                             foreach($data2 AS $sa){
                                         ?>
                                         <tr>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" colspan="10">
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="10" style="font-size: 12px; background: #e8f5ff;">
                                                 <b><?php echo $sa['billing']; ?></b>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="left" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['billing_id']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="left" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['participant_name']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['vatable_sales']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['zero_rated']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['vat_on_sales']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['ewt']); ?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['total']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['ewt_amount']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['original_copy']);?></td>
-                                            <td class="pt-1 pb-1 pr-0 pl-0" align="center" style="font-size: 12px;"><?php echo implode("<hr class='hr'>",$sa['scanned_copy']);?></td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['billing_id']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['participant_name']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['vatable_sales']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['zero_rated']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['vat_on_sales']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['ewt']); ?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['total']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['ewt_amount']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['original_copy']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['scanned_copy']);?>
+                                            </td>
                                         </tr>
                                         <?php } } }?>
                                     </tbody>
