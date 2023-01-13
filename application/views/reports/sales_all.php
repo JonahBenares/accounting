@@ -217,11 +217,11 @@
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label>Billing Date From</label>
-                            <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
+                            <input placeholder="Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                         <div class="form-group col-lg-6">
                             <label>Billing Date to</label>
-                            <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
+                            <input placeholder="Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                     </div>
                     <div class="form-group">
@@ -236,7 +236,7 @@
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                    <input type='button' class="btn btn-primary"  onclick="export_sales_all()" value="Export">
+                    <input type='button' class="btn btn-primary"  onclick="export_salesall()" value="Export">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>

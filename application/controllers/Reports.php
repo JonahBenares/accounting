@@ -1502,10 +1502,9 @@ class Reports extends CI_Controller {
             if($participant !='null' && $from != 'null' && $to != 'null'){
                 $qu = "saved = '1' AND ".$query;
             }else{
-                 $qu = "saved = '1'";
+                 $qu = "saved = '1' ";
             }
 
-        $num=2;
         $sheetno=0;
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -1517,6 +1516,7 @@ class Reports extends CI_Controller {
                 )
             );
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu GROUP BY short_name") AS $head){
+            $num=2;
             $objWorkSheet = $objPHPExcel->createSheet($sheetno);
             $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($head->short_name);
             foreach(range('A','K') as $columnID){
@@ -1566,12 +1566,12 @@ class Reports extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":K".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":I".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $objPHPExcel->getActiveSheet()->getStyle('A1:K1')->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet()->getStyle('A1:K1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $num++;
-                $sheetno++;
             }
+            $sheetno++;
         }
-            $objPHPExcel->getActiveSheet()->getStyle('A1:K1')->getFont()->setBold(true);
-            $objPHPExcel->getActiveSheet()->getStyle('A1:K1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         if (file_exists($exportfilename))
         unlink($exportfilename);
@@ -1592,18 +1592,23 @@ class Reports extends CI_Controller {
         $to=$this->uri->segment(5);
         $original=$this->uri->segment(6);
         $scanned=$this->uri->segment(7);
+        $due_date=$this->uri->segment(8);
         $data['from'] = $from;
         $data['to'] = $to;
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
         $data['part'] = $part;
         $data['original'] = $original;
         $data['scanned'] = $scanned;
+        $data['due'] = $due_date;
 
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND saved = '1'");
         $sql="";
 
         if($from!='null' && $to != 'null'){
             $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        }if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -1649,18 +1654,23 @@ class Reports extends CI_Controller {
         $to=$this->uri->segment(5);
         $original=$this->uri->segment(6);
         $scanned=$this->uri->segment(7);
+        $due_date=$this->uri->segment(8);
         $data['from'] = $from;
         $data['to'] = $to;
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
         $data['part'] = $part;
         $data['original'] = $original;
         $data['scanned'] = $scanned;
+        $data['due'] = $due_date;
 
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!='' AND saved = '1'");
         $sql="";
 
         if($from!='null' && $to != 'null'){
             $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        }if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($original!='null' && isset($original)){
