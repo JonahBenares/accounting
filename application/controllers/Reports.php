@@ -1439,11 +1439,11 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-            if($participant !='null' && $from != 'null' && $to != 'null'){
-                $qu = "saved = '1' AND adjustment !='1' AND ".$query;
-            }else{
-                 $qu = "saved = '1' AND adjustment !='1'";
-            }
+        if($participant !='null' || $from != 'null' || $to != 'null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
 
         $sheetno=0;
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -1781,11 +1781,11 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-            if($participant !='null' && $from != 'null' && $to != 'null'){
-                $qu = "saved = '1' AND adjustment = '1' AND ".$query;
-            }else{
-                 $qu = "saved = '1' AND adjustment = '1'";
-            }
+        if($participant !='null' || $from != 'null' || $to != 'null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
 
         $sheetno=0;
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -1963,11 +1963,11 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-            if($participant !='null' && $from != 'null' && $to != 'null'){
-                $qu = "saved = '1' AND ".$query;
-            }else{
-                 $qu = "saved = '1'";
-            }
+        if($participant !='null' || $from != 'null' || $to != 'null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
 
         $sheetno=0;
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
