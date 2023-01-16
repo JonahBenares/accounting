@@ -1610,18 +1610,17 @@ class Reports extends CI_Controller {
         $exportfilename="Sales Wesm All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= " billing_from >= '$from' AND billing_to <= '$to' AND ";
         } if($participant!='null'){
-             $sql.= "short_name = '$participant' AND "; 
+             $sql.= " short_name = '$participant' AND "; 
         }
 
         $query=substr($sql,0,-4);
-            if($participant !='null' && $from != 'null' && $to != 'null'){
-                $qu = "saved = '1' AND ".$query;
-            }else{
-                 $qu = "saved = '1'";
-            }
-
+        if($participant !='null' || $from != 'null' || $to != 'null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
         $sheetno=0;
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
