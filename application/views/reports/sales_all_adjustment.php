@@ -256,7 +256,7 @@
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                    <input type='button' class="btn btn-primary"  onclick="export_purchasesall()" value="Export">
+                    <input type='button' class="btn btn-primary"  onclick="export_sales_adjustment_all()" value="Export">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
