@@ -1815,18 +1815,18 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $pah->vat_on_purchases);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $pah->ewt);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $total);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $pah->or_no);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $pah->or_number);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $pah->total_update);
-                if($pah->original_copy==1){
+                if($sah->original_copy==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "Yes");
-                }else if($pah->original_copy==0){
+                }else if($sah->original_copy==0){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "");
                 }
-                if($pah->scanned_copy==1){
+                if($sah->scanned_copy==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "Yes");
-                }else if($pah->scanned_copy==0){
+                }else if($sah->scanned_copy==0){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "");
