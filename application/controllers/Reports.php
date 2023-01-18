@@ -1750,16 +1750,16 @@ class Reports extends CI_Controller {
             }
             $sheetno++;
         }
-        // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        // if (file_exists($exportfilename))
-        // unlink($exportfilename);
-        // $objWriter->save($exportfilename);
-        // unset($objPHPExcel);
-        // unset($objWriter);   
-        // ob_end_clean();
-        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        // header('Content-Disposition: attachment; filename="Sales Wesm All Transcations.xlsx"');
-        // readfile($exportfilename);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        if (file_exists($exportfilename))
+        unlink($exportfilename);
+        $objWriter->save($exportfilename);
+        unset($objPHPExcel);
+        unset($objWriter);   
+        ob_end_clean();
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Sales Wesm All Transcations.xlsx"');
+        readfile($exportfilename);
     }
 
     public function purchases_all_adjustment(){
