@@ -1396,7 +1396,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND adjustment !='1' AND ".$query;
+        $qu = "saved = '1' AND adjustment != '1' AND ".$query;
 
         $total_sum[]=0;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE $qu ORDER BY billing_to ASC") AS $pth){
@@ -1440,9 +1440,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant !='null' || $from != 'null' || $to != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND adjustment != '1' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND adjustment != '1'";
         }
 
         $sheetno=0;
@@ -1474,7 +1474,7 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Original Copy");
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND saved = '1' ORDER BY billing_to ASC") AS $pah){
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND saved = '1' AND adjustment != '1' ORDER BY billing_to ASC") AS $pah){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
             $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
             $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
@@ -1878,7 +1878,7 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Original Copy");
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND saved = '1' ORDER BY billing_to ASC") AS $pah){
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND saved = '1' AND adjustment = '1' ORDER BY billing_to ASC") AS $pah){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
             $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
             $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
