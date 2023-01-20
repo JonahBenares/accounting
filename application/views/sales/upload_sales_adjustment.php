@@ -209,6 +209,7 @@ if(!empty($sales_id)){
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
                         <div id='alt1' style="font-weight:bold"></div>
                         <input type="hidden" name="save_sales_adjustment" id="save_sales_adjustment" value="<?php echo $identifier;?>">
+                        <input type="hidden" name="count_name" id="count_name" value="<?php echo $count_name;?>">
                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAllAdjust();" value="Save">
                         <?php } } ?>
                     </div>
