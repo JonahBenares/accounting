@@ -73,7 +73,7 @@
                                         <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
                                     </tr>                                    
                                     <tr>
-                                        <td>Billing Period (To)</td>
+                                        <td>Due Date</td>
                                         <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
                                     </tr>
                                 
