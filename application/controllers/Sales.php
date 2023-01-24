@@ -96,7 +96,7 @@ class Sales extends CI_Controller {
         $data['sales_id'] = $id;
         $data['sub'] = $sub;
         $data['identifier_code']=$this->generateRandomString();
-        $data['count_name'] = $this->super_model->count_custom_where("sales_transaction_details", "company_name ='' AND sales_id ='$id'");
+        $data['count_name'] = $this->super_model->count_custom_where("sales_transaction_details", "company_name = '' AND sales_id ='$id'"); 
         if(!empty($id)){
             foreach($this->super_model->select_row_where("sales_transaction_head", "sales_id",$id) AS $h){
                 $data['transaction_date']=$h->transaction_date;

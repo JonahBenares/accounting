@@ -178,7 +178,7 @@ function saveAll(){
 	var loc= document.getElementById("baseurl").value;
 	var count_name = document.getElementById("count_name").value;
   	if(count_name != 0){
-      	alert('Some of the Company Name is empty!');
+      	alert('Some of the Company Name are empty!');
   	}  else {
     var redirect = loc+"sales/save_all";
     var conf = confirm('Are you sure you want to save this Sales?');
@@ -539,7 +539,7 @@ function saveAllAdjust(){
     var saveadjust_identifier= document.getElementById("save_sales_adjustment").value;
     var count_name = document.getElementById("count_name").value;
   	if(count_name != 0){
-      	alert('Some of the Company Name is empty!');
+      	alert('Some of the Company Name are empty!');
   	}  else {
     var redirect = loc+"sales/save_all_adjust";
     var conf = confirm('Are you sure you want to save this Sales?');
