@@ -51,6 +51,7 @@ if(!empty($sales_id)){
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group m-t-5 addmoreupload">
                                             <input type="hidden" name="adjust_identifier" id="adjust_identifier" value="<?php echo $identifier_code;?>">
+                                            <input type="hidden" name="count_name" id="count_name" value="<?php echo $count_name;?>">
                                             <!-- <button type="button" class="btn btn-primary btn-sm addUpload"><span class="fas fa-plus"></span></button> -->
                                             <!-- <button class="btn btn-danger btn-sm"><span class="fas fa-times"></span></button> -->
                                         </div>
@@ -209,7 +210,6 @@ if(!empty($sales_id)){
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
                         <div id='alt1' style="font-weight:bold"></div>
                         <input type="hidden" name="save_sales_adjustment" id="save_sales_adjustment" value="<?php echo $identifier;?>">
-                        <input type="hidden" name="count_name" id="count_name" value="<?php echo $count_name;?>">
                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAllAdjust();" value="Save">
                         <?php } } ?>
                     </div>
