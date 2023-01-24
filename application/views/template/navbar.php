@@ -219,14 +219,14 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Transaction</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Transaction</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all">Sales</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all">Purchases </a></li>
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Adjustment Transaction</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Adjustment Transaction</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all_adjustment">Sales</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all_adjustment">Purchases </a></li>

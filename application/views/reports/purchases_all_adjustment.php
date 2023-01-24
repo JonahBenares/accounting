@@ -253,9 +253,10 @@
     </section>
 </div>
 
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form method="POST" action="<?php echo base_url(); ?>masterfile/insert_employee" enctype="multipart/form-data">
+        <!-- <form method="POST" action="<?php echo base_url(); ?>masterfile/insert_employee" enctype="multipart/form-data"> -->
+        <form method="POST">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Export to Excel</h5>
@@ -267,22 +268,30 @@
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label>Billing Date From</label>
-                            <input type="date" name="signature" class="form-control">
+                            <input placeholder="Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                         <div class="form-group col-lg-6">
                             <label>Billing Date to</label>
-                            <input type="date" name="signature" class="form-control">
+                            <input placeholder="Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                     </div>
                     <div class="form-group">
+                        <label>Due Date</label>
+                        <input placeholder="Due Date" class="form-control" id="due_date1" name="due_date1" type="text" onfocus="(this.type='date')" id="date">
+                    </div>
+                    <div class="form-group">
                         <label>Company</label>
-                        <select class="form-control select2" name="ref_no" id="ref_no">
-                            <option value="">-- Select Company --</option>
+                        <select class="form-control select2" name="participant1" id="participant1">
+                                <option value="">-- Select Participant --</option>
+                            <?php foreach($participant AS $p){ ?>
+                                <option value="<?php echo $p->settlement_id;?>"><?php echo $p->settlement_id." - ".$p->participant_name;?></option>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
-                    <input type="submit" class="btn btn-success" value="Export">
+                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
+                    <input type='button' class="btn btn-primary"  onclick="export_purchases_adjustment_all()" value="Export">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>

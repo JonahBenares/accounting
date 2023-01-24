@@ -93,7 +93,7 @@
                             <?php if(!empty($details)){ ?>
                             <div class="table-responsive" id="table-wesm" >
                                 <hr>
-                                <table class="table-bordered table table-hover " id="table-6" style="width:300%;">
+                                <table class="table-bordered table table-hover" id="table-6" style="width:300%;">
                                     <thead>
                                         <tr>
                                             <th width="5%" align="center" style="background:rgb(245 245 245)">
@@ -113,8 +113,8 @@
                                             <th>Vat On Purchases</th>
                                             <th>EWT</th>
                                             <th>Total Amount</th>
-                                            <th>OR Number</th>
-                                            <th>Total Amount</th>
+                                            <!-- <th>OR Number</th>
+                                            <th>Total Amount</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>

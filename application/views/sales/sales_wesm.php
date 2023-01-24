@@ -204,42 +204,6 @@
                                 <?php }else{ ?>
                                     <div><center><b>No Available Data...</b></center></div>
                                 <?php } ?>
-
-
-                                <div class="table-responsive">
-                                    <form method="POST" id="print_mult">
-                                        <table class="table-bordered table table-hover " id="table-5" style="width:200%;">
-                                            <thead>
-                                                <tr>         
-                                                    <th width="2%"><input class="form-control" type="checkbox" id="select-all"></th>
-                                                    <th width="2%" hidden=""><input class="form-control" type="checkbox" id="select-all"></th>
-                                                    <th width="2%" align="center" style="background:rgb(245 245 245)">
-                                                        <!-- <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a> -->
-                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button>
-                                                    </th>
-                                                    <th>Item No</th>
-                                                    <th>BS No.</th>
-                                                    <th>OR No.</th>
-                                                    <th>STL ID / TPShort Name</th>
-                                                    <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
-                                                    <th style="position: sticky;left:140px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
-                                                    <th>Facility Type </th>
-                                                    <th>WHT Agent Tag</th>
-                                                    <th>ITH Tag</th>
-                                                    <th>Non Vatable Tag</th>
-                                                    <th>Zero-rated Tag</th>
-                                                    <th>Vatable Sales</th>
-                                                    <th>Zero Rated Sales</th>
-                                                    <th>Zero Rated EcoZones Sales</th>
-                                                    <th>Vat On Sales</th>
-                                                    <th>EWT</th>
-                                                    <th>Total Amount</th>
-                                                    <th>EWT Amount</th>
-                                                    <th>Original Copy</th>
-                                                    <th>Scanned Copy</th>
-                                                </tr>
-                                            </thead>
-                            </div>
                        <!--  </form> -->
                     </div>
                 </div>

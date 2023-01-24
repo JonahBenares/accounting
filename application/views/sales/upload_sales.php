@@ -99,6 +99,7 @@ if(!empty($sales_id)){
                                     <br>
                                 </div>
                                 <input type='hidden' name='sales_id' id='sales_id'  value="<?php echo (!empty($sales_id) ? $sales_id : ''); ?>">
+                                <input type='hidden' name='count_name' id='count_name'  value="<?php echo (!empty($count_name) ? $count_name : ''); ?>">
                             </form>
                             <center><span id="alt"></span></center>
                             <?php if(!empty($details)){ ?>
@@ -245,6 +246,7 @@ if(!empty($sales_id)){
                         <?php if(!empty($details)){ if($saved==0){ ?>
                         <div id='alt' style="font-weight:bold"></div>
                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save">
+
                         <?php } } ?>
                     </div>
                 </div>

@@ -96,6 +96,7 @@ class Sales extends CI_Controller {
         $data['sales_id'] = $id;
         $data['sub'] = $sub;
         $data['identifier_code']=$this->generateRandomString();
+        $data['count_name'] = $this->super_model->count_custom_where("sales_transaction_details", "company_name ='' AND sales_id ='$id'");
         if(!empty($id)){
             foreach($this->super_model->select_row_where("sales_transaction_head", "sales_id",$id) AS $h){
                 $data['transaction_date']=$h->transaction_date;
@@ -895,7 +896,7 @@ class Sales extends CI_Controller {
             $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
 
             $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
-             $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getOldCalculatedValue());
+            $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getOldCalculatedValue());
             $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
 
              
@@ -2099,6 +2100,7 @@ class Sales extends CI_Controller {
         $data['head']=$this->super_model->select_row_where("sales_adjustment_head","adjust_identifier",$identifier);
         //$ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
+                    $data['count_name'] = $this->super_model->count_custom_where("sales_adjustment_details", "company_name ='' AND sales_adjustment_id ='$d->sales_adjustment_id'");
                     $data['details'][]=array(
                         // 'transaction_date'=>$h->transaction_date,
                         // 'billing_from'=>$h->billing_from,

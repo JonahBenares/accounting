@@ -104,7 +104,7 @@
                                 <table class="table table-bordered2"  style="width:120%;">
                                     <thead>
                                         <tr>
-                                            <th class="table_td" style="font-size: 12px;" width="10%">BIlling ID</th> 
+                                            <th class="table_td" style="font-size: 12px;" width="10%">Billing ID</th>
                                             <th class="table_td" style="font-size: 12px;" width="30%">Company Name</th>  
                                             <th class="table_td" style="font-size: 12px;" width="5%">Vatable Sales</th> 
                                             <th class="table_td" style="font-size: 12px;" width="5%">Zero-Rated Ecozones</th>     
@@ -202,9 +202,8 @@
     </section>
 </div>
 
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <!-- <form method="POST" action="<?php echo base_url(); ?>masterfile/insert_employee" enctype="multipart/form-data"> -->
         <form method="POST">
             <div class="modal-content">
                 <div class="modal-header">

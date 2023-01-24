@@ -443,6 +443,33 @@ function filter_purchases_all() {
 
       var loc= document.getElementById("baseurl").value;
       window.location=loc+'reports/purchases_all/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
+}
+
+function export_purchasesall() { 
+     var e_from = document.getElementById("export_from").value; 
+     var e_to = document.getElementById("export_to").value;
+     var participant = document.getElementById("participant1").value;
+
+    if(e_from!=''){
+        e_from=e_from;
+    }else{
+        e_from='null';
+    }
+
+    if(e_to!=''){
+        e_to=e_to;
+    }else{
+        e_to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/export_purchases_all/'+part+'/'+e_from+'/'+e_to;
 
 }
 
@@ -495,6 +522,41 @@ function filter_sales_adjustment_all() {
 
 }
 
+function export_sales_adjustment_all() { 
+     var e_from = document.getElementById("export_from").value; 
+     var e_to = document.getElementById("export_to").value;
+     var participant = document.getElementById("participant1").value;
+     var e_due = document.getElementById("due_date1").value;
+
+    if(e_from!=''){
+        e_from=e_from;
+    }else{
+        e_from='null';
+    }
+
+    if(e_to!=''){
+        e_to=e_to;
+    }else{
+        e_to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+    if(e_due!=''){
+        e_due=e_due;
+    }else{
+        e_due='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/export_sales_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+e_due;
+
+}
+
 function filter_purchases_adjustment_all() { 
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
@@ -541,5 +603,40 @@ function filter_purchases_adjustment_all() {
 
       var loc= document.getElementById("baseurl").value;
       window.location=loc+'reports/purchases_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned+'/'+due;
+
+}
+
+function export_purchases_adjustment_all() { 
+     var e_from = document.getElementById("export_from").value; 
+     var e_to = document.getElementById("export_to").value;
+     var participant = document.getElementById("participant1").value;
+     var e_due = document.getElementById("due_date1").value;
+
+    if(e_from!=''){
+        e_from=e_from;
+    }else{
+        e_from='null';
+    }
+
+    if(e_to!=''){
+        e_to=e_to;
+    }else{
+        e_to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+    if(e_due!=''){
+        e_due=e_due;
+    }else{
+        e_due='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/export_purchases_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+e_due;
 
 }
