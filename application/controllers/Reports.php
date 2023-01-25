@@ -1473,10 +1473,10 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Original Copy");
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND saved = '1' AND adjustment != '1' ORDER BY billing_to ASC") AS $pah){
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND $qu ORDER BY billing_to ASC") AS $pah){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
-            $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
-            $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
+            // $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
+            // $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
 
             $billing_date = date("M. d, Y",strtotime($pah->billing_from))." - ".date("M. d, Y",strtotime($pah->billing_to));
                 $purchaseall[]=array(
@@ -1490,7 +1490,9 @@ class Reports extends CI_Controller {
                     'total_update'=>$pah->total_update,
                     'original_copy'=>$pah->original_copy,
                     'scanned_copy'=>$pah->scanned_copy,
-                    'total'=>$total,
+                    'zero_rated_purchases'=>$pah->zero_rated_purchases,
+                    'zero_rated_ecozones'=>$pah->zero_rated_ecozones,
+                    //  'total'=>$total,
                     'short_name'=>$pah->short_name,
                 );
             }
@@ -1504,6 +1506,8 @@ class Reports extends CI_Controller {
                     $previousKey = $value['billing_date'];
                 }
 
+                $zero_rated=$value['zero_rated_purchases']+$value['zero_rated_ecozones'];
+                $total=($value['vatables_purchases']+$zero_rated+$value['vat_on_purchases'])-$value['ewt'];
                 if($value['short_name']==$pah->short_name){
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
@@ -1601,7 +1605,7 @@ class Reports extends CI_Controller {
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
             $zero_rated=$sth->zero_rated_sales+$sth->zero_rated_ecozones;
             $total=($sth->vatable_sales+$zero_rated+$sth->vat_on_sales)-$sth->ewt;
-            $total_sum[]=$total;
+            //$total_sum[]=$total;
 
             $data['salesall'][]=array(
                 'participant_name'=>$participant_name,
@@ -1678,10 +1682,8 @@ class Reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
 
           
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE short_name='$head->short_name' AND saved = '1' ORDER BY billing_to ASC") AS $sth){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE short_name='$head->short_name' AND $qu ORDER BY billing_to ASC") AS $sth){
                 $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
-                $zero_rated=$sth->zero_rated_sales+$sth->zero_rated_ecozones;
-                $total=($sth->vatable_sales+$zero_rated+$sth->vat_on_sales)-$sth->ewt;
 
                 $billing_date = date("M. d, Y",strtotime($sth->billing_from))." - ".date("M. d, Y",strtotime($sth->billing_to));
                 $salesall[]=array(
@@ -1695,8 +1697,8 @@ class Reports extends CI_Controller {
                     'short_name'=>$sth->short_name,
                     'original_copy'=>$sth->original_copy,
                     'scanned_copy'=>$sth->scanned_copy,
-                    'zero_rated'=>$zero_rated,
-                    'total'=>$total,
+                    'zero_rated_sales'=>$sth->zero_rated_sales,
+                    'zero_rated_ecozones'=>$sth->zero_rated_ecozones,
                 );
             }
             $row = 2;
@@ -1708,16 +1710,18 @@ class Reports extends CI_Controller {
                     $startRow = $row;
                     $previousKey = $value['billing_date'];
                 }
+                $zero_rated=$value['zero_rated_sales']+$value['zero_rated_ecozones'];
+                $total=($value['vatable_sales']+$zero_rated+$value['vat_on_sales'])-$value['ewt'];
                 if($value['short_name']==$sth->short_name){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $participant_name);
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num,  $value['vatable_sales']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['vatable_sales']);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $zero_rated);
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num,  $value['vat_on_sales']);
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num,  $value['ewt']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $value['vat_on_sales']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, "(".$value['ewt'].")");
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $total);
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num,  $value['ewt_amount']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['ewt_amount']);
                     if($value['original_copy']==1){
                         $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "Yes");
                     }else if($value['original_copy']==0){
@@ -1883,10 +1887,10 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Original Copy");
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND saved = '1' AND adjustment = '1' ORDER BY billing_to ASC") AS $pah){
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND $qu ORDER BY billing_to ASC") AS $pah){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
-            $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
-            $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
+            // $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
+            // $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
             $billing_date = date("M. d, Y",strtotime($pah->billing_from))." - ".date("M. d, Y",strtotime($pah->billing_to));
 
                 $purchasealladjustment[]=array(
@@ -1901,7 +1905,9 @@ class Reports extends CI_Controller {
                     'original_copy'=>$pah->original_copy,
                     'scanned_copy'=>$pah->scanned_copy,
                     'short_name'=>$pah->short_name,
-                    'total'=>$total,
+                    'zero_rated_purchases'=>$pah->zero_rated_purchases,
+                    'zero_rated_ecozones'=>$pah->zero_rated_ecozones,
+                    //'total'=>$total,
                 );
 
             }
@@ -1915,6 +1921,8 @@ class Reports extends CI_Controller {
                         $previousKey = $value['billing_date'];
                     }
 
+                $zero_rated=$value['zero_rated_purchases']+$value['zero_rated_ecozones'];
+                $total=($value['vatables_purchases']+$zero_rated+$value['vat_on_purchases'])-$value['ewt'];
                 if($value['short_name']==$pah->short_name){
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
@@ -2091,10 +2099,11 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Original Copy");
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE short_name='$head->short_name' AND saved = '1' ORDER BY billing_to ASC") AS $sah){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE short_name='$head->short_name' AND $qu ORDER BY billing_to ASC") AS $sah){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
-            $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
-            $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
+            // $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
+            // $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
+            
             $billing_date = date("M. d, Y",strtotime($sah->billing_from))." - ".date("M. d, Y",strtotime($sah->billing_to));
 
             $salesalladjustment[]=array(
@@ -2108,8 +2117,10 @@ class Reports extends CI_Controller {
                     'original_copy'=>$sah->original_copy,
                     'scanned_copy'=>$sah->scanned_copy,
                     'short_name'=>$sah->short_name,
-                    'zero_rated'=>$zero_rated,
-                    'total'=>$total,
+                    'zero_rated_sales'=>$sah->zero_rated_sales,
+                    'zero_rated_ecozones'=>$sah->zero_rated_ecozones,
+                    //'zero_rated'=>$zero_rated,
+                    //'total'=>$total,
                 );
 
             }
@@ -2123,6 +2134,9 @@ class Reports extends CI_Controller {
                         $previousKey = $value['billing_date'];
                     }
 
+
+                $zero_rated=$value['zero_rated_sales']+$value['zero_rated_ecozones'];
+                $total=($value['vatable_sales']+$zero_rated+$value['vat_on_sales'])-$value['ewt'];
                 if($value['short_name']==$sah->short_name){
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $sah->billing_id);
@@ -2130,7 +2144,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $sah->vatable_sales);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $zero_rated);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $sah->vat_on_sales);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $sah->ewt);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, "(".$sah->ewt.")");
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $total);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $sah->ewt_amount);
                 if($sah->original_copy==1){
