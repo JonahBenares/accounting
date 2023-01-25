@@ -1386,7 +1386,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -1433,7 +1433,7 @@ class Reports extends CI_Controller {
         $exportfilename="Purchases Wesm All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         }
@@ -1512,12 +1512,12 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $participant_name);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['vatables_purchases']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $value['vat_on_purchases']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, "(".$value['vatables_purchases'].")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "(".$value['vat_on_purchases'].")");
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $value['ewt']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $total);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, "(".$total.")");
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $value['or_no']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['total_update']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, "(".$value['total_update'].")");
                 if($value['original_copy']==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "Yes");
                 }else if($value['original_copy']==0){
@@ -1588,7 +1588,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -1637,7 +1637,7 @@ class Reports extends CI_Controller {
         $exportfilename="Sales Wesm All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= " billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= " billing_from <= '$from' AND billing_to >= '$to' AND ";
         } if($participant!='null'){
              $sql.= " short_name = '$participant' AND "; 
         }
@@ -1794,7 +1794,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
         }if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
@@ -1844,7 +1844,7 @@ class Reports extends CI_Controller {
         $exportfilename="Purchases Wesm Adjustment All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($due!='null'){
@@ -1927,12 +1927,12 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $participant_name);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['vatables_purchases']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $value['vat_on_purchases']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, "(".$value['vatables_purchases'].")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "(".$value['vat_on_purchases'].")");
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $value['ewt']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $total);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, "(".$total.")");
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $value['or_no']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['total_update']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, "(".$value['total_update'].")");
                 if($value['original_copy']==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "Yes");
                 }else if($value['original_copy']==0){
@@ -2006,7 +2006,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
         }if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
@@ -2058,7 +2058,7 @@ class Reports extends CI_Controller {
         $exportfilename="Sales Wesm Adjustment All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= " billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= " billing_from <= '$from' AND billing_to >= '$to' AND ";
         } if($participant!='null'){
              $sql.= " short_name = '$participant' AND "; 
         }   if($due!='null'){
@@ -2139,24 +2139,24 @@ class Reports extends CI_Controller {
                 $total=($value['vatable_sales']+$zero_rated+$value['vat_on_sales'])-$value['ewt'];
                 if($value['short_name']==$sah->short_name){
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $sah->billing_id);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $participant_name);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $sah->vatable_sales);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['vatable_sales']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $zero_rated);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $sah->vat_on_sales);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, "(".$sah->ewt.")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $value['vat_on_sales']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, "(".$value['ewt'].")");
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $total);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $sah->ewt_amount);
-                if($sah->original_copy==1){
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['ewt_amount']);
+                if($value['original_copy']==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "Yes");
-                }else if($sah->original_copy==0){
+                }else if($value['original_copy']==0){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "");
                 }
-                if($sah->scanned_copy==1){
+                if($value['scanned_copy']==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "Yes");
-                }else if($sah->scanned_copy==0){
+                }else if($value['scanned_copy']==0){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "");

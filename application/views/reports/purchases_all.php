@@ -178,12 +178,12 @@
                                                 }
                                                 $data2[$key]['participant_name'][] = $pal['participant_name'];
                                                 $data2[$key]['billing_id'][] = $pal['billing_id'];
-                                                $data2[$key]['vatables_purchases'][] = number_format($pal['vatables_purchases'],2);
-                                                $data2[$key]['vat_on_purchases'][] = number_format($pal['vat_on_purchases'],2);
-                                                $data2[$key]['ewt'][] = "(".number_format($pal['ewt'],2).")";
-                                                $data2[$key]['total'][] = number_format($pal['total'],2);
+                                                $data2[$key]['vatables_purchases'][] = "(".number_format($pal['vatables_purchases'],2).")";
+                                                $data2[$key]['vat_on_purchases'][] = "(".number_format($pal['vat_on_purchases'],2).")";
+                                                $data2[$key]['ewt'][] = number_format($pal['ewt'],2);
+                                                $data2[$key]['total'][] = "(".number_format($pal['total'],2).")";
                                                 $data2[$key]['or_no'][] = $pal['or_no'];
-                                                $data2[$key]['total_update'][] = number_format($pal['total_update'],2);
+                                                $data2[$key]['total_update'][] = "(".number_format($pal['total_update'],2).")";
                                                 $data2[$key]['original_copy'][] =($pal['original_copy']=='0') ? 'NO' : 'YES';
                                                 $data2[$key]['scanned_copy'][] = ($pal['scanned_copy']=='0') ? 'NO' : 'YES';
                                             }
