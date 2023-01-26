@@ -1386,7 +1386,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -1433,7 +1433,7 @@ class Reports extends CI_Controller {
         $exportfilename="Purchases Wesm All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         }
@@ -1588,7 +1588,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -1637,7 +1637,7 @@ class Reports extends CI_Controller {
         $exportfilename="Sales Wesm All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= " billing_from <= '$from' AND billing_to >= '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         } if($participant!='null'){
              $sql.= " short_name = '$participant' AND "; 
         }
@@ -1794,7 +1794,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         }if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
@@ -1844,7 +1844,7 @@ class Reports extends CI_Controller {
         $exportfilename="Purchases Wesm Adjustment All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         } if($participant!='null'){
              $sql.= "short_name = '$participant' AND "; 
         } if($due!='null'){
@@ -2006,7 +2006,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from <= '$from' AND billing_to >= '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         }if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
@@ -2058,7 +2058,7 @@ class Reports extends CI_Controller {
         $exportfilename="Sales Wesm Adjustment All Transcations.xlsx";
         $sql='';
           if($from!='null' && $to != 'null'){
-            $sql.= " billing_from <= '$from' AND billing_to >= '$to' AND ";
+            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
         } if($participant!='null'){
              $sql.= " short_name = '$participant' AND "; 
         }   if($due!='null'){

@@ -139,7 +139,7 @@
                                                         'sales_detail_id'=>array(),
                                                     );
                                                 }
-                                                $data2[$key]['participant_name'][] = $sal['participant_name'];
+                                                $data2[$key]['participant_name'][] = ($sal['participant_name'] != '') ? $sal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
                                                 $data2[$key]['billing_id'][] = $sal['billing_id'];
                                                 $data2[$key]['sales_detail_id'][] = $sal['sales_detail_id'];
                                                 $data2[$key]['vatable_sales'][] = number_format($sal['vatable_sales'],2);
