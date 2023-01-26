@@ -175,34 +175,34 @@
                                         </tr>
                                         <tr>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['billing_id']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['billing_id']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['participant_name']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['participant_name']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['vatable_sales']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['vatable_sales']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['zero_rated']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['zero_rated']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['vat_on_sales']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['vat_on_sales']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['ewt']); ?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['ewt']); ?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['total']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['total']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['ewt_amount']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['ewt_amount']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['original_copy']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['original_copy']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:5px 0px'>",$sa['scanned_copy']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['scanned_copy']);?>
                                             </td>
                                         </tr>
                                         <?php } } } ?>

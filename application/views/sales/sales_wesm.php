@@ -74,7 +74,7 @@
                                     </tr>                                    
                                     <tr>
                                         <td>Due Date</td>
-                                        <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
+                                        <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
                                     </tr>
                                 
                                 </table>
