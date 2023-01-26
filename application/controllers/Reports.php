@@ -1473,8 +1473,8 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Original Copy");
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND $qu ORDER BY billing_from") AS $pah){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND $qu ORDER BY billing_from ASC") AS $pah){
+            $participant_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$pah->short_name);
             // $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
             // $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
 
