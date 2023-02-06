@@ -176,14 +176,14 @@
                                                         'scanned_copy'=>array(),
                                                     );
                                                 }
-                                                $data2[$key]['participant_name'][] = $pal['participant_name'];
+                                                $data2[$key]['participant_name'][] = ($pal['participant_name'] != '') ? $pal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
                                                 $data2[$key]['billing_id'][] = $pal['billing_id'];
-                                                $data2[$key]['vatables_purchases'][] = number_format($pal['vatables_purchases'],2);
-                                                $data2[$key]['vat_on_purchases'][] = number_format($pal['vat_on_purchases'],2);
-                                                $data2[$key]['ewt'][] = "(".number_format($pal['ewt'],2).")";
-                                                $data2[$key]['total'][] = number_format($pal['total'],2);
-                                                $data2[$key]['or_no'][] = $pal['or_no'];
-                                                $data2[$key]['total_update'][] = number_format($pal['total_update'],2);
+                                                $data2[$key]['vatables_purchases'][] = "(".number_format($pal['vatables_purchases'],2).")";
+                                                $data2[$key]['vat_on_purchases'][] = "(".number_format($pal['vat_on_purchases'],2).")";
+                                                $data2[$key]['ewt'][] = number_format($pal['ewt'],2);
+                                                $data2[$key]['total'][] = "(".number_format($pal['total'],2).")";
+                                                $data2[$key]['or_no'][] = ($pal['or_no']!='') ? $pal['or_no'] : '<br>' ;
+                                                $data2[$key]['total_update'][] = "(".number_format($pal['total_update'],2).")";
                                                 $data2[$key]['original_copy'][] =($pal['original_copy']=='0') ? 'NO' : 'YES';
                                                 $data2[$key]['scanned_copy'][] = ($pal['scanned_copy']=='0') ? 'NO' : 'YES';
                                             }
@@ -238,7 +238,7 @@
     </section>
 </div>
 
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <!-- <form method="POST" action="<?php echo base_url(); ?>masterfile/insert_employee" enctype="multipart/form-data"> -->
         <form method="POST">

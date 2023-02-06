@@ -176,21 +176,26 @@ function cancelSales(){
 function saveAll(){
 	var data = $("#upload_wesm").serialize();
 	var loc= document.getElementById("baseurl").value;
+	var count_name = document.getElementById("count_name").value;
+  	if(count_name != 0){
+      	alert('Some of the Company Name are empty!');
+  	}  else {
     var redirect = loc+"sales/save_all";
     var conf = confirm('Are you sure you want to save this Sales?');
-    if(conf){
-	    $.ajax({
-	        data: data,
-	        type: "POST",
-	        url: redirect,
-	        beforeSend: function(){
-	        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
-                $("#submitdata").hide(); 
-	        },
-	        success: function(output){
-	        	window.location=loc+'sales/upload_sales/'+output;  
-	        }
-	    }); 
+		if(conf){
+		    $.ajax({
+		        data: data,
+		        type: "POST",
+		        url: redirect,
+		        beforeSend: function(){
+		        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+		            $("#submitdata").hide(); 
+		        },
+		        success: function(output){
+		        	window.location=loc+'sales/upload_sales/'+output;  
+		        }
+		    }); 
+    	}
     }	 
 }
 
@@ -532,6 +537,10 @@ async function upload_sales_adjust_btn() {
 function saveAllAdjust(){
     var loc= document.getElementById("baseurl").value;
     var saveadjust_identifier= document.getElementById("save_sales_adjustment").value;
+    var count_name = document.getElementById("count_name").value;
+  	if(count_name != 0){
+      	alert('Some of the Company Name are empty!');
+  	}  else {
     var redirect = loc+"sales/save_all_adjust";
     var conf = confirm('Are you sure you want to save this Sales?');
     if(conf){
@@ -548,7 +557,8 @@ function saveAllAdjust(){
                 window.location=loc+'sales/upload_sales_adjustment/'+output;  
             }
         }); 
-    }    
+    	} 
+    }   
 }
 
 function printMultiple(){
