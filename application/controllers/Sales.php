@@ -28,6 +28,68 @@ class Sales extends CI_Controller {
         }
     } 
 
+    public function insert_printbs(){
+        $participant_id = $this->input->post('participant_id');
+        $company_name = $this->input->post('company_name');
+        $address = $this->input->post('address');
+        $tin = $this->input->post('tin');
+        $settlement = $this->input->post('settlement');
+        $serial_no = $this->input->post('serial_no');
+        $transaction_date = $this->input->post('transaction_date');
+        $billing_period = $this->input->post('billing_period');
+        $due_date = $this->input->post('due_date');
+        $reference_number = $this->input->post('reference_number');
+        $prepared_by = $this->input->post('prepared_by');
+        $checked_by_emg = $this->input->post('checked_by_emg');
+        $checked_by_accounting = $this->input->post('checked_by_accounting');
+        $checked_by_finance = $this->input->post('checked_by_finance');
+        $noted_by = $this->input->post('noted_by');
+        $vatable = $this->input->post('vatable');
+        $zero = $this->input->post('zero');
+        $vat = $this->input->post('vat');
+        $ewt_arr = $this->input->post('ewt_arr');
+        $overall_totals = $this->input->post('overall_totals');  
+        $count=count($participant_id);
+        for($x=0;$x<$count;$x++){   
+
+              $data_head = array(
+                    'participant_id' => $participant_id[$x],
+                    'participant_name' => $company_name[$x],
+                    'address' => $address[$x],
+                    'tin' => $tin[$x],
+                    'stl_id' => $settlement[$x],
+                    'invoice_no' => $serial_no[$x],
+                    'statement_date' => $transaction_date[$x],
+                    'billing_period' => $billing_period[$x],
+                    'due_date' => $due_date[$x],
+                    'reference_number' => $reference_number[$x],
+                    'prepared_by' => $prepared_by[$x],
+                    'checked_by_emg' => $checked_by_emg[$x],
+                    'checked_by_accounting' => $checked_by_accounting[$x],
+                    'checked_by_finance' => $checked_by_finance[$x],
+                    'noted_by' => $noted_by[$x],
+                    'total_vatable_sales' => $vatable[$x],
+                    'total_zero_rated' => $zero[$x],
+                    'total_vat' => $vat[$x],
+                    'total_ewt' => $ewt_arr[$x],
+                    'total_net_amount' => $overall_totals[$x],
+             );
+
+            $head_id= $this->super_model->insert_return_id("bs_head", $data_head);
+}
+
+       $data_details = array(
+            'bs_head_id'=>$head_id,
+            'billing_id' => $this->input->post('sub_participant'),
+            'vatable_sales' => $this->input->post('vatable_sales'),
+            'zero_rated_sales' => $this->input->post('zero_rated_sales'),
+            'vat' => $this->input->post('vat_on_sales'),
+            'ewt' => $this->input->post('ewt'),
+            'net_amount' => $this->input->post('net_amount'),
+       );
+        $this->super_model->insert_into("bs_details", $data_details);
+}
+
     public function print_multiple(){
         $identifier=$this->input->post('multiple_print');
         //$count=$this->input->post('count');
@@ -1040,8 +1102,8 @@ class Sales extends CI_Controller {
             $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             if($count_series>=1){
                 $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            }if($count_series<=2){
-                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+            /*}if($count_series<=2){
+                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;*/
             }else{
                 $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             }
@@ -1918,14 +1980,15 @@ class Sales extends CI_Controller {
                         'total'=>$total,
                     );
                     $this->super_model->insert_into("collection_details", $data_details);
-              
+              print_r($data_details);
             } 
 
             $a++;
         }
 
        
-        echo "saved-".$collection_id;
+        //echo "saved-".$collection_id;
+        
 
            
       
