@@ -1028,7 +1028,14 @@ class Sales extends CI_Controller {
         //echo $query;
         $data['collection']=array();
         foreach($this->super_model->custom_query("SELECT * FROM collection_details $query") AS $col){
-            $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
+            //$company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
+            $date_uploaded = $this->super_model->select_column_where("collection_head", "date_uploaded", "collection_id ", $col->collection_id);
+            $company_name=$this->super_model->select_column_where("collection_details", "company_name", "collection_details_id", $col->collection_details_id);
+            if(!empty($company_name) && date('Y',strtotime($date_uploaded))==date('Y')){
+                $comp_name=$company_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "settlement_id", $col->settlement_id);
+            }
             $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id'");
             $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
             $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
@@ -1038,8 +1045,6 @@ class Sales extends CI_Controller {
             $sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
             $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             if($count_series>=1){
-                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            }if($count_series<=2){
                 $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
             }else{
                 $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
@@ -1060,7 +1065,8 @@ class Sales extends CI_Controller {
                 "zero_rated_ecozone"=>$col->zero_rated_ecozone,
                 "ewt"=>$col->ewt,
                 "total"=>$total,
-                "company_name"=>$company_name,
+                //"company_name"=>$company_name,
+                "company_name"=>$comp_name,
                 "amount"=>$col->amount,
                 "overall_total"=>$overall_total,
             );
@@ -1091,7 +1097,7 @@ class Sales extends CI_Controller {
         $query=substr($sql,0,-3);
         //$data['sales'] = $this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.collection_details_id,ch.collection_date,cd.reference_no,cd.settlement_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,std.company_name,std.short_name,std.billing_id, sh.sales_id FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=ch.collection_id INNER JOIN sales_transaction_head sh ON cd.reference_no=sh.reference_number INNER JOIN sales_transaction_details std ON cd.settlement_id=std.short_name WHERE sh.saved='1' $query");
         $data['sales']=array();
-        foreach($this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.collection_details_id,ch.collection_date,cd.reference_no,cd.settlement_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,cd.settlement_id FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=ch.collection_id $query") AS $c){
+        foreach($this->super_model->custom_query("SELECT cd.old_series_no,cd.series_number,cd.collection_id,cd.collection_details_id,ch.collection_date,cd.reference_no,cd.settlement_id,cd.amount,cd.vat,cd.zero_rated_ecozone,cd.ewt,cd.total,cd.zero_rated,cd.settlement_id,cd.company_name FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=ch.collection_id $query") AS $c){
             $company_name=$this->super_model->select_column_custom_where("sales_transaction_details","company_name","short_name='$c->settlement_id'");
             $billing_id=$this->super_model->select_column_custom_where("sales_transaction_details","billing_id","short_name='$c->settlement_id'");
             $data['sales'][]=array(
@@ -1099,7 +1105,7 @@ class Sales extends CI_Controller {
                 "collection_details_id"=>$c->collection_details_id,
                 "collection_date"=>$c->collection_date,
                 "series_number"=>$c->series_number,
-                "company_name"=>$company_name,
+                "company_name"=>$c->company_name,
                 //"billing_id"=>$billing_id,
                 "short_name"=>$c->settlement_id,
                 "amount"=>$c->amount,
@@ -1899,7 +1905,7 @@ class Sales extends CI_Controller {
                 $total = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue());
                 $defint = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
                 $series = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
-             
+                $company_name=$this->super_model->select_column_where('participant','participant_name','settlement_id',$stl_id);
                  $data_details = array(
                         'collection_id'=>$collection_id,
                         'item_no'=>$itemno,
@@ -1909,6 +1915,7 @@ class Sales extends CI_Controller {
                         'defint'=>$defint,
                         'reference_no'=>$statement_no,
                         'settlement_id'=>$stl_id,
+                        'company_name'=>$company_name,
                         'amount'=>$vatable_sales,
                         'vat'=>$vat,
                         'zero_rated'=>$zero_rated,

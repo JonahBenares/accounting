@@ -81,7 +81,16 @@ class Reports extends CI_Controller {
            
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sales->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$sales->billing_id);
-            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sales->billing_id);
+
+            //$company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sales->billing_id);
+
+            $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sales->sales_id);
+            $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sales->sales_detail_id);
+            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$company_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $sales->billing_id);
+            }
             /*$amount=$this->super_model->select_column_where("collection_details","amount","settlement_id",$sales->short_name);
             $total_col[] = $amount;*/
             if($count_collection>0){
@@ -97,7 +106,7 @@ class Reports extends CI_Controller {
                         //'collection_details_id'=>$col->collection_details_id,
                         'transaction_date'=>$sales->transaction_date,
                         'tin'=>$tin,
-                        'participant_name'=>$company_name,
+                        'participant_name'=>$comp_name,
                         'address'=>$registered_address,
                         //'vatable_sales'=>$this->super_model->select_column_custom_where("collection_details","amount","reference_no='$sales->reference_number' AND settlement_id ='$sales->short_name'"),
                         'vatable_sales'=>$col->amount,
@@ -175,7 +184,14 @@ class Reports extends CI_Controller {
         foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $pur,"purchase_id","purchase_detail_id") AS $purchase){
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$purchase->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$purchase->billing_id);
-            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$purchase->billing_id);
+            $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $purchase->purchase_id);
+            $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $purchase->purchase_detail_id);
+            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$company_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $purchase->billing_id);
+            }
+            //$company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$purchase->billing_id);
             /*$total_amount=$this->super_model->select_column_where("payment_details","total_amount","purchase_details_id",$purchase->purchase_detail_id);
             $total_pay[] = $total_amount;*/
             /*foreach($this->super_model->custom_query("SELECT * FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id AND ph.purchase_id='$head->purchase_id' AND pd.purchase_details_id='$head->purchase_detail_id'") AS $c){*/
@@ -204,7 +220,7 @@ class Reports extends CI_Controller {
             $data['purchases'][] = array( 
             'transaction_date'=>$purchase->transaction_date,
             'tin'=>$tin,
-            'participant_name'=>$company_name,
+            'participant_name'=>$comp_name,
             'address'=>$registered_address,
             'vatable_purchases'=>$vatable_purchases,
             'zero_rated_purchases'=>$zero_rated,
@@ -273,14 +289,21 @@ class Reports extends CI_Controller {
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id $qu") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$s->billing_id);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$s->billing_id);
-            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
+            //$company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
+            $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $s->purchase_id);
+            $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $s->purchase_detail_id);
+            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$company_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $s->billing_id);
+            }
             //$total_amount[]=$s->ewt;
             //$data['total']=array_sum($total_amount);
             $data['total']=$this->super_model->select_sum_join("ewt","purchase_transaction_details","purchase_transaction_head","purchase_transaction_head.purchase_id='$s->purchase_id' AND $query","purchase_id");
             $data['purchase'][]=array(
                 'transaction_date'=>$s->transaction_date,
                 'tin'=>$tin,
-                'participant_name'=>$company_name,
+                'participant_name'=>$comp_name,
                 'address'=>$registered_address,
                 'ewt'=>$s->ewt,
                 'billing_from'=>$s->billing_from,
@@ -317,6 +340,13 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$s->short_name);
             $registered_address=$this->super_model->select_column_where("participant","registered_address","settlement_id",$s->short_name);
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$s->short_name);
+            $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $s->sales_id);
+            $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $s->sales_detail_id);
+            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$company_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "settlement_id", $s->short_name);
+            }
             //$billing_from=$this->super_model->select_column_where("sales_transaction_head","billing_from","reference_number",$s->reference_no);
             //$billing_to=$this->super_model->select_column_where("sales_transaction_head","billing_to","reference_number",$s->reference_no);
             //$total_amount[]=$s->ewt;
@@ -325,7 +355,7 @@ class Reports extends CI_Controller {
             $data['sales'][]=array(
                 'transaction_date'=>$s->transaction_date,
                 'tin'=>$tin,
-                'participant_name'=>$company_name,
+                'participant_name'=>$comp_name,
                 'address'=>$registered_address,
                 'ewt'=>$s->ewt,
                 'billing_from'=>$s->billing_from,
@@ -483,11 +513,17 @@ class Reports extends CI_Controller {
                 $data['total_c_ewt']=$c_ewt_total;
                 $total_ewt_balance[]=$ewtbalance;
                 //$data['total_ewt_balance']=$ewt_total-$c_ewt_total;
-               
+                $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $b->sales_id);
+                $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $b->sales_detail_id);
+                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    $comp_name=$company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $b->billing_id);
+                }
 
                 $data['bill'][]=array(
                     "date"=>$b->transaction_date,
-                    "company_name"=>$b->company_name,
+                    "company_name"=>$comp_name,
                     "billing_from"=>$b->billing_from,
                     "billing_to"=>$b->billing_to,
                     "vatable_sales"=>$vatable_sales,
@@ -595,12 +631,18 @@ class Reports extends CI_Controller {
                 $vat_balance=$b->vat_on_purchases - $c->vat;
                 $total_vat_balance[] = $vat_balance;
                 $ewt_balance=$b->ewt - $c->ewt;
-                $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$b->billing_id);
-
+                //$company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$b->billing_id);
+                $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $b->purchase_id);
+                $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $b->purchase_detail_id);
+                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    $comp_name=$company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $b->billing_id);
+                }
 
                 $data['bill'][]=array(
                     "date"=>$b->transaction_date,
-                    "company_name"=>$company_name,
+                    "company_name"=>$comp_name,
                     "billing_from"=>$b->billing_from,
                     "billing_to"=>$b->billing_to,
                     "vatables_purchases"=>$b->vatables_purchases,
@@ -794,7 +836,13 @@ class Reports extends CI_Controller {
                 $total_c_ewt[]=$ewt;
              
                 //$total_ewt_balance[]=$ewtbalance;
-
+                $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $cs->sales_id);
+                $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $cs->sales_detail_id);
+                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    $comp_name=$company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $cs->billing_id);
+                }
                 $data['csledger'][]=array(
                     "date"=>$cs->transaction_date,
                     "company_name"=>$cs->company_name,
@@ -916,8 +964,12 @@ class Reports extends CI_Controller {
                 $vat= $this->super_model->select_sum_where("payment_details","vat","payment_id ='$payment_id' AND short_name='$ss->short_name'");
                 $ewt= $this->super_model->select_sum_where("payment_details","ewt","payment_id ='$payment_id' AND short_name='$ss->short_name'");
 
-                $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$ss->billing_id);
-
+                //$company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$ss->billing_id);
+                if(!empty($ss->company_name) && date('Y',strtotime($ss->create_date))==date('Y')){
+                    $comp_name=$ss->company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $ss->billing_id);
+                }
                 $count_payment = $this->super_model->count_custom_where("payment_details", "purchase_details_id ='$ss->purchase_detail_id'");
 
             if($count_payment>0){
@@ -964,7 +1016,7 @@ class Reports extends CI_Controller {
 
                 $data['ssledger'][]=array(
                     "date"=>$ss->transaction_date,
-                    "company_name"=>$company_name,
+                    "company_name"=>$comp_name,
                     "billing_from"=>$ss->billing_from,
                     "billing_to"=>$ss->billing_to,
                     "vatables_purchases"=>$vatables_purchases,
@@ -1086,7 +1138,13 @@ class Reports extends CI_Controller {
 
                 foreach($this->super_model->select_row_where("collection_details", "series_number", $or) AS $o){
                     $settle=$o->settlement_id;
-                    $name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$settle);
+                    $date_uploaded = $this->super_model->select_column_where("collection_head", "date_uploaded", "collection_id", $o->collection_id);
+                    if(!empty($o->company_name) && date('Y',strtotime($date_uploaded))==date('Y')){
+                        $name=$o->company_name;
+                    }else{
+                        $name=$this->super_model->select_column_where("participant", "participant_name", "settlement_id", $settle);
+                    }
+                    //$name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$settle);
                     
                    
                     $or_date = $this->super_model->select_column_where("collection_head","collection_date","collection_id",$o->collection_id);
@@ -1561,13 +1619,20 @@ class Reports extends CI_Controller {
 
         $total_sum[]=0;
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu ORDER BY sales_detail_id ASC") AS $sth){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
+            //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
+            $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sth->sales_id);
+            $participant_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sth->sales_detail_id);
+            if(!empty($participant_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$participant_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $sth->billing_id);
+            }
             $zero_rated=$sth->zero_rated_sales+$sth->zero_rated_ecozones;
             $total=($sth->vatable_sales+$zero_rated+$sth->vat_on_sales)-$sth->ewt;
             $total_sum[]=$total;
 
             $data['salesall'][]=array(
-                'participant_name'=>$participant_name,
+                'participant_name'=>$comp_name,
                 'billing_id'=>$sth->billing_id,
                 'sales_detail_id'=>$sth->sales_detail_id,
                 'billing_from'=>$sth->billing_from,
@@ -1637,12 +1702,19 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE short_name='$head->short_name' ORDER BY sales_detail_id ASC") AS $sth){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
+            //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
             $zero_rated=$sth->zero_rated_sales+$sth->zero_rated_ecozones;
             $total=($sth->vatable_sales+$zero_rated+$sth->vat_on_sales)-$sth->ewt;
+            $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sth->sales_id);
+            $participant_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sth->sales_detail_id);
+            if(!empty($participant_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$participant_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $sth->billing_id);
+            }
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, date("M. d, Y",strtotime($sth->billing_from))." - ".date("M. d, Y",strtotime($sth->billing_to)));
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $sth->billing_id);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $participant_name);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $comp_name);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $sth->vatable_sales);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $zero_rated);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $sth->vat_on_sales);
@@ -1725,12 +1797,18 @@ class Reports extends CI_Controller {
 
         $total_sum[]=0;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE $qu ORDER BY billing_to ASC") AS $pth){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
+            //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
             $total=($pth->vatables_purchases+$pth->vat_on_purchases)-$pth->ewt;
             $total_sum[]=$total;
-
+            $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $pth->purchase_id);
+            $participant_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $pth->purchase_detail_id);
+            if(!empty($participant_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$participant_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $pth->billing_id);
+            }
             $data['purchasead_all'][]=array(
-                'participant_name'=>$participant_name,
+                'participant_name'=>$comp_name,
                 'billing_id'=>$pth->billing_id,
                 'billing_from'=>$pth->billing_from,
                 'billing_to'=>$pth->billing_to,
@@ -1804,13 +1882,19 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
             foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' ORDER BY purchase_detail_id ASC") AS $pah){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
+            //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
             $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
             $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
-
+            $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $pah->purchase_id);
+            $participant_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $pah->purchase_detail_id);
+            if(!empty($participant_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$participant_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $pah->billing_id);
+            }
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, date("M. d, Y",strtotime($pah->billing_from))." - ".date("M. d, Y",strtotime($pah->billing_to)));
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $pah->billing_id);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $participant_name);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $comp_name);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $pah->vatables_purchases);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $pah->vat_on_purchases);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $pah->ewt);
@@ -1895,13 +1979,20 @@ class Reports extends CI_Controller {
 
         $total_sum[]=0;
                 foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE $qu ORDER BY billing_to ASC") AS $sah){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
+            //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
+            $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id ", $sah->sales_adjustment_id);
+            $participant_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id ", $sah->adjustment_detail_id);
+            if(!empty($participant_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$participant_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $sah->billing_id);
+            }
             $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
             $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
             $total_sum[]=$total;
 
             $data['salesad_all'][]=array(
-                'participant_name'=>$participant_name,
+                'participant_name'=>$comp_name,
                 'billing_id'=>$sah->billing_id,
                 'adjustment_detail_id'=>$sah->adjustment_detail_id,
                 'billing_from'=>$sah->billing_from,
@@ -1974,12 +2065,19 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Scanned Copy");
             $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->applyFromArray($styleArray);
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE short_name='$head->short_name' ORDER BY adjustment_detail_id ASC") AS $sah){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
+            //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
             $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
             $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
+            $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sah->sales_id);
+            $participant_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sah->sales_detail_id);
+            if(!empty($participant_name) && date('Y',strtotime($create_date))==date('Y')){
+                $comp_name=$participant_name;
+            }else{
+                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $sah->billing_id);
+            }
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, date("M. d, Y",strtotime($sah->billing_from))." - ".date("M. d, Y",strtotime($sah->billing_to)));
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $sah->billing_id);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $participant_name);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $comp_name);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $sah->vatable_sales);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $zero_rated);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $sah->vat_on_sales);
