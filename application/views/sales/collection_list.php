@@ -82,22 +82,22 @@
                                     <table class="table-bordered table table-hosver" id="table-3" width="200%"> 
                                         <thead>
                                             <tr>
-                                                <th width="2%"><center><span class="fas fa-bars"></span></center></th>
-                                                <th width="10%">OR#</th>
-                                                <th width="5%" align="center">Def Int</th>
-                                                <th width="5%">Billing Remarks</th>
-                                                <th width="7%">Particulars</th>
-                                                <th>STL ID</th>
-                                                <th>Participant Name</th>
-                                                <th>Reference No</th>
-                                                <th width="5%" align="center">Vatable Sales</th>
-                                                <th width="5%" align="center">Zero Rated Sales</th>
-                                                <th width="5%" align="center">Zero Rated Ecozone</th>
-                                                <th width="5%" align="center">VAT</th>
-                                                <th width="5%" align="center">EWT</th>
-                                                <th width="5%" align="center">Total</th>
+                                                <th width="1%"><center><span class="fas fa-bars"></span></center></th>
+                                                <th width="5%">OR#</th>
+                                                <th width="2%" align="center">Def Int</th>
+                                                <th width="2%">Billing Remarks</th>
+                                                <th width="2%">Particulars</th>
+                                                <th width="2%">STL ID</th>
+                                                <th width="5%">Participant Name</th>
+                                                <th width="3%">Reference No</th>
+                                                <th width="3%" align="center">Vatable Sales</th>
+                                                <th width="3%" align="center">Zero Rated Sales</th>
+                                                <th width="3%" align="center">Zero Rated Ecozone</th>
+                                                <th width="3%" align="center">VAT</th>
+                                                <th width="3%" align="center">EWT</th>
+                                                <th width="3%" align="center">Total</th>
                                                 <!-- <th width="5%" align="center">Def Int</th> -->
-                                                <th width="5%" align="center">Overall Total</th>
+                                                <th width="3%" align="center">Overall Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>

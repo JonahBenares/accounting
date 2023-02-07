@@ -1013,7 +1013,7 @@ class Sales extends CI_Controller {
         $data['ref_no'] = $ref_no;
         $ref_exp=explode("-", $ref_no);
         /*$data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");*/
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_details WHERE reference_no!=''");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
         $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
 
         $sql="";
