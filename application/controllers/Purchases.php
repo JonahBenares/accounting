@@ -170,6 +170,7 @@ class Purchases extends CI_Controller {
             //$itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $company_name=$this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
             if($shortname!="" || !empty($shortname)){
                 $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
@@ -212,7 +213,8 @@ class Purchases extends CI_Controller {
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
-                    'balance'=>$total_amount
+                    'balance'=>$total_amount,
+                    'company_name'=>$company_name,
                     //'balance'=>$total_amount
                 );
                 $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
@@ -608,13 +610,14 @@ class Purchases extends CI_Controller {
         $query=substr($sql,0,-4);
         $qu = " WHERE saved='1' AND ".$query;
         //$query=substr($sql,0,-3);
-        foreach($this->super_model->custom_query("SELECT pd.purchase_details_id,ph.purchase_id,ph.payment_date,ph.payment_mode,pd.purchase_mode,pd.purchase_amount,pd.vat,pd.ewt,pd.total_amount FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id INNER JOIN purchase_transaction_head pth ON ph.purchase_id=pth.purchase_id INNER JOIN purchase_transaction_details ptd ON pd.purchase_details_id=ptd.purchase_detail_id $qu") AS $d){
+        foreach($this->super_model->custom_query("SELECT pd.purchase_details_id,ph.purchase_id,ph.payment_date,ph.payment_mode,pd.purchase_mode,pd.purchase_amount,pd.vat,pd.ewt,pd.total_amount,ptd.company_name,pth.create_date FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id INNER JOIN purchase_transaction_head pth ON ph.purchase_id=pth.purchase_id INNER JOIN purchase_transaction_details ptd ON pd.purchase_details_id=ptd.purchase_detail_id $qu") AS $d){
             $billing_id=$this->super_model->select_column_where("purchase_transaction_details","billing_id","purchase_detail_id",$d->purchase_details_id);
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$billing_id);
             $data['details'][]=array(
                 'purchase_id'=>$d->purchase_id,
                 'payment_date'=>$d->payment_date,
-                'company_name'=>$company_name,
+                //'company_name'=>$company_name,
+                'company_name'=>(!empty($d->company_name) && date('Y',strtotime($d->create_date)) == date('Y')) ? $d->company_name : $company_name,
                 'payment_mode'=>$d->payment_mode,
                 'purchase_mode'=>$d->purchase_mode,
                 'purchase_amount'=>$d->purchase_amount,
@@ -1145,7 +1148,13 @@ class Purchases extends CI_Controller {
         $billing_id=$this->super_model->select_column_where("purchase_transaction_details", "billing_id", "purchase_detail_id", $purchase_detail_id);
 
         $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
-        $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
+        $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $purchase_id);
+        $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $purchase_detail_id);
+        if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+            $data['name']=$company_name;
+        }else{
+            $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);
+        }
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
         $data['zip']=$this->super_model->select_column_where("participant", "zip_code", "billing_id", $billing_id);
         //$due_date=$this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $purchase_id);
@@ -1580,6 +1589,7 @@ class Purchases extends CI_Controller {
                             for($z=4;$z<$highestRow;$z++){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
                                 $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $company_name=$this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if($shortname!="" || !empty($shortname)){
                                     $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
                                     $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
@@ -1613,6 +1623,7 @@ class Purchases extends CI_Controller {
                                         'purchase_id'=>$purchase_id,
                                         'item_no'=>$y,
                                         'short_name'=>$shortname,
+                                        'company_name'=>$company_name,
                                         'billing_id'=>$billing_id,
                                         'facility_type'=>$fac_type,
                                         'wht_agent'=>$wht_agent,
@@ -1718,6 +1729,7 @@ class Purchases extends CI_Controller {
                             for($z=4;$z<$highestRow;$z++){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
                                 $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $company_name = $this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if($shortname!="" || !empty($shortname)){
                                     $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
                                     $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
@@ -1751,6 +1763,7 @@ class Purchases extends CI_Controller {
                                         'purchase_id'=>$purchase_id,
                                         'item_no'=>$y,
                                         'short_name'=>$shortname,
+                                        'company_name'=>$company_name,
                                         'billing_id'=>$billing_id,
                                         'facility_type'=>$fac_type,
                                         'wht_agent'=>$wht_agent,
