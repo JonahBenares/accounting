@@ -7,6 +7,12 @@ if(!empty($collection_id)){
 } else {
     $readonly='';
 }
+
+if(!empty($saved)){
+    $saved = $saved;
+} else {
+    $saved='';
+}
 ?>
 <div class="main-content">
     <section class="section">
@@ -18,8 +24,8 @@ if(!empty($collection_id)){
                             <h4>Bulk Collection</h4>
                         </div>
                         <div class="card-body">
-                            <form id='collection_bulk'> 
-                                <?php if($saved==0){ ?>
+                          <?php if($saved==0){ ?>  
+                            <form id='collection_bulk'>
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-sm-4 offset-lg-2" >
                                         <div class="form-group">
@@ -41,17 +47,7 @@ if(!empty($collection_id)){
                                         </div>
                                     </div>
                                 </div> 
-                                <?php }else{ ?>
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4 offset-lg-4" >
-                                            <div class="form-group">
-                                            <label>Collection Date:</label>
-                                            <input type="date" name="collection_date" id="collection_date" value="<?php echo (!empty($collection_id) ? $collection_date : ''); ?>" required <?php echo $readonly; ?> class="form-control">
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            <?php }  ?>
+                                
                             </form>
                             <form method="POST" id="upload_bulkcollection">
                                  <div id="upload" <?php echo (empty($collection_id) ? 'style="display:none"' : ''); ?>>
@@ -72,6 +68,11 @@ if(!empty($collection_id)){
                                 </div>
                                  <input type='hidden' name='collection_id' id='collection_id'  value="<?php echo (!empty($collection_id) ? $collection_id : ''); ?>">
                             </form>
+                             <?php } else {?> 
+                                <div class="col-lg-4">
+                                        <h4><span>Collection Date:</span> <?php echo date('M d, Y', strtotime($collection_date)); ?></h4>
+                                    </div> 
+                             <?php } ?>
                              <center><span id="alt"></span></center>
                              <?php if(!empty($collection)){ ?>
                             <div class="table-responsive" id="table-collection" >
