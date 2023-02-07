@@ -1031,7 +1031,7 @@ class Sales extends CI_Controller {
         foreach($this->super_model->custom_query("SELECT * FROM collection_details $query") AS $col){
             $saved=$this->super_model->select_column_where("collection_head","saved","collection_id",$col->collection_id);
             if($saved != 0){
-            $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
+            //$company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
             $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id'");
             $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
             $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
@@ -1064,7 +1064,8 @@ class Sales extends CI_Controller {
                 "zero_rated_ecozone"=>$col->zero_rated_ecozone,
                 "ewt"=>$col->ewt,
                 "total"=>$total,
-                "company_name"=>$company_name,
+                //"company_name"=>$company_name,
+                "company_name"=>$col->buyer_fullname,
                 "amount"=>$col->amount,
                 "overall_total"=>$overall_total,
             );
@@ -1859,7 +1860,7 @@ class Sales extends CI_Controller {
                 $data['collection_date']=$h->collection_date;
         //foreach($this->super_model->custom_query("SELECT * FROM collection_details $id") AS $col){
             foreach($this->super_model->select_row_where("collection_details","collection_id",$h->collection_id) AS $col){
-            $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
+            //$company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
             $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id'");
             $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
             $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
@@ -1892,7 +1893,8 @@ class Sales extends CI_Controller {
                 "zero_rated_ecozone"=>$col->zero_rated_ecozone,
                 "ewt"=>$col->ewt,
                 "total"=>$total,
-                "company_name"=>$company_name,
+                //"company_name"=>$company_name,
+                "company_name"=>$col->buyer_fullname,
                 "amount"=>$col->amount,
                 "overall_total"=>$overall_total,
             );
@@ -2009,6 +2011,7 @@ class Sales extends CI_Controller {
                         //'defint'=>$defint,
                         'reference_no'=>$statement_no,
                         'settlement_id'=>$stl_id,
+                        'buyer_fullname'=>$buyer,
                         'amount'=>$vatable_sales,
                         'vat'=>$vat,
                         'zero_rated'=>$zero_rated,
