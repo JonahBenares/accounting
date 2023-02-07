@@ -19,6 +19,7 @@ if(!empty($collection_id)){
                         </div>
                         <div class="card-body">
                             <form id='collection_bulk'> 
+                                <?php if($saved==0){ ?>
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-sm-4 offset-lg-2" >
                                         <div class="form-group">
@@ -40,6 +41,17 @@ if(!empty($collection_id)){
                                         </div>
                                     </div>
                                 </div> 
+                                <?php }else{ ?>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 offset-lg-4" >
+                                            <div class="form-group">
+                                            <label>Collection Date:</label>
+                                            <input type="date" name="collection_date" id="collection_date" value="<?php echo (!empty($collection_id) ? $collection_date : ''); ?>" required <?php echo $readonly; ?> class="form-control">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            <?php }  ?>
                             </form>
                             <form method="POST" id="upload_bulkcollection">
                                  <div id="upload" <?php echo (empty($collection_id) ? 'style="display:none"' : ''); ?>>
