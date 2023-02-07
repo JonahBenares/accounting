@@ -199,6 +199,118 @@ function saveAll(){
     }	 
 }
 
+function proceed_collection() {
+	 var data = $("#collection_bulk").serialize();
+	
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/add_collection_head";
+    var newurl=loc+"sales/upload_collection/";
+    var conf = confirm('Are you sure you want to proceed?');
+    if(conf){
+	  $.ajax({
+        type: "POST",
+        url: redirect,
+        data: data,
+        success: function(output){
+        	//alert(output);
+        	var new_url = newurl+output;
+        	document.getElementById("collection_id").value  = output;
+        	window.history.replaceState('nextState', "Collection Head", new_url);
+ 			var save = document.getElementById("save_head_button");
+            var cancel = document.getElementById("cancel");
+        	document.getElementById('collection_date').readOnly = true;
+        	var x = document.getElementById("upload");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+
+					save.style.display = "none";
+                    cancel.style.display = "block";
+			} else {
+				x.style.display = "none";
+				save.style.display = "block";
+                    cancel.style.display = "none";
+			}
+          
+        	}
+        });
+	}
+	
+}
+
+function cancelCollection(){
+    var collection_id = document.getElementById("collection_id").value; 
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/cancel_collection";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+		$.ajax({
+			data: "collection_id="+collection_id,
+			type: "POST",
+			url: redirect,
+			success: function(response){
+			    window.location=loc+'sales/upload_collection/';
+			}
+		});
+    }
+}
+
+async function upload_collection1() {
+	//var sales_doc = document.getElementById("WESM_sales").value;
+	var collection_id = document.getElementById("collection_id").value;
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/upload_bulk_collection";
+    //var redirect1 = loc+"sales/load_bulk_data";
+	let doc = document.getElementById("bulk_collection").files[0];
+	let formData = new FormData();
+	     
+	formData.append("doc", doc);
+	formData.append("collection_id", collection_id);
+	var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+		$.ajax({
+			type: "POST",
+			url: redirect,
+			data: formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function(){
+	        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+	        	document.getElementById("proceed_collection1").disabled = true;
+	        	document.getElementById("cancel").disabled = true;
+	        	$("#table-collection").hide(); 
+	        },
+	        success: function(output){
+	        	//console.log(output);
+	        	$("#alt").hide(); 
+	        	location.reload();
+	        	//alert(output);
+			}
+		});
+	}
+}
+
+function saveAllCollection(){
+	var data = $("#upload_bulkcollection").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/save_all_collection";
+    var conf = confirm('Are you sure you want to save this Collection?');
+		if(conf){
+		    $.ajax({
+		        data: data,
+		        type: "POST",
+		        url: redirect,
+		        beforeSend: function(){
+		        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+		            $("#submitdata").hide(); 
+		        },
+		        success: function(output){
+		        	//window.location=loc+'sales/upload_collection/'+output; 
+		        	location.reload(); 
+		        }
+		    }); 
+    }	 
+}
+
 function collection_filter() {
 	var ref_number = document.getElementById("ref_number").value; 
 	//var participant = document.getElementById("participant").value; 
@@ -490,6 +602,22 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 			document.getElementById("old_series_no"+count).value=series_number;
 						//document.getElementById("series_number"+count).value=output;
 			//document.getElementById("old_series_no"+count).value=output;
+		}
+	});
+	
+
+}
+
+function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number){
+    var redirect = baseurl+"sales/update_defint";
+    var def_int=document.getElementById("def_int"+count).value;
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'def_int='+def_int+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number,
+		success: function(output){
+			//alert(output);
+			document.getElementById("def_int"+count).setAttribute('value',output);
 		}
 	});
 	
