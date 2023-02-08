@@ -126,11 +126,21 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales_adjustment">Adjustment</a></li>
                 </ul>
             </li>
-            <li class="dropdown">
+            <!-- <li class="dropdown">
                 <a href="<?php echo base_url(); ?>sales/collection_list" class="nav-link">
                     <i data-feather="layers"></i>
                     <span>Collected</span>
                 </a>
+            </li> -->
+             <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>Collected</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_collection">Upload Collection</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_list">Collection List</a></li>
+                </ul>
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">

@@ -96,38 +96,47 @@
             <tr>
                 <td colspan="2">Customer:</td>
                 <td colspan="9" class="bor-btm"><?php echo $company_name[$y];?></td>
+                <input type="hidden" id="company_name" name="company_name" class="form-control" value="<?php echo $company_name[$y]; ?>">
                 <td></td>
                 <td colspan="3">Invoice No.:</td>
                 <td colspan="5" class="bor-btm"><?php echo $serial_no[$y];?></td>
+                <input type="hidden" id="serial_no" name="serial_no" class="form-control" value="<?php echo $serial_no[$y]; ?>">
             </tr>
             <tr>
                 <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
                 <td colspan="9" rowspan="2" style="vertical-align:top" class="bor-btm">
                     <?php echo $address[$y];?>
                 </td>
+                <input type="hidden" id="address" name="address" class="form-control" value="<?php echo $address[$y]; ?>">
                 <td></td>
                 <td colspan="3">Statement Date:</td>
                 <!-- <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td> -->
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($transaction_date[$y]));?></td>
+                <input type="hidden" id="transaction_date" name="transaction_date" class="form-control" value="<?php echo date("M d,Y",strtotime($transaction_date[$y])); ?>">
             </tr>
             <tr>
                 <td></td>
                 <td colspan="3">Billing Period:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($billing_from[$y]))." to ".date("M d,Y",strtotime($billing_to[$y]));?></td>
+                <input type="hidden" id="billing_period" name="billing_period" class="form-control" value="<?php echo date("M d,Y",strtotime($billing_from[$y]))." to ".date("M d,Y",strtotime($billing_to[$y])); ?>">
             </tr>
             <tr>
                 <td colspan="2">TIN:</td>
                 <td colspan="6" class="bor-btm"><?php echo $tin[$y]; ?></td>
+                <input type="hidden" id="tin" name="tin" class="form-control" value="<?php echo $tin[$y]; ?>">
                 <td colspan="4"></td>
                 <td colspan="3">Due Date:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($due_date[$y]));?></td>
+                <input type="hidden" id="due_date" name="due_date" class="form-control" value="<?php echo date("M d,Y",strtotime($due_date[$y])); ?>">
             </tr>
             <tr>
                 <td colspan="2">STL ID:</td>
                 <td colspan="6" class="bor-btm"><?php echo $settlement[$y]; ?></td>
+                <input type="hidden" id="settlement" name="settlement" class="form-control" value="<?php echo $settlement[$y]; ?>">
                 <td colspan="4"></td>
                 <td colspan="3">Reference:</td>
                 <td colspan="5" class="bor-btm"><?php echo $reference_number[$y]; ?></td>
+                <input type="hidden" id="reference_number" name="reference_number" class="form-control" value="<?php echo $reference_number[$y]; ?>">
             </tr>
             <tr>
                 <td colspan="20">
@@ -161,6 +170,13 @@
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($as['vat_on_sales'],2);?></td>
                             <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($as['ewt'],2);?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($as['overall_total'],2);?></b></td>
+
+                            <input type="hidden" id="sub_participant" name="sub_participant" class="form-control" value="<?php echo $as['sub_participant']; ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales" class="form-control" value="<?php echo number_format($as['vatable_sales'],2); ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales" class="form-control" value="<?php echo number_format($as['zero_rated_sales'],2); ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales" class="form-control" value="<?php echo number_format($as['vat_on_sales'],2); ?>">
+                            <input type="hidden" id="ewt" name="ewt" class="form-control" value="<?php echo number_format($as['ewt'],2); ?>">
+                            <input type="hidden" id="overall_total" name="overall_total" class="form-control" value="<?php echo number_format($as['overall_total'],2); ?>">
                         </tr> 
                         <?php
                             if(!empty($sub_part)){ 
@@ -189,6 +205,13 @@
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($sps['vat_on_sales'],2); ?></td>
                             <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($sps['ewt'],2); ?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($sps['overall_total'],2); ?></b></td>
+
+                            <input type="hidden" id="sub_participant" name="sub_participant" class="form-control" value="<?php echo $sps['sub_participant']; ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales" class="form-control" value="<?php echo number_format($sps['vatable_sales'],2); ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales" class="form-control" value="<?php echo number_format($sps['zero_rated_sales'],2); ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales" class="form-control" value="<?php echo number_format($sps['vat_on_sales'],2); ?>">
+                            <input type="hidden" id="ewt" name="ewt" class="form-control" value="<?php echo number_format($sps['ewt'],2); ?>">
+                            <input type="hidden" id="overall_total" name="overall_total" class="form-control" value="<?php echo number_format($sps['overall_total'],2); ?>">
                         </tr> 
                         <?php }  $h++; } $x++; } } ?>
                         <tr>
@@ -245,14 +268,19 @@
                         </tr>
                         <tr>
                             <td width="19%" align="center" class="bor-btm font-10"><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <input type="hidden" id="prepared_by" name="prepared_by" class="form-control" value="<?php echo $_SESSION['user_id']; ?>">
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-10">JOEMAR DELOS SANTOS</td>
+                            <input type="hidden" id="checked_by_emg" name="checked_by_emg" class="form-control" value="JOEMAR DELOS SANTOS">
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-10">CRISTY CESAR</td>
+                            <input type="hidden" id="checked_by_accounting" name="checked_by_accounting" class="form-control" value="CRISTY CESAR">
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-10">ZYNDYRYN PASTERA</td>
+                            <input type="hidden" id="checked_by_finance" name="checked_by_finance" class="form-control" value="ZYNDYRYN PASTERA">
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-10">MILA ARANA</td>
+                            <input type="hidden" id="noted_by" name="noted_by" class="form-control" value="MILA ARANA">
                             <td width="1%"></td>
                         </tr>
                         <tr>
@@ -333,38 +361,47 @@
             <tr>
                 <td colspan="2">Customer:</td>
                 <td colspan="9" class="bor-btm"><?php echo $company_name[$y];?></td>
+                <input type="text" id="company_name" name="company_name" class="form-control" value="<?php echo $company_name[$y]; ?>">
                 <td></td>
                 <td colspan="3">Invoice No.:</td>
                 <td colspan="5" class="bor-btm"><?php echo $serial_no[$y];?></td>
+                <input type="hidden" id="serial_no" name="serial_no" class="form-control" value="<?php echo $serial_no[$y]; ?>">
             </tr>
             <tr>
                 <td colspan="2" rowspan="2" style="vertical-align:top">Address:</td>
                 <td colspan="9" rowspan="2" style="vertical-align:top" class="bor-btm">
                     <?php echo $address[$y];?>
                 </td>
+                <input type="hidden" id="address" name="address" class="form-control" value="<?php echo $address[$y]; ?>">
                 <td></td>
                 <td colspan="3">Statement Date:</td>
                 <!-- <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td> -->
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($transaction_date[$y]));?></td>
+                 <input type="hidden" id="transaction_date" name="transaction_date" class="form-control" value="<?php echo date("M d,Y",strtotime($transaction_date[$y])); ?>">
             </tr>
             <tr>
                 <td></td>
                 <td colspan="3">Billing Period:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($billing_from[$y]))." to ".date("M d,Y",strtotime($billing_to[$y]));?></td>
+                <input type="hidden" id="billing_period" name="billing_period" class="form-control" value="<?php echo date("M d,Y",strtotime($billing_from[$y]))." to ".date("M d,Y",strtotime($billing_to[$y])); ?>">
             </tr>
             <tr>
                 <td colspan="2">TIN:</td>
                 <td colspan="6" class="bor-btm"><?php echo $tin[$y]; ?></td>
+                <input type="hidden" id="tin" name="tin" class="form-control" value="<?php echo $tin[$y]; ?>">
                 <td colspan="4"></td>
                 <td colspan="3">Due Date:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($due_date[$y]));?></td>
+                <input type="hidden" id="due_date" name="due_date" class="form-control" value="<?php echo date("M d,Y",strtotime($due_date[$y])); ?>">
             </tr>
             <tr>
                 <td colspan="2">STL ID:</td>
                 <td colspan="6" class="bor-btm"><?php echo $settlement[$y]; ?></td>
+                <input type="hidden" id="settlement" name="settlement" class="form-control" value="<?php echo $settlement[$y]; ?>">
                 <td colspan="4"></td>
                 <td colspan="3">Reference:</td>
                 <td colspan="5" class="bor-btm"><?php echo $reference_number[$y]; ?></td>
+                <input type="hidden" id="reference_number" name="reference_number" class="form-control" value="<?php echo $reference_number[$y]; ?>">
             </tr>
             <tr>
                 <td colspan="20">
@@ -424,6 +461,13 @@
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($sps['vat_on_sales'],2); ?></td>
                             <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($sps['ewt'],2); ?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($sps['overall_total'],2); ?></b></td>
+
+                            <input type="hidden" id="sub_participant" name="sub_participant" class="form-control" value="<?php echo $sps['sub_participant']; ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales" class="form-control" value="<?php echo number_format($sps['vatable_sales'],2); ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales" class="form-control" value="<?php echo number_format($sps['zero_rated_sales'],2); ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales" class="form-control" value="<?php echo number_format($sps['vat_on_sales'],2); ?>">
+                            <input type="hidden" id="ewt" name="ewt" class="form-control" value="<?php echo number_format($sps['ewt'],2); ?>">
+                            <input type="hidden" id="overall_total" name="overall_total" class="form-control" value="<?php echo number_format($sps['overall_total'],2); ?>">
                         </tr> 
                         <?php } $h++; } $x++; } } ?>
                         <tr>
@@ -480,14 +524,19 @@
                         </tr>
                         <tr>
                             <td width="19%" align="center" class="bor-btm font-10"><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <input type="hidden" id="prepared_by" name="prepared_by" class="form-control" value="<?php echo $_SESSION['user_id']; ?>">
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-10">JOEMAR DELOS SANTOS</td>
+                            <input type="hidden" id="checked_by_emg" name="checked_by_emg" class="form-control" value="JOEMAR DELOS SANTOS">
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-10">CRISTY CESAR</td>
+                            <input type="hidden" id="checked_by_accounting" name="checked_by_accounting" class="form-control" value="CRISTY CESAR">
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-10">ZYNDYRYN PASTERA</td>
+                            <input type="hidden" id="checked_by_finance" name="checked_by_finance" class="form-control" value="ZYNDYRYN PASTERA">
                             <td width="1%"></td>
                             <td width="19%" align="center" class="bor-btm font-10">MILA ARANA</td>
+                            <input type="hidden" id="noted_by" name="noted_by" class="form-control" value="MILA ARANA">
                             <td width="1%"></td>
                         </tr>
                         <tr>
