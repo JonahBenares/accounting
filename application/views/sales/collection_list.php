@@ -156,7 +156,7 @@
                                             <tr>
                                                 <td class="td-btm pt-1 pb-1" style="vertical-align: middle;" align="center">
                                                     <div class="btn-group">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white"><span class="fas fa-print"></span></a>
+                                                        <a href="<?php echo base_url(); ?>sales/print_OR_new/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white"><span class="fas fa-print"></span></a>
                                                     
                                                         <!-- <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $log['series_number']; ?>" data-id='<?php echo $log['collection_id']; ?>' data-settlement='<?php echo $log['settlement_id_single'];?>' data-reference='<?php echo $log['reference_no_single'];?>'>
                                                             <span class="m-0 fas fa-edit"></span>
