@@ -493,18 +493,34 @@ $(document).on("click", "#BSNo", function () {
 
 });
 
-function saveBseries(){
-	var data = $("#update").serialize();
-	var loc= document.getElementById("baseurl").value;
-    var redirect = loc+"sales/update_BSeriesno";
-    $.ajax({
-        data: data,
-        type: "POST",
-        url: redirect,
-        success: function(output){
-        	window.location=loc+'sales/sales_wesm/'+output;  
-        }
-    });  
+// function saveBseries(){
+// 	var data = $("#update").serialize();
+// 	var loc= document.getElementById("baseurl").value;
+//     var redirect = loc+"sales/update_BSeriesno";
+//     $.ajax({
+//         data: data,
+//         type: "POST",
+//         url: redirect,
+//         success: function(output){
+//         	window.location=loc+'sales/sales_wesm/'+output;  
+//         }
+//     });  
+// }
+
+function saveBseries(baseurl,count,sales_detail_id,serial_no){
+    var redirect = baseurl+"sales/update_BSeriesno";
+    var series_number=document.getElementById("series_number"+count).value;
+
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'sales_detail_id='+sales_detail_id+'&serial_no='+serial_no+'&series_number='+series_number,
+        dataType: "json",
+		success: function(response){
+			document.getElementById("series_number"+count).value=response.series_number;
+			//location.reload();
+		}
+	});
 }
 
 

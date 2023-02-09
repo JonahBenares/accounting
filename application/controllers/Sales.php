@@ -1398,10 +1398,10 @@ class Sales extends CI_Controller {
     }
 
     public function update_BSeriesno(){
-        $ref_no=$this->input->post('ref_no');
+        //$ref_no=$this->input->post('ref_no');
         $sales_detail_id=$this->input->post('sales_detail_id');
         $new_series=$this->input->post('series_number');
-        $old_series=$this->input->post('old_series_no');
+        $old_series=$this->input->post('serial_no');
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details WHERE sales_detail_id='$sales_detail_id'") AS $check){
             $count=$this->super_model->count_custom_where("sales_transaction_details","sales_detail_id = '$check->sales_detail_id' AND old_series_no!=''");
             if($count==0){
@@ -1416,9 +1416,15 @@ class Sales extends CI_Controller {
             'old_series_no'=>$old_series_insert,
         );
 
-        $this->super_model->update_custom_where("sales_transaction_details", $data_update, "sales_detail_id='$sales_detail_id'");
-        echo $ref_no;
+        // $this->super_model->update_custom_where("sales_transaction_details", $data_update, "sales_detail_id='$sales_detail_id'");
+        // echo $ref_no;
+        if($this->super_model->update_custom_where("sales_transaction_details", $data_update, "sales_detail_id='$sales_detail_id'")){
+            foreach($this->super_model->select_custom_where("sales_transaction_details","sales_detail_id='$sales_detail_id'") AS $latest_data){
+                $return = array('series_number'=>$latest_data->serial_no);
+            }
+            echo json_encode($return);
     }
+}
 
     public function add_details_BS(){
         $sales_detail_id = $this->uri->segment(3);
