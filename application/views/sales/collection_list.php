@@ -78,6 +78,7 @@
                                 </div>
                                 <hr>
                                 <?php //if(!empty($ref_no) && $ref_no!='null'){ ?>
+                                <?php if(!empty($collection)){ ?>
                                 <div style="overflow-x:scroll;">
                                     <table class="table-bordered table table-hosver" id="table-3" width="200%"> 
                                         <thead>
@@ -224,7 +225,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            <?php //} ?>
+                            <?php } ?>
                             </div>
                         </form>
                     </div>
