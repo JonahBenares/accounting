@@ -142,10 +142,11 @@
                                                             
                                                     </td>
                                                     <td hidden=""></td>
-                                                    <td>
-                                                        <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="BSupdate" data-toggle="modal" data-target="#updateSerial" data-series="<?php echo $s['serial_no']; ?>" data-id="<?php echo $s['sales_detail_id'];?>">
+                                                    <td style="width:100px;margin: 0px 6px;">
+                                                        <!-- <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="BSupdate" data-toggle="modal" data-target="#updateSerial" data-series="<?php echo $s['serial_no']; ?>" data-id="<?php echo $s['sales_detail_id'];?>">
                                                             <span class="m-0 fas fa-edit"></span>
-                                                        </button>
+                                                        </button> -->
+                                                        <input type="text" class="form-control" onblur="saveBseries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['serial_no']; ?>')" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $s['serial_no']; ?>">
                                                     </td>
                                                     <td><center><?php echo $s['item_no'];?></center></td>
                                                     <?php if(!empty($s['old_series_no'])) {?>
