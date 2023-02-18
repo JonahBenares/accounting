@@ -659,7 +659,6 @@ class Sales extends CI_Controller {
         $this->load->view('template/print_head');
         $this->load->view('sales/print_invoice_multiple',$data);
     }
-
     public function print_invoice_multiple_new(){
         error_reporting(0);
         //$sales_detail_id = $this->uri->segment(3);
@@ -668,17 +667,18 @@ class Sales extends CI_Controller {
         $count = $this->uri->segment(5);
         $sales_det_exp=explode("-",$sales_details_id);
         $data['count']=$count;
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         // $this->load->view('template/header');
         //$this->load->view('template/navbar');
         for($x=0;$x<$count;$x++){
             //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
-                $data['address'][$x]=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+                $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                 $data['company_name'][$x]=$p->company_name;
                 $data['billing_from'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
                 $data['billing_to'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
-
+                $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                 $data['participant_id'][$x] = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                  //echo $participant_id."<br>";
@@ -800,6 +800,7 @@ class Sales extends CI_Controller {
         $this->load->view('template/print_head');
         $this->load->view('sales/print_invoice_multiple_new',$data);
     }
+
 
     public function count_print(){
         $sales_detail_id=$this->input->post('sales_details_id');
