@@ -1956,20 +1956,24 @@ class Sales extends CI_Controller {
                 $filename1='bulkcollection.'.$ext1;
               
                 if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
-                     $this->readBulkCollection($collection_id);
+                     $this->readBulkCollection($collection_id,$ext1);
                 } 
             }
         }
     }
 
-    public function readBulkCollection($collection_id){
+    public function readBulkCollection($collection_id,$doc_type){
 
 
 
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
 
-        $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsx');
+        if($doc_type=='xlsx'){
+            $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsx');
+        }else if($doc_type=='xlsm'){
+            $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsm');
+        }
 
        
 
