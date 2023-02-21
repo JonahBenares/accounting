@@ -312,23 +312,31 @@ function saveAllCollection(){
 }
 
 function collection_filter() {
-	var ref_number = document.getElementById("ref_number").value; 
-	//var participant = document.getElementById("participant").value; 
-	var loc= document.getElementById("baseurl").value;
-	if(ref_number!=''){
-		var ref=ref_number;
-	}else{
-		var ref='null';
-	}
-	/*
-	if(participant!=''){
-		var par=participant;
-	}else{
-		var par='null';
-	}*/
+	 var collection_date = document.getElementById("collection_date").value; 
+     var reference_no = document.getElementById("reference_no").value;
+     var stl_id = document.getElementById("stl_id").value;
+
+    if(collection_date!=''){
+        collection_date=collection_date;
+    }else{
+        collection_date='null';
+    }
+
+    if(reference_no!=''){
+        reference_no=reference_no;
+    }else{
+        reference_no='null';
+    }
+
+    if(stl_id!=''){
+        stl_id=stl_id;
+    }else{
+        stl_id='null';
+    }
 
 
-	window.location=loc+'sales/collection_list/'+ref;
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'sales/collection_list/'+collection_date+'/'+reference_no+'/'+stl_id;
 
 }
 
