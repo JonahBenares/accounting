@@ -1049,6 +1049,7 @@ class Sales extends CI_Controller {
             $data['collection'][]=array(
                 "count_series"=>$count_series,
                 "collection_details_id"=>$col->collection_details_id,
+                "collection_date"=>$col->collection_date,
                 "collection_id"=>$col->collection_id,
                 "settlement_id"=>$col->settlement_id,
                 "series_number"=>$col->series_number,
