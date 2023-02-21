@@ -1055,8 +1055,8 @@ class Sales extends CI_Controller {
             $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             if($count_series>=1){
                 $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            }if($count_series<=2){
-                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+            /*}if($count_series<=2){
+                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;*/
             }else{
                 $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             }
@@ -1970,20 +1970,24 @@ class Sales extends CI_Controller {
                 $filename1='bulkcollection.'.$ext1;
               
                 if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
-                     $this->readBulkCollection($collection_id);
+                     $this->readBulkCollection($collection_id,$ext1);
                 } 
             }
         }
     }
 
-    public function readBulkCollection($collection_id){
+    public function readBulkCollection($collection_id,$doc_type){
 
 
 
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
 
-        $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsx');
+        if($doc_type=='xlsx'){
+            $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsx');
+        }else if($doc_type=='xlsm'){
+            $inputFileName =realpath(APPPATH.'../uploads/excel/bulkcollection.xlsm');
+        }
 
        
 

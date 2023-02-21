@@ -2285,6 +2285,10 @@ page[size="OR"] {
 .td-yellow{
 	background: #fffca5!important;
 }
+
+.td-blue{
+	background: #cce3ff!important;
+}
 .td-head{
 	background: #f1f1f1;
 }

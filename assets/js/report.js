@@ -640,3 +640,32 @@ function export_purchases_adjustment_all() {
       window.location=loc+'reports/export_purchases_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+e_due;
 
 }
+
+function filter_collection() { 
+     var collection_date = document.getElementById("collection_date").value; 
+     var reference_no = document.getElementById("reference_no").value;
+     var settlement_id = document.getElementById("settlement_id").value;
+
+    if(collection_date!=''){
+        collection_date=collection_date;
+    }else{
+        collection_date='null';
+    }
+
+    if(reference_no!=''){
+        reference_no=reference_no;
+    }else{
+        reference_no='null';
+    }
+
+    if(settlement_id!=''){
+        settlement_id=settlement_id;
+    }else{
+        settlement_id='null';
+    }
+
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/collection_report/'+collection_date+'/'+reference_no+'/'+settlement_id;
+
+}
