@@ -54,24 +54,37 @@
                             </div> -->
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-10 col-md-10 col-sm-10 offset-lg-1 offset-md-1 offset-sm-1">
                                         <table width="100%">
                                             <tr>
-                                                <td width="25%"></td>
-                                                <td width="45%">
-                                                    <select class="form-control select2" name="ref_number" id="ref_number">
-                                                        <option value=''>-- Select Reference No --</option>
-                                                        <?php 
-                                                            foreach($reference AS $r){
-                                                        ?>
-                                                        <option value="<?php echo $r->reference_no; ?>"><?php echo $r->reference_no; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </td>
-                                                <td width="5%">
+                                        <td width="22%">
+                                                <select class="form-control select2" name="collection_date" id="collection_date">
+                                                    <option value="">-- Select Collection Date --</option>
+                                                    <?php foreach($collection_date AS $cd){ ?>
+                                                        <option value="<?php echo $cd->collection_date;?>"><?php echo date("F d, Y",strtotime($cd->collection_date));?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                            <td width="22%">
+                                                <select class="form-control select2" name="reference_no" id="reference_no">
+                                                    <option value="">-- Select Statement No --</option>
+                                                    <?php foreach($reference_no AS $rn){ ?>
+                                                        <option value="<?php echo $rn->reference_no;?>"><?php echo $rn->reference_no;?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                            <td width="22%">
+                                                <select class="form-control select2" name="stl_id" id="stl_id">
+                                                    <option value="">-- Select Buyer --</option>
+                                                    <?php foreach($buyer AS $b){ ?>
+                                                        <option value="<?php echo $b->settlement_id;?>"><?php echo $b->buyer_fullname;?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                                <td width="1%">
                                                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                                                    <input type='button' class="btn btn-primary"  onclick="collection_filter()" value="Filter"></td>
-                                                <td width="25%"></td>
+                                                    <input type='button' class="btn btn-primary"  onclick="collection_filter()" value="Filter">
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>

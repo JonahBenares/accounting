@@ -66,7 +66,6 @@ if(!empty($sales_id)){
                                             </div>
                                         </div>
                                     </div> -->
-                                     <?php if($saved!=1){ ?>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label><br></label>
@@ -79,7 +78,6 @@ if(!empty($sales_id)){
                                             <?php } ?>
                                         </div>
                                     </div>
-                                     <?php } ?>
                                 </div>
                             </form>   
                             <form method="POST" id="upload_wesm">        
