@@ -1030,28 +1030,6 @@ class Sales extends CI_Controller {
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
         $data['collection']=array();
-<<<<<<< HEAD
-        //foreach($this->super_model->custom_query("SELECT * FROM collection_details $query") AS $col){
-            foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=cd.collection_id $qu") AS $col){
-            // $saved=$this->super_model->select_column_where("collection_head","saved","collection_id",$col->collection_id);
-            // if($saved != 0){
-            //$company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$col->settlement_id);
-            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND collection_details_id = '$col->collection_details_id'");
-            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND collection_details_id = '$col->collection_details_id'");
-            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND collection_details_id = '$col->collection_details_id'");
-            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND collection_details_id = '$col->collection_details_id'");
-            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND collection_details_id = '$col->collection_details_id'");
-            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND collection_details_id = '$col->collection_details_id'");
-            //$sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
-            $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
-            if($count_series>=1){
-                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            /*}if($count_series<=2){
-                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;*/
-            }else{
-                $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
-            }
-=======
 
             foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
             $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
@@ -1068,7 +1046,6 @@ class Sales extends CI_Controller {
             //     $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             // }
             $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
->>>>>>> 5b8d144700732c1dab48b1b037cb479f6f4a51a1
             $data['collection'][]=array(
                 "count_series"=>$count_series,
                 "collection_details_id"=>$col->collection_details_id,

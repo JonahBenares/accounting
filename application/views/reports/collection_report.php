@@ -100,7 +100,7 @@
                                                 $data2 = array();
                                                 foreach($collection as $value) {
                                                     //$key = $value['series_number'].$value['settlement_id'].$value['reference_no'];
-                                                    $key = $value['settlement_id'].$value['reference_no'];
+                                                    $key = $value['settlement_id'].$value['reference_no'].$value['collection_date'];
                                                     if(!isset($data2[$key])) {
                                                         $data2[$key] = array(
                                                             'collection_id' => $value['collection_id'], 

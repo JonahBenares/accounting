@@ -2405,6 +2405,22 @@ class Reports extends CI_Controller {
              $qu = " saved = '1'";
         }
 
+        if($date != 'null'){
+            $collection_date = date('F d, Y', strtotime($date));
+        // }else if($ref_no != null){
+        //     $collection_date = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no = '$ref_no'");
+        // }else if($stl_id != null){
+        //     $collection_date = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE settlement_id = '$stl_id'");
+        }
+
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', "MP ID No.: CENPRI");
+        if($date != 'null'){
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', "As of $collection_date");
+        }else{
+             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', "");
+        }
+
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
             $styleArray = array(
@@ -2418,6 +2434,11 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0);
             foreach(range('A','N') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+
+            foreach(range('B2','B4') as $columnID1) {
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID1)
+                    ->setAutoSize(false);
             }
             
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A6', "OR#");
@@ -2441,16 +2462,16 @@ class Reports extends CI_Controller {
        // echo  $qu . "<br>";
             $row=7;
             $row_final=7;
-         foreach($this->super_model->custom_query("SELECT DISTINCT  reference_no, settlement_id FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $q){
+         foreach($this->super_model->custom_query("SELECT DISTINCT  reference_no, settlement_id, collection_date FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $q){
 
 
              
               $x=1;
               $final=1;
                 $count = $this->super_model->count_custom("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu AND reference_no = '$q->reference_no' 
-                    AND settlement_id = '$q->settlement_id'");
+                    AND settlement_id = '$q->settlement_id' AND collection_date = '$q->collection_date'");
                 foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu AND reference_no = '$q->reference_no' 
-                    AND settlement_id = '$q->settlement_id'") AS $col){
+                    AND settlement_id = '$q->settlement_id' AND collection_date = '$q->collection_date'") AS $col){
 
                     $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id'");
                     $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id'");
@@ -2458,10 +2479,8 @@ class Reports extends CI_Controller {
                     $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id'");
                     $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id'");
                     $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            
 
-                        
-                        //echo $row . " ". $x. " - " .  $col->billing_remarks . " - ". $col->reference_no . ' - '  . $col->settlement_id . ", " .  $count . "<br>";
+                    //echo $row . " ". $x. " - " .  $col->billing_remarks . " - ". $col->reference_no . ' - '  . $col->settlement_id . ", " .  $count . "<br>";
 
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$row, $col->billing_remarks);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$row, $col->particulars);
@@ -2475,7 +2494,7 @@ class Reports extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row, $col->ewt);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row, $col->total);
 
-                     $objPHPExcel->getActiveSheet()->getStyle('A'.$row.":N".$row)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$row.":N".$row)->applyFromArray($styleArray);
                     $objPHPExcel->getActiveSheet()->getStyle('H'.$row.":N".$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle('H'.$row.":N".$row)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
@@ -2497,11 +2516,13 @@ class Reports extends CI_Controller {
                     
                     if($final!=1){
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$row_final, $col->series_number);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$row_final, date('M d, Y', strtotime($col->collection_date)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$row_final, date('F d, Y', strtotime($col->collection_date)));
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$row_final, $col->settlement_id);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$row_final, $col->buyer_fullname);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$row_final, $col->reference_no);
+                        if($col->defint != 0){
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$row_final, $col->defint);
+                        }
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$row_final, $sum_amount);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$row_final, $sum_zero_rated);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$row_final, $sum_zero_rated_ecozone);
@@ -2509,13 +2530,16 @@ class Reports extends CI_Controller {
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row_final, $sum_ewt);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row_final, $overall_total);
 
-                        $objPHPExcel->getActiveSheet()->getStyle('H'.$row_final.":N".$row_final)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('BCD2E8');
+                        if($col->defint != 0){
+                            $objPHPExcel->getActiveSheet()->getStyle('H'.$row_final)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('BCD2E8');
+                        }
+                        $objPHPExcel->getActiveSheet()->getStyle('I'.$row_final.":N".$row_final)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('BCD2E8');
                         $objPHPExcel->getActiveSheet()->getStyle('A'.$row_final.":N".$row_final)->applyFromArray($styleArray);
                         $objPHPExcel->getActiveSheet()->getStyle('H'.$row_final.":N".$row_final)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                         $objPHPExcel->getActiveSheet()->getStyle('H'.$row_final.":N".$row_final)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     }
 
-
+                $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getAlignment()->setWrapText(true);
                 $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
                 $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getFont()->getColor()->setRGB ('FFFFFF');
                 $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getFont()->setBold(true);
