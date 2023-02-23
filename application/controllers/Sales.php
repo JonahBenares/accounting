@@ -659,7 +659,6 @@ class Sales extends CI_Controller {
         $this->load->view('template/print_head');
         $this->load->view('sales/print_invoice_multiple',$data);
     }
-
     public function print_invoice_multiple_new(){
         error_reporting(0);
         //$sales_detail_id = $this->uri->segment(3);
@@ -668,17 +667,18 @@ class Sales extends CI_Controller {
         $count = $this->uri->segment(5);
         $sales_det_exp=explode("-",$sales_details_id);
         $data['count']=$count;
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         // $this->load->view('template/header');
         //$this->load->view('template/navbar');
         for($x=0;$x<$count;$x++){
             //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
-                $data['address'][$x]=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
+                $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                 $data['company_name'][$x]=$p->company_name;
                 $data['billing_from'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
                 $data['billing_to'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
-
+                $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                 $data['participant_id'][$x] = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                  //echo $participant_id."<br>";
@@ -800,6 +800,7 @@ class Sales extends CI_Controller {
         $this->load->view('template/print_head');
         $this->load->view('sales/print_invoice_multiple_new',$data);
     }
+
 
     public function count_print(){
         $sales_detail_id=$this->input->post('sales_details_id');
@@ -1008,38 +1009,28 @@ class Sales extends CI_Controller {
 
     public function collection_list()
     {
-        $ref_no=$this->uri->segment(3);
-        //$collection_id=$this->uri->segment(4);
-        //$participant=$this->uri->segment(4);
-        //$data['ref_no'] = $ref_no;
-        //$ref_exp=explode("-", $ref_no);
-        /*$data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");*/
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
-        $data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+        $date=$this->uri->segment(3);
+        $ref_no=$this->uri->segment(4);
+        $stl_id=$this->uri->segment(5);
+        $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
+        $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
 
         $sql="";
-        // if($ref_no!='null' && strpos($ref_exp[0], 'saved') === false){
-        //    $sql.= " WHERE reference_no = '$ref_no' AND";
-        // }else if($ref_no!='null' && strpos($ref_exp[0], 'saved') !== false){
-        //     $sql.= " WHERE collection_id = '$ref_exp[1]' AND";
-        // }else {
-        //     $sql.= "";
-        // }
+       
 
-         if($ref_no!='null'){
-                $sql.= "cd.reference_no = '$ref_no' AND ";
-            }
+        if($date!='null'){
+            $sql.= "ch.collection_date = '$date' AND ";
+        } if($ref_no!='null'){
+             $sql.= "cd.reference_no = '$ref_no' AND "; 
+        } if($stl_id!='null'){
+             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        }
 
-            // if($collection_id!='null'){
-            //     $sql.= "cd.collection_id = '$collection_id' AND ";
-            // }
-            $query=substr($sql,0,-4);
-            $qu = " WHERE saved='1' AND ".$query;
-            
-
-        //$query=substr($sql,0,-3);
-        //echo $query;
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND ".$query;
         $data['collection']=array();
+<<<<<<< HEAD
         //foreach($this->super_model->custom_query("SELECT * FROM collection_details $query") AS $col){
             foreach($this->super_model->custom_query("SELECT * FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id=cd.collection_id $qu") AS $col){
             // $saved=$this->super_model->select_column_where("collection_head","saved","collection_id",$col->collection_id);
@@ -1060,9 +1051,28 @@ class Sales extends CI_Controller {
             }else{
                 $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             }
+=======
+
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
+            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            $sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            //$total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
+            //if($count_series>=1){
+                //$overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+            // }else{
+            //     $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
+            // }
+            $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+>>>>>>> 5b8d144700732c1dab48b1b037cb479f6f4a51a1
             $data['collection'][]=array(
                 "count_series"=>$count_series,
                 "collection_details_id"=>$col->collection_details_id,
+                "collection_date"=>$col->collection_date,
                 "collection_id"=>$col->collection_id,
                 "settlement_id"=>$col->settlement_id,
                 "series_number"=>$col->series_number,
@@ -1076,7 +1086,7 @@ class Sales extends CI_Controller {
                 "zero_rated"=>$col->zero_rated,
                 "zero_rated_ecozone"=>$col->zero_rated_ecozone,
                 "ewt"=>$col->ewt,
-                "total"=>$total,
+                "total"=>$col->total,
                 //"company_name"=>$company_name,
                 "company_name"=>$col->buyer_fullname,
                 "amount"=>$col->amount,
@@ -1912,14 +1922,15 @@ class Sales extends CI_Controller {
             $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
             $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
             //$sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id'");
-            $total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
-            if($count_series>=1){
-                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            }if($count_series<=2){
-                $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
-            }else{
-                $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
-            }
+            //$total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
+            // if($count_series>=1){
+            //     $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+            // }if($count_series<=2){
+            //     $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+            // }else{
+            //     $overall_total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
+            // }
+            $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
             $data['collection'][]=array(
                 "count_series"=>$count_series,
                 "collection_details_id"=>$col->collection_details_id,
@@ -1936,7 +1947,7 @@ class Sales extends CI_Controller {
                 "zero_rated"=>$col->zero_rated,
                 "zero_rated_ecozone"=>$col->zero_rated_ecozone,
                 "ewt"=>$col->ewt,
-                "total"=>$total,
+                "total"=>$col->total,
                 //"company_name"=>$company_name,
                 "company_name"=>$col->buyer_fullname,
                 "amount"=>$col->amount,
