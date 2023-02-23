@@ -50,6 +50,7 @@
                             $ors=array();
                             $consolidated=array();
                             $missing=array();
+                            $series=array();
                             if(!empty($part) || !empty($date_from) || !empty($date_to)){
                             ?>
                             <table class="table" width="100%">
