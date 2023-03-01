@@ -2368,6 +2368,7 @@ class Reports extends CI_Controller {
                 "total"=>$col->total,
                 "company_name"=>$col->buyer_fullname,
                 "amount"=>$col->amount,
+                "or_no_remarks"=>$col->or_no_remarks,
                 "overall_total"=>$overall_total,
                 "sum_amount"=>$sum_amount,
                 "sum_zero_rated"=>$sum_zero_rated,
@@ -2432,7 +2433,7 @@ class Reports extends CI_Controller {
             );
             // $objWorkSheet = $objPHPExcel->createSheet($sheetno);
             $objPHPExcel->setActiveSheetIndex(0);
-            foreach(range('A','N') as $columnID){
+            foreach(range('A','O') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
 
@@ -2455,7 +2456,8 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L6', "VAT on Sales");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M6', "Withholding Tax");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N6', "Total");
-            $objPHPExcel->getActiveSheet()->getStyle("A6:N6")->applyFromArray($styleArray);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O6', "OR Remarks");
+            $objPHPExcel->getActiveSheet()->getStyle("A6:O6")->applyFromArray($styleArray);
 
         $data=array();
 
@@ -2494,8 +2496,8 @@ class Reports extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row, $col->ewt);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row, $col->total);
 
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$row.":N".$row)->applyFromArray($styleArray);
-                    $objPHPExcel->getActiveSheet()->getStyle('H'.$row.":N".$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$row.":O".$row)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('H'.$row.":O".$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle('H'.$row.":N".$row)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
                         if($count == $x){
@@ -2529,21 +2531,22 @@ class Reports extends CI_Controller {
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$row_final, $sum_vat);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row_final, $sum_ewt);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row_final, $overall_total);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$row_final, $col->or_no_remarks);
 
                         if($col->defint != 0){
                             $objPHPExcel->getActiveSheet()->getStyle('H'.$row_final)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('BCD2E8');
                         }
                         $objPHPExcel->getActiveSheet()->getStyle('I'.$row_final.":N".$row_final)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('BCD2E8');
-                        $objPHPExcel->getActiveSheet()->getStyle('A'.$row_final.":N".$row_final)->applyFromArray($styleArray);
-                        $objPHPExcel->getActiveSheet()->getStyle('H'.$row_final.":N".$row_final)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet()->getStyle('A'.$row_final.":O".$row_final)->applyFromArray($styleArray);
+                        $objPHPExcel->getActiveSheet()->getStyle('H'.$row_final.":O".$row_final)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                         $objPHPExcel->getActiveSheet()->getStyle('H'.$row_final.":N".$row_final)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     }
 
-                $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getAlignment()->setWrapText(true);
-                $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
-                $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getFont()->getColor()->setRGB ('FFFFFF');
-                $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getFont()->setBold(true);
-                $objPHPExcel->getActiveSheet()->getStyle('A6:N6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('A6:O6')->getAlignment()->setWrapText(true);
+                $objPHPExcel->getActiveSheet()->getStyle('A6:O6')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                $objPHPExcel->getActiveSheet()->getStyle('A6:O6')->getFont()->getColor()->setRGB ('FFFFFF');
+                $objPHPExcel->getActiveSheet()->getStyle('A6:O6')->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet()->getStyle('A6:O6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 } 
          }
 

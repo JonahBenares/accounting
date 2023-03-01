@@ -93,6 +93,7 @@
                                                 <th width="2%" align="center">VAT</th>
                                                 <th width="2%" align="center">EWT</th>
                                                 <th width="2%" align="center">Total</th>
+                                                <th width="2%" align="center">OR Remarks</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -132,6 +133,7 @@
                                                             'collection_date_single'=>$value['collection_date'],
                                                             //'defint' => array(),
                                                             'defint_single'=>$value['defint'],
+                                                            'or_no_remarks_single'=>$value['or_no_remarks'],
                                                             'series_number_single' => $value['series_number'],
                                                             'count_series'=>$value['count_series'],
                                                             'overall_total' => array(),
@@ -184,6 +186,7 @@
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                 <?php }else if($log['count_series']<=2){ ?>
                                                     <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                     <td class="td-btm pt-1 pb-1"></td>
@@ -200,6 +203,7 @@
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
+                                                    <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                 <?php }else{ ?>
                                                     <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                     <td class="td-btm pt-1 pb-1"></td>
@@ -216,6 +220,7 @@
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['vat_single']; ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['ewt_single']; ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['total_single']; ?></td>
+                                                    <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                 <?php } ?>
                                             </tr>
                                             <tr>
@@ -234,6 +239,7 @@
                                                 <td align="center" class="td-btm td-blue pt-1 pb-1"><?php echo $log['sum_vat_single']; ?></td>
                                                 <td align="center" class="td-btm td-blue pt-1 pb-1"><?php echo $log['sum_ewt_single']; ?></td>
                                                 <td align="center" class="td-btm td-blue pt-1 pb-1"><?php echo $log['overall_total']; ?></td> 
+                                                <td align="center" class="td-btm td-blue pt-1 pb-1"><?php echo $log['or_no_remarks_single']; ?></td> 
                                             </tr>
                                             <?php $x++; } ?>
                                         </tbody>
@@ -258,6 +264,7 @@
                                                     <th width="2%" align="center">VAT</th>
                                                     <th width="2%" align="center">EWT</th>
                                                     <th width="2%" align="center">Total</th>
+                                                    <th width="2%" align="center">OR Remarks</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -297,6 +304,7 @@
                                                                 'collection_date_single'=>$value['collection_date'],
                                                                 //'defint' => array(),
                                                                 'defint_single'=>$value['defint'],
+                                                                'or_no_remarks_single'=>$value['or_no_remarks'],
                                                                 'series_number_single' => $value['series_number'],
                                                                 'count_series'=>$value['count_series'],
                                                                 'overall_total' => array(),
@@ -349,6 +357,7 @@
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
+                                                        <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                     <?php }else if($log['count_series']<=2){ ?>
                                                         <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                         <td class="td-btm pt-1 pb-1"></td>
@@ -365,6 +374,7 @@
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
+                                                        <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                     <?php }else{ ?>
                                                         <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                         <td class="td-btm pt-1 pb-1"></td>
@@ -381,6 +391,7 @@
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['vat_single']; ?></td>
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['ewt_single']; ?></td>
                                                         <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['total_single']; ?></td>
+                                                        <td class="td-btm pt-1 pb-1"  hidden=""></td>
                                                     <?php } ?>
                                                 </tr>
                                                 <tr>
@@ -399,6 +410,7 @@
                                                     <td align="center" class="td-btm td-blue pt-1 pb-1"><?php echo $log['sum_vat_single']; ?></td>
                                                     <td align="center" class="td-btm td-blue pt-1 pb-1"><?php echo $log['sum_ewt_single']; ?></td>
                                                     <td align="center" class="td-btm td-blue pt-1 pb-1"><?php echo $log['overall_total']; ?></td> 
+                                                    <td align="center" class="td-btm td-blue pt-1 pb-1"><?php echo $log['or_no_remarks_single']; ?></td> 
                                                 </tr>
                                                 <?php $x++; } ?>
                                             </tbody>
