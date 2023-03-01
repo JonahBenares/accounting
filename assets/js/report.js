@@ -219,17 +219,10 @@ function filterSSLedger(){
 }
 
 function filterOR(){
-    var participant= document.getElementById("participant").value;
     var from= document.getElementById("date_from").value;
     var to= document.getElementById("date_to").value;
+    var participant= document.getElementById("participant").value;
     var loc= document.getElementById("baseurl").value;
-
-    if(participant!=''){
-        var part=participant;
-    }else{
-        var part='null';
-    }
-
 
     if(from){
         var from=from;
@@ -243,19 +236,19 @@ function filterOR(){
     }else{
         var to='null';
     }
-    window.location=loc+'reports/or_summary/'+part+'/'+from+'/'+to;          
+
+    if(participant!=''){
+        var part=participant;
+    }else{
+        var part='null';
+    }
+    window.location=loc+'reports/or_summary/'+from+'/'+to+'/'+part;          
 }
 
-function cancelOR(baseurl,or_no,participant,date_from,date_to){
+function cancelOR(baseurl,or_no,date_from,date_to,participant){
     var redirect = baseurl+"reports/cancel_or";
     var conf = confirm('Are you sure you want to cancel this OR?');
     if(conf){
-            if(participant!=''){
-                var participant=participant;
-            }else{
-                var participant='null';
-            }
-
 
             if(date_from){
                 var date_from=date_from;
@@ -269,29 +262,28 @@ function cancelOR(baseurl,or_no,participant,date_from,date_to){
             }else{
                 var date_to='null';
             }
+
+            if(participant!=''){
+                var participant=participant;
+            }else{
+                var participant='null';
+            }
         $.ajax({
-            data: "or_no="+or_no+"&participant="+participant+"&date_from="+date_from+"&date_to="+date_to,
+            data: "or_no="+or_no+"&date_from="+date_from+"&date_to="+date_to+"&participant="+participant,
             type: "POST",
             url: redirect,
             success: function(output){
                 alert('Successfully cancelled the OR.');
-                window.location=baseurl+'reports/or_summary/'+participant+'/'+date_from+'/'+date_to;
+                window.location=baseurl+'reports/or_summary/'+date_from+'/'+date_to+'/'+participant;
             }
         });
     }
 }
 
-function ignoreOR(baseurl,or_no,participant,date_from,date_to){
+function ignoreOR(baseurl,or_no,date_from,date_to,participant){
     var redirect = baseurl+"reports/ignore_or";
     var conf = confirm('Are you sure you want to ignore this OR?');
     if(conf){
-            if(participant!=''){
-                var participant=participant;
-            }else{
-                var participant='null';
-            }
-
-
             if(date_from){
                 var date_from=date_from;
             }else{
@@ -304,13 +296,19 @@ function ignoreOR(baseurl,or_no,participant,date_from,date_to){
             }else{
                 var date_to='null';
             }
+
+            if(participant!=''){
+                var participant=participant;
+            }else{
+                var participant='null';
+            }
         $.ajax({
-            data: "or_no="+or_no+"&participant="+participant+"&date_from="+date_from+"&date_to="+date_to,
+            data: "or_no="+or_no+"&date_from="+date_from+"&date_to="+date_to+"&participant="+participant,
             type: "POST",
             url: redirect,
             success: function(output){
                 alert('Successfully ignored the OR.');
-                window.location=baseurl+'reports/or_summary/'+participant+'/'+date_from+'/'+date_to;
+                window.location=baseurl+'reports/or_summary/'+date_from+'/'+date_to+'/'+participant;
             }
         });
     }

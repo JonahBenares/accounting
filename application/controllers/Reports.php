@@ -1098,9 +1098,9 @@ class Reports extends CI_Controller {
         $this->load->view('template/navbar');
         $series_number=array();
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
-        $participant=$this->uri->segment(3);
-        $date_from=$this->uri->segment(4);
-        $date_to=$this->uri->segment(5);
+        $date_from=$this->uri->segment(3);
+        $date_to=$this->uri->segment(4);
+        $participant=$this->uri->segment(5);
         $settlement_id=$this->super_model->select_column_where("participant","settlement_id","settlement_id",$participant);
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
         $data['settlement_id'] = $settlement_id;
@@ -1108,24 +1108,26 @@ class Reports extends CI_Controller {
         $data['date_from'] = $date_from;
         $data['date_to'] = $date_to;
         $sql='';
-        if($date_from!='null' && $date_to != 'null'){
-            $sql.= "ch.collection_date BETWEEN '$date_from' AND '$date_to' AND ";
+        if($date_from != 'null' && $date_to != 'null'){
+            //$sql.= "collection_date BETWEEN '$date_from' AND '$date_to' AND ";
+             $sql.= "collection_date >= '$date_from' AND collection_date <= '$date_to' AND ";
         } 
         if($participant!='null'){
-             $sql.= "cd.settlement_id = '$participant' AND ";
+             $sql.= "settlement_id = '$participant' AND ";
         }
         $query=substr($sql,0,-4);
-        $data['or_summary']=array();
-        $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
 
-        $data['max']= $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND ".$query."");
+        //echo $query;
+        $data['or_summary']=array();
+        $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND ".$query."");
+
+        $data['max']= $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND ".$query."");
 
        
 
-        foreach($this->super_model->custom_query("SELECT DISTINCT series_number FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
+        foreach($this->super_model->custom_query("SELECT DISTINCT series_number FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND saved='1' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
 
             $series_number[] = $or->series_number;
-  
         }
 
         
@@ -1135,6 +1137,8 @@ class Reports extends CI_Controller {
             $company_name="";
             $amount="";
             $remarks="";
+
+          
 
                 foreach($this->super_model->select_row_where("collection_details", "series_number", $or) AS $o){
                     $settle=$o->settlement_id;
@@ -1165,11 +1169,6 @@ class Reports extends CI_Controller {
                     "remarks"=>$remarks,
                     "company_name"=>$company_name,
                 );
-
-                
-            
-
-            
        }
 
 
