@@ -98,6 +98,7 @@
                                             <tr>
                                                 <th width="1%"><center><span class="fas fa-bars"></span></center></th>
                                                 <th width="5%">OR#</th>
+                                                <th width="5%">OR Remarks</th>
                                                 <th width="2%" align="center">Def Int</th>
                                                 <th width="2%">Billing Remarks</th>
                                                 <th width="2%">Particulars</th>
@@ -148,6 +149,7 @@
                                                             'total_single'=>$value['total'],
                                                             //'defint' => array(),
                                                             'defint_single'=>$value['defint'],  
+                                                            'or_no_remarks_single'=>$value['or_no_remarks'],  
                                                             'count_series'=>$value['count_series'],
                                                             'overall_total'=>$value['overall_total'],
                                                         );
@@ -185,6 +187,10 @@
                                                     <input type="" name="settlement_id_single" id="settlement_id_single<?php echo $x; ?>" value='<?php echo $log['settlement_id_single'];?>'>
                                                     <input type="" name="reference_no_single" id="reference_no_single<?php echo $x; ?>" value='<?php echo $log['reference_no_single'];?>'>-->
                                                     <input type="hidden" name="old_series_no" id="old_series_no<?php echo $x; ?>" value='<?php echo $log['series_number'];?>'> 
+                                                </td>
+                                                 <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
+                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="or_no_remarks" id="or_no_remarks<?php echo $x; ?>" value="<?php echo $log['or_no_remarks_single'];?>" onchange="updateorRemarks('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input OR Remarks'>
+                                                    <span hidden><?php echo $log['or_no_remarks_single'];?></span>
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
                                                     <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="def_int" id="def_int<?php echo $x; ?>" value="<?php echo $log['defint_single'];?>" onchange="updateDefInt('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input Def Int'>

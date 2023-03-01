@@ -631,6 +631,21 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 	
 
 }
+function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_number){
+    var redirect = baseurl+"sales/update_orno_remarks";
+    var or_no_remarks=document.getElementById("or_no_remarks"+count).value;
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'or_no_remarks='+or_no_remarks+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number,
+		success: function(output){
+			//alert(output);
+			document.getElementById("or_no_remarks"+count).setAttribute('value',output);
+		}
+	});
+	
+
+}
 
 function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number){
     var redirect = baseurl+"sales/update_defint";

@@ -1067,6 +1067,7 @@ class Sales extends CI_Controller {
                 //"company_name"=>$company_name,
                 "company_name"=>$col->buyer_fullname,
                 "amount"=>$col->amount,
+                "or_no_remarks"=>$col->or_no_remarks,
                 "overall_total"=>$overall_total,
             );
         //}
@@ -1166,6 +1167,41 @@ class Sales extends CI_Controller {
                echo $latest_defint->defint;
             }
         }
+    }
+
+    public function update_orno_remarks(){
+        $ref_no=$this->input->post('reference_number');
+        $collection_id=$this->input->post('collection_id');
+        $orno_remarks=$this->input->post('or_no_remarks');
+        $settlement_id=$this->input->post('settlement_id');
+
+        $data_update = array(
+            'or_no_remarks'=>$orno_remarks,
+        );
+
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
+            if (strpos($orno_remarks, ',') !== false) {
+                $or_no_remarks=explode(",", $orno_remarks);
+                $or_no=$or_no_remarks[0];
+                $remarks=$or_no_remarks[1];
+                $now = date("Y-m-d H:i:s");
+                    $or_remarks = array(
+                       "or_no"=>$or_no,
+                       "remarks"=>$remarks,
+                       "create_date"=>$now,
+                       "user_id"=>$_SESSION['user_id'],
+                    );
+                    $this->super_model->insert_into("or_remarks", $or_remarks);
+                    }else{
+                        $or_no='';
+                        $remarks='';
+                    }
+
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_or_remarks){
+               echo $latest_or_remarks->or_no_remarks;
+            }
+        }
+
     }
 
     public function save_collection(){
@@ -1928,6 +1964,7 @@ class Sales extends CI_Controller {
                 //"company_name"=>$company_name,
                 "company_name"=>$col->buyer_fullname,
                 "amount"=>$col->amount,
+                "or_no_remarks"=>$col->or_no_remarks,
                 "overall_total"=>$overall_total,
             );
         }
