@@ -142,6 +142,16 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_list">Collection List</a></li>
                 </ul>
             </li>
+             <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>BIR Monitoring Bulk Update</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_main">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_adjustment">Adjustment</a></li>
+                </ul>
+            </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                     <i data-feather="briefcase"></i>

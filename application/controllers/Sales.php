@@ -2594,4 +2594,213 @@ public function upload_sales_adjustment_test(){
         }
         echo $adjust_identifier;
     }
+
+    public function bulk_update_main(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $salesid=$this->uri->segment(3);
+        $data['sales_id'] = $salesid;
+        $identifier=$this->uri->segment(4);
+        $data['identifier']=$this->uri->segment(4);
+        $ref_no=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$salesid);
+        $data['refno']=$ref_no;
+        $data['saved']=$this->super_model->select_column_where("sales_transaction_details","saved_bulk_update","bulk_update_identifier",$identifier);
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_id FROM sales_transaction_head WHERE reference_number!='' AND saved='1' ");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE reference_number='$ref_no' AND saved='1' AND bulk_update_identifier ='$identifier'") AS $d){
+            $data['details'][]=array(
+                'sales_detail_id'=>$d->sales_detail_id,
+                'sales_id'=>$d->sales_id,
+                'ewt_amount'=>$d->ewt_amount,
+                'original_copy'=>$d->original_copy,
+                'scanned_copy'=>$d->scanned_copy,
+                'billing_id'=>$d->billing_id,
+            );
+        }
+        $this->load->view('sales/upload_bulk_update_main', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function cancel_bulkupdate_main(){
+        $sales_id = $this->input->post('sales_id');
+        $main_identifier = $this->input->post('main_identifier');
+            $data_main = array(
+                'ewt_amount'=>'',
+                'original_copy'=>0,
+                'scanned_copy'=>0,
+                'bulk_update_identifier'=>Null,
+            );
+           $this->super_model->update_custom_where("sales_transaction_details", $data_main, "sales_id='$sales_id' AND bulk_update_identifier='$main_identifier'");
+        }
+
+    public function upload_bulk_update_main(){
+        $sales_id = $this->input->post('sales_id');
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $error_ext=0;
+        if(!empty($_FILES['doc']['name'])){
+            $exc= basename($_FILES['doc']['name']);
+            $exc=explode('.',$exc);
+            $ext1=$exc[1];
+            if($ext1=='php' || $ext1!='xlsx'){
+                $error_ext++;
+            }else{
+                $filename1='bir_monitoring_bulkupdate_main.'.$ext1;
+                if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
+                     $this->readExcel_bulkupdate_main($sales_id);
+                }
+            }
+        }
+    }
+
+    public function readExcel_bulkupdate_main($sales_id){
+
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+
+        $inputFileName =realpath(APPPATH.'../uploads/excel/bir_monitoring_bulkupdate_main.xlsx');
+
+       try {
+            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        
+   
+            $objPHPExcel = $objReader->load($inputFileName);
+        } 
+
+
+        catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow();
+        for($x=2;$x<=$highestRow;$x++){
+            $identifier = $this->input->post('identifier');
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+            $ewt_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+     
+            $data_main = array(
+                'ewt_amount'=>$ewt_amount,
+                'original_copy'=>$original_copy,
+                'scanned_copy'=>$scanned_copy,
+                'bulk_update_identifier'=>$identifier,
+            );
+           $this->super_model->update_custom_where("sales_transaction_details", $data_main, "sales_id='$sales_id' AND billing_id='$billing_id'");
+        }
+    }
+
+    public function save_bulkupdate_main(){
+        $sales_id = $this->input->post('sales_id');
+        $bulk_update_identifier = $this->input->post('main_identifier');
+        $data_head = array(
+            'saved_bulk_update'=>1
+        );
+        $this->super_model->update_custom_where("sales_transaction_details", $data_head, "sales_id='$sales_id' AND bulk_update_identifier='$bulk_update_identifier'");
+    }
+
+    public function bulk_update_adjustment(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $salesadjustmentid=$this->uri->segment(3);
+        $data['sales_adjustment_id'] = $salesadjustmentid;
+        $identifier=$this->uri->segment(4);
+        $data['identifier']=$this->uri->segment(4);
+        $ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$salesadjustmentid);
+        $data['refno']=$ref_no;
+        $data['saved']=$this->super_model->select_column_where("sales_adjustment_details","saved_bulk_update","bulk_update_identifier",$identifier);
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_adjustment_id FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' ");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE reference_number='$ref_no' AND saved='1' AND bulk_update_identifier ='$identifier'") AS $d){
+            $data['details'][]=array(
+                'adjustment_detail_id'=>$d->adjustment_detail_id,
+                'sales_adjustment_id'=>$d->sales_adjustment_id,
+                'ewt_amount'=>$d->ewt_amount,
+                'original_copy'=>$d->original_copy,
+                'scanned_copy'=>$d->scanned_copy,
+                'billing_id'=>$d->billing_id,
+            );
+        }
+        $this->load->view('sales/upload_bulk_update_adjustment', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function cancel_bulkupdate_adjustment(){
+        $sales_adjustment_id = $this->input->post('sales_adjustment_id');
+        $adjustment_identifier = $this->input->post('adjustment_identifier');
+            $data_adjustment = array(
+                'ewt_amount'=>'',
+                'original_copy'=>0,
+                'scanned_copy'=>0,
+                'bulk_update_identifier'=>Null,
+            );
+           $this->super_model->update_custom_where("sales_transaction_details", $data_adjustment, "sales_adjustment_id='$sales_adjustment_id' AND bulk_update_identifier='$adjustment_identifier'");
+        }
+
+    public function upload_bulk_update_adjustment(){
+        $sales_adjustment_id = $this->input->post('sales_adjustment_id');
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $error_ext=0;
+        if(!empty($_FILES['doc']['name'])){
+            $exc= basename($_FILES['doc']['name']);
+            $exc=explode('.',$exc);
+            $ext1=$exc[1];
+            if($ext1=='php' || $ext1!='xlsx'){
+                $error_ext++;
+            }else{
+                $filename1='bir_monitoring_bulkupdate_adjustment.'.$ext1;
+                if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
+                     $this->readExcel_bulkupdate_adjustment($sales_adjustment_id);
+                }
+            }
+        }
+    }
+
+    public function readExcel_bulkupdate_adjustment($sales_adjustment_id){
+
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+
+        $inputFileName =realpath(APPPATH.'../uploads/excel/bir_monitoring_bulkupdate_adjustment.xlsx');
+
+       try {
+            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        
+   
+            $objPHPExcel = $objReader->load($inputFileName);
+        } 
+
+
+        catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow();
+        for($x=2;$x<=$highestRow;$x++){
+            $identifier = $this->input->post('identifier');
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+            $ewt_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+     
+            $data_adjustment = array(
+                'ewt_amount'=>$ewt_amount,
+                'original_copy'=>$original_copy,
+                'scanned_copy'=>$scanned_copy,
+                'bulk_update_identifier'=>$identifier,
+            );
+           $this->super_model->update_custom_where("sales_adjustment_details", $data_adjustment, "sales_adjustment_id='$sales_adjustment_id' AND billing_id='$billing_id'");
+        }
+    }
+
+    public function save_bulkupdate_adjustment(){
+        $sales_adjustment_id = $this->input->post('sales_adjustment_id');
+        $bulk_update_identifier = $this->input->post('adjustment_identifier');
+        $data_head = array(
+            'saved_bulk_update'=>1
+        );
+        $this->super_model->update_custom_where("sales_adjustment_details", $data_head, "sales_adjustment_id='$sales_adjustment_id' AND bulk_update_identifier='$bulk_update_identifier'");
+    }
+
 }

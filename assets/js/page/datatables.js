@@ -70,6 +70,11 @@ $("#table-6").dataTable({
   
 });
 
+$("#table-7").dataTable({
+  order: [[1, "asc"]] //column indexes is zero based
+
+});
+
 
 var table = $('#example').DataTable( {
     scrollX:        true,

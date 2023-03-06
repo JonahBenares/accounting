@@ -903,3 +903,225 @@ function updateSalesAdjustment(baseurl,count,sales_detail_id,sales_adjustment_id
 		}
 	});
 }
+
+function proceed_bulk_update_main() {
+    var data = $("#bulkupdatemain").serialize();
+    
+    var loc= document.getElementById("baseurl").value;
+    var sales_id= document.getElementById("sales_id").value;
+    if(sales_id==""){
+        alert('Reference number must not be empty!');
+    }  else {
+    var redirect=loc+"sales/bulk_update_main/";
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: data,
+            success: function(output){
+                window.location=loc+'sales/bulk_update_main/'+sales_id;
+                var redirect = redirect+output;
+                var save = document.getElementById("save_updatebulk_main");
+                var cancel = document.getElementById("cancel_updatebulk_main");
+                document.getElementById('ref_no').readOnly = true;
+                var x = document.getElementById("upload_bulk_update_main");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+
+                        save.style.display = "none";
+                        cancel.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                    save.style.display = "block";
+                    cancel.style.display = "none";
+                }
+            }
+        });
+    } 
+}
+
+async function upload_bulkupdate_main() {
+    //var sales_doc = document.getElementById("WESM_sales").value;
+    var sales_id = document.getElementById("sales_id").value;
+    var identifier = document.getElementById("identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/upload_bulk_update_main";
+    let doc = document.getElementById("bulkupdate_main").files[0];
+    let formData = new FormData();
+         
+    formData.append("doc", doc);
+    formData.append("sales_id", sales_id);
+    formData.append("identifier", identifier);
+    var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("proceed_bulkupdate_main").disabled = true;
+                document.getElementById("cancel_updatebulk_main").disabled = true;
+                $("#table-main").hide(); 
+            },
+            success: function(output){
+                $("#alt").hide(); 
+              
+                window.location=loc+'sales/bulk_update_main/'+sales_id+'/'+identifier;
+            }
+        });
+    }
+}
+
+function saveBulkUpdateMain(){
+    var data = $("#upload_bulkupdate_main").serialize();
+    var sales_id = document.getElementById("sales_id").value;
+    var main_identifier = document.getElementById("main_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/save_bulkupdate_main";
+    var conf = confirm('Are you sure you want to save this Bulk Update?');
+    if(conf){
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: redirect,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#submitbulkmain").hide(); 
+            },
+            success: function(output){
+                window.location=loc+'sales/bulk_update_main/'+sales_id+'/'+main_identifier;
+            }
+        });
+    }
+}
+
+function cancelBulkUpdateMain(){
+    var sales_id = document.getElementById("sales_id").value;
+    var main_identifier = document.getElementById("main_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/cancel_bulkupdate_main";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+        $.ajax({
+            data: 'sales_id='+sales_id+'&main_identifier='+main_identifier,
+            type: "POST",
+            url: redirect,
+            success: function(response){
+                window.location=loc+'sales/bulk_update_main/';
+            }
+        });
+    }
+}
+
+function proceed_bulk_update_adjustment() {
+    var data = $("#bulkupdateadjustment").serialize();
+    
+    var loc= document.getElementById("baseurl").value;
+    var sales_adjustment_id= document.getElementById("sales_adjustment_id").value;
+    if(sales_adjustment_id==""){
+        alert('Reference number must not be empty!');
+    }  else {
+    var redirect=loc+"sales/bulk_update_adjustment/";
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: data,
+            success: function(output){
+                window.location=loc+'sales/bulk_update_adjustment/'+sales_adjustment_id;
+                var redirect = redirect+output;
+                var save = document.getElementById("save_updatebulk_adjustment");
+                var cancel = document.getElementById("cancel_updatebulk_adjustment");
+                document.getElementById('ref_no').readOnly = true;
+                var x = document.getElementById("upload_bulk_update_adjustment");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+
+                        save.style.display = "none";
+                        cancel.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                    save.style.display = "block";
+                    cancel.style.display = "none";
+                }
+            }
+        });
+    } 
+}
+
+async function upload_bulkupdate_adjustment() {
+    //var sales_doc = document.getElementById("WESM_sales").value;
+    var sales_adjustment_id = document.getElementById("sales_adjustment_id").value;
+    var identifier = document.getElementById("identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/upload_bulk_update_adjustment";
+    let doc = document.getElementById("bulkupdate_adjustment").files[0];
+    let formData = new FormData();
+         
+    formData.append("doc", doc);
+    formData.append("sales_adjustment_id", sales_adjustment_id);
+    formData.append("identifier", identifier);
+    var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("proceed_bulkupdate_adjustment").disabled = true;
+                document.getElementById("cancel_updatebulk_adjustment").disabled = true;
+                $("#table-adjustment").hide(); 
+            },
+            success: function(output){
+                $("#alt").hide(); 
+              
+                window.location=loc+'sales/bulk_update_adjustment/'+sales_adjustment_id+'/'+identifier;
+            }
+        });
+    }
+}
+
+function saveBulkUpdateAdjustment(){
+    var data = $("#upload_bulkupdate_adjustment").serialize();
+    var sales_adjustment_id = document.getElementById("sales_adjustment_id").value;
+    var adjustment_identifier = document.getElementById("adjustment_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/save_bulkupdate_adjustment";
+    var conf = confirm('Are you sure you want to save this Bulk Update?');
+    if(conf){
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: redirect,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#submitbulkadjustment").hide(); 
+            },
+            success: function(output){
+                window.location=loc+'sales/bulk_update_adjustment/'+sales_adjustment_id+'/'+adjustment_identifier;
+            }
+        });
+    }
+}
+
+function cancelBulkUpdateAdjustment(){
+    var sales_adjustment_id = document.getElementById("sales_adjustment_id").value;
+    var adjustment_identifier = document.getElementById("adjustment_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/cancel_bulkupdate_adjustment";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+        $.ajax({
+            data: 'sales_adjustment_id='+sales_adjustment_id+'&adjustment_identifier='+adjustment_identifier,
+            type: "POST",
+            url: redirect,
+            success: function(response){
+                window.location=loc+'sales/bulk_update_adjustment/';
+            }
+        });
+    }
+}
