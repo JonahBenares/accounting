@@ -2735,7 +2735,7 @@ public function upload_sales_adjustment_test(){
                 'scanned_copy'=>0,
                 'bulk_update_identifier'=>Null,
             );
-           $this->super_model->update_custom_where("sales_transaction_details", $data_adjustment, "sales_adjustment_id='$sales_adjustment_id' AND bulk_update_identifier='$adjustment_identifier'");
+           $this->super_model->update_custom_where("sales_adjustment_details", $data_adjustment, "sales_adjustment_id='$sales_adjustment_id' AND bulk_update_identifier='$adjustment_identifier'");
         }
 
     public function upload_bulk_update_adjustment(){
