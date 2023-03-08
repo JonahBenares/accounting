@@ -753,5 +753,4 @@ function printbs_history(){
 	        }
 	    }); 
 	     //window.print();
-
 }

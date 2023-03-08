@@ -178,12 +178,12 @@
                             <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($as['ewt'],2);?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($as['overall_total'],2);?></b></td>
 
-                            <input type="hidden" id="sub_participant" name="sub_participant" class="form-control" value="<?php echo $as['sub_participant']; ?>">
-                            <input type="hidden" id="vatable_sales" name="vatable_sales" class="form-control" value="<?php echo number_format($as['vatable_sales'],2); ?>">
-                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales" class="form-control" value="<?php echo number_format($as['zero_rated_sales'],2); ?>">
-                            <input type="hidden" id="vat_on_sales" name="vat_on_sales" class="form-control" value="<?php echo number_format($as['vat_on_sales'],2); ?>">
-                            <input type="hidden" id="ewt" name="ewt" class="form-control" value="<?php echo number_format($as['ewt'],2); ?>">
-                            <input type="hidden" id="overall_total" name="overall_total" class="form-control" value="<?php echo number_format($as['overall_total'],2); ?>">
+                            <input type="hidden" id="sub_participant" name="sub_participan[]t" class="form-control" value="<?php echo $as['sub_participant']; ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo number_format($as['vatable_sales'],2); ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo number_format($as['zero_rated_sales'],2); ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo number_format($as['vat_on_sales'],2); ?>">
+                            <input type="hidden" id="ewt" name="ewt" class="form-control[]" value="<?php echo number_format($as['ewt'],2); ?>">
+                            <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo number_format($as['overall_total'],2); ?>">
                         </tr> 
                         <?php
                             if(!empty($sub_part)){ 
@@ -213,12 +213,12 @@
                             <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($sps['ewt'],2); ?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($sps['overall_total'],2); ?></b></td>
 
-                            <input type="hidden" id="sub_participant" name="sub_participant" class="form-control" value="<?php echo $sps['sub_participant']; ?>">
-                            <input type="hidden" id="vatable_sales" name="vatable_sales" class="form-control" value="<?php echo number_format($sps['vatable_sales'],2); ?>">
-                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales" class="form-control" value="<?php echo number_format($sps['zero_rated_sales'],2); ?>">
-                            <input type="hidden" id="vat_on_sales" name="vat_on_sales" class="form-control" value="<?php echo number_format($sps['vat_on_sales'],2); ?>">
-                            <input type="hidden" id="ewt" name="ewt" class="form-control" value="<?php echo number_format($sps['ewt'],2); ?>">
-                            <input type="hidden" id="net_amount" name="net_amount" class="form-control" value="<?php echo number_format($sps['overall_total'],2); ?>">
+                            <input type="hidden" id="sub_participant" name="sub_participant[]" class="form-control" value="<?php echo $sps['sub_participant']; ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo number_format($sps['vatable_sales'],2); ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo number_format($sps['zero_rated_sales'],2); ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo number_format($sps['vat_on_sales'],2); ?>">
+                            <input type="hidden" id="ewt" name="ewt[]" class="form-control" value="<?php echo number_format($sps['ewt'],2); ?>">
+                            <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo number_format($sps['overall_total'],2); ?>">
                         </tr> 
                         <?php }  $h++; } $x++; } } ?>
                         <tr>
@@ -475,12 +475,12 @@
                             <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($sps['ewt'],2); ?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($sps['overall_total'],2); ?></b></td>
 
-                            <input type="hidden" id="sub_participant" name="sub_participant" class="form-control" value="<?php echo $sps['sub_participant']; ?>">
-                            <input type="hidden" id="vatable_sales" name="vatable_sales" class="form-control" value="<?php echo number_format($sps['vatable_sales'],2); ?>">
-                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales" class="form-control" value="<?php echo number_format($sps['zero_rated_sales'],2); ?>">
-                            <input type="hidden" id="vat_on_sales" name="vat_on_sales" class="form-control" value="<?php echo number_format($sps['vat_on_sales'],2); ?>">
-                            <input type="hidden" id="ewt" name="ewt" class="form-control" value="<?php echo number_format($sps['ewt'],2); ?>">
-                            <input type="hidden" id="net_amount" name="net_amount" class="form-control" value="<?php echo number_format($sps['overall_total'],2); ?>">
+                            <input type="hidden" id="sub_participant" name="sub_participant[]" class="form-control" value="<?php echo $sps['sub_participant']; ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo number_format($sps['vatable_sales'],2); ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo number_format($sps['zero_rated_sales'],2); ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo number_format($sps['vat_on_sales'],2); ?>">
+                            <input type="hidden" id="ewt" name="ewt[]" class="form-control" value="<?php echo number_format($sps['ewt'],2); ?>">
+                            <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo number_format($sps['overall_total'],2); ?>">
                         </tr> 
                         <?php } $h++; } $x++; } } ?>
                         <tr>
@@ -495,7 +495,7 @@
                             <input type="hidden" id="zero" name="zero[]" class="form-control" value="<?php echo number_format($zero,2); ?>">
                             <input type="hidden" id="vat" name="vat[]" class="form-control" value="<?php echo number_format($vat,2); ?>">
                             <input type="hidden" id="ewt_arr" name="ewt_arr[]" class="form-control" value="<?php echo number_format($ewt_arr,2); ?>">
-                            <input type="hidden" id="overall_total[]" name="overall_total" class="form-control" value="<?php echo number_format($overall_totals,2); ?>">
+                            <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo number_format($overall_totals,2); ?>">
                         </tr>
                         <?php } ?>
                     </table>

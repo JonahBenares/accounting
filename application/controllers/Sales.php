@@ -49,46 +49,55 @@ class Sales extends CI_Controller {
         $vat = $this->input->post('vat');
         $ewt_arr = $this->input->post('ewt_arr');
         $overall_totals = $this->input->post('overall_totals');  
-        $count=count($participant_id);
-        for($x=0;$x<$count;$x++){   
+        $count_head=count($participant_id);
 
-              $data_head = array(
-                    'participant_id' => $participant_id[$x],
-                    'participant_name' => $company_name[$x],
-                    'address' => $address[$x],
-                    'tin' => $tin[$x],
-                    'stl_id' => $settlement[$x],
-                    'invoice_no' => $serial_no[$x],
-                    'statement_date' => $transaction_date[$x],
-                    'billing_period' => $billing_period[$x],
-                    'due_date' => $due_date[$x],
-                    'reference_number' => $reference_number[$x],
-                    'prepared_by' => $prepared_by[$x],
-                    'checked_by_emg' => $checked_by_emg[$x],
-                    'checked_by_accounting' => $checked_by_accounting[$x],
-                    'checked_by_finance' => $checked_by_finance[$x],
-                    'noted_by' => $noted_by[$x],
-                    'total_vatable_sales' => $vatable[$x],
-                    'total_zero_rated' => $zero[$x],
-                    'total_vat' => $vat[$x],
-                    'total_ewt' => $ewt_arr[$x],
-                    'total_net_amount' => $overall_totals[$x],
-             );
+        $billing_id = $this->input->post('sub_participant');
+        $vatable_sales = $this->input->post('vatable_sales');
+        $zero_rated_sales = $this->input->post('zero_rated_sales');
+        $vat = $this->input->post('vat_on_sales');
+        $ewt = $this->input->post('ewt');
+        $net_amount = $this->input->post('net_amount');
+        $count_details=count($billing_id);
 
-            $head_id= $this->super_model->insert_return_id("bs_head", $data_head);
-}
+            for($x=0;$x<$count_head;$x++){   
+                  $data_head = array(
+                        'participant_id' => $participant_id[$x],
+                        'participant_name' => $company_name[$x],
+                        'address' => $address[$x],
+                        'tin' => $tin[$x],
+                        'stl_id' => $settlement[$x],
+                        'invoice_no' => $serial_no[$x],
+                        'statement_date' => $transaction_date[$x],
+                        'billing_period' => $billing_period[$x],
+                        'due_date' => $due_date[$x],
+                        'reference_number' => $reference_number[$x],
+                        'prepared_by' => $prepared_by[$x],
+                        'checked_by_emg' => $checked_by_emg[$x],
+                        'checked_by_accounting' => $checked_by_accounting[$x],
+                        'checked_by_finance' => $checked_by_finance[$x],
+                        'noted_by' => $noted_by[$x],
+                        'total_vatable_sales' => $vatable[$x],
+                        'total_zero_rated' => $zero[$x],
+                        'total_vat' => $vat[$x],
+                        'total_ewt' => $ewt_arr[$x],
+                        'total_net_amount' => $overall_totals[$x],
+                 );
+                 $head_id= $this->super_model->insert_return_id("bs_head", $data_head);
+        }
 
-       $data_details = array(
-            'bs_head_id'=>$head_id,
-            'billing_id' => $this->input->post('sub_participant'),
-            'vatable_sales' => $this->input->post('vatable_sales'),
-            'zero_rated_sales' => $this->input->post('zero_rated_sales'),
-            'vat' => $this->input->post('vat_on_sales'),
-            'ewt' => $this->input->post('ewt'),
-            'net_amount' => $this->input->post('net_amount'),
-       );
-        $this->super_model->insert_into("bs_details", $data_details);
-}
+            for($y=0;$y<$count_details;$y++){
+               $data_details = array(
+                    'bs_head_id'=>$head_id,
+                    'billing_id' => $billing_id[$y],
+                    'vatable_sales' => $vatable_sales[$y],
+                    'zero_rated_sales' => $zero_rated_sales[$y],
+                    'vat' => $vat[$y],
+                    'ewt' => $ewt[$y],
+                    'net_amount' => $net_amount[$y],
+               );
+                $this->super_model->insert_into("bs_details", $data_details);
+            }
+    }
 
     public function print_multiple(){
         $identifier=$this->input->post('multiple_print');
