@@ -143,6 +143,7 @@
                                     <thead>
                                         <tr>
                                             <th class="table_td p-2" style="font-size: 12px;" width="10%">BIlling ID</th> 
+                                            <th class="table_td p-2" style="font-size: 12px;" width="10%">Transaction Reference Number</th> 
                                             <th class="table_td p-2" style="font-size: 12px;" width="30%">Company Name</th>
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">Vatable Purchases</th> 
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">VAT on Purchases</th>    
@@ -165,6 +166,7 @@
                                                         'particular'=>array(),
                                                         'participant_name'=>array(),
                                                         'billing_id'=>array(),
+                                                        'reference_number'=>array(),
                                                         'billing'=>date("M. d, Y",strtotime($pal['billing_from']))." - ".date("M. d, Y",strtotime($pal['billing_to'])),
                                                         'vatables_purchases'=>array(),
                                                         'vat_on_purchases'=>array(),
@@ -178,6 +180,7 @@
                                                 }
                                                 $data2[$key]['participant_name'][] = ($pal['participant_name'] != '') ? $pal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
                                                 $data2[$key]['billing_id'][] = $pal['billing_id'];
+                                                $data2[$key]['reference_number'][] = $pal['reference_number'];
                                                 $data2[$key]['vatables_purchases'][] = "(".number_format($pal['vatables_purchases'],2).")";
                                                 $data2[$key]['vat_on_purchases'][] = "(".number_format($pal['vat_on_purchases'],2).")";
                                                 $data2[$key]['ewt'][] = number_format($pal['ewt'],2);
@@ -190,13 +193,16 @@
                                             foreach($data2 AS $pa){
                                         ?>
                                         <tr>
-                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="10" style="font-size: 12px; background: #e8f5ff;">
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="11" style="font-size: 12px; background: #e8f5ff;">
                                                 <b><?php echo $pa['billing']; ?></b>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin: 0px'>",$pa['billing_id']);?>
+                                            </td>
+                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin: 0px'>",$pa['reference_number']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin: 0px'>",$pa['participant_name']);?>

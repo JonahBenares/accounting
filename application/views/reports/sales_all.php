@@ -105,6 +105,7 @@
                                     <thead>
                                         <tr>
                                             <th class="table_td" style="font-size: 12px;" width="10%">Billing ID</th>
+                                            <th class="table_td" style="font-size: 12px;" width="10%">Transaction Reference Number</th>
                                             <th class="table_td" style="font-size: 12px;" width="30%">Company Name</th>  
                                             <th class="table_td" style="font-size: 12px;" width="5%">Vatable Sales</th> 
                                             <th class="table_td" style="font-size: 12px;" width="5%">Zero-Rated Ecozones</th>     
@@ -127,6 +128,7 @@
                                                         'particular'=>array(),
                                                         'participant_name'=>array(),
                                                         'billing_id'=>array(),
+                                                        'reference_number'=>array(),
                                                         'billing'=>date("M. d, Y",strtotime($sal['billing_from']))." - ".date("M. d, Y",strtotime($sal['billing_to'])),
                                                         'vatable_sales'=>array(),
                                                         'vat_on_sales'=>array(),
@@ -141,6 +143,7 @@
                                                 }
                                                 $data2[$key]['participant_name'][] = ($sal['participant_name'] != '') ? $sal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
                                                 $data2[$key]['billing_id'][] = $sal['billing_id'];
+                                                $data2[$key]['reference_number'][] = $sal['reference_number'];
                                                 $data2[$key]['sales_detail_id'][] = $sal['sales_detail_id'];
                                                 $data2[$key]['vatable_sales'][] = number_format($sal['vatable_sales'],2);
                                                 $data2[$key]['vat_on_sales'][] = number_format($sal['vat_on_sales'],2);
@@ -154,13 +157,16 @@
                                             foreach($data2 AS $sa){
                                         ?>
                                         <tr>
-                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="10" style="font-size: 12px; background: #e8f5ff;">
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="11" style="font-size: 12px; background: #e8f5ff;">
                                                 <b><?php echo $sa['billing']; ?></b>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin:0px'>",$sa['billing_id']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['reference_number']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin:0px'>",$sa['participant_name']);?>
