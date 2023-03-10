@@ -1426,7 +1426,7 @@ class Reports extends CI_Controller {
 
     public function purchases_all(){
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        //$this->load->view('template/navbar');
         $participant=$this->uri->segment(3);
         $from=$this->uri->segment(4);
         $to=$this->uri->segment(5);
@@ -1442,20 +1442,31 @@ class Reports extends CI_Controller {
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $sql="";
 
+        $from_date  = strtotime($from);
+        $from_day   = date('d',$from_date);
+        $from_month = date('m',$from_date);
+        $from_year  = date('Y',$from_date);
+
+        $to_date  = strtotime($to);
+        $to_day   = date('d',$to_date);
+        $to_month = date('m',$to_date);
+        $to_year  = date('Y',$to_date);
+
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
         } if($participant!='null'){
              $sql.= "tin = '$participant' AND "; 
         } if($original!='null' && isset($original)){
              $sql.= "original_copy = '$original' AND "; 
         } if($scanned!='null'  && isset($scanned)){
-             $sql.= "scanned_copy = '$scanned' AND "; 
+             $sql.= "scanned_copy = '$scanned' AND ";
         }
 
         $query=substr($sql,0,-4);
         $qu = "saved='1' AND adjustment!='1' AND ".$query;
-
         $total_sum[]=0;
+
+        echo $query;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id INNER JOIN participant p ON p.billing_id = ptd.billing_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC, participant_name  ASC, p.billing_id ASC") AS $pth){
             //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
             // $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $pth->purchase_id);
@@ -1497,8 +1508,19 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="Purchases Wesm All Transcations.xlsx";
         $sql='';
-          if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+
+        $from_date  = strtotime($from);
+        $from_day   = date('d',$from_date);
+        $from_month = date('m',$from_date);
+        $from_year  = date('Y',$from_date);
+
+        $to_date  = strtotime($to);
+        $to_day   = date('d',$to_date);
+        $to_month = date('m',$to_date);
+        $to_year  = date('Y',$to_date);
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
         } if($participant!='null'){
              $sql.= "tin = '$participant' AND "; 
         }
@@ -1666,8 +1688,18 @@ class Reports extends CI_Controller {
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $sql="";
 
+        $from_date  = strtotime($from);
+        $from_day   = date('d',$from_date);
+        $from_month = date('m',$from_date);
+        $from_year  = date('Y',$from_date);
+
+        $to_date  = strtotime($to);
+        $to_day   = date('d',$to_date);
+        $to_month = date('m',$to_date);
+        $to_year  = date('Y',$to_date);
+
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
         } if($participant!='null'){
              $sql.= "tin = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -1723,8 +1755,19 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="Sales Wesm All Transcations.xlsx";
         $sql='';
-          if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+
+        $from_date  = strtotime($from);
+        $from_day   = date('d',$from_date);
+        $from_month = date('m',$from_date);
+        $from_year  = date('Y',$from_date);
+
+        $to_date  = strtotime($to);
+        $to_day   = date('d',$to_date);
+        $to_month = date('m',$to_date);
+        $to_year  = date('Y',$to_date);
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
         } if($participant!='null'){
              $sql.= " tin = '$participant' AND "; 
         }
@@ -1890,8 +1933,18 @@ class Reports extends CI_Controller {
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND saved = '1'");
         $sql="";
 
+        $from_date  = strtotime($from);
+        $from_day   = date('d',$from_date);
+        $from_month = date('m',$from_date);
+        $from_year  = date('Y',$from_date);
+
+        $to_date  = strtotime($to);
+        $to_day   = date('d',$to_date);
+        $to_month = date('m',$to_date);
+        $to_year  = date('Y',$to_date);
+
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
         }if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
@@ -1947,8 +2000,19 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="Purchases Wesm Adjustment All Transcations.xlsx";
         $sql='';
-          if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+
+        $from_date  = strtotime($from);
+        $from_day   = date('d',$from_date);
+        $from_month = date('m',$from_date);
+        $from_year  = date('Y',$from_date);
+
+        $to_date  = strtotime($to);
+        $to_day   = date('d',$to_date);
+        $to_month = date('m',$to_date);
+        $to_year  = date('Y',$to_date);
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
         } if($participant!='null'){
              $sql.= "tin = '$participant' AND "; 
         } if($due!='null'){
@@ -2122,8 +2186,18 @@ class Reports extends CI_Controller {
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!='' AND saved = '1'");
         $sql="";
 
+        $from_date  = strtotime($from);
+        $from_day   = date('d',$from_date);
+        $from_month = date('m',$from_date);
+        $from_year  = date('Y',$from_date);
+
+        $to_date  = strtotime($to);
+        $to_day   = date('d',$to_date);
+        $to_month = date('m',$to_date);
+        $to_year  = date('Y',$to_date);
+
         if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+            $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
         }if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
@@ -2182,8 +2256,19 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="Sales Wesm Adjustment All Transcations.xlsx";
         $sql='';
-          if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
+        
+        $from_date  = strtotime($from);
+        $from_day   = date('d',$from_date);
+        $from_month = date('m',$from_date);
+        $from_year  = date('Y',$from_date);
+
+        $to_date  = strtotime($to);
+        $to_day   = date('d',$to_date);
+        $to_month = date('m',$to_date);
+        $to_year  = date('Y',$to_date);
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
         } if($participant!='null'){
              $sql.= " tin = '$participant' AND "; 
         }   if($due!='null'){
