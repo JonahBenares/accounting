@@ -46,7 +46,7 @@
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->settlement_id." - ".$p->participant_name;?></option>
+                                                        <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
                                                 </td>
@@ -290,7 +290,7 @@
                         <select class="form-control select2" name="participant1" id="participant1">
                                 <option value="">-- Select Participant --</option>
                             <?php foreach($participant AS $p){ ?>
-                                <option value="<?php echo $p->settlement_id;?>"><?php echo $p->settlement_id." - ".$p->participant_name;?></option>
+                                <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
                             <?php } ?>
                         </select>
                     </div>
