@@ -1426,7 +1426,7 @@ class Reports extends CI_Controller {
 
     public function purchases_all(){
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $participant=$this->uri->segment(3);
         $from=$this->uri->segment(4);
         $to=$this->uri->segment(5);
@@ -1466,7 +1466,7 @@ class Reports extends CI_Controller {
         $qu = "saved='1' AND adjustment!='1' AND ".$query;
         $total_sum[]=0;
 
-        echo $query;
+        //echo $query;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id INNER JOIN participant p ON p.billing_id = ptd.billing_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC, participant_name  ASC, p.billing_id ASC") AS $pth){
             //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
             // $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $pth->purchase_id);
