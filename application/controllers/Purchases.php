@@ -1064,8 +1064,10 @@ class Purchases extends CI_Controller {
                 $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
                 // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
-                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
-                if($participant_id != $sub_participant){
+                $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
+                //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                //if($participant_id != $sub_participant){
+                if($sub_participant==0){
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,
                         'purchase_id'=>$d->purchase_id,
@@ -2274,8 +2276,10 @@ class Purchases extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
                 foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
                     $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$re->billing_id'");
-                    $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
-                    if($participant_id != $sub_participant){
+                    $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
+                    //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                    //if($participant_id != $sub_participant){
+                    if($sub_participant==0){
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);

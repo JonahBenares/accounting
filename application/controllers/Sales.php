@@ -133,8 +133,10 @@ class Sales extends CI_Controller {
         }else if($sub==1){
             foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
-                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
-                if($participant_id != $sub_participant){
+                //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
+                //if($participant_id != $sub_participant){
+                if($sub_participant==0){
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_detail_id,
                         'sales_id'=>$d->sales_id,
@@ -1414,11 +1416,11 @@ class Sales extends CI_Controller {
             $qu = " WHERE saved='1' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu") AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
-                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","participant_id='$participant_id'");
+                $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
-                //echo $sub_participant. "<br>";
-                if($participant_id != $sub_participant){
+                if($sub_participant==0){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_detail_id,
                     'sales_id'=>$d->sales_id,
@@ -2218,9 +2220,11 @@ class Sales extends CI_Controller {
             /*foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){*/
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu") AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
-                $sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
                 //echo $sub_participant. "<br>";
-                if($participant_id != $sub_participant){
+                //if($participant_id != $sub_participant){
+                if($sub_participant==0){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->adjustment_detail_id,
                     'sales_adjustment_id'=>$d->sales_adjustment_id,

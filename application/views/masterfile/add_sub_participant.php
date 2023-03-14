@@ -18,7 +18,11 @@
                             if(!empty($subparticipant)){
                             foreach($subparticipant AS $sp){ ?>
                         <tr >
-                            <td><?php echo $sp['billing_id'];?> - <?php echo $sp['participant_name'];?></td>
+                            <td>
+                                <?php echo $sp['billing_id'];?> - <?php echo $sp['participant_name'];?>
+                            </td>
+                            <td>
+                                <a onclick="return confirm('Are you sure you want to delete this data?')" href="<?php echo base_url(); ?>masterfile/delete_subparticipant/<?php echo $sp['participant_id']?>/<?php echo $sp['subparticipant_id']?>" class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i></a></td>
                         </tr>
                     </tbody>
                     <?php } } else { ?>
