@@ -616,8 +616,8 @@
         if($participant_id[$x]==$participant_id_sub[$x]){
     ?>
         <div class="ecozone_sub">Zero Rated Ecozones Sales</div>
-        <div class="ecozone_sub_1"><?php echo "₱ ".number_format($zero_rated_ecozones_peso_sub[$x],0); ?> 00</div>
-        <div class="ecozone_sub_2"><?php echo $zero_rated_ecozones_cents_sub[$x]; ?> 00</div>
+        <div class="ecozone_sub_1"><?php echo "₱ ".number_format($zero_rated_ecozones_peso_sub[$x],0); ?></div>
+        <div class="ecozone_sub_2"><?php echo $zero_rated_ecozones_cents_sub[$x]; ?></div>
     </tr>
     <?php 
         } }
