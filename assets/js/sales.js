@@ -904,6 +904,7 @@ function updateSalesAdjustment(baseurl,count,sales_detail_id,sales_adjustment_id
 	});
 }
 
+
 function proceed_bulk_update_main() {
     var data = $("#bulkupdatemain").serialize();
     
@@ -1124,4 +1125,22 @@ function cancelBulkUpdateAdjustment(){
             }
         });
     }
+}
+function printbs_history(){
+	var data = $("#InsertBS").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/insert_printbs";
+	    $.ajax({
+	        data: data,
+	        type: "POST",
+	        url: redirect,
+	        success: function(output){
+	        	
+	         window.print();  
+	         //alert(output);
+	         //console.log(output);
+	         //print_r(output);
+	        }
+	    }); 
+	     //window.print();
 }

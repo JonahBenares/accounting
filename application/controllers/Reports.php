@@ -778,6 +778,8 @@ class Reports extends CI_Controller {
 /*        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
             $reference_number=$this->super_model->select_column_where("collection_details","reference_no",'settlement_id',$b->short_name);*/
         //foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id","short_name") AS $cs){
+
+            //echo $cs_qu;
         foreach($this->super_model->select_inner_join_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id"," short_name") AS $cs){
 
                 $vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
@@ -788,6 +790,8 @@ class Reports extends CI_Controller {
 
             $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'");
 
+
+            //echo $cs->reference_number ." - ". $cs->short_name ."<br>";
                 
             if($count_collection>0){
 
