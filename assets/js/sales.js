@@ -748,6 +748,7 @@ function printbs_history(){
 	        success: function(output){
 	        	
 	         window.print();  
+	         //alert(output);
 	         //console.log(output);
 	         //print_r(output);
 	        }

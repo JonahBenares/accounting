@@ -119,13 +119,14 @@
                 <td colspan="3">Statement Date:</td>
                 <!-- <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td> -->
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($transaction_date[$y]));?></td>
-                <input type="hidden" id="transaction_date" name="transaction_date[]" class="form-control" value="<?php echo date("M d,Y",strtotime($transaction_date[$y])); ?>">
+                <input type="hidden" id="transaction_date" name="transaction_date[]" class="form-control" value="<?php echo $transaction_date[$y]; ?>">
             </tr>
             <tr>
                 <td></td>
                 <td colspan="3">Billing Period:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($billing_from[$y]))." to ".date("M d,Y",strtotime($billing_to[$y]));?></td>
-                <input type="hidden" id="billing_period" name="billing_period[]" class="form-control" value="<?php echo date("M d,Y",strtotime($billing_from[$y]))." to ".date("M d,Y",strtotime($billing_to[$y])); ?>">
+                <input type="hidden" id="billing_from" name="billing_from[]" class="form-control" value="<?php echo $billing_from[$y]; ?>">
+                <input type="hidden" id="billing_to" name="billing_to[]" class="form-control" value="<?php echo $billing_to[$y]; ?>">
             </tr>
             <tr>
                 <td colspan="2">TIN:</td>
@@ -134,7 +135,7 @@
                 <td colspan="4"></td>
                 <td colspan="3">Due Date:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($due_date[$y]));?></td>
-                <input type="hidden" id="due_date" name="due_date[]" class="form-control" value="<?php echo date("M d,Y",strtotime($due_date[$y])); ?>">
+                <input type="hidden" id="due_date" name="due_date[]" class="form-control" value="<?php echo $due_date[$y]; ?>">
             </tr>
             <tr>
                 <td colspan="2">STL ID:</td>
@@ -145,6 +146,7 @@
                 <td colspan="5" class="bor-btm"><?php echo $reference_number[$y]; ?></td>
                 <input type="hidden" id="reference_number" name="reference_number[]" class="form-control" value="<?php echo $reference_number[$y]; ?>">
             </tr>
+            <input type="hidden" id="sales_detail_id" name="sales_detail_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
             <tr>
                 <td colspan="20">
                     <br>
@@ -162,13 +164,21 @@
                             <td style="vertical-align:text-bottom;" width="14%" align="center" class="p-r-10 p-b-5">NET AMOUNT DUE</td>
                         </tr>
                         <?php 
-                            if(!empty($sub)){ 
-                                $vatable=array_sum($vatable_arraysum[$y]);
-                                $zero=array_sum($zerorated_arraysum[$y]);
-                                $total=array_sum($total_arraysum[$y]);
-                                $vat=array_sum($vat_arraysum[$y]);
-                                $ewt_arr=array_sum($ewt_arraysum[$y]);
-                                $overall_totals=array_sum($overall_total_arraysum[$y]);
+                            if(!empty($sub)){
+                                if($bs_head_id[$y] != ''){
+                                    $vatable=$total_vatable_sales[$y];
+                                    $zero=$total_zero_rated[$y];
+                                    $vat=$total_vat[$y];
+                                    $ewt_arr=$total_ewt[$y];
+                                    $overall_totals=$total_net_amount[$y];
+                                }else{
+                                    $vatable=array_sum($vatable_arraysum[$y]);
+                                    $zero=array_sum($zerorated_arraysum[$y]);
+                                    $total=array_sum($total_arraysum[$y]);
+                                    $vat=array_sum($vat_arraysum[$y]);
+                                    $ewt_arr=array_sum($ewt_arraysum[$y]);
+                                    $overall_totals=array_sum($overall_total_arraysum[$y]);
+                                }
                         ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><?php echo $as['sub_participant'];?></td>
@@ -178,12 +188,13 @@
                             <td class="p-r-10 p-b-5" align="right">(<?php echo number_format($as['ewt'],2);?>)</td>
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($as['overall_total'],2);?></b></td>
 
-                            <input type="hidden" id="sub_participant" name="sub_participan[]t" class="form-control" value="<?php echo $as['sub_participant']; ?>">
-                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo number_format($as['vatable_sales'],2); ?>">
-                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo number_format($as['zero_rated_sales'],2); ?>">
-                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo number_format($as['vat_on_sales'],2); ?>">
-                            <input type="hidden" id="ewt" name="ewt" class="form-control[]" value="<?php echo number_format($as['ewt'],2); ?>">
-                            <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo number_format($as['overall_total'],2); ?>">
+                            <input type="hidden" id="sub_participant" name="sub_participant[]" class="form-control" value="<?php echo $as['sub_participant']; ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo $as['vatable_sales']; ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo $as['zero_rated_sales']; ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo $as['vat_on_sales']; ?>">
+                            <input type="hidden" id="ewt" name="ewt[]" class="form-control" value="<?php echo $as['ewt']; ?>">
+                            <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo $as['overall_total']; ?>">
+                            <input type="hidden" id="details_id" name="details_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
                         </tr> 
                         <?php
                             if(!empty($sub_part)){ 
@@ -192,18 +203,27 @@
                                 foreach($sub_part AS $sps){ 
                                     if($sps['participant_id']==$as['participant_id']){
                                         if($x >=1 || $x<=14){ 
-                                        // $vatable+=$vatable_sales_sub[$h]; 
-                                        // $zero+=$zero_rated_sales_sub[$h]; 
-                                        // $total+=$total_amount_sub[$h]; 
-                                        // $vat+=$vat_on_sales_sub[$h]; 
-                                        // $ewt_arr+=$ewt_s[$h];
-                                        // $overall_totals+=$overall_total_sub[$h];
-                                        $vatable+=$sps['vatable_sales']; 
-                                        $zero+=$sps['zero_rated_sales']; 
-                                        //$total+=$sps['overall_total']; 
-                                        $vat+=$sps['vat_on_sales']; 
-                                        $ewt_arr+=$sps['ewt'];
-                                        $overall_totals+=$sps['overall_total'];
+
+                                        if($bs_head_id[$y] != 0){
+                                            $vatable=$total_vatable_sales[$y];
+                                            $zero=$total_zero_rated[$y];
+                                            $vat=$total_vat[$y];
+                                            $ewt_arr=$total_ewt[$y];
+                                            $overall_totals=$total_net_amount[$y];
+                                        }else{
+                                            // $vatable+=$vatable_sales_sub[$h]; 
+                                            // $zero+=$zero_rated_sales_sub[$h]; 
+                                            // $total+=$total_amount_sub[$h]; 
+                                            // $vat+=$vat_on_sales_sub[$h]; 
+                                            // $ewt_arr+=$ewt_s[$h];
+                                            // $overall_totals+=$overall_total_sub[$h];
+                                            $vatable+=$sps['vatable_sales']; 
+                                            $zero+=$sps['zero_rated_sales']; 
+                                            //$total+=$sps['overall_total']; 
+                                            $vat+=$sps['vat_on_sales']; 
+                                            $ewt_arr+=$sps['ewt'];
+                                            $overall_totals+=$sps['overall_total'];
+                                        }
                         ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><?php echo $sps['sub_participant'];?></td>
@@ -214,11 +234,12 @@
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($sps['overall_total'],2); ?></b></td>
 
                             <input type="hidden" id="sub_participant" name="sub_participant[]" class="form-control" value="<?php echo $sps['sub_participant']; ?>">
-                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo number_format($sps['vatable_sales'],2); ?>">
-                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo number_format($sps['zero_rated_sales'],2); ?>">
-                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo number_format($sps['vat_on_sales'],2); ?>">
-                            <input type="hidden" id="ewt" name="ewt[]" class="form-control" value="<?php echo number_format($sps['ewt'],2); ?>">
-                            <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo number_format($sps['overall_total'],2); ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo $sps['vatable_sales']; ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo $sps['zero_rated_sales']; ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo $sps['vat_on_sales']; ?>">
+                            <input type="hidden" id="ewt" name="ewt[]" class="form-control" value="<?php echo $sps['ewt']; ?>">
+                            <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo $sps['overall_total']; ?>">
+                            <input type="hidden" id="details_id" name="details_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
                         </tr> 
                         <?php }  $h++; } $x++; } } ?>
                         <tr>
@@ -229,11 +250,11 @@
                             <td class="p-r-10 p-b-5 bor-btm" align="right">(<?php echo number_format($ewt_arr,2); ?>)</td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><b><?php echo number_format($overall_totals,2); ?></b></td>
 
-                            <input type="hidden" id="vatable" name="vatable[]" class="form-control" value="<?php echo number_format($vatable,2); ?>">
-                            <input type="hidden" id="zero" name="zero[]" class="form-control" value="<?php echo number_format($zero,2); ?>">
-                            <input type="hidden" id="vat" name="vat[]" class="form-control" value="<?php echo number_format($vat,2); ?>">
-                            <input type="hidden" id="ewt_arr" name="ewt_arr[]" class="form-control" value="<?php echo number_format($ewt_arr,2); ?>">
-                            <input type="hidden" id="overall_totals" name="overall_totals[]" class="form-control" value="<?php echo number_format($overall_totals,2); ?>">
+                            <input type="hidden" id="vatable" name="vatable[]" class="form-control" value="<?php echo $vatable; ?>">
+                            <input type="hidden" id="zero" name="zero[]" class="form-control" value="<?php echo $zero; ?>">
+                            <input type="hidden" id="vat" name="vat[]" class="form-control" value="<?php echo $vat; ?>">
+                            <input type="hidden" id="ewt_arr" name="ewt_arr[]" class="form-control" value="<?php echo $ewt_arr; ?>">
+                            <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo $overall_totals; ?>">
                         </tr>
                         <?php } ?>
                     </table>
@@ -280,32 +301,36 @@
                             <td colspan="20"><br></td>
                         </tr>
                         <tr>
-                            <td width="19%" align="center" class="bor-btm font-10"><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? strtoupper($fullname[$y]) : strtoupper($_SESSION['fullname']); ?></td>
                             <input type="hidden" id="prepared_by" name="prepared_by[]" class="form-control" value="<?php echo $_SESSION['user_id']; ?>">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-10">JOEMAR DELOS SANTOS</td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? $checked_by_emg[$y] : 'JOEMAR DELOS SANTOS'; ?></td>
                             <input type="hidden" id="checked_by_emg" name="checked_by_emg[]" class="form-control" value="JOEMAR DELOS SANTOS">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-10">CRISTY CESAR</td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? $checked_by_accounting[$y] : 'CRISTY CESAR'; ?></td>
                             <input type="hidden" id="checked_by_accounting" name="checked_by_accounting[]" class="form-control" value="CRISTY CESAR">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-10">ZYNDYRYN PASTERA</td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? $checked_by_finance[$y] : 'ZYNDYRYN PASTERA'; ?></td>
                             <input type="hidden" id="checked_by_finance" name="checked_by_finance[]" class="form-control" value="ZYNDYRYN PASTERA">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-10">MILA ARANA</td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? $noted_by[$y] : 'MILA ARANA'; ?></td>
                             <input type="hidden" id="noted_by" name="noted_by[]" class="form-control" value="MILA ARANA">
                             <td width="1%"></td>
                         </tr>
                         <tr>
-                            <td width="19%" align="center" class="font-11">Billing</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y] != '') ? $prepared_by_pos[$y] : 'Billing'; ?></td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">EMG</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y]!='') ? $checked_by_emg_pos[$y] : 'EMG'; ?></td>
+                            <input type="hidden" id="checked_by_emg_pos" name="checked_by_emg_pos[]" class="form-control" value="EMG">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Accounting</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y]!='') ? $checked_by_accounting_pos[$y] : 'Accounting'; ?></td>
+                            <input type="hidden" id="checked_by_accounting_pos" name="checked_by_accounting_pos[]" class="form-control" value="Accounting">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Finance</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y]!='') ? $checked_by_finance_pos[$y] : 'Finance'; ?></td>
+                            <input type="hidden" id="checked_by_finance_pos" name="checked_by_finance_pos[]" class="form-control" value="Finance">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">General Manager</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y]!='') ? $noted_by_pos[$y] : 'General Manager'; ?></td>
+                            <input type="hidden" id="noted_by_pos" name="noted_by_pos[]" class="form-control" value="General Manager">
                             <td width="1%"></td>
                         </tr>
                     </table>
@@ -390,13 +415,14 @@
                 <td colspan="3">Statement Date:</td>
                 <!-- <td colspan="5" class="bor-btm"><?php echo date("M d,Y");?></td> -->
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($transaction_date[$y]));?></td>
-                 <input type="hidden" id="transaction_date" name="transaction_date[]" class="form-control" value="<?php echo date("M d,Y",strtotime($transaction_date[$y])); ?>">
+                 <input type="hidden" id="transaction_date" name="transaction_date[]" class="form-control" value="<?php echo $transaction_date[$y]; ?>">
             </tr>
             <tr>
                 <td></td>
                 <td colspan="3">Billing Period:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($billing_from[$y]))." to ".date("M d,Y",strtotime($billing_to[$y]));?></td>
-                <input type="hidden" id="billing_period" name="billing_period[]" class="form-control" value="<?php echo date("M d,Y",strtotime($billing_from[$y]))." to ".date("M d,Y",strtotime($billing_to[$y])); ?>">
+                <input type="hidden" id="billing_from" name="billing_from[]" class="form-control" value="<?php echo $billing_from[$y]; ?>">
+                <input type="hidden" id="billing_to" name="billing_to[]" class="form-control" value="<?php echo $billing_to[$y]; ?>">
             </tr>
             <tr>
                 <td colspan="2">TIN:</td>
@@ -405,7 +431,7 @@
                 <td colspan="4"></td>
                 <td colspan="3">Due Date:</td>
                 <td colspan="5" class="bor-btm"><?php echo date("M d,Y",strtotime($due_date[$y]));?></td>
-                <input type="hidden" id="due_date" name="due_date[]" class="form-control" value="<?php echo date("M d,Y",strtotime($due_date[$y])); ?>">
+                <input type="hidden" id="due_date" name="due_date[]" class="form-control" value="<?php echo $due_date[$y]; ?>">
             </tr>
             <tr>
                 <td colspan="2">STL ID:</td>
@@ -416,6 +442,7 @@
                 <td colspan="5" class="bor-btm"><?php echo $reference_number[$y]; ?></td>
                 <input type="hidden" id="reference_number" name="reference_number[]" class="form-control" value="<?php echo $reference_number[$y]; ?>">
             </tr>
+            <input type="hidden" id="sales_detail_id" name="sales_detail_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
             <tr>
                 <td colspan="20">
                     <br>
@@ -448,18 +475,27 @@
                                 foreach($sub_part_second AS $sps){ 
                                     if($sps['participant_id']==$sec['participant_id']){
                                         if($x >= 15){ 
-                                        // $vatable+=$vatable_sales_sub[$h]; 
-                                        // $zero+=$zero_rated_sales_sub[$h]; 
-                                        // $total+=$total_amount_sub[$h]; 
-                                        // $vat+=$vat_on_sales_sub[$h]; 
-                                        // $ewt_arr+=$ewt_s[$h];
-                                        // $overall_totals+=$overall_total_sub[$h];
-                                        $vatable+=$sps['vatable_sales']; 
-                                        $zero+=$sps['zero_rated_sales']; 
-                                        //$total+=$sps['overall_total']; 
-                                        $vat+=$sps['vat_on_sales']; 
-                                        $ewt_arr+=$sps['ewt'];
-                                        $overall_totals+=$sps['overall_total'];
+
+                                        if($bs_head_id[$y] != 0){
+                                            $vatable=$total_vatable_sales[$y];
+                                            $zero=$total_zero_rated[$y];
+                                            $vat=$total_vat[$y];
+                                            $ewt_arr=$total_ewt[$y];
+                                            $overall_totals=$total_net_amount[$y];
+                                        }else{
+                                            // $vatable+=$vatable_sales_sub[$h]; 
+                                            // $zero+=$zero_rated_sales_sub[$h]; 
+                                            // $total+=$total_amount_sub[$h]; 
+                                            // $vat+=$vat_on_sales_sub[$h]; 
+                                            // $ewt_arr+=$ewt_s[$h];
+                                            // $overall_totals+=$overall_total_sub[$h];
+                                            $vatable+=$sps['vatable_sales']; 
+                                            $zero+=$sps['zero_rated_sales']; 
+                                            //$total+=$sps['overall_total']; 
+                                            $vat+=$sps['vat_on_sales']; 
+                                            $ewt_arr+=$sps['ewt'];
+                                            $overall_totals+=$sps['overall_total'];
+                                        }
                         ?>
                         <tr>
                             <!-- <td class="p-r-10 p-b-5"><?php echo $sub_participant_sub[$h];?></td>
@@ -476,11 +512,12 @@
                             <td class="p-r-10 p-b-5" align="right"><b><?php echo number_format($sps['overall_total'],2); ?></b></td>
 
                             <input type="hidden" id="sub_participant" name="sub_participant[]" class="form-control" value="<?php echo $sps['sub_participant']; ?>">
-                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo number_format($sps['vatable_sales'],2); ?>">
-                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo number_format($sps['zero_rated_sales'],2); ?>">
-                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo number_format($sps['vat_on_sales'],2); ?>">
-                            <input type="hidden" id="ewt" name="ewt[]" class="form-control" value="<?php echo number_format($sps['ewt'],2); ?>">
-                            <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo number_format($sps['overall_total'],2); ?>">
+                            <input type="hidden" id="vatable_sales" name="vatable_sales[]" class="form-control" value="<?php echo $sps['vatable_sales']; ?>">
+                            <input type="hidden" id="zero_rated_sales" name="zero_rated_sales[]" class="form-control" value="<?php echo $sps['zero_rated_sales']; ?>">
+                            <input type="hidden" id="vat_on_sales" name="vat_on_sales[]" class="form-control" value="<?php echo $sps['vat_on_sales']; ?>">
+                            <input type="hidden" id="ewt" name="ewt[]" class="form-control" value="<?php echo $sps['ewt']; ?>">
+                            <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo $sps['overall_total']; ?>">
+                            <input type="hidden" id="details_id" name="details_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
                         </tr> 
                         <?php } $h++; } $x++; } } ?>
                         <tr>
@@ -491,11 +528,11 @@
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($ewt_arr,2); ?></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><b><?php echo number_format($overall_totals,2); ?></b></td>
 
-                            <input type="hidden" id="vatable" name="vatable[]" class="form-control" value="<?php echo number_format($vatable,2); ?>">
-                            <input type="hidden" id="zero" name="zero[]" class="form-control" value="<?php echo number_format($zero,2); ?>">
-                            <input type="hidden" id="vat" name="vat[]" class="form-control" value="<?php echo number_format($vat,2); ?>">
-                            <input type="hidden" id="ewt_arr" name="ewt_arr[]" class="form-control" value="<?php echo number_format($ewt_arr,2); ?>">
-                            <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo number_format($overall_totals,2); ?>">
+                            <input type="hidden" id="vatable" name="vatable[]" class="form-control" value="<?php echo $vatable; ?>">
+                            <input type="hidden" id="zero" name="zero[]" class="form-control" value="<?php echo $zero; ?>">
+                            <input type="hidden" id="vat" name="vat[]" class="form-control" value="<?php echo $vat; ?>">
+                            <input type="hidden" id="ewt_arr" name="ewt_arr[]" class="form-control" value="<?php echo $ewt_arr; ?>">
+                            <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo $overall_totals; ?>">
                         </tr>
                         <?php } ?>
                     </table>
@@ -542,32 +579,36 @@
                             <td colspan="20"><br></td>
                         </tr>
                          <tr>
-                            <td width="19%" align="center" class="bor-btm font-10"><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? strtoupper($fullname[$y]) : strtoupper($_SESSION['fullname']); ?></td>
                             <input type="hidden" id="prepared_by" name="prepared_by[]" class="form-control" value="<?php echo $_SESSION['user_id']; ?>">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-10">JOEMAR DELOS SANTOS</td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? $checked_by_emg[$y] : 'JOEMAR DELOS SANTOS'; ?></td>
                             <input type="hidden" id="checked_by_emg" name="checked_by_emg[]" class="form-control" value="JOEMAR DELOS SANTOS">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-10">CRISTY CESAR</td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? $checked_by_accounting[$y] : 'CRISTY CESAR'; ?></td>
                             <input type="hidden" id="checked_by_accounting" name="checked_by_accounting[]" class="form-control" value="CRISTY CESAR">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-10">ZYNDYRYN PASTERA</td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? $checked_by_finance[$y] : 'ZYNDYRYN PASTERA'; ?></td>
                             <input type="hidden" id="checked_by_finance" name="checked_by_finance[]" class="form-control" value="ZYNDYRYN PASTERA">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-10">MILA ARANA</td>
+                            <td width="19%" align="center" class="bor-btm font-10"><?php echo ($bs_head_id[$y]!='') ? $noted_by[$y] : 'MILA ARANA'; ?></td>
                             <input type="hidden" id="noted_by" name="noted_by[]" class="form-control" value="MILA ARANA">
                             <td width="1%"></td>
                         </tr>
                         <tr>
-                            <td width="19%" align="center" class="font-11">Billing</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y] != '') ? $prepared_by_pos[$y] : 'Billing'; ?></td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">EMG</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y]!='') ? $checked_by_emg_pos[$y] : 'EMG'; ?></td>
+                            <input type="hidden" id="checked_by_emg_pos" name="checked_by_emg_pos[]" class="form-control" value="EMG">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Accounting</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y]!='') ? $checked_by_accounting_pos[$y] : 'Accounting'; ?></td>
+                            <input type="hidden" id="checked_by_accounting_pos" name="checked_by_accounting_pos[]" class="form-control" value="Accounting">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Finance</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y]!='') ? $checked_by_finance_pos[$y] : 'Finance'; ?></td>
+                            <input type="hidden" id="checked_by_finance_pos" name="checked_by_finance_pos[]" class="form-control" value="Finance">
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">General Manager</td>
+                            <td width="19%" align="center" class="font-11"><?php echo ($bs_head_id[$y]!='') ? $noted_by_pos[$y] : 'General Manager'; ?></td>
+                            <input type="hidden" id="noted_by_pos" name="noted_by_pos[]" class="form-control" value="General Manager">
                             <td width="1%"></td>
                         </tr>
                     </table>
