@@ -42,13 +42,13 @@
 </div>
 <?php 
     $y=0; 
-    foreach($sub AS $as){ 
-        $vatable_arraysum[][$y]=$vatable_sales[$y];
-        $zerorated_arraysum[][$y]=$zero_rated_sales[$y];
-        $total_arraysum[][$y]=$total_amount[$y];
-        $vat_arraysum[][$y]=$vat_on_sales[$y];
-        $ewt_arraysum[][$y]=$ewt[$y];
-        $overall_total_arraysum[][$y]=$overall_total[$y];    
+    foreach($sub AS $as){
+            $vatable_arraysum[][$y]=$vatable_sales[$y];
+            $zerorated_arraysum[][$y]=$zero_rated_sales[$y];
+            $total_arraysum[][$y]=$total_amount[$y];
+            $vat_arraysum[][$y]=$vat_on_sales[$y];
+            $ewt_arraysum[][$y]=$ewt[$y];
+            $overall_total_arraysum[][$y]=$overall_total[$y];
 ?>
 <page size="A4">
     <div style="padding:30px">
@@ -163,15 +163,14 @@
                             <td style="vertical-align:text-bottom;" width="14%" align="center" class="p-r-10 p-b-5">EWT</td>
                             <td style="vertical-align:text-bottom;" width="14%" align="center" class="p-r-10 p-b-5">NET AMOUNT DUE</td>
                         </tr>
-                        <?php 
-                            if(!empty($sub)){
-                                if($bs_head_id[$y] != ''){
+                            <?php if(!empty($sub)){
+                               if($bs_head_id[$y] != ''){
                                     $vatable=$total_vatable_sales[$y];
                                     $zero=$total_zero_rated[$y];
                                     $vat=$total_vat[$y];
                                     $ewt_arr=$total_ewt[$y];
                                     $overall_totals=$total_net_amount[$y];
-                                }else{
+                                }else{ 
                                     $vatable=array_sum($vatable_arraysum[$y]);
                                     $zero=array_sum($zerorated_arraysum[$y]);
                                     $total=array_sum($total_arraysum[$y]);
@@ -180,6 +179,7 @@
                                     $overall_totals=array_sum($overall_total_arraysum[$y]);
                                 }
                         ?>
+                        <?php if(($bs_head_id[$y] == '' && $count_sub_hist[$y] <= 2) || ($count_sub_hist[$y] == '')){ ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><?php echo $as['sub_participant'];?></td>
                             <td class="p-r-10 p-b-5" align="right"><?php echo number_format($as['vatable_sales'],2);?></td>
@@ -196,6 +196,7 @@
                             <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo $as['overall_total']; ?>">
                             <input type="hidden" id="details_id" name="details_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
                         </tr> 
+                        <?php } ?>
                         <?php
                             if(!empty($sub_part)){ 
                                 $h=0;
@@ -204,7 +205,7 @@
                                     if($sps['participant_id']==$as['participant_id']){
                                         if($x >=1 || $x<=14){ 
 
-                                        if($bs_head_id[$y] != 0){
+                                        if($bs_head_id[$y] != ''){
                                             $vatable=$total_vatable_sales[$y];
                                             $zero=$total_zero_rated[$y];
                                             $vat=$total_vat[$y];
@@ -241,7 +242,7 @@
                             <input type="hidden" id="net_amount" name="net_amount[]" class="form-control" value="<?php echo $sps['overall_total']; ?>">
                             <input type="hidden" id="details_id" name="details_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
                         </tr> 
-                        <?php }  $h++; } $x++; } } ?>
+                        <?php } $h++; } $x++; } } ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><b>TOTAL AMOUNT</b></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($vatable,2); ?></td>
@@ -399,7 +400,7 @@
              <tr>
                 <td colspan="2">Customer:</td>
                 <td colspan="9" class="bor-btm"><?php echo $company_name[$y];?></td>
-                <input type="text" id="company_name" name="company_name[]" class="form-control" value="<?php echo $company_name[$y]; ?>">
+                <input type="hidden" id="company_name" name="company_name[]" class="form-control" value="<?php echo $company_name[$y]; ?>">
                 <td></td>
                 <td colspan="3">Invoice No.:</td>
                 <td colspan="5" class="bor-btm"><?php echo $serial_no[$y];?></td>
@@ -476,7 +477,7 @@
                                     if($sps['participant_id']==$sec['participant_id']){
                                         if($x >= 15){ 
 
-                                        if($bs_head_id[$y] != 0){
+                                        if($bs_head_id[$y] != ''){
                                             $vatable=$total_vatable_sales[$y];
                                             $zero=$total_zero_rated[$y];
                                             $vat=$total_vat[$y];
