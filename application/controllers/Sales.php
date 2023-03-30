@@ -53,7 +53,7 @@ class Sales extends CI_Controller {
         $noted_by_pos = $this->input->post('noted_by_pos');
         $vatable = $this->input->post('vatable');
         $zero = $this->input->post('zero');
-        $vat = $this->input->post('vat');
+        $total_vat = $this->input->post('vat');
         $ewt_arr = $this->input->post('ewt_arr');
         $overall_total = $this->input->post('overall_total'); 
         $count_head=count($participant_id);
@@ -95,7 +95,7 @@ class Sales extends CI_Controller {
                         'noted_by_pos' => $noted_by_pos[$x],
                         'total_vatable_sales' => $vatable[$x],
                         'total_zero_rated' => $zero[$x],
-                        'total_vat' => $vat[$x],
+                        'total_vat' => $total_vat[$x],
                         'total_ewt' => $ewt_arr[$x],
                         'total_net_amount' => $overall_total[$x],
                  );
@@ -440,7 +440,7 @@ class Sales extends CI_Controller {
     }
 
 
-    public function print_BS_new(){
+public function print_BS_new(){
         /*$sales_detail_id = $this->uri->segment(3);
         $data['sales_detail_id']=$sales_detail_id;*/
         $sales_details_id = $this->uri->segment(3);
@@ -475,160 +475,164 @@ class Sales extends CI_Controller {
         $data['total_ewt'][]='';
         $data['total_net_amount'][]='';
         $data['bs_head_id'][]='';
+  
+        for($x=0;$x<$count;$x++){
+            $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
+            if(in_array($sales_det_exp[$x],$bs_id)){
+                foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
+                    $data['detail_id'][$x]=$p->sales_detail_id;
+                    $detail_id=$p->sales_detail_id;
+                    $data['address'][$x]=$p->address;
+                    $address=$p->address;
+                    $data['tin'][$x]=$p->tin;
+                    $tin=$p->tin;
+                    $data['company_name'][$x]=$p->participant_name;
+                    $company_name=$p->participant_name;
+                    $data['serial_no'][$x]=$p->invoice_no;
+                    $serial_no=$p->invoice_no;
+                    $data['settlement'][$x]=$p->stl_id;
+                    $settlement=$p->stl_id;
+                    $data['transaction_date'][$x]=$p->statement_date;
+                    $transaction_date=$p->statement_date;
+                    $data['billing_from'][$x]=$p->billing_from;
+                    $billing_from=$p->billing_from;
+                    $data['billing_to'][$x]=$p->billing_to;
+                    $billing_to=$p->billing_to;
+                    $data['due_date'][$x]=$p->due_date;
+                    $due_date=$p->due_date;
+                    $data['reference_number'][$x]=$p->reference_number;
+                    $data['fullname'][$x]=$this->super_model->select_column_where("users","fullname","user_id",$p->prepared_by);
+                    $data['prepared_by_pos'][$x]=$this->super_model->select_column_where("users","position","user_id",$p->prepared_by);
+                    $data['checked_by_emg'][$x]=$p->checked_by_emg;
+                    $data['checked_by_emg_pos'][$x]=$p->checked_by_emg_pos;
+                    $data['checked_by_accounting'][$x]=$p->checked_by_accounting;
+                    $data['checked_by_accounting_pos'][$x]=$p->checked_by_accounting_pos;
+                    $data['checked_by_finance'][$x]=$p->checked_by_finance;
+                    $data['checked_by_finance_pos'][$x]=$p->checked_by_finance_pos;
+                    $data['noted_by'][$x]=$p->noted_by;
+                    $data['noted_by_pos'][$x]=$p->noted_by_pos;
+                    $data['total_vatable_sales'][$x]=$p->total_vatable_sales;
+                    $data['total_zero_rated'][$x]=$p->total_zero_rated;
+                    $data['total_vat'][$x]=$p->total_vat;
+                    $data['total_ewt'][$x]=$p->total_ewt;
+                    $data['total_net_amount'][$x]=$p->total_net_amount;
+                    $data['bs_head_id'][$x]=$p->bs_head_id;
+                    $reference_number=$p->reference_number;
+                    $participant_id = $p->participant_id;
+                    $count_sub_hist=$this->super_model->count_custom_where("bs_details","bs_head_id='$p->bs_head_id'");
+                    $data['count_sub_hist'][$x]=$this->super_model->count_custom_where("bs_details","bs_head_id='$p->bs_head_id'");
+                    $billing_id = $this->super_model->select_column_where("bs_details","billing_id","bs_head_id",$p->bs_head_id);
+                    $vatable_sales = $this->super_model->select_column_where("bs_details","vatable_sales","bs_head_id",$p->bs_head_id);
+                    $zero_rated_sales = $this->super_model->select_column_where("bs_details","zero_rated_sales","bs_head_id",$p->bs_head_id);
+                    $vat = $this->super_model->select_column_where("bs_details","vat","bs_head_id",$p->bs_head_id);
+                    $ewt = $this->super_model->select_column_where("bs_details","ewt","bs_head_id",$p->bs_head_id);
+                    $overall_total = $this->super_model->select_column_where("bs_details","net_amount","bs_head_id",$p->bs_head_id);
+                    $total_amount = $vatable_sales + $zero_rated_sales;
+                    //$overall_total= ($total_amount+$vat) - $ewt;
 
-    //for($x=0;$x<$count;$x++){
-            for($x=0;$x<$count;$x++){
-                $bs_id = $this->super_model->custom_query("SELECT sales_detail_id FROM bs_head WHERE sales_detail_id='".$sales_det_exp[$x]."'");
-                if($sales_det_exp[$x] == $bs_id){
-                    foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
-                            $data['detail_id'][$x]=$p->sales_detail_id;
-                            $detail_id=$p->sales_detail_id;
-                            $data['address'][$x]=$p->address;
-                            $address=$p->address;
-                            $data['tin'][$x]=$p->tin;
-                            $tin=$p->tin;
-                            $data['company_name'][$x]=$p->participant_name;
-                            $company_name=$p->participant_name;
-                            $data['serial_no'][$x]=$p->invoice_no;
-                            $serial_no=$p->invoice_no;
-                            $data['settlement'][$x]=$p->stl_id;
-                            $settlement=$p->stl_id;
-                            $data['transaction_date'][$x]=$p->statement_date;
-                            $transaction_date=$p->statement_date;
-                            $data['billing_from'][$x]=$p->billing_from;
-                            $billing_from=$p->billing_from;
-                            $data['billing_to'][$x]=$p->billing_to;
-                            $billing_to=$p->billing_to;
-                            $data['due_date'][$x]=$p->due_date;
-                            $due_date=$p->due_date;
-                            $data['reference_number'][$x]=$p->reference_number;
-                            $data['fullname'][$x]=$this->super_model->select_column_where("users","fullname","user_id",$p->prepared_by);
-                            $data['prepared_by_pos'][$x]=$this->super_model->select_column_where("users","position","user_id",$p->prepared_by);
-                            $data['checked_by_emg'][$x]=$p->checked_by_emg;
-                            $data['checked_by_emg_pos'][$x]=$p->checked_by_emg_pos;
-                            $data['checked_by_accounting'][$x]=$p->checked_by_accounting;
-                            $data['checked_by_accounting_pos'][$x]=$p->checked_by_accounting_pos;
-                            $data['checked_by_finance'][$x]=$p->checked_by_finance;
-                            $data['checked_by_finance_pos'][$x]=$p->checked_by_finance_pos;
-                            $data['noted_by'][$x]=$p->noted_by;
-                            $data['noted_by_pos'][$x]=$p->noted_by_pos;
-                            $data['total_vatable_sales'][$x]=$p->total_vatable_sales;
-                            $data['total_zero_rated'][$x]=$p->total_zero_rated;
-                            $data['total_vat'][$x]=$p->total_vat;
-                            $data['total_ewt'][$x]=$p->total_ewt;
-                            $data['total_net_amount'][$x]=$p->total_net_amount;
-                            $data['bs_head_id'][$x]=$p->bs_head_id;
-                            $reference_number=$p->reference_number;
-                            $participant_id = $p->participant_id;
-                            $count_sub=$this->super_model->count_custom_where("bs_details","bs_head_id='$p->bs_head_id'");
-                            $billing_id = $this->super_model->select_column_where("bs_details","billing_id","bs_head_id",$p->bs_head_id);
-                            $vatable_sales = $this->super_model->select_column_where("bs_details","vatable_sales","bs_head_id",$p->bs_head_id);
-                            $zero_rated_sales = $this->super_model->select_column_where("bs_details","zero_rated_sales","bs_head_id",$p->bs_head_id);
-                            $vat = $this->super_model->select_column_where("bs_details","vat","bs_head_id",$p->bs_head_id);
-                            $ewt = $this->super_model->select_column_where("bs_details","ewt","bs_head_id",$p->bs_head_id);
-                            $total_amount = $vatable_sales + $zero_rated_sales;
-                            $overall_total= ($total_amount+$vat) - $ewt;
+                    $data['sub_participant'][$x]=$billing_id;
+                    $data['vatable_sales'][$x]=$vatable_sales;
+                    $data['vat_on_sales'][$x]=$vat;
+                    $data['zero_rated_sales'][$x]=$zero_rated_sales;
+                    $data['total_amount'][$x]=$total_amount;
+                    $data['ewt'][$x]=$ewt;
+                    $data['overall_total'][$x]=$overall_total;
+                    $data['participant_id'][$x]=$participant_id;
 
-                            $data['sub_participant'][$x]=$billing_id;
-                            $data['vatable_sales'][$x]=$vatable_sales;
-                            $data['vat_on_sales'][$x]=$vat;
-                            $data['zero_rated_sales'][$x]=$zero_rated_sales;
-                            $data['total_amount'][$x]=$total_amount;
-                            $data['ewt'][$x]=$ewt;
-                            $data['overall_total'][$x]=$overall_total;
-                            $data['participant_id'][$x]=$participant_id;
 
-                            $data['sub'][]=array(
-                                "participant_id"=>$participant_id,
-                                "sub_participant"=>$billing_id,
-                                "vatable_sales"=>$vatable_sales,
-                                "zero_rated_sales"=>$zero_rated_sales,
-                                "total_amount"=>$total_amount,
-                                "vat_on_sales"=>$vat,
-                                "ewt"=>$ewt,
-                                "overall_total"=>$overall_total,
-                            );
-                            if($count_sub >=1 || $count_sub<=14){
-                                $h=0;
-                                foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
-                                    $total_amount = $s->vatable_sales + $s->zero_rated_sales;
-                                    $overall_total= ($total_amount + $s->vat) - $s->ewt;
-                                    $data['sub_participant_sub'][$h]=$s->billing_id;
-                                    $data['vatable_sales_sub'][$h]=$s->vatable_sales;
-                                    $data['vat_on_sales_sub'][$h]=$s->vat;
-                                    $data['zero_rated_sales_sub'][$h]=$s->zero_rated_sales;
-                                    $data['total_amount_sub'][$h]=$total_amount;
-                                    $data['ewt_s'][$h]=$s->ewt;
-                                    $data['overall_total_sub'][$h]=$overall_total;
-                                    $data['participant_id_sub'][$h]=$participant_id;
-                                    if($total_amount !=0){
-                                        $data['sub_part'][]=array(
-                                            "participant_id"=>$participant_id,
-                                            "sub_participant"=>$s->billing_id,
-                                            "vatable_sales"=>$s->vatable_sales,
-                                            "zero_rated_sales"=>$s->zero_rated_sales,
-                                            "total_amount"=>$total_amount,
-                                            "vat_on_sales"=>$s->vat,
-                                            "ewt"=>$s->ewt,
-                                            "overall_total"=>$overall_total,
-                                        );
-                                    }
-                                $h++;
-                            }
-
-                            if($count_sub>=15){
-                                $total_amount = $vatable_sales + $zero_rated_sales;
-                                $overall_total= ($total_amount+$vat) - $ewt;
-
-                                $data['sub_participant'][$x]=$s->billing_id;
-                                $data['vatable_sales'][$x]=$s->vatable_sales;
-                                $data['vat_on_sales'][$x]=$s->vat;
-                                $data['zero_rated_sales'][$x]=$s->zero_rated_sales;
-                                $data['total_amount'][$x]=$total_amount;
-                                $data['ewt'][$x]=$s->ewt;
-                                $data['overall_total'][$x]=$overall_total;
-                                $data['participant_id'][$x]=$participant_id;
-
-                                $data['sub_second'][]=array(
+                    $data['sub'][]=array(
+                        "participant_id"=>$participant_id,
+                        "bs_head_id"=>$p->bs_head_id,
+                        "sub_participant"=>$billing_id,
+                        "vatable_sales"=>$vatable_sales,
+                        "zero_rated_sales"=>$zero_rated_sales,
+                        "total_amount"=>$total_amount,
+                        "vat_on_sales"=>$vat,
+                        "ewt"=>$ewt,
+                        "overall_total"=>$overall_total,
+                    );
+                    if($count_sub_hist >= 1 && $count_sub_hist < 14){
+                        $h=0;
+                        foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
+                            //$total_amount = $s->vatable_sales + $s->zero_rated_sales;
+                            // $overall_total= ($total_amount + $s->vat) - $s->ewt;
+                            $data['sub_participant_sub']=$s->billing_id;
+                            $data['vatable_sales_sub']=$s->vatable_sales;
+                            $data['vat_on_sales_sub']=$s->vat;
+                            $data['zero_rated_sales_sub']=$s->zero_rated_sales;
+                            //$data['total_amount_sub']=$total_amount;
+                            $data['ewt_s']=$s->ewt;
+                            $data['overall_total_sub']=$overall_total;
+                            $data['participant_id_sub']=$participant_id;
+                            //if($total_amount !=0){
+                                $data['sub_part'][]=array(
                                     "participant_id"=>$participant_id,
+                                    "bs_head_id"=>$p->bs_head_id,
                                     "sub_participant"=>$s->billing_id,
                                     "vatable_sales"=>$s->vatable_sales,
                                     "zero_rated_sales"=>$s->zero_rated_sales,
-                                    "total_amount"=>$total_amount,
+                                    //"total_amount"=>$total_amount,
                                     "vat_on_sales"=>$s->vat,
                                     "ewt"=>$s->ewt,
-                                    "overall_total"=>$overall_total,
+                                    "overall_total"=>$s->net_amount,
                                 );
-                                $z=0;
-                                foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
-                                    $total_amount = $s->vatable_sales + $s->zero_rated_sales;
-                                    $overall_total= ($total_amount + $s->vat) - $s->ewt;
-                                    if($total_amount !=0){
-                                        $data['sub_participant_sub'][$z]=$s->billing_id;
-                                        $data['vatable_sales_sub'][$z]=$s->vatable_sales;
-                                        $data['vat_on_sales_sub'][$z]=$s->vat;
-                                        $data['zero_rated_sales_sub'][$z]=$s->zero_rated_sales;
-                                        $data['total_amount_sub'][$z]=$total_amount;
-                                        $data['ewt_s'][$z]=$s->ewt;
-                                        $data['overall_total_sub'][$z]=$overall_total;
-                                        $data['participant_id_sub'][$z]=$participant_id;
-                                        $data['sub_part_second'][]=array(
-                                            "participant_id"=>$participant_id,
-                                            "sub_participant"=>$s->billing_id,
-                                            "vatable_sales"=>$s->vatable_sales,
-                                            "zero_rated_sales"=>$s->zero_rated_sales,
-                                            "total_amount"=>$total_amount,
-                                            "vat_on_sales"=>$s->vat,
-                                            "ewt"=>$s->ewt,
-                                            "overall_total"=>$overall_total,
-                                        );
-                                        $z++;
-                                    }
-                                }
-                            }
+                            //}
+                            $h++;
                         }
                     }
-                }else{
+
+                    if($count_sub_hist>=15){
+                        // $total_amount = $vatable_sales + $zero_rated_sales;
+                        // $overall_total= ($total_amount+$vat) - $ewt;
+
+                        $data['sub_participant'][$x]=$s->billing_id;
+                        $data['vatable_sales'][$x]=$s->vatable_sales;
+                        $data['vat_on_sales'][$x]=$s->vat;
+                        $data['zero_rated_sales'][$x]=$s->zero_rated_sales;
+                        //$data['total_amount'][$x]=$total_amount;
+                        $data['ewt'][$x]=$s->ewt;
+                        $data['overall_total'][$x]=$s->net_amount;
+                        $data['participant_id'][$x]=$participant_id;
+
+                        $data['sub_second'][]=array(
+                            "participant_id"=>$participant_id,
+                            "bs_head_id"=>$p->bs_head_id,
+                            "sub_participant"=>$s->billing_id,
+                            "vatable_sales"=>$s->vatable_sales,
+                            "zero_rated_sales"=>$s->zero_rated_sales,
+                            "total_amount"=>$total_amount,
+                            "vat_on_sales"=>$s->vat,
+                            "ewt"=>$s->ewt,
+                            "overall_total"=>$s->net_amount,
+                        );
+                        $z=0;
+                        foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
+                            //$total_amount = $s->vatable_sales + $s->zero_rated_sales;
+                            //$overall_total= ($total_amount + $s->vat) - $s->ewt;
+                            //if($total_amount !=0){
+                                $data['sub_participant_sub'][$z]=$s->billing_id;
+                                $data['vatable_sales_sub'][$z]=$s->vatable_sales;
+                                $data['vat_on_sales_sub'][$z]=$s->vat;
+                                $data['zero_rated_sales_sub'][$z]=$s->zero_rated_sales;
+                                $data['ewt_s'][$z]=$s->ewt;
+                                $data['participant_id_sub'][$z]=$participant_id;
+                                $data['sub_part_second'][]=array(
+                                    "participant_id"=>$participant_id,
+                                    "bs_head_id"=>$p->bs_head_id,
+                                    "sub_participant"=>$s->billing_id,
+                                    "vatable_sales"=>$s->vatable_sales,
+                                    "zero_rated_sales"=>$s->zero_rated_sales,
+                                    //"total_amount"=>$total_amount,
+                                    "vat_on_sales"=>$s->vat,
+                                    "ewt"=>$s->ewt,
+                                    "overall_total"=>$s->net_amount,
+                                );
+                            //}
+                            $z++;
+                        }
+                    }
+                }
+            }else{
                         foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                             $data['detail_id'][$x]=$p->sales_detail_id;
                             $detail_id=$p->sales_detail_id;
@@ -658,6 +662,7 @@ class Sales extends CI_Controller {
                             $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
                             $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
                             $data['bs_head_id'][$x]='';
+                            $data['count_sub_hist'][$x]='';
 
                             $data['sub_participant'][$x]=$p->billing_id;
                             $data['vatable_sales'][$x]=$p->vatable_sales;
@@ -694,12 +699,12 @@ class Sales extends CI_Controller {
                                     $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                                     $overall_total= ($total_amount + $vat_on_sales) - $ewt;
                                     $data['sub_participant_sub'][$h]=$subparticipant;
-                                    $data['vatable_sales_sub'][$h]=$vatable_sales;
-                                    $data['vat_on_sales_sub'][$h]=$vat_on_sales;
-                                    $data['zero_rated_sales_sub'][$h]=$zero_rated;
-                                    $data['total_amount_sub'][$h]=$total_amount;
-                                    $data['ewt_s'][$h]=$ewt;
-                                    $data['overall_total_sub'][$h]=$overall_total;
+                                    //$data['vatable_sales_sub'][$h]=$vatable_sales;
+                                    //$data['vat_on_sales_sub'][$h]=$vat_on_sales;
+                                   // $data['zero_rated_sales_sub'][$h]=$zero_rated;
+                                    //$data['total_amount_sub'][$h]=$total_amount;
+                                    //$data['ewt_s'][$h]=$ewt;
+                                    //$data['overall_total_sub'][$h]=$overall_total;
                                     $data['participant_id_sub'][$h]=$s->participant_id;
                                     //if($participant_id==$s->participant_id){
                                     if($total_amount !=0){
@@ -716,7 +721,7 @@ class Sales extends CI_Controller {
                                             //"zero_rated"=>$zero_rated,
                                         );
                                     //}
-                                        }
+                                    }
                                     $h++;
                                 }
                             }
