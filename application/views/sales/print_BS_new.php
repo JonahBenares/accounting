@@ -45,6 +45,8 @@
     foreach($sub AS $as){
             $vatable_arraysum[][$y]=$vatable_sales[$y];
             $zerorated_arraysum[][$y]=$zero_rated_sales[$y];
+            $zeroecozones_arraysum[][$y]=$zero_ecozones_sales[$y];
+            $ratedsales_arraysum[][$y]=$rated_sales[$y];
             $total_arraysum[][$y]=$total_amount[$y];
             $vat_arraysum[][$y]=$vat_on_sales[$y];
             $ewt_arraysum[][$y]=$ewt[$y];
@@ -167,12 +169,16 @@
                                if($bs_head_id[$y] != ''){
                                     $vatable=$total_vatable_sales[$y];
                                     $zero=$total_zero_rated[$y];
+                                    $zero_ecozones=0;
+                                    $rated_sales=0;
                                     $vat=$total_vat[$y];
                                     $ewt_arr=$total_ewt[$y];
                                     $overall_totals=$total_net_amount[$y];
                                 }else{ 
                                     $vatable=array_sum($vatable_arraysum[$y]);
                                     $zero=array_sum($zerorated_arraysum[$y]);
+                                    $zero_ecozones=array_sum($zeroecozones_arraysum[$y]);
+                                    $rated_sales=array_sum($ratedsales_arraysum[$y]);
                                     $total=array_sum($total_arraysum[$y]);
                                     $vat=array_sum($vat_arraysum[$y]);
                                     $ewt_arr=array_sum($ewt_arraysum[$y]);
@@ -208,6 +214,8 @@
                                         if($bs_head_id[$y] != ''){
                                             $vatable=$total_vatable_sales[$y];
                                             $zero=$total_zero_rated[$y];
+                                            $zero_ecozones+=0;
+                                            $rated_sales+=0;
                                             $vat=$total_vat[$y];
                                             $ewt_arr=$total_ewt[$y];
                                             $overall_totals=$total_net_amount[$y];
@@ -220,6 +228,8 @@
                                             // $overall_totals+=$overall_total_sub[$h];
                                             $vatable+=$sps['vatable_sales']; 
                                             $zero+=$sps['zero_rated_sales']; 
+                                            $zero_ecozones+=$sps['zero_rated_ecozones'];
+                                            $rated_sales+=$sps['rated_sales'];
                                             //$total+=$sps['overall_total']; 
                                             $vat+=$sps['vat_on_sales']; 
                                             $ewt_arr+=$sps['ewt'];
@@ -253,6 +263,8 @@
 
                             <input type="hidden" id="vatable" name="vatable[]" class="form-control" value="<?php echo $vatable; ?>">
                             <input type="hidden" id="zero" name="zero[]" class="form-control" value="<?php echo $zero; ?>">
+                            <input type="hidden" id="zero_ecozones" name="zero_ecozones[]" class="form-control" value="<?php echo $zero_ecozones; ?>">
+                            <input type="hidden" id="rated_sales" name="rated_sales[]" class="form-control" value="<?php echo $rated_sales; ?>">
                             <input type="hidden" id="vat" name="vat[]" class="form-control" value="<?php echo $vat; ?>">
                             <input type="hidden" id="ewt_arr" name="ewt_arr[]" class="form-control" value="<?php echo $ewt_arr; ?>">
                             <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo $overall_totals; ?>">
@@ -464,6 +476,7 @@
                             if(!empty($sub_second)){ 
                                 $vatable=0;
                                 $zero=0;
+                                $zero_ecozones=0;
                                 $total=0;
                                 $vat=0;
                                 $ewt_arr=0;
@@ -480,6 +493,8 @@
                                         if($bs_head_id[$y] != ''){
                                             $vatable=$total_vatable_sales[$y];
                                             $zero=$total_zero_rated[$y];
+                                            $rated_sales=0;
+                                            $zero_ecozones=0;
                                             $vat=$total_vat[$y];
                                             $ewt_arr=$total_ewt[$y];
                                             $overall_totals=$total_net_amount[$y];
@@ -492,6 +507,8 @@
                                             // $overall_totals+=$overall_total_sub[$h];
                                             $vatable+=$sps['vatable_sales']; 
                                             $zero+=$sps['zero_rated_sales']; 
+                                            $rated_sales+=$sps['rated_sales']; 
+                                            $zero_ecozones+=$sps['zero_rated_ecozones']; 
                                             //$total+=$sps['overall_total']; 
                                             $vat+=$sps['vat_on_sales']; 
                                             $ewt_arr+=$sps['ewt'];
@@ -531,6 +548,8 @@
 
                             <input type="hidden" id="vatable" name="vatable[]" class="form-control" value="<?php echo $vatable; ?>">
                             <input type="hidden" id="zero" name="zero[]" class="form-control" value="<?php echo $zero; ?>">
+                            <input type="hidden" id="zero_ecozones" name="zero_ecozones[]" class="form-control" value="<?php echo $zero_ecozones; ?>">
+                            <input type="hidden" id="rated_sales" name="rated_sales[]" class="form-control" value="<?php echo $rated_sales; ?>">
                             <input type="hidden" id="vat" name="vat[]" class="form-control" value="<?php echo $vat; ?>">
                             <input type="hidden" id="ewt_arr" name="ewt_arr[]" class="form-control" value="<?php echo $ewt_arr; ?>">
                             <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo $overall_totals; ?>">
