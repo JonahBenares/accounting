@@ -1,0 +1,361 @@
+    body{
+       background: rgb(204,204,204);
+    }
+    page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+    }
+    page[size="A4"] {  
+        width: 21cm;
+        height: 29.7cm; 
+    }
+    page[size="Long"] {
+        background: white;
+        position: absolute;
+        width: 8.5in;
+        height: 13in; 
+        display: block;
+        margin: 0 auto;
+        left: 20%;
+        right: 20%;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+    }
+    page[size="A4"][layout="landscape"] {
+        width: 29.7cm;
+        height: 21cm;  
+    }
+    page[size="A3"] {
+        width: 29.7cm;
+        height: 42cm;
+    }
+    page[size="A3"][layout="landscape"] {
+        width: 42cm;
+        height: 29.7cm;  
+    }
+    page[size="A5"] {
+        width: 14.8cm;
+        height: 21cm;
+    }
+    page[size="A5"][layout="landscape"] {
+        width: 21cm;
+        height: 14.8cm;  
+    }
+    .btn-success, .btn-success.disabled {
+        box-shadow: 0 2px 6px #8edc9c;
+        background-color: #54ca68;
+        border-color: #54ca68;
+        color: #fff;
+    }
+    .btn-warning, .btn-warning.disabled {
+        box-shadow: 0 2px 6px #ffc473;
+        background-color: #ffa426;
+        border-color: #ffa426;
+        color: #fff;
+    }
+
+    .btn {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 24px;
+        padding: 0.1rem 0.5rem;
+        letter-spacing: 0.5px;
+        border-radius: 5px;
+    }
+    #printbutton{
+        /*position: fixed;*/
+        width: 100%;
+        align-content: center;
+        z-index: 999;
+    }
+    #printableArea{
+/*        font-weight: 600;*/
+    }
+    .date_1{
+/*        background: #0001;*/
+        font-size: 12px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 140px;
+        left: 440px; 
+        top: 168px;
+        position: absolute;
+        text-align: center;    
+    }
+    .ornumber_1{
+/*        background: #0001;*/
+        font-size: 22px;
+        width: 70px;
+        left: 660px; 
+        top: 155px;
+        position: absolute;
+        text-align: center;  
+        font-weight: 700;
+        color: red;  letter-spacing: 1;
+    }
+    .cusname_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 300px;
+        left: 160px; 
+        top: 190px;
+        position: absolute;  
+        text-align: left;
+    }
+    .address_1{
+/*        background: #0001;*/
+        font-size: 10px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 225px;
+        left: 525px; 
+        top: 190px;
+        position: absolute;  
+        text-align: left;
+    }
+    .address_1{
+/*        background: #0001;*/
+        font-size: 10px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 225px;
+        left: 525px; 
+        top: 190px;
+        position: absolute;  
+        text-align: left;
+    }
+    .tin_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 135px;
+        left: 605px; 
+        top: 220px;
+        position: absolute;  
+        text-align: right;
+    }
+    .desc_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 195px;
+        left: 55px; 
+        top: 270px;
+        position: absolute;  
+        text-align: right;
+    }
+    .defint_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 195px;
+        left: 55px; 
+        top: 290px;
+        position: absolute;  
+        text-align: right;
+    }
+    .defint_value_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 415px; 
+        top: 290px;
+        position: absolute;  
+        text-align: right;
+    }
+    .energy_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 195px;
+        left: 55px; 
+        top: 310px;
+        position: absolute;  
+        text-align: right;
+    }
+    .energy_value_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 415px; 
+        top: 310px;
+        position: absolute;  
+        text-align: right;
+    }
+    .vat_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 195px;
+        left: 55px; 
+        top: 330px;
+        position: absolute;  
+        text-align: right;
+    }
+    .vat_value_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 415px; 
+        top: 330px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .total_sales_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 250px;
+        position: absolute;  
+        text-align: right;   
+    }
+    .net_vat_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 265px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .add_vat_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 285px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .total_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 300px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .less_withholding_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 320px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .total_amount_1{
+/*        background: #0001;*/
+        font-size: 11px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 337px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .vatable_1{
+/*        background: #0001;*/
+        font-size: 9px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 352px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .vat_exempt_1{
+/*        background: #0001;*/
+        font-size: 9px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 362px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .zero_rated_1{
+/*        background: #0001;*/
+        font-size: 9px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 372px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .vat_percent_1{
+/*        background: #0001;*/
+        font-size: 9px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 382px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .grand_total_1{
+/*        background: #0001;*/
+        font-size: 9px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 635px; 
+        top: 392px;
+        position: absolute;  
+        text-align: right; 
+    }
+    .signature_1{
+/*        background: #0001;*/
+        font-size: 9px;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        width: 100px;
+        left: 580px; 
+        top: 390px;
+        position: absolute;  
+        text-align: right; 
+    }
+    
+    @media print {
+        body,page {
+            margin: 0;
+            box-shadow: 0;
+            font-size: auto;
+        }
+        body{
+            background: #fff;
+        }
+        page[size="Long"] {
+            background: white;
+            width: 8.5in;
+            height: 13in; 
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+        }
+        /*table td{ border:1px solid #fff!important; }*/
+        .bor-btm{border-bottom:1px solid #000!important;}
+        .bor-all{
+            border: 1px solid #000;
+        }
+        #printbutton, #br, #br1{display: none}
+        page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+        }
+       
+    }
