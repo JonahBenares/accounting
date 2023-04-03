@@ -53,6 +53,8 @@ class Sales extends CI_Controller {
         $noted_by_pos = $this->input->post('noted_by_pos');
         $vatable = $this->input->post('vatable');
         $zero = $this->input->post('zero');
+        $rated_sales = $this->input->post('rated_sales');
+        $zero_ecozones = $this->input->post('zero_ecozones');
         $total_vat = $this->input->post('vat');
         $ewt_arr = $this->input->post('ewt_arr');
         $overall_total = $this->input->post('overall_total'); 
@@ -95,6 +97,8 @@ class Sales extends CI_Controller {
                         'noted_by_pos' => $noted_by_pos[$x],
                         'total_vatable_sales' => $vatable[$x],
                         'total_zero_rated' => $zero[$x],
+                        'total_zero_sales' => $rated_sales[$x],
+                        'total_zero_ecozones' => $zero_ecozones[$x],
                         'total_vat' => $total_vat[$x],
                         'total_ewt' => $ewt_arr[$x],
                         'total_net_amount' => $overall_total[$x],
@@ -534,6 +538,8 @@ public function print_BS_new(){
                     $data['vatable_sales'][$x]=$vatable_sales;
                     $data['vat_on_sales'][$x]=$vat;
                     $data['zero_rated_sales'][$x]=$zero_rated_sales;
+                    $data['rated_sales'][$x]=$p->total_zero_sales;
+                    $data['zero_ecozones_sales'][$x]=$p->total_zero_ecozones;
                     $data['total_amount'][$x]=$total_amount;
                     $data['ewt'][$x]=$ewt;
                     $data['overall_total'][$x]=$overall_total;
@@ -546,6 +552,7 @@ public function print_BS_new(){
                         "sub_participant"=>$billing_id,
                         "vatable_sales"=>$vatable_sales,
                         "zero_rated_sales"=>$zero_rated_sales,
+                        "zero_ecozones_sales"=>$p->total_zero_ecozones,
                         "total_amount"=>$total_amount,
                         "vat_on_sales"=>$vat,
                         "ewt"=>$ewt,
@@ -668,6 +675,8 @@ public function print_BS_new(){
                             $data['vatable_sales'][$x]=$p->vatable_sales;
                             $data['vat_on_sales'][$x]=$p->vat_on_sales;
                             $data['zero_rated_sales'][$x]=$zero_rated;
+                            $data['rated_sales'][$x]=$p->zero_rated_sales;
+                            $data['zero_ecozones_sales'][$x]=$p->zero_rated_ecozones;
                             $data['total_amount'][$x]=$total_amount;
                             $data['ewt'][$x]=$p->ewt;
                             $data['overall_total'][$x]=$overall_total;
@@ -678,6 +687,8 @@ public function print_BS_new(){
                                 "sub_participant"=>$p->billing_id,
                                 "vatable_sales"=>$p->vatable_sales,
                                 "zero_rated_sales"=>$zero_rated,
+                                "rated_sales"=>$p->zero_rated,
+                                "zero_ecozones_sales"=>$p->zero_rated_ecozones,
                                 "total_amount"=>$total_amount,
                                 "vat_on_sales"=>$p->vat_on_sales,
                                 "ewt"=>$p->ewt,
@@ -713,6 +724,7 @@ public function print_BS_new(){
                                             "sub_participant"=>$subparticipant,
                                             "vatable_sales"=>$vatable_sales,
                                             "zero_rated_sales"=>$zero_rated,
+                                            "rated_sales"=>$zero_rated_sales,
                                             "zero_rated_ecozones"=>$zero_rated_ecozones,
                                             "total_amount"=>$total_amount,
                                             "vat_on_sales"=>$vat_on_sales,
@@ -744,6 +756,8 @@ public function print_BS_new(){
                                     "sub_participant"=>$p->billing_id,
                                     "vatable_sales"=>$p->vatable_sales,
                                     "zero_rated_sales"=>$p->zero_rated_sales,
+                                    "rated_sales"=>$p->zero_rated_sales,
+                                    "zero_ecozones_sales"=>$p->zero_rated_ecozones,
                                     "total_amount"=>$total_amount,
                                     "vat_on_sales"=>$p->vat_on_sales,
                                     "ewt"=>$p->ewt,
@@ -778,6 +792,8 @@ public function print_BS_new(){
                                         "sub_participant"=>$subparticipant,
                                         "vatable_sales"=>$vatable_sales,
                                         "zero_rated_sales"=>$zero_rated,
+                                        "rated_sales"=>$zero_rated_sales,
+                                        "zero_ecozones_sales"=>$zero_rated_ecozones,
                                         "total_amount"=>$total_amount,
                                         "vat_on_sales"=>$vat_on_sales,
                                         "ewt"=>$ewt,
@@ -806,7 +822,99 @@ public function print_BS_new(){
         // $this->load->view('template/header');
         //$this->load->view('template/navbar');
         for($x=0;$x<$count;$x++){
-            //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
+             $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
+            if(in_array($sales_det_exp[$x],$bs_id)){
+                foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
+                    $data['address'][$x]=$p->address;
+                    $data['tin'][$x]=$p->tin;
+                    $data['company_name'][$x]=$p->participant_name;
+                    $data['billing_from'][$x]=$p->billing_from;
+                    $data['billing_to'][$x]=$p->billing_to;
+                    $data['transaction_date'][$x]=$p->statement_date;
+                    $participant_id = $p->participant_id;
+                    $data['participant_id'][$x] = $p->participant_id;
+                }
+
+            $sum_vs_exp = explode(".", $p->total_vatable_sales);
+            $sum_vatable_sales_peso=$sum_vs_exp[0];
+            $sum_vatable_sales_cents=$sum_vs_exp[1];
+
+            $sum_vos_exp=explode(".", $p->vat);
+            $sum_vat_on_sales_peso=$sum_vos_exp[0];
+            $sum_vat_on_sales_cents=$sum_vos_exp[1];
+
+            $sum_e_exp=explode(".", $p->total_ewt);
+            $sum_ewt_peso=$sum_e_exp[0];
+            $sum_ewt_cents=$sum_e_exp[1];
+
+            $sum_zr_exp=explode(".", $p->total_zero_rated);
+            $sum_zero_rated_peso=$sum_zr_exp[0];
+            $sum_zero_rated_cents=$sum_zr_exp[1];
+
+            $total_vs=$p->total_vatable_sales;
+            $vatable_sales = explode(".",$total_vs);
+            $data['vat_sales_peso'][$x] = $vatable_sales[0];
+            $data['vat_sales_cents'][$x] = $vatable_sales[1];
+
+            $data['vat_sales_peso_sub'][$x] = 0;
+            $data['vat_sales_cents_sub'][$x] = 0;
+
+            $total_zr=$p->total_zero_sales;
+            $data['total_zr'][$x]=$total_zr;
+            $zero_rated_sales = explode(".",$total_zr);
+            $data['zero_rated_peso'][$x] = $zero_rated_sales[0];
+            $data['zero_rated_cents'][$x] = $zero_rated_sales[1];
+
+            $data['total_zr_sub'][$x]=0;
+            $data['zero_rated_peso_sub'][$x] = 0;
+            $data['zero_rated_cents_sub'][$x] = 0;
+
+            $total_zra=$p->total_zero_ecozones;
+            $data['total_zra'][$x]=$total_zra;
+            $zero_rated_ecozones_exp=explode(".", $total_zra);
+            $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
+            $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
+
+            $data['total_zra_sub']=0;
+            $data['zero_rated_ecozones_peso_sub'][$x]=0;
+            $data['zero_rated_ecozones_cents_sub'][$x]=0;
+
+            $total_vos=$p->total_vat;
+            $vat_on_sales = explode(".",$total_vos);
+            $data['vat_peso'][$x] = $vat_on_sales[0];
+            $data['vat_cents'][$x] = $vat_on_sales[1];
+
+            $data['vat_peso_sub'][$x] = 0;
+            $data['vat_cents_sub'][$x] = 0;
+
+            $total_ewt=$p->total_ewt;
+            $ewt_exp=explode(".", $total_ewt);
+            $data['ewt_peso'][$x]=$ewt_exp[0];
+            $data['ewt_cents'][$x]=$ewt_exp[1];
+
+            $data['ewt_peso_sub'][$x]=0;
+            $data['ewt_cents_sub'][$x]=0;
+            $total= $p->total_net_amount;
+
+            
+            //$total_sub= ($sum_vatable_sales + $sum_vat_on_sales + $sum_zero_rated_ecozone + $sum_zero_rated) - $sum_ewt;
+            $total_amount=str_replace(',','',number_format($total,2));
+           
+            $total_amount_sub=0;
+            $data['total_amount'][$x]=$total_amount;
+            $data['total_amount_sub'][$x]=0;
+            $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
+            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber(str_replace(',','',number_format($total_amount_sub,2))));
+            $total_exp=explode(".", $total_amount);
+            $data['total_peso'][$x]=$total_exp[0];
+            $data['total_cents'][$x]=$total_exp[1];
+
+            $total_exp_sub=explode(".", $total_amount_sub);
+            $data['total_peso_sub'][$x]=$total_exp_sub[0];
+            $data['total_cents_sub'][$x]=$total_exp_sub[1];
+
+        }else{
+                //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                 $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
@@ -931,6 +1039,7 @@ public function print_BS_new(){
             $total_exp_sub=explode(".", $total_amount_sub);
             $data['total_peso_sub'][$x]=$total_exp_sub[0];
             $data['total_cents_sub'][$x]=$total_exp_sub[1];
+            }
         }
         $this->load->view('template/print_head');
         $this->load->view('sales/print_invoice_multiple',$data);
