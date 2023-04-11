@@ -1397,6 +1397,9 @@ public function print_BS_new(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
         $stl_id=$this->uri->segment(5);
+        $data['date'] = $date;
+        $data['ref_no'] = $ref_no;
+        $data['stl_id'] = $stl_id;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'");
         $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
@@ -1455,6 +1458,7 @@ public function print_BS_new(){
                 "or_no_remarks"=>$col->or_no_remarks,
                 "overall_total"=>$overall_total,
             );
+            $data['details_id']=$col->collection_details_id;
         //}
     }
         $this->load->view('template/header');
@@ -3192,10 +3196,93 @@ public function upload_sales_adjustment_test(){
     }
 
     public function PDF_OR(){
-        $this->load->view('sales/PDF_OR');
+        $collection_id=$this->uri->segment(3);
+        $settlement_id=$this->uri->segment(4);
+        $reference_no=$this->uri->segment(5);
+        $data['ref_no'] = $reference_no;
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
+        $collection_date = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
+        $data['billing_month'] = date('my',strtotime($collection_date));
+        $data['timestamp'] = date('Ymd');
+        $billing_id = $this->super_model->select_column_where("participant", "billing_id", "settlement_id", $settlement_id);
+        
+        //$data['client']=$this->super_model->select_row_where("participant", "billing_id", $billing_id);
+        $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
+        $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
+        $data['stl_id']=$this->super_model->select_column_custom_where("collection_details","settlement_id","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['or_no']=$this->super_model->select_column_custom_where("collection_details","series_number","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['buyer']=$this->super_model->select_column_custom_where("collection_details","buyer_fullname","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_amount']=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_vat']=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_ewt'] =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['defint'] =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
+        $this->load->view('sales/PDF_OR',$data);
     }
+
     public function PDF_OR_bulk(){
-        $this->load->view('sales/PDF_OR_bulk');
+        $date=$this->uri->segment(3);
+        $ref_no=$this->uri->segment(4);
+        $stl_id=$this->uri->segment(5);
+
+        $sql="";
+
+        if($date!='null'){
+            $sql.= "ch.collection_date = '$date' AND ";
+        } if($ref_no!='null'){
+             $sql.= "cd.reference_no = '$ref_no' AND "; 
+        } if($stl_id!='null'){
+             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND ".$query;
+        $data['details']=array();
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
+
+            /*$data_update = array(
+                "bulk_pdf_flag"=>1
+
+            );
+
+            $this->super_model->update_where("collection_details", $data_update, "collection_details_id", $col->collection_details_id);*/
+
+            $data['collection_date'] = date('my',strtotime($col->collection_date));
+            $data['timestamp'] = date('Ymd');
+            //$data['refno'] = preg_replace("/[^0-9.]/", "", "-",  $col->reference_no);
+
+            //$refno = preg_replace("", "-",  $col->reference_no);
+
+            $billing_id = $this->super_model->select_column_where("participant", "billing_id", "settlement_id", $col->settlement_id);
+            $sum_amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no'");
+            $sum_vat=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no'");
+            $sum_ewt =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no'");
+            $sum_zero_rated =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no'");
+            $sum_zero_rated_ecozone =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no'");
+            $defint =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no'");
+
+            $data['details'][] = array(
+                'billing_id'=>$billing_id,
+                'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id),
+                'tin'=>$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id),
+                'ref_no'=>$col->reference_no,
+                'stl_id'=>$col->settlement_id,
+                'buyer'=>$col->buyer_fullname,
+                'or_no'=>$col->series_number,
+                'date'=>$col->collection_date,
+                'sum_amount'=>$sum_amount,
+                'sum_vat'=>$sum_vat,
+                'sum_ewt'=>$sum_ewt,
+                'sum_zero_rated'=>$sum_zero_rated,
+                'sum_zero_rated_ecozone'=>$sum_zero_rated_ecozone,
+                'defint'=>$defint,
+            );
+
+        }
+        $this->load->view('sales/PDF_OR_bulk',$data);
     }
 
 }

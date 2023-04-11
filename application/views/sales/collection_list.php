@@ -75,7 +75,7 @@
                                         </table>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <a href="<?php echo base_url();?>sales/PDF_OR_bulk" class="btn btn-success btn-block" style="margin-top:4px"  onclick="collection_filter()">Export Bulk PDF</a>   
+                                        <a href="<?php echo base_url();?>sales/PDF_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $stl_id;?>" target='_blank' class="btn btn-success btn-block" style="margin-top:4px">Export Bulk PDF</a>   
                                     </div>
                                 </div>
                                 <hr>
@@ -159,7 +159,7 @@
                                                     <td class="td-btm pt-1 pb-1" style="vertical-align: middle;" align="center">
                                                         <div style="display:flex">
                                                             <a href="<?php echo base_url(); ?>sales/print_OR_new/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white" style="margin-right: 2px;"><span class="fas fa-print" style="margin:0px"></span></a>
-                                                            <a href="<?php echo base_url();?>sales/PDF_OR" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                            <a href="<?php echo base_url();?>sales/PDF_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
                                                         </div>
                                                     </td>
                                                     <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">

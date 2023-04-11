@@ -19,17 +19,56 @@
     <center>
         
         <button class="btn btn-warning " onclick="goBack()">Back</button>
-        <button class="btn btn-success " id="counter_print" onclick="printDiv('printableArea')">Print</button>
-        <button class="btn btn-success " onclick="">Save as PDF</button>
+        <!-- <button class="btn btn-success " id="counter_print" onclick="printDiv('printableArea')">Print</button>
+        <button class="btn btn-success " onclick="">Save as PDF</button> -->
     </center>
     <br>
 </div>
 <center>
+<?php 
+    $x=1;
+    foreach($details AS $d)
+        $zero_rated = $d['sum_zero_rated'] + $d['sum_zero_rated_ecozone']; 
+        $total = $d['sum_amount'] +$zero_rated + $d['sum_vat']; 
+        $total_due = $total - $d['sum_ewt'];
+
+        { ?>
 <div style="padding-bottom:90px;">
     <div id="contentPDF" >
-    <page size="Long" id="printableArea" class="canvas_div_pdf" >
+    <page size="Long" id="printableArea" class="canvas_div_pdf<?php echo $x; ?>" >
         <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.jpg" style="width: 100%;">
         <div class="">
+            <label class="date_1"><?php echo date("F j, Y", strtotime($d['date'])); ?></label>
+            <label class="ornumber_1"><?php echo $d['or_no']; ?></label>
+            <label class="cusname_1"><?php echo $d['buyer']; ?> </label>
+            <label class="address_1"><?php echo $d['address']; ?> </label>
+            <label class="tin_1"><?php echo $d['tin']; ?> </label>
+            <label class="desc_1"><?php echo $d['ref_no']; ?></label>
+            <label class="defint_1">DEF INTEREST</label>
+            <label class="defint_value_1"><?php echo number_format($d['defint'],2); ?></label>
+            <label class="energy_1">ENERGY</label>
+            <label class="energy_value_1"><?php echo number_format($d['sum_amount'],2); ?></label>
+            <label class="vat_1">VAT</label>
+            <label class="vat_value_1"><?php echo number_format($d['sum_vat'],2); ?></label>
+            <label class="total_sales_1"><?php echo number_format($total,2); ?></label>
+            <label class="net_vat_1"><?php echo number_format($d['sum_amount'],2); ?></label>
+            <label class="add_vat_1"><?php echo number_format($d['sum_vat'],2); ?></label>
+            <label class="total_1"><?php echo number_format($total,2); ?></label>
+            <label class="less_withholding_1"><?php echo number_format($d['sum_ewt'],2); ?></label>
+            <label class="total_amount_1"><?php echo number_format($total_due,2); ?></label>
+            <label class="vatable_1"><?php echo number_format($d['sum_amount'],2); ?></label>
+            <label class="vat_exempt_1">0.00</label>
+            <label class="zero_rated_1"><?php echo number_format($zero_rated,2); ?></label>
+            <label class="vat_percent_1"><?php echo number_format($d['sum_vat'],2); ?></label>
+            <label class="grand_total_1"><?php echo number_format($total,2); ?></label>
+            <label class="signature_1">
+                <img src="<?php echo base_url()."uploads/".$user_signature; ?>" width="100px">
+            </label>
+
+
+
+        </div>
+        <!-- <div class="" style="position:absolute;top: 420px;left:-5px">
             <label class="date_1">December 10, 2023</label>
             <label class="ornumber_1">8951</label>
             <label class="cusname_1">1590 Energy Corporation 1590 Energy Corporation 1590 Energy Corporation 1590 </label>
@@ -56,90 +95,72 @@
             <label class="signature_1">
                 <img src="<?php echo base_url(); ?>assets/img/signature.png" width="100px">
             </label>
-
-
-
-        </div>
-        <div class="" style="position:absolute;top: 420px;left:-5px">
-            <label class="date_1">December 10, 2023</label>
-            <label class="ornumber_1">8951</label>
-            <label class="cusname_1">1590 Energy Corporation 1590 Energy Corporation 1590 Energy Corporation 1590 </label>
-            <label class="address_1">907-908 Ayala Life FGU Ctr. Cebu Business Park Luz Cebu City, Cebu City (Capital) Philippines </label>
-            <label class="tin_1">007-099-179-000 </label>
-            <label class="desc_1">TS-WAD-1b5F'2-00000</label>
-            <label class="defint_1">DEF INTEREST</label>
-            <label class="defint_value_1">0.00</label>
-            <label class="energy_1">ENERGY</label>
-            <label class="energy_value_1">2.23</label>
-            <label class="vat_1">VAT</label>
-            <label class="vat_value_1">2.23</label>
-            <label class="total_sales_1">019.23</label>
-            <label class="net_vat_1">019.23</label>
-            <label class="add_vat_1">019.23</label>
-            <label class="total_1">019.23</label>
-            <label class="less_withholding_1">500.23</label>
-            <label class="total_amount_1">500.23</label>
-            <label class="vatable_1">500.23</label>
-            <label class="vat_exempt_1">500.23</label>
-            <label class="zero_rated_1">500.23</label>
-            <label class="vat_percent_1">500.23</label>
-            <label class="grand_total_1">500.23</label>
-            <label class="signature_1">
-                <img src="<?php echo base_url(); ?>assets/img/signature.png" width="100px">
-            </label>
-        </div>
+        </div> -->
     </page>
     </div>
 </div>
+<input type="hidden" class="stl_id" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
+<input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $reference_no; ?>">
+<input type="hidden" class="billing_month" id="billing_month<?php echo $x; ?>" value="<?php echo $billing_month; ?>">
+<input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
+<?php $x++; } ?>
 </center>
-</html>
-
 <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
 <script type="text/javascript">
-    function getPDF(shortname, refno,billing_month, timestamp){
+  $(document).ready(function() {
+         
+        var counter=document.getElementById('count').value;
+        var billing_month=document.getElementById('billing_month').value;
+        var timestamp=document.getElementById('timestamp').value;
 
-        var HTML_Width = $(".canvas_div_pdf").width();
+        for(let a=1;a<counter;a++){
         
-        var HTML_Height = $(".canvas_div_pdf").height();
-
-        /*alert(HTML_Height);*/
-        var top_left_margin = 10;
-        var PDF_Width = HTML_Width+(top_left_margin*2);
-        var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
-        var canvas_image_width = HTML_Width;
-        var canvas_image_height = HTML_Height;
         
-        var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
-        
+            var refno=document.getElementById('ref_no'+a).value;
+          
+            var HTML_Width = $(".canvas_div_pdf"+a).width();
 
-        html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
-            useCORS: true,
-            logging: false,
-            height: window.outerHeight + window.innerHeight,
-            windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
-            canvas.getContext('2d');
-        /*    
-            console.log(canvas.height+"  "+canvas.width);*/
             
-            
-            var imgData = canvas.toDataURL("image/jpeg", 1.0);
-            var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
-            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-            
-            
-            for (var i = 1; i <= totalPDFPages; i++) { 
-                pdf.addPage(PDF_Width, PDF_Height);
-                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-            }
-            
+            var HTML_Height = $(".canvas_div_pdf"+a).height();
+           
 
-            pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
-        });
-    };
+            var top_left_margin = 10;
+            var PDF_Width = HTML_Width+(top_left_margin*2);
+            var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+            
+            var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+          
+            html2canvas($(".canvas_div_pdf"+a)[0],{
+                allowTaint:true, 
+                useCORS: true,
+                logging: false,
+                height: window.outerHeight + window.innerHeight,
+                windowHeight: window.outerHeight + window.innerHeight,
+
+            }).then(function(canvas) {
+                    canvas.getContext('2d');   
+                    var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                    var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
+                    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+
+                    var shortname= $(".stl_id"+a).val();
+                   
+                        pdf.addPage(PDF_Width, PDF_Height);
+                        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+                    
+                     pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+                 
+                  
+              });
+
+
+        }
+   });
 </script>
-<!-- <script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script> -->
 <script type="text/javascript">
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
@@ -154,3 +175,4 @@
 
    
 </script>
+</html>
