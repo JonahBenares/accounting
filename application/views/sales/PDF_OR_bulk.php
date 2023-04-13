@@ -100,8 +100,8 @@
     </div>
 </div>
 <input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
-<input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $refno; ?>">
-<input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $billing_month; ?>">
+<input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
+<input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $d['billing_month']; ?>">
 <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <?php $x++; } ?>
 <input type="text"  id="count" value="<?php echo $x; ?>">
@@ -118,8 +118,8 @@
 
         for(let a=1;a<counter;a++){
         
-            // var billing_month=document.getElementById('billing_month'+a).value;
-            // var refno=document.getElementById('ref_no'+a).value;
+            //var billing_month=document.getElementById('billing_month'+a).value;
+            //var refno=document.getElementById('ref_no'+a).value;
             // var shortname=document.getElementById('stl_id'+a).value;
           
             var HTML_Width = $(".canvas_div_pdf"+a).width();

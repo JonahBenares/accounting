@@ -3247,6 +3247,7 @@ public function upload_sales_adjustment_test(){
 
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
+        $data['timestamp'] = date('Ymd');
             foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu LIMIT 20") AS $col){
 
             $data_update = array(
@@ -3260,9 +3261,8 @@ public function upload_sales_adjustment_test(){
                 $reference_number = $col->reference_no;
             }
 
-            $data['billing_month'] = date('my',strtotime($col->collection_date));
-            $data['timestamp'] = date('Ymd');
-            $data['refno'] = preg_replace("/[^0-9]/", "",$reference_number);
+            $billing_month = date('my',strtotime($col->collection_date));
+            $refno = preg_replace("/[^0-9]/", "",$reference_number);
 
             $billing_id = $this->super_model->select_column_where("participant", "billing_id", "settlement_id", $col->settlement_id);
             $sum_amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no'");
@@ -3277,6 +3277,7 @@ public function upload_sales_adjustment_test(){
                 'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id),
                 'tin'=>$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id),
                 'ref_no'=>$col->reference_no,
+                'refno'=>$refno,
                 'stl_id'=>$col->settlement_id,
                 'buyer'=>$col->buyer_fullname,
                 'or_no'=>$col->series_number,
@@ -3287,6 +3288,7 @@ public function upload_sales_adjustment_test(){
                 'sum_zero_rated'=>$sum_zero_rated,
                 'sum_zero_rated_ecozone'=>$sum_zero_rated_ecozone,
                 'defint'=>$defint,
+                'billing_month'=>$billing_month,
             );
         }
         $this->load->view('sales/PDF_OR_bulk',$data);
