@@ -27,12 +27,12 @@
 <center>
 <?php 
     $x=1;
-    foreach($details AS $d)
+    foreach($details AS $d){
         $zero_rated = $d['sum_zero_rated'] + $d['sum_zero_rated_ecozone']; 
         $total = $d['sum_amount'] +$zero_rated + $d['sum_vat']; 
         $total_due = $total - $d['sum_ewt'];
 
-        { ?>
+         ?>
 <div style="padding-bottom:90px;">
     <div id="contentPDF" >
     <page size="Long" id="printableArea" class="canvas_div_pdf<?php echo $x; ?>" >
@@ -99,11 +99,12 @@
     </page>
     </div>
 </div>
-<input type="hidden" class="stl_id" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
-<input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $reference_no; ?>">
-<input type="hidden" class="billing_month" id="billing_month<?php echo $x; ?>" value="<?php echo $billing_month; ?>">
+<input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
+<input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $refno; ?>">
+<input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $billing_month; ?>">
 <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <?php $x++; } ?>
+<input type="text"  id="count" value="<?php echo $x; ?>">
 </center>
 <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
@@ -112,34 +113,34 @@
   $(document).ready(function() {
          
         var counter=document.getElementById('count').value;
-        var billing_month=document.getElementById('billing_month').value;
         var timestamp=document.getElementById('timestamp').value;
+
 
         for(let a=1;a<counter;a++){
         
-        
-            var refno=document.getElementById('ref_no'+a).value;
+            // var billing_month=document.getElementById('billing_month'+a).value;
+            // var refno=document.getElementById('ref_no'+a).value;
+            // var shortname=document.getElementById('stl_id'+a).value;
           
             var HTML_Width = $(".canvas_div_pdf"+a).width();
-
-            
             var HTML_Height = $(".canvas_div_pdf"+a).height();
            
-
             var top_left_margin = 10;
             var PDF_Width = HTML_Width+(top_left_margin*2);
             var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
             var canvas_image_width = HTML_Width;
             var canvas_image_height = HTML_Height;
-            
+
             var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
           
             html2canvas($(".canvas_div_pdf"+a)[0],{
                 allowTaint:true, 
                 useCORS: true,
                 logging: false,
-                height: window.outerHeight + window.innerHeight,
-                windowHeight: window.outerHeight + window.innerHeight,
+                // height: window.outerHeight + window.innerHeight,
+                // windowHeight: window.outerHeight + window.innerHeight,
+                height: window.outerHeight,
+                windowHeight: window.outerHeight,
 
             }).then(function(canvas) {
                     canvas.getContext('2d');   
@@ -148,16 +149,14 @@
                     pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
 
                     var shortname= $(".stl_id"+a).val();
-                   
+                    var billing_month= $(".billing_month"+a).val();
+                    var refno= $(".ref_no"+a).val();
+
                         pdf.addPage(PDF_Width, PDF_Height);
                         pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                     
                      pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
-                 
-                  
               });
-
-
         }
    });
 </script>

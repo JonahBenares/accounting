@@ -21,7 +21,7 @@
         
         <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="printDiv('printableArea')">Print</button>
-        <button class="btn btn-success " onclick="">Save as PDF</button>
+       <!--  <button class="btn btn-success " onclick="">Save as PDF</button> -->
     </center>
     <br>
 </div>
@@ -98,7 +98,7 @@
     </div>
 </div>
 <input type="hidden" class="stl_id" id="stl_id" value="<?php echo $stl_id; ?>">
-<input type="hidden" class="ref_no" id="ref_no" value="<?php echo $ref_no; ?>">
+<input type="hidden" class="ref_no" id="ref_no" value="<?php echo $refno; ?>">
 <input type="hidden" class="billing_month" id="billing_month" value="<?php echo $billing_month; ?>">
 <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 </center>
@@ -110,16 +110,14 @@
 <script type="text/javascript">
   $(document).ready(function() {
          
-             var timestamp=document.getElementById('timestamp').value;
+            var timestamp=document.getElementById('timestamp').value;
             var refno=document.getElementById('ref_no').value;
             var billing_month=document.getElementById('billing_month').value;
             var shortname=document.getElementById('stl_id').value;
           
-            var HTML_Width = $("canvas_div_pdf").width();
+            var HTML_Width = $(".canvas_div_pdf").width();
 
-            
-            var HTML_Height = $("canvas_div_pdf").height();
-           
+            var HTML_Height = $(".canvas_div_pdf").height();
 
             var top_left_margin = 10;
             var PDF_Width = HTML_Width+(top_left_margin*2);
@@ -127,27 +125,24 @@
             var canvas_image_width = HTML_Width;
             var canvas_image_height = HTML_Height;
             
-            var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+            var totalPDFPages = Math.ceil(HTML_Height/PDF_Height);
           
-            html2canvas($("canvas_div_pdf"),{
+            html2canvas($(".canvas_div_pdf")[0],{
                 allowTaint:true, 
                 useCORS: true,
                 logging: false,
-                height: window.outerHeight + window.innerHeight,
-                windowHeight: window.outerHeight + window.innerHeight,
+                height: window.outerHeight,
+                windowHeight: window.outerHeight,
 
             }).then(function(canvas) {
-                    canvas.getContext('2d');   
+                    canvas.getContext('2d');
                     var imgData = canvas.toDataURL("image/jpeg", 1.0);
                     var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
                     pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-                   
-                        pdf.addPage(PDF_Width, PDF_Height);
-                        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-                    
-                     pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
-                 
-                  
+
+                    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+                    pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+
               });
    });
 </script>

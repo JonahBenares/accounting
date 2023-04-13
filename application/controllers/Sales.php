@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+ini_set('max_execution_time', 10000);
+ini_set('max_input_vars', 100000);
 
 class Sales extends CI_Controller {
 
@@ -3200,6 +3202,9 @@ public function upload_sales_adjustment_test(){
         $settlement_id=$this->uri->segment(4);
         $reference_no=$this->uri->segment(5);
         $data['ref_no'] = $reference_no;
+        $data['refno'] = preg_replace("/[^0-9]/", "",$reference_no);
+        //$refno = preg_replace("/[^0-9]/", "",$reference_no);
+
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         $collection_date = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         $data['billing_month'] = date('my',strtotime($collection_date));
@@ -3238,23 +3243,26 @@ public function upload_sales_adjustment_test(){
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "bulk_pdf_flag = '0' AND saved = '1' AND ".$query;
+
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
-            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu LIMIT 20") AS $col){
 
-            /*$data_update = array(
+            $data_update = array(
                 "bulk_pdf_flag"=>1
-
             );
+            $this->super_model->update_where("collection_details", $data_update, "collection_details_id", $col->collection_details_id);
 
-            $this->super_model->update_where("collection_details", $data_update, "collection_details_id", $col->collection_details_id);*/
+            if($ref_no!='null'){
+                $reference_number = $ref_no;
+            }else{
+                $reference_number = $col->reference_no;
+            }
 
-            $data['collection_date'] = date('my',strtotime($col->collection_date));
+            $data['billing_month'] = date('my',strtotime($col->collection_date));
             $data['timestamp'] = date('Ymd');
-            //$data['refno'] = preg_replace("/[^0-9.]/", "", "-",  $col->reference_no);
-
-            //$refno = preg_replace("", "-",  $col->reference_no);
+            $data['refno'] = preg_replace("/[^0-9]/", "",$reference_number);
 
             $billing_id = $this->super_model->select_column_where("participant", "billing_id", "settlement_id", $col->settlement_id);
             $sum_amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no'");
@@ -3280,7 +3288,6 @@ public function upload_sales_adjustment_test(){
                 'sum_zero_rated_ecozone'=>$sum_zero_rated_ecozone,
                 'defint'=>$defint,
             );
-
         }
         $this->load->view('sales/PDF_OR_bulk',$data);
     }
