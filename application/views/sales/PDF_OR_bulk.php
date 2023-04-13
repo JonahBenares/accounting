@@ -152,7 +152,7 @@
                     var billing_month= $(".billing_month"+a).val();
                     var refno= $(".ref_no"+a).val();
 
-                        pdf.addPage(PDF_Width, PDF_Height);
+                        //pdf.addPage(PDF_Width, PDF_Height);
                         pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                     
                      pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
