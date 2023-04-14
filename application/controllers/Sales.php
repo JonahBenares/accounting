@@ -3241,14 +3241,14 @@ public function upload_sales_adjustment_test(){
         }
 
         $query=substr($sql,0,-4);
-        $qu = "bulk_pdf_flag = '0' AND series_number != 'null' AND saved = '1' AND ".$query;
+        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
 
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         $data['timestamp'] = date('Ymd');
 
 
-            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number LIMIT 10") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number LIMIT 20") AS $col){
 
             $data_update = array(
                 "bulk_pdf_flag"=>1
