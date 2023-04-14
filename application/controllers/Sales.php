@@ -3246,12 +3246,14 @@ public function upload_sales_adjustment_test(){
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         $data['timestamp'] = date('Ymd');
+
+
             foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY cd.series_number LIMIT 20") AS $col){
 
             $data_update = array(
                 "bulk_pdf_flag"=>1
             );
-            $this->super_model->update_where("collection_details", $data_update, "collection_details_id", $col->collection_details_id);
+            $this->super_model->update_where("collection_details", $data_update, "series_number", $col->series_number);
 
             if($ref_no!='null'){
                 $reference_number = $ref_no;
