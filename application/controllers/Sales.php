@@ -3248,7 +3248,7 @@ public function upload_sales_adjustment_test(){
         $data['timestamp'] = date('Ymd');
 
 
-            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY cd.series_number LIMIT 20") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number LIMIT 10") AS $col){
 
             $data_update = array(
                 "bulk_pdf_flag"=>1
