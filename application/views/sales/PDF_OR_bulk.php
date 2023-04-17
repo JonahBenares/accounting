@@ -104,7 +104,7 @@
 <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
 <input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $d['billing_month']; ?>">
 <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
-<input type="hidden" class="baseurl"  id="baseurl" value="<?php echo base_url(); ?>">
+<input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
 <?php $x++; } ?>
 <input type="hidden"  id="count" value="<?php echo $x; ?>">
 </center>
@@ -162,12 +162,10 @@
                         pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
 
                         $.ajax({
-                        data: "series_no="+series_no,
+                        data: 'series_no='+series_no,
                         type: "POST",
                         url: redirect,
                         success: function(output){
-                            /*window.opener.location=loc+'sales/print_OR/'+output;
-                            window.close();*/
                             //console.log(output);
                             pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
                         }

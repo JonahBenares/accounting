@@ -1619,12 +1619,12 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['reference_number']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['participant_name']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "(".$value['vatables_purchases'].")");
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, "(".$value['vat_on_purchases'].")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "-".$value['vatables_purchases']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, "-".$value['vat_on_purchases']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $value['ewt']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "(".$total.")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$total);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['or_no']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "(".$value['total_update'].")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "-".$value['total_update']);
                 if($value['original_copy']==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "Yes");
                 }else if($value['original_copy']==0){
@@ -1867,7 +1867,7 @@ class Reports extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $value['vatable_sales']);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $zero_rated);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $value['vat_on_sales']);
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "(".$value['ewt'].")");
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$value['ewt']);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $total);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, $value['ewt_amount']);
                     if($value['original_copy']==1){
@@ -2118,12 +2118,12 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['reference_number']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['participant_name']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "(".$value['vatables_purchases'].")");
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, "(".$value['vat_on_purchases'].")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "-".$value['vatables_purchases']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, "-".$value['vat_on_purchases']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $value['ewt']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "(".$total.")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$total);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['or_no']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "(".$value['total_update'].")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "-".$value['total_update']);
                 if($value['original_copy']==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "Yes");
                 }else if($value['original_copy']==0){
@@ -2378,7 +2378,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $value['vatable_sales']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $zero_rated);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $value['vat_on_sales']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "(".$value['ewt'].")");
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$value['ewt']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $total);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, $value['ewt_amount']);
                 if($value['original_copy']==1){
