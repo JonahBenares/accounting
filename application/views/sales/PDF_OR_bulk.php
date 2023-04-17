@@ -100,9 +100,11 @@
     </div>
 </div>
 <input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
+<input type="hidden" class="series_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="series_no<?php echo $x; ?>">
 <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
 <input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $d['billing_month']; ?>">
 <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
+<input type="hidden" class="baseurl"  id="baseurl" value="<?php echo base_url(); ?>">
 <?php $x++; } ?>
 <input type="hidden"  id="count" value="<?php echo $x; ?>">
 </center>
@@ -114,9 +116,12 @@
          
         var counter=document.getElementById('count').value;
         var timestamp=document.getElementById('timestamp').value;
+        var loc= document.getElementById("baseurl").value;
+        var redirect = loc+"sales/update_flag";
 
 
         for(let a=1;a<counter;a++){
+           
         
             //var billing_month=document.getElementById('billing_month'+a).value;
             //var refno=document.getElementById('ref_no'+a).value;
@@ -132,7 +137,7 @@
             var canvas_image_height = HTML_Height;
 
             var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
-          
+          // alert(a);
             html2canvas($(".canvas_div_pdf"+a)[0],{
                 allowTaint:true, 
                 useCORS: true,
@@ -141,8 +146,9 @@
                 // windowHeight: window.outerHeight + window.innerHeight,
                 height: window.outerHeight,
                 windowHeight: window.outerHeight,
-
+        
             }).then(function(canvas) {
+                 var series_no= document.getElementById("series_no"+a).value;
                     canvas.getContext('2d');   
                     var imgData = canvas.toDataURL("image/jpeg", 1.0);
                     var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
@@ -154,8 +160,18 @@
 
                         //pdf.addPage(PDF_Width, PDF_Height);
                         pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-                    
-                     pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+
+                        $.ajax({
+                        data: "series_no="+series_no,
+                        type: "POST",
+                        url: redirect,
+                        success: function(output){
+                            /*window.opener.location=loc+'sales/print_OR/'+output;
+                            window.close();*/
+                            //console.log(output);
+                            pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+                        }
+                    });
               });
         }
    });
