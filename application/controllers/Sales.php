@@ -3247,8 +3247,13 @@ public function upload_sales_adjustment_test(){
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         $data['timestamp'] = date('Ymd');
 
+            $count = $this->super_model->count_custom("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no");
 
-            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number LIMIT 20") AS $col){
+            echo $count."<br>";
+
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no LIMIT 20") AS $col){
+
+                echo $col->series_number."-".$col->settlement_id."<br>";
 
             /*$data_update = array(
                 "bulk_pdf_flag"=>1
@@ -3273,6 +3278,7 @@ public function upload_sales_adjustment_test(){
             $defint =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no' AND series_number='$col->series_number'");
 
             $data['details'][] = array(
+                'collection_id'=>$col->collection_id,
                 'billing_id'=>$billing_id,
                 'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id),
                 'tin'=>$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id),
@@ -3296,11 +3302,15 @@ public function upload_sales_adjustment_test(){
 
     public function update_flag(){
         $series_number = $this->input->post('series_no');
+        $settlement_id = $this->input->post('stl_id');
+        $reference_no = $this->input->post('reference_no');
+        $collection_id = $this->input->post('collection_id');
         $data_update = array(
                 "bulk_pdf_flag"=>1
             );
-            $this->super_model->update_where("collection_details", $data_update, "series_number", $series_number);
-            //echo $series_number;
+            //$this->super_model->update_where("collection_details", $data_update, "series_number", $series_number);
+            $this->super_model->update_custom_where("collection_details", $data_update, "series_number='$series_number' AND settlement_id='$settlement_id' AND reference_no='$reference_no' AND collection_id='$collection_id'");
+            //echo $series_number."-".$settlement_id."-".$reference_no."-".$collection_id;
     }
 
 }

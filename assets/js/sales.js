@@ -312,7 +312,7 @@ function saveAllCollection(){
 }
 
 function collection_filter() {
-	 var collection_date = document.getElementById("collection_date").value; 
+	 var collection_date = document.getElementById("col_date").value; 
      var reference_no = document.getElementById("reference_no").value;
      var stl_id = document.getElementById("stl_id").value;
 

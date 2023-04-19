@@ -102,6 +102,8 @@
 <input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
 <input type="hidden" class="series_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="series_no<?php echo $x; ?>">
 <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
+<input type="hidden" class="reference_no<?php echo $x; ?>" id="reference_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
+<input type="hidden" class="collection_id<?php echo $x; ?>" id="collection_id<?php echo $x; ?>" value="<?php echo $d['collection_id']; ?>">
 <input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $d['billing_month']; ?>">
 <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
@@ -149,25 +151,28 @@
         
             }).then(function(canvas) {
                  var series_no= document.getElementById("series_no"+a).value;
+                 var reference_no= document.getElementById("reference_no"+a).value;
+                 var collection_id= document.getElementById("collection_id"+a).value;
+
                     canvas.getContext('2d');   
                     var imgData = canvas.toDataURL("image/jpeg", 1.0);
                     var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
                     pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
 
-                    var shortname= $(".stl_id"+a).val();
+                    var stl_id= $(".stl_id"+a).val();
                     var billing_month= $(".billing_month"+a).val();
-                    var refno= $(".ref_no"+a).val();
+                    var ref_no= $(".ref_no"+a).val();
 
                         //pdf.addPage(PDF_Width, PDF_Height);
                         pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
 
                         $.ajax({
-                        data: 'series_no='+series_no,
+                        data: 'series_no='+series_no+'&stl_id='+stl_id+'&reference_no='+reference_no+'&collection_id='+collection_id,
                         type: "POST",
                         url: redirect,
                         success: function(output){
                             //console.log(output);
-                            pdf.save("OR_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+                            pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
                         }
                     });
               });

@@ -44,7 +44,7 @@
                                         <table width="100%">
                                             <tr>
                                                 <td width="22%">
-                                                    <select class="form-control select2" name="collection_date" id="collection_date">
+                                                    <select class="form-control select2" name="col_date" id="col_date">
                                                         <option value="">-- Select Collection Date --</option>
                                                         <?php foreach($collection_date AS $cd){ ?>
                                                             <option value="<?php echo $cd->collection_date;?>"><?php echo date("F d, Y",strtotime($cd->collection_date));?></option>
