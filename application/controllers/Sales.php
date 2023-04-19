@@ -3247,13 +3247,13 @@ public function upload_sales_adjustment_test(){
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         $data['timestamp'] = date('Ymd');
 
-            $count = $this->super_model->count_custom("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no");
+            //$count = $this->super_model->count_custom("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no");
 
-            echo $count."<br>";
+            //echo $count."<br>";
 
             foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no LIMIT 20") AS $col){
 
-                echo $col->series_number."-".$col->settlement_id."<br>";
+                //echo $col->series_number."-".$col->settlement_id."<br>";
 
             /*$data_update = array(
                 "bulk_pdf_flag"=>1
