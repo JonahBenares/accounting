@@ -130,6 +130,7 @@
                                             <th class="table_td" style="font-size: 12px;" width="5%">EWT Amount</th>
                                             <th class="table_td" style="font-size: 12px;" width="5%">Original Copy</th>
                                             <th class="table_td" style="font-size: 12px;" width="5%">Scanned Copy</th>
+                                            <th class="table_td" style="font-size: 12px;" width="5%">OR Number</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -154,6 +155,7 @@
                                                         'original_copy'=>array(),
                                                         'scanned_copy'=>array(),
                                                         'adjustment_detail_id'=>array(),
+                                                        'or_no'=>array(),
                                                     );
                                                 }
                                                 $data2[$key]['participant_name'][] = ($sal['participant_name'] != '') ? $sal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
@@ -168,6 +170,7 @@
                                                 $data2[$key]['ewt_amount'][] = number_format($sal['ewt_amount'],2);
                                                 $data2[$key]['original_copy'][] =($sal['original_copy']=='0') ? 'NO' : 'YES';
                                                 $data2[$key]['scanned_copy'][] = ($sal['scanned_copy']=='0') ? 'NO' : 'YES';
+                                                $data2[$key]['or_no'][] = ($sal['or_no'] != '') ? $sal['or_no'] : '<br>';
                                             }
                                             foreach($data2 AS $sa){
                                         ?>
@@ -209,6 +212,9 @@
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin:0px'>",$sa['scanned_copy']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['or_no']);?>
                                             </td>
                                         </tr>
                                         <?php } } } ?>
