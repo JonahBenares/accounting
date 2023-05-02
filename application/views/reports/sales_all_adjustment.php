@@ -175,7 +175,7 @@
                                             foreach($data2 AS $sa){
                                         ?>
                                         <tr>
-                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="11" style="font-size: 12px; background: #e8f5ff;">
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="12" style="font-size: 12px; background: #e8f5ff;">
                                                 <b><?php echo $sa['billing']; ?></b>
                                             </td>
                                         </tr>
