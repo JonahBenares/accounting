@@ -2318,7 +2318,7 @@ class Reports extends CI_Controller {
             //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
             // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id ", $sah->sales_adjustment_id);
             // $participant_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id ", $sah->adjustment_detail_id);
-                    $short_name=$this->super_model->select_column_where("sales_transaction_details", "short_name", "sales_detail_id", $sah->sales_detail_id);
+            $short_name=$this->super_model->select_column_where("sales_adjustment_details", "short_name", "adjustment_detail_id", $sah->adjustment_detail_id);
             $or_no=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$sah->reference_number' AND settlement_id='$short_name'");
             if(!empty($sah->company_name) && date('Y',strtotime($sah->create_date))==date('Y')){
                     $comp_name=$sah->company_name;
@@ -2431,7 +2431,7 @@ class Reports extends CI_Controller {
             // $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
             // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id ", $sah->sales_adjustment_id );
             // $participant_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id ", $sah->adjustment_detail_id );
-                $short_name=$this->super_model->select_column_where("sales_transaction_details", "short_name", "sales_detail_id", $sah->sales_detail_id);
+            $short_name=$this->super_model->select_column_where("sales_adjustment_details", "short_name", "adjustment_detail_id", $sah->adjustment_detail_id);
             $or_no=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$sah->reference_number' AND settlement_id='$short_name'");
             if(!empty($sah->company_name) && date('Y',strtotime($sah->create_date))==date('Y')){
                 $comp_name=$sah->company_name;
