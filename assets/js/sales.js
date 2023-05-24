@@ -628,9 +628,21 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 			//document.getElementById("old_series_no"+count).value=output;
 		}
 	});
-	
-
 }
+
+function updateORDate(baseurl,count,collection_id,settlement_id,reference_number){
+    var redirect = baseurl+"sales/update_ordate";
+    var or_date=document.getElementById("or_date"+count).value;
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number,
+		success: function(output){
+			document.getElementById("or_date"+count).setAttribute('value',output);
+		}
+	});
+}
+
 function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_number){
     var redirect = baseurl+"sales/update_orno_remarks";
     var or_no_remarks=document.getElementById("or_no_remarks"+count).value;
@@ -643,8 +655,6 @@ function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_num
 			document.getElementById("or_no_remarks"+count).setAttribute('value',output);
 		}
 	});
-	
-
 }
 
 function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number){
@@ -659,8 +669,6 @@ function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number
 			document.getElementById("def_int"+count).setAttribute('value',output);
 		}
 	});
-	
-
 }
 
 async function upload_sales_adjust_btn() {

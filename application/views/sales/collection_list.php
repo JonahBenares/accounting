@@ -86,6 +86,7 @@
                                                 <tr>
                                                     <th width="1%"><center><span class="fas fa-bars"></span></center></th>
                                                     <th width="5%">OR#</th>
+                                                    <th width="2%">OR Date</th>
                                                     <th width="5%">OR Remarks</th>
                                                     <th width="2%" align="center">Def Int</th>
                                                     <th width="2%">Billing Remarks</th>
@@ -134,7 +135,8 @@
                                                                 'ewt_single'=>$value['ewt'], 
                                                                 'total' => array(),
                                                                 'total_single'=>$value['total'],
-                                                                'defint_single'=>$value['defint'],  
+                                                                'defint_single'=>$value['defint'],
+                                                                'or_date_single'=>$value['or_date'],  
                                                                 'or_no_remarks_single'=>$value['or_no_remarks'],  
                                                                 'count_series'=>$value['count_series'],
                                                                 'overall_total'=>$value['overall_total'],
@@ -166,6 +168,10 @@
                                                         <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onchange="updateSeries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input Series Number'>
                                                         <span hidden><?php echo $log['series_number'];?></span>
                                                         <input type="hidden" name="old_series_no" id="old_series_no<?php echo $x; ?>" value='<?php echo $log['series_number'];?>'> 
+                                                    </td>
+                                                    <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
+                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="date" name="or_date" id="or_date<?php echo $x; ?>" value="<?php echo $log['or_date_single'];?>" onchange="updateORDate('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');">
+                                                    <span hidden><?php echo $log['or_date_single'];?></span>
                                                     </td>
                                                      <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
                                                         <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="or_no_remarks" id="or_no_remarks<?php echo $x; ?>" value="<?php echo $log['or_no_remarks_single'];?>" onchange="updateorRemarks('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input OR Remarks'>
