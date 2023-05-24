@@ -1441,6 +1441,7 @@ public function print_BS_new(){
                 "collection_id"=>$col->collection_id,
                 "settlement_id"=>$col->settlement_id,
                 "series_number"=>$col->series_number,
+                "or_date"=>$col->or_date,
                 "billing_remarks"=>$col->billing_remarks,
                 "particulars"=>$col->particulars,
                 "item_no"=>$col->item_no,
@@ -1537,6 +1538,23 @@ public function print_BS_new(){
         if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
             foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_series){
                echo $latest_series->series_number;
+            }
+        }
+    }
+
+    public function update_ordate(){
+        $ref_no=$this->input->post('reference_number');
+        $collection_id=$this->input->post('collection_id');
+        $or_date=$this->input->post('or_date');
+        $settlement_id=$this->input->post('settlement_id');
+
+        $data_update = array(
+            'or_date'=>$or_date,
+        );
+
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_ordate){
+               echo $latest_ordate->or_date;
             }
         }
     }
@@ -1700,7 +1718,8 @@ public function print_BS_new(){
         $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['defint'] =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
+        $data['date'] =  $this->super_model->select_column_custom_where("collection_details","or_date","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        //$data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         //$data['ref_no'] = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
         $this->load->view('template/print_head');
         $this->load->view('sales/print_OR_new',$data);
@@ -2339,6 +2358,7 @@ public function print_BS_new(){
                 "collection_id"=>$col->collection_id,
                 "settlement_id"=>$col->settlement_id,
                 "series_number"=>$col->series_number,
+                "or_date"=>$col->or_date,
                 "billing_remarks"=>$col->billing_remarks,
                 "particulars"=>$col->particulars,
                 "item_no"=>$col->item_no,
@@ -2465,6 +2485,7 @@ public function print_BS_new(){
              
                  $data_details = array(
                         'collection_id'=>$collection_id,
+                        'or_date'=>$this->super_model->select_column_where("collection_head","collection_date","collection_id",$collection_id),
                         //'item_no'=>$itemno,
                         'item_no'=>$a,
                         'billing_remarks'=>$remarks,
@@ -3221,7 +3242,8 @@ public function upload_sales_adjustment_test(){
         $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['defint'] =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
+        $data['date']=$this->super_model->select_column_custom_where("collection_details","or_date","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        //$data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         $this->load->view('sales/PDF_OR',$data);
     }
 
@@ -3287,7 +3309,8 @@ public function upload_sales_adjustment_test(){
                 'stl_id'=>$col->settlement_id,
                 'buyer'=>$col->buyer_fullname,
                 'or_no'=>$col->series_number,
-                'date'=>$col->collection_date,
+                //'date'=>$col->collection_date,
+                'date'=>$col->or_date,
                 'sum_amount'=>$sum_amount,
                 'sum_vat'=>$sum_vat,
                 'sum_ewt'=>$sum_ewt,
