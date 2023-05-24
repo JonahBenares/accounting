@@ -836,7 +836,7 @@ class Reports extends CI_Controller {
                
                 //$total_vat_balance[]=$vatbalance;
 
-                $total_ewt[]=$ewt;
+                $total_ewt[]=$ewt_sales;
                 $total_c_ewt[]=$ewt;
              
                 //$total_ewt_balance[]=$ewtbalance;
