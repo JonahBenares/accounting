@@ -393,15 +393,25 @@ class Reports extends CI_Controller {
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $ref_no=$this->uri->segment(3);
-        $date_from=$this->uri->segment(4);
-        $date_to=$this->uri->segment(5);
+        $year=$this->uri->segment(4);
+        $date_from=$this->uri->segment(5);
+        $date_to=$this->uri->segment(6);
         $data['ref_no'] = $ref_no;
+        $data['year'] = $year;
         $data['date_from'] = $date_from;
         $data['date_to'] = $date_to;
         $sql='';
+        // if($date_from!='null' && $date_to != 'null'){
+        //     $sql.= "billing_from = '$date_from' AND billing_to = '$date_to' AND ";
+        // } 
         if($date_from!='null' && $date_to != 'null'){
-            $sql.= "billing_from = '$date_from' AND billing_to = '$date_to' AND ";
+            $sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
         } 
+
+        if($year!='null'){
+            $sql.= " YEAR(transaction_date) = '$year' AND ";
+        }
+        
         if($ref_no!='null'){
             $sql.= "reference_number = '$ref_no' AND ";
         }
@@ -722,18 +732,28 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $participant=$this->uri->segment(3);
-        $date_from=$this->uri->segment(4);
-        $date_to=$this->uri->segment(5);
+        $year=$this->uri->segment(4);
+        $date_from=$this->uri->segment(5);
+        $date_to=$this->uri->segment(6);
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
         $data['part'] = $part;
+        $data['year'] = $year;
         $data['date_from'] = $date_from;
         $data['date_to'] = $date_to;
         $sql='';
+
         if($date_from!='null' && $date_to != 'null'){
-            $sql.= "billing_from >= '$date_from' AND billing_to <= '$date_to' AND "; 
-        } if($participant!='null'){
+            $sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
+        } 
+
+        if($year!='null'){
+            $sql.= " YEAR(transaction_date) = '$year' AND ";
+        }
+        
+        if($participant!='null'){
             $sql.= "billing_id = '$participant' AND ";
         }
 

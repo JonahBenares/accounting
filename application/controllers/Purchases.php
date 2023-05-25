@@ -169,10 +169,11 @@ class Purchases extends CI_Controller {
         for($x=3;$x<$highestRow;$x++){
             //$itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
-            $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
             $company_name=$this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
             if($shortname!="" || !empty($shortname)){
-                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+                //$billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+                $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
                 $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
@@ -1590,10 +1591,10 @@ class Purchases extends CI_Controller {
                             $y=1;
                             for($z=4;$z<$highestRow;$z++){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
-                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 $company_name=$this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if($shortname!="" || !empty($shortname)){
-                                    $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                    $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
                                     $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
                                     $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
                                     $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
@@ -1730,10 +1731,10 @@ class Purchases extends CI_Controller {
                             $y=1;
                             for($z=4;$z<$highestRow;$z++){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
-                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 $company_name = $this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if($shortname!="" || !empty($shortname)){
-                                    $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                    $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
                                     $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
                                     $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
                                     $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
@@ -1909,7 +1910,7 @@ class Purchases extends CI_Controller {
         //$highestRow = $highestRow-1;
         for($x=2;$x<=$highestRow;$x++){
             $identifier = $this->input->post('identifier');
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());   
+            $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());   
             $or_no = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
             //$total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getOldCalculatedValue());
             $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());

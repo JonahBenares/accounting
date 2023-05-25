@@ -29,12 +29,57 @@
                                                     <?php } ?>
                                                 </select>
                                             </td>
-                                             <td width="20%">
+                                            <td width="20%">
+                                                <select id="year" class="form-control" name="year">
+                                                    <option value="">--Select Year--</option>
+                                                    <?php 
+                                                        $years=date('Y');
+                                                        for($x=2020;$x<=$years;$x++){
+                                                    ?>
+                                                        <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                            <td width="20%">
+                                                <select name="month_from" id='month_from' class="form-control">
+                                                    <option value="" selected>--Select Month From--</option>
+                                                    <option value="1">January</option>
+                                                    <option value="2">February</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </td>
+                                            <td width="20%">
+                                                <select name="month_to" id='month_to' class="form-control">
+                                                    <option value="" selected>--Select Month To--</option>
+                                                    <option value="1">January</option>
+                                                    <option value="2">February</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </td>
+                                            <!-- <td width="20%">
                                                     <input placeholder="Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
                                             <td width="20%">
                                                     <input placeholder="Date To" id="date_to" class="form-control" type="text" onfocus="(this.type='date')" id="date">
-                                            </td>
+                                            </td> -->
                                             <td width="10%">
                                                     <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
                                                     <button type="button" onclick="filterCSLedger();" class="btn btn-primary btn-block">Filter</button>
@@ -45,16 +90,24 @@
                             </div>
                             <hr>
                             <?php 
-                            if(!empty($part) || !empty($date_from) || !empty($date_to)){
+                            if(!empty($part) || !empty($year) || !empty($date_from) || !empty($date_to)){
+                                $from_date   = DateTime::createFromFormat('!m', $date_from);
+                                $from = $from_date->format('F'); // March
+                                $to_date   = DateTime::createFromFormat('!m', $date_to);
+                                $to = $to_date->format('F'); // March
                             ?>
                             <table class="table-bordersed" width="100%">
                                 <tr>
-                                    <td width="7%"></td>
-                                    <td width="13%"><b>Participant Name:</b></td>
-                                    <td width="32%"><?php echo $part ?></td>
-                                    <td width="12%"><b>Date From - To:</b></td>
-                                    <td width="33%"><?php echo $date_from ?> - <?php echo $date_to ?></td>
-                                    <td width="3%"></td>
+                                    <td width=""></td>
+                                    <td width=""><b>Participant Name:</b></td>
+                                    <td width=""><?php echo $part ?></td>
+
+                                    <td width=""><b>Year:</b></td>
+                                    <td width=""><?php echo ($year!='null') ? $year : '' ?></td>
+                                    
+                                    <td width=""><b>Month From - To:</b></td>
+                                    <td width=""><?php echo $from ?> - <?php echo $to ?></td>
+                                    <td width=""></td>
                                 </tr>
                             </table>
                             <br>

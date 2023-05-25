@@ -38,8 +38,9 @@ function filterCreditable(){
 
 function filterLedger(){
     var ref_no= document.getElementById("ref_no").value;
-    var date_from= document.getElementById("date_from").value;
-    var date_to= document.getElementById("date_to").value;
+    var year= document.getElementById("year").value;
+    var month_from= document.getElementById("month_from").value;
+    var month_to= document.getElementById("month_to").value;
     var loc= document.getElementById("baseurl").value;
 
     if(ref_no!=''){
@@ -48,20 +49,26 @@ function filterLedger(){
         var ref='null';
     }
 
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
 
-    if(date_from){
-        var from=date_from;
+
+    if(month_from){
+        var from=month_from;
     }else{
         var from='null';
     }
 
 
-    if(date_to){
-        var to=date_to;
+    if(month_to){
+        var to=month_to;
     }else{
         var to='null';
     }
-    window.location=loc+'reports/sales_ledger/'+ref+'/'+from+'/'+to;          
+    window.location=loc+'reports/sales_ledger/'+ref+'/'+years+'/'+from+'/'+to;          
 }
 
 function filter_sales() {
@@ -164,8 +171,9 @@ function filter_purchasesledger(){
 
 function filterCSLedger(){
     var participant= document.getElementById("participant").value;
-    var date_from= document.getElementById("date_from").value;
-    var date_to= document.getElementById("date_to").value;
+    var month_from= document.getElementById("month_from").value;
+    var month_to= document.getElementById("month_to").value;
+    var year= document.getElementById("year").value;
     var loc= document.getElementById("baseurl").value;
 
     if(participant!=''){
@@ -174,20 +182,25 @@ function filterCSLedger(){
         var part='null';
     }
 
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
 
-    if(date_from){
-        var from=date_from;
+    if(month_from){
+        var from=month_from;
     }else{
         var from='null';
     }
 
 
-    if(date_to){
-        var to=date_to;
+    if(month_to){
+        var to=month_to;
     }else{
         var to='null';
     }
-    window.location=loc+'reports/cs_ledger/'+part+'/'+from+'/'+to;          
+    window.location=loc+'reports/cs_ledger/'+part+'/'+years+'/'+from+'/'+to;          
 }
 
 function filterSSLedger(){
