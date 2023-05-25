@@ -172,6 +172,7 @@
                                                     <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
                                                     <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="date" name="or_date" id="or_date<?php echo $x; ?>" value="<?php echo $log['or_date_single'];?>" onchange="updateORDate('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');">
                                                     <span hidden><?php echo $log['or_date_single'];?></span>
+                                                    <input type="hidden" name="old_or_date" id="old_or_date<?php echo $x; ?>" value='<?php echo $log['or_date_single'];?>'> 
                                                     </td>
                                                      <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
                                                         <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="or_no_remarks" id="or_no_remarks<?php echo $x; ?>" value="<?php echo $log['or_no_remarks_single'];?>" onchange="updateorRemarks('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input OR Remarks'>
