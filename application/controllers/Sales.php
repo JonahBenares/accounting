@@ -1707,9 +1707,9 @@ public function print_BS_new(){
         $data['ref_no'] = $reference_no;
         //$reference_no = $this->super_model->select_column_where("collection_details", "reference_no", "collection_id", $collection_id);
         //$settlement_id = $this->super_model->select_column_where("collection_details", "settlement_id", "collection_id", $collection_id);
-        $billing_id = $this->super_model->select_column_where("sales_transaction_details", "billing_id", "short_name", $settlement_id);
+        //$billing_id = $this->super_model->select_column_where("participant", "billing_id", "short_name", $settlement_id);
         
-        $data['client']=$this->super_model->select_row_where("participant", "billing_id", $billing_id);
+        $data['client']=$this->super_model->select_row_where("participant", "billing_id", $settlement_id);
         $data['sum_amount']=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         /*$data['amount'] =  $this->super_model->select_column_custom_where("collection_details", "amount", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
         $data['vat'] =  $this->super_model->select_column_custom_where("collection_details", "vat", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");*/
