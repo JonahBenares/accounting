@@ -633,12 +633,15 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 function updateORDate(baseurl,count,collection_id,settlement_id,reference_number){
     var redirect = baseurl+"sales/update_ordate";
     var or_date=document.getElementById("or_date"+count).value;
+    var old_or_date=document.getElementById("old_or_date"+count).value;
+    document.getElementById("old_or_date"+count).setAttribute('value','');
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number,
+		data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_or_date='+old_or_date,
 		success: function(output){
 			document.getElementById("or_date"+count).setAttribute('value',output);
+			document.getElementById("old_or_date"+count).value=or_date;
 		}
 	});
 }

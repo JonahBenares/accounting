@@ -1545,11 +1545,22 @@ public function print_BS_new(){
     public function update_ordate(){
         $ref_no=$this->input->post('reference_number');
         $collection_id=$this->input->post('collection_id');
-        $or_date=$this->input->post('or_date');
+        $new_or_date=$this->input->post('or_date');
+        $old_or_date=$this->input->post('or_date');
         $settlement_id=$this->input->post('settlement_id');
 
+        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
+            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_or_date!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
+            if($count==0){
+                $old_ordate_insert = $old_or_date;
+            }else{
+                $old_ordate_insert = $old_or_date.", ".$check->old_or_date;
+            }
+        }
+
         $data_update = array(
-            'or_date'=>$or_date,
+            'or_date'=>$new_or_date,
+            'old_or_date'=>$old_ordate_insert,
         );
 
         if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
