@@ -312,7 +312,7 @@ function saveAllCollection(){
 }
 
 function collection_filter() {
-	 var collection_date = document.getElementById("collection_date").value; 
+	 var collection_date = document.getElementById("col_date").value; 
      var reference_no = document.getElementById("reference_no").value;
      var stl_id = document.getElementById("stl_id").value;
 
@@ -628,9 +628,24 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 			//document.getElementById("old_series_no"+count).value=output;
 		}
 	});
-	
-
 }
+
+function updateORDate(baseurl,count,collection_id,settlement_id,reference_number){
+    var redirect = baseurl+"sales/update_ordate";
+    var or_date=document.getElementById("or_date"+count).value;
+    var old_or_date=document.getElementById("old_or_date"+count).value;
+    document.getElementById("old_or_date"+count).setAttribute('value','');
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_or_date='+old_or_date,
+		success: function(output){
+			document.getElementById("or_date"+count).setAttribute('value',output);
+			document.getElementById("old_or_date"+count).value=or_date;
+		}
+	});
+}
+
 function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_number){
     var redirect = baseurl+"sales/update_orno_remarks";
     var or_no_remarks=document.getElementById("or_no_remarks"+count).value;
@@ -643,8 +658,6 @@ function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_num
 			document.getElementById("or_no_remarks"+count).setAttribute('value',output);
 		}
 	});
-	
-
 }
 
 function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number){
@@ -659,8 +672,6 @@ function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number
 			document.getElementById("def_int"+count).setAttribute('value',output);
 		}
 	});
-	
-
 }
 
 async function upload_sales_adjust_btn() {
@@ -904,6 +915,7 @@ function updateSalesAdjustment(baseurl,count,sales_detail_id,sales_adjustment_id
 	});
 }
 
+
 function proceed_bulk_update_main() {
     var data = $("#bulkupdatemain").serialize();
     
@@ -1124,4 +1136,22 @@ function cancelBulkUpdateAdjustment(){
             }
         });
     }
+}
+function printbs_history(){
+	var data = $("#InsertBS").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/insert_printbs";
+	    $.ajax({
+	        data: data,
+	        type: "POST",
+	        url: redirect,
+	        success: function(output){
+	        	
+	         window.print();  
+	         //alert(output);
+	         //console.log(output);
+	         //print_r(output);
+	        }
+	    }); 
+	     //window.print();
 }
