@@ -1031,9 +1031,9 @@ function proceed_bulk_update_adjustment() {
     var data = $("#bulkupdateadjustment").serialize();
     
     var loc= document.getElementById("baseurl").value;
-    var sales_adjustment_id= document.getElementById("sales_adjustment_id").value;
-    if(sales_adjustment_id==""){
-        alert('Reference number must not be empty!');
+    var due_date= document.getElementById("due_date").value;
+    if(due_date==""){
+        alert('Due Date must not be empty!');
     }  else {
     var redirect=loc+"sales/bulk_update_adjustment/";
         $.ajax({
@@ -1041,11 +1041,11 @@ function proceed_bulk_update_adjustment() {
             url: redirect,
             data: data,
             success: function(output){
-                window.location=loc+'sales/bulk_update_adjustment/'+sales_adjustment_id;
+                window.location=loc+'sales/bulk_update_adjustment/'+due_date;
                 var redirect = redirect+output;
                 var save = document.getElementById("save_updatebulk_adjustment");
                 var cancel = document.getElementById("cancel_updatebulk_adjustment");
-                document.getElementById('ref_no').readOnly = true;
+                document.getElementById('due_date').readOnly = true;
                 var x = document.getElementById("upload_bulk_update_adjustment");
                     if (x.style.display === "none") {
                         x.style.display = "block";
@@ -1064,7 +1064,7 @@ function proceed_bulk_update_adjustment() {
 
 async function upload_bulkupdate_adjustment() {
     //var sales_doc = document.getElementById("WESM_sales").value;
-    var sales_adjustment_id = document.getElementById("sales_adjustment_id").value;
+    var due = document.getElementById("due").value;
     var identifier = document.getElementById("identifier").value;
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"sales/upload_bulk_update_adjustment";
@@ -1072,7 +1072,7 @@ async function upload_bulkupdate_adjustment() {
     let formData = new FormData();
          
     formData.append("doc", doc);
-    formData.append("sales_adjustment_id", sales_adjustment_id);
+    formData.append("due", due);
     formData.append("identifier", identifier);
     var conf = confirm('Are you sure you want to upload this file?');
     if(conf){
@@ -1091,7 +1091,7 @@ async function upload_bulkupdate_adjustment() {
             success: function(output){
                 $("#alt").hide(); 
               
-                window.location=loc+'sales/bulk_update_adjustment/'+sales_adjustment_id+'/'+identifier;
+                window.location=loc+'sales/bulk_update_adjustment/'+due+'/'+identifier;
             }
         });
     }
@@ -1121,14 +1121,14 @@ function saveBulkUpdateAdjustment(){
 }
 
 function cancelBulkUpdateAdjustment(){
-    var sales_adjustment_id = document.getElementById("sales_adjustment_id").value;
+    var due = document.getElementById("due").value;
     var adjustment_identifier = document.getElementById("adjustment_identifier").value;
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"sales/cancel_bulkupdate_adjustment";
     var conf = confirm('Are you sure you want to cancel this transaction?');
     if(conf){
         $.ajax({
-            data: 'sales_adjustment_id='+sales_adjustment_id+'&adjustment_identifier='+adjustment_identifier,
+            data: 'due_date='+due+'&adjustment_identifier='+adjustment_identifier,
             type: "POST",
             url: redirect,
             success: function(response){

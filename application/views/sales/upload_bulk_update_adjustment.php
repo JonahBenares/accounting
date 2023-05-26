@@ -14,18 +14,18 @@
                                     <?php if($saved==0){ ?>
                                     <div class="col-lg-4 col-md-4 col-sm-4 offset-lg-2" >
                                         <div class="form-group">
-                                            <label>Reference Number</label>
-                                            <?php if(empty($sales_adjustment_id)){ ?>
-                                            <select class="form-control select2" name="sales_adjustment_id" id="sales_adjustment_id">
-                                                        <option value=''>-- Select Reference No --</option>
+                                            <label>Due Date</label>
+                                            <?php if(empty($due_date)){ ?>
+                                            <select class="form-control select2" name="due_date" id="due_date">
+                                                        <option value=''>-- Select Due Date --</option>
                                                         <?php 
-                                                            foreach($reference AS $r){
+                                                            foreach($due AS $r){
                                                         ?>
-                                                        <option value="<?php echo $r->sales_adjustment_id; ?>"><?php echo $r->reference_number; ?></option>
+                                                        <option value="<?php echo $r->due_date; ?>"><?php echo $r->due_date; ?></option>
                                                         <?php } ?>
                                             </select>
                                             <?php } else { ?>
-                                            <input type="text" class="form-control" name='ref_number' id="ref_number" value="<?php echo $refno ?>" readonly>
+                                            <input type="text" class="form-control" name='due_date' id="due_date" value="<?php echo $due_date ?>" readonly>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -34,7 +34,7 @@
                                         <div class="form-group">
                                             <label><br></label>
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                            <?php if(empty($sales_adjustment_id) && empty($identifier)){ ?>
+                                            <?php if(empty($due_date) && empty($identifier)){ ?>
                                                 <input type='button' class="btn btn-primary" id='save_updatebulk_adjustment' type="button" onclick="proceed_bulk_update_adjustment()" value="Proceed" style="width:100%">
                                                  <input type='button' class="btn btn-danger" id="cancel_updatebulk_adjustment" onclick="cancelBulkUpdateAdjustment()" value="Cancel Transaction" style='display: none;width:100%'>
                                              <?php } elseif ($saved==0){ ?>
@@ -49,7 +49,7 @@
                                 <?php } ?>  
                                 </div> 
                             </form>
-                            <?php if(!empty($sales_adjustment_id)){ if($saved==0){ ?>
+                            <?php if(!empty($due_date)){ if($saved==0){ ?>
                             <form method="POST" id="upload_bulkupdate_adjustment">
                                 <div id="upload_bulk_update_adjustment">
                                     <hr>
@@ -67,7 +67,7 @@
                                     </div>
                                     <br>
                                 </div>
-                                 <input type='hidden' name='sales_adjustment_id' id='sales_adjustment_id'  value="<?php echo (!empty($sales_adjustment_id) ? $sales_adjustment_id : ''); ?>">
+                                 <input type='hidden' name='due' id='due'  value="<?php echo (!empty($due_date) ? $due_date : ''); ?>">
                                  <input type="hidden" name="identifier" id="identifier" value="<?php echo $identifier_code;?>">
                                   <input type="hidden" name="adjustment_identifier" id="adjustment_identifier" value="<?php echo $identifier;?>">
                             </form>
