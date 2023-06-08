@@ -28,16 +28,19 @@
                                         <table width="100%">
                                             <tr>
                                                 <td width="15%">
-                                                    <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Due Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td width="15%">
-                                                    <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Due Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                  <td>
-                                                    <select class="form-control select2" name="due_date" id="due_date">
-                                                        <option value="">-- Select Due Date --</option>
-                                                        <?php foreach($date AS $d){ ?>
-                                                            <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
+                                                    <select class="form-control select2" name="year" id="year">
+                                                        <option value="">-- Select Year --</option>
+                                                        <?php 
+                                                            $year=date('Y'); 
+                                                            for($x=2020;$x<=$year;$x++){
+                                                        ?>
+                                                            <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
@@ -109,8 +112,8 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><b>Due Date:</b></td>
-                                    <td><?php echo $due; ?></td>
+                                    <td><b>Year:</b></td>
+                                    <td><?php echo $years; ?></td>
                                     <td></td>
                                 </tr>
                             </table>
@@ -243,17 +246,25 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-lg-6">
-                            <label>Billing Date From</label>
-                            <input placeholder="Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
+                            <label>Due Date From</label>
+                            <input placeholder="Due Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                         <div class="form-group col-lg-6">
-                            <label>Billing Date to</label>
-                            <input placeholder="Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
+                            <label>Due Date to</label>
+                            <input placeholder="Due Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Due Date</label>
-                        <input placeholder="Due Date" class="form-control" id="due_date1" name="due_date1" type="text" onfocus="(this.type='date')" id="date">
+                        <label>Year</label>
+                        <select class="form-control select2" name="year" id="year">
+                            <option value="">-- Select Year --</option>
+                            <?php 
+                                $year=date('Y'); 
+                                for($x=2020;$x<=$year;$x++){
+                            ?>
+                                <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Company</label>

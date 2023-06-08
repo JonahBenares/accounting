@@ -170,16 +170,19 @@ function filter_purchasesledger(){
 }
 
 function filterCSLedger(){
-    var participant= document.getElementById("participant").value;
-    var month_from= document.getElementById("month_from").value;
-    var month_to= document.getElementById("month_to").value;
+    var count = $('#reference_no option:selected').length;
+    if (count<=2) {
+        var reference_no= $('#reference_no option:selected').toArray().map(item => item.value);
+    }else{
+        var reference_no= document.getElementById("reference_no").value;  
+    }
+    var month= document.getElementById("month").value;
     var year= document.getElementById("year").value;
     var loc= document.getElementById("baseurl").value;
-
-    if(participant!=''){
-        var part=participant;
+    if(reference_no!=''){
+        var refno=reference_no;
     }else{
-        var part='null';
+        var refno='null';
     }
 
     if(year!=''){
@@ -188,19 +191,26 @@ function filterCSLedger(){
         var years='null';
     }
 
-    if(month_from){
-        var from=month_from;
+    if(month!=''){
+        var months=month;
     }else{
-        var from='null';
+        var months='null';
     }
+    window.location=loc+'reports/cs_ledger/'+years+'/'+months+'/'+refno;          
+}
 
-
-    if(month_to){
-        var to=month_to;
-    }else{
-        var to='null';
-    }
-    window.location=loc+'reports/cs_ledger/'+part+'/'+years+'/'+from+'/'+to;          
+function getReference(){
+    var month = document.getElementById("month").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"reports/getReference";
+    $.ajax({
+        data: 'month='+month,
+        type: "POST",
+        url: redirect,
+        success: function(data){
+            $("#reference_no").html(data);
+        }
+    });
 }
 
 function filterSSLedger(){
@@ -487,7 +497,7 @@ function export_purchasesall() {
 function filter_sales_adjustment_all() { 
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
-     var due = document.getElementById("due_date").value;
+     var year = document.getElementById("year").value;
      var participant = document.getElementById("participant").value;
      var original = document.getElementById("og_copy").value;
      var scanned = document.getElementById("s_copy").value;
@@ -504,10 +514,10 @@ function filter_sales_adjustment_all() {
         to='null';
     }
 
-    if(due!=''){
-        due=due;
+    if(year!=''){
+        years=year;
     }else{
-        due='null';
+        years='null';
     }
 
     if(participant!=''){
@@ -529,7 +539,7 @@ function filter_sales_adjustment_all() {
     }
 
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/sales_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned+'/'+due;
+      window.location=loc+'reports/sales_all_adjustment/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned+'/'+years;
 
 }
 
@@ -537,7 +547,7 @@ function export_sales_adjustment_all() {
      var e_from = document.getElementById("export_from").value; 
      var e_to = document.getElementById("export_to").value;
      var participant = document.getElementById("participant1").value;
-     var e_due = document.getElementById("due_date1").value;
+     var year = document.getElementById("year").value;
 
     if(e_from!=''){
         e_from=e_from;
@@ -557,14 +567,14 @@ function export_sales_adjustment_all() {
         part='null';
     }
 
-    if(e_due!=''){
-        e_due=e_due;
+    if(year!=''){
+        years=year;
     }else{
-        e_due='null';
+        years='null';
     }
 
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/export_sales_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+e_due;
+      window.location=loc+'reports/export_sales_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+years;
 
 }
 
@@ -674,9 +684,7 @@ function filter_collection() {
     }else{
         settlement_id='null';
     }
-
-
-      var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/collection_report/'+collection_date+'/'+reference_no+'/'+settlement_id;
-
+    var loc= document.getElementById("baseurl").value;
+    window.location=loc+'reports/collection_report/'+collection_date+'/'+reference_no+'/'+settlement_id;
 }
+

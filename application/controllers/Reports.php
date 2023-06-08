@@ -727,38 +727,234 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+//     public function cs_ledger()
+//     {
+//         $this->load->view('template/header');
+//         //$this->load->view('template/navbar');
+//         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
+//         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+//         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
+//         $year=$this->uri->segment(3);
+//         $month=$this->uri->segment(4);
+//         $referenceno=str_replace("%60","",$this->uri->segment(5));
+//         //$part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+//         $data['refno'] = $referenceno;
+//         $data['year'] = $year;
+//         $data['month'] = $month;
+//         $sql='';
+
+//         if($month!='null' && !empty($month)){
+//             //$sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
+//             $sql.= " MONTH(transaction_date)='$month' AND "; 
+//         } 
+
+//         if($year!='null' && !empty($year)){
+//             $sql.= " YEAR(transaction_date) = '$year' AND ";
+//         }
+        
+//         if($referenceno!='null' && !empty($referenceno)){
+//             $sql.= " reference_number IN($referenceno) AND ";
+//         }
+
+//         $query=substr($sql,0,-4);
+//         //echo $query;
+//         $cs_qu = " saved = '1' AND ".$query;
+//         $data['csledger']=array();
+
+//         $data['total_vatable_sales']=0;
+//         $total_vatable_sales=array();
+//         $data['total_amount']=0;
+//         $total_amount=array();
+//         $data['total_vatable_balance']=0;
+//         $total_vatable_balance=array();
+
+//         $data['total_zero_rated']=0;
+//         $total_zero_rated=array();
+//         $data['total_c_zero_rated']=0;
+//         $total_c_zero_rated=array();
+//         $data['total_zero_rated_balance']=0;
+//         $total_zero_rated_balance=array();
+
+//         $data['total_zero_ecozones']=0;
+//         $total_zero_ecozones=array();
+//         $data['total_c_zero_ecozones']=0;
+//         $total_c_zero_ecozones=array();
+//         $data['total_zero_ecozones_balance']=0;
+//         $total_zero_ecozones_balance=array();
+
+//         $data['total_vat']=0;
+//         $total_vat=array();
+//         $data['total_c_vat']=0;
+//         $total_c_vat=array();
+//         $data['total_vat_balance']=0;
+//         $total_vat_balance=array();
+
+//         $data['total_ewt']=0;
+//         $total_ewt=array();
+//         $data['total_c_ewt']=0;
+//         $total_c_ewt=array();
+//         $data['total_ewt_balance']=0;
+//         $total_ewt_balance=array();
+// /*        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
+//             $reference_number=$this->super_model->select_column_where("collection_details","reference_no",'settlement_id',$b->short_name);*/
+//         //foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id","short_name") AS $cs){
+
+//             //echo $cs_qu;
+//         //foreach($this->super_model->select_inner_join_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id"," short_name") AS $cs){
+//         if(!empty($query)){
+//             $x=0;
+//             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $cs_qu ORDER BY transaction_date ASC") AS $cs){
+//                 //$vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
+//                 $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+//                 $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+//                 $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+//                 $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+//                 $ewt_sales = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+//                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'");
+//                 //echo $cs->reference_number ." - ". $cs->short_name ."<br>";
+//                     $id=array();
+//                 if($count_collection>0){
+//                     $amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+//                     $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+//                     $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+//                     $vat=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+//                     $ewt=$this->super_model->select_sum_where("collection_details","ewt","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
+
+//                     $vatablebalance=$vatable_sales - $amount;
+//                     $zerobalance=$zero_rated_sales - $zero_rated;
+//                     $zeroecobalance=$zero_rated_ecozones - $zero_rated_ecozone;
+//                     $vatbalance=$vat_on_sales - $vat;
+//                     $ewtbalance=$ewt - $ewt;
+
+
+//                     $total_vatable_sales[]=$vatable_sales;
+//                     $total_amount[]=$amount;
+
+//                 // $total_amount = array_unique($total_amount);
+
+
+
+//                 // $total_vatable_balance[]=$vatablebalance;
+
+//                     $total_zero_rated[]=$zero_rated_sales;         
+//                     $total_c_zero_rated[]=$zero_rated;
+                
+//                     //$total_zero_rated_balance[]=$zerobalance;
+
+//                     $total_zero_ecozones[]=$zero_rated_ecozones;
+//                     $total_c_zero_ecozones[]=$zero_rated_ecozone;
+
+                
+//                     //$total_zero_ecozones_balance[]=$zeroecobalance;
+
+//                     $total_vat[]=$vat_on_sales;
+//                     $total_c_vat[]=$vat;
+                
+//                     //$total_vat_balance[]=$vatbalance;
+
+//                     $total_ewt[]=$ewt_sales;
+//                     $total_c_ewt[]=$ewt;
+                
+//                     //$total_ewt_balance[]=$ewtbalance;
+//                     $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $cs->sales_id);
+//                     $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $cs->sales_detail_id);
+//                     if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+//                         $comp_name=$company_name;
+//                     }else{
+//                         $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $cs->billing_id);
+//                     }
+//                     $data['csledger'][]=array(
+//                         "sales_id"=>$cs->sales_id,
+//                         "item_no"=>$cs->item_no,
+//                         "date"=>$cs->transaction_date,
+//                         "due_date"=>$cs->due_date,
+//                         "short_name"=>$cs->short_name,
+//                         "reference_no"=>$cs->reference_number,
+//                         "company_name"=>$cs->company_name,
+//                         "billing_from"=>$cs->billing_from,
+//                         "billing_to"=>$cs->billing_to,
+//                         "vatable_sales_sum"=>$vatable_sales,
+//                         "vatable_sales"=>$cs->vatable_sales,
+//                         "zero_rated_sales_sum"=>$zero_rated_sales,
+//                         "zero_rated_sales"=>$cs->zero_rated_sales,
+//                         "zero_rated_ecozones"=>$cs->zero_rated_ecozones,
+//                         "zero_rated_ecozones_sum"=>$zero_rated_ecozones,
+//                         "vat_on_sales"=>$cs->vat_on_sales,
+//                         "vat_on_sales_sum"=>$vat_on_sales,
+//                         "ewt"=>$cs->ewt,
+//                         "ewt_sum"=>$ewt_sales,
+//                         "vatablebalance"=>$vatablebalance,
+//                         "zerobalance"=>$zerobalance,
+//                         "zeroecobalance"=>$zeroecobalance,
+//                         "vatbalance"=>$vatbalance,
+//                         "ewtbalance"=>$ewtbalance,
+//                         "cvatable_sales"=>$amount,
+//                         "czero_rated_sales"=>$zero_rated,
+//                         "czero_rated_ecozone"=>$zero_rated_ecozone,
+//                         "cvat_on_sales"=>$vat,
+//                         "cewt"=>$ewt,
+//                     );
+//                     $x++;
+//                 }
+//             }
+
+        
+//             $data['total_vatable_sales']=array_sum($total_vatable_sales);
+//             $data['total_amount']=array_sum($total_amount);
+//             $data['total_vatable_balance']=array_sum($total_vatable_sales) - array_sum($total_amount);
+
+//             $data['total_zero_rated']=array_sum($total_zero_rated);
+//             $data['total_c_zero_rated']=array_sum($total_c_zero_rated);
+//             $data['total_zero_rated_balance']=array_sum($total_zero_rated) -array_sum($total_c_zero_rated);
+
+//             $data['total_zero_ecozones']=array_sum($total_zero_ecozones);
+//             $data['total_c_zero_ecozones']=array_sum($total_c_zero_ecozones);
+//             $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones) - array_sum($total_c_zero_ecozones);
+
+//             $data['total_vat']=array_sum($total_vat);
+//             $data['total_c_vat']=array_sum($total_c_vat);
+//             $data['total_vat_balance']=array_sum($total_vat)- array_sum($total_c_vat);
+
+//             $data['total_ewt']=array_sum($total_ewt);
+//             $data['total_c_ewt']=array_sum($total_c_ewt);
+//             $data['total_ewt_balance']=array_sum($total_ewt) - array_sum($total_c_ewt);
+//         }
+//         $this->load->view('reports/cs_ledger', $data);
+//         $this->load->view('template/footer');
+//     }
+
     public function cs_ledger()
     {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
-        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
-        $participant=$this->uri->segment(3);
-        $year=$this->uri->segment(4);
-        $date_from=$this->uri->segment(5);
-        $date_to=$this->uri->segment(6);
-        $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
-        $data['part'] = $part;
+        //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
+        $year=$this->uri->segment(3);
+        $month=$this->uri->segment(4);
+        $referenceno=str_replace("%60","",$this->uri->segment(5));
+        //$part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['refno'] = $referenceno;
         $data['year'] = $year;
-        $data['date_from'] = $date_from;
-        $data['date_to'] = $date_to;
+        $data['month'] = $month;
         $sql='';
 
-        if($date_from!='null' && $date_to != 'null'){
-            $sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
+        if($month!='null' && !empty($month)){
+            //$sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
+            $sql.= " MONTH(transaction_date)='$month' AND "; 
         } 
 
-        if($year!='null'){
+        if($year!='null' && !empty($year)){
             $sql.= " YEAR(transaction_date) = '$year' AND ";
         }
         
-        if($participant!='null'){
-            $sql.= "billing_id = '$participant' AND ";
+        if($referenceno!='null' && !empty($referenceno)){
+            $sql.= " reference_number IN($referenceno) AND ";
         }
 
         $query=substr($sql,0,-4);
-        $cs_qu = "saved = '1' AND ".$query;
+        //echo $query;
+        $cs_qu = " saved = '1' AND ".$query;
         $data['csledger']=array();
 
         $data['total_vatable_sales']=0;
@@ -795,125 +991,110 @@ class Reports extends CI_Controller {
         $total_c_ewt=array();
         $data['total_ewt_balance']=0;
         $total_ewt_balance=array();
-/*        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id=std.sales_id WHERE saved='1' $query") AS $b){
-            $reference_number=$this->super_model->select_column_where("collection_details","reference_no",'settlement_id',$b->short_name);*/
-        //foreach($this->super_model->select_innerjoin_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id","short_name") AS $cs){
-
-            //echo $cs_qu;
-        foreach($this->super_model->select_inner_join_where("sales_transaction_details","sales_transaction_head", $cs_qu,"sales_id"," short_name") AS $cs){
-
-                $vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
-                $zero_rated_sales = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
-                $zero_rated_ecozones = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
-                $vat_on_sales = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
-                $ewt_sales = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
-
-            $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'");
-
-
-            //echo $cs->reference_number ." - ". $cs->short_name ."<br>";
-                
-            if($count_collection>0){
-
-
-                $amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
-
-
-                $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
-                $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
-                $vat=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
-                $ewt=$this->super_model->select_sum_where("collection_details","ewt","settlement_id='$cs->short_name' AND reference_no='$cs->reference_number'");
-
-                $vatablebalance=$vatable_sales - $amount;
-                $zerobalance=$zero_rated_sales - $zero_rated;
-                $zeroecobalance=$zero_rated_ecozones - $zero_rated_ecozone;
-                $vatbalance=$vat_on_sales - $vat;
-                $ewtbalance=$ewt - $ewt;
-
-
-                $total_vatable_sales[]=$vatable_sales;
-                $total_amount[]=$amount;
-
-               // $total_amount = array_unique($total_amount);
-
-
-
-               // $total_vatable_balance[]=$vatablebalance;
-
-                $total_zero_rated[]=$zero_rated_sales;         
-                $total_c_zero_rated[]=$zero_rated;
-             
-                //$total_zero_rated_balance[]=$zerobalance;
-
-                $total_zero_ecozones[]=$zero_rated_ecozones;
-                $total_c_zero_ecozones[]=$zero_rated_ecozone;
-
-              
-                //$total_zero_ecozones_balance[]=$zeroecobalance;
-
-                $total_vat[]=$vat_on_sales;
-                $total_c_vat[]=$vat;
+        if(!empty($query)){
+            $x=0;
+            $shortlast="";
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $cs_qu ORDER BY transaction_date ASC") AS $cs){
+                //$vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+                $ewt_sales = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
+                $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'");
+                //echo $cs->reference_number ." - ". $cs->short_name ."<br>";
                
-                //$total_vat_balance[]=$vatbalance;
-
-                $total_ewt[]=$ewt_sales;
-                $total_c_ewt[]=$ewt;
-             
-                //$total_ewt_balance[]=$ewtbalance;
-                $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $cs->sales_id);
-                $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $cs->sales_detail_id);
-                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
-                    $comp_name=$company_name;
-                }else{
-                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $cs->billing_id);
+                $amount=$this->sales_display($cs->short_name,$cs->reference_number,'vatable_sales')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'vatable_sales')."</span>";
+                $zerorated=$this->sales_display($cs->short_name,$cs->reference_number,'zero_rated_sales')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_sales')."</span>";
+                $zeroratedeco=$this->sales_display($cs->short_name,$cs->reference_number,'zero_rated_ecozones')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozones')."</span>";
+                $vatonsales=$this->sales_display($cs->short_name,$cs->reference_number,'vat_on_sales')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'vat_on_sales')."</span>";
+                $ewt=$this->sales_display($cs->short_name,$cs->reference_number,'ewt')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'ewt')."</span>";
+                $id=array();
+                if($count_collection>0){
+                    $camount='';
+                    $czerorated='';
+                    $czeroratedeco='';
+                    $cvat='';
+                    $cewt='';
+                    foreach($this->super_model->select_custom_where("collection_details","reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'") AS $c){
+                        $camount.=$this->collection_display($c->collection_details_id,$c->settlement_id,$c->reference_no,'amount');
+                        $czerorated.=$this->collection_display($c->collection_details_id,$c->settlement_id,$c->reference_no,'zero_rated');
+                        $czeroratedeco.=$this->collection_display($c->collection_details_id,$c->settlement_id,$c->reference_no,'zero_rated_ecozone');
+                        $cvat.=$this->collection_display($c->collection_details_id,$c->settlement_id,$c->reference_no,'vat');
+                        $cewt.=$this->collection_display($c->collection_details_id,$c->settlement_id,$c->reference_no,'ewt');
+                    }
+                    $cvatsal_amount=$camount." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'amount')."</span>";
+                    $czerorated_amount=$czerorated." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated')."</span>";
+                    $czeroratedeco_amount=$czeroratedeco." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozone')."</span>";
+                    $cvatonsal_amount=$cvat." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'vat')."</span>";
+                    $cewt_amount=$cewt." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'ewt')."</span>";
+                    
+                    $data['csledger'][]=array(
+                        "sales_id"=>$cs->sales_id,
+                        "item_no"=>$cs->item_no,
+                        "date"=>$cs->transaction_date,
+                        "due_date"=>$cs->due_date,
+                        "short_name"=>$cs->short_name,
+                        "reference_no"=>$cs->reference_number,
+                        "company_name"=>$cs->company_name,
+                        "billing_from"=>$cs->billing_from,
+                        "billing_to"=>$cs->billing_to,
+                        "vatable_sales_sum"=>$vatable_sales,
+                        "vatable_sales"=>$amount,
+                        "cvatsal_amount"=>$cvatsal_amount,
+                        "zero_rated_sales_sum"=>$zero_rated_sales,
+                        "zero_rated_sales"=>$zerorated,
+                        "czerorated_amount"=>$czerorated_amount,
+                        "zero_rated_ecozones"=>$zeroratedeco,
+                        "zero_rated_ecozones_sum"=>$zero_rated_ecozones,
+                        "czeroratedeco_amount"=>$czeroratedeco_amount,
+                        "vat_on_sales"=>$vatonsales,
+                        "vat_on_sales_sum"=>$vat_on_sales,
+                        "cvatonsal_amount"=>$cvatonsal_amount,
+                        "ewt"=>$ewt,
+                        "ewt_sum"=>$ewt_sales,
+                        "cewt_amount"=>$cewt_amount
+                    );
+                    $x++;
                 }
-                $data['csledger'][]=array(
-                    "date"=>$cs->transaction_date,
-                    "company_name"=>$cs->company_name,
-                    "billing_from"=>$cs->billing_from,
-                    "billing_to"=>$cs->billing_to,
-                    "vatable_sales"=>$vatable_sales,
-                    "zero_rated_sales"=>$zero_rated_sales,
-                    "zero_rated_ecozones"=>$zero_rated_ecozones,
-                    "vat_on_sales"=>$vat_on_sales,
-                    "ewt"=>$ewt_sales,
-                    "vatablebalance"=>$vatablebalance,
-                    "zerobalance"=>$zerobalance,
-                    "zeroecobalance"=>$zeroecobalance,
-                    "vatbalance"=>$vatbalance,
-                    "ewtbalance"=>$ewtbalance,
-                    "cvatable_sales"=>$amount,
-                    "czero_rated_sales"=>$zero_rated,
-                    "czero_rated_ecozone"=>$zero_rated_ecozone,
-                    "cvat_on_sales"=>$vat,
-                    "cewt"=>$ewt,
-                );
             }
         }
-
-       
-        $data['total_vatable_sales']=array_sum($total_vatable_sales);
-        $data['total_amount']=array_sum($total_amount);
-        $data['total_vatable_balance']=array_sum($total_vatable_sales) - array_sum($total_amount);
-
-        $data['total_zero_rated']=array_sum($total_zero_rated);
-        $data['total_c_zero_rated']=array_sum($total_c_zero_rated);
-        $data['total_zero_rated_balance']=array_sum($total_zero_rated) -array_sum($total_c_zero_rated);
-
-        $data['total_zero_ecozones']=array_sum($total_zero_ecozones);
-        $data['total_c_zero_ecozones']=array_sum($total_c_zero_ecozones);
-        $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones) - array_sum($total_c_zero_ecozones);
-
-        $data['total_vat']=array_sum($total_vat);
-        $data['total_c_vat']=array_sum($total_c_vat);
-        $data['total_vat_balance']=array_sum($total_vat)- array_sum($total_c_vat);
-
-        $data['total_ewt']=array_sum($total_ewt);
-        $data['total_c_ewt']=array_sum($total_c_ewt);
-        $data['total_ewt_balance']=array_sum($total_ewt) - array_sum($total_c_ewt);
-
         $this->load->view('reports/cs_ledger', $data);
         $this->load->view('template/footer');
+    }
+
+    public function getReference(){
+        $month=$this->input->post('month');
+        echo "<option value=''>--Select Reference Number--</option>";
+        foreach($this->super_model->select_custom_where('sales_transaction_head',"MONTH(transaction_date)='$month' AND saved='1'") AS $slct){
+            echo "<option value=`"."'".$slct->reference_number."'"."`>".$slct->reference_number."</option>";
+        }
+    }
+
+    public function sales_display($short_name,$reference_no,$type){
+        //foreach($this->super_model->custom_query("SELECT $type FROM collection_details WHERE settlement_id = '$short_name' AND reference_no IN($reference_no)") AS $col){
+        $amount='';
+        foreach($this->super_model->custom_query("SELECT $type FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0") AS $col){
+            $amount.=number_format($col->$type,2)."<br>";
+        }
+        return $amount;
+    }
+
+    public function sales_sum($short_name,$reference_no,$type){
+        $sum=$this->super_model->select_sum_join("$type","sales_transaction_details","sales_transaction_head","short_name = '$short_name' AND reference_number='$reference_no'",'sales_id');
+        return number_format($sum,2);
+    }
+
+    public function collection_display($collection_details_id,$short_name,$reference_no,$type){
+        //foreach($this->super_model->custom_query("SELECT $type FROM collection_details WHERE settlement_id = '$short_name' AND reference_no IN($reference_no)") AS $col){
+        foreach($this->super_model->custom_query("SELECT $type FROM collection_details WHERE collection_details_id='$collection_details_id' AND settlement_id = '$short_name' AND reference_no='$reference_no' AND $type!=0") AS $col){
+            return number_format($col->$type,2)."<br>";
+        }
+    }
+
+    public function collection_sum($short_name,$reference_no,$type){
+        $sum=$this->super_model->select_sum_where('collection_details',"$type","settlement_id='$short_name' AND reference_no = '$reference_no' AND $type!=0");
+        return number_format($sum,2);
     }
 
     public function ss_ledger(){
@@ -2294,34 +2475,24 @@ class Reports extends CI_Controller {
         $to=$this->uri->segment(5);
         $original=$this->uri->segment(6);
         $scanned=$this->uri->segment(7);
-        $due_date=$this->uri->segment(8);
+        $year=$this->uri->segment(8);
         $data['from'] = $from;
         $data['to'] = $to;
         $part=$this->super_model->select_column_where("participant","participant_name","tin",$participant);
         $data['part'] = $part;
         $data['original'] = $original;
         $data['scanned'] = $scanned;
-        $data['due'] = $due_date;
+        $data['years'] = $year;
 
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!='' AND saved = '1'");
         $sql="";
 
-        $from_date  = strtotime($from);
-        $from_day   = date('d',$from_date);
-        $from_month = date('m',$from_date);
-        $from_year  = date('Y',$from_date);
-
-        $to_date  = strtotime($to);
-        $to_day   = date('d',$to_date);
-        $to_month = date('m',$to_date);
-        $to_year  = date('Y',$to_date);
-
         if($from!='null' && $to != 'null'){
-            // $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
-            $sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
-        }if($due_date!='null'){
-            $sql.= "due_date = '$due_date' AND ";
+            //$sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
+            $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
+        }if($year!='null'){
+            $sql.= "YEAR(due_date) = '$year' AND ";
         } if($participant!='null'){
              $sql.= "tin = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -2334,7 +2505,7 @@ class Reports extends CI_Controller {
         $qu = "saved = '1' AND ".$query;
 
         $total_sum[]=0;
-                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id INNER JOIN participant p ON p.billing_id = sad.billing_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC, participant_name  ASC, p.billing_id ASC") AS $sah){
+                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id INNER JOIN participant p ON p.billing_id = sad.billing_id WHERE $qu ORDER BY due_date ASC, reference_number ASC, participant_name  ASC, p.billing_id ASC") AS $sah){
             //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
             // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id ", $sah->sales_adjustment_id);
             // $participant_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id ", $sah->adjustment_detail_id);
@@ -2376,29 +2547,21 @@ class Reports extends CI_Controller {
         $participant=$this->uri->segment(3);
         $from=$this->uri->segment(4);
         $to=$this->uri->segment(5);
-        $due=$this->uri->segment(6);
+        $year=$this->uri->segment(6);
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="Sales Wesm Adjustment All Transcations.xlsx";
         $sql='';
-        
-        $from_date  = strtotime($from);
-        $from_day   = date('d',$from_date);
-        $from_month = date('m',$from_date);
-        $from_year  = date('Y',$from_date);
-
-        $to_date  = strtotime($to);
-        $to_day   = date('d',$to_date);
-        $to_month = date('m',$to_date);
-        $to_year  = date('Y',$to_date);
 
         if($from!='null' && $to != 'null'){
-            // $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
-            $sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
-        } if($participant!='null'){
+            // $sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
+            $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
+        } 
+        if($participant!='null'){
              $sql.= " tin = '$participant' AND "; 
-        }   if($due!='null'){
-             $sql.= " due_date = '$due' AND "; 
+        }
+        if($year!='null'){
+             $sql.= " YEAR(due_date) = '$year' AND "; 
         }
 
         $query=substr($sql,0,-4);
@@ -2420,22 +2583,23 @@ class Reports extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id INNER JOIN participant p ON p.billing_id = sad.billing_id WHERE participant_name != '' AND $qu GROUP BY tin ORDER BY participant_name") AS $head){
             $objWorkSheet = $objPHPExcel->createSheet($sheetno);
             $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($head->settlement_id);
-            foreach(range('A','M') as $columnID){
+            foreach(range('A','N') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A1', "Billing Period");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B1', "Billing ID");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C1', "Transaction Reference Number");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D1', "Company Name");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E1', "Vatables Sales");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F1', "Zero-rated Ecozones Sales");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G1', "Vat on Sales");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H1', "EWT Sales");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I1', "Total");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "EWT Amount");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Original Copy");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L1', "Scanned Copy");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M1', "OR Number");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A1', "Due Date");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B1', "Billing Period");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C1', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D1', "Transaction Reference Number");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E1', "Company Name");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F1', "Vatables Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G1', "Zero-rated Ecozones Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H1', "Vat on Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I1', "EWT Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Total");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "EWT Amount");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L1', "Original Copy");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M1', "Scanned Copy");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N1', "OR Number");
             $objPHPExcel->getActiveSheet()->getStyle("A1:M1")->applyFromArray($styleArray);
 
             //$total_vatables=array();
@@ -2462,6 +2626,7 @@ class Reports extends CI_Controller {
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
 
             $salesalladjustment[]=array(
+                    'due_date'=>$sah->due_date,
                     'billing_date'=>$billing_date,
                     'participant_name'=>$comp_name,
                     'billing_id'=>$sah->billing_id,
@@ -2485,11 +2650,13 @@ class Reports extends CI_Controller {
                 $row = 2;
                 $startRow = -1;
                 $previousKey = '';
+                $previousKey1 = '';
                 $num=2;
                 foreach($salesalladjustment AS $index => $value){
                     if($startRow == -1){
                         $startRow = $row;
-                        $previousKey = $value['billing_date'];
+                        $previousKey = $value['due_date'];
+                        $previousKey1 = $value['billing_date'];
                     }
 
 
@@ -2503,65 +2670,70 @@ class Reports extends CI_Controller {
                 $total_ewt_amount[]=$value['ewt_amount'];
                 //$overall_total[]=$total;
                 //if($value['short_name']==$sah->short_name){
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['reference_number']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['participant_name']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $value['vatable_sales']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $zero_rated);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $value['vat_on_sales']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$value['ewt']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $total);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, $value['ewt_amount']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['due_date']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_date']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['billing_id']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['reference_number']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $value['participant_name']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $value['vatable_sales']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $zero_rated);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $value['vat_on_sales']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, "-".$value['ewt']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, $total);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, $value['ewt_amount']);
                 if($value['original_copy']==1){
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "Yes");
-                }else if($value['original_copy']==0){
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "No");
-                }else{
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "");
-                }
-                if($value['scanned_copy']==1){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "Yes");
-                }else if($value['scanned_copy']==0){
+                }else if($value['original_copy']==0){
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "No");
                 }else{
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "");
                 }
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, $value['or_no']);
+                if($value['scanned_copy']==1){
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "Yes");
+                }else if($value['scanned_copy']==0){
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "No");
+                }else{
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "");
+                }
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N'.$num, $value['or_no']);
 
-                $nextKey = isset($salesalladjustment[$index+1]) ? $salesalladjustment[$index+1]['billing_date'] : null;
+                $nextKey = isset($salesalladjustment[$index+1]) ? $salesalladjustment[$index+1]['due_date'] : null;
+                $nextKey1 = isset($salesalladjustment[$index+1]) ? $salesalladjustment[$index+1]['billing_date'] : null;
 
                 if($row >= $startRow && (($previousKey <> $nextKey) || ($nextKey == null))){
                     $cellToMerge = 'A'.$startRow.':A'.$row;
                     $objPHPExcel->getActiveSheet()->mergeCells($cellToMerge);
+                    // if($row >= $startRow && (($previousKey1 <> $nextKey1) || ($nextKey1 == null))){
+                    //     $cellToMerge = 'B'.$startRow.':B'.$row;
+                    //     $objPHPExcel->getActiveSheet()->mergeCells($cellToMerge);
+                    // }
                     $startRow = -1;
-
                 }
                 $row++;
 
-                $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
-                $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFont()->getColor()->setRGB ('FFFFFF');
-                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":M".$num)->applyFromArray($styleArray);
+                $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFont()->getColor()->setRGB ('FFFFFF');
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":N".$num)->applyFromArray($styleArray);
                 $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":M".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":J".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-                $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFont()->setBold(true);
-                $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('F'.$num.":N".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":K".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $num++;
             }
         }
 
                 $a = $num;
                     //$objPHPExcel->getActiveSheet()->getStyle('D'.$a)->getFont()->setBold(true);
-                    $objPHPExcel->getActiveSheet()->getStyle('E'.$a.":J".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                    $objPHPExcel->getActiveSheet()->getStyle("E".$a.':J'.$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.":K".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle("I".$a.':K'.$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     //$objPHPExcel->getActiveSheet()->setCellValue('D'.$a, "TOTAL: ");
                     //$objPHPExcel->getActiveSheet()->setCellValue('E'.$a, array_sum($total_vatables));
                     //$objPHPExcel->getActiveSheet()->setCellValue('F'.$a, array_sum($total_zero_rated));
                     //$objPHPExcel->getActiveSheet()->setCellValue('G'.$a, array_sum($total_vat));
-                    $objPHPExcel->getActiveSheet()->setCellValue('H'.$a, "-".array_sum($total_ewt));
+                    $objPHPExcel->getActiveSheet()->setCellValue('I'.$a, "-".array_sum($total_ewt));
                     //$objPHPExcel->getActiveSheet()->setCellValue('I'.$a, array_sum($overall_total));
-                    $objPHPExcel->getActiveSheet()->setCellValue('J'.$a, array_sum($total_ewt_amount));
+                    $objPHPExcel->getActiveSheet()->setCellValue('K'.$a, array_sum($total_ewt_amount));
                 $num--;
             $sheetno++;
         }

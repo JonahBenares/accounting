@@ -3207,18 +3207,19 @@ public function upload_sales_adjustment_test(){
             die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
         }
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow();
-        $sales_adjustment_id=array();
-        foreach($this->super_model->select_row_where('sales_adjustment_head','due_date',$due) AS $dues){
-            $sales_adjustment_id[]=$dues->sales_adjustment_id;
-        }
-        $sales_adjust_id=implode(',',$sales_adjustment_id);
         for($x=2;$x<=$highestRow;$x++){
             $identifier = $this->input->post('identifier');
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
-            $ewt_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
-            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
-            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
-     
+            $due_date = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+            $transaction_no = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+            $ewt_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+            $sales_adjustment_id=array();
+            foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due_date' AND reference_number='$transaction_no'") AS $dues){
+                $sales_adjustment_id[]=$dues->sales_adjustment_id;
+            }
+            $sales_adjust_id=implode(',',$sales_adjustment_id);
             $data_adjustment = array(
                 'ewt_amount'=>$ewt_amount,
                 'original_copy'=>$original_copy,
