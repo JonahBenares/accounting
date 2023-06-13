@@ -12,7 +12,12 @@
                                     <h4>Sales Ledger</h4>
                                 </div>
                                 <div class="col-8">
-                                    <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
+                                    <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
+                                    <?php if(!empty($bill)){ ?>
+                                        <a href = "<?php echo base_url();?>/reports/export_sales_ledger/<?php echo $ref_no; ?>/<?php echo $year; ?>/<?php echo $date_from; ?>/<?php echo $date_to; ?>" class = "btn btn-success pull-right">Export to Excel</a>
+                                    <?php }else{ ?>
+                                        <a href = "<?php echo base_url();?>/reports/export_sales_ledger/" class = "btn btn-success pull-right">Export to Excel</a>
+                                    <?php } ?>  
                                 </div>
                             </div>
                         </div>
@@ -23,7 +28,7 @@
                                         <table width="100%">
                                             <tr>
                                                 <td width="30%">
-                                                    <select class="form-control" id="ref_no">
+                                                    <select class="form-control select2" id="ref_no">
                                                         <option value="">-- Select Transaction No --</option>
                                                         <?php foreach($reference_no AS $r){ ?>
                                                             <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
@@ -31,7 +36,7 @@
                                                     </select>
                                                 </td>
                                                 <td width="20%">
-                                                <select id="year" class="form-control" name="year">
+                                                <select id="year" class="form-control select2" name="year">
                                                     <option value="">--Select Year--</option>
                                                     <?php 
                                                         $years=date('Y');
@@ -42,7 +47,7 @@
                                                 </select>
                                             </td>
                                             <td width="20%">
-                                                <select name="month_from" id='month_from' class="form-control">
+                                                <select name="month_from" id='month_from' class="form-control select2">
                                                     <option value="" selected>--Select Month From--</option>
                                                     <option value="1">January</option>
                                                     <option value="2">February</option>
@@ -59,7 +64,7 @@
                                                 </select>
                                             </td>
                                             <td width="20%">
-                                                <select name="month_to" id='month_to' class="form-control">
+                                                <select name="month_to" id='month_to' class="form-control select2">
                                                     <option value="" selected>--Select Month To--</option>
                                                     <option value="1">January</option>
                                                     <option value="2">February</option>
