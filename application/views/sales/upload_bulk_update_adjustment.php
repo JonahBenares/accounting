@@ -44,7 +44,7 @@
                                     </div>
                                 <?php } else {?>
                                     <div class="col-lg-4">
-                                        <span>Reference Number:</span> <?php echo $refno ?>
+                                        <span>Due Date:</span> <?php echo $due_date ?>
                                     </div> 
                                 <?php } ?>  
                                 </div> 

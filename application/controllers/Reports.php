@@ -1354,6 +1354,8 @@ class Reports extends CI_Controller {
                 $bal_vatonsalesarr[]=$this->sales_sum($cs->short_name,$cs->reference_number,'vat_on_sales');
                 $bal_ewt=$this->sales_sum($cs->short_name,$cs->reference_number,'ewt');
                 $bal_ewtarr[]=$this->sales_sum($cs->short_name,$cs->reference_number,'ewt');
+                $bal_camount=$this->collection_sum($cs->short_name,$cs->reference_number,'amount');
+                echo $bal_camount."<br>";
                 if($count_collection>0){
                     $camount='';
                     $czerorated='';
@@ -1369,7 +1371,7 @@ class Reports extends CI_Controller {
                     }
                     
                     //Collection Balance
-                    $bal_camount=$this->collection_sum($cs->short_name,$cs->reference_number,'amount');
+                    //$bal_camount=$this->collection_sum($cs->short_name,$cs->reference_number,'amount');
                     $bal_camountarr[]=$this->collection_sum($cs->short_name,$cs->reference_number,'amount');
                     $bal_czerorated_amount=$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated');
                     $bal_czerorated_amountarr[]=$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated');
