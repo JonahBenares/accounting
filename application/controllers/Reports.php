@@ -645,8 +645,15 @@ class Reports extends CI_Controller {
             $total_ewt_billing = array();
             $total_ewt_collection = array();
             $total_ewt_balance = array(); 
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE reference_number='$head->reference_number' AND $qu GROUP BY short_name ORDER BY billing_from ASC, short_name ASC") AS $details){
-            $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $details->sales_detail_id);
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE reference_number='$head->reference_number' GROUP BY short_name ORDER BY billing_from ASC, short_name ASC") AS $details){
+
+            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$details->billing_id);
+            if(!empty($details->company_name) && date('Y',strtotime($details->create_date))==date('Y')){
+                $comp_name=$details->company_name;
+            }else{
+                $comp_name=$company_name;
+            }
+            $billing_date = date("M. d, Y",strtotime($details->billing_from))." - ".date("M. d, Y",strtotime($details->billing_to));
 
                 $vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$details->sales_id' AND short_name='$details->short_name'");
                 $zero_rated_sales = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$details->sales_id' AND short_name='$details->short_name'");
@@ -666,6 +673,7 @@ class Reports extends CI_Controller {
                 $vatbalance=$vat_on_sales - $vat;
                 $ewtbalance=$ewt_sales - $ewt;
 
+            if($head->reference_number==$details->reference_number){
                 $total_vatable_billing[] = $vatable_sales;
                 $total_vatable_collection[] = $amount;
                 $total_vatable_balance[] = $vatablebalance;
@@ -686,9 +694,9 @@ class Reports extends CI_Controller {
                 $total_ewt_collection[] = $ewt;
                 $total_ewt_balance[] = $ewtbalance;
 
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $head->transaction_date);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $company_name);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, date("F d,Y",strtotime($head->billing_from))." - ".date("F d,Y",strtotime($head->billing_to)));
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $details->transaction_date);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $comp_name);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $billing_date);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, number_format($vatable_sales,2));
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, number_format($amount,2));
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N'.$num, number_format($vatablebalance,2));
@@ -786,6 +794,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->getStyle('A1:AM1')->getFont()->setBold(true);
                 $objPHPExcel->getActiveSheet()->getStyle('A2:AM2')->getFont()->setBold(true);
                 $num++;
+            }
         }
 
                     $a = $num;
