@@ -13,7 +13,10 @@
                                     <h4>Customer Subsidiary Ledger </h4>
                                 </div>
                                 <div class="col-8">
-                                    <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
+                                    <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
+                                    <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
+                                        <span class="fas fa-file-export"></span> Export to Excel
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -383,5 +386,62 @@
             </div>
         </div>
     </section>
+</div>
+
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <!-- <form method="POST" action="<?php echo base_url(); ?>masterfile/insert_employee" enctype="multipart/form-data"> -->
+        <form method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Export to Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Year:</label>
+                        <select name="year_export" id='year_export' class="form-control select2">
+                            <option value="">-- Select Year --</option>
+                            <?php 
+                                $year=date('Y'); 
+                                for($x=2020;$x<=$year;$x++){
+                            ?>
+                                <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Month:</label>
+                        <select name="month_export" id='month_export' class="form-control select2" onchange='getReference()'>
+                            <option value="" selected>--Select Month--</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Reference No:</label>
+                        <select name="reference_no_export" id='reference_no_export' class="form-control select2" multiple></select>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
+                    <input type='button' class="btn btn-primary"  onclick="export_cs_ledger()" value="Export">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 

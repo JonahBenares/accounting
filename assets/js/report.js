@@ -688,3 +688,33 @@ function filter_collection() {
     window.location=loc+'reports/collection_report/'+collection_date+'/'+reference_no+'/'+settlement_id;
 }
 
+function export_cs_ledger() { 
+    var count = $('#reference_no_export option:selected').length;
+    if (count<=2) {
+        var reference_no= $('#reference_no_export option:selected').toArray().map(item => item.value);
+    }else{
+        var reference_no= document.getElementById("reference_no_export").value;  
+    }
+    var month= document.getElementById("month_export").value;
+    var year= document.getElementById("year_export").value;
+    var loc= document.getElementById("baseurl").value;
+    if(reference_no!=''){
+        var refno=reference_no;
+    }else{
+        var refno='null';
+    }
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(month!=''){
+        var months=month;
+    }else{
+        var months='null';
+    }
+    window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno; 
+}
+
