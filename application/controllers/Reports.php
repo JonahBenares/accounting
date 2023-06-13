@@ -1247,7 +1247,7 @@ class Reports extends CI_Controller {
     public function cs_ledger()
     {
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        //$this->load->view('template/navbar');
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
@@ -1315,6 +1315,26 @@ class Reports extends CI_Controller {
         if(!empty($query)){
             $x=0;
             $shortlast="";
+            $data['bal_amountarr']=0;
+            $bal_amountarr=array();
+            $data['bal_zeroratedarr']=0;
+            $bal_zeroratedarr=array();
+            $data['bal_zeroratedecoarr']=0;
+            $bal_zeroratedecoarr=array();
+            $data['bal_vatonsalesarr']=0;
+            $bal_vatonsalesarr=array();
+            $data['bal_ewtarr']=0;
+            $bal_ewtarr=array();
+            $data['bal_camountarr']=0;
+            $bal_camountarr=array();
+            $data['bal_czerorated_amountarr']=0;
+            $bal_czerorated_amountarr=array();
+            $data['bal_czeroratedeco_amountarr']=0;
+            $bal_czeroratedeco_amountarr=array();
+            $data['bal_cvatonsal_amountarr']=0;
+            $bal_cvatonsal_amountarr=array();
+            $data['bal_cewt_amountarr']=0;
+            $bal_cewt_amountarr=array();
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $cs_qu ORDER BY transaction_date ASC") AS $cs){
                 //$vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$cs->sales_id' AND short_name='$cs->short_name'");
                 $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_transaction_details","sales_transaction_head","transaction_date='$cs->transaction_date' AND short_name='$cs->short_name'",'sales_id');
@@ -1325,12 +1345,26 @@ class Reports extends CI_Controller {
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$cs->reference_number' AND settlement_id ='$cs->short_name'");
                 //echo $cs->reference_number ." - ". $cs->short_name ."<br>";
                
-                $amount=$this->sales_display($cs->short_name,$cs->reference_number,'vatable_sales')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'vatable_sales')."</span>";
-                $zerorated=$this->sales_display($cs->short_name,$cs->reference_number,'zero_rated_sales')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_sales')."</span>";
-                $zeroratedeco=$this->sales_display($cs->short_name,$cs->reference_number,'zero_rated_ecozones')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozones')."</span>";
-                $vatonsales=$this->sales_display($cs->short_name,$cs->reference_number,'vat_on_sales')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'vat_on_sales')."</span>";
-                $ewt=$this->sales_display($cs->short_name,$cs->reference_number,'ewt')."<span class='td-30 td-yellow'> Total: ".$this->sales_sum($cs->short_name,$cs->reference_number,'ewt')."</span>";
+                $amount=$this->sales_display($cs->short_name,$cs->reference_number,'vatable_sales')."<span class='td-30 td-yellow'> Total: ".number_format($this->sales_sum($cs->short_name,$cs->reference_number,'vatable_sales'),2)."</span>";
+                $zerorated=$this->sales_display($cs->short_name,$cs->reference_number,'zero_rated_sales')."<span class='td-30 td-yellow'> Total: ".number_format($this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_sales'),2)."</span>";
+                $zeroratedeco=$this->sales_display($cs->short_name,$cs->reference_number,'zero_rated_ecozones')."<span class='td-30 td-yellow'> Total: ".number_format($this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozones'),2)."</span>";
+                $vatonsales=$this->sales_display($cs->short_name,$cs->reference_number,'vat_on_sales')."<span class='td-30 td-yellow'> Total: ".number_format($this->sales_sum($cs->short_name,$cs->reference_number,'vat_on_sales'),2)."</span>";
+                $ewt=$this->sales_display($cs->short_name,$cs->reference_number,'ewt')."<span class='td-30 td-yellow'> Total: ".number_format($this->sales_sum($cs->short_name,$cs->reference_number,'ewt'),2)."</span>";
                 $id=array();
+
+                //Sales Balance
+                $bal_amount=$this->sales_sum($cs->short_name,$cs->reference_number,'vatable_sales');
+                $bal_amountarr[]=$this->sales_sum($cs->short_name,$cs->reference_number,'vatable_sales');
+                $bal_zerorated=$this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_sales');
+                $bal_zeroratedarr[]=$this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_sales');
+                $bal_zeroratedeco=$this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozones');
+                $bal_zeroratedecoarr[]=$this->sales_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozones');
+                $bal_vatonsales=$this->sales_sum($cs->short_name,$cs->reference_number,'vat_on_sales');
+                $bal_vatonsalesarr[]=$this->sales_sum($cs->short_name,$cs->reference_number,'vat_on_sales');
+                $bal_ewt=$this->sales_sum($cs->short_name,$cs->reference_number,'ewt');
+                $bal_ewtarr[]=$this->sales_sum($cs->short_name,$cs->reference_number,'ewt');
+                $bal_camount=$this->collection_sum($cs->short_name,$cs->reference_number,'amount');
+                echo $bal_camount."<br>";
                 if($count_collection>0){
                     $camount='';
                     $czerorated='';
@@ -1344,11 +1378,30 @@ class Reports extends CI_Controller {
                         $cvat.=$this->collection_display($c->collection_details_id,$c->settlement_id,$c->reference_no,'vat');
                         $cewt.=$this->collection_display($c->collection_details_id,$c->settlement_id,$c->reference_no,'ewt');
                     }
-                    $cvatsal_amount=$camount." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'amount')."</span>";
-                    $czerorated_amount=$czerorated." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated')."</span>";
-                    $czeroratedeco_amount=$czeroratedeco." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozone')."</span>";
-                    $cvatonsal_amount=$cvat." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'vat')."</span>";
-                    $cewt_amount=$cewt." <span class='td-30 td-yellow'> Total: ".$this->collection_sum($cs->short_name,$cs->reference_number,'ewt')."</span>";
+                    
+                    //Collection Balance
+                    //$bal_camount=$this->collection_sum($cs->short_name,$cs->reference_number,'amount');
+                    $bal_camountarr[]=$this->collection_sum($cs->short_name,$cs->reference_number,'amount');
+                    $bal_czerorated_amount=$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated');
+                    $bal_czerorated_amountarr[]=$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated');
+                    $bal_czeroratedeco_amount=$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozone');
+                    $bal_czeroratedeco_amountarr[]=$this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozone');
+                    $bal_cvatonsal_amount=$this->collection_sum($cs->short_name,$cs->reference_number,'vat');
+                    $bal_cvatonsal_amountarr[]=$this->collection_sum($cs->short_name,$cs->reference_number,'vat');
+                    $bal_cewt_amount=$this->collection_sum($cs->short_name,$cs->reference_number,'ewt');
+                    $bal_cewt_amountarr[]=$this->collection_sum($cs->short_name,$cs->reference_number,'ewt');
+                    //Balance
+                    $balance_vatsal=$bal_amount-$bal_camount;
+                    $balance_zerorated=$bal_zerorated-$bal_czerorated_amount;
+                    $balance_zeroratedeco=$bal_zeroratedeco-$bal_czeroratedeco_amount;
+                    $balance_vatonsales=$bal_vatonsales-$bal_cvatonsal_amount;
+                    $balance_ewt=$bal_ewt-$bal_cewt_amount;
+
+                    $cvatsal_amount=$camount." <span class='td-30 td-yellow'> Total: ".number_format($this->collection_sum($cs->short_name,$cs->reference_number,'amount'),2)."</span>";
+                    $czerorated_amount=$czerorated." <span class='td-30 td-yellow'> Total: ".number_format($this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated'),2)."</span>";
+                    $czeroratedeco_amount=$czeroratedeco." <span class='td-30 td-yellow'> Total: ".number_format($this->collection_sum($cs->short_name,$cs->reference_number,'zero_rated_ecozone'),2)."</span>";
+                    $cvatonsal_amount=$cvat." <span class='td-30 td-yellow'> Total: ".number_format($this->collection_sum($cs->short_name,$cs->reference_number,'vat'),2)."</span>";
+                    $cewt_amount=$cewt." <span class='td-30 td-yellow'> Total: ".number_format($this->collection_sum($cs->short_name,$cs->reference_number,'ewt'),2)."</span>";
                     
                     $data['csledger'][]=array(
                         "sales_id"=>$cs->sales_id,
@@ -1363,22 +1416,47 @@ class Reports extends CI_Controller {
                         "vatable_sales_sum"=>$vatable_sales,
                         "vatable_sales"=>$amount,
                         "cvatsal_amount"=>$cvatsal_amount,
+                        "balance_vatsal"=>number_format($balance_vatsal,2),
                         "zero_rated_sales_sum"=>$zero_rated_sales,
                         "zero_rated_sales"=>$zerorated,
                         "czerorated_amount"=>$czerorated_amount,
+                        "balance_zerorated"=>number_format($balance_zerorated,2),
                         "zero_rated_ecozones"=>$zeroratedeco,
                         "zero_rated_ecozones_sum"=>$zero_rated_ecozones,
                         "czeroratedeco_amount"=>$czeroratedeco_amount,
+                        "balance_zeroratedeco"=>number_format($balance_zeroratedeco,2),
                         "vat_on_sales"=>$vatonsales,
                         "vat_on_sales_sum"=>$vat_on_sales,
                         "cvatonsal_amount"=>$cvatonsal_amount,
+                        "balance_vatonsales"=>number_format($balance_vatonsales,2),
                         "ewt"=>$ewt,
                         "ewt_sum"=>$ewt_sales,
-                        "cewt_amount"=>$cewt_amount
+                        "cewt_amount"=>$cewt_amount,
+                        "balance_ewt"=>number_format($balance_ewt,2),
                     );
                     $x++;
                 }
             }
+            $result_amountarr = array_unique($bal_amountarr);
+            $data['bal_amountarr']=array_sum($result_amountarr);
+            $result_zeroratedarr = array_unique($bal_zeroratedarr);
+            $data['bal_zeroratedarr']=array_sum($result_zeroratedarr);
+            $result_zeroratedecoarr = array_unique($bal_zeroratedecoarr);
+            $data['bal_zeroratedecoarr']=array_sum($result_zeroratedecoarr);
+            $result_vatonsalesarr = array_unique($bal_vatonsalesarr);
+            $data['bal_vatonsalesarr']=array_sum($result_vatonsalesarr);
+            $result_ewtarr = array_unique($bal_ewtarr);
+            $data['bal_ewtarr']=array_sum($result_ewtarr);
+            $result_camountarr = array_unique($bal_camountarr);
+            $data['bal_camountarr']=array_sum($result_camountarr);
+            $result_czerorated_amountarr = array_unique($bal_czerorated_amountarr);
+            $data['bal_czerorated_amountarr']=array_sum($result_czerorated_amountarr);
+            $result_czeroratedeco_amountarr = array_unique($bal_czeroratedeco_amountarr);
+            $data['bal_czeroratedeco_amountarr']=array_sum($result_czeroratedeco_amountarr);
+            $result_cvatonsal_amountarr = array_unique($bal_cvatonsal_amountarr);
+            $data['bal_cvatonsal_amountarr']=array_sum($result_cvatonsal_amountarr);
+            $result_cewt_amountarr = array_unique($bal_cewt_amountarr);
+            $data['bal_cewt_amountarr']=array_sum($result_cewt_amountarr);
         }
         $this->load->view('reports/cs_ledger', $data);
         $this->load->view('template/footer');
@@ -1402,8 +1480,8 @@ class Reports extends CI_Controller {
     }
 
     public function sales_sum($short_name,$reference_no,$type){
-        $sum=$this->super_model->select_sum_join("$type","sales_transaction_details","sales_transaction_head","short_name = '$short_name' AND reference_number='$reference_no'",'sales_id');
-        return number_format($sum,2);
+        $sum=$this->super_model->select_sum_join("$type","sales_transaction_details","sales_transaction_head","short_name = '$short_name' AND reference_number='$reference_no'  AND $type!='0'",'sales_id');
+        return $sum;
     }
 
     public function collection_display($collection_details_id,$short_name,$reference_no,$type){
@@ -1415,7 +1493,7 @@ class Reports extends CI_Controller {
 
     public function collection_sum($short_name,$reference_no,$type){
         $sum=$this->super_model->select_sum_where('collection_details',"$type","settlement_id='$short_name' AND reference_no = '$reference_no' AND $type!=0");
-        return number_format($sum,2);
+        return $sum;
     }
 
     public function ss_ledger(){
