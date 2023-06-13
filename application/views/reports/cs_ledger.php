@@ -278,7 +278,7 @@
                                                     echo (strpos($b['cvatsal_amount'], "Total: 0.00") == false) ? $b['cvatsal_amount'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
                                                 ?>
                                             </td>
-                                            <td align="right"><?php //echo number_format($diff_val_sal,2); ?></td>
+                                            <td align="right"><?php echo $b['balance_vatsal'];?></td>
 
                                             <td align="right">
                                                 <?php 
@@ -293,7 +293,7 @@
                                                     echo (strpos($b['czerorated_amount'], "Total: 0.00") == false) ? $b['czerorated_amount'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
                                                 ?>
                                             </td>
-                                            <td align="right"><?php //echo number_format($diff_zerorated_sal,2) ?></td>
+                                            <td align="right"><?php echo $b['balance_zerorated'];?></td>
 
                                             <td align="right">
                                                 <?php 
@@ -308,7 +308,7 @@
                                                     echo (strpos($b['czeroratedeco_amount'], "Total: 0.00") == false) ? $b['czeroratedeco_amount'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
                                                 ?>
                                             </td>
-                                            <td align="right"><?php //echo number_format($diff_zeroratedeco_sal,2) ?></td>
+                                            <td align="right"><?php echo $b['balance_zeroratedeco'];?></td>
 
                                             <td align="right">
                                                 <?php 
@@ -323,7 +323,7 @@
                                                     echo (strpos($b['cvatonsal_amount'], "Total: 0.00") == false) ? $b['cvatonsal_amount'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
                                                 ?>
                                             </td>
-                                            <td align="right"><?php //echo number_format($diff_vat_on_sal,2) ?></td>
+                                            <td align="right"><?php echo $b['balance_vatonsales'];?></td>
 
                                             <td align="right">
                                                 <?php 
@@ -338,7 +338,7 @@
                                                     echo (strpos($b['cewt_amount'], "Total: 0.00") == false) ? $b['cewt_amount'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
                                                 ?>
                                             </td>
-                                            <td align="right"><?php //echo number_format($diff_ewt_sal,2) ?></td>
+                                            <td align="right"><?php echo $b['balance_ewt'];?></td>
                                             <?php } ?>
                                         </tr>
                                         <?php 
@@ -351,24 +351,24 @@
                                         <tr >
                                             <td align="right" style="vertical-align:middle!important;" class="td-sticky left-col-1 td-yellow" colspan="5">TOTAL</td>
 
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_val_sal),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_cval_sal),2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_amountarr,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_camountarr,2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($diff_total_val_sal),2); ?></td>
 
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_zerorated_sal),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_czerorated_sal),2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_zeroratedarr,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_czerorated_amountarr,2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($diff_total_zerorated_sal),2); ?></td>
 
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_zeroratedeco_sal),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_czeroratedeco_sal),2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_zeroratedecoarr,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_czeroratedeco_amountarr,2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($diff_total_zeroratedeco_sal),2); ?></td>
 
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_vat_on_sal),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_cvat_on_sal),2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_vatonsalesarr,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_cvatonsal_amountarr,2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($diff_total_vat_on_sal),2); ?></td>
 
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_ewt_sal),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($total_cewt_sal),2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_ewtarr,2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($bal_cewt_amountarr,2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($diff_total_ewt_sal),2); ?></td>
                                         </tr>
                                     </tfoot>

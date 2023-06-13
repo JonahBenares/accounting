@@ -3217,7 +3217,7 @@ public function upload_sales_adjustment_test(){
             $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
             $sales_adjustment_id=array();
             foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due_date' AND reference_number='$transaction_no'") AS $dues){
-                $sales_adjustment_id[]=$dues->sales_adjustment_id;
+                $sales_adjustment_id[]="'".$dues->sales_adjustment_id."'";
             }
             $sales_adjust_id=implode(',',$sales_adjustment_id);
             $data_adjustment = array(
@@ -3231,12 +3231,17 @@ public function upload_sales_adjustment_test(){
     }
 
     public function save_bulkupdate_adjustment(){
-        $sales_adjustment_id = $this->input->post('sales_adjustment_id');
+        $due_date = $this->input->post('due');
         $bulk_update_identifier = $this->input->post('adjustment_identifier');
+        foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due_date'") AS $dues){
+            $sales_adjustment_id[]="'".$dues->sales_adjustment_id."'";
+        }
+        $sales_adjust_id=implode(',',$sales_adjustment_id);
         $data_head = array(
             'saved_bulk_update'=>1
         );
-        $this->super_model->update_custom_where("sales_adjustment_details", $data_head, "sales_adjustment_id='$sales_adjustment_id' AND bulk_update_identifier='$bulk_update_identifier'");
+        //$this->super_model->update_custom_where("sales_adjustment_details", $data_head, "due_date='$due_date' AND bulk_update_identifier='$bulk_update_identifier'");
+        $this->super_model->update_custom_where("sales_adjustment_details", $data_head, "sales_adjustment_id IN ($sales_adjust_id) AND bulk_update_identifier='$bulk_update_identifier'");
     }
 
     public function PDF_OR(){

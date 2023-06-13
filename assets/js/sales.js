@@ -1099,7 +1099,7 @@ async function upload_bulkupdate_adjustment() {
 
 function saveBulkUpdateAdjustment(){
     var data = $("#upload_bulkupdate_adjustment").serialize();
-    var sales_adjustment_id = document.getElementById("sales_adjustment_id").value;
+    var due = document.getElementById("due").value;
     var adjustment_identifier = document.getElementById("adjustment_identifier").value;
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"sales/save_bulkupdate_adjustment";
@@ -1114,7 +1114,7 @@ function saveBulkUpdateAdjustment(){
                 $("#submitbulkadjustment").hide(); 
             },
             success: function(output){
-                window.location=loc+'sales/bulk_update_adjustment/'+sales_adjustment_id+'/'+adjustment_identifier;
+                window.location=loc+'sales/bulk_update_adjustment/'+due+'/'+adjustment_identifier;
             }
         });
     }
