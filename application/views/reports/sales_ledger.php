@@ -14,7 +14,7 @@
                                 <div class="col-8">
                                     <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
                                     <?php if(!empty($bill)){ ?>
-                                        <a href = "<?php echo base_url();?>/reports/export_sales_ledger/<?php echo $refno; ?>/<?php echo $year; ?>/<?php echo $date_from; ?>/<?php echo $date_to; ?>" class = "btn btn-success pull-right">Export to Excel</a>
+                                        <a href = "<?php echo base_url();?>/reports/export_sales_ledger/<?php echo $year; ?>/<?php echo $refno; ?>/<?php echo $date_from; ?>/<?php echo $date_to; ?>" class = "btn btn-success pull-right">Export to Excel</a>
                                     <?php }else{ ?>
                                         <a href = "<?php echo base_url();?>/reports/export_sales_ledger/" class = "btn btn-success pull-right">Export to Excel</a>
                                     <?php } ?>  
