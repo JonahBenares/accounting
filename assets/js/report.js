@@ -722,7 +722,8 @@ function export_cs_ledger() {
     }else{
         var months='null';
     }
-    window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno; 
+    window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno;
+} 
 
 function getSalesLedgerRef(){
     var year = document.getElementById("year").value;
