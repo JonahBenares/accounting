@@ -37,7 +37,13 @@ function filterCreditable(){
 }
 
 function filterLedger(){
-    var ref_no= document.getElementById("ref_no").value;
+    //var ref_no= document.getElementById("ref_no").value;
+    var count = $('#ref_no option:selected').length;
+    if (count>=2) {
+        var ref_no= $('#ref_no option:selected').toArray().map(item => item.value);
+    }else{
+        var ref_no= document.getElementById("ref_no").value;  
+    }
     var year= document.getElementById("year").value;
     var month_from= document.getElementById("month_from").value;
     var month_to= document.getElementById("month_to").value;
@@ -68,7 +74,7 @@ function filterLedger(){
     }else{
         var to='null';
     }
-    window.location=loc+'reports/sales_ledger/'+ref+'/'+years+'/'+from+'/'+to;          
+    window.location=loc+'reports/sales_ledger/'+years+'/'+ref+'/'+from+'/'+to;          
 }
 
 function filter_sales() {
@@ -688,6 +694,7 @@ function filter_collection() {
     window.location=loc+'reports/collection_report/'+collection_date+'/'+reference_no+'/'+settlement_id;
 }
 
+
 function export_cs_ledger() { 
     var count = $('#reference_no_export option:selected').length;
     if (count<=2) {
@@ -716,5 +723,18 @@ function export_cs_ledger() {
         var months='null';
     }
     window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno; 
+
+function getSalesLedgerRef(){
+    var year = document.getElementById("year").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"reports/getSalesLedgerRef";
+    $.ajax({
+        data: 'year='+year,
+        type: "POST",
+        url: redirect,
+        success: function(data){
+            $("#ref_no").html(data);
+        }
+    });
 }
 
