@@ -2347,7 +2347,19 @@ table tfoot {
 }
 
 .left-col-3 {
-  left: 350px;
+  left: 400px;
+}
+
+.left-col-4 {
+  left: 700px;
+}
+
+.width300{
+	width: 300px
+}
+
+.width200{
+	width: 200px
 }
 
 .sticky-back{

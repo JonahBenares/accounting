@@ -29,7 +29,7 @@
 <div style="padding-bottom:90px;">
     <div id="contentPDF" >
     <page size="Long" id="printableArea" class="canvas_div_pdf" >
-        <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.jpg" style="width: 100%;">
+        <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.png" style="width: 100%;">
         <div class="">
             <label class="date_1"><?php echo date("F j, Y", strtotime($date)); ?></label>
             <label class="ornumber_1"><?php echo $or_no; ?></label>
@@ -54,11 +54,13 @@
             <label class="total_1"><?php echo number_format($total,2); ?></label>
             <label class="less_withholding_1"><?php echo number_format($sum_ewt,2); ?></label>
             <label class="total_amount_1"><?php echo number_format($total_due,2); ?></label>
-            <label class="vatable_1"><?php echo number_format($sum_amount,2); ?></label>
-            <label class="vat_exempt_1">0.00</label>
-            <label class="zero_rated_1"><?php echo number_format($zero_rated,2); ?></label>
-            <label class="vat_percent_1"><?php echo number_format($sum_vat,2); ?></label>
-            <label class="grand_total_1"><?php echo number_format($total,2); ?></label>
+            <div style="position: absolute;top:5px">  
+                <label class="vatable_1"><?php echo number_format($sum_amount,2); ?></label>
+                <label class="vat_exempt_1">0.00</label>
+                <label class="zero_rated_1"><?php echo number_format($zero_rated,2); ?></label>
+                <label class="vat_percent_1"><?php echo number_format($sum_vat,2); ?></label>
+                <label class="grand_total_1"><?php echo number_format($total,2); ?></label>
+            </div>
             <label class="signature_1">
                 <img src="<?php echo base_url()."uploads/".$user_signature; ?>" width="100px">
             </label>
