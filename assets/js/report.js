@@ -205,6 +205,84 @@ function filterCSLedger(){
     window.location=loc+'reports/cs_ledger/'+years+'/'+months+'/'+refno;          
 }
 
+function filterCSLedgersalesadj(){
+    var participant= document.getElementById("participant").value;  
+    var reference_no= document.getElementById("reference_no").value;  
+    var year= document.getElementById("year").value;
+    var date_from= document.getElementById("date_from").value;
+    var date_to= document.getElementById("date_to").value;
+    var loc= document.getElementById("baseurl").value;
+    if(participant!=''){
+        var part=participant;
+    }else{
+        var part='null';
+    }
+
+    if(reference_no!=''){
+        var refno=reference_no;
+    }else{
+        var refno='null';
+    }
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(date_from!=''){
+        var from=date_from;
+    }else{
+        var from='null';
+    }
+
+    if(date_to!=''){
+        var to=date_to;
+    }else{
+        var to='null';
+    }
+    window.location=loc+'reports/cs_ledger_salesadj/'+part+'/'+refno+'/'+years+'/'+from+'/'+to;          
+}
+
+function filterCSLedgerpurchaseadj(){
+    var participant= document.getElementById("participant").value;  
+    var reference_no= document.getElementById("reference_no").value;  
+    var year= document.getElementById("year").value;
+    var date_from= document.getElementById("date_from").value;
+    var date_to= document.getElementById("date_to").value;
+    var loc= document.getElementById("baseurl").value;
+    if(participant!=''){
+        var part=participant;
+    }else{
+        var part='null';
+    }
+
+    if(reference_no!=''){
+        var refno=reference_no;
+    }else{
+        var refno='null';
+    }
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(date_from!=''){
+        var from=date_from;
+    }else{
+        var from='null';
+    }
+
+    if(date_to!=''){
+        var to=date_to;
+    }else{
+        var to='null';
+    }
+    window.location=loc+'reports/cs_ledger_purchaseadj/'+part+'/'+refno+'/'+years+'/'+from+'/'+to;          
+}
+
 function getReference(){
     var month = document.getElementById("month").value;
     var loc= document.getElementById("baseurl").value;

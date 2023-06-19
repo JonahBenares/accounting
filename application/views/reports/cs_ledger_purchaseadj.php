@@ -10,13 +10,10 @@
                         <div class="card-header">                        
                             <div class="row">
                                 <div class="col-4">
-                                    <h4>Customer Subsidiary Ledger </h4>
+                                    <h4>Customer Subsidiary Ledger (Purchase Adjustment)</h4>
                                 </div>
                                 <div class="col-8">
-                                    <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
-                                    <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
-                                        <span class="fas fa-file-export"></span> Export to Excel
-                                    </button>
+                                    <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
                                 </div>
                             </div>
                         </div>
@@ -25,15 +22,23 @@
                                 <div class="col-lg-10 offset-lg-1">
                                     <table width="100%">
                                         <tr>
-                                            <!-- <td>
+                                            <td width="20%">
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->participant_name;?></option>
+                                                        <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
-                                            </td> -->
+                                            </td>
                                             <td width="20%">
+                                                <select class="form-control select2" name="reference_no" id="reference_no">
+                                                    <option value="">-- Select Reference Number --</option>
+                                                    <?php foreach($reference_no AS $r){ ?>
+                                                        <option value="<?php echo $r->reference_number;?>"><?php echo $r->reference_number;?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                            <td width="15%">
                                                 <select id="year" class="form-control" name="year">
                                                     <option value="">--Select Year--</option>
                                                     <?php 
@@ -45,35 +50,14 @@
                                                 </select>
                                             </td>
                                             <td width="20%">
-                                                <select name="month" id='month' class="form-control select2" onchange='getReference()'>
-                                                    <option value="" selected>--Select Month--</option>
-                                                    <option value="1">January</option>
-                                                    <option value="2">February</option>
-                                                    <option value="3">March</option>
-                                                    <option value="4">April</option>
-                                                    <option value="5">May</option>
-                                                    <option value="6">June</option>
-                                                    <option value="7">July</option>
-                                                    <option value="8">August</option>
-                                                    <option value="9">September</option>
-                                                    <option value="10">October</option>
-                                                    <option value="11">November</option>
-                                                    <option value="12">December</option>
-                                                </select>
+                                                    <input placeholder="Due Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
                                             <td width="20%">
-                                                <select name="reference_no" id='reference_no' class="form-control select2" multiple>
-                                                </select>
+                                                    <input placeholder="Due Date To" id="date_to" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
-                                            <!-- <td width="20%">
-                                                    <input placeholder="Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
-                                            </td>
-                                            <td width="20%">
-                                                    <input placeholder="Date To" id="date_to" class="form-control" type="text" onfocus="(this.type='date')" id="date">
-                                            </td> -->
                                             <td width="10%">
                                                     <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
-                                                    <button type="button" onclick="filterCSLedger();" class="btn btn-primary btn-block">Filters</button>
+                                                    <button type="button" onclick="filterCSLedgerpurchaseadj();" class="btn btn-primary btn-block">Filters</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -81,21 +65,23 @@
                             </div>
                             <hr>
                             <?php 
-                            if(!empty($part) || !empty($year) || !empty($month)){
-                                $months   = DateTime::createFromFormat('!m', $month);
-                                $mnth = ($months!='') ? $months->format('F') : ''; // March
+                                if(!empty($participants) || !empty($referenceno) || !empty($year) || !empty($from) || !empty($to)){
                             ?>
                             <table class="table-bordersed" width="100%">
                                 <tr>
+                                    <td width=""><b>Participant_name:</b></td>
+                                    <td width=""><?php echo $participants ?></td>
+                                    <td width=""></td>
+
                                     <td width=""></td>
                                     <td width=""><b>Reference Number:</b></td>
-                                    <td width=""><?php echo $refno ?></td>
+                                    <td width=""><?php echo $referenceno ?></td>
 
                                     <td width=""><b>Year:</b></td>
                                     <td width=""><?php echo ($year!='null') ? $year : '' ?></td>
                                     
-                                    <td width=""><b>Month:</b></td>
-                                    <td width=""><?php echo $mnth ?></td>
+                                    <td width=""><b>Due Date From / Due Date To:</b></td>
+                                    <td width=""><?php echo $from."-".$to ?></td>
                                     <td width=""></td>
                                 </tr>
                             </table>
@@ -109,68 +95,52 @@
                                             <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-1" rowspan="2" align="center">Transaction No.</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-2" rowspan="2" align="center">Participant Name</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head td-sticky-hd left-col-3" rowspan="2" align="center">Description</td> 
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Vatable Sales</td> 
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Zero-Rated Sales</td>    
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Zero-Rated Ecozone</td>    
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Vatable Purchase</td> 
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">Vat</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" colspan="3" align="center">EWT</td>
                                         </tr>
                                         <tr>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Billing</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Collection</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Payment</td>
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Balance</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
                                             //$csledger = array_map("unserialize", array_unique(array_map("serialize", $csledger)));
-                                            //sales
+                                             //sales
                                             $sum_amount=array();
-                                            $sum_zerorated=array();
-                                            $sum_zeroratedeco=array();
                                             $sum_vat_on_sales=array();
                                             $sum_ewt=array();
                                             //collection
                                             $sum_camountarr=array();
-                                            $sum_czerorated_amountarr=array();
-                                            $sum_czeroratedeco_amountarr=array();
                                             $sum_cvatonsal_amountarr=array();
                                             $sum_cewt_amountarr=array();
-                                            if(!empty($csledger)){
+                                            if(!empty($csledger)){  
                                                 $shortname_last='';
                                                 $referenceno_last='';
                                                 foreach($csledger as $b) {
                                                     $short_name=$b['short_name'];
                                                     $reference_number=$b['reference_no'];
-                                                    //echo $b['count_collection']."-".$b['short_name']."-".$b['reference_no']."<br>";
+                                                    //echo $b['count_payment']."-".$b['short_name']."-".$b['reference_no']."<br>";
                                         ?>
                                         <tr>
                                             <?php 
                                                 //if($short_name!=$shortname_last){ 
-                                                //sales sum
-                                                $sum_amount[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'vatable_sales');
-                                                $sum_zerorated[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'zero_rated_sales');
-                                                $sum_zeroratedeco[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'zero_rated_ecozones');
-                                                $sum_vat_on_sales[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'vat_on_sales');
-                                                $sum_ewt[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'ewt');
-                                                //collection sum
-                                                $sum_camountarr[]=$ci->collection_sum($b['short_name'],$b['reference_no'],'amount');
-                                                $sum_czerorated_amountarr[]=$ci->collection_sum($b['short_name'],$b['reference_no'],'zero_rated');
-                                                $sum_czeroratedeco_amountarr[]=$ci->collection_sum($b['short_name'],$b['reference_no'],'zero_rated_ecozone');
-                                                $sum_cvatonsal_amountarr[]=$ci->collection_sum($b['short_name'],$b['reference_no'],'vat');
-                                                $sum_cewt_amountarr[]=$ci->collection_sum($b['short_name'],$b['reference_no'],'ewt');
+                                                //purchase sum
+                                                $sum_amount[]=$ci->purchase_adjustment_sum($b['short_name'],$b['reference_no'],'vatables_purchases');
+                                                $sum_vat_on_sales[]=$ci->purchase_adjustment_sum($b['short_name'],$b['reference_no'],'vat_on_purchases');
+                                                $sum_ewt[]=$ci->purchase_adjustment_sum($b['short_name'],$b['reference_no'],'ewt');
+                                                //payment sum
+                                                $sum_camountarr[]=$ci->payment_sum($b['short_name'],$b['payment_id'],'purchase_amount');
+                                                $sum_cvatonsal_amountarr[]=$ci->payment_sum($b['short_name'],$b['payment_id'],'vat');
+                                                $sum_cewt_amountarr[]=$ci->payment_sum($b['short_name'],$b['payment_id'],'ewt');
                                             ?>
                                             <td align="left" class="td-sticky left-col-1 sticky-back" align="center"><?php echo $b['date']; ?></td>
                                             <td align="left" class="td-sticky left-col-1 sticky-back" align="center"><?php echo $b['due_date']; ?></td>
@@ -178,7 +148,7 @@
                                             <td align="left" class="td-sticky left-col-2 sticky-back" style="width:18%!important">
                                                 <?php echo $b['company_name']; ?>
                                             </td>
-                                            <td align="left" class="td-sticky left-col-3 sticky-back"><?php echo ($b['billing_from']!='' && $b['billing_to']!='') ? date("F d,Y",strtotime($b['billing_from']))." - ".date("F d,Y",strtotime($b['billing_to'])) : ''; ?></td>
+                                            <td align="left" class="td-sticky left-col-3 sticky-back" style='width: 9%!important;'><?php echo ($b['billing_from']!='' && $b['billing_to']!='') ? date("F d,Y",strtotime($b['billing_from']))." - ".date("F d,Y",strtotime($b['billing_to'])) : ''; ?></td>
 
                                             <td align="right">
                                                 <?php 
@@ -191,31 +161,6 @@
                                                 ?>
                                             </td>
                                             <td align="right"><?php echo $b['balance_vatsal'];?></td>
-
-                                            <td align="right">
-                                                <?php 
-                                                    echo (strpos($b['zero_rated_sales'], "Total: 0.00") == false) ? $b['zero_rated_sales'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
-                                                ?>
-                                            </td>
-                                            <td align="right">
-                                                <?php 
-                                                    echo (strpos($b['czerorated_amount'], "Total: 0.00") == false) ? $b['czerorated_amount'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
-                                                ?>
-                                            </td>
-                                            <td align="right"><?php echo $b['balance_zerorated'];?></td>
-
-                                            <td align="right">
-                                                <?php 
-                                                    echo (strpos($b['zero_rated_ecozones'], "Total: 0.00") == false) ? $b['zero_rated_ecozones'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
-                                                ?>
-                                            </td>
-                                            <td align="right">
-                                                <?php 
-                                                    echo (strpos($b['czeroratedeco_amount'], "Total: 0.00") == false) ? $b['czeroratedeco_amount'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
-                                                ?>
-                                            </td>
-                                            <td align="right"><?php echo $b['balance_zeroratedeco'];?></td>
-
                                             <td align="right">
                                                 <?php 
                                                     echo (strpos($b['vat_on_sales'], "Total: 0.00") == false) ? $b['vat_on_sales'] : "0.00<br><span class='td-30 td-yellow'>Total: 0.00</span>"; 
@@ -254,14 +199,6 @@
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_camountarr),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($balance_vatsalarr,2); ?></td>
 
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_zerorated),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_czerorated_amountarr),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($balance_zeroratedarr,2); ?></td>
-
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_zeroratedeco),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_czeroratedeco_amountarr),2); ?></td>
-                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($balance_zeroratedecoarr,2); ?></td>
-
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php  echo number_format(array_sum($sum_vat_on_sales),2); //echo number_format($bal_vatonsalesarr,2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_cvatonsal_amountarr),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format($balance_vatonsalesarr,2); ?></td>
@@ -282,62 +219,5 @@
             </div>
         </div>
     </section>
-</div>
-
-<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <!-- <form method="POST" action="<?php echo base_url(); ?>masterfile/insert_employee" enctype="multipart/form-data"> -->
-        <form method="POST">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Export to Excel</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Year:</label>
-                        <select name="year_export" id='year_export' class="form-control select2">
-                            <option value="">-- Select Year --</option>
-                            <?php 
-                                $year=date('Y'); 
-                                for($x=2020;$x<=$year;$x++){
-                            ?>
-                                <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Month:</label>
-                        <select name="month_export" id='month_export' class="form-control select2" onchange='getReference()'>
-                            <option value="" selected>--Select Month--</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Reference No:</label>
-                        <select name="reference_no_export" id='reference_no_export' class="form-control select2" multiple></select>
-                    </div>
-                </div>
-                <div class="modal-footer bg-whitesmoke br">
-                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                    <input type='button' class="btn btn-primary"  onclick="export_cs_ledger()" value="Export">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </form>
-    </div>
 </div>
 
