@@ -231,6 +231,8 @@
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Subsidiary Ledger</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/cs_ledger">Customer Subsidiary Ledger</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/cs_ledger_salesadj">Customer Subsidiary Ledger(Sales Adjustment)</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/cs_ledger_purchaseadj">Customer Subsidiary Ledger(Purchase Adjustment)</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/ss_ledger">Supplier Subsidiary Ledger</a></li>
                 </ul>
             </li>

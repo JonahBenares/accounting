@@ -10,7 +10,7 @@
                         <div class="card-header">                        
                             <div class="row">
                                 <div class="col-4">
-                                    <h4>Customer Subsidiary Ledger </h4>
+                                    <h4>Customer Subsidiary Ledger (Sales Adjustment)</h4>
                                 </div>
                                 <div class="col-8">
                                     <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
@@ -22,15 +22,23 @@
                                 <div class="col-lg-10 offset-lg-1">
                                     <table width="100%">
                                         <tr>
-                                            <!-- <td>
+                                            <td width="20%">
                                                 <select class="form-control select2" name="participant" id="participant">
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->participant_name;?></option>
+                                                        <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
-                                            </td> -->
+                                            </td>
                                             <td width="20%">
+                                                <select class="form-control select2" name="reference_no" id="reference_no">
+                                                    <option value="">-- Select Reference Number --</option>
+                                                    <?php foreach($reference_no AS $r){ ?>
+                                                        <option value="<?php echo $r->reference_number;?>"><?php echo $r->reference_number;?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                            <td width="15%">
                                                 <select id="year" class="form-control" name="year">
                                                     <option value="">--Select Year--</option>
                                                     <?php 
@@ -42,35 +50,14 @@
                                                 </select>
                                             </td>
                                             <td width="20%">
-                                                <select name="month" id='month' class="form-control select2" onchange='getReference()'>
-                                                    <option value="" selected>--Select Month--</option>
-                                                    <option value="1">January</option>
-                                                    <option value="2">February</option>
-                                                    <option value="3">March</option>
-                                                    <option value="4">April</option>
-                                                    <option value="5">May</option>
-                                                    <option value="6">June</option>
-                                                    <option value="7">July</option>
-                                                    <option value="8">August</option>
-                                                    <option value="9">September</option>
-                                                    <option value="10">October</option>
-                                                    <option value="11">November</option>
-                                                    <option value="12">December</option>
-                                                </select>
+                                                    <input placeholder="Due Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
                                             <td width="20%">
-                                                <select name="reference_no" id='reference_no' class="form-control select2" multiple>
-                                                </select>
+                                                    <input placeholder="Due Date To" id="date_to" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
-                                            <!-- <td width="20%">
-                                                    <input placeholder="Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
-                                            </td>
-                                            <td width="20%">
-                                                    <input placeholder="Date To" id="date_to" class="form-control" type="text" onfocus="(this.type='date')" id="date">
-                                            </td> -->
                                             <td width="10%">
                                                     <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
-                                                    <button type="button" onclick="filterCSLedger();" class="btn btn-primary btn-block">Filters</button>
+                                                    <button type="button" onclick="filterCSLedgersalesadj();" class="btn btn-primary btn-block">Filters</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -78,21 +65,23 @@
                             </div>
                             <hr>
                             <?php 
-                            if(!empty($part) || !empty($year) || !empty($month)){
-                                $months   = DateTime::createFromFormat('!m', $month);
-                                $mnth = ($months!='') ? $months->format('F') : ''; // March
+                                if(!empty($participants) || !empty($referenceno) || !empty($year) || !empty($from) || !empty($to)){
                             ?>
                             <table class="table-bordersed" width="100%">
                                 <tr>
+                                    <td width=""><b>Participant_name:</b></td>
+                                    <td width=""><?php echo $participants ?></td>
+                                    <td width=""></td>
+
                                     <td width=""></td>
                                     <td width=""><b>Reference Number:</b></td>
-                                    <td width=""><?php echo $refno ?></td>
+                                    <td width=""><?php echo $referenceno ?></td>
 
                                     <td width=""><b>Year:</b></td>
                                     <td width=""><?php echo ($year!='null') ? $year : '' ?></td>
                                     
-                                    <td width=""><b>Month:</b></td>
-                                    <td width=""><?php echo $mnth ?></td>
+                                    <td width=""><b>Due Date From / Due Date To:</b></td>
+                                    <td width=""><?php echo $from."-".$to ?></td>
                                     <td width=""></td>
                                 </tr>
                             </table>
@@ -133,7 +122,7 @@
                                     <tbody>
                                         <?php 
                                             //$csledger = array_map("unserialize", array_unique(array_map("serialize", $csledger)));
-                                            //sales
+                                             //sales
                                             $sum_amount=array();
                                             $sum_zerorated=array();
                                             $sum_zeroratedeco=array();
@@ -145,7 +134,7 @@
                                             $sum_czeroratedeco_amountarr=array();
                                             $sum_cvatonsal_amountarr=array();
                                             $sum_cewt_amountarr=array();
-                                            if(!empty($csledger)){
+                                            if(!empty($csledger)){  
                                                 $shortname_last='';
                                                 $referenceno_last='';
                                                 foreach($csledger as $b) {
@@ -157,11 +146,11 @@
                                             <?php 
                                                 //if($short_name!=$shortname_last){ 
                                                 //sales sum
-                                                $sum_amount[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'vatable_sales');
-                                                $sum_zerorated[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'zero_rated_sales');
-                                                $sum_zeroratedeco[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'zero_rated_ecozones');
-                                                $sum_vat_on_sales[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'vat_on_sales');
-                                                $sum_ewt[]=$ci->sales_sum($b['short_name'],$b['reference_no'],'ewt');
+                                                $sum_amount[]=$ci->sales_adjustment_sum($b['short_name'],$b['reference_no'],'vatable_sales');
+                                                $sum_zerorated[]=$ci->sales_adjustment_sum($b['short_name'],$b['reference_no'],'zero_rated_sales');
+                                                $sum_zeroratedeco[]=$ci->sales_adjustment_sum($b['short_name'],$b['reference_no'],'zero_rated_ecozones');
+                                                $sum_vat_on_sales[]=$ci->sales_adjustment_sum($b['short_name'],$b['reference_no'],'vat_on_sales');
+                                                $sum_ewt[]=$ci->sales_adjustment_sum($b['short_name'],$b['reference_no'],'ewt');
                                                 //collection sum
                                                 $sum_camountarr[]=$ci->collection_sum($b['short_name'],$b['reference_no'],'amount');
                                                 $sum_czerorated_amountarr[]=$ci->collection_sum($b['short_name'],$b['reference_no'],'zero_rated');
