@@ -25,16 +25,8 @@
                                 <div class="col-lg-10 offset-lg-1">
                                     <table width="100%">
                                         <tr>
-                                            <!-- <td>
-                                                <select class="form-control select2" name="participant" id="participant">
-                                                    <option value="">-- Select Participant --</option>
-                                                    <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->participant_name;?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </td> -->
                                             <td width="20%">
-                                                <select id="year" class="form-control" name="year">
+                                                <select id="year" class="form-control" name="year" onchange='getReference()'>
                                                     <option value="">--Select Year--</option>
                                                     <?php 
                                                         $years=date('Y');
@@ -45,20 +37,20 @@
                                                 </select>
                                             </td>
                                             <td width="20%">
-                                                <select name="month" id='month' class="form-control select2" onchange='getReference()'>
-                                                    <option value="" selected>--Select Month--</option>
-                                                    <option value="1">January</option>
-                                                    <option value="2">February</option>
-                                                    <option value="3">March</option>
-                                                    <option value="4">April</option>
-                                                    <option value="5">May</option>
-                                                    <option value="6">June</option>
-                                                    <option value="7">July</option>
-                                                    <option value="8">August</option>
-                                                    <option value="9">September</option>
-                                                    <option value="10">October</option>
-                                                    <option value="11">November</option>
-                                                    <option value="12">December</option>
+                                                <select name="month" id='month' class="form-control select2" style="color:black!important" onchange='getReference()' multiple>
+                                                    <!-- <option value="">--Select Month--</option> -->
+                                                    <option value="'1'">January</option>
+                                                    <option value="'2'">February</option>
+                                                    <option value="'3'">March</option>
+                                                    <option value="'4'">April</option>
+                                                    <option value="'5'">May</option>
+                                                    <option value="'6'">June</option>
+                                                    <option value="'7'">July</option>
+                                                    <option value="'8'">August</option>
+                                                    <option value="'9'">September</option>
+                                                    <option value="'10'">October</option>
+                                                    <option value="'11'">November</option>
+                                                    <option value="'12'">December</option>
                                                 </select>
                                             </td>
                                             <td width="20%">
@@ -340,4 +332,3 @@
         </form>
     </div>
 </div>
-

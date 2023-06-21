@@ -404,17 +404,21 @@ class Reports extends CI_Controller {
         // if($date_from!='null' && $date_to != 'null'){
         //     $sql.= "billing_from = '$date_from' AND billing_to = '$date_to' AND ";
         // } 
-        if($date_from!='null' && $date_to != 'null') {
-            $sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
-        } 
 
         if($year!='null' && !empty($year)){
             $sql.= " YEAR(transaction_date) = '$year' AND ";
         }
-        
+
         if($ref_no!='null' && !empty($ref_no)){
-            //$sql.= "reference_number = '$ref_no' AND ";
             $sql.= "reference_number IN($ref_no) AND ";
+        }
+
+        if($date_from!='null' && $date_to != 'null') {
+            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to') AND "; 
+        }
+
+        if($date_from!='null' && $date_to != 'null' && $year != 'null') {
+            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to' AND YEAR(transaction_date) = '$year') AND "; 
         }
 
         $query=substr($sql,0,-4);
@@ -520,16 +524,20 @@ class Reports extends CI_Controller {
         $exportfilename="Sales Ledger.xlsx";
         $sql='';
 
-        if($date_from!='null' && $date_to != 'null'){
-            $sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
-        } 
-
         if($year!='null' && !empty($year)){
             $sql.= " YEAR(transaction_date) = '$year' AND ";
         }
-        
+
         if($ref_no!='null' && !empty($ref_no)){
             $sql.= "reference_number IN($ref_no) AND ";
+        }
+
+        if($date_from!='null' && $date_to != 'null') {
+            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to') AND "; 
+        }
+
+        if($date_from!='null' && $date_to != 'null' && $year != 'null') {
+            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to' AND YEAR(transaction_date) = '$year') AND "; 
         }
 
         $query=substr($sql,0,-4);
@@ -1225,7 +1233,8 @@ class Reports extends CI_Controller {
 
         if($month!='null' && !empty($month)){
             //$sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
-            $sql.= " MONTH(transaction_date)='$month' AND "; 
+            //$sql.= " MONTH(transaction_date)='$month' AND "; 
+            $sql.= " MONTH(transaction_date) IN($month) AND "; 
         } 
 
         if($year!='null' && !empty($year)){
@@ -1643,8 +1652,19 @@ class Reports extends CI_Controller {
 
     public function getReference(){
         $month=$this->input->post('month');
+        $year=$this->input->post('year');
+        $sql='';
+        if($month!='null' && !empty($month)){
+            $sql.= " MONTH(transaction_date) IN ($month) AND ";
+        }
+
+        if($year!='null' && !empty($year)){
+            $sql.= " YEAR(transaction_date) = '$year' AND ";
+        }
+        $query=substr($sql,0,-4);
+        $cs_qu = " saved = '1' AND ".$query;
         echo "<option value=''>--Select Reference Number--</option>";
-        foreach($this->super_model->select_custom_where('sales_transaction_head',"MONTH(transaction_date)='$month' AND saved='1'") AS $slct){
+        foreach($this->super_model->select_custom_where('sales_transaction_head',"$cs_qu") AS $slct){
             echo "<option value=`"."'".$slct->reference_number."'"."`>".$slct->reference_number."</option>";
         }
     }

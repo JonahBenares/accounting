@@ -182,7 +182,13 @@ function filterCSLedger(){
     }else{
         var reference_no= document.getElementById("reference_no").value;  
     }
-    var month= document.getElementById("month").value;
+
+    var countmonth = $('#month option:selected').length;
+    if (countmonth<=2) {
+        var month= $('#month option:selected').toArray().map(item => item.value);
+    }else{
+        var month= document.getElementById("month").value; 
+    }
     var year= document.getElementById("year").value;
     var loc= document.getElementById("baseurl").value;
     if(reference_no!=''){
@@ -284,11 +290,17 @@ function filterCSLedgerpurchaseadj(){
 }
 
 function getReference(){
-    var month = document.getElementById("month").value;
+    var year = document.getElementById("year").value;
+    var countmonth = $('#month option:selected').length;
+    if (countmonth<=2) {
+        var month= $('#month option:selected').toArray().map(item => item.value);
+    }else{
+        var month= document.getElementById("month").value; 
+    }
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"reports/getReference";
     $.ajax({
-        data: 'month='+month,
+        data: 'month='+month+'&year='+year,
         type: "POST",
         url: redirect,
         success: function(data){
