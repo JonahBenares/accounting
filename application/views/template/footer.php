@@ -110,11 +110,11 @@
                 allowClear: true
             });
             $("#reference_no").select2({
-                placeholder: "Select Refernce Number",
+                placeholder: "Select Reference Number",
                 allowClear: true
             });
             $("#ref_no").select2({
-                placeholder: "Select Refernce Number",
+                placeholder: "Select Reference Number",
                 allowClear: true
             });
           });
