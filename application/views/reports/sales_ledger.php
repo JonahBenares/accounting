@@ -12,7 +12,7 @@
                                     <h4>Sales Ledger</h4>
                                 </div>
                                 <div class="col-8">
-                                    <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
+                                    <!-- <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button> -->
                                     <?php if(!empty($bill)){ ?>
                                         <a href = "<?php echo base_url();?>/reports/export_sales_ledger/<?php echo $year; ?>/<?php echo $refno; ?>/<?php echo $date_from; ?>/<?php echo $date_to; ?>" class = "btn btn-success pull-right">Export to Excel</a>
                                     <?php }else{ ?>
@@ -153,6 +153,18 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+                                            $sum_vatable_sales[]=0; 
+                                            $sum_zero_rated_sales[]=0; 
+                                            $sum_zero_rated_ecozone[]=0; 
+                                            $sum_vat_on_sales[]=0; 
+                                            $sum_ewt[]=0;
+
+                                            $sum_cvatable_sales[]=0; 
+                                            $sum_czero_rated_sales[]=0; 
+                                            $sum_czero_rated_ecozone[]=0; 
+                                            $sum_cvat_on_sales[]=0; 
+                                            $sum_cewt[]=0;
+                                            
                                             if(!empty($bill)){
                                             foreach($bill AS $b){
                                             $sum_vatable_sales[]=$b['vatable_sales']; 
