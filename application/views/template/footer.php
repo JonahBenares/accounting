@@ -104,6 +104,22 @@
         <link href="<?php echo base_url(); ?>assets/css/select2.min.css" rel="stylesheet" />
         <script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
         <script>
+          $(document).ready(function() {
+            $("#month").select2({
+                placeholder: "Select Month",
+                allowClear: true
+            });
+            $("#reference_no").select2({
+                placeholder: "Select Refernce Number",
+                allowClear: true
+            });
+            $("#ref_no").select2({
+                placeholder: "Select Refernce Number",
+                allowClear: true
+            });
+          });
+        </script>
+        <script>
           $('.select2').select2();
           $(document).on("click", "#editEmp", function () {
             var user_id = $(this).attr("data-id");

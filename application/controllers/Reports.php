@@ -1424,8 +1424,18 @@ class Reports extends CI_Controller {
     public function getReference(){
         $month=$this->input->post('month');
         $year=$this->input->post('year');
+        $sql='';
+        if($month!='null' && !empty($month)){
+            $sql.= " MONTH(transaction_date) IN ($month) AND ";
+        }
+
+        if($year!='null' && !empty($year)){
+            $sql.= " YEAR(transaction_date) = '$year' AND ";
+        }
+        $query=substr($sql,0,-4);
+        $cs_qu = " saved = '1' AND ".$query;
         echo "<option value=''>--Select Reference Number--</option>";
-        foreach($this->super_model->select_custom_where('sales_transaction_head',"MONTH(transaction_date) IN($month) AND YEAR(transaction_date)='$year' AND saved='1'") AS $slct){
+        foreach($this->super_model->select_custom_where('sales_transaction_head',"$cs_qu") AS $slct){
             echo "<option value=`"."'".$slct->reference_number."'"."`>".$slct->reference_number."</option>";
         }
     }

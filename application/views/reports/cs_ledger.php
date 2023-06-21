@@ -12,9 +12,9 @@
                                 <div class="col-4">
                                     <h4>Customer Subsidiary Ledger </h4>
                                 </div>
-                                <div class="col-8">
+                                <!-- <div class="col-8">
                                     <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="card-body">
@@ -22,16 +22,8 @@
                                 <div class="col-lg-10 offset-lg-1">
                                     <table width="100%">
                                         <tr>
-                                            <!-- <td>
-                                                <select class="form-control select2" name="participant" id="participant">
-                                                    <option value="">-- Select Participant --</option>
-                                                    <?php foreach($participant AS $p){ ?>
-                                                        <option value="<?php echo $p->settlement_id;?>"><?php echo $p->participant_name;?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </td> -->
                                             <td width="20%">
-                                                <select id="year" class="form-control" name="year">
+                                                <select id="year" class="form-control" name="year" onchange='getReference()'>
                                                     <option value="">--Select Year--</option>
                                                     <?php 
                                                         $years=date('Y');
@@ -42,8 +34,8 @@
                                                 </select>
                                             </td>
                                             <td width="20%">
-                                                <select name="month" id='month' class="form-control select2" onchange='getReference()' multiple>
-                                                    <option value="">--Select Month--</option>
+                                                <select name="month" id='month' class="form-control select2" style="color:black!important" onchange='getReference()' multiple>
+                                                    <!-- <option value="">--Select Month--</option> -->
                                                     <option value="'1'">January</option>
                                                     <option value="'2'">February</option>
                                                     <option value="'3'">March</option>
