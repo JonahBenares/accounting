@@ -404,17 +404,21 @@ class Reports extends CI_Controller {
         // if($date_from!='null' && $date_to != 'null'){
         //     $sql.= "billing_from = '$date_from' AND billing_to = '$date_to' AND ";
         // } 
-        if($date_from!='null' && $date_to != 'null') {
-            $sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
-        } 
 
         if($year!='null' && !empty($year)){
             $sql.= " YEAR(transaction_date) = '$year' AND ";
         }
-        
+
         if($ref_no!='null' && !empty($ref_no)){
-            //$sql.= "reference_number = '$ref_no' AND ";
             $sql.= "reference_number IN($ref_no) AND ";
+        }
+
+        if($date_from!='null' && $date_to != 'null') {
+            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to') AND "; 
+        }
+
+        if($date_from!='null' && $date_to != 'null' && $year != 'null') {
+            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to' AND YEAR(transaction_date) = '$year') AND "; 
         }
 
         $query=substr($sql,0,-4);
