@@ -71,8 +71,16 @@
                             <hr>
                             <?php 
                             if(!empty($part) || !empty($year) || !empty($month)){
-                                $months   = DateTime::createFromFormat('!m', $month);
-                                $mnth = ($months!='') ? $months->format('F') : ''; // March
+                                $remqt=str_replace("'","",$month);
+                                $exp=explode(',',$remqt);
+                                $mnth=array();
+                                foreach($exp AS $e){
+                                    $months   = DateTime::createFromFormat('!m', $e);
+                                    $mnth[]= ($months!='') ? $months->format('F') : ''; // March
+                                }
+                                $mnth_imp=implode(', ',$mnth);
+                                // $months   = DateTime::createFromFormat('!m', $month);
+                                // $mnth = ($months!='') ? $months->format('F') : ''; // March
                             ?>
                             <table class="table-bordersed" width="100%">
                                 <tr>
@@ -84,7 +92,7 @@
                                     <td width=""><?php echo ($year!='null') ? $year : '' ?></td>
                                     
                                     <td width=""><b>Month:</b></td>
-                                    <td width=""><?php echo $mnth ?></td>
+                                    <td width=""><?php echo $mnth_imp ?></td>
                                     <td width=""></td>
                                 </tr>
                             </table>
