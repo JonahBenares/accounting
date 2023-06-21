@@ -1225,7 +1225,8 @@ class Reports extends CI_Controller {
 
         if($month!='null' && !empty($month)){
             //$sql.= " (MONTH(billing_from) BETWEEN '$date_from' AND '$date_to') OR (MONTH(billing_to) BETWEEN '$date_from' AND '$date_to') AND "; 
-            $sql.= " MONTH(transaction_date)='$month' AND "; 
+            //$sql.= " MONTH(transaction_date)='$month' AND "; 
+            $sql.= " MONTH(transaction_date) IN($month) AND "; 
         } 
 
         if($year!='null' && !empty($year)){
@@ -1422,8 +1423,9 @@ class Reports extends CI_Controller {
 
     public function getReference(){
         $month=$this->input->post('month');
+        $year=$this->input->post('year');
         echo "<option value=''>--Select Reference Number--</option>";
-        foreach($this->super_model->select_custom_where('sales_transaction_head',"MONTH(transaction_date)='$month' AND saved='1'") AS $slct){
+        foreach($this->super_model->select_custom_where('sales_transaction_head',"MONTH(transaction_date) IN($month) AND YEAR(transaction_date)='$year' AND saved='1'") AS $slct){
             echo "<option value=`"."'".$slct->reference_number."'"."`>".$slct->reference_number."</option>";
         }
     }
