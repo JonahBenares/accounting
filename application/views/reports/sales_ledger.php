@@ -14,7 +14,7 @@
                                 <div class="col-8">
                                     <!-- <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button> -->
                                     <?php if(!empty($bill)){ ?>
-                                        <a href = "<?php echo base_url();?>/reports/export_sales_ledger/<?php echo $year; ?>/<?php echo $refno; ?>/<?php echo $date_from; ?>/<?php echo $date_to; ?>" class = "btn btn-success pull-right">Export to Excel</a>
+                                        <a href = "<?php echo base_url();?>/reports/export_sales_ledger/<?php echo $year; ?>/<?php echo $month; ?>/<?php echo $refno; ?>/" class = "btn btn-success pull-right">Export to Excel</a>
                                     <?php }else{ ?>
                                         <a href = "<?php echo base_url();?>/reports/export_sales_ledger/" class = "btn btn-success pull-right">Export to Excel</a>
                                     <?php } ?>  
@@ -38,7 +38,24 @@
                                                     <?php } ?>
                                                 </select>
                                             </td>
-                                            <td width="30%">
+                                            <td width="20%">
+                                                <select name="month" id='month' class="form-control select2" style="color:black!important" onchange='getSalesLedgerRef()' multiple>
+                                                    <!-- <option value="">--Select Month--</option> -->
+                                                    <option value="'1'">January</option>
+                                                    <option value="'2'">February</option>
+                                                    <option value="'3'">March</option>
+                                                    <option value="'4'">April</option>
+                                                    <option value="'5'">May</option>
+                                                    <option value="'6'">June</option>
+                                                    <option value="'7'">July</option>
+                                                    <option value="'8'">August</option>
+                                                    <option value="'9'">September</option>
+                                                    <option value="'10'">October</option>
+                                                    <option value="'11'">November</option>
+                                                    <option value="'12'">December</option>
+                                                </select>
+                                            </td>
+                                            <td width="25%">
                                                     <!-- <select class="form-control select2" id="ref_no" multiple>
                                                         <option value="">-- Select Transaction No --</option>
                                                         <?php foreach($reference_no AS $r){ ?>
@@ -48,7 +65,7 @@
                                                     <select name="ref_no" id='ref_no' class="form-control select2" multiple>
                                                     </select>
                                             </td>
-                                            <td width="20%">
+                                            <!-- <td width="20%">
                                                 <select name="month_from" id='month_from' class="form-control select2">
                                                     <option value="" selected>--Select Month From--</option>
                                                     <option value="1">January</option>
@@ -81,7 +98,7 @@
                                                     <option value="11">November</option>
                                                     <option value="12">December</option>
                                                 </select>
-                                            </td>
+                                            </td> -->
                                                 <!-- <td width="20%">
                                                     <input placeholder="Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
@@ -98,22 +115,28 @@
                                 </div>
                             </div>
                             <hr>
-                            <?php 
-                            if(!empty($refno) || !empty($year) || !empty($date_from) || !empty($date_to)){
-                                $month_from   = DateTime::createFromFormat('!m', $date_from);
-                                $mnth_from = ($month_from!='') ? $month_from->format('F') : ''; // March
-                                $month_to   = DateTime::createFromFormat('!m', $date_to);
-                                $mnth_to = ($month_to!='') ? $month_to->format('F') : ''; // March
+                           <?php 
+                            if(!empty($refno) || !empty($year) || !empty($month)){
+                                $remqt=str_replace("'","",$month);
+                                $exp=explode(',',$remqt);
+                                $mnth=array();
+                                foreach($exp AS $e){
+                                    $months   = DateTime::createFromFormat('!m', $e);
+                                    $mnth[]= ($months!='') ? $months->format('F') : ''; // March
+                                }
+                                $mnth_imp=implode(', ',$mnth);
+                                // $months   = DateTime::createFromFormat('!m', $month);
+                                // $mnth = ($months!='') ? $months->format('F') : ''; // March
                             ?>
                             <table class="table-bordersed" width="100%">
                                 <tr>
                                     <td width="10%"></td>
+                                    <td width="4%"><b>Year:</b></td>
+                                    <td width="15%"><?php echo $year ?></td>
+                                    <td width="8%"><b>Month:</b></td>
+                                    <td width="10%"><?php echo $mnth_imp ?></td>
                                     <td width="7%"><b>Transaction No.:</b></td>
                                     <td width="41%"><?php echo $refno ?></td>
-                                    <td width="4%"><b>Year:</b></td>
-                                    <td width="10%"><?php echo $year ?></td>
-                                    <td width="8%"><b>Month From - To:</b></td>
-                                    <td width="10%"><?php echo $mnth_from ?> - <?php echo $mnth_to ?></td>
                                     <td width="10%"></td>
                                 </tr>
                             </table>

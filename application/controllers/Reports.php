@@ -393,36 +393,27 @@ class Reports extends CI_Controller {
         $this->load->view('template/navbar');
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $year=$this->uri->segment(3);
-        $ref_no=str_replace("%60","",$this->uri->segment(4));
-        $date_from=$this->uri->segment(5);
-        $date_to=$this->uri->segment(6);
-        $data['refno'] = $ref_no;
+        $month=$this->uri->segment(4);
+        $referenceno=str_replace("%60","",$this->uri->segment(5));
+        $data['refno'] = $referenceno;
         $data['year'] = $year;
-        $data['date_from'] = $date_from;
-        $data['date_to'] = $date_to;
+        $data['month'] = $month;
         $sql='';
-        // if($date_from!='null' && $date_to != 'null'){
-        //     $sql.= "billing_from = '$date_from' AND billing_to = '$date_to' AND ";
-        // } 
+
+        if($month!='null' && !empty($month)){
+            $sql.= " MONTH(transaction_date) IN($month) AND "; 
+        } 
 
         if($year!='null' && !empty($year)){
             $sql.= " YEAR(transaction_date) = '$year' AND ";
         }
-
-        if($ref_no!='null' && !empty($ref_no)){
-            $sql.= "reference_number IN($ref_no) AND ";
-        }
-
-        if($date_from!='null' && $date_to != 'null') {
-            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to') AND "; 
-        }
-
-        if($date_from!='null' && $date_to != 'null' && $year != 'null') {
-            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to' AND YEAR(transaction_date) = '$year') AND "; 
+        
+        if($referenceno!='null' && !empty($referenceno)){
+            $sql.= " reference_number IN($referenceno) AND ";
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = " saved = '1' AND ".$query;
         $data['bill']=array();
         $data['total_vatable_balance']=0;
         $total_vatable_balance=array();
@@ -434,6 +425,7 @@ class Reports extends CI_Controller {
         $total_vat_balance=array();
         $data['total_ewt_balance']=0;
         $total_ewt_balance=array();
+        if(!empty($query)){
         //foreach($this->super_model->select_inner_join_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","short_name,transaction_date") AS $b){
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id INNER JOIN participant p ON std.billing_id=p.billing_id WHERE $qu GROUP BY sth.sales_id, p.tin ORDER BY billing_from ASC, std.short_name ASC, sth.transaction_date ASC") AS $b){
 
@@ -504,40 +496,36 @@ class Reports extends CI_Controller {
                     "cvat_on_sales"=>$vat,
                     "cewt"=>$ewt,
                 );
+            }
+            $data['total_vatable_balance']=array_sum($total_vatable_balance);
+            $data['total_zero_rated_balance']=array_sum($total_zero_rated_balance);
+            $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones_balance);
+            $data['total_vat_balance']=array_sum($total_vat_balance);
+            $data['total_ewt_balance']=array_sum($total_ewt_balance);
         }
-        $data['total_vatable_balance']=array_sum($total_vatable_balance);
-        $data['total_zero_rated_balance']=array_sum($total_zero_rated_balance);
-        $data['total_zero_ecozones_balance']=array_sum($total_zero_ecozones_balance);
-        $data['total_vat_balance']=array_sum($total_vat_balance);
-        $data['total_ewt_balance']=array_sum($total_ewt_balance);
         $this->load->view('reports/sales_ledger',$data);
         $this->load->view('template/footer');
     }
 
         public function export_sales_ledger(){
-        $ref_no=$this->uri->segment(4);
         $year=$this->uri->segment(3);
-        $date_from=$this->uri->segment(5);
-        $date_to=$this->uri->segment(6);
+        $month=$this->uri->segment(4);
+        $referenceno=str_replace("%60","",$this->uri->segment(5));
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="Sales Ledger.xlsx";
         $sql='';
 
+        if($month!='null' && !empty($month)){
+            $sql.= " MONTH(transaction_date) IN($month) AND "; 
+        } 
+
         if($year!='null' && !empty($year)){
             $sql.= " YEAR(transaction_date) = '$year' AND ";
         }
-
-        if($ref_no!='null' && !empty($ref_no)){
-            $sql.= "reference_number IN($ref_no) AND ";
-        }
-
-        if($date_from!='null' && $date_to != 'null') {
-            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to') AND "; 
-        }
-
-        if($date_from!='null' && $date_to != 'null' && $year != 'null') {
-            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to' AND YEAR(transaction_date) = '$year') AND "; 
+        
+        if($referenceno!='null' && !empty($referenceno)){
+            $sql.= " reference_number IN($referenceno) AND ";
         }
 
         $query=substr($sql,0,-4);
@@ -847,9 +835,20 @@ class Reports extends CI_Controller {
     }
 
     public function getSalesLedgerRef(){
+        $month=$this->input->post('month');
         $year=$this->input->post('year');
+        $sql='';
+        if($month!='null' && !empty($month)){
+            $sql.= " MONTH(transaction_date) IN ($month) AND ";
+        }
+
+        if($year!='null' && !empty($year)){
+            $sql.= " YEAR(transaction_date) = '$year' AND ";
+        }
+        $query=substr($sql,0,-4);
+        $sales_qu = " saved = '1' AND ".$query;
         echo "<option value=''>--Select Reference Number--</option>";
-        foreach($this->super_model->select_custom_where('sales_transaction_head',"YEAR(transaction_date)='$year' AND saved='1'") AS $slct){
+        foreach($this->super_model->select_custom_where('sales_transaction_head',"$sales_qu") AS $slct){
             echo "<option value=`"."'".$slct->reference_number."'"."`>".$slct->reference_number."</option>";
         }
     }
