@@ -292,7 +292,7 @@ function filterCSLedgerpurchaseadj(){
 function getReference(){
     var year = document.getElementById("year").value;
     var countmonth = $('#month option:selected').length;
-    if (countmonth<=2) {
+    if (countmonth>=2) {
         var month= $('#month option:selected').toArray().map(item => item.value);
     }else{
         var month= document.getElementById("month").value; 
