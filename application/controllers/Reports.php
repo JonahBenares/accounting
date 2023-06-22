@@ -508,29 +508,24 @@ class Reports extends CI_Controller {
     }
 
         public function export_sales_ledger(){
-        $ref_no=$this->uri->segment(4);
         $year=$this->uri->segment(3);
-        $date_from=$this->uri->segment(5);
-        $date_to=$this->uri->segment(6);
+        $month=$this->uri->segment(4);
+        $referenceno=str_replace("%60","",$this->uri->segment(5));
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="Sales Ledger.xlsx";
         $sql='';
 
+        if($month!='null' && !empty($month)){
+            $sql.= " MONTH(transaction_date) IN($month) AND "; 
+        } 
+
         if($year!='null' && !empty($year)){
             $sql.= " YEAR(transaction_date) = '$year' AND ";
         }
-
-        if($ref_no!='null' && !empty($ref_no)){
-            $sql.= "reference_number IN($ref_no) AND ";
-        }
-
-        if($date_from!='null' && $date_to != 'null') {
-            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to') AND "; 
-        }
-
-        if($date_from!='null' && $date_to != 'null' && $year != 'null') {
-            $sql.= " (MONTH(transaction_date) BETWEEN '$date_from' AND '$date_to' AND YEAR(transaction_date) = '$year') AND "; 
+        
+        if($referenceno!='null' && !empty($referenceno)){
+            $sql.= " reference_number IN($referenceno) AND ";
         }
 
         $query=substr($sql,0,-4);
