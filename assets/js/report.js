@@ -37,22 +37,25 @@ function filterCreditable(){
 }
 
 function filterLedger(){
-    //var ref_no= document.getElementById("ref_no").value;
     var count = $('#ref_no option:selected').length;
     if (count>=2) {
         var ref_no= $('#ref_no option:selected').toArray().map(item => item.value);
     }else{
         var ref_no= document.getElementById("ref_no").value;  
     }
-    var year= document.getElementById("year").value;
-    var month_from= document.getElementById("month_from").value;
-    var month_to= document.getElementById("month_to").value;
-    var loc= document.getElementById("baseurl").value;
 
-    if(ref_no!=''){
-        var ref=ref_no;
+    var countmonth = $('#month option:selected').length;
+    if (countmonth>=2) {
+        var month= $('#month option:selected').toArray().map(item => item.value);
     }else{
-        var ref='null';
+        var month= document.getElementById("month").value; 
+    }
+    var year= document.getElementById("year").value;
+    var loc= document.getElementById("baseurl").value;
+    if(ref_no!=''){
+        var refno=ref_no;
+    }else{
+        var refno='null';
     }
 
     if(year!=''){
@@ -61,20 +64,12 @@ function filterLedger(){
         var years='null';
     }
 
-
-    if(month_from){
-        var from=month_from;
+    if(month!=''){
+        var months=month;
     }else{
-        var from='null';
+        var months='null';
     }
-
-
-    if(month_to){
-        var to=month_to;
-    }else{
-        var to='null';
-    }
-    window.location=loc+'reports/sales_ledger/'+years+'/'+ref+'/'+from+'/'+to;          
+    window.location=loc+'reports/sales_ledger/'+years+'/'+months+'/'+refno;          
 }
 
 function filter_sales() {
@@ -177,14 +172,14 @@ function filter_purchasesledger(){
 
 function filterCSLedger(){
     var count = $('#reference_no option:selected').length;
-    if (count<=2) {
+    if (count>=2) {
         var reference_no= $('#reference_no option:selected').toArray().map(item => item.value);
     }else{
         var reference_no= document.getElementById("reference_no").value;  
     }
 
     var countmonth = $('#month option:selected').length;
-    if (countmonth<=2) {
+    if (countmonth>=2) {
         var month= $('#month option:selected').toArray().map(item => item.value);
     }else{
         var month= document.getElementById("month").value; 
@@ -786,10 +781,16 @@ function filter_collection() {
 
 function getSalesLedgerRef(){
     var year = document.getElementById("year").value;
+    var countmonth = $('#month option:selected').length;
+    if (countmonth>=2) {
+        var month= $('#month option:selected').toArray().map(item => item.value);
+    }else{
+        var month= document.getElementById("month").value; 
+    }
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"reports/getSalesLedgerRef";
     $.ajax({
-        data: 'year='+year,
+        data: 'month='+month+'&year='+year,
         type: "POST",
         url: redirect,
         success: function(data){
@@ -797,4 +798,3 @@ function getSalesLedgerRef(){
         }
     });
 }
-
