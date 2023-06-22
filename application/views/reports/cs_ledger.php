@@ -13,7 +13,7 @@
                                     <h4>Customer Subsidiary Ledger </h4>
                                 </div>
                                 <div class="col-8">
-                                    <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
+                                    <!-- <button class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button> -->
                                     <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
                                         <span class="fas fa-file-export"></span> Export to Excel
                                     </button>
@@ -290,11 +290,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Year:</label>
-                        <select name="year_export" id='year_export' class="form-control select2">
-                            <option value="">-- Select Year --</option>
+                        <select name="year_export" id='year_export' class="form-control select2" onchange='getReferenceExport()'>
+                            <option value="">--Select Year--</option>
                             <?php 
-                                $year=date('Y'); 
-                                for($x=2020;$x<=$year;$x++){
+                                $years=date('Y');
+                                for($x=2020;$x<=$years;$x++){
                             ?>
                                 <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
                             <?php } ?>
@@ -302,8 +302,7 @@
                     </div>
                     <div class="form-group">
                         <label>Month:</label>
-                        <select name="month_export" id='month_export' class="form-control select2" onchange='getReference()'>
-                            <option value="" selected>--Select Month--</option>
+                        <select name="month_export" id='month_export' class="form-control select2" onchange='getReferenceExport()' multiple>
                             <option value="1">January</option>
                             <option value="2">February</option>
                             <option value="3">March</option>
