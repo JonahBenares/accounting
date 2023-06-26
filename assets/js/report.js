@@ -307,7 +307,7 @@ function getReference(){
 function getReferenceExport(){
     var year = document.getElementById("year_export").value;
     var countmonth = $('#month_export option:selected').length;
-    if (countmonth<=2) {
+    if (countmonth>=2) {
         var month= $('#month_export option:selected').toArray().map(item => item.value);
     }else{
         var month= document.getElementById("month_export").value; 
