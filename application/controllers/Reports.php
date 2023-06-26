@@ -401,11 +401,11 @@ class Reports extends CI_Controller {
         $sql='';
 
         if($month!='null' && !empty($month)){
-            $sql.= " MONTH(transaction_date) IN($month) AND "; 
+            $sql.= " MONTH(billing_to) IN($month) AND "; 
         } 
 
         if($year!='null' && !empty($year)){
-            $sql.= " YEAR(transaction_date) = '$year' AND ";
+            $sql.= " YEAR(billing_to) = '$year' AND ";
         }
         
         if($referenceno!='null' && !empty($referenceno)){
@@ -839,11 +839,11 @@ class Reports extends CI_Controller {
         $year=$this->input->post('year');
         $sql='';
         if($month!='null' && !empty($month)){
-            $sql.= " MONTH(transaction_date) IN ($month) AND ";
+            $sql.= " MONTH(billing_to) IN ($month) AND ";
         }
 
         if($year!='null' && !empty($year)){
-            $sql.= " YEAR(transaction_date) = '$year' AND ";
+            $sql.= " YEAR(billing_to) = '$year' AND ";
         }
         $query=substr($sql,0,-4);
         $sales_qu = " saved = '1' AND ".$query;
