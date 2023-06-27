@@ -1721,6 +1721,66 @@ class Reports extends CI_Controller {
         }
     }
 
+    public function getReferenceAdj(){
+        $participant=$this->input->post('participant');
+        $year=$this->input->post('year');
+        $date_from=$this->input->post('date_from');
+        $date_to=$this->input->post('date_to');
+        $sql='';
+        if(!empty($participant)){
+            $par=array();
+            foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
+                $par[]="'".$p->settlement_id."'";
+            }
+            $imp=implode(',',$par);
+            $sql.= " short_name IN($imp) AND ";
+        }
+
+        if(!empty($date_from) && !empty($date_to)){
+            $sql.= " DATE(due_date) BETWEEN '$date_from' AND '$date_to' AND ";
+        }
+
+        if(!empty($year)){
+            $sql.= " YEAR(due_date) = '$year' AND ";
+        }
+        $query=substr($sql,0,-4);
+        $cs_qu = " saved = '1' AND ".$query;
+        echo "<option value=''>--Select Reference Number--</option>";
+        foreach($this->super_model->select_inner_join_where('sales_adjustment_details','sales_adjustment_head',"$cs_qu",'sales_adjustment_id','reference_number') AS $slct){
+            echo "<option value=".$slct->reference_number.">".$slct->reference_number."</option>";
+        }
+    }
+
+    public function getReferencePurchAdj(){
+        $participant=$this->input->post('participant');
+        $year=$this->input->post('year');
+        $date_from=$this->input->post('date_from');
+        $date_to=$this->input->post('date_to');
+        $sql='';
+        if(!empty($participant)){
+            $par=array();
+            foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
+                $par[]="'".$p->settlement_id."'";
+            }
+            $imp=implode(',',$par);
+            $sql.= " short_name IN($imp) AND ";
+        }
+
+        if(!empty($date_from) && !empty($date_to)){
+            $sql.= " DATE(due_date) BETWEEN '$date_from' AND '$date_to' AND ";
+        }
+
+        if(!empty($year)){
+            $sql.= " YEAR(due_date) = '$year' AND ";
+        }
+        $query=substr($sql,0,-4);
+        $cs_qu = " saved = '1' AND adjustment='1' AND ".$query;
+        echo "<option value=''>--Select Reference Number--</option>";
+        foreach($this->super_model->select_inner_join_where('purchase_transaction_details','purchase_transaction_head',"$cs_qu",'purchase_id','reference_number') AS $slct){
+            echo "<option value=".$slct->reference_number.">".$slct->reference_number."</option>";
+        }
+    }
+
     public function sales_display($short_name,$reference_no,$type){
         //foreach($this->super_model->custom_query("SELECT $type FROM collection_details WHERE settlement_id = '$short_name' AND reference_no IN($reference_no)") AS $col){
         $amount='';
