@@ -64,7 +64,7 @@
                             ?>
                             <table class="table-bordersed" width="100%">
                                 <tr>
-                                    <td width=""><b>Participant_name:</b></td>
+                                    <td width=""><b>Participant Name:</b></td>
                                     <td width=""><?php echo $participants ?></td>
                                     <td width=""></td>
 
