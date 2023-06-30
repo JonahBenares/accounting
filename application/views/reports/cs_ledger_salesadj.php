@@ -23,23 +23,15 @@
                                     <table width="100%">
                                         <tr>
                                             <td width="20%">
-                                                <select class="form-control select2" name="participant" id="participant">
+                                                <select class="form-control select2" name="participant" id="participant" onchange='getReferenceAdj()'>
                                                     <option value="">-- Select Participant --</option>
                                                     <?php foreach($participant AS $p){ ?>
                                                         <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
-                                            <td width="20%">
-                                                <select class="form-control select2" name="reference_no" id="reference_no">
-                                                    <option value="">-- Select Reference Number --</option>
-                                                    <?php foreach($reference_no AS $r){ ?>
-                                                        <option value="<?php echo $r->reference_number;?>"><?php echo $r->reference_number;?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </td>
                                             <td width="15%">
-                                                <select id="year" class="form-control" name="year">
+                                                <select id="year" class="form-control select2" name="year" onchange='getReferenceAdj()'>
                                                     <option value="">--Select Year--</option>
                                                     <?php 
                                                         $years=date('Y');
@@ -50,10 +42,13 @@
                                                 </select>
                                             </td>
                                             <td width="20%">
-                                                    <input placeholder="Due Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
+                                                <input placeholder="Due Date From" id="date_from" onchange='getReferenceAdj()' class="form-control" type="text" onfocus="(this.type='date')" >
                                             </td>
                                             <td width="20%">
-                                                    <input placeholder="Due Date To" id="date_to" class="form-control" type="text" onfocus="(this.type='date')" id="date">
+                                                <input placeholder="Due Date To" id="date_to" onchange='getReferenceAdj()' class="form-control" type="text" onfocus="(this.type='date')" >
+                                            </td>
+                                            <td width="20%">
+                                                <select class="form-control select2" name="reference_no" id="reference_no"></select>
                                             </td>
                                             <td width="10%">
                                                     <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
@@ -69,7 +64,7 @@
                             ?>
                             <table class="table-bordersed" width="100%">
                                 <tr>
-                                    <td width=""><b>Participant_name:</b></td>
+                                    <td width=""><b>Participant Name:</b></td>
                                     <td width=""><?php echo $participants ?></td>
                                     <td width=""></td>
 

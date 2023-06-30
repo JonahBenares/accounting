@@ -320,6 +320,37 @@ function getReferenceExport(){
         url: redirect,
         success: function(data){
             $("#reference_no_export").html(data);
+
+function getReferenceAdj(){
+    var participant = document.getElementById("participant").value;
+    var year = document.getElementById("year").value;
+    var date_from = document.getElementById("date_from").value;
+    var date_to = document.getElementById("date_to").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"reports/getReferenceAdj";
+    $.ajax({
+        data: 'participant='+participant+'&year='+year+'&date_from='+date_from+'&date_to='+date_to,
+        type: "POST",
+        url: redirect,
+        success: function(data){
+           $("#reference_no").html(data);
+        }
+    });
+}
+
+function getReferencePurchAdj(){
+    var participant = document.getElementById("participant").value;
+    var year = document.getElementById("year").value;
+    var date_from = document.getElementById("date_from").value;
+    var date_to = document.getElementById("date_to").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"reports/getReferencePurchAdj";
+    $.ajax({
+        data: 'participant='+participant+'&year='+year+'&date_from='+date_from+'&date_to='+date_to,
+        type: "POST",
+        url: redirect,
+        success: function(data){
+           $("#reference_no").html(data);
         }
     });
 }
