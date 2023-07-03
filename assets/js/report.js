@@ -320,6 +320,9 @@ function getReferenceExport(){
         url: redirect,
         success: function(data){
             $("#reference_no_export").html(data);
+        }
+    });
+}
 
 function getReferenceAdj(){
     var participant = document.getElementById("participant").value;
