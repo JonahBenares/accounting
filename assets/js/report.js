@@ -692,7 +692,7 @@ function export_sales_adjustment_all() {
      var e_from = document.getElementById("export_from").value; 
      var e_to = document.getElementById("export_to").value;
      var participant = document.getElementById("participant1").value;
-     var year = document.getElementById("year").value;
+     var year = document.getElementById("year_export").value;
 
     if(e_from!=''){
         e_from=e_from;

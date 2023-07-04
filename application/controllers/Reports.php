@@ -3715,7 +3715,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        if($participant !='null' || $from != 'null' || $to != 'null'){
+        if($participant !='null' || $from != 'null' || $to != 'null' || $year != 'null'){
             $qu = " saved = '1' AND ".$query;
         }else{
              $qu = " saved = '1'";
@@ -3759,7 +3759,7 @@ class Reports extends CI_Controller {
             $total_ewt_amount=array();
             //$overall_total=array();
 
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id INNER JOIN participant p ON p.billing_id = sad.billing_id WHERE tin='$head->tin' AND participant_name != '' AND $qu ORDER BY billing_from ASC, reference_number ASC, p.billing_id ASC") AS $sah){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id INNER JOIN participant p ON p.billing_id = sad.billing_id WHERE tin='$head->tin' AND participant_name != '' AND $qu ORDER BY due_date ASC, billing_from ASC, reference_number ASC, p.billing_id ASC") AS $sah){
             //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
             // $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
             // $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
