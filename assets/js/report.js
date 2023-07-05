@@ -864,6 +864,18 @@ function export_cs_ledger() {
     window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno;
 } 
 
+function export_cs_purchaseadj() { 
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(due_date!=''){
+        var due_date=due_date;
+    }else{
+        var due_date='null';
+    }
+    window.location=loc+'reports/export_cs_ledger_purchaseadj/'+due_date;
+} 
+
 function getSalesLedgerRef(){
     var year = document.getElementById("year").value;
     var countmonth = $('#month option:selected').length;
