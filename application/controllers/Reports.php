@@ -2243,7 +2243,6 @@ class Reports extends CI_Controller {
             $vatonsales=$this->sales_adjustment_display_export($details->short_name,$details->reference_number,'vat_on_sales')."Total: ".number_format($this->sales_adjustment_sum($details->short_name,$details->reference_number,'vat_on_sales'),2);
             $ewt=$this->sales_adjustment_display_export($details->short_name,$details->reference_number,'ewt')."Total: ".number_format($this->sales_adjustment_sum($details->short_name,$details->reference_number,'ewt'),2);
 
-                echo $details->transaction_date." - ".$details->reference_number." - ".$details->short_name."<br>";
             //Sales Balance
             $bal_amount=$this->sales_adjustment_sum($details->short_name,$details->reference_number,'vatable_sales');
             $bal_amountarr[]=$this->sales_adjustment_sum($details->short_name,$details->reference_number,'vatable_sales');
