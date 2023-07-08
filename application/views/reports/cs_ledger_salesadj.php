@@ -13,7 +13,9 @@
                                     <h4>Customer Subsidiary Ledger (Sales Adjustment)</h4>
                                 </div>
                                 <div class="col-8">
-                                    <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
+                                    <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
+                                        <span class="fas fa-file-export"></span> Export to Excel
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -265,3 +267,53 @@
     </section>
 </div>
 
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <!-- <form method="POST" action="<?php echo base_url(); ?>masterfile/insert_employee" enctype="multipart/form-data"> -->
+        <form method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Export to Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Year:</label>
+                        <select name="year_export" id='year_export' class="form-control select2" onchange='getReferenceAdjExport()' required>
+                            <option value="">--Select Year--</option>
+                            <?php 
+                                $years=date('Y');
+                                for($x=2020;$x<=$years;$x++){
+                            ?>
+                                <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Participant Name:</label>
+                        <select class="form-control select2" name="participant_export" id="participant_export" onchange='getReferenceAdjExport()'>
+                            <option value="">-- Select Participant --</option>
+                            <?php foreach($participant AS $p){ ?>
+                                <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Reference No:</label>
+                        <select name="reference_no_export" id='reference_no_export' class="form-control select2"></select>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-lg-5 offset-lg-1"><input type="radio" id="sheet_0" name="sheet" value="0" required> Per Short Name</div>
+                        <div class="col-lg-5"><input type="radio" id="sheet_1" name="sheet" value="1" required> Per Reference Number</div>
+                    </div> -->
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
+                    <input type='button' class="btn btn-primary"  onclick="export_cs_salesadj()" value="Export">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>

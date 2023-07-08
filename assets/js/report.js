@@ -341,6 +341,21 @@ function getReferenceAdj(){
     });
 }
 
+function getReferenceAdjExport(){
+    var participant_export = document.getElementById("participant_export").value;
+    var year_export = document.getElementById("year_export").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"reports/getReferenceAdjExport";
+    $.ajax({
+        data: 'participant_export='+participant_export+'&year_export='+year_export,
+        type: "POST",
+        url: redirect,
+        success: function(data){
+           $("#reference_no_export").html(data);
+        }
+    });
+}
+
 function getReferencePurchAdj(){
     var participant = document.getElementById("participant").value;
     var year = document.getElementById("year").value;
@@ -862,7 +877,40 @@ function export_cs_ledger() {
         var months='null';
     }
     window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno;
-} 
+}
+
+function export_cs_salesadj(){
+    var participant= document.getElementById("participant_export").value;  
+    var reference_no= document.getElementById("reference_no_export").value;  
+    var year= document.getElementById("year_export").value;
+    var loc= document.getElementById("baseurl").value;
+    if(participant!=''){
+        var part=participant;
+    }else{
+        var part='null';
+    }
+
+    if(reference_no!=''){
+        var refno=reference_no;
+    }else{
+        var refno='null';
+    }
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(year!='' && reference_no!='') {   
+         window.location=loc+'reports/export_cs_ledger_saledadj_pn/'+part+'/'+refno+'/'+years;   
+    }else if (year!='' && participant!=''){  
+         window.location=loc+'reports/export_cs_ledger_saledadj_rn/'+part+'/'+refno+'/'+years;   
+    }else{
+        alert("Year must not be empty!");
+    }
+              
+}
 
 function export_cs_purchaseadj() { 
     var due_date= document.getElementById("due_date").value;
