@@ -257,6 +257,13 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all_adjustment">Purchases </a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Unpaid Invoices</span></a> 
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_sales">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_salesadj">Adjustment </a></li>
+                </ul>
+            </li>
             <br><br>
             <br>
         </ul>

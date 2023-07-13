@@ -256,7 +256,7 @@
                     </div>
                     <div class="form-group">
                         <label>Year</label>
-                        <select class="form-control select2" name="year" id="year">
+                        <select class="form-control select2" name="year_export" id="year_export">
                             <option value="">-- Select Year --</option>
                             <?php 
                                 $year=date('Y'); 

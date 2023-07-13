@@ -311,6 +311,26 @@ function getReference(){
     });
 }
 
+function getReferenceExport(){
+    var year = document.getElementById("year_export").value;
+    var countmonth = $('#month_export option:selected').length;
+    if (countmonth>=2) {
+        var month= $('#month_export option:selected').toArray().map(item => item.value);
+    }else{
+        var month= document.getElementById("month_export").value; 
+    }
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"reports/getReference";
+    $.ajax({
+        data: 'month='+month+'&year='+year,
+        type: "POST",
+        url: redirect,
+        success: function(data){
+            $("#reference_no_export").html(data);
+        }
+    });
+}
+
 function getReferenceAdj(){
     var participant = document.getElementById("participant").value;
     var year = document.getElementById("year").value;
@@ -324,6 +344,21 @@ function getReferenceAdj(){
         url: redirect,
         success: function(data){
            $("#reference_no").html(data);
+        }
+    });
+}
+
+function getReferenceAdjExport(){
+    var participant_export = document.getElementById("participant_export").value;
+    var year_export = document.getElementById("year_export").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"reports/getReferenceAdjExport";
+    $.ajax({
+        data: 'participant_export='+participant_export+'&year_export='+year_export,
+        type: "POST",
+        url: redirect,
+        success: function(data){
+           $("#reference_no_export").html(data);
         }
     });
 }
@@ -679,7 +714,7 @@ function export_sales_adjustment_all() {
      var e_from = document.getElementById("export_from").value; 
      var e_to = document.getElementById("export_to").value;
      var participant = document.getElementById("participant1").value;
-     var year = document.getElementById("year").value;
+     var year = document.getElementById("year_export").value;
 
     if(e_from!=''){
         e_from=e_from;
@@ -820,6 +855,82 @@ function filter_collection() {
     window.location=loc+'reports/collection_report/'+collection_date+'/'+reference_no+'/'+settlement_id;
 }
 
+
+function export_cs_ledger() { 
+    var count = $('#reference_no_export option:selected').length;
+    if (count<=2) {
+        var reference_no= $('#reference_no_export option:selected').toArray().map(item => item.value);
+    }else{
+        var reference_no= document.getElementById("reference_no_export").value;  
+    }
+    var month= document.getElementById("month_export").value;
+    var year= document.getElementById("year_export").value;
+    var loc= document.getElementById("baseurl").value;
+    if(reference_no!=''){
+        var refno=reference_no;
+    }else{
+        var refno='null';
+    }
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(month!=''){
+        var months=month;
+    }else{
+        var months='null';
+    }
+    window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno;
+}
+
+function export_cs_salesadj(){
+    var participant= document.getElementById("participant_export").value;  
+    var reference_no= document.getElementById("reference_no_export").value;  
+    var year= document.getElementById("year_export").value;
+    var loc= document.getElementById("baseurl").value;
+    if(participant!=''){
+        var part=participant;
+    }else{
+        var part='null';
+    }
+
+    if(reference_no!=''){
+        var refno=reference_no;
+    }else{
+        var refno='null';
+    }
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(year!='' && reference_no!='') {   
+         window.location=loc+'reports/export_cs_ledger_saledadj_pn/'+part+'/'+refno+'/'+years;   
+    }else if (year!='' && participant!=''){  
+         window.location=loc+'reports/export_cs_ledger_saledadj_rn/'+part+'/'+refno+'/'+years;   
+    }else{
+        alert("Year must not be empty!");
+    }
+              
+}
+
+function export_cs_purchaseadj() { 
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(due_date!=''){
+        var due_date=due_date;
+    }else{
+        var due_date='null';
+    }
+    window.location=loc+'reports/export_cs_ledger_purchaseadj/'+due_date;
+} 
+
 function getSalesLedgerRef(){
     var year = document.getElementById("year").value;
     var countmonth = $('#month option:selected').length;
@@ -838,4 +949,42 @@ function getSalesLedgerRef(){
             $("#ref_no").html(data);
         }
     });
+}
+
+function filterUnpaidSales(){
+    var year= document.getElementById("year").value;
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'reports/unpaid_invoices_sales/'+years+'/'+due;          
+}
+
+function filterUnpaidSalesAdj(){
+    var year= document.getElementById("year").value;
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'reports/unpaid_invoices_salesadj/'+years+'/'+due;          
 }

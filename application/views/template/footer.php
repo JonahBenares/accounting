@@ -117,6 +117,10 @@
                 placeholder: "Select Reference Number",
                 allowClear: true
             });
+            $("#reference_no_export").select2({
+                placeholder: "Select Reference Number",
+                allowClear: true
+            });
           });
         </script>
         <script>
