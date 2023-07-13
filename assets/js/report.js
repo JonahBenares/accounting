@@ -943,3 +943,41 @@ function getSalesLedgerRef(){
         }
     });
 }
+
+function filterUnpaidSales(){
+    var year= document.getElementById("year").value;
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'reports/unpaid_invoices_sales/'+years+'/'+due;          
+}
+
+function filterUnpaidSalesAdj(){
+    var year= document.getElementById("year").value;
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'reports/unpaid_invoices_salesadj/'+years+'/'+due;          
+}

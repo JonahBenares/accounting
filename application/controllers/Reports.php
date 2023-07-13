@@ -5028,4 +5028,128 @@ class Reports extends CI_Controller {
 
     }
 
+    public function unpaid_invoices_sales(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' ORDER BY due_date ASC");
+        $year=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        $data['year'] = $year;
+        $data['due'] = $due_date;
+        $today = date('Y-m-d');
+        $sql='';
+
+        if($year!='null' && !empty($year)){
+            $sql.= " YEAR(due_date) = '$year' AND ";
+        }
+        
+        if($due_date!='null' && !empty($due_date)){
+            $sql.= " due_date = '$due_date' AND ";
+        }
+
+        $query=substr($sql,0,-4);
+
+        if(!empty($year) && !empty($due_date)){
+             $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = "saved = '1' ";
+        }
+        $data['bill']=array();
+        $data['total_vatable_balance']=0;
+        $total_vatable_balance=array();
+        $data['total_zero_rated_balance']=0;
+        $total_zero_rated_balance=array();
+        $data['total_zero_ecozones_balance']=0;
+        $total_zero_ecozones_balance=array();
+        $data['total_vat_balance']=0;
+        $total_vat_balance=array();
+        $data['total_ewt_balance']=0;
+        $total_ewt_balance=array();
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $qu ORDER BY short_name ASC") AS $ui){
+                $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
+                $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
+            if($count_collection==0){
+                $data['unpaid_sales'][]=array(
+                    "date"=>$ui->transaction_date,
+                    "due_date"=>$ui->due_date,
+                    "billing_from"=>$ui->billing_from,
+                    "billing_to"=>$ui->billing_to,
+                    "reference_number"=>$ui->reference_number,
+                    "vatable_sales"=>$ui->vatable_sales,
+                    "zero_rated_sales"=>$ui->zero_rated_ecozones,
+                    "vat_on_sales"=>$ui->vat_on_sales,
+                    "ewt"=>$ui->ewt,
+                    "stl_id"=>$ui->short_name,
+                    "billing_id"=>$ui->billing_id,
+                    "invoice_no"=>$ui->serial_no,
+                    "total"=>$total,
+                    );
+                }
+            }
+        $this->load->view('reports/unpaid_invoices_sales',$data);
+        $this->load->view('template/footer');
+    }
+
+    public function unpaid_invoices_salesadj(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' ORDER BY due_date ASC");
+        $year=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        $data['year'] = $year;
+        $data['due'] = $due_date;
+        $today = date('Y-m-d');
+        $sql='';
+
+        if($year!='null' && !empty($year)){
+            $sql.= " YEAR(due_date) = '$year' AND ";
+        }
+        
+        if($due_date!='null' && !empty($due_date)){
+            $sql.= " due_date = '$due_date' AND ";
+        }
+
+        $query=substr($sql,0,-4);
+
+        if(!empty($year) && !empty($due_date)){
+             $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = "saved = '1' ";
+        }
+        $data['bill']=array();
+        $data['total_vatable_balance']=0;
+        $total_vatable_balance=array();
+        $data['total_zero_rated_balance']=0;
+        $total_zero_rated_balance=array();
+        $data['total_zero_ecozones_balance']=0;
+        $total_zero_ecozones_balance=array();
+        $data['total_vat_balance']=0;
+        $total_vat_balance=array();
+        $data['total_ewt_balance']=0;
+        $total_ewt_balance=array();
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE $qu ORDER BY short_name ASC") AS $ui){
+                $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
+                $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
+            if($count_collection==0){
+                $data['unpaid_sales'][]=array(
+                    "date"=>$ui->transaction_date,
+                    "due_date"=>$ui->due_date,
+                    "billing_from"=>$ui->billing_from,
+                    "billing_to"=>$ui->billing_to,
+                    "reference_number"=>$ui->reference_number,
+                    "vatable_sales"=>$ui->vatable_sales,
+                    "zero_rated_sales"=>$ui->zero_rated_ecozones,
+                    "vat_on_sales"=>$ui->vat_on_sales,
+                    "ewt"=>$ui->ewt,
+                    "stl_id"=>$ui->short_name,
+                    "billing_id"=>$ui->billing_id,
+                    "invoice_no"=>$ui->serial_no,
+                    "total"=>$total,
+                    );
+                }
+            }
+        $this->load->view('reports/unpaid_invoices_salesadj',$data);
+        $this->load->view('template/footer');
+    }
+
 }
