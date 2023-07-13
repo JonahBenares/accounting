@@ -507,7 +507,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-        public function export_sales_ledger(){
+    public function export_sales_ledger(){
         $year=$this->uri->segment(3);
         $month=$this->uri->segment(4);
         $referenceno=str_replace("%60","",$this->uri->segment(5));
@@ -662,7 +662,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('AO'.$num, number_format($ewtbalance,2));
 
                  $objPHPExcel->getActiveSheet()->mergeCells('A1:B2');
-                 $objPHPExcel->getActiveSheet()->mergeCells('A'.$num.":B".$num);
+                 $objPHPExcel->getActiveSheet()->mergeCells('A'.$num);
                  $objPHPExcel->getActiveSheet()->mergeCells('C1:F2');
                  $objPHPExcel->getActiveSheet()->mergeCells('C'.$num.":F".$num);
                  $objPHPExcel->getActiveSheet()->mergeCells('G1:I2');
@@ -5090,6 +5090,161 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function export_unpaid_invoices_sales(){
+        $year=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        $today = date('F j, Y');
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $exportfilename="Summary of Unpaid Invoices (Sales).xlsx";
+        $sql='';
+
+            if($year!='null' && !empty($year)){
+                $sql.= " YEAR(due_date) = '$year' AND ";
+            }
+            
+            if($due_date!='null' && !empty($due_date)){
+                $sql.= " due_date = '$due_date' AND ";
+            }
+
+            $query=substr($sql,0,-4);
+
+            if(!empty($year) && !empty($due_date)){
+                 $qu = " saved = '1' AND ".$query;
+            }else{
+                 $qu = "saved = '1' ";
+            }
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                    )
+                )
+            );
+            foreach(range('A','R') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G2', "AGING OF RECEIVABLES");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G3', "AS OF $today");
+
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', "Invoice Date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', "Invoice Number");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "Due Date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D5', "Transaction No");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "STL No");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I5', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K5', "Vatable Sales");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M5', "Zero Rated Ecozones Sales");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O5', "Vat");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "OVerdue");
+            $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
+
+            $num=6;
+            $total_vatable = array();
+            $total_zero_rated = array();
+            $total_vat = array();
+            $total_overdue = array();
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $qu ORDER BY short_name ASC") AS $ui){
+                $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
+
+                if($count_collection==0){
+                $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
+
+                $total_vatable[] = $ui->vatable_sales;
+                $total_zero_rated[] = $ui->zero_rated_ecozones;
+                $total_vat[] = $ui->vat_on_sales;
+                $total_overdue[] = $total;
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $ui->transaction_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $ui->transaction_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $ui->transaction_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $ui->reference_number);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $ui->short_name);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $ui->billing_id);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, number_format($ui->vatable_sales,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, number_format($ui->zero_rated_ecozones,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, number_format($ui->vat_on_sales,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, number_format($total,2));
+
+                     $objPHPExcel->getActiveSheet()->mergeCells('D5:F5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('D'.$num.":F".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('G5:H5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('I5:J5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('I'.$num.":J".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('K5:L5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('K'.$num.":L".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('M5:N5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('M'.$num.":N".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('O5:P5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":P".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('Q5:R5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('Q'.$num.":R".$num);
+                     $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('G2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('G3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('B'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('C'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('G'.$num.":H".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":J".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('K'.$num.":L".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('K'.$num.":L".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                     $objPHPExcel->getActiveSheet()->getStyle('M'.$num.":N".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('M'.$num.":N".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                     $objPHPExcel->getActiveSheet()->getStyle('O'.$num.":P".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('O'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                     $objPHPExcel->getActiveSheet()->getStyle('Q'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('Q'.$num.":R".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                     $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('F1F1F1');
+                     //$objPHPExcel->getActiveSheet()->getStyle('A'.$num.":L".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('E8E0FF');
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('G2')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('G3')->getFont()->setBold(true);
+                    $num++;
+                }
+            }
+
+                    $a = $num;
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFCA5');
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->applyFromArray($styleArray);
+                         $objPHPExcel->getActiveSheet()->mergeCells('A'.$a.":J".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('K'.$a.":L".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('M'.$a.":N".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('O'.$a.":P".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('Q'.$a.":R".$a);
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->getFont()->setBold(true);
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":J".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                         $objPHPExcel->getActiveSheet()->getStyle('K'.$a.":L".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                         $objPHPExcel->getActiveSheet()->getStyle('K'.$a.":L".$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                         $objPHPExcel->getActiveSheet()->getStyle('M'.$a.":N".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                         $objPHPExcel->getActiveSheet()->getStyle('M'.$a.":N".$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                         $objPHPExcel->getActiveSheet()->getStyle('O'.$a.":P".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                         $objPHPExcel->getActiveSheet()->getStyle('O'.$a.":P".$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                         $objPHPExcel->getActiveSheet()->getStyle('Q'.$a.":R".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                         $objPHPExcel->getActiveSheet()->getStyle('Q'.$a.":R".$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                        $objPHPExcel->getActiveSheet()->setCellValue('A'.$a, "TOTAL: ");
+                        $objPHPExcel->getActiveSheet()->setCellValue('K'.$a, array_sum($total_vatable));
+                        $objPHPExcel->getActiveSheet()->setCellValue('M'.$a, array_sum($total_zero_rated));
+                        $objPHPExcel->getActiveSheet()->setCellValue('O'.$a, array_sum($total_vat));
+                        $objPHPExcel->getActiveSheet()->setCellValue('Q'.$a, array_sum($total_overdue));
+                    $num--;
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        if (file_exists($exportfilename))
+        unlink($exportfilename);
+        $objWriter->save($exportfilename);
+        unset($objPHPExcel);
+        unset($objWriter);   
+        ob_end_clean();
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Summary of Unpaid Invoices (Sales).xlsx"');
+        readfile($exportfilename);
+    }
+
     public function unpaid_invoices_salesadj(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -5150,6 +5305,161 @@ class Reports extends CI_Controller {
             }
         $this->load->view('reports/unpaid_invoices_salesadj',$data);
         $this->load->view('template/footer');
+    }
+
+    public function export_unpaid_invoices_salesadj(){
+        $year=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        $today = date('F j, Y');
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $exportfilename="Summary of Unpaid Invoices (Sales Adjustment).xlsx";
+        $sql='';
+
+            if($year!='null' && !empty($year)){
+                $sql.= " YEAR(due_date) = '$year' AND ";
+            }
+            
+            if($due_date!='null' && !empty($due_date)){
+                $sql.= " due_date = '$due_date' AND ";
+            }
+
+            $query=substr($sql,0,-4);
+
+            if(!empty($year) && !empty($due_date)){
+                 $qu = " saved = '1' AND ".$query;
+            }else{
+                 $qu = "saved = '1' ";
+            }
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                    )
+                )
+            );
+            foreach(range('A','R') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G2', "AGING OF RECEIVABLES");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G3', "AS OF $today");
+
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', "Invoice Date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', "Invoice Number");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "Due Date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D5', "Transaction No");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "STL No");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I5', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K5', "Vatable Sales");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M5', "Zero Rated Ecozones Sales");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O5', "Vat");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "OVerdue");
+            $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
+
+            $num=6;
+            $total_vatable = array();
+            $total_zero_rated = array();
+            $total_vat = array();
+            $total_overdue = array();
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE $qu ORDER BY short_name ASC") AS $ui){
+                $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
+
+                if($count_collection==0){
+                $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
+
+                $total_vatable[] = $ui->vatable_sales;
+                $total_zero_rated[] = $ui->zero_rated_ecozones;
+                $total_vat[] = $ui->vat_on_sales;
+                $total_overdue[] = $total;
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $ui->transaction_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $ui->transaction_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $ui->transaction_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $ui->reference_number);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $ui->short_name);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $ui->billing_id);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, number_format($ui->vatable_sales,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, number_format($ui->zero_rated_ecozones,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, number_format($ui->vat_on_sales,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, number_format($total,2));
+
+                     $objPHPExcel->getActiveSheet()->mergeCells('D5:F5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('D'.$num.":F".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('G5:H5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('I5:J5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('I'.$num.":J".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('K5:L5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('K'.$num.":L".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('M5:N5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('M'.$num.":N".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('O5:P5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":P".$num);
+                     $objPHPExcel->getActiveSheet()->mergeCells('Q5:R5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('Q'.$num.":R".$num);
+                     $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('G2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('G3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('B'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('C'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('G'.$num.":H".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":J".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('K'.$num.":L".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('K'.$num.":L".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                     $objPHPExcel->getActiveSheet()->getStyle('M'.$num.":N".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('M'.$num.":N".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                     $objPHPExcel->getActiveSheet()->getStyle('O'.$num.":P".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('O'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                     $objPHPExcel->getActiveSheet()->getStyle('Q'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('Q'.$num.":R".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                     $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('F1F1F1');
+                     //$objPHPExcel->getActiveSheet()->getStyle('A'.$num.":L".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('E8E0FF');
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('G2')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('G3')->getFont()->setBold(true);
+                    $num++;
+                }
+            }
+
+                    $a = $num;
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFCA5');
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->applyFromArray($styleArray);
+                         $objPHPExcel->getActiveSheet()->mergeCells('A'.$a.":J".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('K'.$a.":L".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('M'.$a.":N".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('O'.$a.":P".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('Q'.$a.":R".$a);
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->getFont()->setBold(true);
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":J".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                         $objPHPExcel->getActiveSheet()->getStyle('K'.$a.":L".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                         $objPHPExcel->getActiveSheet()->getStyle('K'.$a.":L".$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                         $objPHPExcel->getActiveSheet()->getStyle('M'.$a.":N".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                         $objPHPExcel->getActiveSheet()->getStyle('M'.$a.":N".$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                         $objPHPExcel->getActiveSheet()->getStyle('O'.$a.":P".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                         $objPHPExcel->getActiveSheet()->getStyle('O'.$a.":P".$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                         $objPHPExcel->getActiveSheet()->getStyle('Q'.$a.":R".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                         $objPHPExcel->getActiveSheet()->getStyle('Q'.$a.":R".$a)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                        $objPHPExcel->getActiveSheet()->setCellValue('A'.$a, "TOTAL: ");
+                        $objPHPExcel->getActiveSheet()->setCellValue('K'.$a, array_sum($total_vatable));
+                        $objPHPExcel->getActiveSheet()->setCellValue('M'.$a, array_sum($total_zero_rated));
+                        $objPHPExcel->getActiveSheet()->setCellValue('O'.$a, array_sum($total_vat));
+                        $objPHPExcel->getActiveSheet()->setCellValue('Q'.$a, array_sum($total_overdue));
+                    $num--;
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        if (file_exists($exportfilename))
+        unlink($exportfilename);
+        $objWriter->save($exportfilename);
+        unset($objPHPExcel);
+        unset($objWriter);   
+        ob_end_clean();
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Summary of Unpaid Invoices (Sales Adjustment).xlsx"');
+        readfile($exportfilename);
     }
 
 }
