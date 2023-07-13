@@ -1224,7 +1224,10 @@ class Reports extends CI_Controller {
         $year=$this->uri->segment(3);
         $month=$this->uri->segment(4);
         $referenceno=str_replace("%60","",$this->uri->segment(5));
+        $participant=$this->uri->segment(6);
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
         //$part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
+        $data['part'] = $this->super_model->select_column_where("participant","participant_name","tin",$participant);
         $data['refno'] = $referenceno;
         $data['year'] = $year;
         $data['month'] = $month;
@@ -1242,6 +1245,15 @@ class Reports extends CI_Controller {
         
         if($referenceno!='null' && !empty($referenceno)){
             $sql.= " reference_number IN($referenceno) AND ";
+        }
+
+        if($participant!='null' && !empty($participant)){
+            $par=array();
+            foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
+                $par[]="'".$p->settlement_id."'";
+            }
+            $imp=implode(',',$par);
+            $sql.= " short_name IN($imp) AND ";
         }
         $query=substr($sql,0,-4);
         $cs_qu = " saved = '1' AND ".$query;

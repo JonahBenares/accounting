@@ -185,6 +185,7 @@ function filterCSLedger(){
         var month= document.getElementById("month").value; 
     }
     var year= document.getElementById("year").value;
+    var participant= document.getElementById("participant").value;
     var loc= document.getElementById("baseurl").value;
     if(reference_no!=''){
         var refno=reference_no;
@@ -203,7 +204,13 @@ function filterCSLedger(){
     }else{
         var months='null';
     }
-    window.location=loc+'reports/cs_ledger/'+years+'/'+months+'/'+refno;          
+
+    if(participant!=''){
+        var participants=participant;
+    }else{
+        var participants='null';
+    }
+    window.location=loc+'reports/cs_ledger/'+years+'/'+months+'/'+refno+'/'+participants;          
 }
 
 function filterCSLedgersalesadj(){
