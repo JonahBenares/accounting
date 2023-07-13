@@ -57,6 +57,14 @@
                                                 <select name="reference_no" id='reference_no' class="form-control select2" multiple>
                                                 </select>
                                             </td>
+                                            <td width="20%">
+                                                <select name="participant" id='participant' class="form-control select2">
+                                                    <option value="">--Select Participant--</option>
+                                                    <?php foreach($participant AS $p){ ?>
+                                                    <option value="<?php echo $p->tin; ?>"><?php echo $p->participant_name; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
                                             <!-- <td width="20%">
                                                     <input placeholder="Date From" id="date_from" class="form-control" type="text" onfocus="(this.type='date')" id="date">
                                             </td>
@@ -96,6 +104,10 @@
                                     
                                     <td width=""><b>Month:</b></td>
                                     <td width=""><?php echo $mnth_imp ?></td>
+                                    <td width=""></td>
+
+                                    <td width=""><b>Participant:</b></td>
+                                    <td width=""><?php echo $part ?></td>
                                     <td width=""></td>
                                 </tr>
                             </table>
