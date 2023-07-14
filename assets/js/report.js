@@ -587,7 +587,7 @@ function export_salesall() {
         part='null';
     }
 
-      var loc= document.getElementById("baseurl").value;
+      var loc= document.getElementById("baseurl1").value;
       window.location=loc+'reports/export_sales_all/'+part+'/'+e_from+'/'+e_to;
 
 }
@@ -656,7 +656,7 @@ function export_purchasesall() {
         part='null';
     }
 
-      var loc= document.getElementById("baseurl").value;
+      var loc= document.getElementById("baseurl1").value;
       window.location=loc+'reports/export_purchases_all/'+part+'/'+e_from+'/'+e_to;
 
 }
