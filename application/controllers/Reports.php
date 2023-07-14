@@ -1444,6 +1444,7 @@ class Reports extends CI_Controller {
         $year=$this->uri->segment(3);
         $month=$this->uri->segment(4);
         $referenceno=str_replace("%60","",$this->uri->segment(5));
+        $participant=$this->uri->segment(6);
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="Customer Sudsidiary Ledger.xlsx";
@@ -1461,8 +1462,17 @@ class Reports extends CI_Controller {
             $sql.= " reference_number IN($referenceno) AND ";
         }
 
+        if($participant!='null' && !empty($participant)){
+            $par=array();
+            foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
+                $par[]="'".$p->settlement_id."'";
+            }
+            $imp=implode(',',$par);
+            $sql.= " short_name IN($imp) AND ";
+        }
+
         $query=substr($sql,0,-4);
-        if($month !='null' && $year != 'null' && $referenceno != 'null'){
+        if($month !='null' && $year != 'null' && $referenceno != 'null' && $participant != 'null'){
             $cs_qu = " saved = '1' AND ".$query;
         }else{
              $cs_qu = " saved = '1'";
@@ -4182,16 +4192,16 @@ class Reports extends CI_Controller {
                 $num--;
             $sheetno++;
         }
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        if (file_exists($exportfilename))
-        unlink($exportfilename);
-        $objWriter->save($exportfilename);
-        unset($objPHPExcel);
-        unset($objWriter);   
-        ob_end_clean();
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Sales Wesm All Transcations.xlsx"');
-        readfile($exportfilename);
+        // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        // if (file_exists($exportfilename))
+        // unlink($exportfilename);
+        // $objWriter->save($exportfilename);
+        // unset($objPHPExcel);
+        // unset($objWriter);   
+        // ob_end_clean();
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment; filename="Sales Wesm All Transcations.xlsx"');
+        // readfile($exportfilename);
     }
 
     public function purchases_all_adjustment(){

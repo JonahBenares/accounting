@@ -341,6 +341,14 @@
                         <label>Reference No:</label>
                         <select name="reference_no_export" id='reference_no_export' class="form-control select2" multiple></select>
                     </div>
+                    <div>
+                        <select name="participant_export" id='participant_export' class="form-control select2">
+                            <option value="">--Select Participant--</option>
+                            <?php foreach($participant AS $p){ ?>
+                            <option value="<?php echo $p->tin; ?>"><?php echo $p->participant_name; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">

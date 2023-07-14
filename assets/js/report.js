@@ -865,6 +865,7 @@ function export_cs_ledger() {
     }
     var month= document.getElementById("month_export").value;
     var year= document.getElementById("year_export").value;
+    var participant= document.getElementById("participant_export").value;
     var loc= document.getElementById("baseurl").value;
     if(reference_no!=''){
         var refno=reference_no;
@@ -883,7 +884,13 @@ function export_cs_ledger() {
     }else{
         var months='null';
     }
-    window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno;
+
+    if(participant!=''){
+        var participants=participant;
+    }else{
+        var participants='null';
+    }
+    window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno+'/'+participants;
 }
 
 function export_cs_salesadj(){
