@@ -1472,11 +1472,12 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        if($month !='null' && $year != 'null' && $referenceno != 'null' && $participant != 'null'){
+        if($month !='null' || $year != 'null' || $referenceno != 'null' || $participant != 'null'){
             $cs_qu = " saved = '1' AND ".$query;
         }else{
              $cs_qu = " saved = '1'";
         }
+
         $sheetno=0;
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -1523,7 +1524,6 @@ class Reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->getStyle("A1:AC1")->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyle("A2:AC2")->applyFromArray($styleArray);
 
-
             $num=3;
             $bal_amountarr = array();
             $bal_camountarr = array();
@@ -1540,7 +1540,7 @@ class Reports extends CI_Controller {
             $bal_ewtarr = array();
             $bal_cewt_amountarr = array();
             $balance_ewtarr = array();
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE short_name = '$head->short_name' AND reference_number = '$head->reference_number' GROUP BY transaction_date,reference_number ORDER BY transaction_date ASC") AS $details){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $cs_qu AND short_name = '$head->short_name' GROUP BY transaction_date,reference_number ORDER BY transaction_date ASC") AS $details){
             $or_no=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$details->reference_number' AND settlement_id='$details->short_name'");
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$details->billing_id);
             if(!empty($details->company_name) && date('Y',strtotime($details->create_date))==date('Y')){
@@ -1620,7 +1620,7 @@ class Reports extends CI_Controller {
             if($details->short_name==$short_name){
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $details->transaction_date);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $details->due_date);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $head->reference_number);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $details->reference_number);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $comp_name);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, $billing_date);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('O'.$num, $amount);

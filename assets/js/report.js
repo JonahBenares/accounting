@@ -858,12 +858,17 @@ function filter_collection() {
 
 function export_cs_ledger() { 
     var count = $('#reference_no_export option:selected').length;
-    if (count<=2) {
+    if (count>=2) {
         var reference_no= $('#reference_no_export option:selected').toArray().map(item => item.value);
     }else{
         var reference_no= document.getElementById("reference_no_export").value;  
     }
-    var month= document.getElementById("month_export").value;
+    var countmonth = $('#month_export option:selected').length;
+    if (countmonth>=2) {
+        var month= $('#month_export option:selected').toArray().map(item => item.value);
+    }else{
+        var month= document.getElementById("month_export").value; 
+    }
     var year= document.getElementById("year_export").value;
     var participant= document.getElementById("participant_export").value;
     var loc= document.getElementById("baseurl").value;
