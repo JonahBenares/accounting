@@ -3956,19 +3956,8 @@ class Reports extends CI_Controller {
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $sql="";
 
-        $from_date  = strtotime($from);
-        $from_day   = date('d',$from_date);
-        $from_month = date('m',$from_date);
-        $from_year  = date('Y',$from_date);
-
-        $to_date  = strtotime($to);
-        $to_day   = date('d',$to_date);
-        $to_month = date('m',$to_date);
-        $to_year  = date('Y',$to_date);
-
         if($from!='null' && $to != 'null'){
-            // $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
-            $sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
+            $sql.= "(billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to') AND";
         } if($participant!='null'){
              $sql.= "tin = '$participant' AND "; 
         } if($original!='null' && isset($original)){
@@ -4028,19 +4017,8 @@ class Reports extends CI_Controller {
         $exportfilename="Sales Wesm All Transcations.xlsx";
         $sql='';
 
-        $from_date  = strtotime($from);
-        $from_day   = date('d',$from_date);
-        $from_month = date('m',$from_date);
-        $from_year  = date('Y',$from_date);
-
-        $to_date  = strtotime($to);
-        $to_day   = date('d',$to_date);
-        $to_month = date('m',$to_date);
-        $to_year  = date('Y',$to_date);
-
         if($from!='null' && $to != 'null'){
-            // $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
-            $sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
+            $sql.= "(billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to') AND";
         } if($participant!='null'){
              $sql.= " tin = '$participant' AND "; 
         }
@@ -4237,19 +4215,8 @@ class Reports extends CI_Controller {
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND saved = '1'");
         $sql="";
 
-        $from_date  = strtotime($from);
-        $from_day   = date('d',$from_date);
-        $from_month = date('m',$from_date);
-        $from_year  = date('Y',$from_date);
-
-        $to_date  = strtotime($to);
-        $to_day   = date('d',$to_date);
-        $to_month = date('m',$to_date);
-        $to_year  = date('Y',$to_date);
-
         if($from!='null' && $to != 'null'){
-            // $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
-            $sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
+            $sql.= "(billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to') AND";
         }if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
         } if($participant!='null'){
@@ -4306,19 +4273,8 @@ class Reports extends CI_Controller {
         $exportfilename="Purchases Wesm Adjustment All Transcations.xlsx";
         $sql='';
 
-        $from_date  = strtotime($from);
-        $from_day   = date('d',$from_date);
-        $from_month = date('m',$from_date);
-        $from_year  = date('Y',$from_date);
-
-        $to_date  = strtotime($to);
-        $to_day   = date('d',$to_date);
-        $to_month = date('m',$to_date);
-        $to_year  = date('Y',$to_date);
-
         if($from!='null' && $to != 'null'){
-            // $sql.= "MONTH(billing_from) >= '$from_month' AND MONTH(billing_to) <= '$to_month' AND DAY(billing_from) >= '$from_day' AND DAY(billing_to) <= '$to_day' AND YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
-            $sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
+           $sql.= "(billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to') AND";
         } if($participant!='null'){
              $sql.= "tin = '$participant' AND "; 
         } if($due!='null'){
