@@ -5057,7 +5057,8 @@ class Reports extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $qu ORDER BY short_name ASC") AS $ui){
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
                 $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
-            if($count_collection==0){
+
+            if($count_collection == 0 && $total != 0){
                 $data['unpaid_sales'][]=array(
                     "date"=>$ui->transaction_date,
                     "due_date"=>$ui->due_date,
@@ -5138,9 +5139,8 @@ class Reports extends CI_Controller {
             $total_overdue = array();
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $qu ORDER BY short_name ASC") AS $ui){
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
-
-                if($count_collection==0){
                 $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
+                if($count_collection==0 && $total != 0){
 
                 $total_vatable[] = $ui->vatable_sales;
                 $total_zero_rated[] = $ui->zero_rated_ecozones;
@@ -5274,7 +5274,7 @@ class Reports extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE $qu ORDER BY short_name ASC") AS $ui){
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
                 $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
-            if($count_collection==0){
+            if($count_collection == 0 && $total != 0){
                 $data['unpaid_sales'][]=array(
                     "date"=>$ui->transaction_date,
                     "due_date"=>$ui->due_date,
@@ -5355,10 +5355,9 @@ class Reports extends CI_Controller {
             $total_overdue = array();
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE $qu ORDER BY short_name ASC") AS $ui){
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
-
-                if($count_collection==0){
                 $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
-
+                if($count_collection == 0 && $total != 0){
+                    
                 $total_vatable[] = $ui->vatable_sales;
                 $total_zero_rated[] = $ui->zero_rated_ecozones;
                 $total_vat[] = $ui->vat_on_sales;
