@@ -70,8 +70,8 @@
                             <?php 
                              if(!empty($unpaid_sales)){
                                 ?>
-                            <div style="overflow-x:scroll; min-height: 500px; height:550px">
-                                <table class="table table-bordered table-hover mb-0" style="width:100%;font-size: 13px;">
+                            <div>
+                                <table class="table table-bordered table-hover mb-0" id="table-1" style="width:100%;font-size: 13px;">
                                     <thead class="header">
                                         <tr>
                                             <td style="vertical-align:middle!important;" class="1"align="center">Invoice Date</td>
