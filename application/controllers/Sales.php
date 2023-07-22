@@ -586,7 +586,7 @@ public function print_BS_new(){
                             //}
                             $h++;
                         }
-
+                    }
                     if($count_sub_hist>=15){
                         // $total_amount = $vatable_sales + $zero_rated_sales;
                         // $overall_total= ($total_amount+$vat) - $ewt;
@@ -611,7 +611,7 @@ public function print_BS_new(){
                             "ewt"=>$s->ewt,
                             "overall_total"=>$s->net_amount,
                         );
-                    }
+                    
                         $z=0;
                         foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
                             //$total_amount = $s->vatable_sales + $s->zero_rated_sales;
