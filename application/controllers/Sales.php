@@ -592,25 +592,24 @@ public function print_BS_new(){
                         // $total_amount = $vatable_sales + $zero_rated_sales;
                         // $overall_total= ($total_amount+$vat) - $ewt;
 
-                        $data['sub_participant'][$x]=$s->billing_id;
-                        $data['vatable_sales'][$x]=$s->vatable_sales;
-                        $data['vat_on_sales'][$x]=$s->vat;
-                        $data['zero_rated_sales'][$x]=$s->zero_rated_sales;
+                        $data['sub_participant'][$x]=$billing_id;
+                        $data['vatable_sales'][$x]=$vatable_sales;
+                        $data['vat_on_sales'][$x]=$vat;
+                        $data['zero_rated_sales'][$x]=$zero_rated_sales;
                         //$data['total_amount'][$x]=$total_amount;
-                        $data['ewt'][$x]=$s->ewt;
-                        $data['overall_total'][$x]=$s->net_amount;
+                        $data['ewt'][$x]=$ewt;
+                        $data['overall_total'][$x]=$overall_total;
                         $data['participant_id'][$x]=$participant_id;
-
                         $data['sub_second'][]=array(
                             "participant_id"=>$participant_id,
                             "bs_head_id"=>$p->bs_head_id,
-                            "sub_participant"=>$s->billing_id,
-                            "vatable_sales"=>$s->vatable_sales,
-                            "zero_rated_sales"=>$s->zero_rated_sales,
+                            "sub_participant"=>$billing_id,
+                            "vatable_sales"=>$vatable_sales,
+                            "zero_rated_sales"=>$zero_rated_sales,
                             "total_amount"=>$total_amount,
-                            "vat_on_sales"=>$s->vat,
-                            "ewt"=>$s->ewt,
-                            "overall_total"=>$s->net_amount,
+                            "vat_on_sales"=>$vat,
+                            "ewt"=>$ewt,
+                            "overall_total"=>$overall_total,
                         );
                         $z=0;
                         foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
