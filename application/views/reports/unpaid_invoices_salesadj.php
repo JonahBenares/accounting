@@ -84,7 +84,8 @@
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Vatable Sales</td> 
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Zero Rated Ecozones Sales</td>    
                                             <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">VAT</td>
-                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Overdue</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Total</td>
+                                            <td style="vertical-align:middle!important;" class="td-30 td-head" align="center">Overdue Days</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -99,6 +100,8 @@
                                             $sum_zero_rated_ecozone[]=$us['zero_rated_sales']; 
                                             $sum_vat_on_sales[]=$us['vat_on_sales'];
                                             $sum_total[]=$us['total'];
+
+                                            $today = date('Y-m-d');
                                         ?>
                                         <tr>
                                             <td align="center" class=""><?php echo $us['date']; ?></td>
@@ -111,6 +114,11 @@
                                             <td align="right"><?php echo number_format($us['zero_rated_sales'],2); ?></td>
                                             <td align="right"><?php echo number_format($us['vat_on_sales'],2); ?></td>
                                             <td align="right"><?php echo number_format($us['total'],2); ?></td>
+                                            <?php if($us['days_lapsed'] != 0){ ?>
+                                            <td align="right" style="color:<?php echo ($us['due_date'] > $today) ? 'green' : 'red'; ?>"><?php echo $us['days_lapsed']." day/s"; ?></td>
+                                            <?php }else{ ?>
+                                            <td align="right"></td>
+                                            <?php } ?>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
@@ -122,6 +130,7 @@
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_zero_rated_ecozone),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_vat_on_sales),2); ?></td>
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($sum_total),2); ?></td>
+                                            <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"></td>
                                         </tr>
                                     </tfoot>
                                      <?php }else{ ?>
