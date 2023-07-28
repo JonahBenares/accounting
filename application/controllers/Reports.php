@@ -28,6 +28,16 @@ class Reports extends CI_Controller {
         }
     } 
 
+    public function dateDifference($date_1 , $date_2)
+    {
+        $datetime2 = date_create($date_2);
+        $datetime1 = date_create($date_1 );
+        $interval = date_diff($datetime2, $datetime1);
+       
+        return $interval->format('%R%a');
+       
+    }
+
     public function sales_summary()
     {
         $ref_no=$this->uri->segment(3);
@@ -5057,7 +5067,7 @@ class Reports extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $qu ORDER BY short_name ASC") AS $ui){
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
                 $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
-
+                $days_lapsed=$this->dateDifference($ui->due_date, $today);
             if($count_collection == 0 && $total != 0){
                 $data['unpaid_sales'][]=array(
                     "date"=>$ui->transaction_date,
@@ -5073,6 +5083,7 @@ class Reports extends CI_Controller {
                     "billing_id"=>$ui->billing_id,
                     "invoice_no"=>$ui->serial_no,
                     "total"=>$total,
+                    "days_lapsed"=>$days_lapsed,
                     );
                 }
             }
@@ -5113,7 +5124,7 @@ class Reports extends CI_Controller {
                     )
                 )
             );
-            foreach(range('A','R') as $columnID){
+            foreach(range('A','T') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
 
@@ -5129,8 +5140,9 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K5', "Vatable Sales");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M5', "Zero Rated Ecozones Sales");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O5', "Vat");
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "OVerdue");
-            $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Total");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S5', "Overdue Days");
+            $objPHPExcel->getActiveSheet()->getStyle("A5:T5")->applyFromArray($styleArray);
 
             $num=6;
             $total_vatable = array();
@@ -5140,6 +5152,13 @@ class Reports extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $qu ORDER BY short_name ASC") AS $ui){
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
                 $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
+                $days_lapsed=$this->dateDifference($ui->due_date, $today);
+
+                if($days_lapsed != 0){
+                    $overdue = $days_lapsed." day/s";
+                }else{
+                    $overdue = '';
+                }
                 if($count_collection==0 && $total != 0){
 
                 $total_vatable[] = $ui->vatable_sales;
@@ -5157,6 +5176,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, number_format($ui->zero_rated_ecozones,2));
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, number_format($ui->vat_on_sales,2));
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, number_format($total,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S'.$num, $overdue);
 
                      $objPHPExcel->getActiveSheet()->mergeCells('D5:F5');
                      $objPHPExcel->getActiveSheet()->mergeCells('D'.$num.":F".$num);
@@ -5172,7 +5192,9 @@ class Reports extends CI_Controller {
                      $objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":P".$num);
                      $objPHPExcel->getActiveSheet()->mergeCells('Q5:R5');
                      $objPHPExcel->getActiveSheet()->mergeCells('Q'.$num.":R".$num);
-                     $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->mergeCells('S5:T5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('S'.$num.":T".$num);
+                     $objPHPExcel->getActiveSheet()->getStyle('A5:T5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                      $objPHPExcel->getActiveSheet()->getStyle('G2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                      $objPHPExcel->getActiveSheet()->getStyle('G3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                      $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -5188,10 +5210,11 @@ class Reports extends CI_Controller {
                      $objPHPExcel->getActiveSheet()->getStyle('O'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                      $objPHPExcel->getActiveSheet()->getStyle('Q'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                      $objPHPExcel->getActiveSheet()->getStyle('Q'.$num.":R".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-                     $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('F1F1F1');
+                     $objPHPExcel->getActiveSheet()->getStyle('S'.$num.":T".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('A5:T5')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('F1F1F1');
                      //$objPHPExcel->getActiveSheet()->getStyle('A'.$num.":L".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('E8E0FF');
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
-                    $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":T".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A5:T5')->getFont()->setBold(true);
                     $objPHPExcel->getActiveSheet()->getStyle('G2')->getFont()->setBold(true);
                     $objPHPExcel->getActiveSheet()->getStyle('G3')->getFont()->setBold(true);
                     $num++;
@@ -5199,13 +5222,14 @@ class Reports extends CI_Controller {
             }
 
                     $a = $num;
-                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFCA5');
-                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->applyFromArray($styleArray);
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":T".$a)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFCA5');
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":T".$a)->applyFromArray($styleArray);
                          $objPHPExcel->getActiveSheet()->mergeCells('A'.$a.":J".$a);
                          $objPHPExcel->getActiveSheet()->mergeCells('K'.$a.":L".$a);
                          $objPHPExcel->getActiveSheet()->mergeCells('M'.$a.":N".$a);
                          $objPHPExcel->getActiveSheet()->mergeCells('O'.$a.":P".$a);
                          $objPHPExcel->getActiveSheet()->mergeCells('Q'.$a.":R".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('S'.$a.":T".$a);
                          $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->getFont()->setBold(true);
                          $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":J".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                          $objPHPExcel->getActiveSheet()->getStyle('K'.$a.":L".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -5274,6 +5298,7 @@ class Reports extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE $qu ORDER BY short_name ASC") AS $ui){
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
                 $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
+                $days_lapsed=$this->dateDifference($ui->due_date, $today);
             if($count_collection == 0 && $total != 0){
                 $data['unpaid_sales'][]=array(
                     "date"=>$ui->transaction_date,
@@ -5289,6 +5314,7 @@ class Reports extends CI_Controller {
                     "billing_id"=>$ui->billing_id,
                     "invoice_no"=>$ui->serial_no,
                     "total"=>$total,
+                    "days_lapsed"=>$days_lapsed,
                     );
                 }
             }
@@ -5329,7 +5355,7 @@ class Reports extends CI_Controller {
                     )
                 )
             );
-            foreach(range('A','R') as $columnID){
+            foreach(range('A','T') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
 
@@ -5345,8 +5371,9 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K5', "Vatable Sales");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M5', "Zero Rated Ecozones Sales");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O5', "Vat");
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "OVerdue");
-            $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q5', "Total");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S5', "Overdue Days");
+            $objPHPExcel->getActiveSheet()->getStyle("A5:T5")->applyFromArray($styleArray);
 
             $num=6;
             $total_vatable = array();
@@ -5356,6 +5383,14 @@ class Reports extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE $qu ORDER BY short_name ASC") AS $ui){
                 $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->reference_number' AND settlement_id ='$ui->short_name'");
                 $total = $ui->vatable_sales+$ui->zero_rated_ecozones+$ui->vat_on_sales;
+                $days_lapsed=$this->dateDifference($ui->due_date, $today);
+
+                if($days_lapsed != 0){
+                    $overdue = $days_lapsed." day/s";
+                }else{
+                    $overdue = '';
+                }
+
                 if($count_collection == 0 && $total != 0){
                     
                 $total_vatable[] = $ui->vatable_sales;
@@ -5373,6 +5408,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, number_format($ui->zero_rated_ecozones,2));
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, number_format($ui->vat_on_sales,2));
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, number_format($total,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S'.$num, $overdue);
 
                      $objPHPExcel->getActiveSheet()->mergeCells('D5:F5');
                      $objPHPExcel->getActiveSheet()->mergeCells('D'.$num.":F".$num);
@@ -5388,7 +5424,9 @@ class Reports extends CI_Controller {
                      $objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":P".$num);
                      $objPHPExcel->getActiveSheet()->mergeCells('Q5:R5');
                      $objPHPExcel->getActiveSheet()->mergeCells('Q'.$num.":R".$num);
-                     $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->mergeCells('S5:T5');
+                     $objPHPExcel->getActiveSheet()->mergeCells('S'.$num.":T".$num);
+                     $objPHPExcel->getActiveSheet()->getStyle('A5:T5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                      $objPHPExcel->getActiveSheet()->getStyle('G2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                      $objPHPExcel->getActiveSheet()->getStyle('G3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                      $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -5404,10 +5442,11 @@ class Reports extends CI_Controller {
                      $objPHPExcel->getActiveSheet()->getStyle('O'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                      $objPHPExcel->getActiveSheet()->getStyle('Q'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                      $objPHPExcel->getActiveSheet()->getStyle('Q'.$num.":R".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-                     $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('F1F1F1');
+                     $objPHPExcel->getActiveSheet()->getStyle('S'.$num.":T".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                     $objPHPExcel->getActiveSheet()->getStyle('A5:T5')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('F1F1F1');
                      //$objPHPExcel->getActiveSheet()->getStyle('A'.$num.":L".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('E8E0FF');
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
-                    $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":T".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A5:T5')->getFont()->setBold(true);
                     $objPHPExcel->getActiveSheet()->getStyle('G2')->getFont()->setBold(true);
                     $objPHPExcel->getActiveSheet()->getStyle('G3')->getFont()->setBold(true);
                     $num++;
@@ -5415,13 +5454,14 @@ class Reports extends CI_Controller {
             }
 
                     $a = $num;
-                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFCA5');
-                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->applyFromArray($styleArray);
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":T".$a)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFCA5');
+                         $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":T".$a)->applyFromArray($styleArray);
                          $objPHPExcel->getActiveSheet()->mergeCells('A'.$a.":J".$a);
                          $objPHPExcel->getActiveSheet()->mergeCells('K'.$a.":L".$a);
                          $objPHPExcel->getActiveSheet()->mergeCells('M'.$a.":N".$a);
                          $objPHPExcel->getActiveSheet()->mergeCells('O'.$a.":P".$a);
                          $objPHPExcel->getActiveSheet()->mergeCells('Q'.$a.":R".$a);
+                         $objPHPExcel->getActiveSheet()->mergeCells('S'.$a.":T".$a);
                          $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":R".$a)->getFont()->setBold(true);
                          $objPHPExcel->getActiveSheet()->getStyle('A'.$a.":J".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
                          $objPHPExcel->getActiveSheet()->getStyle('K'.$a.":L".$a)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
