@@ -205,17 +205,16 @@
                         <?php } ?>
                         <?php
                             if(!empty($sub_part)){ 
-                                $h=0;
+                                $h=1;
                                 $x=1;
                                 foreach($sub_part AS $sps){ 
                                     if($sps['participant_id']==$as['participant_id']){
-                                        if($x >=1 || $x<=14){ 
-
+                                        if($h <=15){ 
                                         if($bs_head_id[$y] != ''){
                                             $vatable=$total_vatable_sales[$y];
                                             $zero=$total_zero_rated[$y];
-                                            $zero_ecozones+=0;
-                                            $rated_sales+=0;
+                                            $zero_ecozones=0;
+                                            $rated_sales=0;
                                             $vat=$total_vat[$y];
                                             $ewt_arr=$total_ewt[$y];
                                             $overall_totals=$total_net_amount[$y];
@@ -253,6 +252,7 @@
                             <input type="hidden" id="details_id" name="details_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
                         </tr> 
                         <?php } $h++; } $x++; } } ?>
+                        <?php if($total_sub <=14 && $total_sub_h <=14){ ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><b>TOTAL AMOUNT</b></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($vatable,2); ?></td>
@@ -269,7 +269,7 @@
                             <input type="hidden" id="ewt_arr" name="ewt_arr[]" class="form-control" value="<?php echo $ewt_arr; ?>">
                             <input type="hidden" id="overall_total" name="overall_total[]" class="form-control" value="<?php echo $overall_totals; ?>">
                         </tr>
-                        <?php } ?>
+                        <?php } } ?>
                     </table>
                 </td>
             </tr>
@@ -488,32 +488,31 @@
                                 $x=1;
                                 foreach($sub_part_second AS $sps){ 
                                     if($sps['participant_id']==$sec['participant_id']){
-                                        if($x >= 15){ 
-
-                                        if($bs_head_id[$y] != ''){
-                                            $vatable=$total_vatable_sales[$y];
-                                            $zero=$total_zero_rated[$y];
-                                            $rated_sales=0;
-                                            $zero_ecozones=0;
-                                            $vat=$total_vat[$y];
-                                            $ewt_arr=$total_ewt[$y];
-                                            $overall_totals=$total_net_amount[$y];
-                                        }else{
-                                            // $vatable+=$vatable_sales_sub[$h]; 
-                                            // $zero+=$zero_rated_sales_sub[$h]; 
-                                            // $total+=$total_amount_sub[$h]; 
-                                            // $vat+=$vat_on_sales_sub[$h]; 
-                                            // $ewt_arr+=$ewt_s[$h];
-                                            // $overall_totals+=$overall_total_sub[$h];
-                                            $vatable+=$sps['vatable_sales']; 
-                                            $zero+=$sps['zero_rated_sales']; 
-                                            $rated_sales+=$sps['rated_sales']; 
-                                            $zero_ecozones+=$sps['zero_rated_ecozones']; 
-                                            //$total+=$sps['overall_total']; 
-                                            $vat+=$sps['vat_on_sales']; 
-                                            $ewt_arr+=$sps['ewt'];
-                                            $overall_totals+=$sps['overall_total'];
-                                        }
+                                            if($bs_head_id[$y] != ''){
+                                                $vatable=$total_vatable_sales[$y];
+                                                $zero=$total_zero_rated[$y];
+                                                $rated_sales=0;
+                                                $zero_ecozones=0;
+                                                $vat=$total_vat[$y];
+                                                $ewt_arr=$total_ewt[$y];
+                                                $overall_totals=$total_net_amount[$y];
+                                            }else{
+                                                // $vatable+=$vatable_sales_sub[$h]; 
+                                                // $zero+=$zero_rated_sales_sub[$h]; 
+                                                // $total+=$total_amount_sub[$h]; 
+                                                // $vat+=$vat_on_sales_sub[$h]; 
+                                                // $ewt_arr+=$ewt_s[$h];
+                                                // $overall_totals+=$overall_total_sub[$h];
+                                                $vatable = $overall_vatable_sales + $as['vatable_sales']; 
+                                                $zero = $overall_zero_rated + $as['zero_rated_sales']; 
+                                                $rated_sales = $overall_zero_rated_sales + $as['rated_sales']; 
+                                                $zero_ecozones = $overall_zero_rated_ecozones + $as['zero_ecozones_sales']; 
+                                                //$total+=$sps['overall_total']; 
+                                                $vat = $overall_vat_on_sales + $as['vat_on_sales']; 
+                                                $ewt_arr = $overall_ewt + $as['ewt'];
+                                                $overall_totals = $all_total + $as['overall_total'];
+                                            }
+                                        if($sps['counter'] >= 15 || $sps['counter_h'] > 15){
                         ?>
                         <tr>
                             <!-- <td class="p-r-10 p-b-5"><?php echo $sub_participant_sub[$h];?></td>
@@ -543,7 +542,7 @@
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($vatable,2); ?></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($zero,2); ?></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($vat,2); ?></td>
-                            <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($ewt_arr,2); ?></td>
+                            <td class="p-r-10 p-b-5 bor-btm" align="right">(<?php echo number_format($ewt_arr,2); ?>)</td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><b><?php echo number_format($overall_totals,2); ?></b></td>
 
                             <input type="hidden" id="vatable" name="vatable[]" class="form-control" value="<?php echo $vatable; ?>">
@@ -631,6 +630,7 @@
                             <input type="hidden" id="noted_by_pos" name="noted_by_pos[]" class="form-control" value="General Manager">
                             <td width="1%"></td>
                         </tr>
+
                     </table>
                 </td>
             </tr>
