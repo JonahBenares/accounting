@@ -5172,10 +5172,10 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $ui->reference_number);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $ui->short_name);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $ui->billing_id);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, number_format($ui->vatable_sales,2));
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, number_format($ui->zero_rated_ecozones,2));
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, number_format($ui->vat_on_sales,2));
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, number_format($total,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, $ui->vatable_sales);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, $ui->zero_rated_ecozones);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $ui->vat_on_sales);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, $total);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S'.$num, $overdue);
 
                      $objPHPExcel->getActiveSheet()->mergeCells('D5:F5');
@@ -5404,10 +5404,10 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $ui->reference_number);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $ui->short_name);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $ui->billing_id);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, number_format($ui->vatable_sales,2));
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, number_format($ui->zero_rated_ecozones,2));
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, number_format($ui->vat_on_sales,2));
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, number_format($total,2));
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, $ui->vatable_sales);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, $ui->zero_rated_ecozones);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $ui->vat_on_sales);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, $total);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S'.$num, $overdue);
 
                      $objPHPExcel->getActiveSheet()->mergeCells('D5:F5');
