@@ -1173,7 +1173,7 @@ function proceed_sales_invoicing() {
                 window.location=loc+'sales/bulk_invoicing/'+due_date;
                 var redirect = redirect+output;
                 var save = document.getElementById("save_bulk_invoicing");
-                var cancel = document.getElementById("cancel_bulk_invoicing");
+                var cancel = document.getElementById("cancel_bulkinvoicing_adjustment");
                 document.getElementById('due_date').readOnly = true;
                 var x = document.getElementById("upload_bulk_invoicing");
                     if (x.style.display === "none") {
@@ -1191,13 +1191,12 @@ function proceed_sales_invoicing() {
     } 
 }
 
-/*async function upload_bulkupdate_adjustment() {
-    //var sales_doc = document.getElementById("WESM_sales").value;
+async function upload_bulkinvoicing_adjustment() {
     var due = document.getElementById("due").value;
     var identifier = document.getElementById("identifier").value;
     var loc= document.getElementById("baseurl").value;
-    var redirect = loc+"sales/upload_bulk_update_adjustment";
-    let doc = document.getElementById("bulkupdate_adjustment").files[0];
+    var redirect = loc+"sales/upload_bulk_invoicing_adjustment";
+    let doc = document.getElementById("bulkinvoicing_adjustment").files[0];
     let formData = new FormData();
          
     formData.append("doc", doc);
@@ -1213,25 +1212,25 @@ function proceed_sales_invoicing() {
             contentType: false,
             beforeSend: function(){
                 document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
-                document.getElementById("proceed_bulkupdate_adjustment").disabled = true;
-                document.getElementById("cancel_updatebulk_adjustment").disabled = true;
-                $("#table-adjustment").hide(); 
+                document.getElementById("proceed_bulkinvoicing_adjustment").disabled = true;
+                document.getElementById("cancel_bulkinvoicing_adjustment").disabled = true;
+                $("#table-invoicing").hide(); 
             },
             success: function(output){
                 $("#alt").hide(); 
               
-                window.location=loc+'sales/bulk_update_adjustment/'+due+'/'+identifier;
+                window.location=loc+'sales/bulk_invoicing_adjustment/'+due+'/'+identifier;
             }
         });
     }
-}*/
+}
 
-/*function saveBulkUpdateAdjustment(){
-    var data = $("#upload_bulkupdate_adjustment").serialize();
+function saveBulkInvoicingAdjustment(){
+    var data = $("#upload_bulkinvoicing_adjustment").serialize();
     var due = document.getElementById("due").value;
     var adjustment_identifier = document.getElementById("adjustment_identifier").value;
     var loc= document.getElementById("baseurl").value;
-    var redirect = loc+"sales/save_bulkupdate_adjustment";
+    var redirect = loc+"sales/save_bulkinvoicing_adjustment";
     var conf = confirm('Are you sure you want to save this Bulk Update?');
     if(conf){
         $.ajax({
@@ -1243,11 +1242,11 @@ function proceed_sales_invoicing() {
                 $("#submitbulkadjustment").hide(); 
             },
             success: function(output){
-                window.location=loc+'sales/bulk_update_adjustment/'+due+'/'+adjustment_identifier;
+                window.location=loc+'sales/bulk_invoicing/'+due+'/'+adjustment_identifier;
             }
         });
     }
-}*/
+}
 
 function cancelSalesInvoicing(){
     var due = document.getElementById("due").value;
