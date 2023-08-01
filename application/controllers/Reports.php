@@ -672,7 +672,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('AO'.$num, number_format($ewtbalance,2));
 
                  $objPHPExcel->getActiveSheet()->mergeCells('A1:B2');
-                 $objPHPExcel->getActiveSheet()->mergeCells('A'.$num);
+                 $objPHPExcel->getActiveSheet()->mergeCells('A'.$num.":B".$num);
                  $objPHPExcel->getActiveSheet()->mergeCells('C1:F2');
                  $objPHPExcel->getActiveSheet()->mergeCells('C'.$num.":F".$num);
                  $objPHPExcel->getActiveSheet()->mergeCells('G1:I2');
