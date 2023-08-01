@@ -1217,9 +1217,8 @@ async function upload_bulkinvoicing_adjustment() {
                 $("#table-invoicing").hide(); 
             },
             success: function(output){
-                $("#alt").hide(); 
-              
-                window.location=loc+'sales/bulk_invoicing_adjustment/'+due+'/'+identifier;
+                $("#alt").hide();
+                window.location=loc+'sales/bulk_invoicing/'+due+'/'+identifier;
             }
         });
     }
@@ -1238,7 +1237,7 @@ function saveBulkInvoicingAdjustment(){
             type: "POST",
             url: redirect,
             beforeSend: function(){
-                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>';
                 $("#submitbulkadjustment").hide(); 
             },
             success: function(output){
