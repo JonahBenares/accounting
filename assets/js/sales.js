@@ -1155,3 +1155,112 @@ function printbs_history(){
 	    }); 
 	     //window.print();
 }
+
+function proceed_sales_invoicing() {
+    var data = $("#bulkinvoicing").serialize();
+    
+    var loc= document.getElementById("baseurl").value;
+    var due_date= document.getElementById("due_date").value;
+    if(due_date==""){
+        alert('Due Date must not be empty!');
+    }  else {
+    var redirect=loc+"sales/bulk_invoicing/";
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: data,
+            success: function(output){
+                window.location=loc+'sales/bulk_invoicing/'+due_date;
+                var redirect = redirect+output;
+                var save = document.getElementById("save_bulk_invoicing");
+                var cancel = document.getElementById("cancel_bulkinvoicing_adjustment");
+                document.getElementById('due_date').readOnly = true;
+                var x = document.getElementById("upload_bulk_invoicing");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+
+                        save.style.display = "none";
+                        cancel.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                    save.style.display = "block";
+                    cancel.style.display = "none";
+                }
+            }
+        });
+    } 
+}
+
+async function upload_bulkinvoicing_adjustment() {
+    var due = document.getElementById("due").value;
+    var identifier = document.getElementById("identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/upload_bulk_invoicing_adjustment";
+    let doc = document.getElementById("bulkinvoicing_adjustment").files[0];
+    let formData = new FormData();
+         
+    formData.append("doc", doc);
+    formData.append("due", due);
+    formData.append("identifier", identifier);
+    var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("proceed_bulkinvoicing_adjustment").disabled = true;
+                document.getElementById("cancel_bulkinvoicing_adjustment").disabled = true;
+                $("#table-invoicing").hide(); 
+            },
+            success: function(output){
+                $("#alt").hide();
+                window.location=loc+'sales/bulk_invoicing/'+due+'/'+identifier;
+            }
+        });
+    }
+}
+
+function saveBulkInvoicingAdjustment(){
+    var data = $("#upload_bulkinvoicing_adjustment").serialize();
+    var due = document.getElementById("due").value;
+    var adjustment_identifier = document.getElementById("adjustment_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/save_bulkinvoicing_adjustment";
+    var conf = confirm('Are you sure you want to save this Bulk Update?');
+    if(conf){
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: redirect,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>';
+                $("#submitbulkadjustment").hide(); 
+            },
+            success: function(output){
+                window.location=loc+'sales/bulk_invoicing/'+due+'/'+adjustment_identifier;
+            }
+        });
+    }
+}
+
+function cancelSalesInvoicing(){
+    var due = document.getElementById("due").value;
+    var adjustment_identifier = document.getElementById("adjustment_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/cancel_sales_invoicing";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+        $.ajax({
+            data: 'due_date='+due+'&adjustment_identifier='+adjustment_identifier,
+            type: "POST",
+            url: redirect,
+            success: function(response){
+                window.location=loc+'sales/bulk_invoicing/';
+            }
+        });
+    }
+}

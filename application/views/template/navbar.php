@@ -152,6 +152,9 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_adjustment">Adjustment</a></li>
                 </ul>
             </li>
+             <li>
+                <a href="<?php echo base_url(); ?>sales/bulk_invoicing" ><i data-feather="briefcase"></i><span>Bulk Upload - Invoicing of Sales Adjustments</span></a>
+            </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                     <i data-feather="briefcase"></i>
