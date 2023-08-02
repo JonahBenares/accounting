@@ -3435,7 +3435,7 @@ public function upload_sales_adjustment_test(){
         }
         $sales_adjust_id=implode(',',$sales_adjustment_id);*/
         $data_adjustment = array(
-            'serial_no'=>'',
+            'serial_no'=>Null,
             'bulk_invoicing_identifier'=>Null,
         );
         //$this->super_model->update_custom_where("sales_adjustment_details", $data_adjustment, "sales_adjustment_id IN($sales_adjust_id) AND bulk_invoicing_identifier='$adjustment_identifier'");
