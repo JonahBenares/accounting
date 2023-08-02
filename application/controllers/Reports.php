@@ -5167,8 +5167,8 @@ class Reports extends CI_Controller {
                 $total_overdue[] = $total;
 
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $ui->transaction_date);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $ui->transaction_date);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $ui->transaction_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $ui->serial_no);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $ui->due_date);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $ui->reference_number);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $ui->short_name);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $ui->billing_id);
@@ -5399,8 +5399,8 @@ class Reports extends CI_Controller {
                 $total_overdue[] = $total;
 
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $ui->transaction_date);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $ui->transaction_date);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $ui->transaction_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $ui->serial_no);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $ui->due_date);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $ui->reference_number);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $ui->short_name);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $ui->billing_id);
