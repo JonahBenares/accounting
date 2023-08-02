@@ -145,7 +145,7 @@
              <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                     <i data-feather="briefcase"></i>
-                    <span>BIR Monitoring Bulk Update</span>
+                    <span class="line-height">BIR Monitoring Bulk Update</span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_main">Main</a></li>
@@ -153,7 +153,7 @@
                 </ul>
             </li>
              <li>
-                <a href="<?php echo base_url(); ?>sales/bulk_invoicing" ><i data-feather="briefcase"></i><span>Bulk Upload - Invoicing of Sales Adjustments</span></a>
+                <a href="<?php echo base_url(); ?>sales/bulk_invoicing" ><i data-feather="briefcase"></i><span class="line-height">Bulk Upload - Invoicing of Sales Adjustments</span></a>
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
