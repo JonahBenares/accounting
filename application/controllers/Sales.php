@@ -3513,5 +3513,4 @@ public function upload_sales_adjustment_test(){
         //$this->super_model->update_custom_where("sales_adjustment_details", $data_head, "due_date='$due_date' AND bulk_update_identifier='$bulk_update_identifier'");
         $this->super_model->update_custom_where("sales_adjustment_details", $data_head, "bulk_invoicing_identifier='$bulk_invoicing_identifier'");
     }
-
 }
