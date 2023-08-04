@@ -79,6 +79,7 @@
                                 
                                 </table>
                                 <br>
+                                <?php if(!empty($details)){ ?>
                                 <div class="table-responsive">
                                     <form method="POST" id="print_mult">
                                         <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
@@ -86,10 +87,10 @@
                                                 <tr>
                                                     <th>Item No</th>
                                                     <th>BS No.</th>
-                                                    <!-- <th>OR No.</th> -->
+                                                    <th>OR No.</th>
                                                     <th>STL ID / TPShort Name</th>
-                                                    <th width="8%" style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
-                                                    <th width="10%" style="position: sticky;left:165px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
+                                                    <th width="7%" style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
+                                                    <th width="15%" style="position: sticky;left:165px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
                                                     <th>Facility Type </th>
                                                     <th>WHT Agent Tag</th>
                                                     <th>ITH Tag</th>
@@ -107,39 +108,101 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
-                                                    $x=1;
-                                                    if(!empty($details)){
+                                                <?php
+                                                    $data2 = array();
                                                     foreach($details AS $s){ 
+                                                    $key = $s['serial_no'].$s['due_date'];
+                                                    if(!isset($data2[$key])) {
+                                                            $data2[$key] = array(
+                                                                'sales_detail_id' => $s['sales_detail_id'], 
+                                                                'old_series_no' => $s['old_series_no'], 
+                                                                'serial_no' => $s['serial_no'], 
+                                                                'item_no' => array(),
+                                                                'item_no_single'=>$s['item_no'],
+                                                                'short_name' => array(),
+                                                                'short_name_single'=>$s['short_name'], 
+                                                                'billing_id' => array(),
+                                                                'billing_id_single'=>$s['billing_id'], 
+                                                                'company_name' => array(),
+                                                                'company_single'=>$s['company_name'], 
+                                                                'facility_type' => array(),
+                                                                'facility_type_single'=>$s['facility_type'], 
+                                                                'wht_agent' => array(),
+                                                                'wht_agent_single'=>$s['wht_agent'],
+                                                                'ith_tag' => array(),
+                                                                'ith_tag_single'=>$s['ith_tag'], 
+                                                                'non_vatable' => array(),
+                                                                'non_vatable_single'=>$s['non_vatable'], 
+                                                                'zero_rated' => array(),
+                                                                'zero_rated_single'=>$s['zero_rated'], 
+                                                                'vatable_sales' => array(),
+                                                                'vatable_sales_single'=>$s['vatable_sales'],
+                                                                'zero_rated_sales' => array(),
+                                                                'zero_rated_sales_single'=>$s['zero_rated_sales'],
+                                                                'zero_rated_ecozones' => array(),
+                                                                'zero_rated_ecozones_single'=>$s['zero_rated_ecozones'],
+                                                                'vat_on_sales' => array(),
+                                                                'vat_on_sales_single'=>$s['vat_on_sales'],
+                                                                'ewt' => array(),
+                                                                'ewt_single'=>$s['ewt'],
+                                                                'total_amount' => array(),
+                                                                'total_amount_single'=>$s['total_amount'], 
+                                                                /*'total' => array(),
+                                                                'total_single'=>$value['total'],
+                                                                'defint_single'=>$value['defint'],
+                                                                'or_date_single'=>$value['or_date'],  
+                                                                'or_no_remarks_single'=>$value['or_no_remarks'],  
+                                                                'count_series'=>$value['count_series'],
+                                                                'overall_total'=>$value['overall_total'],*/
+                                                            );
+                                                        }
+                                                        $data2[$key]['item_no'][] = $s['item_no'];
+                                                        $data2[$key]['short_name'][] = $s['short_name'];
+                                                        $data2[$key]['billing_id'][] = $s['billing_id'];
+                                                        $data2[$key]['company_name'][] = $s['company_name'];
+                                                        $data2[$key]['facility_type'][] = $s['facility_type'];
+                                                        $data2[$key]['wht_agent'][] = $s['wht_agent'];
+                                                        $data2[$key]['ith_tag'][] = $s['ith_tag'];
+                                                        $data2[$key]['non_vatable'][] = $s['non_vatable'];
+                                                        $data2[$key]['zero_rated'][] = $s['zero_rated'];
+                                                        $data2[$key]['vatable_sales'][] = $s['vatable_sales'];
+                                                        $data2[$key]['zero_rated_sales'][] = $s['zero_rated_sales'];
+                                                        $data2[$key]['zero_rated_ecozones'][] = $s['zero_rated_ecozones'];
+                                                        $data2[$key]['vat_on_sales'][] = $s['vat_on_sales'];
+                                                        $data2[$key]['ewt'][] = "(".$s['ewt'].")";
+                                                        $data2[$key]['total_amount'][] = $s['total_amount'];
+                                                    }
+                                                    $x=1;
+                                                    foreach($data2 as $log) {
                                                 ?>
                                                 <tr>
-                                                    <td><center><?php echo $s['item_no'];?></center></td>
-                                                    <td><?php echo $s['serial_no'];?></td>
-                                                    <!-- <?php if(!empty($s['old_series_no'])) {?>
-                                                    <td width="7%"><a href="" data-toggle="modal" id="BSNo" data-target="#olSeries" data-bs="<?php echo $s['serial_no']; ?>" data-old-bs="<?php echo $s['old_series_no'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
+                                                    <td><center><?php echo implode("<br /><br />",$log['item_no']); ?></center></td>
+                                                    <!-- <td><?php echo $s['serial_no'];?></td> -->
+                                                    <?php if(!empty($log['old_series_no'])) {?>
+                                                    <td width="7%"><a href="" data-toggle="modal" id="BSNo" data-target="#olSeries" data-bs="<?php echo $log['serial_no']; ?>" data-old-bs="<?php echo $log['old_series_no'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $log['serial_no'];?></a></td>
                                                     <?php }else{ ?>
-                                                    <td><?php echo $s['serial_no'];?></td>
+                                                    <td><?php echo $log['serial_no'];?></td>
                                                     <?php } ?>
                                                     <?php if(!empty($s['old_series_no_col'])) {?>
                                                     <td width="7%"><a href="" data-toggle="modal" id="ORNo" data-target="#oldOR" data-series-col="<?php echo $s['series_number']; ?>" data-old-series-col="<?php echo $s['old_series_no_col'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['series_number'];?></a></td>
                                                     <?php }else{ ?>
-                                                    <td><?php echo $s['series_number'];?></td>
-                                                    <?php } ?> -->
-                                                    <td><?php echo $s['short_name'];?></td>
-                                                    <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $s['billing_id'];?></td>
-                                                    <td style="position: sticky;left:165px;background:#fff;z-index: 999;"><?php echo $s['company_name'];?></td>
-                                                    <td align="center"><?php echo $s['facility_type'];?></td>
-                                                    <td align="center"><?php echo $s['wht_agent'];?></td>
-                                                    <td align="center"><?php echo $s['ith_tag'];?></td>
-                                                    <td align="center"><?php echo $s['non_vatable'];?></td>
-                                                    <td align="center"><?php echo $s['zero_rated'];?></td>
-                                                    <td align="right"><?php echo $s['vatable_sales'];?></td>
-                                                    <td align="right"><?php echo $s['zero_rated_sales'];?></td>
-                                                    <td align="right"><?php echo $s['zero_rated_ecozones'];?></td>
-                                                    <td align="right"><?php echo $s['vat_on_sales'];?></td>
-                                                    <td align="right">(<?php echo $s['ewt'];?>)</td>
-                                                    <td align="right" style="padding:0px"><?php echo $d['total_amount'];?></td>
-                                                   <td align="right" style="padding:0px">
+                                                    <td><?php echo $log['serial_no'];?></td>
+                                                    <?php } ?>
+                                                    <td><?php echo implode("<br /><br />",$log['short_name']); ?></td>
+                                                    <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo implode("<br /><br />",$log['billing_id']); ?></td>
+                                                    <td style="position: sticky;left:165px;background:#fff;z-index: 999;"><?php echo implode("<br /><br />",$log['company_name']); ?></td>
+                                                    <td align="center"><?php echo implode("<br /><br />",$log['facility_type']); ?></td>
+                                                    <td align="center"><?php echo implode("<br /><br />",$log['wht_agent']); ?></td>
+                                                    <td align="center"><?php echo implode("<br /><br />",$log['ith_tag']); ?></td>
+                                                    <td align="center"><?php echo implode("<br /><br />",$log['non_vatable']); ?></td>
+                                                    <td align="center"><?php echo implode("<br /><br />",$log['zero_rated']); ?></td>
+                                                    <td align="right"><?php echo implode("<br /><br />",$log['vatable_sales']); ?></td>
+                                                    <td align="right"><?php echo implode("<br /><br />",$log['zero_rated_sales']); ?></td>
+                                                    <td align="right"><?php echo implode("<br /><br />",$log['zero_rated_ecozones']); ?></td>
+                                                    <td align="right"><?php echo implode("<br /><br />",$log['vat_on_sales']); ?></td>
+                                                    <td align="right"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
+                                                    <td align="right" style="padding:0px"><?php echo implode("<br /><br />",$log['total_amount']); ?></td>
+                                                    <td align="right" style="padding:0px">
                                                     <input type="text" class="form-control" onblur="updateSalesAdjustment('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['sales_adjustment_id']; ?>','<?php echo $s['billing_id']; ?>')" name="ewt_amount" id="ewt_amount<?php echo $x; ?>" value="<?php echo $s['ewt_amount']; ?>">
                                                     </td>
                                                     <td align="center">
@@ -168,9 +231,7 @@
                                         </table>
                                     </form>
                                 </div>
-                                <?php }else{ ?>
-                                    <div><center><b>No Available Data...</b></center></div>
-                                <?php } ?>
+                            <?php } ?>
                             </div>
                        <!--  </form> -->
                     </div>
