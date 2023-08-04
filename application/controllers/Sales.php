@@ -2514,7 +2514,8 @@ public function print_BS_new(){
                 $remarks = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
                 if($remarks!='' ){
                 $particulars = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
-                $stl_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+                //$stl_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+                $stl_id = str_replace(array('_FIT'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
                 $buyer = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
                 $statement_no = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
 
@@ -2539,9 +2540,9 @@ public function print_BS_new(){
                         //'series_number'=>$series,
                         //'defint'=>$defint,
                         //'reference_no'=>$statement_no,
-                        'reference_no'=>rtrim($statement_no, "S"),
+                        'reference_no'=>rtrim($statement_no,"S"),
                         //'settlement_id'=>$stl_id,
-                        'settlement_id'=>rtrim($stl_id, "_FIT"),
+                        'settlement_id'=>$stl_id,
                         'buyer_fullname'=>$buyer,
                         'amount'=>$vatable_sales,
                         'vat'=>$vat,
