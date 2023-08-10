@@ -439,30 +439,35 @@ class Reports extends CI_Controller {
         //foreach($this->super_model->select_inner_join_where("sales_transaction_details","sales_transaction_head", $qu,"sales_id","short_name,transaction_date") AS $b){
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id INNER JOIN participant p ON std.billing_id=p.billing_id WHERE $qu GROUP BY sth.sales_id, p.tin ORDER BY billing_from ASC, std.short_name ASC, sth.transaction_date ASC") AS $b){
 
+                $par=array();
+                foreach($this->super_model->select_custom_where('participant',"tin='$b->tin'") AS $p){
+                    $par[]="'".$p->settlement_id."'";
+                }
+                $imp=implode(',',$par);
 
-                //$vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$b->sales_id' AND short_name='$b->short_name'");
-                //$zero_rated_sales = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$b->sales_id' AND short_name='$b->short_name'");
-                //$zero_rated_ecozones = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id='$b->sales_id' AND short_name='$b->short_name'");
-                //$vat_on_sales = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id='$b->sales_id' AND short_name='$b->short_name'");
-                //$ewt_sales = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$b->sales_id' AND short_name='$b->short_name'");
+                $vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$b->sales_id' AND short_name IN($imp)");
+                $zero_rated_sales = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$b->sales_id' AND short_name IN($imp)");
+                $zero_rated_ecozones = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id='$b->sales_id' AND short_name IN($imp)");
+                $vat_on_sales = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id='$b->sales_id' AND short_name IN($imp)");
+                $ewt_sales = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$b->sales_id' AND short_name IN($imp)");
 
-                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_transaction_details","participant","sales_id='$b->sales_id' AND tin='$b->tin'",'billing_id');
+                /*$vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_transaction_details","participant","sales_id='$b->sales_id' AND tin='$b->tin'",'billing_id');
                 $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_transaction_details","participant","sales_id='$b->sales_id' AND tin='$b->tin'",'billing_id');
                 $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_transaction_details","participant","sales_id='$b->sales_id' AND tin='$b->tin'",'billing_id');
                 $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_transaction_details","participant","sales_id='$b->sales_id' AND tin='$b->tin'",'billing_id');
-                $ewt_sales = $this->super_model->select_sum_join("ewt","sales_transaction_details","participant","sales_id='$b->sales_id' AND tin='$b->tin'",'billing_id');
+                $ewt_sales = $this->super_model->select_sum_join("ewt","sales_transaction_details","participant","sales_id='$b->sales_id' AND tin='$b->tin'",'billing_id');*/
 
-                //$amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$b->short_name' AND reference_no='$b->reference_number'");
-                // $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","settlement_id='$b->short_name' AND reference_no='$b->reference_number'");
-                // $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","settlement_id='$b->short_name' AND reference_no='$b->reference_number'");
-                // $vat=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$b->short_name' AND reference_no='$b->reference_number'");
-                // $ewt=$this->super_model->select_sum_where("collection_details","ewt","settlement_id='$b->short_name' AND reference_no='$b->reference_number'");
+                $amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id IN($imp) AND reference_no='$b->reference_number'");
+                $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","settlement_id IN($imp) AND reference_no='$b->reference_number'");
+                $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","settlement_id IN($imp) AND reference_no='$b->reference_number'");
+                $vat=$this->super_model->select_sum_where("collection_details","vat","settlement_id IN($imp) AND reference_no='$b->reference_number'");
+                $ewt=$this->super_model->select_sum_where("collection_details","ewt","settlement_id IN($imp) AND reference_no='$b->reference_number'");
 
-                $amount = $this->super_model->select_sum_join("amount","collection_details","participant","tin='$b->tin' AND reference_no='$b->reference_number'",'settlement_id');
+                /*$amount = $this->super_model->select_sum_join("amount","collection_details","participant","tin='$b->tin' AND reference_no='$b->reference_number'",'settlement_id');
                 $zero_rated = $this->super_model->select_sum_join("zero_rated","collection_details","participant","tin='$b->tin' AND reference_no='$b->reference_number'",'settlement_id');
                 $zero_rated_ecozone = $this->super_model->select_sum_join("zero_rated_ecozone","collection_details","participant","tin='$b->tin' AND reference_no='$b->reference_number'",'settlement_id');
                 $vat = $this->super_model->select_sum_join("vat","collection_details","participant","tin='$b->tin' AND reference_no='$b->reference_number'",'settlement_id');
-                $ewt = $this->super_model->select_sum_join("ewt","collection_details","participant","tin='$b->tin' AND reference_no='$b->reference_number'",'settlement_id');
+                $ewt = $this->super_model->select_sum_join("ewt","collection_details","participant","tin='$b->tin' AND reference_no='$b->reference_number'",'settlement_id');*/
 
                 $vatablebalance=$vatable_sales - $amount;
                 $zerobalance=$zero_rated_sales - $zero_rated;
@@ -603,15 +608,21 @@ class Reports extends CI_Controller {
             // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE reference_number='$head->reference_number' GROUP BY short_name ORDER BY billing_from ASC, short_name ASC") AS $details){
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id INNER JOIN participant p ON std.short_name=p.settlement_id WHERE reference_number='$head->reference_number' GROUP BY p.tin ORDER BY billing_from ASC, std.short_name ASC, sth.transaction_date ASC") AS $details){
 
-            $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$details->billing_id);
-            if(!empty($details->company_name) && date('Y',strtotime($details->create_date))==date('Y')){
-                $comp_name=$details->company_name;
-            }else{
-                $comp_name=$company_name;
-            }
-            $billing_date = date("M. d, Y",strtotime($details->billing_from))." - ".date("M. d, Y",strtotime($details->billing_to));
+                $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$details->billing_id);
+                if(!empty($details->company_name) && date('Y',strtotime($details->create_date))==date('Y')){
+                    $comp_name=$details->company_name;
+                }else{
+                    $comp_name=$company_name;
+                }
+                $billing_date = date("M. d, Y",strtotime($details->billing_from))." - ".date("M. d, Y",strtotime($details->billing_to));
 
-                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_transaction_details","participant","sales_id='$details->sales_id' AND tin='$details->tin'",'billing_id');
+                $par=array();
+                foreach($this->super_model->select_custom_where('participant',"tin='$details->tin'") AS $p){
+                    $par[]="'".$p->settlement_id."'";
+                }
+                $imp=implode(',',$par);
+
+                /*$vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_transaction_details","participant","sales_id='$details->sales_id' AND tin='$details->tin'",'billing_id');
                 $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_transaction_details","participant","sales_id='$details->sales_id' AND tin='$details->tin'",'billing_id');
                 $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_transaction_details","participant","sales_id='$details->sales_id' AND tin='$details->tin'",'billing_id');
                 $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_transaction_details","participant","sales_id='$details->sales_id' AND tin='$details->tin'",'billing_id');
@@ -621,7 +632,19 @@ class Reports extends CI_Controller {
                 $zero_rated = $this->super_model->select_sum_join("zero_rated","collection_details","participant","tin='$details->tin' AND reference_no='$details->reference_number'",'settlement_id');
                 $zero_rated_ecozone = $this->super_model->select_sum_join("zero_rated_ecozone","collection_details","participant","tin='$details->tin' AND reference_no='$details->reference_number'",'settlement_id');
                 $vat = $this->super_model->select_sum_join("vat","collection_details","participant","tin='$details->tin' AND reference_no='$details->reference_number'",'settlement_id');
-                $ewt = $this->super_model->select_sum_join("ewt","collection_details","participant","tin='$details->tin' AND reference_no='$details->reference_number'",'settlement_id');
+                $ewt = $this->super_model->select_sum_join("ewt","collection_details","participant","tin='$details->tin' AND reference_no='$details->reference_number'",'settlement_id');*/
+
+                $vatable_sales = $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id='$details->sales_id' AND short_name IN($imp)");
+                $zero_rated_sales = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_sales","sales_id='$details->sales_id' AND short_name IN($imp)");
+                $zero_rated_ecozones = $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id='$details->sales_id' AND short_name IN($imp)");
+                $vat_on_sales = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id='$details->sales_id' AND short_name IN($imp)");
+                $ewt_sales = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$details->sales_id' AND short_name IN($imp)");
+
+                $amount=$this->super_model->select_sum_where("collection_details","amount","settlement_id IN($imp) AND reference_no='$details->reference_number'");
+                $zero_rated=$this->super_model->select_sum_where("collection_details","zero_rated","settlement_id IN($imp) AND reference_no='$details->reference_number'");
+                $zero_rated_ecozone=$this->super_model->select_sum_where("collection_details","zero_rated_ecozone","settlement_id IN($imp) AND reference_no='$details->reference_number'");
+                $vat=$this->super_model->select_sum_where("collection_details","vat","settlement_id IN($imp) AND reference_no='$details->reference_number'");
+                $ewt=$this->super_model->select_sum_where("collection_details","ewt","settlement_id IN($imp) AND reference_no='$details->reference_number'");
 
 
                 $vatablebalance=$vatable_sales - $amount;
