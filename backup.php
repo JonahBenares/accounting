@@ -1,13 +1,13 @@
 <?php
 //include 'functions/functions.php';
-backup_tables('localhost','root','','db_accounting_test');
+backup_tables('localhost','root','','db_accounting');
 
 $now=date('Y-m-d');
 
 $host='localhost';
 $user='root';
 $pass='';
-$name='db_accounting_test';
+$name='db_accounting';
 function backup_tables($host,$user,$pass,$name,$tables = '*')
 {
 
