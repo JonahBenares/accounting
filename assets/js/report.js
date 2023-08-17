@@ -895,7 +895,7 @@ function export_cs_ledger() {
     }else{
         var participants='null';
     }
-    window.location=loc+'reports/export_cs_ledger/'+years+'/'+months+'/'+refno+'/'+participants;
+    window.location=loc+'test/export_cs_ledger/'+years+'/'+months+'/'+refno+'/'+participants;
 }
 
 function export_cs_salesadj(){
