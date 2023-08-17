@@ -1223,7 +1223,7 @@ class Reports extends CI_Controller {
         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
         $year=$this->uri->segment(3);
         $month=$this->uri->segment(4);
-        $referenceno=str_replace("%60","",$this->uri->segment(5));
+        $referenceno=str_replace("%60","",$this->uri->segment(5) ?? '');
         $participant=$this->uri->segment(6);
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
         //$part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
