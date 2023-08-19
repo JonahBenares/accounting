@@ -42,7 +42,6 @@ class Sales extends CI_Controller {
         $due_date = $this->input->post('due_date');
         $reference_number = $this->input->post('reference_number');
         $prepared_by = $this->input->post('prepared_by');
-        $prepared_by = $this->input->post('prepared_by');
         $checked_by_emg = $this->input->post('checked_by_emg');
         $checked_by_emg_pos = $this->input->post('checked_by_emg_pos');
         $checked_by_accounting = $this->input->post('checked_by_accounting');
@@ -85,7 +84,6 @@ class Sales extends CI_Controller {
                         'billing_to' => $billing_to[$x],
                         'due_date' => $due_date[$x],
                         'reference_number' => $reference_number[$x],
-                        'prepared_by' => $prepared_by[$x],
                         'prepared_by' => $prepared_by[$x],
                         'checked_by_emg' => $checked_by_emg[$x],
                         'checked_by_emg_pos' => $checked_by_emg_pos[$x],
@@ -3561,13 +3559,111 @@ public function upload_sales_adjustment_test(){
         $this->super_model->update_custom_where("sales_adjustment_details", $data_head, "bulk_invoicing_identifier='$bulk_invoicing_identifier'");
     }
 
+        public function insert_printbs_adjustment(){
+        $company_name = $this->input->post('company_name');
+        $address = $this->input->post('address');
+        $tin = $this->input->post('tin');
+        $settlement = $this->input->post('settlement');
+        $serial_no = $this->input->post('serial_no');
+        $transaction_date = $this->input->post('transaction_date');
+        $due_date = $this->input->post('due_date');
+        $prepared_by = $this->input->post('prepared_by');
+        $checked_by_emg = $this->input->post('checked_by_emg');
+        $checked_by_emg_pos = $this->input->post('checked_by_emg_pos');
+        $checked_by_accounting = $this->input->post('checked_by_accounting');
+        $checked_by_accounting_pos = $this->input->post('checked_by_accounting_pos');
+        $checked_by_finance = $this->input->post('checked_by_finance');
+        $checked_by_finance_pos = $this->input->post('checked_by_finance_pos');
+        $noted_by = $this->input->post('noted_by');
+        $noted_by_pos = $this->input->post('noted_by_pos');
+        $vatable = $this->input->post('vatable');
+        $total_rated_sales = $this->input->post('total_rated_sales');
+        $total_rated_ecozones = $this->input->post('total_rated_ecozones');
+        $zero = $this->input->post('zero');
+        $total_vat = $this->input->post('vat');
+        $ewt_arr = $this->input->post('ewt_arr');
+        $overall_total = $this->input->post('overall_total');
+        $count_head=count($serial_no);
+
+        $billing_from = $this->input->post('billing_from');
+        $billing_to = $this->input->post('billing_to');
+        $reference_number = $this->input->post('ref_no');
+        $billing_id = $this->input->post('sub_participant');
+        $vatable_sales = $this->input->post('vatable_sales');
+        $rated_sales = $this->input->post('rated_sales');
+        $rated_ecozones = $this->input->post('rated_ecozones');
+        $zero_rated_sales = $this->input->post('zero_rated_sales');
+        $vat = $this->input->post('vat_on_sales');
+        $ewt = $this->input->post('ewt');
+        $net_amount = $this->input->post('net_amount');
+        $invoice_no = $this->input->post('invoice_no');
+        $count_details=count($billing_id);
+       
+        for($x=0;$x<$count_head;$x++){
+            $count_participant = $this->super_model->count_custom_where("bs_head_adjustment", "invoice_no = '$serial_no[$x]'");
+            if($count_participant == 0){ 
+                  $data_head = array(
+                        'participant_name' => $company_name[$x],
+                        'address' => $address[$x],
+                        'tin' => $tin[$x],
+                        'stl_id' => $settlement[$x],
+                        'invoice_no' => $serial_no[$x],
+                        'statement_date' => $transaction_date[$x],
+                        'due_date' => $due_date[$x],
+                        'prepared_by' => $prepared_by[$x],
+                        'checked_by_emg' => $checked_by_emg[$x],
+                        'checked_by_emg_pos' => $checked_by_emg_pos[$x],
+                        'checked_by_accounting' => $checked_by_accounting[$x],
+                        'checked_by_accounting_pos' => $checked_by_accounting_pos[$x],
+                        'checked_by_finance' => $checked_by_finance[$x],
+                        'checked_by_finance_pos' => $checked_by_finance_pos[$x],
+                        'noted_by' => $noted_by[$x],
+                        'noted_by_pos' => $noted_by_pos[$x],
+                        'total_vatable_sales' => $vatable[$x],
+                        'total_zero_rated' => $zero[$x],
+                        'total_zero_sales' => $total_rated_sales[$x],
+                        'total_zero_ecozones' => $total_rated_ecozones[$x],
+                        'total_vat' => $total_vat[$x],
+                        'total_ewt' => $ewt_arr[$x],
+                        'total_net_amount' => $overall_total[$x],
+                 );
+                 $this->super_model->insert_return_id("bs_head_adjustment", $data_head);
+                }
+            }
+
+        for($y=0;$y<$count_details;$y++){
+            if($invoice_no[$y] != ''){
+            $bs_head_adjustment_id = $this->super_model->select_column_custom_where("bs_head_adjustment","bs_head_adjustment_id","invoice_no='$invoice_no[$y]'");
+            $count_bs_details = $this->super_model->count_custom_where("bs_details_adjustment", "bs_head_adjustment_id = '$bs_head_adjustment_id' AND billing_id = '$billing_id[$y]' AND billing_from = '$billing_from[$y]' AND billing_to = '$billing_to[$y]' AND reference_number = '$reference_number[$y]'");
+            // echo $count_bs_details;
+            if($count_bs_details == 0){
+                   $data_details = array(
+                        'bs_head_adjustment_id'=>$bs_head_adjustment_id,
+                        'billing_from' => $billing_from[$y],
+                        'billing_to' => $billing_to[$y],
+                        'reference_number' => $reference_number[$y],
+                        'billing_id' => $billing_id[$y],
+                        'vatable_sales' => $vatable_sales[$y],
+                        'rated_sales' => $rated_sales[$y],
+                        'rated_ecozones' => $rated_ecozones[$y],
+                        'zero_rated_sales' => $zero_rated_sales[$y],
+                        'vat' => $vat[$y],
+                        'ewt' => $ewt[$y],
+                        'net_amount' => $net_amount[$y],
+                   );
+                   $this->super_model->insert_into("bs_details_adjustment", $data_details);
+                        }
+                    }
+                }
+            }
+
     public function print_bs_adjustment(){
         $invoice_no = $this->uri->segment(3);
         $print_identifier = $this->uri->segment(4);
         $count = $this->uri->segment(5);
         $data['count']=$count;
         $invoice_no_exp=explode("-",$invoice_no);
-        $data['inovice_no']=$invoice_no;
+        $data['invoice_no']=$invoice_no;
         $data['print_identifier']=$print_identifier;
         $data['address'][]='';
         $data['tin'][]='';
@@ -3590,17 +3686,19 @@ public function upload_sales_adjustment_test(){
         $data['noted_by_pos'][]='';
         $data['total_vatable_sales'][]='';
         $data['total_zero_rated'][]='';
+        $data['total_zero_sales'][]='';
+        $data['total_zero_ecozones'][]='';
         $data['total_vat'][]='';
         $data['total_ewt'][]='';
         $data['total_net_amount'][]='';
-        $data['bs_head_id'][]='';
+        $data['bs_head_adjustment_id'][]='';
+        $data['total_sub_h'][]='';
+        $data['total_sub'][]='';
   
         for($x=0;$x<$count;$x++){
-            /*$bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.invoice_no='$invoice_no_exp[$x]'");
-            if(in_array($sales_det_exp[$x],$bs_id)){
-                foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
-                    $data['detail_id'][$x]=$p->sales_detail_id;
-                    $detail_id=$p->sales_detail_id;
+            $invoice[]=$this->super_model->custom_query_single('invoice_no',"SELECT * FROM sales_adjustment_details sad  INNER JOIN bs_head_adjustment bha ON bha.invoice_no=sad.serial_no WHERE bha.invoice_no='$invoice_no_exp[$x]'");
+            if(in_array($invoice_no_exp[$x],$invoice)){
+                foreach($this->super_model->select_custom_where("bs_head_adjustment","invoice_no='".$invoice_no_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $address=$p->address;
                     $data['tin'][$x]=$p->tin;
@@ -3613,13 +3711,8 @@ public function upload_sales_adjustment_test(){
                     $settlement=$p->stl_id;
                     $data['transaction_date'][$x]=$p->statement_date;
                     $transaction_date=$p->statement_date;
-                    $data['billing_from'][$x]=$p->billing_from;
-                    $billing_from=$p->billing_from;
-                    $data['billing_to'][$x]=$p->billing_to;
-                    $billing_to=$p->billing_to;
                     $data['due_date'][$x]=$p->due_date;
                     $due_date=$p->due_date;
-                    $data['reference_number'][$x]=$p->reference_number;
                     $data['fullname'][$x]=$this->super_model->select_column_where("users","fullname","user_id",$p->prepared_by);
                     $data['prepared_by_pos'][$x]=$this->super_model->select_column_where("users","position","user_id",$p->prepared_by);
                     $data['checked_by_emg'][$x]=$p->checked_by_emg;
@@ -3632,66 +3725,43 @@ public function upload_sales_adjustment_test(){
                     $data['noted_by_pos'][$x]=$p->noted_by_pos;
                     $data['total_vatable_sales'][$x]=$p->total_vatable_sales;
                     $data['total_zero_rated'][$x]=$p->total_zero_rated;
+                    $data['total_zero_sales'][$x]=$p->total_zero_sales;
+                    $data['total_zero_ecozones'][$x]=$p->total_zero_ecozones;
                     $data['total_vat'][$x]=$p->total_vat;
                     $data['total_ewt'][$x]=$p->total_ewt;
                     $data['total_net_amount'][$x]=$p->total_net_amount;
-                    $data['bs_head_id'][$x]=$p->bs_head_id;
-                    $reference_number=$p->reference_number;
-                    $participant_id = $p->participant_id;
-                    $count_sub_hist=$this->super_model->count_custom_where("bs_details","bs_head_id='$p->bs_head_id'");
-                    $data['count_sub_hist'][$x]=$this->super_model->count_custom_where("bs_details","bs_head_id='$p->bs_head_id'");
-                    $billing_id = $this->super_model->select_column_where("bs_details","billing_id","bs_head_id",$p->bs_head_id);
-                    $vatable_sales = $this->super_model->select_column_where("bs_details","vatable_sales","bs_head_id",$p->bs_head_id);
-                    $zero_rated_sales = $this->super_model->select_column_where("bs_details","zero_rated_sales","bs_head_id",$p->bs_head_id);
-                    $vat = $this->super_model->select_column_where("bs_details","vat","bs_head_id",$p->bs_head_id);
-                    $ewt = $this->super_model->select_column_where("bs_details","ewt","bs_head_id",$p->bs_head_id);
-                    $overall_total = $this->super_model->select_column_where("bs_details","net_amount","bs_head_id",$p->bs_head_id);
+                    $data['bs_head_adjustment_id'][$x]=$p->bs_head_adjustment_id;
+                    $count_sub_hist=$this->super_model->count_custom_where("bs_details_adjustment","bs_head_adjustment_id='$p->bs_head_adjustment_id'");
+                    $data['count_sub_hist'][$x]=$this->super_model->count_custom_where("bs_details_adjustment","bs_head_adjustment_id='$p->bs_head_adjustment_id'");
+                    $billing_id = $this->super_model->select_column_where("bs_details_adjustment","billing_id","bs_head_adjustment_id",$p->bs_head_adjustment_id);
+                    $vatable_sales = $this->super_model->select_column_where("bs_details_adjustment","vatable_sales","bs_head_adjustment_id",$p->bs_head_adjustment_id);
+                    $zero_rated_sales = $this->super_model->select_column_where("bs_details_adjustment","zero_rated_sales","bs_head_adjustment_id",$p->bs_head_adjustment_id);
+                    $vat = $this->super_model->select_column_where("bs_details_adjustment","vat","bs_head_adjustment_id",$p->bs_head_adjustment_id);
+                    $ewt = $this->super_model->select_column_where("bs_details_adjustment","ewt","bs_head_adjustment_id",$p->bs_head_adjustment_id);
+                    $overall_total = $this->super_model->select_column_where("bs_details_adjustment","net_amount","bs_head_adjustment_id",$p->bs_head_adjustment_id);
                     $total_amount = $vatable_sales + $zero_rated_sales;
 
-                    $data['sub_participant'][$x]=$billing_id;
-                    $data['vatable_sales'][$x]=$vatable_sales;
-                    $data['vat_on_sales'][$x]=$vat;
-                    $data['zero_rated_sales'][$x]=$zero_rated_sales;
-                    $data['rated_sales'][$x]=$p->total_zero_sales;
-                    $data['zero_ecozones_sales'][$x]=$p->total_zero_ecozones;
-                    $data['total_amount'][$x]=$total_amount;
-                    $data['ewt'][$x]=$ewt;
-                    $data['overall_total'][$x]=$overall_total;
-                    $data['participant_id'][$x]=$participant_id;
-
-
-                    $data['sub'][]=array(
-                        "participant_id"=>$participant_id,
-                        "bs_head_id"=>$p->bs_head_id,
-                        "sub_participant"=>$billing_id,
-                        "vatable_sales"=>$vatable_sales,
-                        "zero_rated_sales"=>$zero_rated_sales,
-                        "zero_ecozones_sales"=>$p->total_zero_ecozones,
-                        "total_amount"=>$total_amount,
-                        "vat_on_sales"=>$vat,
-                        "ewt"=>$ewt,
-                        "overall_total"=>$overall_total,
+                    $data['head'][]=array(
+                        "serial_no"=>$p->invoice_no,
                     );
                      
                     
                     $h=0;
                     $u=1;
-                    foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
-                    if($u <= 15){
-                            $data['sub_participant_sub']=$s->billing_id;
-                            $data['vatable_sales_sub']=$s->vatable_sales;
-                            $data['vat_on_sales_sub']=$s->vat;
-                            $data['zero_rated_sales_sub']=$s->zero_rated_sales;
-                            $data['ewt_s']=$s->ewt;
-                            $data['overall_total_sub']=$overall_total;
-                            $data['participant_id_sub']=$participant_id;
+                    foreach($this->super_model->select_custom_where("bs_details_adjustment","bs_head_adjustment_id='$p->bs_head_adjustment_id'") AS $s){
+                    if($u <= 10){
                             $data['total_sub_h']=$u;
                             $data['total_sub']='';
                                 $data['sub_part'][]=array(
-                                    "participant_id"=>$participant_id,
-                                    "bs_head_id"=>$p->bs_head_id,
+                                    "serial_no"=>$p->invoice_no,
+                                    "ref_no"=>$s->reference_number,
+                                    "billing_from"=>$s->billing_from,
+                                    "billing_to"=>$s->billing_to,
+                                    "bs_head_adjustment_id"=>$p->bs_head_adjustment_id,
                                     "sub_participant"=>$s->billing_id,
                                     "vatable_sales"=>$s->vatable_sales,
+                                    "rated_sales"=>'',
+                                    "zero_rated_ecozones"=>'',
                                     "zero_rated_sales"=>$s->zero_rated_sales,
                                     "vat_on_sales"=>$s->vat,
                                     "ewt"=>$s->ewt,
@@ -3703,19 +3773,16 @@ public function upload_sales_adjustment_test(){
                        $u++; 
                     }
 
-                        $data['sub_participant'][$x]=$billing_id;
-                        $data['vatable_sales'][$x]=$vatable_sales;
-                        $data['vat_on_sales'][$x]=$vat;
-                        $data['zero_rated_sales'][$x]=$zero_rated_sales;
-                        //$data['total_amount'][$x]=$total_amount;
-                        $data['ewt'][$x]=$ewt;
-                        $data['overall_total'][$x]=$overall_total;
-                        $data['participant_id'][$x]=$participant_id;
                         $data['sub_second'][]=array(
-                            "participant_id"=>$participant_id,
-                            "bs_head_id"=>$p->bs_head_id,
+                            "bs_head_adjustment_id"=>$p->bs_head_adjustment_id,
+                            "serial_no"=>$p->invoice_no,
+                            "ref_no"=>$s->reference_number,
+                            "billing_from"=>$s->billing_from,
+                            "billing_to"=>$s->billing_to,
                             "sub_participant"=>$billing_id,
                             "vatable_sales"=>$vatable_sales,
+                            "rated_sales"=>'',
+                            "zero_rated_ecozones"=>'',
                             "zero_rated_sales"=>$zero_rated_sales,
                             "total_amount"=>$total_amount,
                             "vat_on_sales"=>$vat,
@@ -3725,23 +3792,22 @@ public function upload_sales_adjustment_test(){
                     
                         $z=0;
                         $t=1;
-                        foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
-                    if($t>=16){
-                                $data['sub_participant_sub'][$z]=$s->billing_id;
-                                $data['vatable_sales_sub'][$z]=$s->vatable_sales;
-                                $data['vat_on_sales_sub'][$z]=$s->vat;
-                                $data['zero_rated_sales_sub'][$z]=$s->zero_rated_sales;
-                                $data['ewt_s'][$z]=$s->ewt;
-                                $data['participant_id_sub'][$z]=$participant_id;
+                        foreach($this->super_model->select_custom_where("bs_details_adjustment","bs_head_adjustment_id='$p->bs_head_adjustment_id'") AS $s){
+                    if($t>=11){
+
                                 $data['sub_part_second'][]=array(
                                     "counter"=>'',
                                     "counter_h"=>$t,
-                                    "participant_id"=>$participant_id,
-                                    "bs_head_id"=>$p->bs_head_id,
+                                    "bs_head_adjustment_id"=>$p->bs_head_adjustment_id,
+                                    "serial_no"=>$p->invoice_no,
+                                    "ref_no"=>$s->reference_number,
+                                    "billing_from"=>$s->billing_from,
+                                    "billing_to"=>$s->billing_to,
                                     "sub_participant"=>$s->billing_id,
                                     "vatable_sales"=>$s->vatable_sales,
+                                    "rated_sales"=>'',
+                                    "zero_rated_ecozones"=>'',
                                     "zero_rated_sales"=>$s->zero_rated_sales,
-                                    //"total_amount"=>$total_amount,
                                     "vat_on_sales"=>$s->vat,
                                     "ewt"=>$s->ewt,
                                     "overall_total"=>$s->net_amount,
@@ -3751,87 +3817,58 @@ public function upload_sales_adjustment_test(){
                             $t++;
                     }
                 }
-            }else{*/
-                foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no[$x]."'") AS $p){
-                   /* $data['detail_id'][$x]=$p->adjustment_detail_id;
-                    $detail_id=$p->sales_detail_id;*/
-                    /*$data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                    $address=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);*/
+            }else{
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP BY serial_no ORDER BY serial_no ASC")AS $p){
+                    $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                    $data['company_name'][$x]=$p->company_name;
                     $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                     $tin=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
-                    $data['company_name'][$x]=$p->company_name;
-                    $company_name=$p->company_name;
-                    $data['serial_no'][$x]=$p->serial_no;
-                    $serial_no=$p->serial_no;
+                    $data['serial_no'][$x]=$this->super_model->select_column_where("sales_adjustment_details","serial_no","serial_no",$p->serial_no);
+                    $serial_no=$this->super_model->select_column_where("sales_adjustment_details","serial_no","serial_no",$p->serial_no);
                     $data['settlement'][$x]=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
-                    $settlement=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
-                    $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
-                    $transaction_date=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
-                    /*$data['billing_from'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
-                    $billing_from=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
-                    $data['billing_to'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
-                    $billing_to=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);*/
-                    $data['due_date'][$x]=$this->super_model->select_column_where("sales_transaction_head","due_date","sales_id",$p->sales_id);
-                    $due_date=$this->super_model->select_column_where("sales_transaction_head","due_date","sales_id",$p->sales_id);
-                    /*$data['reference_number'][$x]=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$p->sales_id);
-                    $reference_number=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$p->sales_id);*/
+                    $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
+                    $transaction_date=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
+                    $data['due_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
+                    $due_date=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
                     $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                     $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
                     $zero_rated= $p->zero_rated_sales + $p->zero_rated_ecozones;
                     $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
                     $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
-                    //$data['bs_head_adjustment_id'][$x]='';
+                    $data['bs_head_adjustment_id'][$x]='';
                     $data['count_sub_hist'][$x]='';
 
-                    $data['sub_participant'][$x]=$p->billing_id;
-                    $data['vatable_sales'][$x]=$p->vatable_sales;
-                    $data['vat_on_sales'][$x]=$p->vat_on_sales;
-                    $data['zero_rated_sales'][$x]=$zero_rated;
-                    $data['rated_sales'][$x]=$p->zero_rated_sales;
-                    $data['zero_ecozones_sales'][$x]=$p->zero_rated_ecozones;
-                    $data['total_amount'][$x]=$total_amount;
-                    $data['ewt'][$x]=$p->ewt;
-                    $data['overall_total'][$x]=$overall_total;
-                    $data['participant_id'][$x]=$participant_id;
-
-                    $data['sub'][]=array(
-                        "address"=>$p->registered_address,
-                        // "participant_id"=>$participant_id,
-                        // "sub_participant"=>$p->billing_id,
-                        // "vatable_sales"=>$p->vatable_sales,
-                        // "zero_rated_sales"=>$zero_rated,
-                        // "rated_sales"=>$p->zero_rated_sales,
-                        // "zero_ecozones_sales"=>$p->zero_rated_ecozones,
-                        // "total_amount"=>$total_amount,
-                        // "vat_on_sales"=>$p->vat_on_sales,
-                        // "ewt"=>$p->ewt,
-                        // "overall_total"=>$overall_total,
+                    $data['head'][]=array(
+                        "serial_no"=>$p->serial_no,
                     );
 
-                    $h=1;
-                    /*foreach($this->super_model->select_custom_where("subparticipant","participant_id = '$participant_id'") AS $sp){
-                            $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$sp->sub_participant);*/
+                        $h=1;
                             $data['total_sub']=$h;
                             $data['total_sub_h']='';
-                        foreach($this->super_model->select_custom_where("sales_transaction_details","billing_id = '$subparticipant' AND sales_id = '$p->sales_id' AND total_amount != '0'") AS $s){
-                            if($h<=14){
+                        foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
+                            if($h<=10){
 
-                                    $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","sales_detail_id",$s->sales_detail_id);
-                                    $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","sales_detail_id",$s->sales_detail_id);
-                                    $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","sales_detail_id",$s->sales_detail_id);
-                                    $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","sales_detail_id",$s->sales_detail_id);
-                                    $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","sales_detail_id",$s->sales_detail_id);
+                                    $reference_number=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$p->sales_adjustment_id);
+                                    $billing_from=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$p->sales_adjustment_id);
+                                    $billing_to=$this->super_model->select_column_where("sales_adjustment_head","billing_to","sales_adjustment_id",$p->sales_adjustment_id);
+                                    $vatable_sales=$this->super_model->select_column_where("sales_adjustment_details","vatable_sales","adjustment_detail_id",$s->adjustment_detail_id);
+                                    $zero_rated_sales=$this->super_model->select_column_where("sales_adjustment_details","zero_rated_sales","adjustment_detail_id",$s->adjustment_detail_id);
+                                    $zero_rated_ecozones=$this->super_model->select_column_where("sales_adjustment_details","zero_rated_ecozones","adjustment_detail_id",$s->adjustment_detail_id);
+                                    $vat_on_sales=$this->super_model->select_column_where("sales_adjustment_details","vat_on_sales","adjustment_detail_id",$s->adjustment_detail_id);
+                                    $ewt=$this->super_model->select_column_where("sales_adjustment_details","ewt","adjustment_detail_id",$s->adjustment_detail_id);
 
                                     $zero_rated= $zero_rated_sales + $zero_rated_ecozones;
                                     $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                                     $overall_total= ($total_amount + $vat_on_sales) - $ewt;
-                                    $data['sub_participant_sub'][$h]=$subparticipant;
-                                    $data['participant_id_sub'][$h]=$sp->participant_id;
                                     $data['sub_part'][]=array(
                                         "counter"=>$h,
                                         "counter_h"=>'',
-                                        "participant_id"=>$sp->participant_id,
-                                        "sub_participant"=>$subparticipant,
+                                        "ref_no"=>$reference_number,
+                                        "billing_from"=>$billing_from,
+                                        "billing_to"=>$billing_to,
+                                        "sub_participant"=>$s->billing_id,
+                                        "sub_participant"=>$s->billing_id,
+                                        "serial_no"=>$s->serial_no,
                                         "vatable_sales"=>$vatable_sales,
                                         "zero_rated_sales"=>$zero_rated,
                                         "rated_sales"=>$zero_rated_sales,
@@ -3843,28 +3880,21 @@ public function upload_sales_adjustment_test(){
                                     );
                                 }
                                 $h++;
-                            //}
                         }
 
                         $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
                         $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
 
-                        $data['sub_participant'][$x]=$p->billing_id;
-                        $data['vatable_sales'][$x]=$p->vatable_sales;
-                        $data['vat_on_sales'][$x]=$p->vat_on_sales;
-                        $data['zero_rated_sales'][$x]=$zero_rated;
-                        $data['total_amount'][$x]=$total_amount;
-                        $data['ewt'][$x]=$p->ewt;
-                        $data['overall_total'][$x]=$overall_total;
-                        $data['participant_id'][$x]=$participant_id;
-
                         $data['sub_second'][]=array(
-                            "participant_id"=>$participant_id,
                             "sub_participant"=>$p->billing_id,
+                            "ref_no"=>$reference_number,
+                            "billing_from"=>$billing_from,
+                            "billing_to"=>$billing_to,
+                            "serial_no"=>$serial_no,
                             "vatable_sales"=>$p->vatable_sales,
                             "zero_rated_sales"=>$p->zero_rated_sales,
                             "rated_sales"=>$p->zero_rated_sales,
-                            "zero_ecozones_sales"=>$p->zero_rated_ecozones,
+                            "zero_rated_ecozones"=>$p->zero_rated_ecozones,
                             "total_amount"=>$total_amount,
                             "vat_on_sales"=>$p->vat_on_sales,
                             "ewt"=>$p->ewt,
@@ -3872,16 +3902,16 @@ public function upload_sales_adjustment_test(){
                         );
 
                         $z=1;
-                        foreach($this->super_model->select_custom_where("subparticipant","participant_id = '$participant_id'") AS $sp){
-                                $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$sp->sub_participant);
-                        foreach($this->super_model->select_custom_where("sales_transaction_details","billing_id = '$subparticipant' AND sales_id = '$p->sales_id' AND total_amount != '0'") AS $s){
-
-                            
-                                $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","sales_detail_id",$s->sales_detail_id);
-                                $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","sales_detail_id",$s->sales_detail_id);
-                                $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","sales_detail_id",$s->sales_detail_id);
-                                $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","sales_detail_id",$s->sales_detail_id);
-                                $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","sales_detail_id",$s->sales_detail_id);
+                        foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
+                                
+                                $reference_number=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$p->sales_adjustment_id);
+                                $billing_from=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$p->sales_adjustment_id);
+                                $billing_to=$this->super_model->select_column_where("sales_adjustment_head","billing_to","sales_adjustment_id",$p->sales_adjustment_id);
+                                $vatable_sales=$this->super_model->select_column_where("sales_adjustment_details","vatable_sales","adjustment_detail_id",$s->adjustment_detail_id);
+                                $zero_rated_sales=$this->super_model->select_column_where("sales_adjustment_details","zero_rated_sales","adjustment_detail_id",$s->adjustment_detail_id);
+                                $zero_rated_ecozones=$this->super_model->select_column_where("sales_adjustment_details","zero_rated_ecozones","adjustment_detail_id",$s->adjustment_detail_id);
+                                $vat_on_sales=$this->super_model->select_column_where("sales_adjustment_details","vat_on_sales","adjustment_detail_id",$s->adjustment_detail_id);
+                                $ewt=$this->super_model->select_column_where("sales_adjustment_details","ewt","adjustment_detail_id",$s->adjustment_detail_id);
                                 $zero_rated= $zero_rated_sales + $zero_rated_ecozones;
                                 $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                                 $overall_total= ($total_amount + $vat_on_sales) - $ewt;
@@ -3895,24 +3925,19 @@ public function upload_sales_adjustment_test(){
                                 $total_sub_total_amount[] = $total_amount;
                                 $total_sub_overall_total[] = $overall_total;
 
-                                if($z>=15){
-                                $data['sub_participant_sub'][$z]=$subparticipant;
-                                $data['vatable_sales_sub'][$z]=$vatable_sales;
-                                $data['vat_on_sales_sub'][$z]=$vat_on_sales;
-                                $data['zero_rated_sales_sub'][$z]=$zero_rated;
-                                $data['total_amount_sub'][$z]=$total_amount;
-                                $data['ewt_s'][$z]=$ewt;
-                                $data['overall_total_sub'][$z]=$overall_total;
-                                $data['participant_id_sub'][$z]=$sp->participant_id;
+                                if($z>=11){
                                 $data['sub_part_second'][]=array(
                                     "counter"=>$h,
                                     "counter_h"=>'',
-                                    "participant_id"=>$sp->participant_id,
-                                    "sub_participant"=>$subparticipant,
+                                    "sub_participant"=>$s->billing_id,
+                                    "ref_no"=>$reference_number,
+                                    "billing_from"=>$billing_from,
+                                    "billing_to"=>$billing_to,
+                                    "serial_no"=>$s->serial_no,
                                     "vatable_sales"=>$vatable_sales,
                                     "zero_rated_sales"=>$zero_rated,
                                     "rated_sales"=>$zero_rated_sales,
-                                    "zero_ecozones_sales"=>$zero_rated_ecozones,
+                                    "zero_rated_ecozones"=>$zero_rated_ecozones,
                                     "total_amount"=>$total_amount,
                                     "vat_on_sales"=>$vat_on_sales,
                                     "ewt"=>$ewt,
@@ -3928,31 +3953,29 @@ public function upload_sales_adjustment_test(){
                             $data['overall_total_amount']=array_sum($total_sub_total_amount);
                             $data['all_total']=array_sum($total_sub_overall_total);
                             $z++;
-                        }
                     }
                 }
             }
-        //}
+        }
         $this->load->view('template/print_head');
         $this->load->view('sales/print_bs_adjustment',$data);
     }
     public function print_invoice_adjustment(){
         error_reporting(0);
-        $sales_details_id = $this->uri->segment(3);
+        $invoice_no = $this->uri->segment(3);
         $print_identifier = $this->uri->segment(4);
         $count = $this->uri->segment(5);
-        $sales_det_exp=explode("-",$sales_details_id);
+        $invoice_no_exp=explode("-",$invoice_no);
         $data['count']=$count;
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         for($x=0;$x<$count;$x++){
-             $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
-            if(in_array($sales_det_exp[$x],$bs_id)){
-                foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
+             $invoice[]=$this->super_model->custom_query_single('invoice_no',"SELECT * FROM sales_adjustment_details sad  INNER JOIN bs_head_adjustment bha ON bha.invoice_no=sad.serial_no WHERE bha.invoice_no='$invoice_no_exp[$x]'");
+            if(in_array($invoice_no_exp[$x],$invoice)){
+                foreach($this->super_model->select_custom_where("bs_head_adjustment","invoice_no='".$invoice_no_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $data['tin'][$x]=$p->tin;
                     $data['company_name'][$x]=$p->participant_name;
-                    $data['billing_from'][$x]=$p->billing_from;
-                    $data['billing_to'][$x]=$p->billing_to;
+                    $data['due_date'][$x]=$p->due_date;
                     $data['transaction_date'][$x]=$p->statement_date;
                     $participant_id = $p->participant_id;
                     $data['participant_id'][$x] = $p->participant_id;
@@ -3979,9 +4002,6 @@ public function upload_sales_adjustment_test(){
             $data['vat_sales_peso'][$x] = $vatable_sales[0];
             $data['vat_sales_cents'][$x] = $vatable_sales[1];
 
-            $data['vat_sales_peso_sub'][$x] = 0;
-            $data['vat_sales_cents_sub'][$x] = 0;
-
             $total_zr=$p->total_zero_sales;
             $data['total_zr'][$x]=$total_zr;
             $zero_rated_sales = explode(".",$total_zr);
@@ -3998,63 +4018,35 @@ public function upload_sales_adjustment_test(){
             $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
             $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
 
-            $data['total_zra_sub']=0;
-            $data['zero_rated_ecozones_peso_sub'][$x]=0;
-            $data['zero_rated_ecozones_cents_sub'][$x]=0;
-
             $total_vos=$p->total_vat;
             $vat_on_sales = explode(".",$total_vos);
             $data['vat_peso'][$x] = $vat_on_sales[0];
             $data['vat_cents'][$x] = $vat_on_sales[1];
-
-            $data['vat_peso_sub'][$x] = 0;
-            $data['vat_cents_sub'][$x] = 0;
 
             $total_ewt=$p->total_ewt;
             $ewt_exp=explode(".", $total_ewt);
             $data['ewt_peso'][$x]=$ewt_exp[0];
             $data['ewt_cents'][$x]=$ewt_exp[1];
 
-            $data['ewt_peso_sub'][$x]=0;
-            $data['ewt_cents_sub'][$x]=0;
             $total= $p->total_net_amount;
 
             $total_amount=str_replace(',','',number_format($total,2));
            
             $total_amount_sub=0;
             $data['total_amount'][$x]=$total_amount;
-            $data['total_amount_sub'][$x]=0;
             $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
-            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber(str_replace(',','',number_format($total_amount_sub,2))));
             $total_exp=explode(".", $total_amount);
             $data['total_peso'][$x]=$total_exp[0];
             $data['total_cents'][$x]=$total_exp[1];
 
-            $total_exp_sub=explode(".", $total_amount_sub);
-            $data['total_peso_sub'][$x]=$total_exp_sub[0];
-            $data['total_cents_sub'][$x]=$total_exp_sub[1];
-
         }else{
-            foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
+            foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."'") AS $p){
                 $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                 $data['company_name'][$x]=$p->company_name;
-                $data['billing_from'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_from","sales_id",$p->sales_id);
-                $data['billing_to'][$x]=$this->super_model->select_column_where("sales_transaction_head","billing_to","sales_id",$p->sales_id);
-                $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_transaction_head","transaction_date","sales_id",$p->sales_id);
-                $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
-                $data['participant_id'][$x] = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+                $data['due_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
+                $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
                 $h=0;
-                foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
-                    $data['participant_id_sub'][$h]=$s->participant_id;
-                    $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $h++;
-                }
             }
 
             $sum_vatable_sales=array_sum($vatable_sales_bs);
@@ -4087,22 +4079,11 @@ public function upload_sales_adjustment_test(){
             $data['vat_sales_peso'][$x] = $vatable_sales[0];
             $data['vat_sales_cents'][$x] = $vatable_sales[1];
 
-            $total_vs_sub=$p->vatable_sales + $sum_vatable_sales;
-            $vatable_sales_sub = explode(".",$total_vs_sub);
-            $data['vat_sales_peso_sub'][$x] = $vatable_sales_sub[0];
-            $data['vat_sales_cents_sub'][$x] = $vatable_sales_sub[1];
-
             $total_zr=$p->zero_rated_sales;
             $data['total_zr'][$x]=$total_zr;
             $zero_rated_sales = explode(".",$total_zr);
             $data['zero_rated_peso'][$x] = $zero_rated_sales[0];
             $data['zero_rated_cents'][$x] = $zero_rated_sales[1];
-
-            $total_zr_sub=$p->zero_rated_sales + $sum_zero_rated;
-            $data['total_zr_sub'][$x]=$total_zr_sub;
-            $zero_rated_sales_sub = explode(".",$total_zr_sub);
-            $data['zero_rated_peso_sub'][$x] = $zero_rated_sales_sub[0];
-            $data['zero_rated_cents_sub'][$x] = $zero_rated_sales_sub[1];
 
             $total_zra=$p->zero_rated_ecozones;
             $data['total_zra'][$x]=$total_zra;
@@ -4110,52 +4091,27 @@ public function upload_sales_adjustment_test(){
             $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
             $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
 
-            $total_zra_sub=$p->zero_rated_ecozones + $sum_zero_rated_ecozone;
-            $data['total_zra_sub']=$total_zra_sub;
-            $zero_rated_ecozones_exp_sub=explode(".", $total_zra_sub);
-            $data['zero_rated_ecozones_peso_sub'][$x]=$zero_rated_ecozones_exp_sub[0];
-            $data['zero_rated_ecozones_cents_sub'][$x]=$zero_rated_ecozones_exp_sub[1];
-
             $total_vos=$p->vat_on_sales;
             $vat_on_sales = explode(".",$total_vos);
             $data['vat_peso'][$x] = $vat_on_sales[0];
             $data['vat_cents'][$x] = $vat_on_sales[1];
-
-            $total_vos_sub=$p->vat_on_sales + $sum_vat_on_sales;
-            $vat_on_sales_sub = explode(".",$total_vos_sub);
-            $data['vat_peso_sub'][$x] = $vat_on_sales_sub[0];
-            $data['vat_cents_sub'][$x] = $vat_on_sales_sub[1];
 
             $total_ewt=$p->ewt;
             $ewt_exp=explode(".", $total_ewt);
             $data['ewt_peso'][$x]=$ewt_exp[0];
             $data['ewt_cents'][$x]=$ewt_exp[1];
 
-            $total_ewt_sub=$p->ewt + $sum_ewt;
-            $ewt_exp_sub=explode(".", $total_ewt_sub);
-            $data['ewt_peso_sub'][$x]=$ewt_exp_sub[0];
-            $data['ewt_cents_sub'][$x]=$ewt_exp_sub[1];
             $total= ($p->vatable_sales + $p->vat_on_sales + $p->zero_rated_ecozones + $p->zero_rated_sales) - $p->ewt;
-
-            
-            $total_sub= ($sum_vatable_sales + $sum_vat_on_sales + $sum_zero_rated_ecozone + $sum_zero_rated) - $sum_ewt;
             $total_amount=str_replace(',','',number_format($total,2));
-           
-            $total_amount_sub=$total + $total_sub;
+
             $data['total_amount'][$x]=$total_amount;
-            $data['total_amount_sub'][$x]=$total_amount_sub;
             $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
-            $data['amount_words_sub'][$x]=strtoupper($this->convertNumber(str_replace(',','',number_format($total_amount_sub,2))));
             $total_exp=explode(".", $total_amount);
             $data['total_peso'][$x]=$total_exp[0];
             $data['total_cents'][$x]=$total_exp[1];
-
-            $total_exp_sub=explode(".", $total_amount_sub);
-            $data['total_peso_sub'][$x]=$total_exp_sub[0];
-            $data['total_cents_sub'][$x]=$total_exp_sub[1];
             }
         }
         $this->load->view('template/print_head');
-        $this->load->view('sales/print_invoice_multiple',$data);
+        $this->load->view('sales/print_invoice_adjustment_multiple',$data);
     }
 }

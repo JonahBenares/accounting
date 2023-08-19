@@ -1198,6 +1198,25 @@ function printbs_history(){
 	     //window.print();
 }
 
+function printbs_adjustment_history(){
+	var data = $("#InsertBSAdjustment").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/insert_printbs_adjustment";
+	    $.ajax({
+	        data: data,
+	        type: "POST",
+	        url: redirect,
+	        success: function(output){
+	        	
+	         window.print();  
+	         //alert(output);
+	         //console.log(output);
+	         //print_r(output);
+	        }
+	    }); 
+	     //window.print();
+}
+
 function proceed_sales_invoicing() {
     var data = $("#bulkinvoicing").serialize();
     
