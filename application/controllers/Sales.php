@@ -3750,7 +3750,7 @@ public function upload_sales_adjustment_test(){
                     $u=1;
                     foreach($this->super_model->select_custom_where("bs_details_adjustment","bs_head_adjustment_id='$p->bs_head_adjustment_id'") AS $s){
                     if($u <= 10){
-                            $data['total_sub_h']=$u;
+                            $data['total_sub_h']=$this->super_model->count_custom_where("bs_details_adjustment","bs_head_adjustment_id='$p->bs_head_adjustment_id'");
                             $data['total_sub']='';
                                 $data['sub_part'][]=array(
                                     "serial_no"=>$p->invoice_no,
@@ -3843,7 +3843,7 @@ public function upload_sales_adjustment_test(){
                     );
 
                         $h=1;
-                            $data['total_sub']=$h;
+                            $data['total_sub']=$this->super_model->count_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'");
                             $data['total_sub_h']='';
                         foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
                             if($h<=10){
