@@ -146,7 +146,7 @@
                                                     <td align="right"><?php echo $s['zero_rated_ecozones'];?></td>
                                                     <td align="right"><?php echo $s['vat_on_sales'];?></td>
                                                     <td align="right">(<?php echo $s['ewt'];?>)</td>
-                                                    <td align="right" style="padding:0px"><?php echo $d['total_amount'];?></td>
+                                                    <td align="right" style="padding:0px"><?php echo $s['total_amount'];?></td>
                                                     <td align="right" style="padding:0px">
                                                     <input type="text" class="form-control" onblur="updateSalesAdjustment('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['sales_adjustment_id']; ?>','<?php echo $s['billing_id']; ?>')" name="ewt_amount" id="ewt_amount<?php echo $x; ?>" value="<?php echo $s['ewt_amount']; ?>">
                                                     </td>
