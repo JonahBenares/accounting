@@ -4046,62 +4046,41 @@ public function upload_sales_adjustment_test(){
                 $data['company_name'][$x]=$p->company_name;
                 $data['due_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
                 $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
-                $h=0;
+                $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$p->serial_no'");
+                $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$p->serial_no'");
+                $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$p->serial_no'");
+                $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$p->serial_no'");
+                $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$p->serial_no'");
             }
 
-            $sum_vatable_sales=array_sum($vatable_sales_bs);
-            $sum_vs_exp = explode(".", $sum_vatable_sales);
-            $sum_vatable_sales_peso=$sum_vs_exp[0];
-            $sum_vatable_sales_cents=$sum_vs_exp[1];
-
-            $sum_zero_rated_ecozone=array_sum($zero_rated_ecozone_bs);
-            $sum_zre_exp=explode(".", $sum_zero_rated_ecozone);
-            $sum_zero_rated_ecozone_peso=$sum_zre_exp[0];
-            $sum_zero_rated_ecozone_cents=$sum_zre_exp[1];
-
-            $sum_vat_on_sales=array_sum($vat_on_sales_bs);
-            $sum_vos_exp=explode(".", $sum_vat_on_sales);
-            $sum_vat_on_sales_peso=$sum_vos_exp[0];
-            $sum_vat_on_sales_cents=$sum_vos_exp[1];
-
-            $sum_ewt=array_sum($ewt_bs);
-            $sum_e_exp=explode(".", $sum_ewt);
-            $sum_ewt_peso=$sum_e_exp[0];
-            $sum_ewt_cents=$sum_e_exp[1];
-
-            $sum_zero_rated=array_sum($zero_rated_bs);
-            $sum_zr_exp=explode(".", $sum_zero_rated);
-            $sum_zero_rated_peso=$sum_zr_exp[0];
-            $sum_zero_rated_cents=$sum_zr_exp[1];
-
-            $total_vs=$p->vatable_sales;
+            $total_vs=$vatable_sales;
             $vatable_sales = explode(".",$total_vs);
             $data['vat_sales_peso'][$x] = $vatable_sales[0];
             $data['vat_sales_cents'][$x] = $vatable_sales[1];
 
-            $total_zr=$p->zero_rated_sales;
+            $total_zr=$zero_rated_sales;
             $data['total_zr'][$x]=$total_zr;
             $zero_rated_sales = explode(".",$total_zr);
             $data['zero_rated_peso'][$x] = $zero_rated_sales[0];
             $data['zero_rated_cents'][$x] = $zero_rated_sales[1];
 
-            $total_zra=$p->zero_rated_ecozones;
+            $total_zra=$zero_rated_ecozones;
             $data['total_zra'][$x]=$total_zra;
             $zero_rated_ecozones_exp=explode(".", $total_zra);
             $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
             $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
 
-            $total_vos=$p->vat_on_sales;
+            $total_vos=$vat_on_sales;
             $vat_on_sales = explode(".",$total_vos);
             $data['vat_peso'][$x] = $vat_on_sales[0];
             $data['vat_cents'][$x] = $vat_on_sales[1];
 
-            $total_ewt=$p->ewt;
+            $total_ewt=$ewt;
             $ewt_exp=explode(".", $total_ewt);
             $data['ewt_peso'][$x]=$ewt_exp[0];
             $data['ewt_cents'][$x]=$ewt_exp[1];
 
-            $total= ($p->vatable_sales + $p->vat_on_sales + $p->zero_rated_ecozones + $p->zero_rated_sales) - $p->ewt;
+            $total= ($total_vs + $total_vos + $total_zra + $total_zr) - $total_ewt;
             $total_amount=str_replace(',','',number_format($total,2));
 
             $data['total_amount'][$x]=$total_amount;
