@@ -2674,7 +2674,7 @@ public function print_BS_new(){
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu ORDER BY serial_no ASC, item_no ASC") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $data['details'][]=array(
@@ -2722,7 +2722,7 @@ public function print_BS_new(){
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
             /*foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){*/
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu ORDER BY serial_no ASC, item_no ASC") AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
                 //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
                 $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
