@@ -2675,12 +2675,14 @@ public function print_BS_new(){
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu") AS $d){
+                $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->adjustment_detail_id,
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
                     'item_no'=>$d->item_no,
-                    'series_number'=>$d->serial_no,
-                    'old_series_no_col'=>$d->old_series_no,
+                    'series_number'=>$series_number,
+                    'old_series_no_col'=>$old_series_no,
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
@@ -2726,13 +2728,15 @@ public function print_BS_new(){
                 $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
                 //echo $sub_participant. "<br>";
                 //if($participant_id != $sub_participant){
+                $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 if($sub_participant==0){
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->adjustment_detail_id,
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
                     'item_no'=>$d->item_no,
-                    //'series_number'=>$d->series_number,
-                    //'old_series_no_col'=>$old_series_no,
+                    'series_number'=>$series_number,
+                    'old_series_no_col'=>$old_series_no,
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
