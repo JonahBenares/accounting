@@ -588,7 +588,7 @@ public function print_BS_new(){
                             $data['ewt_s']=$s->ewt;
                             $data['overall_total_sub']=$overall_total;
                             $data['participant_id_sub']=$participant_id;
-                            $data['total_sub_h']=$u;
+                            $data['total_sub_h']= $this->super_model->count_custom_where("bs_details","bs_head_id='$p->bs_head_id'");
                             $data['total_sub']='';
                                 $data['sub_part'][]=array(
                                     "participant_id"=>$participant_id,
@@ -714,8 +714,6 @@ public function print_BS_new(){
                     foreach($this->super_model->select_custom_where("subparticipant","participant_id = '$participant_id'") AS $sp){
                             $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$sp->sub_participant);
                             //$billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$sp->sub_participant);
-                            $data['total_sub']=$h;
-                            $data['total_sub_h']='';
                         foreach($this->super_model->select_custom_where("sales_transaction_details","billing_id = '$subparticipant' AND sales_id = '$p->sales_id' AND total_amount != '0'") AS $s){
                             if($h<=14){
 
@@ -743,7 +741,7 @@ public function print_BS_new(){
                                     //$data['overall_total_sub'][$h]=$overall_total;
                                     $data['participant_id_sub'][$h]=$sp->participant_id;
                                     $data['sub_part'][]=array(
-                                        "counter"=>$h,
+                                        "counter"=>$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'"),
                                         "counter_h"=>'',
                                         "participant_id"=>$sp->participant_id,
                                         "sub_participant"=>$subparticipant,
