@@ -554,7 +554,7 @@ public function print_BS_new(){
                     $data['sub_participant'][$x]=$billing_id;
                     $data['vatable_sales'][$x]=$vatable_sales;
                     $data['vat_on_sales'][$x]=$vat;
-                    $data['zero_rated_sales'][$x]=$zero_rated_sales;
+                    $data['zero_rated'][$x]=$zero_rated_sales;
                     $data['rated_sales'][$x]=$p->total_zero_sales;
                     $data['zero_ecozones_sales'][$x]=$p->total_zero_ecozones;
                     $data['total_amount'][$x]=$total_amount;
@@ -689,7 +689,7 @@ public function print_BS_new(){
                     $data['sub_participant'][$x]=$p->billing_id;
                     $data['vatable_sales'][$x]=$p->vatable_sales;
                     $data['vat_on_sales'][$x]=$p->vat_on_sales;
-                    $data['zero_rated_sales'][$x]=$zero_rated;
+                    $data['zero_rated'][$x]=$zero_rated;
                     $data['rated_sales'][$x]=$p->zero_rated_sales;
                     $data['zero_ecozones_sales'][$x]=$p->zero_rated_ecozones;
                     $data['total_amount'][$x]=$total_amount;
@@ -722,6 +722,7 @@ public function print_BS_new(){
                                     $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","sales_detail_id",$s->sales_detail_id);
                                     $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","sales_detail_id",$s->sales_detail_id);
                                     $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","sales_detail_id",$s->sales_detail_id);
+
 
                                     // $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
                                     // $zero_rated_sales=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
