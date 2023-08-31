@@ -1090,7 +1090,7 @@ async function upload_bulkupdate_adjustment() {
             },
             success: function(output){
                 $("#alt").hide(); 
-              
+                //console.log(output);
                 window.location=loc+'sales/bulk_update_adjustment/'+due+'/'+identifier;
             }
         });
