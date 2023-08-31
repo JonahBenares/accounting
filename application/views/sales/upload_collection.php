@@ -11,7 +11,7 @@ if(!empty($collection_id)){
 if(!empty($saved)){
     $saved = $saved;
 } else {
-    $saved='';
+    $saved=0;
 }
 ?>
 <div class="main-content">

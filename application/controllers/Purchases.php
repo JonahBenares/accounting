@@ -1,6 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+require FCPATH.'vendor\autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writerxlsx;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx as readerxlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing as drawing; // Instead PHPExcel_Worksheet_Drawing
+use PhpOffice\PhpSpreadsheet\Style\Alignment as alignment; // Instead alignment
+use PhpOffice\PhpSpreadsheet\Style\Border as border;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat as numberformat;
+use PhpOffice\PhpSpreadsheet\Style\Fill as fill; // Instead fill
+use PhpOffice\PhpSpreadsheet\Style\Color as color; //Instead PHPExcel_Style_Color
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup as pagesetup; // Instead PHPExcel_Worksheet_PageSetup
+use PhpOffice\PhpSpreadsheet\IOFactory as io_factory; // Instead PHPExcel_IOFactory
 class Purchases extends CI_Controller {
 
     function __construct(){
@@ -146,17 +158,12 @@ class Purchases extends CI_Controller {
     }
 
     public function readExcel_inv($purchase_id){
-
-        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
-        $objPHPExcel = new PHPExcel();
-
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
         $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases.xlsx');
-
        try {
-            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-        
-   
+            $inputFileType = io_factory::identify($inputFileName);
+            $objReader = io_factory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($inputFileName);
         } 
         catch(Exception $e) {
@@ -168,17 +175,17 @@ class Purchases extends CI_Controller {
         $y=1;
         for($x=3;$x<$highestRow;$x++){
             //$itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
-            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+            $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
             $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
             $company_name=$this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
             if($shortname!="" || !empty($shortname)){
                 //$billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
                 $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
-                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
-                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
-                $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
-                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+                $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
+                $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
+                $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
+                $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue() ?? '');
+                $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue() ?? '');
                 //$vatables_purchases = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue(),'()');
                 //$vatables_purchases = trim($vatables_purchases,"-");
                 //$zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue(),'()');
@@ -889,7 +896,7 @@ class Purchases extends CI_Controller {
         $or_no=$this->uri->segment(5);
         $original_copy=$this->uri->segment(6);
         $scanned_copy=$this->uri->segment(7);
-        $ors=str_replace("%5E","",$or_no);
+        $ors=str_replace("%5E","",$or_no ?? '');
         $data['or_nos']=$or_no;
         $data['original_copy']=$original_copy;
         $data['scanned_copy']=$scanned_copy;
@@ -967,7 +974,7 @@ class Purchases extends CI_Controller {
         $or_no=$this->uri->segment(6);
         $original_copy=$this->uri->segment(7);
         $scanned_copy=$this->uri->segment(8);
-        $ors=str_replace("%5E","",$or_no);
+        $ors=str_replace("%5E","",$or_no ?? '');
         $data['or_nos']=$or_no;
         $data['original_copy']=$original_copy;
         $data['scanned_copy']=$scanned_copy;
@@ -1531,8 +1538,8 @@ class Purchases extends CI_Controller {
 
     public function upload_purchase_adjust(){
         
-        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
-        $objPHPExcel = new PHPExcel();
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
         $count = $this->input->post('count');
         $adjust_identifier = $this->input->post('adjust_identifier');
         for($x=0;$x<$count;$x++){
@@ -1553,8 +1560,8 @@ class Purchases extends CI_Controller {
                         //for($a=0;$a<$count;$a++){
                             $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases_adjust'.$x.'.xlsx');
                             try {
-                                $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-                                $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                                $inputFileType = io_factory::identify($inputFileName);
+                                $objReader = io_factory::createReader($inputFileType);
                             
                        
                                 $objPHPExcel = $objReader->load($inputFileName);
@@ -1564,12 +1571,12 @@ class Purchases extends CI_Controller {
                             }
                             $objPHPExcel->setActiveSheetIndex(2);
 
-                            $reference_number = trim($objPHPExcel->getActiveSheet()->getCell('A2')->getFormattedValue());
-                            $transaction_date = trim($objPHPExcel->getActiveSheet()->getCell('B2')->getFormattedValue());
-                            $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
-                            $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
-                            $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
-                            $remarks = trim($objPHPExcel->getActiveSheet()->getCell('F2')->getFormattedValue());
+                            $reference_number = trim($objPHPExcel->getActiveSheet()->getCell('A2')->getFormattedValue() ?? '');
+                            $transaction_date = trim($objPHPExcel->getActiveSheet()->getCell('B2')->getFormattedValue() ?? '');
+                            $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue() ?? '');
+                            $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue() ?? '');
+                            $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue() ?? '');
+                            $remarks = trim($objPHPExcel->getActiveSheet()->getCell('F2')->getFormattedValue() ?? '');
                             //$remarks = $this->input->post('remarks['.$x.']');
                             $data_insert=array(
                                 'reference_number'=>$reference_number,
@@ -1590,16 +1597,16 @@ class Purchases extends CI_Controller {
                             $highestRow = $highestRow-1;
                             $y=1;
                             for($z=4;$z<$highestRow;$z++){
-                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
                                 $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 $company_name=$this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if($shortname!="" || !empty($shortname)){
                                     $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
-                                    $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
-                                    $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
-                                    $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
-                                    $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
-                                    $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
+                                    $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue() ?? '');
+                                    $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue() ?? '');
+                                    $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue() ?? '');
+                                    $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue() ?? '');
+                                    $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue() ?? '');
                                     $vatables_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
                                     $zero_rated_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
                                     $zero_rated_ecozone = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue());
@@ -1673,8 +1680,8 @@ class Purchases extends CI_Controller {
     }
 
     public function display_upload_purchase_adjust(){
-        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
-        $objPHPExcel = new PHPExcel();
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
         $count = $this->input->post('count');
         $adjust_identifier = $this->input->post('adjust_identifier');
         $x=0;
@@ -1693,8 +1700,8 @@ class Purchases extends CI_Controller {
                         //for($a=0;$a<$count;$a++){
                             $inputFileName =realpath(APPPATH.'../uploads/excel/wesm_purchases_adjust'.$x.'.xlsx');
                             try {
-                                $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-                                $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                                $inputFileType = io_factory::identify($inputFileName);
+                                $objReader = io_factory::createReader($inputFileType);
                             
                        
                                 $objPHPExcel = $objReader->load($inputFileName);
@@ -1704,12 +1711,12 @@ class Purchases extends CI_Controller {
                             }
                             $objPHPExcel->setActiveSheetIndex(2);
 
-                            $reference_number = trim($objPHPExcel->getActiveSheet()->getCell('A2')->getFormattedValue());
-                            $transaction_date = trim($objPHPExcel->getActiveSheet()->getCell('B2')->getFormattedValue());
-                            $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue());
-                            $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue());
-                            $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue());
-                            $remarks = trim($objPHPExcel->getActiveSheet()->getCell('F2')->getFormattedValue());
+                            $reference_number = trim($objPHPExcel->getActiveSheet()->getCell('A2')->getFormattedValue() ?? '');
+                            $transaction_date = trim($objPHPExcel->getActiveSheet()->getCell('B2')->getFormattedValue() ?? '');
+                            $billing_from = trim($objPHPExcel->getActiveSheet()->getCell('C2')->getFormattedValue() ?? '');
+                            $billing_to = trim($objPHPExcel->getActiveSheet()->getCell('D2')->getFormattedValue() ?? '');
+                            $due_date = trim($objPHPExcel->getActiveSheet()->getCell('E2')->getFormattedValue() ?? '');
+                            $remarks = trim($objPHPExcel->getActiveSheet()->getCell('F2')->getFormattedValue() ?? '');
                             //$remarks = $this->input->post('remarks['.$x.']');
                             $data_insert=array(
                                 'reference_number'=>$reference_number,
@@ -1730,16 +1737,16 @@ class Purchases extends CI_Controller {
                             $highestRow = $highestRow-1;
                             $y=1;
                             for($z=4;$z<$highestRow;$z++){
-                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
+                                $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
                                 $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 $company_name = $this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if($shortname!="" || !empty($shortname)){
                                     $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
-                                    $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
-                                    $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
-                                    $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
-                                    $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue());
-                                    $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue());
+                                    $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue() ?? '');
+                                    $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue() ?? '');
+                                    $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue() ?? '');
+                                    $non_vatable = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue() ?? '');
+                                    $zero_rated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$z)->getFormattedValue() ?? '');
                                     $vatables_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('I'.$z)->getFormattedValue());
                                     $zero_rated_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue());
                                     $zero_rated_ecozone = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue());
@@ -1889,17 +1896,12 @@ class Purchases extends CI_Controller {
     }
 
     public function readExcel_or($purchase_id){
-
-        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
-        $objPHPExcel = new PHPExcel();
-
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
         $inputFileName =realpath(APPPATH.'../uploads/excel/bulk_updates_of_OR.xlsx');
-
        try {
-            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-        
-   
+            $inputFileType = io_factory::identify($inputFileName);
+            $objReader = io_factory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($inputFileName);
         } 
         catch(Exception $e) {
@@ -1911,11 +1913,11 @@ class Purchases extends CI_Controller {
         for($x=2;$x<=$highestRow;$x++){
             $identifier = $this->input->post('identifier');
             $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());   
-            $or_no = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $or_no = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
             //$total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getOldCalculatedValue());
             $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
-            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
-            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
+            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
      
             $data_or = array(
                 'or_no'=>$or_no,
@@ -1934,9 +1936,9 @@ class Purchases extends CI_Controller {
         $or_no=$this->uri->segment(5);
         $original_copy=$this->uri->segment(6);
         $scanned_copy=$this->uri->segment(7);
-        $ors=str_replace("%5E","",$or_no);
-        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
-        $objPHPExcel = new PHPExcel();
+        $ors=str_replace("%5E","",$or_no ?? '');
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
         $exportfilename="Purchase Wesm Transcation.xlsx";
         $sql='';
         $sql1='';
@@ -1962,6 +1964,7 @@ class Purchases extends CI_Controller {
         $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
         
         $query_filter=substr($sql1,0,-4);
+        $qufilt='';
         if($query_filter!=''){
             $qufilt = " AND ".$query_filter;
         }
@@ -1982,12 +1985,13 @@ class Purchases extends CI_Controller {
             $objPHPExcel->getActiveSheet()->mergeCells('A3:E3');
             $objPHPExcel->getActiveSheet()->mergeCells('G1:J1');
             $objPHPExcel->getActiveSheet()->mergeCells('G2:J2');
-            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-            $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+            // $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+            // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
             $styleArray = array(
                 'borders' => array(
-                    'allborders' => array(
-                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                    'allBorders' => array(
+                        'borderStyle' => border::BORDER_THIN,
+                        'color' => ['rgb' => '000000'],
                     )
                 )
             );
@@ -2045,25 +2049,29 @@ class Purchases extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "");
                 }
                 $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
-                $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
                 $num++;
                 $x++;
             }
             $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
-            $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
         }
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        if (file_exists($exportfilename))
-        unlink($exportfilename);
-        $objWriter->save($exportfilename);
-        unset($objPHPExcel);
-        unset($objWriter);   
-        ob_end_clean();
+        
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Purchase Wesm Transcation.xlsx"');
-        readfile($exportfilename);
+        header('Content-Disposition: attachment;filename="Purchase Wesm Transcation.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+        
+        
+        // if (file_exists($exportfilename))
+        // unlink($exportfilename);
+        // unset($objPHPExcel);
+        // unset($objWriter);   
+        // ob_end_clean();
+        //readfile($exportfilename);
     }
 
     public function export_purchasetransadjust(){
@@ -2073,9 +2081,9 @@ class Purchases extends CI_Controller {
         $or_no=$this->uri->segment(6);
         $original_copy=$this->uri->segment(7);
         $scanned_copy=$this->uri->segment(8);
-        $ors=str_replace("%5E","",$or_no);
-        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
-        $objPHPExcel = new PHPExcel();
+        $ors=str_replace("%5E","",$or_no ?? '');
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
         $exportfilename="Purchase Wesm Transcation Adjustment.xlsx";
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
             $sql='';
@@ -2124,12 +2132,11 @@ class Purchases extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->mergeCells('A3:E3');
                 $objPHPExcel->getActiveSheet()->mergeCells('G1:J1');
                 $objPHPExcel->getActiveSheet()->mergeCells('G2:J2');
-                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-                $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
                 $styleArray = array(
                     'borders' => array(
-                        'allborders' => array(
-                            'style' => PHPExcel_Style_Border::BORDER_THIN
+                        'allBorders' => array(
+                            'borderStyle' => border::BORDER_THIN,
+                            'color' => ['rgb' => '000000'],
                         )
                     )
                 );
@@ -2157,7 +2164,7 @@ class Purchases extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->getStyle("A5:R5")->applyFromArray($styleArray);
                 
                 foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
-                    echo $x."<br>";
+                    //echo $x."<br>";
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
@@ -2189,14 +2196,14 @@ class Purchases extends CI_Controller {
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "");
                     }
                     $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                    $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                    $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     $num++;
                     $x++;
                 }
                 $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
-                $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
             }
         }else if($in_ex_sub==1){
             $sql='';
@@ -2244,12 +2251,11 @@ class Purchases extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->mergeCells('A3:E3');
                 $objPHPExcel->getActiveSheet()->mergeCells('G1:J1');
                 $objPHPExcel->getActiveSheet()->mergeCells('G2:J2');
-                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-                $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
                 $styleArray = array(
                     'borders' => array(
-                        'allborders' => array(
-                            'style' => PHPExcel_Style_Border::BORDER_THIN
+                        'allBorders' => array(
+                            'borderStyle' => border::BORDER_THIN,
+                            'color' => ['rgb' => '000000'],
                         )
                     )
                 );
@@ -2312,26 +2318,31 @@ class Purchases extends CI_Controller {
                             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, "");
                         }
                         $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
-                        $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                        $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                        $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                        $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":R".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":N".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);$objPHPExcel->getActiveSheet()->getStyle('P'.$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
                         $num++;
                         $x++;
                     }
                 }
                 $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getFont()->setBold(true);
-                $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('A5:R5')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
             }
         }
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        if (file_exists($exportfilename))
-        unlink($exportfilename);
-        $objWriter->save($exportfilename);
-        unset($objPHPExcel);
-        unset($objWriter);   
-        ob_end_clean();
+        //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Purchase Wesm Transcation Adjustment.xlsx"');
-        readfile($exportfilename);
+        header('Content-Disposition: attachment;filename="Purchase Wesm Transcation Adjustment.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+        // if (file_exists($exportfilename))
+        // unlink($exportfilename);
+        // $objWriter->save($exportfilename);
+        // unset($objPHPExcel);
+        // unset($objWriter);   
+        // ob_end_clean();
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment; filename="Purchase Wesm Transcation Adjustment.xlsx"');
+        //readfile($exportfilename);
     }
 }

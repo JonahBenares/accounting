@@ -131,11 +131,11 @@
                                         <tr>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo $a['date']; ?></td>
                                             <td style="border-bottom: 1px solid #e5e5e5;"><?php echo $a['or_no']; ?></td>
-                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>", $a['stl_id']); ?></td>
-                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['company_name']); ?></td>
-                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>", $a['amount']); ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>", $a['stl_id'] ?? ''); ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['company_name'] ?? ''); ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>", $a['amount'] ?? ''); ?></td>
                                             <?php if(empty($a['date'])){ ?>
-                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['remarks']); ?></td>
+                                            <td style="border-bottom: 1px solid #e5e5e5;"><?php echo str_replace("-", "<br>",$a['remarks'] ?? ''); ?></td>
                                             <?php } else { ?>
                                                 <td style="border-bottom: 1px solid #e5e5e5;"></td>
                                             <?php } ?>
