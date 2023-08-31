@@ -4096,4 +4096,12 @@ public function upload_sales_adjustment_test(){
         $this->load->view('template/print_head');
         $this->load->view('sales/print_invoice_adjustment_multiple',$data);
     }
+
+    public function export_not_download()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/export_not_download');
+        $this->load->view('template/footer');
+    }
 }
