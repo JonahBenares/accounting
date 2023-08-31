@@ -221,14 +221,6 @@ class Test extends CI_Controller {
                         
                     }
                     //$count_camount=$this->super_model->select_custom_sum_where('collection_details','settlement_id',$details->short_name,"settlement_id='$details->short_name' AND reference_no IN($referenceno) AND amount!='0'");
-<<<<<<< HEAD
-                    $count_camount=$this->super_model->count_custom("SELECT settlement_id FROM collection_details WHERE settlement_id='$details->short_name' AND reference_no IN($referenceno)");
-                    $cvatsal_amount=$camount." Total: ".$this->collection_sum($details->short_name,$details->reference_number,'amount');
-                    $czerorated_amount=$czerorated." Total: ".$this->collection_sum($details->short_name,$details->reference_number,'zero_rated');
-                    $czeroratedeco_amount=$czeroratedeco." Total: ".$this->collection_sum($details->short_name,$details->reference_number,'zero_rated_ecozone');
-                    $cvatonsal_amount=$cvat." Total: ".$this->collection_sum($details->short_name,$details->reference_number,'vat');
-                    $cewt_amount=$cewt." Total: ".$this->collection_sum($details->short_name,$details->reference_number,'ewt');
-=======
                     $count_camount=$this->super_model->count_custom("SELECT settlement_id FROM collection_details WHERE settlement_id='$details->short_name' AND reference_no IN($referenceno) AND amount!= 0");
                    // echo "SELECT settlement_id FROM collection_details WHERE settlement_id='$details->short_name' AND reference_no IN($referenceno)<br>";
                     //echo $count_camount . " = " . $details->short_name . " - " .   $referenceno . "<br>";
@@ -237,7 +229,6 @@ class Test extends CI_Controller {
                     $czeroratedeco_amount=$czeroratedeco." Total: ".number_format($this->collection_sum($details->short_name,$details->reference_number,'zero_rated_ecozone'),2);
                     $cvatonsal_amount=$cvat." Total: ".number_format($this->collection_sum($details->short_name,$details->reference_number,'vat'),2);
                     $cewt_amount=$cewt." Total: ".number_format($this->collection_sum($details->short_name,$details->reference_number,'ewt'),2);
->>>>>>> 0013dcb0e829d1a5ea4e4513eafdc7b00bd800ea
 
                     //Collection Balance
                     $bal_camount=$this->collection_sum($details->short_name,$details->reference_number,'amount');
@@ -431,11 +422,6 @@ class Test extends CI_Controller {
             $sheetno++;
             }
         }
-<<<<<<< HEAD
-        //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        
-        $objWriter = new Xlsx($objPHPExcel);
-=======
         // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         // if (file_exists($exportfilename))
         // unlink($exportfilename);
@@ -804,7 +790,6 @@ class Test extends CI_Controller {
             }
         }
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
->>>>>>> 0013dcb0e829d1a5ea4e4513eafdc7b00bd800ea
         if (file_exists($exportfilename))
         unlink($exportfilename);
         $objWriter->save($exportfilename);
