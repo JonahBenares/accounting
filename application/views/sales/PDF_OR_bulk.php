@@ -165,16 +165,22 @@
 
                         //pdf.addPage(PDF_Width, PDF_Height);
                         pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-
-                        $.ajax({
-                        data: 'series_no='+series_no+'&stl_id='+stl_id+'&reference_no='+reference_no+'&collection_id='+collection_id,
-                        type: "POST",
-                        url: redirect,
-                        success: function(output){
-                            //console.log(output);
-                            pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
-                        }
-                    });
+                       
+                       if(pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf")){
+                        alert(series_no);
+                       }
+                       
+                                $.ajax({
+                                    data: 'series_no='+series_no+'&stl_id='+stl_id+'&reference_no='+reference_no+'&collection_id='+collection_id,
+                                    type: "POST",
+                                    url: redirect,
+                                    success: function(output){
+                                        //console.log(output);
+                                    
+                                       
+                                    }
+                                });
+                        
               });
         }
    });

@@ -531,6 +531,22 @@ function saveBseries(baseurl,count,sales_detail_id,serial_no){
 	});
 }
 
+function saveBseriesadjustment(baseurl,count,sales_detail_id,serial_no){
+    var redirect = baseurl+"sales/update_BSeriesnoAdjustment";
+    var series_number=document.getElementById("series_number"+count).value;
+
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'sales_detail_id='+sales_detail_id+'&serial_no='+serial_no+'&series_number='+series_number,
+        dataType: "json",
+		success: function(response){
+			document.getElementById("series_number"+count).value=response.series_number;
+			//location.reload();
+		}
+	});
+}
+
 
 
 
@@ -765,6 +781,32 @@ function printMultiple(){
             //window.open(loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
             window.open(loc+'sales/print_BS_new/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
            	//window.location=loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2];
+        }
+    });
+}
+
+function printMultipleAdjustment(){
+	var x = document.getElementsByClassName("multiple_print");
+	var loc= document.getElementById("baseurl").value;
+ 	var redirect = loc+"sales/print_multiple_adjustment";
+ 	var form = document.querySelector('#print_mult');
+    var formData = new FormData(form);
+	for(var i =0;i<x.length;i++){
+		if(document.getElementsByClassName('multiple_print')[i].checked){
+			multiple_print= document.querySelector('input[name="multiple_print[]"]').value;
+			formData.append('multiple_print'+[i], multiple_print);
+		}
+    }
+    $.ajax({
+        type: "POST",
+        url: redirect,
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(output){
+            var exp=output.split(",");
+            //window.open(loc+'sales/print_BS_multiple/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
+            window.open(loc+'sales/print_bs_adjustment/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
         }
     });
 }
@@ -1141,6 +1183,25 @@ function printbs_history(){
 	var data = $("#InsertBS").serialize();
 	var loc= document.getElementById("baseurl").value;
     var redirect = loc+"sales/insert_printbs";
+	    $.ajax({
+	        data: data,
+	        type: "POST",
+	        url: redirect,
+	        success: function(output){
+	        	
+	         window.print();  
+	         //alert(output);
+	         //console.log(output);
+	         //print_r(output);
+	        }
+	    }); 
+	     //window.print();
+}
+
+function printbs_adjustment_history(){
+	var data = $("#InsertBSAdjustment").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/insert_printbs_adjustment";
 	    $.ajax({
 	        data: data,
 	        type: "POST",
