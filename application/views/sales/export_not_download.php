@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                        <form>
+                    <form method="POST" action="<?php echo base_url(); ?>sales/pdf_scan_directory">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">  
                                     <div>
@@ -46,8 +46,15 @@
                                 </div>
                             </div>
                             <div class="card-body">
+                            <?php if(!empty($result)){ ?>
                                 
-                                <span class="p-2">The following file/s are not downloaded. Please click Download button below.</span>
+                                <div class="alert alert-danger  alert-dismissible fade show mt-2" role="alert">
+                                        <span class="p-2">The following file/s are not downloaded. Please click Download button below.</span>
+                                        
+                                        <button class="close" onclick="history.back()" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div> 
                                 <table class="table-bordered table table-hosver mt-2"> 
                                     <thead>
                                         <tr>
@@ -55,16 +62,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="td-btm pt-1 pb-1">File Name</td>
-                                        </tr>
+                                        <?php 
+                                       
+                                            foreach($result AS $r){ ?>
+                                            <tr>
+                                                <td class="td-btm pt-1 pb-1"><?php echo $r ?></td>
+                                                <input type="hidden" name="filenames[]" value="<?php echo $r; ?>">
+                                            </tr>
+                                            <?php }  ?>
+                                       
                                     </tbody>
                                 </table>
                                 <div class="">
                                     <center>
-                                        <button type="button" class="btn btn-success">Download All</button>
+                                        <input type="submit" class="btn btn-success" value="Download All">
                                     </center>
                                 </div>
+                                <?php } else {?>
+                                    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                                        <span class="p-2">All files were successfully downloaded!</span>
+                                        
+                                        <button class="close" onclick="history.back()" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div> 
+                                    
+                                <?php } ?>
                             </div>
                             
                         </form>
