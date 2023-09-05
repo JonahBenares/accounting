@@ -44,7 +44,7 @@
     $y=0; 
     foreach($sub AS $as){
             $vatable_arraysum[][$y]=$vatable_sales[$y];
-            $zerorated_arraysum[][$y]=$zero_rated_sales[$y];
+            $zerorated_arraysum[][$y]=$zero_rated[$y];
             $zeroecozones_arraysum[][$y]=$zero_ecozones_sales[$y];
             $ratedsales_arraysum[][$y]=$rated_sales[$y];
             $total_arraysum[][$y]=$total_amount[$y];
@@ -174,7 +174,7 @@
                                     $vat=$total_vat[$y];
                                     $ewt_arr=$total_ewt[$y];
                                     $overall_totals=$total_net_amount[$y];
-                                }else{ 
+                                }else{
                                     $vatable=array_sum($vatable_arraysum[$y]);
                                     $zero=array_sum($zerorated_arraysum[$y]);
                                     $zero_ecozones=array_sum($zeroecozones_arraysum[$y]);
@@ -204,6 +204,7 @@
                         </tr> 
                         <?php } ?>
                         <?php
+
                             if(!empty($sub_part)){ 
                                 $h=1;
                                 $x=1;
@@ -234,6 +235,7 @@
                                             $ewt_arr+=$sps['ewt'];
                                             $overall_totals+=$sps['overall_total'];
                                         }
+
                         ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><?php echo $sps['sub_participant'];?></td>
@@ -252,7 +254,7 @@
                             <input type="hidden" id="details_id" name="details_id[]" class="form-control" value="<?php echo $detail_id[$y]; ?>">
                         </tr> 
                         <?php } $h++; } $x++; } } ?>
-                        <?php if($total_sub <=14 && $total_sub_h <=14){ ?>
+                        <?php if(($total_sub <=14 && $total_sub_h <=15) || ($total_sub !=1 && $total_sub_h !=1)){ ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><b>TOTAL AMOUNT</b></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"><?php echo number_format($vatable,2); ?></td>

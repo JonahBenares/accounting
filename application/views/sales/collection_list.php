@@ -38,9 +38,19 @@
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
                         <form>
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">  
+                                    <div>
+                                        <h4>Collection List</h4>
+                                    </div>
+                                    <div>
+                                        <a href="<?php echo base_url();?>sales/PDF_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $stl_id;?>" target='_blank' class="btn btn-success btn-block" style="margin-top:4px">Export Bulk PDF</a>   
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-10 col-md-10 col-sm-10 " style="border-right:1px solid #e5e5e5">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 ">
                                         <table width="100%">
                                             <tr>
                                                 <td width="22%">
@@ -69,15 +79,21 @@
                                                 </td>
                                                 <td width="1%">
                                                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                                                    <input type='button' class="btn btn-primary"  onclick="collection_filter()" value="Filter">
+                                                    <input type='button' class="btn btn-primary btn-block"  onclick="collection_filter()" value="Filter">
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <a href="<?php echo base_url();?>sales/PDF_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $stl_id;?>" target='_blank' class="btn btn-success btn-block" style="margin-top:4px">Export Bulk PDF</a>   
-                                    </div>
+                                    
                                 </div>
+
+                                <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                                    <strong>Oh no!</strong> There are certain files that are not downloaded.
+                                    <a href="<?php echo base_url(); ?>sales/export_not_download"><u>Click here</u></a>to show and download.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>  
                                 <hr>
                                 <?php if(!empty($collection)){ ?>
                                     <div style="overflow-x:scroll;">

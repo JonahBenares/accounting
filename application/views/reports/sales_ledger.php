@@ -207,25 +207,25 @@
                                             <td align="left" class="td-sticky left-col-2 sticky-back"><?php echo $b['company_name']; ?></td>
                                             <td align="center" class="td-sticky left-col-3 sticky-back"><?php echo ($b['billing_from']!='' && $b['billing_to']!='') ? date("F d,Y",strtotime($b['billing_from']))." - ".date("F d,Y",strtotime($b['billing_to'])) : ''; ?></td>
                                             <td align="center" class="td-sticky left-col-4 sticky-back"><?php echo $b['reference_number']; ?></td>
-                                            <td align="right"><?php echo number_format($b['vatable_sales'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['cvatable_sales'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['vatablebalance'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['vatable_sales'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['cvatable_sales'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['vatablebalance'],2); ?></td>
 
-                                            <td align="right"><?php echo number_format($b['zero_rated_sales'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['czero_rated_sales'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['zerobalance'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['zero_rated_sales'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['czero_rated_sales'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['zerobalance'],2); ?></td>
 
-                                            <td align="right"><?php echo number_format($b['zero_rated_ecozones'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['czero_rated_ecozone'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['zeroecobalance'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['zero_rated_ecozones'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['czero_rated_ecozone'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['zeroecobalance'],2); ?></td>
 
-                                            <td align="right"><?php echo number_format($b['vat_on_sales'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['cvat_on_sales'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['vatbalance'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['vat_on_sales'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['cvat_on_sales'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['vatbalance'],2); ?></td>
 
-                                            <td align="right"><?php echo number_format($b['ewt'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['cewt'],2); ?></td>
-                                            <td align="right"><?php echo number_format($b['ewtbalance'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['ewt'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['cewt'],2); ?></td>
+                                            <td align="right"><?php echo number_format((float)$b['ewtbalance'],2); ?></td>
                                         </tr>
                                         <?php } } ?>
                                     </tbody>
