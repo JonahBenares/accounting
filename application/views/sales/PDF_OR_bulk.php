@@ -104,6 +104,7 @@
 <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
 <input type="hidden" class="reference_no<?php echo $x; ?>" id="reference_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
 <input type="hidden" class="collection_id<?php echo $x; ?>" id="collection_id<?php echo $x; ?>" value="<?php echo $d['collection_id']; ?>">
+<input type="hidden" class="collection_details_id<?php echo $x; ?>" id="collection_details_id<?php echo $x; ?>" value="<?php echo $d['collection_details_id']; ?>">
 <input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $d['billing_month']; ?>">
 <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
@@ -125,9 +126,9 @@
         for(let a=1;a<counter;a++){
            
         
-            //var billing_month=document.getElementById('billing_month'+a).value;
-            //var refno=document.getElementById('ref_no'+a).value;
-            // var shortname=document.getElementById('stl_id'+a).value;
+            var billing_month=document.getElementById('billing_month'+a).value;
+            var refno=document.getElementById('ref_no'+a).value;
+            var shortname=document.getElementById('stl_id'+a).value;
           
             var HTML_Width = $(".canvas_div_pdf"+a).width();
             var HTML_Height = $(".canvas_div_pdf"+a).height();
@@ -166,12 +167,12 @@
                         //pdf.addPage(PDF_Width, PDF_Height);
                         pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                        
-                       if(pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf")){
-                        alert(series_no);
-                       }
+                        var fname = "OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf";
+                       pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
+                       
                        
                                 $.ajax({
-                                    data: 'series_no='+series_no+'&stl_id='+stl_id+'&reference_no='+reference_no+'&collection_id='+collection_id,
+                                    data: 'series_no='+series_no+'&stl_id='+stl_id+'&reference_no='+reference_no+'&collection_id='+collection_id+'&filename='+fname,
                                     type: "POST",
                                     url: redirect,
                                     success: function(output){

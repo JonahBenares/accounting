@@ -3410,6 +3410,7 @@ public function upload_sales_adjustment_test(){
             $defint =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND reference_no='$col->reference_no' AND series_number='$col->series_number'");
 
             $data['details'][] = array(
+                'collection_details_id'=>$col->collection_details_id,
                 'collection_id'=>$col->collection_id,
                 'billing_id'=>$billing_id,
                 'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id),
@@ -3430,6 +3431,8 @@ public function upload_sales_adjustment_test(){
                 'billing_month'=>$billing_month,
             );
         }
+
+       
         $this->load->view('sales/PDF_OR_bulk',$data);
     }
 
@@ -3438,14 +3441,67 @@ public function upload_sales_adjustment_test(){
         $settlement_id = $this->input->post('stl_id');
         $reference_no = $this->input->post('reference_no');
         $collection_id = $this->input->post('collection_id');
+        //$collection_details_id = $this->input->post('collection_details_id');
+        $filename = $this->input->post('filename');
         $data_update = array(
-                "bulk_pdf_flag"=>1
+                "bulk_pdf_flag"=>1,
+                "filename"=>$filename
             );
             //$this->super_model->update_where("collection_details", $data_update, "series_number", $series_number);
+            //echo $collection_details_id;
             $this->super_model->update_custom_where("collection_details", $data_update, "series_number='$series_number' AND settlement_id='$settlement_id' AND reference_no='$reference_no' AND collection_id='$collection_id'");
             //echo $series_number."-".$settlement_id."-".$reference_no."-".$collection_id;
     }
 
+    public function scan_directory(){
+        $date=$this->uri->segment(3);
+        $ref_no=$this->uri->segment(4);
+        $stl_id=$this->uri->segment(5);
+
+        $sql="";
+
+       
+
+        if($date!='null'){
+            $sql.= "ch.collection_date = '$date' AND ";
+        } if($ref_no!='null'){
+             $sql.= "cd.reference_no = '$ref_no' AND "; 
+        } if($stl_id!='null'){
+             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        }
+        $query=substr($sql,0,-4);
+        $qu = "bulk_pdf_flag = '1' AND series_number != '0' AND saved = '1' AND ".$query;
+
+        $dir    = "C:\Users\Jonah Benares\Downloads\/";
+        $files = scandir($dir,1);
+
+       
+        $db_files = array();
+        $pdffiles = array();
+        $valid_files = array('pdf');
+        if(is_dir($dir)){
+        foreach(scandir($dir) as $file){
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            if(in_array($ext, $valid_files)){
+             array_push($pdffiles, $file);
+            }   
+        }
+        }
+        
+       // echo "SELECT filename FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no";
+       foreach($this->super_model->custom_query("SELECT filename FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no") AS $db){
+        $db_files[] = $db->filename;
+       }
+        
+     // print_r($pdffiles);
+       //print_r($db_files);
+       //print_r($db_files);
+        $result = array_diff($db_files, $pdffiles);
+
+       print_r($result);
+            
+        
+    }
      public function bulk_invoicing(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
