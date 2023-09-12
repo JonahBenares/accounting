@@ -4224,7 +4224,7 @@ public function upload_sales_adjustment_test(){
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '1' AND series_number != '0' AND saved = '1' AND ".$query;
 
-        $dir    = "C:\Users\Marian\Downloads\/";
+        $dir    = "C:\Users\Jonah Benares\Downloads\/";
         $files = scandir($dir,1);
 
        
@@ -4249,7 +4249,7 @@ public function upload_sales_adjustment_test(){
       
 
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        // $this->load->view('template/navbar');
         $this->load->view('sales/export_not_download',$data);
         $this->load->view('template/footer');
     }

@@ -31,7 +31,8 @@
         </div>
     </div>
 </div>
-<div class="main-content">
+<br>
+<div class="container-fluid">
     <section class="section">
         <div class="section-body">
             <div class="row">
@@ -39,9 +40,12 @@
                     <div class="card">
                     <form method="POST" action="<?php echo base_url(); ?>sales/pdf_scan_directory">
                             <div class="card-header">
-                                <div class="d-flex justify-content-between">  
+                                <div class="d-flex justify-content-start">  
                                     <div>
-                                        <h4>Collection List</h4>
+                                        <a href="<?php echo base_url(); ?>accounting/sales/collection_list" class="btn btn-warning mr-2">Back</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="pt-1">Collection List</h4>
                                     </div>
                                 </div>
                             </div>
