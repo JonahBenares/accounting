@@ -92,7 +92,7 @@
                                 <?php if(!empty($collection)){ ?>
                                 <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
                                     <strong>Quick Scan!</strong> 
-                                    <a href="<?php echo base_url(); ?>sales/export_not_download/<?php echo $date; ?>/<?php echo $ref_no; ?>/<?php echo $stl_id; ?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
+                                    <a href="http://localhost/accounting/sales/export_not_download/<?php echo $date; ?>/<?php echo $ref_no; ?>/<?php echo $stl_id; ?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

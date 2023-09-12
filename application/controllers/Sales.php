@@ -4224,7 +4224,7 @@ public function upload_sales_adjustment_test(){
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '1' AND series_number != '0' AND saved = '1' AND ".$query;
 
-        $dir    = "C:\Users\Jonah Benares\Downloads\/";
+        $dir    = "C:\Users\Marian\Downloads\/";
         $files = scandir($dir,1);
 
        
