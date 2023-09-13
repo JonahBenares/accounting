@@ -3252,6 +3252,7 @@ public function upload_sales_adjustment_test(){
         $due_date = $this->input->post('due_date');
         $adjustment_identifier = $this->input->post('adjustment_identifier');
         $sales_adjustment_id=array();
+        $array=array();
         foreach($this->super_model->select_row_where('sales_adjustment_head','due_date',$due_date) AS $dues){
             $sales_adjustment_id[]=$dues->sales_adjustment_id;
         }
@@ -3313,6 +3314,7 @@ public function upload_sales_adjustment_test(){
             $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
             $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
             $sales_adjustment_id=array();
+            $array=array();
             foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due_date' AND reference_number='$transaction_no'") AS $dues){
                 $array[]=$dues->sales_adjustment_id;
                 $sales_adjustment_id=array_merge($sales_adjustment_id, $array);
@@ -3321,6 +3323,7 @@ public function upload_sales_adjustment_test(){
             if(!in_array($sales_adjust_id,$array)){
                 $imp_id=$sales_adjust_id;    
             }
+            //echo $imp_id;
             //$sales_adjust_id=implode(",",$sales_adjustment_id);
             $data_adjustment = array(
                 'ewt_amount'=>$ewt_amount,
@@ -3336,6 +3339,7 @@ public function upload_sales_adjustment_test(){
         $due_date = $this->input->post('due');
         $bulk_update_identifier = $this->input->post('adjustment_identifier');
         $sales_adjustment_id=array();
+        $array=array();
         foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due_date'") AS $dues){
             //$sales_adjustment_id[]="'".$dues->sales_adjustment_id."'";
             $array[]=$dues->sales_adjustment_id;
@@ -3639,6 +3643,7 @@ public function upload_sales_adjustment_test(){
             // }
             // $sales_adjust_id=implode(',',$sales_adjustment_id);
             $sales_adjustment_id=array();
+            $array=array();
             foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due' AND reference_number='$reference_no'") AS $dues){
                 $array[]=$dues->sales_adjustment_id;
                 $sales_adjustment_id=array_merge($sales_adjustment_id, $array);
