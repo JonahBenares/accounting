@@ -1,3 +1,21 @@
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>FEBA SYSTEM</title>
+    <!-- General CSS Files -->    
+
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/app.min.css" >
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bundles/pretty-checkbox/pretty-checkbox.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bundles/datatables/datatables.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/components.css">
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css">
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
+</head>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <!-- Modal -->
@@ -67,7 +85,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                       
+                                                echo "hello";
                                             foreach($result AS $r){ ?>
                                             <tr>
                                                 <td class="td-btm pt-1 pb-1"><?php echo $r ?></td>
