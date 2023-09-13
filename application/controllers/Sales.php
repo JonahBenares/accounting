@@ -3410,7 +3410,7 @@ public function upload_sales_adjustment_test(){
 
             //echo $count."<br>";
 
-            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no LIMIT 20") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no LIMIT 10") AS $col){
 
                 //echo $col->series_number."-".$col->settlement_id."<br>";
 
@@ -4224,7 +4224,7 @@ public function upload_sales_adjustment_test(){
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '1' AND series_number != '0' AND saved = '1' AND ".$query;
 
-        $dir    = "C:\Users\Jonah Benares\Downloads\/";
+        $dir    = "C:\Users\Henne\Downloads\/";
         $files = scandir($dir,1);
 
        
@@ -4240,16 +4240,29 @@ public function upload_sales_adjustment_test(){
              }
         }
         
+       // foreach($pdffiles AS $pdf){
+       //  echo $pdf . "<br>";
+       // }
        foreach($this->super_model->custom_query("SELECT filename FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no") AS $db){
         $db_files[] = $db->filename;
        }
         
-       $data['result'] = array_diff($db_files, $pdffiles);
+
+       //   foreach($db_files AS $db){
+       //  echo $db . "<br>";
+       // }
+       // $data['result'] = array_diff($db_files, $pdffiles);
+
+        $data['result'] = array_diff($db_files, $pdffiles);
+
+        $result=array_diff($db_files, $pdffiles);
+        $x=1;
+       
 
       
 
-        $this->load->view('template/header');
-        // $this->load->view('template/navbar');
+     
+        
         $this->load->view('sales/export_not_download',$data);
         $this->load->view('template/footer');
     }
