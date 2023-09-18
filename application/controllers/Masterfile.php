@@ -1,6 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+require FCPATH.'vendor\autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writerxlsx;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx as readerxlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing as drawing; // Instead PHPExcel_Worksheet_Drawing
+use PhpOffice\PhpSpreadsheet\Style\Alignment as alignment; // Instead alignment
+use PhpOffice\PhpSpreadsheet\Style\Border as border;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat as number_format;
+use PhpOffice\PhpSpreadsheet\Style\Fill as fill; // Instead fill
+use PhpOffice\PhpSpreadsheet\Style\Color as color; //Instead PHPExcel_Style_Color
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup as pagesetup; // Instead PHPExcel_Worksheet_PageSetup
+use PhpOffice\PhpSpreadsheet\IOFactory as io_factory; // Instead PHPExcel_IOFactory
 class Masterfile extends CI_Controller {
 
     function __construct(){
@@ -368,12 +380,12 @@ class Masterfile extends CI_Controller {
     }
 
     public function readExcel_customer(){
-        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
-        $objPHPExcel = new PHPExcel();
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
         $inputFileName =realpath(APPPATH.'../uploads/excel/Customers.xlsx');
         try {
-            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+            $inputFileType = io_factory::identify($inputFileName);
+            $objReader = io_factory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($inputFileName);
         } catch(Exception $e) {
             die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
@@ -389,25 +401,25 @@ class Masterfile extends CI_Controller {
             $maxid=$this->super_model->get_max("participant", "participant_id");
             $participant_id=$maxid+1;
         }
-            $settlement_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getValue());
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getValue());
-            $participant_name = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getValue());
-            $registered_address = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getValue());
-            $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getValue());
-            $category = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getValue());
-            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getValue());
-            $vat_zerorated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getValue());
-            $income_tax_holiday = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getValue());
-            $documents_submitted = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getValue());
-            $contact_person = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getValue());
-            $contact_position = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getValue());
-            $office_address = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getValue());
-            $landline = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getValue());
-            $mobile = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getValue());
-            $contact_email = trim($objPHPExcel->getActiveSheet()->getCell('P'.$x)->getValue());
-            $region = trim($objPHPExcel->getActiveSheet()->getCell('Q'.$x)->getValue());
-            $status = trim($objPHPExcel->getActiveSheet()->getCell('R'.$x)->getValue());
-            $zip_code = trim($objPHPExcel->getActiveSheet()->getCell('S'.$x)->getValue());
+            $settlement_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue());
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $participant_name = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+            $registered_address = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
+            $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+            $category = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+            $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+            $vat_zerorated = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+            $income_tax_holiday = trim($objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
+            $documents_submitted = trim($objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
+            $contact_person = trim($objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue());
+            $contact_position = trim($objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue());
+            $office_address = trim($objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue());
+            $landline = trim($objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
+            $mobile = trim($objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
+            $contact_email = trim($objPHPExcel->getActiveSheet()->getCell('P'.$x)->getFormattedValue());
+            $region = trim($objPHPExcel->getActiveSheet()->getCell('Q'.$x)->getFormattedValue());
+            $status = trim($objPHPExcel->getActiveSheet()->getCell('R'.$x)->getFormattedValue());
+            $zip_code = trim($objPHPExcel->getActiveSheet()->getCell('S'.$x)->getFormattedValue());
 
 
             $data_customer = array(
