@@ -74,6 +74,7 @@
         <label class="row2-col5"><?php echo (($d['thirdmonth']=="-") ? "-" : number_format($d['thirdmonth'],2)); ?></label>
         <label class="row2-col6"><?php echo number_format($d['total'],2); ?></label>
         <label class="row2-col7"><?php echo number_format($d['ewt'],2); ?> <span>&nbsp;&nbsp;</span></label>
+        <img src="<?php echo base_url(); ?>assets/img/sign_lacambra.png" class="sign_lacambra">
         <label class="row2-col8"> Reference Number: <b><?php echo $reference_no; ?></b></label>
         <label class="row2-col9"> Item Number: <b><?php echo $d['item_no']; ?></b></label>
        
