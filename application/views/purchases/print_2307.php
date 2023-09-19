@@ -27,8 +27,6 @@
         <?php foreach($next_purchase_details_id AS $next){ ?>
         <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $next->purchase_detail_id; ?>" class="btn btn-primary">Next</a>
         <?php } ?>
-
-
     </center>
     <br>
 </div>
@@ -73,6 +71,7 @@
         <label class="row2-col5"><?php echo (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)); ?></label>
         <label class="row2-col6"><?php echo number_format($total,2); ?></label>
         <label class="row2-col7"><?php echo number_format($ewt,2); ?> <span>&nbsp;&nbsp;</span></label>
+        <img src="<?php echo base_url(); ?>assets/img/sign_lacambra.png" class="sign_lacambra">
         <label class="row2-col8"> Reference Number: <b><?php echo $reference_no; ?></b></label>
         <label class="row2-col9"> Item Number: <b><?php echo $item_no; ?></b></label>
     </page>
