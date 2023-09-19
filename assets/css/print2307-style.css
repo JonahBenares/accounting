@@ -288,6 +288,9 @@
         align-content: center;
         z-index: 999;
     }
+    .sign_lacambra{
+        width:220px;position:relative;display:inline-block;bottom:310;
+    }
     @media print {
         body,page {
             margin: 0;
@@ -543,6 +546,9 @@
         }
         .hey{
             display: none;
+        }
+        .sign_lacambra{
+            width:220px;position:relative;display:inline-block;bottom:450;left:420;
         }
        
     }
