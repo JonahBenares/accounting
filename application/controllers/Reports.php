@@ -4455,7 +4455,7 @@ class Reports extends CI_Controller {
                 $comp_name=$participant_name;
             }
             $billing_date = date("M. d, Y",strtotime($pah->billing_from))." - ".date("M. d, Y",strtotime($pah->billing_to));
-            $short_name=$this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $pah->purchase_detail_id);
+            //$short_name=$this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $pah->purchase_detail_id);
             //$tin=$this->super_model->select_column_where("participant","tin","billing_id",$pah->billing_id);
                 $purchaseall[]=array(
                     'billing_date'=>$billing_date,
@@ -4489,7 +4489,7 @@ class Reports extends CI_Controller {
                 $total=($value['vatables_purchases']+$zero_rated+$value['vat_on_purchases'])-$value['ewt'];
                 //if($value['short_name']==$pah->short_name){
             //if($value['tin']==$tin){
-            if($value['short_name']==$short_name){
+            if($value['short_name']==$pah->short_name){
                 $total_vatables[]=$value['vatables_purchases'];
                 $total_vat[]=$value['vat_on_purchases'];
                 $total_ewt[]=$value['ewt'];
@@ -4724,11 +4724,11 @@ class Reports extends CI_Controller {
             //$overall_total=array();
             $salesall=array();
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  WHERE $qu AND short_name = '$head->short_name' ORDER BY billing_from ASC, reference_number ASC") AS $sth){
-                //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
+                $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
                 // $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sth->sales_id);
                 $or_no=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$sth->reference_number' AND settlement_id='$sth->short_name'");
-                $participant_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sth->sales_detail_id);
-                $short_name=$this->super_model->select_column_where("sales_transaction_details", "short_name", "sales_detail_id", $sth->sales_detail_id);
+                // $participant_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sth->sales_detail_id);
+                // $short_name=$this->super_model->select_column_where("sales_transaction_details", "short_name", "sales_detail_id", $sth->sales_detail_id);
                 if(!empty($sth->company_name) && date('Y',strtotime($sth->create_date))==date('Y')){
                         $comp_name=$sth->company_name;
                     }else{
@@ -4767,7 +4767,7 @@ class Reports extends CI_Controller {
                 $zero_rated=$value['zero_rated_sales']+$value['zero_rated_ecozones'];
                 $total=($value['vatable_sales']+$zero_rated+$value['vat_on_sales'])-$value['ewt'];
                 //if($value['tin']==$tin){
-                if($sth->short_name==$short_name){
+                if($value['short_name']==$sth->short_name){
                 // $total_vatables[]=$value['vatable_sales'];
                 // $total_vat[]=$value['vat_on_sales'];
                 $total_ewt[]=$value['ewt'];
@@ -5042,7 +5042,7 @@ class Reports extends CI_Controller {
 
                 $zero_rated=$value['zero_rated_purchases']+$value['zero_rated_ecozones'];
                 $total=($value['vatables_purchases']+$zero_rated+$value['vat_on_purchases'])-$value['ewt'];
-                if($value['tin']==$tin){
+                if($value['short_name']==$pah->short_name){
                 $total_vatables[]=$value['vatables_purchases'];
                 $total_vat[]=$value['vat_on_purchases'];
                 $total_ewt[]=$value['ewt'];
@@ -5338,7 +5338,7 @@ class Reports extends CI_Controller {
                     
                 $zero_rated=$value['zero_rated_sales']+$value['zero_rated_ecozones'];
                 $total=($value['vatable_sales']+$zero_rated+$value['vat_on_sales'])-$value['ewt'];
-                if($value['tin']==$tin){
+                if($value['short_name']==$sah->short_name){
                 // $total_vatables[]=$value['vatable_sales'];
                 // $total_vat[]=$value['vat_on_sales'];
                 $total_ewt[]=$value['ewt'];
