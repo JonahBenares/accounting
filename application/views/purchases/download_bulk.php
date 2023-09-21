@@ -88,7 +88,7 @@
     <input type="hidden" class="billing_month" id="billing_month" value="<?php echo $billing_month; ?>">
     <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <?php $x++; } ?>
-<input type="text"  id="count" value="<?php echo $x; ?>">
+<input type="hidden"  id="count" value="<?php echo $x; ?>">
 
 </center>
 <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>

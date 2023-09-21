@@ -4381,13 +4381,13 @@ class Reports extends CI_Controller {
         $sql='';
 
         if($participant!='null'){
-             //$sql.= " tin = '$participant' AND "; 
-            $par=array();
+             $sql.= " tin = '$participant' AND "; 
+            /*$par=array();
             foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
                 $par[]="'".$p->settlement_id."'";
             }
             $imp=implode(',',$par);
-            $sql.= " short_name IN($imp) AND ";
+            $sql.= " short_name IN($imp) AND ";*/
         }
         if($from!='null' && $to != 'null'){
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
@@ -4411,12 +4411,13 @@ class Reports extends CI_Controller {
                     )
                 )
             );
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE $qu GROUP BY short_name ORDER BY short_name ASC") AS $head){
- 
+            /*foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE $qu GROUP BY short_name ORDER BY short_name ASC") AS $head){*/
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id INNER JOIN participant p ON p.billing_id = pad.billing_id WHERE participant_name != '' AND $qu GROUP BY tin ORDER BY participant_name") AS $head){
+            $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$head->tin' ORDER BY settlement_id ASC LIMIT 1");
             $objWorkSheet = $objPHPExcel->createSheet($sheetno);
             // $invalidCharacters = array('*', ':', '/', '\\', '?', '[', ']');
             // $title = str_replace($invalidCharacters, '', $head->settlement_id);
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($head->short_name);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
             foreach(range('A','L') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
@@ -4443,8 +4444,9 @@ class Reports extends CI_Controller {
             $overall_total=array();
             $purchaseall=array();
 
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE $qu AND short_name = '$head->short_name' ORDER BY billing_from ASC, reference_number ASC") AS $pah){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
+            // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE $qu AND short_name = '$head->short_name' ORDER BY billing_from ASC, reference_number ASC") AS $pah){
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id INNER JOIN participant p ON p.billing_id = pad.billing_id WHERE tin='$head->tin' AND participant_name != '' AND $qu ORDER BY billing_from ASC, reference_number ASC, p.billing_id ASC") AS $pah){
+            //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
             // $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
             // $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
             // $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $pah->purchase_id);
@@ -4452,11 +4454,11 @@ class Reports extends CI_Controller {
             if(!empty($pah->company_name) && date('Y',strtotime($pah->create_date))==date('Y')){
                 $comp_name=$pah->company_name;
             }else{
-                $comp_name=$participant_name;
+                $comp_name=$pah->participant_name;
             }
             $billing_date = date("M. d, Y",strtotime($pah->billing_from))." - ".date("M. d, Y",strtotime($pah->billing_to));
-            $short_name=$this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $pah->purchase_detail_id);
-            //$tin=$this->super_model->select_column_where("participant","tin","billing_id",$pah->billing_id);
+            //$short_name=$this->super_model->select_column_where("purchase_transaction_details", "short_name", "purchase_detail_id", $pah->purchase_detail_id);
+            $tin=$this->super_model->select_column_where("participant","tin","billing_id",$pah->billing_id);
                 $purchaseall[]=array(
                     'billing_date'=>$billing_date,
                     'participant_name'=>$comp_name,
@@ -4473,7 +4475,7 @@ class Reports extends CI_Controller {
                     'zero_rated_ecozones'=>$pah->zero_rated_ecozones,
                     //  'total'=>$total,
                     'short_name'=>$pah->short_name,
-                    //'tin'=>$tin,
+                    'tin'=>$tin,
                 );
             }
             $row = 2;
@@ -4489,7 +4491,7 @@ class Reports extends CI_Controller {
                 $total=($value['vatables_purchases']+$zero_rated+$value['vat_on_purchases'])-$value['ewt'];
                 //if($value['short_name']==$pah->short_name){
             //if($value['tin']==$tin){
-            if($value['short_name']==$short_name){
+            if($value['tin']==$pah->tin){
                 $total_vatables[]=$value['vatables_purchases'];
                 $total_vat[]=$value['vat_on_purchases'];
                 $total_ewt[]=$value['ewt'];
@@ -4499,7 +4501,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['reference_number']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['participant_name']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['tin']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "-".$value['vatables_purchases']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, "-".$value['vat_on_purchases']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $value['ewt']);
@@ -4662,13 +4664,13 @@ class Reports extends CI_Controller {
         $sql='';
 
         if($participant!='null'){
-             //$sql.= " tin = '$participant' AND "; 
-            $par=array();
+             $sql.= " tin = '$participant' AND "; 
+            /*$par=array();
             foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
                 $par[]="'".$p->settlement_id."'";
             }
             $imp=implode(',',$par);
-            $sql.= " short_name IN($imp) AND ";
+            $sql.= " short_name IN($imp) AND ";*/
         }
         if($from!='null' && $to != 'null'){
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
@@ -4692,11 +4694,12 @@ class Reports extends CI_Controller {
                 )
             );
            
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu GROUP BY short_name ORDER BY short_name ASC") AS 
-            $head){
+        // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu GROUP BY short_name ORDER BY short_name ASC") AS $head){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON p.billing_id = std.billing_id WHERE participant_name != '' AND $qu GROUP BY tin ORDER BY settlement_id ASC") AS $head){
+            $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$head->tin' ORDER BY settlement_id ASC LIMIT 1");
             //foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu ORDER BY sales_detail_id ASC") AS $sth){
             $objWorkSheet = $objPHPExcel->createSheet($sheetno);
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($head->short_name);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
             
             foreach(range('A','M') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
@@ -4723,19 +4726,20 @@ class Reports extends CI_Controller {
             $total_ewt_amount=array();
             //$overall_total=array();
             $salesall=array();
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  WHERE $qu AND short_name = '$head->short_name' ORDER BY billing_from ASC, reference_number ASC") AS $sth){
+            /*foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  WHERE $qu AND short_name = '$head->short_name' ORDER BY billing_from ASC, reference_number ASC") AS $sth){*/
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  INNER JOIN participant p ON p.billing_id = std.billing_id WHERE tin='$head->tin' AND participant_name != '' AND $qu ORDER BY due_date ASC, billing_from ASC, reference_number ASC, p.billing_id ASC") AS $sth){
                 //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
                 // $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sth->sales_id);
                 $or_no=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$sth->reference_number' AND settlement_id='$sth->short_name'");
-                $participant_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sth->sales_detail_id);
-                $short_name=$this->super_model->select_column_where("sales_transaction_details", "short_name", "sales_detail_id", $sth->sales_detail_id);
+                // $participant_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sth->sales_detail_id);
+                // $short_name=$this->super_model->select_column_where("sales_transaction_details", "short_name", "sales_detail_id", $sth->sales_detail_id);
                 if(!empty($sth->company_name) && date('Y',strtotime($sth->create_date))==date('Y')){
                         $comp_name=$sth->company_name;
                     }else{
-                        $comp_name=$participant_name;
+                        $comp_name=$sth->participant_name;
                     }
                 $billing_date = date("M. d, Y",strtotime($sth->billing_from))." - ".date("M. d, Y",strtotime($sth->billing_to));
-                //$tin=$this->super_model->select_column_where("participant","tin","billing_id",$sth->billing_id);
+                $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sth->billing_id);
                 $salesall[]=array(
                     'billing_date'=>$billing_date,
                     'participant_name'=>$comp_name,
@@ -4750,7 +4754,7 @@ class Reports extends CI_Controller {
                     'scanned_copy'=>$sth->scanned_copy,
                     'zero_rated_sales'=>$sth->zero_rated_sales,
                     'zero_rated_ecozones'=>$sth->zero_rated_ecozones,
-                    //'tin'=>$tin,
+                    'tin'=>$tin,
                     'or_no'=>$or_no,
                 );
             }
@@ -4767,7 +4771,7 @@ class Reports extends CI_Controller {
                 $zero_rated=$value['zero_rated_sales']+$value['zero_rated_ecozones'];
                 $total=($value['vatable_sales']+$zero_rated+$value['vat_on_sales'])-$value['ewt'];
                 //if($value['tin']==$tin){
-                if($sth->short_name==$short_name){
+                if($value['tin']==$sth->tin){
                 // $total_vatables[]=$value['vatable_sales'];
                 // $total_vat[]=$value['vat_on_sales'];
                 $total_ewt[]=$value['ewt'];
@@ -4939,13 +4943,13 @@ class Reports extends CI_Controller {
         if($from!='null' && $to != 'null'){
            $sql.= "(billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to') AND";
         } if($participant!='null'){
-             //$sql.= "tin = '$participant' AND ";
-            $par=array();
+             $sql.= "tin = '$participant' AND ";
+             /*$par=array();
             foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
                 $par[]="'".$p->settlement_id."'";
             }
             $imp=implode(',',$par);
-            $sql.= " short_name IN($imp) AND ";
+            $sql.= " short_name IN($imp) AND ";*/
         } if($due!='null'){
              $sql.= "due_date = '$due' AND "; 
         }
@@ -4968,9 +4972,10 @@ class Reports extends CI_Controller {
                     )
                 )
             );
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE $qu GROUP BY short_name ORDER BY pad.short_name") AS $head){
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id INNER JOIN participant p ON p.billing_id = pad.billing_id WHERE participant_name != '' AND $qu GROUP BY tin ORDER BY participant_name ASC") AS $head){
+            $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$head->tin' ORDER BY settlement_id ASC LIMIT 1");
             $objWorkSheet = $objPHPExcel->createSheet($sheetno);
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($head->short_name);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
             foreach(range('A','L') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
@@ -4996,7 +5001,7 @@ class Reports extends CI_Controller {
             $total_update_amount=array();
             $overall_total=array();
 
-            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE short_name='$head->short_name' AND $qu ORDER BY billing_from ASC, reference_number ASC") AS $pah){
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id INNER JOIN participant p ON p.billing_id = pad.billing_id WHERE tin='$head->tin' AND participant_name != '' AND $qu ORDER BY billing_from ASC, reference_number ASC, p.billing_id ASC") AS $pah){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
             // $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
             // $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
@@ -5005,7 +5010,7 @@ class Reports extends CI_Controller {
            if(!empty($pah->company_name) && date('Y',strtotime($pah->create_date))==date('Y')){
                     $comp_name=$pah->company_name;
                 }else{
-                    $comp_name=$participant_name;
+                    $comp_name=$pah->participant_name;
                 }
             $billing_date = date("M. d, Y",strtotime($pah->billing_from))." - ".date("M. d, Y",strtotime($pah->billing_to));
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$pah->billing_id);
@@ -5042,7 +5047,7 @@ class Reports extends CI_Controller {
 
                 $zero_rated=$value['zero_rated_purchases']+$value['zero_rated_ecozones'];
                 $total=($value['vatables_purchases']+$zero_rated+$value['vat_on_purchases'])-$value['ewt'];
-                if($value['tin']==$tin){
+                if($value['tin']==$pah->tin){
                 $total_vatables[]=$value['vatables_purchases'];
                 $total_vat[]=$value['vat_on_purchases'];
                 $total_ewt[]=$value['ewt'];
@@ -5227,13 +5232,13 @@ class Reports extends CI_Controller {
             $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
         } 
         if($participant!='null'){
-             //$sql.= " tin = '$participant' AND ";
-            $par=array();
-            foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
-                $par[]="'".$p->settlement_id."'";
-            }
-            $imp=implode(',',$par);
-            $sql.= " short_name IN($imp) AND ";
+             $sql.= " tin = '$participant' AND ";
+                /*$par=array();
+                foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
+                    $par[]="'".$p->settlement_id."'";
+                }
+                $imp=implode(',',$par);
+                $sql.= " short_name IN($imp) AND ";*/
         }
         if($year!='null'){
              $sql.= " YEAR(due_date) = '$year' AND "; 
@@ -5255,9 +5260,10 @@ class Reports extends CI_Controller {
                     )
                 )
             );
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE $qu GROUP BY short_name ORDER BY short_name") AS $head){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id INNER JOIN participant p ON p.billing_id = sad.billing_id WHERE participant_name != '' AND $qu GROUP BY tin ORDER BY settlement_id ASC") AS $head){
+            $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$head->tin' ORDER BY settlement_id ASC LIMIT 1");
             $objWorkSheet = $objPHPExcel->createSheet($sheetno);
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($head->short_name);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
             foreach(range('A','N') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
@@ -5284,8 +5290,8 @@ class Reports extends CI_Controller {
             $total_ewt_amount=array();
             //$overall_total=array();
 
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE short_name='$head->short_name' AND $qu ORDER BY due_date ASC, billing_from ASC, reference_number ASC") AS $sah){
-            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id INNER JOIN participant p ON p.billing_id = sad.billing_id WHERE tin='$head->tin' AND participant_name != '' AND $qu ORDER BY due_date ASC, billing_from ASC, reference_number ASC, p.billing_id ASC") AS $sah){
+            //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
             // $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
             // $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
             // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id ", $sah->sales_adjustment_id );
@@ -5295,7 +5301,7 @@ class Reports extends CI_Controller {
             if(!empty($sah->company_name) && date('Y',strtotime($sah->create_date))==date('Y')){
                 $comp_name=$sah->company_name;
             }else{
-                $comp_name=$participant_name;
+                $comp_name=$sah->participant_name;
             }
             $billing_date = date("M. d, Y",strtotime($sah->billing_from))." - ".date("M. d, Y",strtotime($sah->billing_to));
             $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
@@ -5338,7 +5344,7 @@ class Reports extends CI_Controller {
                     
                 $zero_rated=$value['zero_rated_sales']+$value['zero_rated_ecozones'];
                 $total=($value['vatable_sales']+$zero_rated+$value['vat_on_sales'])-$value['ewt'];
-                if($value['tin']==$tin){
+                if($value['tin']==$sah->tin){
                 // $total_vatables[]=$value['vatable_sales'];
                 // $total_vat[]=$value['vat_on_sales'];
                 $total_ewt[]=$value['ewt'];
