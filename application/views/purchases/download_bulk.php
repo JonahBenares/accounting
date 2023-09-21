@@ -53,14 +53,14 @@
         <label class="zip1"><?php echo $d['zip']; ?></label>
         <label class="address2"></label>
         <div class="tin2">
-           <label class="">008</label> 
-           <label class="">691</label> 
-           <label class="">287</label> 
-           <label class="last1">0000</label> 
+           <label class=""><?php echo COMPANY_TIN1 ?></label> 
+           <label class=""><?php echo COMPANY_TIN2 ?></label> 
+           <label class=""><?php echo COMPANY_TIN3 ?></label> 
+           <label class="last1"><?php echo COMPANY_TIN4 ?></label> 
         </div>
-        <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
-        <label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label>
-        <label class="zip2">6100</label>
+        <label class="payor"><?php echo COMPANY_NAME2307 ?></label>
+        <label class="address3"><?php echo COMPANY_ADDRESS ?></label>
+        <label class="zip2"><?php echo COMPANY_ZIP ?></label>
         <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label>
         <label class="row1-col2">WC160</label>
         <label class="row1-col3"><?php echo (($d['firstmonth']=="-") ? "-" : number_format($d['firstmonth'],2)); ?></label>
