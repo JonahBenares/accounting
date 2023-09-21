@@ -354,6 +354,7 @@
             position: absolute;
             font-size: 21px;
             letter-spacing: 0.86em;
+            width: 600px;
         }
         .tin2{
             left: 358px;
@@ -361,6 +362,7 @@
             position: absolute;
             font-size: 21px;
             letter-spacing: 0.86em;
+            width: 600px;
         }
         .last1{
             margin-left:5px ;
@@ -548,7 +550,11 @@
             display: none;
         }
         .sign_lacambra{
-            width:220px;position:relative;display:inline-block;bottom:450;left:420;
+            width:220px;
+            position:relative;
+            display:inline-block;
+            bottom:400;
+            left:420;
         }
        
     }
