@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.100.119',
-	'username' => 'CENPRI-HENNE',
-	'password' => 'cenpri2k18', 
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '', 
 	'database' => 'db_accounting',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
