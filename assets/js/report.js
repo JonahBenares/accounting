@@ -1000,3 +1000,22 @@ function filterUnpaidSalesAdj(){
     }
     window.location=loc+'reports/unpaid_invoices_salesadj/'+years+'/'+due;          
 }
+
+function filterSalesMainEWT(){
+    var from= document.getElementById("from").value;
+    var to= document.getElementById("to").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(from!=''){
+        var date_from=from;
+    }else{
+        var date_from='null';
+    }
+
+    if(to!=''){
+        var date_to=to;
+    }else{
+        var date_to='null';
+    }
+    window.location=loc+'reports/sales_main_ewt_variance/'+date_from+'/'+date_to;          
+}

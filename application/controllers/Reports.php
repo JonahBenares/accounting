@@ -6186,4 +6186,80 @@ class Reports extends CI_Controller {
         // readfile($exportfilename);
     }
 
+    public function sales_main_ewt_variance(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $from=$this->uri->segment(3);
+        $to=$this->uri->segment(4);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $sql="";
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND ".$query;
+
+        $total_ewt=array();
+        $total_ewt_amount=array();
+        $variance_total=array();
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON std.billing_id=p.billing_id WHERE $qu ORDER BY std.billing_id ASC, billing_from ASC") AS $sah){
+            $par=array();
+            foreach($this->super_model->select_custom_where('participant',"tin='$sah->tin'") AS $p){
+                $par[]="'".$p->settlement_id."'";
+            }
+            $imp=implode(',',$par);
+
+            $salesid=array();
+            foreach($this->super_model->select_custom_where('sales_transaction_head',"$qu") AS $p){
+                $salesid[]="'".$p->sales_id."'";
+            }
+            $sid=implode(',',$salesid);
+           /* $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "billing_id = '$sah->billing_id' AND $qu","sales_id");
+            $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_transaction_head", "short_name IN($imp) AND $qu","sales_id");*/
+
+            $overall_ewt_amount = $this->super_model->select_sum_where("sales_transaction_details","ewt","short_name IN($imp) AND sales_id IN($sid)");
+            $overall_ewt_collected = $this->super_model->select_sum_where("sales_transaction_details","ewt_amount","short_name IN($imp) AND sales_id IN($sid)");
+
+            $participant_name = $this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
+            if(!empty($sah->company_name) && date('Y',strtotime($sah->create_date))==date('Y')){
+                $comp_name=$sah->company_name;
+            }else{
+                $comp_name=$participant_name;
+            }
+
+            $variance  = $sah->ewt - $sah->ewt_amount;
+            $total_variance  = $overall_ewt_amount - $overall_ewt_collected;
+
+            $total_ewt[]=$sah->ewt;
+            $total_ewt_amount[]=$sah->ewt_amount;
+            $variance_total[]=$variance;
+
+
+            //echo $imp."<br>";
+            //echo $sah->tin ." - ". $sah->billing_id ." - ". $sah->settlement_id ." - ". $sah->ewt."<br>";
+
+            $data['salesmain_ewt'][]=array(
+                'billing_from'=>$sah->billing_from,
+                'billing_to'=>$sah->billing_to,
+                'billing_id'=>$sah->billing_id,
+                'transaction_no'=>$sah->reference_number,
+                'ewt_amount'=>$sah->ewt,
+                'overall_ewt_amount'=>$overall_ewt_amount,
+                'ewt_collected'=>$sah->ewt_amount,
+                'overall_ewt_collected'=>$overall_ewt_collected,
+                'tin'=>$sah->tin,
+                'variance'=>$variance,
+                'total_variance'=>$total_variance,
+            );
+        }
+        $data['b_total_ewt']=array_sum($total_ewt);
+        $data['b_total_ewt_amount']=array_sum($total_ewt_amount);
+        $data['b_total_variance']=array_sum($variance_total);
+        $this->load->view('reports/sales_main_ewt_variance',$data);
+        $this->load->view('template/footer');
+    }
+
 }
