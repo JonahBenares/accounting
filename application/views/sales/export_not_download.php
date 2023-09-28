@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                    <form method="POST" action="<?php echo base_url(); ?>sales/pdf_scan_directory">
+                    <form method="POST" action="http://tradingsvr/accounting/sales/pdf_scan_directory">
                             <div class="card-header">
                                 <div class="d-flex justify-content-start">  
                                     <div>
@@ -85,7 +85,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                                echo "hello";
+                                               
                                             foreach($result AS $r){ ?>
                                             <tr>
                                                 <td class="td-btm pt-1 pb-1"><?php echo $r ?></td>
