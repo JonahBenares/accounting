@@ -12,11 +12,9 @@
                                     <h4>Summary of Total Sales EWT Variance - Main</h4>
                                 </div>
                                 <div class="col-8">
-                                    <?php if(!empty($unpaid_sales)){ ?>
-                                        <a href = "<?php echo base_url();?>reports/export_unpaid_invoices_sales/<?php echo $year; ?>/<?php echo $due; ?>/" class = "btn btn-success pull-right">Export to Excel</a>
-                                    <?php }else{ ?>
-                                        <a href = "<?php echo base_url();?>/reports/export_unpaid_invoices_sales/" class = "btn btn-success pull-right">Export to Excel</a>
-                                    <?php } ?>  
+                                    <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
+                                        <span class="fas fa-file-export"></span> Export to Excel
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -30,14 +28,14 @@
                                                     <b>Date From:</b>
                                                 </td> -->
                                                 <td width="15%">
-                                                    <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Billing Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <!-- <td width="5%"></td> -->
                                                 <!-- <td width="3%">
                                                     <b>Date To:</b>
                                                 </td> -->
                                                 <td width="15%">
-                                                    <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Billing Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td width="10%">
                                                     <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
@@ -150,3 +148,34 @@
     </section>
 </div>
 
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Export to Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>Billing Date From</label>
+                            <input placeholder="Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>Billing Date to</label>
+                            <input placeholder="Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type='hidden' name='baseurl1' id='baseurl1' value="<?php echo base_url(); ?>">
+                    <input type='button' class="btn btn-primary"  onclick="exportSalesMainEWT()" value="Export">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
