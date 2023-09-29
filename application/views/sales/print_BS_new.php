@@ -43,14 +43,14 @@
 <?php 
     $y=0; 
     foreach($sub AS $as){
-            $vatable_arraysum[][$y]=$vatable_sales[$y];
-            $zerorated_arraysum[][$y]=$zero_rated[$y];
-            $zeroecozones_arraysum[][$y]=$zero_ecozones_sales[$y];
-            $ratedsales_arraysum[][$y]=$rated_sales[$y];
-            $total_arraysum[][$y]=$total_amount[$y];
-            $vat_arraysum[][$y]=$vat_on_sales[$y];
-            $ewt_arraysum[][$y]=$ewt[$y];
-            $overall_total_arraysum[][$y]=$overall_total[$y];
+            $vatable_arraysum[][$y]= isset($vatable_sales[$y]) ? $vatable_sales[$y] : 0;
+            $zerorated_arraysum[][$y]=isset($zero_rated[$y]) ? $zero_rated[$y] : 0;
+            $zeroecozones_arraysum[][$y]=isset($zero_ecozones_sales[$y]) ? $zero_ecozones_sales[$y] : 0;
+            $ratedsales_arraysum[][$y]=isset($rated_sales[$y]) ? $rated_sales[$y] : 0;
+            $total_arraysum[][$y]=isset($total_amount[$y]) ? $total_amount[$y] : 0;
+            $vat_arraysum[][$y]=isset($vat_on_sales[$y]) ? $vat_on_sales[$y] : 0;
+            $ewt_arraysum[][$y]=isset($ewt[$y]) ? $ewt[$y] : 0;
+            $overall_total_arraysum[][$y]=isset($overall_total[$y]) ? $overall_total[$y] : 0;
 ?>
 <page size="A4">
     <div style="padding:30px">
