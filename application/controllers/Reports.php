@@ -4357,6 +4357,8 @@ class Reports extends CI_Controller {
                 'billing_to'=>$pth->billing_to,
                 'vatables_purchases'=>$pth->vatables_purchases,
                 'vat_on_purchases'=>$pth->vat_on_purchases,
+                'zero_rated_purchases'=>$pth->zero_rated_purchases,
+                'zero_rated_ecozones'=>$pth->zero_rated_ecozones,
                 'ewt'=>$pth->ewt,
                 'or_no'=>$pth->or_no,
                 'total_update'=>$pth->total_update,
@@ -4418,7 +4420,7 @@ class Reports extends CI_Controller {
             // $invalidCharacters = array('*', ':', '/', '\\', '?', '[', ']');
             // $title = str_replace($invalidCharacters, '', $head->settlement_id);
             $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
-            foreach(range('A','L') as $columnID){
+            foreach(range('A','N') as $columnID){
                 $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A1', "Billing Period");
@@ -4426,16 +4428,20 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C1', "Transaction Reference Number");
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D1', "Company Name");
             $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E1', "Vatables Purchases");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F1', "Vat On Purchases");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G1', "EWT");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H1', "Total");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I1', "OR Number");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Total Amount");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Original Copy");
-            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L1', "Scanned Copy");
-            $objPHPExcel->getActiveSheet()->getStyle("A1:L1")->applyFromArray($styleArray);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F1', "Zero-rated Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G1', "Zero-rated Ecozones Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H1', "Vat On Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I1', "EWT Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Total");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "OR Number");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L1', "Total Amount");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M1', "Original Copy");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N1', "Scanned Copy");
+            $objPHPExcel->getActiveSheet()->getStyle("A1:N1")->applyFromArray($styleArray);
 
             $total_vatables=array();
+            $total_zerorated_purchases=array();;
+            $total_zerorated_ecozones=array();;
             $total_vat=array();
             $total_ewt=array();
             $total_zero_rated=array();
@@ -4465,6 +4471,8 @@ class Reports extends CI_Controller {
                     'billing_id'=>$pah->billing_id,
                     'reference_number'=>$pah->reference_number,
                     'vatables_purchases'=>$pah->vatables_purchases,
+                    'zero_rated_purchases'=>$pah->zero_rated_purchases,
+                    'zero_rated_ecozones'=>$pah->zero_rated_ecozones,
                     'vat_on_purchases'=>$pah->vat_on_purchases,
                     'ewt'=>$pah->ewt,
                     'or_no'=>$pah->or_no,
@@ -4493,6 +4501,8 @@ class Reports extends CI_Controller {
             //if($value['tin']==$tin){
             if($value['tin']==$pah->tin){
                 $total_vatables[]=$value['vatables_purchases'];
+                $total_zerorated_purchases[]=$value['zero_rated_purchases'];
+                $total_zerorated_ecozones[]=$value['zero_rated_ecozones'];
                 $total_vat[]=$value['vat_on_purchases'];
                 $total_ewt[]=$value['ewt'];
                 $total_zero_rated[]=$zero_rated;
@@ -4503,24 +4513,26 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['reference_number']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['participant_name']);
                 $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "-".$value['vatables_purchases']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, "-".$value['vat_on_purchases']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $value['ewt']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$total);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['or_no']);
-                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "-".$value['total_update']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, "-".$value['zero_rated_purchases']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, "-".$value['zero_rated_ecozones']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$value['vat_on_purchases']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['ewt']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "-".$total);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, $value['or_no']);
+                $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "-".$value['total_update']);
                 if($value['original_copy']==1){
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "Yes");
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "Yes");
                 }else if($value['original_copy']==0){
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "No");
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "No");
                 }else{
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "");
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "");
                 }
                 if($value['scanned_copy']==1){
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "Yes");
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N'.$num, "Yes");
                 }else if($value['scanned_copy']==0){
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "No");
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N'.$num, "No");
                 }else{
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "");
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N'.$num, "");
                 }
 
                 $nextKey = isset($purchaseall[$index+1]) ? $purchaseall[$index+1]['billing_date'] : null;
@@ -4533,30 +4545,32 @@ class Reports extends CI_Controller {
                 }
                 $row++;
                 
-                $objPHPExcel->getActiveSheet()->getStyle('A1:L1')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
-                $objPHPExcel->getActiveSheet()->getStyle('A1:L1')->getFont()->getColor()->setRGB ('FFFFFF');
-                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":L".$num)->applyFromArray($styleArray);
+                $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFont()->getColor()->setRGB ('FFFFFF');
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":N".$num)->applyFromArray($styleArray);
                 $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":L".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":H".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
-                $objPHPExcel->getActiveSheet()->getStyle('J'.$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
-                $objPHPExcel->getActiveSheet()->getStyle('A1:L1')->getFont()->setBold(true);
-                $objPHPExcel->getActiveSheet()->getStyle('A1:L1')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":N".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":J".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $objPHPExcel->getActiveSheet()->getStyle('L'.$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
                 $num++;
             }
         }
                 $a = $num;
                     //$objPHPExcel->getActiveSheet()->getStyle('D'.$a)->getFont()->setBold(true);
-                    $objPHPExcel->getActiveSheet()->getStyle('E'.$a.":H".$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                    $objPHPExcel->getActiveSheet()->getStyle('J'.$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                    $objPHPExcel->getActiveSheet()->getStyle("E".$a.':H'.$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
-                    $objPHPExcel->getActiveSheet()->getStyle("J".$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('E'.$a.":J".$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('L'.$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle("E".$a.':J'.$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle("L".$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     //$objPHPExcel->getActiveSheet()->setCellValue('D'.$a, "TOTAL: ");
                     $objPHPExcel->getActiveSheet()->setCellValue('E'.$a, "-".array_sum($total_vatables));
-                    $objPHPExcel->getActiveSheet()->setCellValue('F'.$a, "-".array_sum($total_vat));
-                    $objPHPExcel->getActiveSheet()->setCellValue('G'.$a, array_sum($total_ewt));
-                    $objPHPExcel->getActiveSheet()->setCellValue('H'.$a, "-".array_sum($overall_total));
-                    $objPHPExcel->getActiveSheet()->setCellValue('J'.$a, "-".array_sum($total_update_amount));
+                    $objPHPExcel->getActiveSheet()->setCellValue('F'.$a, "-".array_sum($total_zerorated_purchases));
+                    $objPHPExcel->getActiveSheet()->setCellValue('G'.$a, "-".array_sum($total_zerorated_ecozones));
+                    $objPHPExcel->getActiveSheet()->setCellValue('H'.$a, "-".array_sum($total_vat));
+                    $objPHPExcel->getActiveSheet()->setCellValue('I'.$a, array_sum($total_ewt));
+                    $objPHPExcel->getActiveSheet()->setCellValue('J'.$a, "-".array_sum($overall_total));
+                    $objPHPExcel->getActiveSheet()->setCellValue('L'.$a, "-".array_sum($total_update_amount));
                 $num--;
             $sheetno++;
         }
