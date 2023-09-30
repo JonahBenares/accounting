@@ -6276,9 +6276,9 @@ class Reports extends CI_Controller {
             
             // $objWorkSheet = $objPHPExcel->createSheet($sheetno);
             // $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Regular Bill ".$from."-".$to);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Regular Bill ".$from." - ".$to);
             foreach(range('A','F') as $columnID){
-                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "#");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "Billing ID");
@@ -6293,9 +6293,9 @@ class Reports extends CI_Controller {
             $total_varince=array();
             $x=1;
             $num=3;
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON p.billing_id = std.billing_id WHERE $qu GROUP BY tin ORDER BY std.short_name ASC") AS $sah){
-                $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$sah->tin' ORDER BY settlement_id ASC LIMIT 1");
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON p.billing_id = std.billing_id WHERE $qu ORDER BY std.short_name ASC") AS $sah){
                 $tin = $this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
+                $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$tin' ORDER BY settlement_id ASC LIMIT 1");
 
                 if(!empty($sah->company_name) && date('Y',strtotime($sah->create_date))==date('Y')){
                     $comp_name=$sah->company_name;
@@ -6305,11 +6305,12 @@ class Reports extends CI_Controller {
 
                 $par=array();
                 foreach($this->super_model->select_custom_where('participant',"tin='$tin'") AS $p){
-                    $par[]="'".$p->billing_id."'";
+                    $par[]="'".$p->settlement_id."'";
                 }
                 $imp=implode(',',$par);
 
-                $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
+                $overall_ewt_amount = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$sah->sales_id' AND short_name IN($imp)");
+                //$overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
                 $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
                 $variance  = $overall_ewt_amount - $overall_ewt_collected;
 
@@ -6323,6 +6324,7 @@ class Reports extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $overall_ewt_collected);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $variance);
 
+                    $objPHPExcel->getActiveSheet()->mergeCells('A1:C1');
                     $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
                     $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFont()->getColor()->setRGB ('FFFFFF');
                     $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":F".$num)->applyFromArray($styleArray);
