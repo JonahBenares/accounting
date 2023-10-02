@@ -511,7 +511,7 @@ public function print_BS_new(){
         $data['total_sub'][]='';
   
         for($x=0;$x<$count;$x++){
-            $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
+            $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
             if(in_array($sales_det_exp[$x],$bs_id)){
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                     $data['detail_id'][$x]=$p->sales_detail_id;
@@ -573,7 +573,6 @@ public function print_BS_new(){
                     $data['ewt'][$x]=$ewt;
                     $data['overall_total'][$x]=$overall_total;
                     $data['participant_id'][$x]=$participant_id;
-
 
                     $data['sub'][]=array(
                         "participant_id"=>$participant_id,
@@ -745,14 +744,14 @@ public function print_BS_new(){
                                     $zero_rated= $zero_rated_sales + $zero_rated_ecozones;
                                     $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                                     $overall_total= ($total_amount + $vat_on_sales) - $ewt;
-                                    $data['sub_participant_sub'][$h]=$subparticipant;
+                                    //$data['sub_participant_sub'][$h]=$subparticipant;
                                     //$data['vatable_sales_sub'][$h]=$vatable_sales;
                                     //$data['vat_on_sales_sub'][$h]=$vat_on_sales;
                                     //$data['zero_rated_sales_sub'][$h]=$zero_rated;
                                     //$data['total_amount_sub'][$h]=$total_amount;
                                     //$data['ewt_s'][$h]=$ewt;
                                     //$data['overall_total_sub'][$h]=$overall_total;
-                                    $data['participant_id_sub'][$h]=$sp->participant_id;
+                                    //$data['participant_id_sub'][$h]=$sp->participant_id;
                                     $data['sub_part'][]=array(
                                         "counter"=>$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'"),
                                         "counter_h"=>'',
@@ -832,15 +831,15 @@ public function print_BS_new(){
                                 $total_sub_total_amount[] = $total_amount;
                                 $total_sub_overall_total[] = $overall_total;
 
-                                if($z>=15){
-                                $data['sub_participant_sub'][$z]=$subparticipant;
-                                $data['vatable_sales_sub'][$z]=$vatable_sales;
-                                $data['vat_on_sales_sub'][$z]=$vat_on_sales;
-                                $data['zero_rated_sales_sub'][$z]=$zero_rated;
-                                $data['total_amount_sub'][$z]=$total_amount;
-                                $data['ewt_s'][$z]=$ewt;
-                                $data['overall_total_sub'][$z]=$overall_total;
-                                $data['participant_id_sub'][$z]=$sp->participant_id;
+                                if($z>=16){
+                                //$data['sub_participant_sub'][$z]=$subparticipant;
+                                // $data['vatable_sales_sub'][$z]=$vatable_sales;
+                                // $data['vat_on_sales_sub'][$z]=$vat_on_sales;
+                                // $data['zero_rated_sales_sub'][$z]=$zero_rated;
+                                // $data['total_amount_sub'][$z]=$total_amount;
+                                // $data['ewt_s'][$z]=$ewt;
+                                // $data['overall_total_sub'][$z]=$overall_total;
+                                // $data['participant_id_sub'][$z]=$sp->participant_id;
                                 $data['sub_part_second'][]=array(
                                     "counter"=>$h,
                                     "counter_h"=>'',
