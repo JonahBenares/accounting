@@ -69,7 +69,7 @@ class Sales extends CI_Controller {
         $total_vat = $this->input->post('vat');
         $ewt_arr = $this->input->post('ewt_arr');
         $overall_total = $this->input->post('overall_total'); 
-        $count_head=count($participant_id);
+        $count_head=is_countable($participant_id);
 
         $billing_id = $this->input->post('sub_participant');
         $vatable_sales = $this->input->post('vatable_sales');
@@ -78,7 +78,7 @@ class Sales extends CI_Controller {
         $ewt = $this->input->post('ewt');
         $net_amount = $this->input->post('net_amount');
         $details_id = $this->input->post('details_id');
-        $count_details=count($billing_id);
+        $count_details=is_countable($billing_id);
        
         for($x=0;$x<$count_head;$x++){
             $count_participant = $this->super_model->count_custom_where("bs_head", "participant_id = '$participant_id[$x]' AND reference_number = '$reference_number[$x]' AND billing_from = '$billing_from[$x]' AND billing_to = '$billing_to[$x]'");
@@ -978,6 +978,11 @@ public function print_BS_new(){
 
         }else{
                 //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
+            $vatable_sales_bs=array();
+            $vat_on_sales_bs=array();
+            $ewt_bs=array();
+            $zero_rated_ecozone_bs=array();
+            $zero_rated_bs=array();
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                 $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
