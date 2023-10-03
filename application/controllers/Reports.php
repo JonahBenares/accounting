@@ -6557,7 +6557,7 @@ class Reports extends CI_Controller {
 
         if($from!='null' && $to != 'null'){
             $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
-
+        }
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND adjustment = '0' AND ".$query;
 
@@ -6565,7 +6565,7 @@ class Reports extends CI_Controller {
         $total_amount_collected=array();
         $variance_total=array();
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE $qu ORDER BY billing_id ASC, due_date ASC") AS $pah){
-            $tin = $this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
+            $tin = $this->super_model->select_column_where("participant","tin","billing_id",$pah->billing_id);
 
             $par=array();
             foreach($this->super_model->select_custom_where('participant',"tin='$tin'") AS $p){
@@ -6573,26 +6573,26 @@ class Reports extends CI_Controller {
             }
             $imp=implode(',',$par);
 
-            $overall_total_amount = $this->super_model->select_sum_join("total_amount","purchase_transaction_details","purchase_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
-            $overall_total_amount_collected = $this->super_model->select_sum_join("total_update","purchase_transaction_details","purchase_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
+            $overall_total_amount = $this->super_model->select_sum_join("total_amount","purchase_transaction_details","purchase_transaction_head", "billing_id IN($imp) AND $qu","purchase_id");
+            $overall_total_amount_collected = $this->super_model->select_sum_join("total_update","purchase_transaction_details","purchase_transaction_head", "billing_id IN($imp) AND $qu","purchase_id");
 
-            $variance  = $sah->total_amount - $sah->total_update;
+            $variance  = $pah->total_amount - $pah->total_update;
             $total_variance  = $overall_total_amount - $overall_total_amount_collected;
 
-            $total_amount[]=$sah->total_amount;
-            $total_amount_collected[]=$sah->total_update;
+            $total_amount[]=$pah->total_amount;
+            $total_amount_collected[]=$pah->total_update;
             $variance_total[]=$variance;
 
-            $data['salesmain_ewt'][]=array(
-                'due_date'=>$sah->due_date,
-                'billing_from'=>$sah->billing_from,
-                'billing_to'=>$sah->billing_to,
-                'billing_id'=>$sah->billing_id,
-                'transaction_no'=>$sah->reference_number,
-                'ewt_amount'=>$sah->total_amount,
-                'overall_ewt_amount'=>$overall_total_amount,
-                'ewt_collected'=>$sah->total_update,
-                'overall_ewt_collected'=>$overall_total_amount_collected,
+            $data['purchasesmain_total'][]=array(
+                'due_date'=>$pah->due_date,
+                'billing_from'=>$pah->billing_from,
+                'billing_to'=>$pah->billing_to,
+                'billing_id'=>$pah->billing_id,
+                'transaction_no'=>$pah->reference_number,
+                'total_amount'=>$pah->total_amount,
+                'overall_total_amount'=>$overall_total_amount,
+                'amount_collected'=>$pah->total_update,
+                'overall_total_amount_collected'=>$overall_total_amount_collected,
                 'tin'=>$tin,
                 'variance'=>$variance,
                 'total_variance'=>$total_variance,

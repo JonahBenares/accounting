@@ -1080,3 +1080,22 @@ function exportSalesAdjEWT() {
       window.location=loc+'reports/export_sales_adj_ewt_variance/'+e_from+'/'+e_to;
 
 }
+
+function filterPurchasesMainTotal(){
+    var from= document.getElementById("from").value;
+    var to= document.getElementById("to").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(from!=''){
+        var date_from=from;
+    }else{
+        var date_from='null';
+    }
+
+    if(to!=''){
+        var date_to=to;
+    }else{
+        var date_to='null';
+    }
+    window.location=loc+'reports/purchases_main_total_variance/'+date_from+'/'+date_to;          
+}
