@@ -1099,3 +1099,64 @@ function filterPurchasesMainTotal(){
     }
     window.location=loc+'reports/purchases_main_total_variance/'+date_from+'/'+date_to;          
 }
+
+function exportPurchasesMainTotal() { 
+     var e_from = document.getElementById("export_from").value; 
+     var e_to = document.getElementById("export_to").value;
+
+    if(e_from!=''){
+        e_from=e_from;
+    }else{
+        e_from='null';
+    }
+
+    if(e_to!=''){
+        e_to=e_to;
+    }else{
+        e_to='null';
+    }
+
+      var loc= document.getElementById("baseurl1").value;
+      window.location=loc+'reports/export_purchases_main_total_variance/'+e_from+'/'+e_to;
+
+}
+
+function filterPurchasesAdjTotal(){
+    var from= document.getElementById("from").value;
+    var to= document.getElementById("to").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(from!=''){
+        var date_from=from;
+    }else{
+        var date_from='null';
+    }
+
+    if(to!=''){
+        var date_to=to;
+    }else{
+        var date_to='null';
+    }
+    window.location=loc+'reports/purchases_adj_total_variance/'+date_from+'/'+date_to;          
+}
+
+function exportPurchasesAdjTotal() { 
+     var e_from = document.getElementById("export_from").value; 
+     var e_to = document.getElementById("export_to").value;
+
+    if(e_from!=''){
+        e_from=e_from;
+    }else{
+        e_from='null';
+    }
+
+    if(e_to!=''){
+        e_to=e_to;
+    }else{
+        e_to='null';
+    }
+
+      var loc= document.getElementById("baseurl1").value;
+      window.location=loc+'reports/export_purchases_adj_total_variance/'+e_from+'/'+e_to;
+
+}

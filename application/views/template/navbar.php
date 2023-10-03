@@ -268,14 +268,14 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Total Sales EWT Variance</span></a> 
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Sales Total EWT Variance</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_main_ewt_variance">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_adj_ewt_variance">Adjustment</a></li>
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Total Purchases EWT Variance</span></a> 
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Purchases Total Amount Variance</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance">Adjustment</a></li>

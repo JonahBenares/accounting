@@ -39,7 +39,7 @@
                                                 </td>
                                                 <td width="10%">
                                                     <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
-                                                    <button type="button" onclick="filterSalesMainEWT();" class="btn btn-primary btn-block">Filter</button>
+                                                    <button type="button" onclick="filterSalesAdjEWT();" class="btn btn-primary btn-block">Filter</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -172,7 +172,7 @@
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <input type='hidden' name='baseurl1' id='baseurl1' value="<?php echo base_url(); ?>">
-                    <input type='button' class="btn btn-primary"  onclick="exportSalesMainEWT()" value="Export">
+                    <input type='button' class="btn btn-primary"  onclick="exportSalesAjdEWT()" value="Export">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
