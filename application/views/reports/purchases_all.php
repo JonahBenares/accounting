@@ -182,7 +182,21 @@
                                                         'scanned_copy'=>array(),
                                                     );
                                                 }
-                                                $data2[$key]['participant_name'][] = ($pal['participant_name'] != '') ? $pal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
+                                                // $data2[$key]['participant_name'][] = ($pal['participant_name'] != '') ? $pal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
+                                                // $data2[$key]['billing_id'][] = $pal['billing_id'];
+                                                // $data2[$key]['reference_number'][] = $pal['reference_number'];
+                                                // $data2[$key]['vatables_purchases'][] = "(".number_format($pal['vatables_purchases'],2).")";
+                                                // $data2[$key]['zero_rated_purchases'][] = "(".number_format($pal['zero_rated_purchases'],2).")";
+                                                // $data2[$key]['zero_rated_ecozones'][] = "(".number_format($pal['zero_rated_ecozones'],2).")";
+                                                // $data2[$key]['vat_on_purchases'][] = "(".number_format($pal['vat_on_purchases'],2).")";
+                                                // $data2[$key]['ewt'][] = number_format($pal['ewt'],2);
+                                                // $data2[$key]['total'][] = "(".number_format($pal['total'],2).")";
+                                                // $data2[$key]['or_no'][] = ($pal['or_no']!='') ? $pal['or_no'] : '<br>' ;
+                                                // $data2[$key]['total_update'][] = "(".number_format($pal['total_update'],2).")";
+                                                // $data2[$key]['original_copy'][] =($pal['original_copy']=='0') ? 'NO' : 'YES';
+                                                // $data2[$key]['scanned_copy'][] = ($pal['scanned_copy']=='0') ? 'NO' : 'YES';
+
+                                                $data2[$key]['participant_name'][] = ($pal['participant_name'] != '') ? substr($pal['participant_name'],0,60) : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
                                                 $data2[$key]['billing_id'][] = $pal['billing_id'];
                                                 $data2[$key]['reference_number'][] = $pal['reference_number'];
                                                 $data2[$key]['vatables_purchases'][] = "(".number_format($pal['vatables_purchases'],2).")";

@@ -513,6 +513,8 @@ public function print_BS_new(){
         for($x=0;$x<$count;$x++){
             $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
             if(in_array($sales_det_exp[$x],$bs_id)){
+
+                
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                     $data['detail_id'][$x]=$p->sales_detail_id;
                     $detail_id=$p->sales_detail_id;
@@ -590,6 +592,8 @@ public function print_BS_new(){
                     
                     $h=0;
                     $u=1;
+
+                    
                     foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
                     if($u <= 15){
                             $data['sub_participant_sub']=$s->billing_id;
@@ -726,7 +730,7 @@ public function print_BS_new(){
                             $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$sp->sub_participant);
                             //$billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$sp->sub_participant);
                         foreach($this->super_model->select_custom_where("sales_transaction_details","billing_id = '$subparticipant' AND sales_id = '$p->sales_id' AND total_amount != '0'") AS $s){
-                            if($h<=14){
+                            if($h<=15){
 
                                     $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","sales_detail_id",$s->sales_detail_id);
                                     $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","sales_detail_id",$s->sales_detail_id);
