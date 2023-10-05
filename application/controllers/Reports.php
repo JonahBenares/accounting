@@ -6205,17 +6205,16 @@ class Reports extends CI_Controller {
         $total_ewt=array();
         $total_ewt_amount=array();
         $variance_total=array();
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu ORDER BY billing_id ASC, billing_from ASC") AS $sah){
-            $tin = $this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON p.billing_id = std.billing_id WHERE $qu ORDER BY std.billing_id ASC, billing_from ASC") AS $sah){
 
             $par=array();
-            foreach($this->super_model->select_custom_where('participant',"tin='$tin'") AS $p){
-                $par[]="'".$p->billing_id."'";
+            foreach($this->super_model->select_custom_where('participant',"tin='$sah->tin'") AS $p){
+                $par[]="'".$p->settlement_id."'";
             }
             $imp=implode(',',$par);
 
-            $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
-            $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
+            $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "short_name IN($imp) AND $qu","sales_id");
+            $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_transaction_head", "short_name IN($imp) AND $qu","sales_id");
 
             $variance  = $sah->ewt - $sah->ewt_amount;
             $total_variance  = $overall_ewt_amount - $overall_ewt_collected;
@@ -6233,7 +6232,7 @@ class Reports extends CI_Controller {
                 'overall_ewt_amount'=>$overall_ewt_amount,
                 'ewt_collected'=>$sah->ewt_amount,
                 'overall_ewt_collected'=>$overall_ewt_collected,
-                'tin'=>$tin,
+                'tin'=>$sah->tin,
                 'variance'=>$variance,
                 'total_variance'=>$total_variance,
             );
@@ -6269,7 +6268,6 @@ class Reports extends CI_Controller {
                     )
                 )
             );
-            
             // $objWorkSheet = $objPHPExcel->createSheet($sheetno);
             // $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Sales Regular Bill ".$from." - ".$to);
@@ -6277,7 +6275,7 @@ class Reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "#");
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "Short Name");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Company Name");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D2', "EWT Total Amount");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E2', "EWT Amount Collected");
@@ -6286,13 +6284,12 @@ class Reports extends CI_Controller {
 
             $total_ewt_amount=array();
             $total_ewt_collected=array();
-            $total_varince=array();
+            $total_variance=array();
             $x=1;
             $num=3;
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON p.billing_id = std.billing_id WHERE $qu ORDER BY std.short_name ASC") AS $sah){
-                $tin = $this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
-                $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$tin' ORDER BY settlement_id ASC LIMIT 1");
-
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON p.billing_id = std.billing_id WHERE $qu GROUP BY p.tin ORDER BY std.short_name ASC") AS $sah){
+                //$tin = $this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
+                $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$sah->tin' ORDER BY settlement_id ASC LIMIT 1");
                 if(!empty($sah->company_name) && date('Y',strtotime($sah->create_date))==date('Y')){
                     $comp_name=$sah->company_name;
                 }else{
@@ -6300,19 +6297,18 @@ class Reports extends CI_Controller {
                 }
 
                 $par=array();
-                foreach($this->super_model->select_custom_where('participant',"tin='$tin'") AS $p){
-                    $par[]="'".$p->billing_id."'";
+                foreach($this->super_model->select_custom_where('participant',"tin='$sah->tin'") AS $p){
+                    $par[]="'".$p->settlement_id."'";
                 }
                 $imp=implode(',',$par);
-
                 //$overall_ewt_amount = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$sah->sales_id' AND short_name IN($imp)");
-                $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
-                $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
+                $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "short_name IN($imp) AND $qu","sales_id");
+                $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_transaction_head", "short_name IN($imp) AND $qu","sales_id");
                 $variance  = $overall_ewt_amount - $overall_ewt_collected;
 
                 $total_ewt_amount[]=$overall_ewt_amount;
                 $total_ewt_collected[]=$overall_ewt_collected;
-                $total_varince[]=$variance;
+                $total_variance[]=$variance;
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $settlement_id);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $comp_name);
@@ -6335,8 +6331,8 @@ class Reports extends CI_Controller {
                     $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
                     $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFont()->setBold(true);
                     $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                    $x++;
                     $num++;
+                    $x++;
                 }
                 $a = $num;
                     //$objPHPExcel->getActiveSheet()->getStyle('D'.$a)->getFont()->setBold(true);
@@ -6348,7 +6344,7 @@ class Reports extends CI_Controller {
                     //$objPHPExcel->getActiveSheet()->setCellValue('G'.$a, array_sum($total_vat));
                     $objPHPExcel->getActiveSheet()->setCellValue('D'.$a, array_sum($total_ewt_amount));
                     $objPHPExcel->getActiveSheet()->setCellValue('E'.$a, array_sum($total_ewt_collected));
-                    $objPHPExcel->getActiveSheet()->setCellValue('F'.$a, array_sum($total_varince));
+                    $objPHPExcel->getActiveSheet()->setCellValue('F'.$a, array_sum($total_variance));
                 $num--;
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="Summary of Sales Total EWT Variance (Main).xlsx"');
@@ -6386,7 +6382,7 @@ class Reports extends CI_Controller {
         $total_ewt=array();
         $total_ewt_amount=array();
         $variance_total=array();
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_id = sad.sales_id WHERE $qu ORDER BY billing_id ASC, billing_from ASC") AS $sah){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE $qu ORDER BY billing_id ASC, billing_from ASC") AS $sah){
             $tin = $this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
 
             $par=array();
@@ -6395,8 +6391,8 @@ class Reports extends CI_Controller {
             }
             $imp=implode(',',$par);
 
-            $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_adjustment_details","sales_adjustment_head", "billing_id IN($imp) AND $qu","sales_id");
-            $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_adjustment_details","sales_adjustment_head", "billing_id IN($imp) AND $qu","sales_id");
+            $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_adjustment_details","sales_adjustment_head", "billing_id IN($imp) AND $qu","sales_adjustment_id");
+            $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_adjustment_details","sales_adjustment_head", "billing_id IN($imp) AND $qu","sales_adjustment_id");
 
             $variance  = $sah->ewt - $sah->ewt_amount;
             $total_variance  = $overall_ewt_amount - $overall_ewt_collected;
@@ -6488,8 +6484,8 @@ class Reports extends CI_Controller {
                 $imp=implode(',',$par);
 
                 //$overall_ewt_amount = $this->super_model->select_sum_where("sales_adjustment_head","ewt","sales_id='$sah->sales_id' AND short_name IN($imp)");
-                $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_adjustment_head", "billing_id IN($imp) AND $qu","sales_id");
-                $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_adjustment_head", "billing_id IN($imp) AND $qu","sales_id");
+                $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_adjustment_head", "billing_id IN($imp) AND $qu","sales_adjustment_id");
+                $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_adjustment_head", "billing_id IN($imp) AND $qu","sales_adjustment_id");
                 $variance  = $overall_ewt_amount - $overall_ewt_collected;
 
                 $total_ewt_amount[]=$overall_ewt_amount;

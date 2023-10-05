@@ -116,11 +116,11 @@
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['transaction_no']);?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['billing_id']);?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['ewt_amount']);?></td>
-                                            <td align="center" class=""><?php echo $sa['overall_ewt_amount']; ?></td>
+                                            <td align="center" class=""><?php echo number_format($sa['overall_ewt_amount'],2); ?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['ewt_collected']);?></td>
-                                            <td align="center" class=""><?php echo $sa['overall_ewt_collected']; ?></td>
+                                            <td align="center" class=""><?php echo number_format($sa['overall_ewt_collected'],2); ?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['variance']);?></td>
-                                            <td align="center" class="" style='color: <?php echo ($sa['total_variance'] >= 0) ? 'green' : 'red';?>'><?php echo $sa['total_variance']; ?></td>
+                                            <td align="center" class="" style='color: <?php echo ($sa['total_variance'] >= 0) ? 'green' : 'red';?>'><?php echo number_format($sa['total_variance'],2); ?></td>
                                         </tr>
                                     </tbody>
                                     <?php } ?>

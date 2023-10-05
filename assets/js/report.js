@@ -1057,7 +1057,7 @@ function filterSalesAdjEWT(){
     }else{
         var date_to='null';
     }
-    window.location=loc+'reports/sales_main_adj_variance/'+date_from+'/'+date_to;          
+    window.location=loc+'reports/sales_adj_ewt_variance/'+date_from+'/'+date_to;          
 }
 
 function exportSalesAdjEWT() { 

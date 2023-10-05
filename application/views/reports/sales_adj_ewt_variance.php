@@ -9,7 +9,7 @@
                         <div class="card-header">                        
                             <div class="row">
                                 <div class="col-4">
-                                    <h4>Summary of Sales Total EWT Variance - Main</h4>
+                                    <h4>Summary of Sales Total EWT Variance - Adjustment</h4>
                                 </div>
                                 <div class="col-8">
                                     <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
@@ -116,11 +116,11 @@
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['transaction_no']);?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['billing_id']);?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['ewt_amount']);?></td>
-                                            <td align="center" class=""><?php echo $sa['overall_ewt_amount']; ?></td>
+                                            <td align="center" class=""><?php echo number_format($sa['overall_ewt_amount'],2); ?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['ewt_collected']);?></td>
-                                            <td align="center" class=""><?php echo $sa['overall_ewt_collected']; ?></td>
+                                            <td align="center" class=""><?php echo number_format($sa['overall_ewt_collected'],2); ?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['variance']);?></td>
-                                            <td align="center" class="" style='color: <?php echo ($sa['total_variance'] >= 0) ? 'green' : 'red';?>'><?php echo $sa['total_variance']; ?></td>
+                                            <td align="center" class="" style='color: <?php echo ($sa['total_variance'] >= 0) ? 'green' : 'red';?>'><?php echo number_format($sa['total_variance'],2); ?></td>
                                         </tr>
                                     </tbody>
                                     <?php } ?>
@@ -172,7 +172,7 @@
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <input type='hidden' name='baseurl1' id='baseurl1' value="<?php echo base_url(); ?>">
-                    <input type='button' class="btn btn-primary"  onclick="exportSalesAjdEWT()" value="Export">
+                    <input type='button' class="btn btn-primary"  onclick="exportSalesAdjEWT()" value="Export">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
