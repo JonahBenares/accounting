@@ -509,10 +509,12 @@ public function print_BS_new(){
         $data['bs_head_id'][]='';
         $data['total_sub_h'][]='';
         $data['total_sub'][]='';
-  
+        
         for($x=0;$x<$count;$x++){
+            $array_salesdet_id[]=$sales_det_exp[$x];
             $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
-            if(in_array($sales_det_exp[$x],$bs_id)){
+            $sales_det_id=implode(',',$array_salesdet_id);
+            if(in_array($sales_det_id,$bs_id)){
 
                 
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
