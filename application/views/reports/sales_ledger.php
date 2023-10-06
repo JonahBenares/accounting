@@ -190,8 +190,8 @@
                                             
                                             if(!empty($bill)){
                                             foreach($bill AS $b){
-                                            $sum_vatable_sales[]=$b['vatable_sales']; 
-                                            $sum_zero_rated_sales[]=$b['zero_rated_sales']; 
+                                            $sum_vatable_sales[]=$b['vatable_sales'];
+                                            $sum_zero_rated_sales[]=$b['zero_rated_sales'];
                                             $sum_zero_rated_ecozone[]=$b['zero_rated_ecozones']; 
                                             $sum_vat_on_sales[]=$b['vat_on_sales']; 
                                             $sum_ewt[]=$b['ewt'];
