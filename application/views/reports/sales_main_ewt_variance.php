@@ -75,6 +75,19 @@
                                             <td style="vertical-align:middle!important;" class="3"align="center">Total Variance</td>
                                         </tr>
                                     </thead>
+                                   <!--  <tbody class="header">
+                                        <tr>
+                                            <td style="vertical-align:middle!important;" class="1"align="center">Billing Date</td>
+                                            <td style="vertical-align:middle!important;" class="2"align="center">Transaction No</td>
+                                            <td style="vertical-align:middle!important;" class="3"align="center">Billing ID</td>
+                                            <td style="vertical-align:middle!important;" class="3"align="center">EWT Total Amount</td>
+                                            <td style="vertical-align:middle!important;" class="3"align="center">Overall Total Amount</td>
+                                            <td style="vertical-align:middle!important;" class="3"align="center">EWT Amount Collected</td>
+                                            <td style="vertical-align:middle!important;" class="3"align="center">Overall Amount Collected</td>
+                                            <td style="vertical-align:middle!important;" class="3"align="center">Variance</td>
+                                            <td style="vertical-align:middle!important;" class="3"align="center">Total Variance</td>
+                                        </tr>
+                                    </tbody> -->
                                     <tbody>
                                         <?php 
                                             if(!empty($salesmain_ewt)){
@@ -122,8 +135,8 @@
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['variance']);?></td>
                                             <td align="center" class="" style='color: <?php echo ($sa['total_variance'] >= 0) ? 'green' : 'red';?>'><?php echo number_format($sa['total_variance'],2); ?></td>
                                         </tr>
+                                        <?php } ?>
                                     </tbody>
-                                    <?php } ?>
                                     <tfoot class="header">
                                         <tr>
                                             <td align="right" style="vertical-align:middle!important;" class="td-sticky left-col-1 td-yellow" colspan="3">TOTAL</td>

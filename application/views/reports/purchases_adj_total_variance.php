@@ -125,8 +125,8 @@
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['variance']);?></td>
                                             <td align="center" class="" style='color: <?php echo ($sa['total_variance'] >= 0) ? 'green' : 'red';?>'><?php echo $sa['total_variance']; ?></td>
                                         </tr>
-                                    </tbody>
                                     <?php } ?>
+                                    </tbody>
                                     <tfoot class="header">
                                         <tr>
                                             <td align="right" style="vertical-align:middle!important;" class="td-sticky left-col-1 td-yellow" colspan="4">TOTAL</td>
