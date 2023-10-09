@@ -6303,8 +6303,9 @@ class Reports extends CI_Controller {
             $total_variance=array();
             $x=1;
             $num=3;
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON p.billing_id = std.billing_id WHERE $qu AND std.short_name = p.settlement_id GROUP BY p.tin ORDER BY std.short_name ASC") AS $sah){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id INNER JOIN participant p ON p.billing_id = std.billing_id WHERE $qu GROUP BY p.tin ORDER BY std.short_name ASC") AS $sah){
                 $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$sah->tin' ORDER BY settlement_id ASC LIMIT 1");
+                $tin = $this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
                 if(!empty($sah->company_name) && date('Y',strtotime($sah->create_date))==date('Y')){
                     $comp_name=$sah->company_name;
                 }else{
@@ -6312,13 +6313,13 @@ class Reports extends CI_Controller {
                 }
 
                 $par=array();
-                foreach($this->super_model->select_custom_where('participant',"tin='$sah->tin'") AS $p){
-                    $par[]="'".$p->settlement_id."'";
+                foreach($this->super_model->select_custom_where('participant',"tin='$tin'") AS $p){
+                    $par[]="'".$p->billing_id."'";
                 }
                 $imp=implode(',',$par);
                 //$overall_ewt_amount = $this->super_model->select_sum_where("sales_transaction_details","ewt","sales_id='$sah->sales_id' AND short_name IN($imp)");
-                $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "short_name IN($imp) AND $qu","sales_id");
-                $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_transaction_head", "short_name IN($imp) AND $qu","sales_id");
+                $overall_ewt_amount = $this->super_model->select_sum_join("ewt","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
+                $overall_ewt_collected = $this->super_model->select_sum_join("ewt_amount","sales_transaction_details","sales_transaction_head", "billing_id IN($imp) AND $qu","sales_id");
                 $variance  = $overall_ewt_amount - $overall_ewt_collected;
 
                 $total_ewt_amount[]=$overall_ewt_amount;
@@ -6388,7 +6389,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+            $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
         }
 
         $query=substr($sql,0,-4);
@@ -6446,7 +6447,7 @@ class Reports extends CI_Controller {
         $sql='';
 
         if($from!='null' && $to != 'null'){
-            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+            $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
         }
 
         $query=substr($sql,0,-4);
@@ -6570,7 +6571,7 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
+            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         }
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND adjustment = '0' AND ".$query;
@@ -6628,7 +6629,7 @@ class Reports extends CI_Controller {
         $sql='';
 
         if($from!='null' && $to != 'null'){
-            $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
+            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         }
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND adjustment = '0' AND ".$query;
@@ -6826,7 +6827,7 @@ class Reports extends CI_Controller {
             
             // $objWorkSheet = $objPHPExcel->createSheet($sheetno);
             // $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Purchases Regular Bill ".$from." - ".$to);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Purchases Adjustment Bill ".$from." - ".$to);
             foreach(range('A','F') as $columnID){
             $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
             }
