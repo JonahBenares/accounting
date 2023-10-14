@@ -61,7 +61,7 @@
                             </table>
                             <br>
                             <div >
-                                <table class="table table-bordered table-hover mb-0" id="table-1"  style="width:100%;font-size: 13px;">
+                               <table class="table table-bordered table-hover mb-0" id="table-1" style="width:100%;font-size: 13px;">
                                     <thead class="header">
                                         <tr>
                                             <td style="vertical-align:middle!important;" class="1"align="center">Billing Date</td>
@@ -120,7 +120,16 @@
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['ewt_collected']);?></td>
                                             <td align="center" class=""><?php echo number_format($sa['overall_ewt_collected'],2); ?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['variance']);?></td>
-                                            <td align="center" class="" style='color: <?php echo ($sa['total_variance'] >= 0) ? 'green' : 'red';?>'><?php echo number_format($sa['total_variance'],2); ?></td>
+                                             <td align="center" class=""
+                                             <?php if($sa['total_variance'] == 0){
+                                                echo "style='color:green'";
+                                            } else if($sa['overall_ewt_amount'] < $sa['overall_ewt_collected']) {
+                                                echo "style='color:blue'";
+                                            } else if($sa['overall_ewt_amount'] > $sa['overall_ewt_collected']) {
+                                                echo "style='color:red'";
+                                            } ?>>
+                                                <?php echo number_format($sa['total_variance'],2); ?>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>

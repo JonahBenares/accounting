@@ -70,8 +70,8 @@
                                             <td style="vertical-align:middle!important;" class="3" align="center">Billing ID</td>
                                             <td style="vertical-align:middle!important;" class="3" align="center">Total Amount</td>
                                             <td style="vertical-align:middle!important;" class="3" align="center">Overall Total Amount</td>
-                                            <td style="vertical-align:middle!important;" class="3" align="center">Total Amount Collected</td>
-                                            <td style="vertical-align:middle!important;" class="3" align="center">Overall Amount Collected</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">Total Collected Amount</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">Overall Collected Amount</td>
                                             <td style="vertical-align:middle!important;" class="3" align="center">Variance</td>
                                             <td style="vertical-align:middle!important;" class="3" align="center">Total Variance</td>
                                         </tr>
@@ -123,7 +123,16 @@
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['amount_collected']);?></td>
                                             <td align="center" class=""><?php echo $sa['overall_total_amount_collected']; ?></td>
                                             <td align="center" class=""><?php echo implode("<hr style='margin:0px'>",$sa['variance']);?></td>
-                                            <td align="center" class="" style='color: <?php echo ($sa['total_variance'] >= 0) ? 'green' : 'red';?>'><?php echo $sa['total_variance']; ?></td>
+                                            <td align="center" class=""
+                                             <?php if($sa['total_variance'] == 0){
+                                                echo "style='color:green'";
+                                            } else if($sa['overall_total_amount'] < $sa['overall_total_amount_collected']) {
+                                                echo "style='color:blue'";
+                                            } else if($sa['overall_total_amount'] > $sa['overall_total_amount_collected']) {
+                                                echo "style='color:red'";
+                                            } ?>>
+                                                <?php echo number_format($sa['total_variance'],2); ?>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>
