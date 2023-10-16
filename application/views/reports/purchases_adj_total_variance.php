@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <!-- <?php if(!empty($from) || !empty($to)){ ?> -->
+                            <?php if(!empty($from) || !empty($to)){ ?>
                             <table class="table-bordesred" width="100%">
                                 <tr>
                                     <td width="5%"></td>
@@ -147,9 +147,7 @@
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($o_total_variance),2); ?></td>
                                         </tr>
                                     </tfoot>
-                                    <?php } }else{ ?>
-                                            <div><center><b>No Available Data...</b></center></div>
-                                    <?php } ?>
+                                    <?php } } ?>
                                 </table>
                             </div>
                         </div>

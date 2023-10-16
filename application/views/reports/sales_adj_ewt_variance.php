@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <!-- <?php if(!empty($from) || !empty($to)){ ?> -->
+                            <?php if(!empty($from) || !empty($to)){ ?>
                             <table class="table-bordesred" width="100%">
                                 <tr>
                                     <td width="5%"></td>
@@ -64,15 +64,15 @@
                                <table class="table table-bordered table-hover mb-0" id="table-1" style="width:100%;font-size: 13px;">
                                     <thead class="header">
                                         <tr>
-                                            <td style="vertical-align:middle!important;" class="1"align="center">Billing Date</td>
-                                            <td style="vertical-align:middle!important;" class="2"align="center">Transaction No</td>
-                                            <td style="vertical-align:middle!important;" class="3"align="center">Billing ID</td>
-                                            <td style="vertical-align:middle!important;" class="3"align="center">EWT Total Amount</td>
-                                            <td style="vertical-align:middle!important;" class="3"align="center">Overall Total Amount</td>
-                                            <td style="vertical-align:middle!important;" class="3"align="center">EWT Amount Collected</td>
-                                            <td style="vertical-align:middle!important;" class="3"align="center">Overall Amount Collected</td>
-                                            <td style="vertical-align:middle!important;" class="3"align="center">Variance</td>
-                                            <td style="vertical-align:middle!important;" class="3"align="center">Total Variance</td>
+                                            <td style="vertical-align:middle!important;" class="1" align="center">Billing Date</td>
+                                            <td style="vertical-align:middle!important;" class="2" align="center">Transaction No</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">Billing ID</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">EWT Total Amount</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">Overall Total Amount</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">EWT Amount Collected</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">Overall Amount Collected</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">Variance</td>
+                                            <td style="vertical-align:middle!important;" class="3" align="center">Total Variance</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -144,9 +144,7 @@
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($o_total_variance),2); ?></td>
                                         </tr>
                                     </tfoot>
-                                    <?php } }else{ ?>
-                                            <div><center><b>No Available Data...</b></center></div>
-                                    <?php } ?>
+                                    <?php } } ?>
                                 </table>
                             </div>
                         </div>

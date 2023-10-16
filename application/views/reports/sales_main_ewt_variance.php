@@ -1,5 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/report.js"></script>
+<style type="text/css">
+    .table_td{border:1px solid #ddd!important}
+</style>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -8,10 +11,10 @@
                     <div class="card">
                         <div class="card-header">                        
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-8">
                                     <h4>Summary of Sales Total EWT Variance - Main</h4>
                                 </div>
-                                <div class="col-8">
+                                 <div class="col-4">
                                     <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
                                         <span class="fas fa-file-export"></span> Export to Excel
                                     </button>
@@ -46,8 +49,8 @@
                                     </form>
                                 </div>
                             </div>
-                            <hr>
-                            <!-- <?php if(!empty($from) || !empty($to)){ ?> -->
+                            <br>
+                            <?php if(!empty($from) || !empty($to)){ ?>
                             <table class="table-bordesred" width="100%">
                                 <tr>
                                     <td width="5%"></td>
@@ -157,9 +160,7 @@
                                             <td class="td-30 td-yellow" align="right" style="vertical-align:middle!important;"><?php echo number_format(array_sum($o_total_variance),2); ?></td>
                                         </tr>
                                     </tfoot>
-                                    <?php } }else{ ?>
-                                            <div><center><b>No Available Data...</b></center></div>
-                                    <?php } ?>
+                                    <?php } } ?>
                                 </table>
                             </div>
                         </div>
