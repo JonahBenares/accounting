@@ -94,3 +94,11 @@ define('TELFAX','Telefax: (034) 435-1932');
 define('ADDRESS_2','Plant Site: Purok San Jose, Barangay Calumangan, Bago City');
 define('JO_NAME','CENPRI');
 define('COMPANY','CNPR');
+
+define('COMPANY_NAME2307','CENTRAL NEGROS POWER RELIABILITY, INC.');
+define('COMPANY_ADDRESS','PUROK SAN JOSE CALUMANGAN 6101 BAGO CITY NEGROS OCCIDENTAL PHILIPPINES');
+define('COMPANY_ZIP','6101');
+define('COMPANY_TIN1','008');
+define('COMPANY_TIN2','691');
+define('COMPANY_TIN3','287');
+define('COMPANY_TIN4','0000');

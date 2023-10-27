@@ -53,14 +53,14 @@
         <label class="zip1"><?php echo $d['zip']; ?></label>
         <label class="address2"></label>
         <div class="tin2">
-           <label class="">008</label> 
-           <label class="">691</label> 
-           <label class="">287</label> 
-           <label class="last1">0000</label> 
+           <label class=""><?php echo COMPANY_TIN1 ?></label> 
+           <label class=""><?php echo COMPANY_TIN2 ?></label> 
+           <label class=""><?php echo COMPANY_TIN3 ?></label> 
+           <label class="last1"><?php echo COMPANY_TIN4 ?></label> 
         </div>
-        <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
-        <label class="address3">COR. RIZAL - MABINI STREETS, BACOLOD CITY</label>
-        <label class="zip2">6100</label>
+        <label class="payor"><?php echo COMPANY_NAME2307 ?></label>
+        <label class="address3"><?php echo COMPANY_ADDRESS ?></label>
+        <label class="zip2"><?php echo COMPANY_ZIP ?></label>
         <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label>
         <label class="row1-col2">WC160</label>
         <label class="row1-col3"><?php echo (($d['firstmonth']=="-") ? "-" : number_format($d['firstmonth'],2)); ?></label>
@@ -74,6 +74,7 @@
         <label class="row2-col5"><?php echo (($d['thirdmonth']=="-") ? "-" : number_format($d['thirdmonth'],2)); ?></label>
         <label class="row2-col6"><?php echo number_format($d['total'],2); ?></label>
         <label class="row2-col7"><?php echo number_format($d['ewt'],2); ?> <span>&nbsp;&nbsp;</span></label>
+        <img src="<?php echo base_url(); ?>assets/img/sign_lacambra.png" class="sign_lacambra">
         <label class="row2-col8"> Reference Number: <b><?php echo $reference_no; ?></b></label>
         <label class="row2-col9"> Item Number: <b><?php echo $d['item_no']; ?></b></label>
        
@@ -87,7 +88,7 @@
     <input type="hidden" class="billing_month" id="billing_month" value="<?php echo $billing_month; ?>">
     <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <?php $x++; } ?>
-<input type="text"  id="count" value="<?php echo $x; ?>">
+<input type="hidden"  id="count" value="<?php echo $x; ?>">
 
 </center>
 <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>

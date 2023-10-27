@@ -146,8 +146,10 @@
                                             <th class="table_td p-2" style="font-size: 12px;" width="10%">Transaction Reference Number</th> 
                                             <th class="table_td p-2" style="font-size: 12px;" width="30%">Company Name</th>
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">Vatable Purchases</th> 
+                                            <th class="table_td p-2" style="font-size: 12px;" width="5%">Zero-rated Purchases</th>    
+                                            <th class="table_td p-2" style="font-size: 12px;" width="5%">Zero-rated Ecozones Purchases</th>    
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">VAT on Purchases</th>    
-                                            <th class="table_td p-2" style="font-size: 12px;" width="5%">EWT</th>    
+                                            <th class="table_td p-2" style="font-size: 12px;" width="5%">EWT Purchases</th>    
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">Total</th> 
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">OR Number</th> 
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">Total Amount</th> 
@@ -169,6 +171,8 @@
                                                         'reference_number'=>array(),
                                                         'billing'=>date("M. d, Y",strtotime($pal['billing_from']))." - ".date("M. d, Y",strtotime($pal['billing_to'])),
                                                         'vatables_purchases'=>array(),
+                                                        'zero_rated_ecozones'=>array(),
+                                                        'zero_rated_ecozones'=>array(),
                                                         'vat_on_purchases'=>array(),
                                                         'ewt'=>array(),
                                                         'total'=>array(),
@@ -178,10 +182,26 @@
                                                         'scanned_copy'=>array(),
                                                     );
                                                 }
-                                                $data2[$key]['participant_name'][] = ($pal['participant_name'] != '') ? $pal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
+                                                // $data2[$key]['participant_name'][] = ($pal['participant_name'] != '') ? $pal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
+                                                // $data2[$key]['billing_id'][] = $pal['billing_id'];
+                                                // $data2[$key]['reference_number'][] = $pal['reference_number'];
+                                                // $data2[$key]['vatables_purchases'][] = "(".number_format($pal['vatables_purchases'],2).")";
+                                                // $data2[$key]['zero_rated_purchases'][] = "(".number_format($pal['zero_rated_purchases'],2).")";
+                                                // $data2[$key]['zero_rated_ecozones'][] = "(".number_format($pal['zero_rated_ecozones'],2).")";
+                                                // $data2[$key]['vat_on_purchases'][] = "(".number_format($pal['vat_on_purchases'],2).")";
+                                                // $data2[$key]['ewt'][] = number_format($pal['ewt'],2);
+                                                // $data2[$key]['total'][] = "(".number_format($pal['total'],2).")";
+                                                // $data2[$key]['or_no'][] = ($pal['or_no']!='') ? $pal['or_no'] : '<br>' ;
+                                                // $data2[$key]['total_update'][] = "(".number_format($pal['total_update'],2).")";
+                                                // $data2[$key]['original_copy'][] =($pal['original_copy']=='0') ? 'NO' : 'YES';
+                                                // $data2[$key]['scanned_copy'][] = ($pal['scanned_copy']=='0') ? 'NO' : 'YES';
+
+                                                $data2[$key]['participant_name'][] = ($pal['participant_name'] != '') ? substr($pal['participant_name'],0,60) : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
                                                 $data2[$key]['billing_id'][] = $pal['billing_id'];
                                                 $data2[$key]['reference_number'][] = $pal['reference_number'];
                                                 $data2[$key]['vatables_purchases'][] = "(".number_format($pal['vatables_purchases'],2).")";
+                                                $data2[$key]['zero_rated_purchases'][] = "(".number_format($pal['zero_rated_purchases'],2).")";
+                                                $data2[$key]['zero_rated_ecozones'][] = "(".number_format($pal['zero_rated_ecozones'],2).")";
                                                 $data2[$key]['vat_on_purchases'][] = "(".number_format($pal['vat_on_purchases'],2).")";
                                                 $data2[$key]['ewt'][] = number_format($pal['ewt'],2);
                                                 $data2[$key]['total'][] = "(".number_format($pal['total'],2).")";
@@ -193,7 +213,7 @@
                                             foreach($data2 AS $pa){
                                         ?>
                                         <tr>
-                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="11" style="font-size: 12px; background: #e8f5ff;">
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="13" style="font-size: 12px; background: #e8f5ff;">
                                                 <b><?php echo $pa['billing']; ?></b>
                                             </td>
                                         </tr>
@@ -209,6 +229,12 @@
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin: 0px'>",$pa['vatables_purchases']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin: 0px'>",$pa['zero_rated_purchases']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin: 0px'>",$pa['zero_rated_ecozones']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin: 0px'>",$pa['vat_on_purchases']);?>
