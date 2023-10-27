@@ -1,3 +1,4 @@
+<?php error_reporting(0); ?>
 <script>
     function goBack() {
         window.history.back();
