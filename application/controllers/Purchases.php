@@ -1424,7 +1424,7 @@ class Purchases extends CI_Controller {
            
         $x=0;
         $data['details']=array();
-        foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id='$purchase_id' and bulk_print_flag = '0' and ewt > '0' LIMIT 20" ) AS $det){ 
+        foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id='$purchase_id' and bulk_print_flag = '0' and ewt > '0' LIMIT 10" ) AS $det){ 
            
            
              if($det->vatables_purchases != 0){
