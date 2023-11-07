@@ -64,7 +64,7 @@ element.addEventListener("click", onClick);*/
                                     </div>
                                 </div>
                                 <hr>
-                                <?php if(!empty($details) && (!empty($ref_no) || !empty($due_date))){ ?>
+                                <?php if(!empty($details) && ((!empty($ref_no) || !empty($due_date)))){ ?>
                                 <table class="table-bsordered" width="100%">
                                     <?php 
                                         foreach($details AS $d){ 

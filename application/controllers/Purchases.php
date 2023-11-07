@@ -1395,8 +1395,10 @@ class Purchases extends CI_Controller {
     public function download_bulk(){
         
         $refno =  $this->uri->segment(3);
+
         $purchase_id = $this->super_model->select_column_custom_where('purchase_transaction_head', 'purchase_id', "reference_number='$refno' AND saved='1'");
         $billing_to = $this->super_model->select_column_custom_where('purchase_transaction_head', 'billing_to', "reference_number='$refno' AND saved='1'");
+
           $month= date("n",strtotime($billing_to ?? ''));
             $yearQuarter = ceil($month / 3);
             $first = array(1,4,7,10);

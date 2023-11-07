@@ -1,3 +1,21 @@
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>FEBA SYSTEM</title>
+    <!-- General CSS Files -->    
+
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/app.min.css" >
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bundles/pretty-checkbox/pretty-checkbox.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bundles/datatables/datatables.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/components.css">
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css">
+    <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
+</head>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <!-- Modal -->
@@ -31,17 +49,21 @@
         </div>
     </div>
 </div>
-<div class="main-content">
+<br>
+<div class="container-fluid">
     <section class="section">
         <div class="section-body">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                    <form method="POST" action="<?php echo base_url(); ?>sales/pdf_scan_directory">
+                    <form method="POST" action="http://tradingsvr/accounting/sales/pdf_scan_directory">
                             <div class="card-header">
-                                <div class="d-flex justify-content-between">  
+                                <div class="d-flex justify-content-start">  
                                     <div>
-                                        <h4>Collection List</h4>
+                                        <a href="<?php echo base_url(); ?>accounting/sales/collection_list" class="btn btn-warning mr-2">Back</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="pt-1">Collection List</h4>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +85,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                       
+                                               
                                             foreach($result AS $r){ ?>
                                             <tr>
                                                 <td class="td-btm pt-1 pb-1"><?php echo $r ?></td>

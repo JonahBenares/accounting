@@ -27,8 +27,6 @@
         <?php foreach($next_purchase_details_id AS $next){ ?>
         <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $next->purchase_detail_id; ?>" class="btn btn-primary">Next</a>
         <?php } ?>
-
-
     </center>
     <br>
 </div>
@@ -52,14 +50,14 @@
         <label class="zip1"><?php echo $zip; ?></label>
         <label class="address2"></label>
         <div class="tin2">
-           <label class="">008</label> 
-           <label class="">691</label> 
-           <label class="">287</label> 
-           <label class="last1">000</label> 
+           <label class=""><?php echo COMPANY_TIN1 ?></label> 
+           <label class=""><?php echo COMPANY_TIN2 ?></label> 
+           <label class=""><?php echo COMPANY_TIN3 ?></label> 
+           <label class="last1"><?php echo COMPANY_TIN4 ?></label> 
         </div>
-        <label class="payor">CENTRAL NEGROS POWER RELIABILITY, INC.</label>
-        <label class="address3">#88 ELOISA Q'S BLDG. COR. RIZAL-MABINI STS., BRGY. 22, BACOLOD CITY</label>
-        <label class="zip2">6100</label>
+        <label class="payor"><?php echo COMPANY_NAME2307 ?></label>
+        <label class="address3"><?php echo COMPANY_ADDRESS ?></label>
+        <label class="zip2"><?php echo COMPANY_ZIP ?></label>
         <label class="row1-col1">Income payment made by top withholding agents to their local/resident supplier of services other than those covered by other rates of withholding tax</label>
         <label class="row1-col2">WC160</label>
         <label class="row1-col3"><?php echo (($firstmonth=="-") ? "-" : number_format($firstmonth,2)); ?></label>
@@ -73,6 +71,7 @@
         <label class="row2-col5"><?php echo (($thirdmonth=="-") ? "-" : number_format($thirdmonth,2)); ?></label>
         <label class="row2-col6"><?php echo number_format($total,2); ?></label>
         <label class="row2-col7"><?php echo number_format($ewt,2); ?> <span>&nbsp;&nbsp;</span></label>
+        <img src="<?php echo base_url(); ?>assets/img/sign_lacambra.png" class="sign_lacambra">
         <label class="row2-col8"> Reference Number: <b><?php echo $reference_no; ?></b></label>
         <label class="row2-col9"> Item Number: <b><?php echo $item_no; ?></b></label>
     </page>
@@ -123,7 +122,9 @@
                 pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
             }
             
+
             pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+
         });
     };
 </script>

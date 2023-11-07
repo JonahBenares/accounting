@@ -69,7 +69,7 @@ class Sales extends CI_Controller {
         $total_vat = $this->input->post('vat');
         $ewt_arr = $this->input->post('ewt_arr');
         $overall_total = $this->input->post('overall_total'); 
-        $count_head=count($participant_id);
+        $count_head=is_countable($participant_id);
 
         $billing_id = $this->input->post('sub_participant');
         $vatable_sales = $this->input->post('vatable_sales');
@@ -78,7 +78,7 @@ class Sales extends CI_Controller {
         $ewt = $this->input->post('ewt');
         $net_amount = $this->input->post('net_amount');
         $details_id = $this->input->post('details_id');
-        $count_details=count($billing_id);
+        $count_details=is_countable($billing_id);
        
         for($x=0;$x<$count_head;$x++){
             $count_participant = $this->super_model->count_custom_where("bs_head", "participant_id = '$participant_id[$x]' AND reference_number = '$reference_number[$x]' AND billing_from = '$billing_from[$x]' AND billing_to = '$billing_to[$x]'");
@@ -509,10 +509,14 @@ public function print_BS_new(){
         $data['bs_head_id'][]='';
         $data['total_sub_h'][]='';
         $data['total_sub'][]='';
-  
+        
         for($x=0;$x<$count;$x++){
-            $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
-            if(in_array($sales_det_exp[$x],$bs_id)){
+            $array_salesdet_id[]=$sales_det_exp[$x];
+            $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
+            $sales_det_id=implode(',',$array_salesdet_id);
+            if(in_array($sales_det_id,$bs_id)){
+
+                
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                     $data['detail_id'][$x]=$p->sales_detail_id;
                     $detail_id=$p->sales_detail_id;
@@ -574,7 +578,6 @@ public function print_BS_new(){
                     $data['overall_total'][$x]=$overall_total;
                     $data['participant_id'][$x]=$participant_id;
 
-
                     $data['sub'][]=array(
                         "participant_id"=>$participant_id,
                         "bs_head_id"=>$p->bs_head_id,
@@ -591,6 +594,8 @@ public function print_BS_new(){
                     
                     $h=0;
                     $u=1;
+
+                    
                     foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
                     if($u <= 15){
                             $data['sub_participant_sub']=$s->billing_id;
@@ -727,7 +732,7 @@ public function print_BS_new(){
                             $subparticipant=$this->super_model->select_column_where("participant","billing_id","participant_id",$sp->sub_participant);
                             //$billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$sp->sub_participant);
                         foreach($this->super_model->select_custom_where("sales_transaction_details","billing_id = '$subparticipant' AND sales_id = '$p->sales_id' AND total_amount != '0'") AS $s){
-                            if($h<=14){
+                            if($h<=15){
 
                                     $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","sales_detail_id",$s->sales_detail_id);
                                     $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","sales_detail_id",$s->sales_detail_id);
@@ -745,14 +750,14 @@ public function print_BS_new(){
                                     $zero_rated= $zero_rated_sales + $zero_rated_ecozones;
                                     $total_amount = $vatable_sales + $zero_rated_sales + $zero_rated_ecozones;
                                     $overall_total= ($total_amount + $vat_on_sales) - $ewt;
-                                    $data['sub_participant_sub'][$h]=$subparticipant;
+                                    //$data['sub_participant_sub'][$h]=$subparticipant;
                                     //$data['vatable_sales_sub'][$h]=$vatable_sales;
                                     //$data['vat_on_sales_sub'][$h]=$vat_on_sales;
                                     //$data['zero_rated_sales_sub'][$h]=$zero_rated;
                                     //$data['total_amount_sub'][$h]=$total_amount;
                                     //$data['ewt_s'][$h]=$ewt;
                                     //$data['overall_total_sub'][$h]=$overall_total;
-                                    $data['participant_id_sub'][$h]=$sp->participant_id;
+                                    //$data['participant_id_sub'][$h]=$sp->participant_id;
                                     $data['sub_part'][]=array(
                                         "counter"=>$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'"),
                                         "counter_h"=>'',
@@ -832,15 +837,15 @@ public function print_BS_new(){
                                 $total_sub_total_amount[] = $total_amount;
                                 $total_sub_overall_total[] = $overall_total;
 
-                                if($z>=15){
-                                $data['sub_participant_sub'][$z]=$subparticipant;
-                                $data['vatable_sales_sub'][$z]=$vatable_sales;
-                                $data['vat_on_sales_sub'][$z]=$vat_on_sales;
-                                $data['zero_rated_sales_sub'][$z]=$zero_rated;
-                                $data['total_amount_sub'][$z]=$total_amount;
-                                $data['ewt_s'][$z]=$ewt;
-                                $data['overall_total_sub'][$z]=$overall_total;
-                                $data['participant_id_sub'][$z]=$sp->participant_id;
+                                if($z>=16){
+                                //$data['sub_participant_sub'][$z]=$subparticipant;
+                                // $data['vatable_sales_sub'][$z]=$vatable_sales;
+                                // $data['vat_on_sales_sub'][$z]=$vat_on_sales;
+                                // $data['zero_rated_sales_sub'][$z]=$zero_rated;
+                                // $data['total_amount_sub'][$z]=$total_amount;
+                                // $data['ewt_s'][$z]=$ewt;
+                                // $data['overall_total_sub'][$z]=$overall_total;
+                                // $data['participant_id_sub'][$z]=$sp->participant_id;
                                 $data['sub_part_second'][]=array(
                                     "counter"=>$h,
                                     "counter_h"=>'',
@@ -979,6 +984,11 @@ public function print_BS_new(){
 
         }else{
                 //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
+            $vatable_sales_bs=array();
+            $vat_on_sales_bs=array();
+            $ewt_bs=array();
+            $zero_rated_ecozone_bs=array();
+            $zero_rated_bs=array();
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                 $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
@@ -3252,6 +3262,7 @@ public function upload_sales_adjustment_test(){
         $due_date = $this->input->post('due_date');
         $adjustment_identifier = $this->input->post('adjustment_identifier');
         $sales_adjustment_id=array();
+        $array=array();
         foreach($this->super_model->select_row_where('sales_adjustment_head','due_date',$due_date) AS $dues){
             $sales_adjustment_id[]=$dues->sales_adjustment_id;
         }
@@ -3313,6 +3324,7 @@ public function upload_sales_adjustment_test(){
             $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
             $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
             $sales_adjustment_id=array();
+            $array=array();
             foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due_date' AND reference_number='$transaction_no'") AS $dues){
                 $array[]=$dues->sales_adjustment_id;
                 $sales_adjustment_id=array_merge($sales_adjustment_id, $array);
@@ -3321,6 +3333,7 @@ public function upload_sales_adjustment_test(){
             if(!in_array($sales_adjust_id,$array)){
                 $imp_id=$sales_adjust_id;    
             }
+            //echo $imp_id;
             //$sales_adjust_id=implode(",",$sales_adjustment_id);
             $data_adjustment = array(
                 'ewt_amount'=>$ewt_amount,
@@ -3336,6 +3349,7 @@ public function upload_sales_adjustment_test(){
         $due_date = $this->input->post('due');
         $bulk_update_identifier = $this->input->post('adjustment_identifier');
         $sales_adjustment_id=array();
+        $array=array();
         foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due_date'") AS $dues){
             //$sales_adjustment_id[]="'".$dues->sales_adjustment_id."'";
             $array[]=$dues->sales_adjustment_id;
@@ -3410,7 +3424,7 @@ public function upload_sales_adjustment_test(){
 
             //echo $count."<br>";
 
-            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no LIMIT 20") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no LIMIT 10") AS $col){
 
                 //echo $col->series_number."-".$col->settlement_id."<br>";
 
@@ -3639,6 +3653,7 @@ public function upload_sales_adjustment_test(){
             // }
             // $sales_adjust_id=implode(',',$sales_adjustment_id);
             $sales_adjustment_id=array();
+            $array=array();
             foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due' AND reference_number='$reference_no'") AS $dues){
                 $array[]=$dues->sales_adjustment_id;
                 $sales_adjustment_id=array_merge($sales_adjustment_id, $array);
@@ -4224,7 +4239,7 @@ public function upload_sales_adjustment_test(){
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '1' AND series_number != '0' AND saved = '1' AND ".$query;
 
-        $dir    = "C:\Users\Marian\Downloads\/";
+        $dir    = "C:\Users\Henne\Downloads\/";
         $files = scandir($dir,1);
 
        
@@ -4240,16 +4255,29 @@ public function upload_sales_adjustment_test(){
              }
         }
         
+       // foreach($pdffiles AS $pdf){
+       //  echo $pdf . "<br>";
+       // }
        foreach($this->super_model->custom_query("SELECT filename FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no") AS $db){
         $db_files[] = $db->filename;
        }
         
-       $data['result'] = array_diff($db_files, $pdffiles);
+
+       //   foreach($db_files AS $db){
+       //  echo $db . "<br>";
+       // }
+       // $data['result'] = array_diff($db_files, $pdffiles);
+
+        $data['result'] = array_diff($db_files, $pdffiles);
+
+        $result=array_diff($db_files, $pdffiles);
+        $x=1;
+       
 
       
 
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
+     
+        
         $this->load->view('sales/export_not_download',$data);
         $this->load->view('template/footer');
     }
