@@ -1525,6 +1525,7 @@ class Purchases extends CI_Controller {
             $data['period_from']=$period_from;
             $data['period_to'] = $period_to;
             $data['reference_no']=$refno;
+            $data['ref_no']=preg_replace("/[^0-9]/", "", $refno);
 
            
         $x=0;

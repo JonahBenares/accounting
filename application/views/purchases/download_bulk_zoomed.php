@@ -84,7 +84,7 @@
  
     </div>
      <input type="hidden" class="shortname<?php echo $x; ?>" value="<?php echo $d['shortname']; ?>" id="shortname<?php echo $x; ?>">   
-    <input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $reference_no; ?>">
+    <input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $ref_no; ?>">
     <input type="hidden" class="billing_month" id="billing_month" value="<?php echo $billing_month; ?>">
     <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <?php $x++; } ?>
