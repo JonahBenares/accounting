@@ -139,9 +139,9 @@
                         // pdf.addPage(PDF_Width, PDF_Height);
                         // pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                     //}
-                    let rno = refno.split("-");
-                    let newref = rno[2] + rno[3].slice(0, -1);
-                     pdf.save("BIR2307_CENPRI_"+shortname+"_"+newref+"_"+billing_month+"_"+timestamp+".pdf");
+                    // let rno = refno.split("-");
+                    // let newref = rno[2] + rno[3].slice(0, -1);
+                     pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
                  
                   
               });
