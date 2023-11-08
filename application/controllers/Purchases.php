@@ -1492,6 +1492,106 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/download_bulk',$data);
     }
 
+     public function download_bulk_zoomed(){
+        
+        $refno =  $this->uri->segment(3);
+        $purchase_id = $this->super_model->select_column_where('purchase_transaction_head', 'purchase_id', 'reference_number', $refno);
+        $billing_to = $this->super_model->select_column_where('purchase_transaction_head', 'billing_to', 'reference_number', $refno);
+          $month= date("n",strtotime($billing_to ?? ''));
+            $yearQuarter = ceil($month / 3);
+            $first = array(1,4,7,10);
+            $second = array(2,5,8,11);
+            $third = array(3,6,9,12);
+
+            if($yearQuarter ==1){
+                $period_from = "0101".date("Y");
+                $period_to = "0331".date("Y");
+            } else if($yearQuarter == 2){
+                $period_from = "0401".date("Y");
+                $period_to = "0630".date("Y");
+            } else if($yearQuarter == 3){
+                $period_from = "0701".date("Y");
+                $period_to = "0930".date("Y");
+            } else if($yearQuarter == 4){
+                $period_from = "1001".date("Y");
+                $period_to = "1231".date("Y");
+            }
+
+            $data['period_from']=$period_from;
+            $data['period_to'] = $period_to;
+            $data['reference_no']=$refno;
+
+           
+        $x=0;
+        $data['details']=array();
+        foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id='$purchase_id' and bulk_print_flag = '0' and ewt > '0' LIMIT 10" ) AS $det){ 
+           
+           
+             if($det->vatables_purchases != 0){
+                $amount=$det->vatables_purchases;
+            }
+            if($det->zero_rated_purchases != 0){
+                $amount=$det->zero_rated_purchases;
+            }
+            if($det->zero_rated_ecozones != 0){
+                $amount=$det->zero_rated_ecozones;
+            }
+
+             $total = $amount;
+
+               if(in_array($month, $first)){
+                $firstmonth = $amount; 
+            } else {
+                $firstmonth = "-"; 
+            }
+
+            if(in_array($month, $second)){
+                $secondmonth = $amount; 
+            } else {
+                $secondmonth = "-"; 
+            }
+
+            if(in_array($month, $third)){
+                $thirdmonth = $amount; 
+            } else {
+                $thirdmonth = "-"; 
+            }
+
+
+            $data_update = array(
+                "bulk_print_flag"=>1
+
+            );
+
+            $this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id", $det->purchase_detail_id);
+
+            $data['billing_month'] = date('my',strtotime($billing_to));
+            $data['timestamp']=date('Ymd');
+
+            $count=$this->super_model->count_custom_where("participant","billing_id='$det->billing_id'");
+            if($count>0){
+                $tin=$this->super_model->select_column_where("participant", "tin", "billing_id", $det->billing_id);
+            } else {
+                $tin='000-000-000';
+            }
+            $data['details'][] = array(
+                'tin'=>$tin,
+                'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
+                'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
+                'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
+                'total'=>$amount,
+                'ewt'=>$det->ewt,
+                'firstmonth'=>$firstmonth,
+                'secondmonth'=>$secondmonth,
+                'thirdmonth'=>$thirdmonth,
+                'item_no'=>$det->item_no,
+                'shortname'=>$det->short_name,
+            );
+
+        }
+        $this->load->view('purchases/download_bulk_zoomed',$data);
+    }
+
     public function upload_purchases_adjustment(){
 
         $identifier_code=$this->generateRandomString();

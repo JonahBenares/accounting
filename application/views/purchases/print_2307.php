@@ -24,6 +24,7 @@
         <button class="btn btn-warning " onclick="goBack()">Back</button>
         <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
         <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo $billing_month; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
+        <button class="btn btn-success " onclick="getPDFZoomed('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo $billing_month; ?>','<?php echo date("Ymd"); ?>')">Save as PDF (zoomed)</button>
         <?php foreach($next_purchase_details_id AS $next){ ?>
         <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $next->purchase_detail_id; ?>" class="btn btn-primary">Next</a>
         <?php } ?>
@@ -89,15 +90,21 @@
     function getPDF(shortname, refno,billing_month, timestamp){
 
         var HTML_Width = $(".canvas_div_pdf").width();
-        
-        var HTML_Height = $(".canvas_div_pdf").height();
 
-        /*alert(HTML_Height);*/
+       
+        
+         var HTML_Height = $(".canvas_div_pdf").height();
+        
         var top_left_margin = 10;
         var PDF_Width = HTML_Width+(top_left_margin*2);
-        var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
+         var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
+
+       
+       
         var canvas_image_width = HTML_Width;
         var canvas_image_height = HTML_Height;
+
+      
         
         var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
         
@@ -108,8 +115,7 @@
             height: window.outerHeight + window.innerHeight,
             windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
             canvas.getContext('2d');
-        /*    
-            console.log(canvas.height+"  "+canvas.width);*/
+        
             
             
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -123,9 +129,55 @@
             }
             
 
-            let rno = refno.split("-");
-                    let newref = rno[2] + rno[3].slice(0, -1);
-           pdf.save("BIR2307_CENPRI_"+shortname+"_"+newref+"_"+billing_month+"_"+timestamp+".pdf");
+           
+           pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+        });
+    };
+
+     function getPDFZoomed(shortname, refno,billing_month, timestamp){
+
+        var HTML_Width = $(".canvas_div_pdf").width();
+
+       
+        
+         var HTML_Height = 1900;
+        
+        var top_left_margin = 10;
+        var PDF_Width = HTML_Width+(top_left_margin*2);
+         var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
+
+       
+       
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+
+      
+        
+        var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-2;
+        
+
+        html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
+            useCORS: true,
+            logging: false,
+            height: window.outerHeight + window.innerHeight,
+            windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
+            canvas.getContext('2d');
+        
+            
+            
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+            
+            
+            for (var i = 1; i <= totalPDFPages; i++) { 
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+            }
+            
+
+           
+           pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
         });
     };
 </script>
