@@ -75,7 +75,7 @@
         <label class="row2-col6"><?php echo number_format($d['total'],2); ?></label>
         <label class="row2-col7"><?php echo number_format($d['ewt'],2); ?> <span>&nbsp;&nbsp;</span></label>
         <img src="<?php echo base_url(); ?>assets/img/sign_lacambra.png" class="sign_lacambra">
-        <label class="row2-col8"> Reference Number: <b><?php echo $reference_no; ?></b></label>
+        <label class="row2-col8"> Reference Number: <b><?php echo $d['reference_no']; ?></b></label>
         <label class="row2-col9"> Item Number: <b><?php echo $d['item_no']; ?></b></label>
        
             
@@ -84,7 +84,7 @@
  
     </div>
      <input type="hidden" class="shortname<?php echo $x; ?>" value="<?php echo $d['shortname']; ?>" id="shortname<?php echo $x; ?>">   
-    <input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $ref_no; ?>">
+    <input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
     <input type="hidden" class="billing_month" id="billing_month" value="<?php echo $billing_month; ?>">
     <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <?php $x++; } ?>

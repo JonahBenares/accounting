@@ -1395,11 +1395,23 @@ class Purchases extends CI_Controller {
     public function download_bulk(){
         
         $refno =  $this->uri->segment(3);
+        $due_date =  $this->uri->segment(4);
+        $in_ex_sub =  $this->uri->segment(5);
+        $sql='';
+        if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
+        }
 
-        $purchase_id = $this->super_model->select_column_custom_where('purchase_transaction_head', 'purchase_id', "reference_number='$refno' AND saved='1'");
-        $billing_to = $this->super_model->select_column_custom_where('purchase_transaction_head', 'billing_to', "reference_number='$refno' AND saved='1'");
-
-          $month= date("n",strtotime($billing_to ?? ''));
+        if($refno!='null'){
+            $sql.= "reference_number = '$refno' AND ";
+        }
+        $query=substr($sql,0,-4);
+        //$purchase_id = $this->super_model->select_column_custom_where('purchase_transaction_head', 'purchase_id', "reference_number='$refno' AND saved='1'");
+        //$billing_to = $this->super_model->select_column_custom_where('purchase_transaction_head', 'billing_to', "reference_number='$refno' AND saved='1'");
+        $data['details']=array();
+        $x=1;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE $query AND saved='1' AND bulk_print_flag = '0' AND ewt > '0' ORDER BY ptd.purchase_detail_id LIMIT 10") AS $det){
+          $month= date("n",strtotime($det->billing_to ?? ''));
             $yearQuarter = ceil($month / 3);
             $first = array(1,4,7,10);
             $second = array(2,5,8,11);
@@ -1421,15 +1433,15 @@ class Purchases extends CI_Controller {
 
             $data['period_from']=$period_from;
             $data['period_to'] = $period_to;
-            $data['reference_no']=$refno;
-            $data['ref_no']=preg_replace("/[^0-9]/", "", $refno);
+            // $data['reference_no']=$refno;
+            // $data['ref_no']=preg_replace("/[^0-9]/", "", $refno);
         
 
 
            
-        $x=0;
-        $data['details']=array();
-        foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id='$purchase_id' and bulk_print_flag = '0' and ewt > '0' LIMIT 10" ) AS $det){ 
+        //$x=0;
+        //$data['details']=array();
+        //foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id='$purchase_id' and bulk_print_flag = '0' and ewt > '0' LIMIT 10" ) AS $det){ 
            
            
              if($det->vatables_purchases != 0){
@@ -1470,7 +1482,7 @@ class Purchases extends CI_Controller {
 
             $this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id", $det->purchase_detail_id);
 
-            $data['billing_month'] = date('my',strtotime($billing_to));
+            $data['billing_month'] = date('my',strtotime($det->billing_to));
             $data['timestamp']=date('Ymd');
 
             $count=$this->super_model->count_custom_where("participant","billing_id='$det->billing_id'");
@@ -1479,30 +1491,66 @@ class Purchases extends CI_Controller {
             } else {
                 $tin='000-000-000';
             }
-            $data['details'][] = array(
-                'tin'=>$tin,
-                'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
-                'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
-                'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
-                'total'=>$amount,
-                'ewt'=>$det->ewt,
-                'firstmonth'=>$firstmonth,
-                'secondmonth'=>$secondmonth,
-                'thirdmonth'=>$thirdmonth,
-                'item_no'=>$det->item_no,
-                'shortname'=>$det->short_name,
-            );
-
+            if($in_ex_sub==0 || $in_ex_sub=='null'){
+                $data['details'][] = array(
+                    'tin'=>$tin,
+                    'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
+                    'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
+                    'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
+                    'total'=>$amount,
+                    'ewt'=>$det->ewt,
+                    'firstmonth'=>$firstmonth,
+                    'secondmonth'=>$secondmonth,
+                    'thirdmonth'=>$thirdmonth,
+                    'item_no'=>$det->item_no,
+                    'shortname'=>$det->short_name,
+                    'reference_no'=>$det->reference_number,
+                    'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
+                );
+            }else if($in_ex_sub==1){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$det->billing_id'");
+                $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
+                if($sub_participant==0){
+                    $data['details'][] = array(
+                        'tin'=>$tin,
+                        'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
+                        'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
+                        'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
+                        'total'=>$amount,
+                        'ewt'=>$det->ewt,
+                        'firstmonth'=>$firstmonth,
+                        'secondmonth'=>$secondmonth,
+                        'thirdmonth'=>$thirdmonth,
+                        'item_no'=>$det->item_no,
+                        'shortname'=>$det->short_name,
+                        'reference_no'=>$det->reference_number,
+                        'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
+                    );
+                }
+            }
         }
         $this->load->view('purchases/download_bulk',$data);
     }
 
-     public function download_bulk_zoomed(){
-        
+    public function download_bulk_zoomed(){
         $refno =  $this->uri->segment(3);
-        $purchase_id = $this->super_model->select_column_where('purchase_transaction_head', 'purchase_id', 'reference_number', $refno);
-        $billing_to = $this->super_model->select_column_where('purchase_transaction_head', 'billing_to', 'reference_number', $refno);
-          $month= date("n",strtotime($billing_to ?? ''));
+        $due_date =  $this->uri->segment(4);
+        $in_ex_sub =  $this->uri->segment(5);
+        $sql='';
+        if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
+        }
+
+        if($refno!='null'){
+            $sql.= "reference_number = '$refno' AND ";
+        }
+        $query=substr($sql,0,-4);
+        //$purchase_id = $this->super_model->select_column_custom_where('purchase_transaction_head', 'purchase_id', "$query AND saved='1'");
+        //$billing_to = $this->super_model->select_column_custom_where('purchase_transaction_head', 'billing_to', "$query AND saved='1'");
+        $data['details']=array();
+        $x=1;
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE $query AND saved='1' AND bulk_print_flag = '0' AND ewt > '0' ORDER BY ptd.purchase_detail_id LIMIT 10") AS $det){
+            $month= date("n",strtotime($det->billing_to ?? ''));
             $yearQuarter = ceil($month / 3);
             $first = array(1,4,7,10);
             $second = array(2,5,8,11);
@@ -1524,16 +1572,11 @@ class Purchases extends CI_Controller {
 
             $data['period_from']=$period_from;
             $data['period_to'] = $period_to;
-            $data['reference_no']=$refno;
-            $data['ref_no']=preg_replace("/[^0-9]/", "", $refno);
-
-           
-        $x=0;
-        $data['details']=array();
-        foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id='$purchase_id' and bulk_print_flag = '0' and ewt > '0' LIMIT 10" ) AS $det){ 
-           
-           
-             if($det->vatables_purchases != 0){
+            // $data['reference_no']=$head->reference_number;
+            // $data['ref_no']=preg_replace("/[^0-9]/", "", $head->reference_number);
+            //$x=0;
+            //foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id='$head->purchase_id' and bulk_print_flag = '0' and ewt > '0' LIMIT 10" ) AS $det){ 
+            if($det->vatables_purchases != 0){
                 $amount=$det->vatables_purchases;
             }
             if($det->zero_rated_purchases != 0){
@@ -1543,9 +1586,9 @@ class Purchases extends CI_Controller {
                 $amount=$det->zero_rated_ecozones;
             }
 
-             $total = $amount;
+            $total = $amount;
 
-               if(in_array($month, $first)){
+            if(in_array($month, $first)){
                 $firstmonth = $amount; 
             } else {
                 $firstmonth = "-"; 
@@ -1563,37 +1606,57 @@ class Purchases extends CI_Controller {
                 $thirdmonth = "-"; 
             }
 
-
             $data_update = array(
                 "bulk_print_flag"=>1
-
             );
+            
+            $this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id",$det->purchase_detail_id);
 
-            $this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id", $det->purchase_detail_id);
-
-            $data['billing_month'] = date('my',strtotime($billing_to));
+            $data['billing_month'] = date('my',strtotime($det->billing_to));
             $data['timestamp']=date('Ymd');
-
             $count=$this->super_model->count_custom_where("participant","billing_id='$det->billing_id'");
             if($count>0){
                 $tin=$this->super_model->select_column_where("participant", "tin", "billing_id", $det->billing_id);
             } else {
                 $tin='000-000-000';
             }
-            $data['details'][] = array(
-                'tin'=>$tin,
-                'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
-                'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
-                'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
-                'total'=>$amount,
-                'ewt'=>$det->ewt,
-                'firstmonth'=>$firstmonth,
-                'secondmonth'=>$secondmonth,
-                'thirdmonth'=>$thirdmonth,
-                'item_no'=>$det->item_no,
-                'shortname'=>$det->short_name,
-            );
-
+            if($in_ex_sub==0 || $in_ex_sub=='null'){
+                $data['details'][] = array(
+                    'tin'=>$tin,
+                    'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
+                    'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
+                    'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
+                    'total'=>$amount,
+                    'ewt'=>$det->ewt,
+                    'firstmonth'=>$firstmonth,
+                    'secondmonth'=>$secondmonth,
+                    'thirdmonth'=>$thirdmonth,
+                    'item_no'=>$det->item_no,
+                    'shortname'=>$det->short_name,
+                    'reference_no'=>$det->reference_number,
+                    'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
+                );
+            }else if($in_ex_sub==1){
+                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$det->billing_id'");
+                $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
+                if($sub_participant==0){
+                    $data['details'][] = array(
+                        'tin'=>$tin,
+                        'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
+                        'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
+                        'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
+                        'total'=>$amount,
+                        'ewt'=>$det->ewt,
+                        'firstmonth'=>$firstmonth,
+                        'secondmonth'=>$secondmonth,
+                        'thirdmonth'=>$thirdmonth,
+                        'item_no'=>$det->item_no,
+                        'shortname'=>$det->short_name,
+                        'reference_no'=>$det->reference_number,
+                        'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
+                    );
+                }
+            }
         }
         $this->load->view('purchases/download_bulk_zoomed',$data);
     }
