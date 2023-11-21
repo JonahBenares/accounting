@@ -1493,6 +1493,7 @@ class Purchases extends CI_Controller {
             }
             if($in_ex_sub==0 || $in_ex_sub=='null'){
                 $data['details'][] = array(
+                    'due_date'=>'',
                     'tin'=>$tin,
                     'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
                     'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
@@ -1512,6 +1513,7 @@ class Purchases extends CI_Controller {
                 $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
                 if($sub_participant==0){
                     $data['details'][] = array(
+                        'due_date'=>'',
                         'tin'=>$tin,
                         'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
                         'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
@@ -1622,6 +1624,7 @@ class Purchases extends CI_Controller {
             }
             if($in_ex_sub==0 || $in_ex_sub=='null'){
                 $data['details'][] = array(
+                    'due_date'=>'',
                     'tin'=>$tin,
                     'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
                     'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
@@ -1641,6 +1644,7 @@ class Purchases extends CI_Controller {
                 $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
                 if($sub_participant==0){
                     $data['details'][] = array(
+                        'due_date'=>'',
                         'tin'=>$tin,
                         'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
                         'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
@@ -1762,6 +1766,7 @@ class Purchases extends CI_Controller {
             }
             if($in_ex_sub==0 || $in_ex_sub=='null'){
                 $data['details'][] = array(
+                    'due_date'=> date('my',strtotime($det->due_date)),
                     'tin'=>$tin,
                     'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
                     'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
@@ -1781,6 +1786,7 @@ class Purchases extends CI_Controller {
                 $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
                 if($sub_participant==0){
                     $data['details'][] = array(
+                        'due_date'=>date('my',strtotime($det->due_date)),
                         'tin'=>$tin,
                         'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
                         'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
@@ -1882,6 +1888,7 @@ class Purchases extends CI_Controller {
             $this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id",$det->purchase_detail_id);
 
             $data['billing_month'] = date('my',strtotime($det->billing_to));
+            $data['due_date'] = date('my',strtotime($due_date));
             $data['timestamp']=date('Ymd');
             $count=$this->super_model->count_custom_where("participant","billing_id='$det->billing_id'");
             if($count>0){
