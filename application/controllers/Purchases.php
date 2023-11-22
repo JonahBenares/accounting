@@ -1810,6 +1810,8 @@ class Purchases extends CI_Controller {
     public function download_bulk_zoomed_adjustment(){
         $refno =  $this->uri->segment(3);
         $due_date =  $this->uri->segment(4);
+
+       
         $in_ex_sub =  $this->uri->segment(5);
         $sql='';
         if($due_date!='null'){
