@@ -1811,7 +1811,7 @@ class Purchases extends CI_Controller {
         $refno =  $this->uri->segment(3);
         $due_date =  $this->uri->segment(4);
 
-       
+
         $in_ex_sub =  $this->uri->segment(5);
         $sql='';
         if($due_date!='null'){
@@ -1827,7 +1827,8 @@ class Purchases extends CI_Controller {
         $data['details']=array();
         $x=1;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE $query AND saved='1' AND adjustment='1' AND bulk_print_flag = '0' AND ewt > '0' ORDER BY ptd.purchase_detail_id LIMIT 10") AS $det){
-            $month= date("n",strtotime($det->billing_to ?? ''));
+            //$month= date("n",strtotime($det->billing_to ?? ''));
+            $month= date("n",strtotime($det->due_date ?? ''));
             $yearQuarter = ceil($month / 3);
             $first = array(1,4,7,10);
             $second = array(2,5,8,11);
