@@ -116,9 +116,9 @@ element.addEventListener("click", onClick);*/
                                         <td>: <?php echo (!empty($due_dates)) ? $due_dates : ''; ?></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>/<?php echo $due_date_from; ?>/<?php echo $due_date_to; ?>/<?php echo $in_ex_sub; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
+                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk_adjustment/<?php echo $ref_no; ?>/<?php echo $due_date_from; ?>/<?php echo $due_date_to; ?>/<?php echo $in_ex_sub; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
                                         </center></td>
-                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk_zoomed/<?php echo $ref_no; ?>/<?php echo $due_date_from; ?>/<?php echo $due_date_to; ?>/<?php echo $in_ex_sub; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-info btn-block">Download Bulk 2307 (Zoomed)</a>
+                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk_zoomed_adjustment/<?php echo $ref_no; ?>/<?php echo $due_date_from; ?>/<?php echo $due_date_to; ?>/<?php echo $in_ex_sub; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-info btn-block">Download Bulk 2307 (Zoomed)</a>
                                         </center></td>
                                     </tr>
                                     <tr>

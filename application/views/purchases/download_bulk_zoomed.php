@@ -85,7 +85,7 @@
     </div>
      <input type="hidden" class="shortname<?php echo $x; ?>" value="<?php echo $d['shortname']; ?>" id="shortname<?php echo $x; ?>">   
     <input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
-    <input type="hidden" class="billing_month" id="billing_month" value="<?php echo $billing_month; ?>">
+    <input type="hidden" class="billing_month" id="billing_month" value="<?php echo ($due_date=='') ? $billing_month : $due_date; ?>">
     <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <?php $x++; } ?>
 <input type="hidden"  id="count" value="<?php echo $x; ?>">
@@ -99,6 +99,7 @@
          
         var counter=document.getElementById('count').value;
         var billing_month=document.getElementById('billing_month').value;
+       
         var timestamp=document.getElementById('timestamp').value;
 
         for(let a=1;a<counter;a++){

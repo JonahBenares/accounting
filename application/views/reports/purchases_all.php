@@ -171,7 +171,7 @@
                                                         'reference_number'=>array(),
                                                         'billing'=>date("M. d, Y",strtotime($pal['billing_from']))." - ".date("M. d, Y",strtotime($pal['billing_to'])),
                                                         'vatables_purchases'=>array(),
-                                                        'zero_rated_ecozones'=>array(),
+                                                        'zero_rated_purchases'=>array(),
                                                         'zero_rated_ecozones'=>array(),
                                                         'vat_on_purchases'=>array(),
                                                         'ewt'=>array(),
