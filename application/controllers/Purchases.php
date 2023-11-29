@@ -1684,6 +1684,7 @@ class Purchases extends CI_Controller {
             $this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id",$det->purchase_detail_id);
 
             $data['billing_month'] = date('my',strtotime($det->billing_to));
+            $data['due_date'] = '';
             $data['timestamp']=date('Ymd');
             $count=$this->super_model->count_custom_where("participant","billing_id='$det->billing_id'");
             if($count>0){
@@ -1989,7 +1990,7 @@ class Purchases extends CI_Controller {
                 "bulk_print_flag"=>1
             );
             
-            $this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id",$det->purchase_detail_id);
+            //$this->super_model->update_where("purchase_transaction_details", $data_update, "purchase_detail_id",$det->purchase_detail_id);
 
             $data['billing_month'] = date('my',strtotime($det->billing_to));
             $data['due_date'] = date('my',strtotime($due_date_from));
