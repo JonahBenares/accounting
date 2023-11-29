@@ -1838,12 +1838,17 @@ public function print_BS_new(){
         $ref_no=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
         $in_ex_sub=$this->uri->segment(5);
+        $billfrom=$this->uri->segment(6);
+        $billto=$this->uri->segment(7);
+        $participants=$this->uri->segment(8);
         $data['ref_no']=$ref_no;
         $data['due_date']=$due_date;
         $data['in_ex_sub']=$in_ex_sub;
         $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE due_date!=''");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
+        $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
@@ -1854,6 +1859,20 @@ public function print_BS_new(){
 
             if($due_date!='null'){
                 $sql.= "sh.due_date = '$due_date' AND ";
+            }
+
+            if($billfrom!='null' && $billto!='null'){ 
+                $sql.= " ((sh.billing_from BETWEEN '$billfrom' AND '$billto') OR (sh.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
@@ -1902,6 +1921,20 @@ public function print_BS_new(){
 
             if($due_date!='null'){
                 $sql.= "sh.due_date = '$due_date' AND ";
+            }
+
+            if($billfrom!='null' && $billto!='null'){ 
+                $sql.= " ((sh.billing_from BETWEEN '$billfrom' AND '$billto') OR (sh.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
@@ -2674,14 +2707,19 @@ public function print_BS_new(){
 
     public function sales_wesm_adjustment(){
         $ref_no=$this->uri->segment(3);
-        $due_date=$this->uri->segment(4);
-        $in_ex_sub=$this->uri->segment(5);
+        $due_datefrom=$this->uri->segment(4);
+        $due_dateto=$this->uri->segment(5);
+        $in_ex_sub=$this->uri->segment(6);
+        $participants=$this->uri->segment(7);
         $data['ref_no']=$ref_no;
-        $data['due_date']=$due_date;
+        $data['due_date_from']=$due_datefrom;
+        $data['due_date_to']=$due_dateto;
         $data['in_ex_sub']=$in_ex_sub;
         $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_adjustment_head WHERE reference_number!=''");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!=''");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
+        $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 || $in_ex_sub=='null'){
@@ -2690,8 +2728,18 @@ public function print_BS_new(){
                 $sql.= "sah.reference_number = '$ref_no' AND ";
             }
 
-            if($due_date!='null'){
-                $sql.= "sah.due_date = '$due_date' AND ";
+            if($due_datefrom!='null' && $due_dateto!='null'){ 
+                $sql.= " sah.due_date BETWEEN '$due_datefrom' AND '$due_dateto' AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " sad.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
@@ -2737,8 +2785,18 @@ public function print_BS_new(){
                 $sql.= "sah.reference_number = '$ref_no' AND ";
             }
 
-            if($due_date!='null'){
-                $sql.= "sah.due_date = '$due_date' AND ";
+            if($due_datefrom!='null' && $due_dateto!='null'){ 
+                $sql.= " sah.due_date BETWEEN '$due_datefrom' AND '$due_dateto' AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " sad.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;

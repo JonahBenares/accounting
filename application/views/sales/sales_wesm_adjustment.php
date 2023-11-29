@@ -16,6 +16,16 @@
                                             <table class="table-borderded" width="100%">
                                                 <tr>
                                                     <td>
+                                                        <select class="form-control select2" name="participant" id="participant">
+                                                            <option value=''>-- Select Participant --</option>
+                                                            <?php 
+                                                                foreach($participant AS $p){
+                                                            ?>
+                                                            <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
                                                         <select class="form-control select2" name="ref_no" id="ref_no">
                                                             <option value=''>-- Select Reference No --</option>
                                                             <?php 
@@ -26,8 +36,16 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <select class="form-control select2" name="due_date" id="due_date">
-                                                            <option value="">-- Select Due Date --</option>
+                                                        <select class="form-control select2" name="due_date_from" id="due_date_from">
+                                                            <option value="">-- Select Due Date From--</option>
+                                                            <?php foreach($date AS $d){ ?>
+                                                                <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control select2" name="due_date_to" id="due_date_to">
+                                                            <option value="">-- Select Due Date To--</option>
                                                             <?php foreach($date AS $d){ ?>
                                                                 <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
                                                             <?php } ?>
@@ -48,7 +66,7 @@
                                     </div>
                                 </form>
                                 <hr>
-                               <?php if(!empty($details) && (!empty($ref_no) || !empty($due_date))){ ?>
+                               <?php if(!empty($details) && (!empty($ref_no) || (!empty($due_date_from) && !empty($due_date_from)))){ ?>
                                 <table class="table-bsordered" width="100%">
                                     <?php 
                                         foreach($details AS $d){ 
@@ -58,8 +76,13 @@
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
                                             $due_date=date("F d,Y",strtotime($d['due_date']));
                                         }
-
+                                    if(!empty($participant_name)){
                                     ?>
+                                    <tr>
+                                        <td>Participant Name</td>
+                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                    </tr>
+                                    <?php } ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
                                         <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>

@@ -896,14 +896,22 @@ class Purchases extends CI_Controller {
         $or_no=$this->uri->segment(5);
         $original_copy=$this->uri->segment(6);
         $scanned_copy=$this->uri->segment(7);
+        $billfrom=$this->uri->segment(8);
+        $billto=$this->uri->segment(9);
+        $participants=$this->uri->segment(10);
         $ors=str_replace("%5E","",$or_no ?? '');
         $data['or_nos']=$or_no;
         $data['original_copy']=$original_copy;
         $data['scanned_copy']=$scanned_copy;
         $data['ref_no']=$ref_no;
         $data['due_date']=$due_date;
+        $data['billfrom']=$billfrom;
+        $data['billto']=$billto;
+        $data['participants']=$participants;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0'");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0'");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
+        $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $sql='';
@@ -913,6 +921,20 @@ class Purchases extends CI_Controller {
 
         if($due_date!='null'){
             $sql.= "ph.due_date = '$due_date' AND ";
+        }
+
+        if($billfrom!='null' && $billto!='null'){ 
+            $sql.= " ((ph.billing_from BETWEEN '$billfrom' AND '$billto') OR (ph.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
+        }
+
+        if(!empty($participants) && $participants!='null'){
+            //$sql.= " tin = '$participant' AND "; 
+           $par=array();
+           foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+               $par[]="'".$p->settlement_id."'";
+           }
+           $imp=implode(',',$par);
+           $sql.= " pd.short_name IN($imp) AND ";
         }
 
         if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
@@ -931,7 +953,8 @@ class Purchases extends CI_Controller {
         $query=substr($sql,0,-4);
         $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
-            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='0' ORDER BY or_no ASC");
+            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.purchase_id='$d->purchase_id' AND saved='1' AND adjustment='0' ORDER BY or_no ASC");
+            //$data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND saved='1' AND adjustment='0' ORDER BY or_no ASC");
         // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
@@ -969,20 +992,26 @@ class Purchases extends CI_Controller {
 
     public function purchases_wesm_adjustment(){
         $ref_no=$this->uri->segment(3);
-        $due_date=$this->uri->segment(4);
-        $in_ex_sub=$this->uri->segment(5);
-        $or_no=$this->uri->segment(6);
-        $original_copy=$this->uri->segment(7);
-        $scanned_copy=$this->uri->segment(8);
+        $due_date_from=$this->uri->segment(4);
+        $due_date_to=$this->uri->segment(5);
+        $in_ex_sub=$this->uri->segment(6);
+        $or_no=$this->uri->segment(7);
+        $original_copy=$this->uri->segment(8);
+        $scanned_copy=$this->uri->segment(9);
+        $participants=$this->uri->segment(10);
         $ors=str_replace("%5E","",$or_no ?? '');
         $data['or_nos']=$or_no;
         $data['original_copy']=$original_copy;
         $data['scanned_copy']=$scanned_copy;
         $data['ref_no']=$ref_no;
-        $data['due_date']=$due_date;
+        $data['due_date_from']=$due_date_from;
+        $data['due_date_to']=$due_date_to;
         $data['in_ex_sub']=$in_ex_sub;
+        $data['participants']=$participants;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1'");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1'");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
+        $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 || $in_ex_sub=='null'){
@@ -991,8 +1020,22 @@ class Purchases extends CI_Controller {
                 $sql.= "ph.reference_number = '$ref_no' AND ";
             }
 
-            if($due_date!='null'){
-                $sql.= "ph.due_date = '$due_date' AND ";
+            // if($due_date!='null'){
+            //     $sql.= "ph.due_date = '$due_date' AND ";
+            // }
+
+            if($due_date_from!='null' && $due_date_to!='null'){ 
+                $sql.= " ph.due_date BETWEEN '$due_date_from' AND '$due_date_to' AND ";
+            }
+    
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " pd.short_name IN($imp) AND ";
             }
 
             if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
@@ -1011,7 +1054,8 @@ class Purchases extends CI_Controller {
             $query=substr($sql,0,-4);
             $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
-                $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
+                $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.purchase_id='$d->purchase_id' AND saved='1' AND adjustment='1' ORDER BY or_no ASC");
+                //$data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
             // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
                 $data['details'][]=array(
                     'purchase_detail_id'=>$d->purchase_detail_id,
@@ -1395,11 +1439,12 @@ class Purchases extends CI_Controller {
     public function download_bulk(){
         
         $refno =  $this->uri->segment(3);
-        $due_date =  $this->uri->segment(4);
-        $in_ex_sub =  $this->uri->segment(5);
+        $due_date_from =  $this->uri->segment(4);
+        $due_date_to =  $this->uri->segment(5);
+        $in_ex_sub =  $this->uri->segment(6);
         $sql='';
-        if($due_date!='null'){
-            $sql.= "due_date = '$due_date' AND ";
+        if($due_date_from!='null' && $due_date_to!='null'){
+            $sql.= "due_date BETWEEN '$due_date_from' AND '$due_date_to' AND ";
         }
 
         if($refno!='null'){
@@ -1534,11 +1579,15 @@ class Purchases extends CI_Controller {
 
     public function download_bulk_zoomed(){
         $refno =  $this->uri->segment(3);
-        $due_date =  $this->uri->segment(4);
-        $in_ex_sub =  $this->uri->segment(5);
+        $due_date_from =  $this->uri->segment(4);
+        $due_date_to =  $this->uri->segment(5);
+        $in_ex_sub =  $this->uri->segment(6);
         $sql='';
-        if($due_date!='null'){
-            $sql.= "due_date = '$due_date' AND ";
+        // if($due_date!='null'){
+        //     $sql.= "due_date = '$due_date' AND ";
+        // }
+        if($due_date_from!='null' && $due_date_to!='null'){
+            $sql.= "due_date BETWEEN '$due_date_from' AND '$due_date_to' AND ";
         }
 
         if($refno!='null'){
@@ -2106,6 +2155,9 @@ class Purchases extends CI_Controller {
         $or_no=$this->uri->segment(5);
         $original_copy=$this->uri->segment(6);
         $scanned_copy=$this->uri->segment(7);
+        $billfrom=$this->uri->segment(8);
+        $billto=$this->uri->segment(9);
+        $participants=$this->uri->segment(10);
         $ors=str_replace("%5E","",$or_no ?? '');
         //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new Spreadsheet();
@@ -2117,6 +2169,20 @@ class Purchases extends CI_Controller {
         }
         if($due_date!='null'){
             $sql.= "due_date = '$due_date' AND ";
+        }
+        
+        if($billfrom!='null' && $billto!='null'){ 
+            $sql.= " ((billing_from BETWEEN '$billfrom' AND '$billto') OR (billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
+        }
+
+        if(!empty($participants) && $participants!='null'){
+            //$sql.= " tin = '$participant' AND "; 
+           $par=array();
+           foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+               $par[]="'".$p->settlement_id."'";
+           }
+           $imp=implode(',',$par);
+           $sql1.= "short_name IN($imp) AND ";
         }
 
         if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
@@ -2131,8 +2197,11 @@ class Purchases extends CI_Controller {
             $sql1.= "scanned_copy = '$scanned_copy' AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
-        
+        if($query!=''){
+            $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
+        }else{
+            $qu = " WHERE adjustment='0' AND saved='1'";
+        }
         $query_filter=substr($sql1,0,-4);
         $qufilt='';
         if($query_filter!=''){
@@ -2140,11 +2209,13 @@ class Purchases extends CI_Controller {
         }
         $num=6;
         $x=1;
+        $participant_name=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head $qu") AS $head){
             $transaction_date=date("F d,Y",strtotime($head->transaction_date));
             $billing_from=date("F d,Y",strtotime($head->billing_from));
             $billing_to=date("F d,Y",strtotime($head->billing_to));
             $due_dates=date("F d,Y",strtotime($head->due_date));
+
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Reference Number: $head->reference_number");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "Date: $transaction_date");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3', "Due Date: $due_dates");
@@ -2246,11 +2317,13 @@ class Purchases extends CI_Controller {
 
     public function export_purchasetransadjust(){
         $reference_number=$this->uri->segment(3);
-        $due_date=$this->uri->segment(4);
-        $in_ex_sub=$this->uri->segment(5);
-        $or_no=$this->uri->segment(6);
-        $original_copy=$this->uri->segment(7);
-        $scanned_copy=$this->uri->segment(8);
+        $due_date_from=$this->uri->segment(4);
+        $due_date_to=$this->uri->segment(5);
+        $in_ex_sub=$this->uri->segment(6);
+        $or_no=$this->uri->segment(7);
+        $original_copy=$this->uri->segment(8);
+        $scanned_copy=$this->uri->segment(9);
+        $participants=$this->uri->segment(10);
         $ors=str_replace("%5E","",$or_no ?? '');
         //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new Spreadsheet();
@@ -2261,8 +2334,22 @@ class Purchases extends CI_Controller {
             if($reference_number!='null'){
                 $sql.= "reference_number = '$reference_number' AND ";
             }
-            if($due_date!='null'){
-                $sql.= "due_date = '$due_date' AND ";
+            // if($due_date!='null'){
+            //     $sql.= "due_date = '$due_date' AND ";
+            // }
+            
+            if($due_date_from!='null' && $due_date_to!='null'){ 
+                $sql.= " due_date BETWEEN '$due_date_from' AND '$due_date_to' AND ";
+            }
+    
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql1.= "short_name IN($imp) AND ";
             }
 
             if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
@@ -2277,7 +2364,11 @@ class Purchases extends CI_Controller {
                 $sql1.= "scanned_copy = '$scanned_copy' AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            if($query!=''){
+                $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            }else{
+                $qu = " WHERE adjustment='1' AND saved='1'";
+            }
             
             $query_filter=substr($sql1,0,-4);
             $qufilt='';

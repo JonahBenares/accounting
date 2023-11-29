@@ -33,6 +33,16 @@ element.addEventListener("click", onClick);*/
                                         <table class="table-borderded" width="100%">
                                             <tr>
                                                 <td>
+                                                    <select class="form-control select2" name="participant" id="participant">
+                                                        <option value=''>-- Select Participant --</option>
+                                                        <?php 
+                                                            foreach($participant AS $p){
+                                                        ?>
+                                                        <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td>
                                                     <select class="form-control select2" name="ref_no" id="ref_no">
                                                         <option value=''>-- Select Reference No --</option>
                                                         <?php 
@@ -43,8 +53,16 @@ element.addEventListener("click", onClick);*/
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control select2" name="due_date" id="due_date">
-                                                        <option value="">-- Select Due Date --</option>
+                                                    <select class="form-control select2" name="due_date_from" id="due_date_from">
+                                                        <option value="">-- Select Due Date From--</option>
+                                                        <?php foreach($date AS $d){ ?>
+                                                            <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control select2" name="due_date_to" id="due_date_to">
+                                                        <option value="">-- Select Due Date To--</option>
                                                         <?php foreach($date AS $d){ ?>
                                                             <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
                                                         <?php } ?>
@@ -74,8 +92,13 @@ element.addEventListener("click", onClick);*/
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
                                             $due_dates=date("F d,Y",strtotime($d['due_date']));
                                         }
-
+                                        if(!empty($participant_name)){
                                     ?>
+                                    <tr>
+                                        <td>Participant Name</td>
+                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                    </tr>
+                                    <?php } ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
                                         <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
@@ -93,9 +116,9 @@ element.addEventListener("click", onClick);*/
                                         <td>: <?php echo (!empty($due_dates)) ? $due_dates : ''; ?></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $in_ex_sub; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
+                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>/<?php echo $due_date_from; ?>/<?php echo $due_date_to; ?>/<?php echo $in_ex_sub; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
                                         </center></td>
-                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk_zoomed/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $in_ex_sub; ?>' target="_blank" class="btn btn-info btn-block">Download Bulk 2307 (Zoomed)</a>
+                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk_zoomed/<?php echo $ref_no; ?>/<?php echo $due_date_from; ?>/<?php echo $due_date_to; ?>/<?php echo $in_ex_sub; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-info btn-block">Download Bulk 2307 (Zoomed)</a>
                                         </center></td>
                                     </tr>
                                     <tr>
@@ -145,16 +168,17 @@ element.addEventListener("click", onClick);*/
                                         </td>
                                         <td>
                                             <input type="hidden" name="ref_no" id="reference_no" value="<?php echo $ref_no; ?>">
-                                            <input type="hidden" name="due_date" id="due_datefilt" value="<?php echo $due_date; ?>">
+                                            <input type="hidden" name="due_date_from" id="due_datefilt_from" value="<?php echo $due_date_from; ?>">
+                                            <input type="hidden" name="due_date_to" id="due_datefilt_to" value="<?php echo $due_date_to; ?>">
                                             <input type="hidden" name="in_ex_sub" id="in_ex_subfilt" value="<?php echo $in_ex_sub; ?>">
                                             <input name="baseurl" id="base_url" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                             <button type="button" class="btn btn-primary btn-md" onclick="filterPurchasesAdj()">Filter</button>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $in_ex_sub; ?>" class="btn btn-warning btn-md">Remove Filter</a>
+                                            <a href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment/<?php echo $ref_no; ?>/<?php echo $due_date_from; ?>/<?php echo $due_date_to; ?>/<?php echo $in_ex_sub; ?>/<?php echo $participants; ?>" class="btn btn-warning btn-md">Remove Filter</a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetransadjust/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $in_ex_sub; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
+                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetransadjust/<?php echo $ref_no; ?>/<?php echo $due_date_from; ?>/<?php echo $due_date_to; ?>/<?php echo $in_ex_sub; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>/<?php echo $participants; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
                                         </td>
                                     </tr>
                                 </table>

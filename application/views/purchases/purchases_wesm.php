@@ -33,6 +33,22 @@ element.addEventListener("click", onClick);*/
                                         <table class="table-borderded" width="100%">
                                             <tr>
                                                 <td>
+                                                    <select class="form-control select2" name="participant" id="participant">
+                                                        <option value=''>-- Select Participant --</option>
+                                                        <?php 
+                                                            foreach($participant AS $p){
+                                                        ?>
+                                                        <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type='text' class="form-control" name="billing_from" id="billing_from" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing From">
+                                                </td>
+                                                <td>
+                                                    <input type='text' class="form-control" name="billing_to" id="billing_to" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing To">
+                                                </td>
+                                                <td>
                                                     <select class="form-control select2" name="ref_no" id="ref_no">
                                                         <option value=''>-- Select Reference No --</option>
                                                         <?php 
@@ -67,8 +83,13 @@ element.addEventListener("click", onClick);*/
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
                                             $due_dates=date("F d,Y",strtotime($d['due_date']));
                                         }
-
+                                        if(!empty($participant_name)){
                                     ?>
+                                    <tr>
+                                        <td>Participant Name</td>
+                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                    </tr>
+                                    <?php } ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
                                         <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
@@ -146,7 +167,7 @@ element.addEventListener("click", onClick);*/
                                             <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-md">Remove Filter</a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
+                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
                                         </td>
                                     </tr>
                                 </table>
