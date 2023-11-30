@@ -288,7 +288,7 @@ element.addEventListener("click", onClick);*/
                                 <?php }else{ ?>
                                     <div><center><b>No Available Data...</b></center></div>
                                     <?php if(isset($or_nos) && isset($original_copy) && isset($scanned_copy)){ ?>
-                                        <a href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $in_ex_sub; ?>" class="btn btn-warning btn-block">Remove Filter</a>
+                                        <a href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment" class="btn btn-warning btn-block">Remove Filter</a>
                                     <?php } ?>
                                 <?php } ?>
                             </div>
