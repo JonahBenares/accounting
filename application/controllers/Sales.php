@@ -1880,16 +1880,27 @@ public function print_BS_new(){
             // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+
+                $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $d->sales_id);
+                $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $d->sales_detail_id);
+                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    $comp_name=$company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
+                }
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_detail_id,
                     'sales_id'=>$d->sales_id,
                     'item_no'=>$d->item_no,
+                    'billing_from'=>$d->billing_from,
+                    'billing_to'=>$d->billing_to,
+                    'reference_number'=>$d->reference_number,
                     'series_number'=>$series_number,
                     'old_series_no_col'=>$old_series_no,
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
-                    'company_name'=>$d->company_name,
+                    'company_name'=>$comp_name,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
                     'ith_tag'=>$d->ith_tag,
@@ -2746,16 +2757,26 @@ public function print_BS_new(){
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu ORDER BY serial_no ASC, item_no ASC") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+
+                $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $d->sales_adjustment_id);
+                $company_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id", $d->adjustment_detail_id);
+                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    $comp_name=$company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
+                }
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->adjustment_detail_id,
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
                     'item_no'=>$d->item_no,
+                    'due_date'=>$d->due_date,
+                    'reference_number'=>$d->reference_number,
                     'series_number'=>$series_number,
                     'old_series_no_col'=>$old_series_no,
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
-                    'company_name'=>$d->company_name,
+                    'company_name'=>$comp_name,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
                     'ith_tag'=>$d->ith_tag,
