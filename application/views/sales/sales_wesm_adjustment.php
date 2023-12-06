@@ -116,8 +116,10 @@
                                                     <th>BS No.</th>
                                                     <th>OR No.</th>
                                                     <th>STL ID / TPShort Name</th>
-                                                    <th width="8%" style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
-                                                    <th width="10%" style="position: sticky;left:165px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
+                                                    <th style="position:sticky; left:0;  z-index: 10;background: rgb(240 240 240);">Billing ID</th>
+                                                    <th style="position:sticky; left:140px; z-index: 10;background: rgb(240 240 240);">Trading Participant Name</th>
+                                                    <th style="position:sticky; left:440px; z-index: 10;background: rgb(240 240 240);">Due Date</th>
+                                                    <th style="position:sticky; left:534px; z-index: 10;background: rgb(240 240 240);">Reference No</th>
                                                     <th>Facility Type </th>
                                                     <th>WHT Agent Tag</th>
                                                     <th>ITH Tag</th>
@@ -164,7 +166,9 @@
                                                     <?php } ?>
                                                     <td><?php echo $s['short_name'];?></td>
                                                     <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $s['billing_id'];?></td>
-                                                    <td style="position: sticky;left:165px;background:#fff;z-index: 999;"><?php echo $s['company_name'];?></td>
+                                                    <td style="position: sticky;left:140px;background:#fff;z-index: 999;"><?php echo $s['company_name'];?></td>
+                                                    <td style="position: sticky;left:440px;background:#fff;z-index: 999;"><?php echo date("M. d, Y",strtotime($s['due_date']));?></td>
+                                                    <td style="position: sticky;left:534px;background:#fff;z-index: 999;"><?php echo $s['reference_number'];?></td>
                                                     <td align="center"><?php echo $s['facility_type'];?></td>
                                                     <td align="center"><?php echo $s['wht_agent'];?></td>
                                                     <td align="center"><?php echo $s['ith_tag'];?></td>
