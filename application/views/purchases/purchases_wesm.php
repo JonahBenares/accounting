@@ -187,10 +187,10 @@ element.addEventListener("click", onClick);*/
                                                 </th>
                                                 <th>Item No.</th>
                                                 <th>STL ID / TPShort Name</th>
-                                                <th style="position:sticky;min-width: 30px; left:0; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
-                                                <th style="position:sticky; left:192px;min-width: 90px; z-index: 10;background: rgb(240 240 240);">Trading Participant Name</th>
-                                                <th style="position:sticky; left:507px;min-width: 5px; z-index: 10;background: rgb(240 240 240);">Billing Period</th>
-                                                <th style="position:sticky; left:701px;min-width: 30px; z-index: 10;background: rgb(240 240 240);">Reference No</th>
+                                                <th style="position:sticky;max-width: 150px!important; left:0; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
+                                                <th style="position:sticky; left:175px;max-width: 300px!important; z-index: 10;background: rgb(240 240 240);">Trading Participant Name</th>
+                                                <th style="position:sticky; left:540px;max-width: 180px!important; z-index: 10;background: rgb(240 240 240);">Billing Period</th>
+                                                <th style="position:sticky; left:755px;max-width: 120px!important; z-index: 10;background: rgb(240 240 240);">Reference No</th>
                                                 <th>Facility Type </th>
                                                 <th>WHT Agent Tag</th>
                                                 <th>ITH Tag</th>
@@ -229,10 +229,14 @@ element.addEventListener("click", onClick);*/
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
                                                 <td><?php echo $d['short_name'];?></td>
-                                                <td style="position:sticky;min-width: 30px; left:0; z-index: 10;background: #fff"><?php echo $d['billing_id']; ?></td>
-                                                <td style="position:sticky; left:192px;min-width: 90px; z-index: 10;background: #fff"><?php echo $d['company_name']; ?></td>
-                                                <td style="position:sticky; left:507px;min-width: 5px; z-index: 10;background: #fff"><?php echo date("M. d, Y",strtotime($d['billing_from']))." - ".date("M. d, Y",strtotime($d['billing_to'])); ?></td>
-                                                <td style="position:sticky; left:701px;min-width: 30px; z-index: 10;background: #fff"><?php echo $d['reference_number']; ?></td>
+                                                <td style="position:sticky;max-width: 150px!important; left:0; z-index: 10;background: #fff"><?php echo $d['billing_id']; ?></td>
+                                                <td style="position:sticky; left:175px;max-width: 300px!important; z-index: 10;background: #fff; ">
+                                                    <div style="width: 80%!important;max-width: 80%!important;">
+                                                        <?php echo $d['company_name']; ?>
+                                                    </div>
+                                                </td>
+                                                <td style="position:sticky; left:540px;max-width: 180px!important; z-index: 10;background: #fff"><?php echo date("M. d, Y",strtotime($d['billing_from']))." - ".date("M. d, Y",strtotime($d['billing_to'])); ?></td>
+                                                <td style="position:sticky; left:755px;max-width: 120px!important; z-index: 10;background: #fff"><?php echo $d['reference_number']; ?></td>
                                                 <td align="center"><?php echo $d['facility_type']; ?></td>
                                                 <td align="center"><?php echo $d['wht_agent']; ?></td>
                                                 <td align="center"><?php echo $d['ith_tag']; ?></td>
