@@ -1595,8 +1595,9 @@ public function print_BS_new(){
         $new_series=$this->input->post('series_number');
         $old_series=$this->input->post('old_series');
         $settlement_id=$this->input->post('settlement_id');
-        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
-            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
+        $item_no=$this->input->post('item_no');
+        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'") AS $check){
+            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'");
             if($count==0){
                 $old_series_insert = $old_series;
             }else{
@@ -1609,8 +1610,8 @@ public function print_BS_new(){
             'old_series_no'=>$old_series_insert,
         );
 
-        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
-            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_series){
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'")){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'") AS $latest_series){
                echo $latest_series->series_number;
             }
         }
@@ -1622,9 +1623,9 @@ public function print_BS_new(){
         $new_or_date=$this->input->post('or_date');
         $old_or_date=$this->input->post('or_date');
         $settlement_id=$this->input->post('settlement_id');
-
-        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
-            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_or_date!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
+        $item_no=$this->input->post('item_no');
+        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'") AS $check){
+            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_or_date!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'");
             if($count==0){
                 $old_ordate_insert = $old_or_date;
             }else{
@@ -1637,8 +1638,8 @@ public function print_BS_new(){
             'old_or_date'=>$old_ordate_insert,
         );
 
-        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
-            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_ordate){
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'")){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'") AS $latest_ordate){
                echo $latest_ordate->or_date;
             }
         }
@@ -1649,13 +1650,13 @@ public function print_BS_new(){
         $collection_id=$this->input->post('collection_id');
         $def_int=$this->input->post('def_int');
         $settlement_id=$this->input->post('settlement_id');
-
+        $item_no=$this->input->post('item_no');
         $data_update = array(
             'defint'=>$def_int,
         );
 
-        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
-            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_defint){
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'")){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'") AS $latest_defint){
                echo $latest_defint->defint;
             }
         }
@@ -1666,12 +1667,12 @@ public function print_BS_new(){
         $collection_id=$this->input->post('collection_id');
         $orno_remarks=$this->input->post('or_no_remarks');
         $settlement_id=$this->input->post('settlement_id');
-
+        $item_no=$this->input->post('item_no');
         $data_update = array(
             'or_no_remarks'=>$orno_remarks,
         );
 
-        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'")){
             if (strpos($orno_remarks, ',') !== false) {
                 $or_no_remarks=explode(",", $orno_remarks);
                 $or_no=$or_no_remarks[0];
@@ -1689,7 +1690,7 @@ public function print_BS_new(){
                         $remarks='';
                     }
 
-            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_or_remarks){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no='$item_no'") AS $latest_or_remarks){
                echo $latest_or_remarks->or_no_remarks;
             }
         }

@@ -661,7 +661,7 @@ function calculateSales(){
 }
 
 
-function updateSeries(baseurl,count,collection_id,settlement_id,reference_number){
+function updateSeries(baseurl,count,collection_id,settlement_id,reference_number,item_no){
     var redirect = baseurl+"sales/update_seriesno";
     var series_number=document.getElementById("series_number"+count).value;
     var old_series=document.getElementById("old_series_no"+count).value;
@@ -670,7 +670,7 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'series_number='+series_number+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_series='+old_series,
+		data: 'series_number='+series_number+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_series='+old_series+'&item_no='+item_no,
 		success: function(output){
 			//alert(output);
 			document.getElementById("series_number"+count).setAttribute('value',output);
@@ -681,7 +681,7 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 	});
 }
 
-function updateORDate(baseurl,count,collection_id,settlement_id,reference_number){
+function updateORDate(baseurl,count,collection_id,settlement_id,reference_number,item_no){
     var redirect = baseurl+"sales/update_ordate";
     var or_date=document.getElementById("or_date"+count).value;
     var old_or_date=document.getElementById("old_or_date"+count).value;
@@ -689,7 +689,7 @@ function updateORDate(baseurl,count,collection_id,settlement_id,reference_number
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_or_date='+old_or_date,
+		data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_or_date='+old_or_date+'&item_no='+item_no,
 		success: function(output){
 			document.getElementById("or_date"+count).setAttribute('value',output);
 			document.getElementById("old_or_date"+count).value=or_date;
@@ -697,13 +697,13 @@ function updateORDate(baseurl,count,collection_id,settlement_id,reference_number
 	});
 }
 
-function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_number){
+function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_number,item_no){
     var redirect = baseurl+"sales/update_orno_remarks";
     var or_no_remarks=document.getElementById("or_no_remarks"+count).value;
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'or_no_remarks='+or_no_remarks+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number,
+		data: 'or_no_remarks='+or_no_remarks+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&item_no='+item_no,
 		success: function(output){
 			//alert(output);
 			document.getElementById("or_no_remarks"+count).setAttribute('value',output);
@@ -711,13 +711,13 @@ function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_num
 	});
 }
 
-function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number){
+function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number,item_no){
     var redirect = baseurl+"sales/update_defint";
     var def_int=document.getElementById("def_int"+count).value;
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'def_int='+def_int+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number,
+		data: 'def_int='+def_int+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&item_no='+item_no,
 		success: function(output){
 			//alert(output);
 			document.getElementById("def_int"+count).setAttribute('value',output);
