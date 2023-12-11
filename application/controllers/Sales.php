@@ -1494,13 +1494,13 @@ public function print_BS_new(){
         $data['collection']=array();
 
             foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
-            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
             //$total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             //if($count_series>=1){
                 //$overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
@@ -3449,10 +3449,12 @@ public function upload_sales_adjustment_test(){
 
     public function PDF_OR(){
         $collection_id=$this->uri->segment(3);
-        $settlement_id=$this->uri->segment(4);
+        $settlement_id=str_replace('%20', ' ', $this->uri->segment(4));
         $reference_no=$this->uri->segment(5);
+        $series_number=$this->uri->segment(6);
         $data['ref_no'] = $reference_no;
         $data['refno'] = preg_replace("/[^0-9]/", "",$reference_no);
+
         //$refno = preg_replace("/[^0-9]/", "",$reference_no);
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
@@ -3464,16 +3466,17 @@ public function upload_sales_adjustment_test(){
         //$data['client']=$this->super_model->select_row_where("participant", "billing_id", $billing_id);
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
         $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
-        $data['stl_id']=$this->super_model->select_column_custom_where("collection_details","settlement_id","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['or_no']=$this->super_model->select_column_custom_where("collection_details","series_number","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['buyer']=$this->super_model->select_column_custom_where("collection_details","buyer_fullname","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_amount']=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_vat']=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_ewt'] =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['defint'] =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['date']=$this->super_model->select_column_custom_where("collection_details","or_date","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['stl_id']=$this->super_model->select_column_custom_where("collection_details","settlement_id","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        //$data['or_no']=$this->super_model->select_column_custom_where("collection_details","series_number","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['or_no']=$series_number;
+        $data['buyer']=$this->super_model->select_column_custom_where("collection_details","buyer_fullname","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' ");
+        $data['sum_amount']=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['sum_vat']=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['sum_ewt'] =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['defint'] =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['date']=$this->super_model->select_column_custom_where("collection_details","or_date","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
         //$data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         $this->load->view('sales/PDF_OR',$data);
     }
