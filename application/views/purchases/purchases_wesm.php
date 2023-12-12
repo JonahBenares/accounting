@@ -17,6 +17,12 @@
 var element = document.getElementById("clickbind");
 element.addEventListener("click", onClick);*/
 </script>
+<style>
+    table#table-6 tr td {
+        vertical-align: top!important;
+        padding-top: 5px!important;
+    }
+</style>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -182,30 +188,30 @@ element.addEventListener("click", onClick);*/
                                     <table class="table-bordered table table-hover " id="table-6" style="width:300%;">
                                         <thead>
                                             <tr>
-                                                <th width="3%" align="center" style="background:rgb(245 245 245)">
+                                                <th width="3%" align="center" style="background:rgb(245 245 245);max-width:10px">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
-                                                <th>Item No.</th>
-                                                <th>STL ID / TPShort Name</th>
-                                                <th style="position:sticky;max-width: 150px!important; left:0; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
-                                                <th style="position:sticky; left:175px;max-width: 300px!important; z-index: 10;background: rgb(240 240 240);">Trading Participant Name</th>
-                                                <th style="position:sticky; left:540px;max-width: 180px!important; z-index: 10;background: rgb(240 240 240);">Billing Period</th>
-                                                <th style="position:sticky; left:755px;max-width: 120px!important; z-index: 10;background: rgb(240 240 240);">Reference No</th>
-                                                <th>Facility Type </th>
-                                                <th>WHT Agent Tag</th>
-                                                <th>ITH Tag</th>
-                                                <th>Non Vatable Tag</th>
-                                                <th>Zero-rated Tag</th>
-                                                <th>Vatable Purchases</th>
-                                                <th>Zero Rated Purchases</th>
-                                                <th>Zero Rated EcoZones Purchases </th>
-                                                <th>Vat On Purchases</th>
-                                                <th>EWT</th>
-                                                <th>Total Amount</th>
-                                                <th>OR Number</th>
-                                                <th>Total Amount</th>
-                                                <th>Original Copy</th>
-                                                <th>Scanned Copy</th>
+                                                <th style="max-width:5px">Item No.</th>
+                                                <th style="max-width:30px">STL ID / TPShort Name</th>
+                                                <th style="position:sticky;max-width: 20px!important; left:0; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
+                                                <th style="position:sticky; left:105px;max-width: 60px!important; z-index: 10;background: rgb(240 240 240);">Trading Participant Name</th>
+                                                <th style="position:sticky; left:280px;max-width: 15px!important; z-index: 10;background: rgb(240 240 240);">Billing Period</th>
+                                                <th style="position:sticky; left:380px;max-width: 10px!important; z-index: 10;background: rgb(240 240 240);">Reference No</th>
+                                                <th style="max-width:20px">Facility Type </th>
+                                                <th style="max-width:20px">WHT Agent Tag</th>
+                                                <th style="max-width:20px">ITH Tag</th>
+                                                <th style="max-width:20px">Non Vatable Tag</th>
+                                                <th style="max-width:20px">Zero-rated Tag</th>
+                                                <th style="max-width:20px">Vatable Purchases</th>
+                                                <th style="max-width:20px">Zero Rated Purchases</th>
+                                                <th style="max-width:40px">Zero Rated EcoZones Purchases </th>
+                                                <th style="max-width:20px">Vat On Purchases</th>
+                                                <th style="max-width:10px">EWT</th>
+                                                <th style="max-width:10px">Total Amount</th>
+                                                <th style="max-width:20px">OR Number</th>
+                                                <th style="max-width:20px">Total Amount</th>
+                                                <th style="max-width:30px">Original Copy</th>
+                                                <th style="max-width:30px">Scanned Copy</th>
                                                 <!-- <th width="2%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th> -->
@@ -229,14 +235,28 @@ element.addEventListener("click", onClick);*/
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
                                                 <td><?php echo $d['short_name'];?></td>
-                                                <td style="position:sticky;max-width: 150px!important; left:0; z-index: 10;background: #fff"><?php echo $d['billing_id']; ?></td>
-                                                <td style="position:sticky; left:175px;max-width: 300px!important; z-index: 10;background: #fff; ">
-                                                    <div style="width: 80%!important;max-width: 80%!important;">
+
+                                                <td style="position:sticky;max-width: 20px!important; left:0; z-index: 10;background: #fff">
+                                                    <div style="width:90px;word-wrap: break-word;font-size:11px!important;">
+                                                        <?php echo $d['billing_id']; ?>
+                                                    </div>
+                                                </td>
+
+                                                <td style="position:sticky; left:105px;max-width: 60px!important; z-index: 10;background: #fff; ">
+                                                    <div style="font-size:11px!important;width: 160px!important;padding:1px;">
                                                         <?php echo $d['company_name']; ?>
                                                     </div>
                                                 </td>
-                                                <td style="position:sticky; left:540px;max-width: 180px!important; z-index: 10;background: #fff"><?php echo date("M. d, Y",strtotime($d['billing_from']))." - ".date("M. d, Y",strtotime($d['billing_to'])); ?></td>
-                                                <td style="position:sticky; left:755px;max-width: 120px!important; z-index: 10;background: #fff"><?php echo $d['reference_number']; ?></td>
+                                                <td style="position:sticky; left:280px;max-width: 15px!important; z-index: 10;background: #fff">
+                                                    <div style="font-size:11px!important;width: 80px!important;padding:1px;">
+                                                        <?php echo date("M. d, Y",strtotime($d['billing_from']))." - ".date("M. d, Y",strtotime($d['billing_to'])); ?>
+                                                    </div>
+                                                </td>
+                                                <td style="position:sticky; left:380px;max-width: 10px!important; z-index: 10;background: #fff">
+                                                    <div style="font-size:11px!important;width: 80px!important;padding:1px;">
+                                                        <?php echo $d['reference_number']; ?>
+                                                    </div>  
+                                                </td>
                                                 <td align="center"><?php echo $d['facility_type']; ?></td>
                                                 <td align="center"><?php echo $d['wht_agent']; ?></td>
                                                 <td align="center"><?php echo $d['ith_tag']; ?></td>
