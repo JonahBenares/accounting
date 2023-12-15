@@ -253,7 +253,7 @@ element.addEventListener("click", onClick);*/
                                                 </td>
                                                 <td style="position:sticky; left:280px;max-width: 15px!important; z-index: 10;background: #fff">
                                                     <div style="font-size:11px!important;width: 80px!important;padding:1px;">
-                                                        <?php echo date("M. d, Y",strtotime($d['billing_from']))." - ".date("M. d, Y",strtotime($d['billing_to'])); ?>
+                                                        <?php echo date("M. d, Y",strtotime($d['due_date'])); ?>
                                                     </div>
                                                 </td>
                                                 <td style="position:sticky; left:380px;max-width: 10px!important; z-index: 10;background: #fff">
