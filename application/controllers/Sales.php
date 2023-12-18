@@ -3906,7 +3906,7 @@ public function upload_sales_adjustment_test(){
   
         for($x=0;$x<$count;$x++){
             $invoice[]=$this->super_model->custom_query_single('invoice_no',"SELECT * FROM sales_adjustment_details sad  INNER JOIN bs_head_adjustment bha ON bha.invoice_no=sad.serial_no WHERE bha.invoice_no='$invoice_no_exp[$x]'");
-            if(in_array($invoice_no_exp[$x],$invoice)){
+            if(array_key_exists($invoice_no_exp[$x],$invoice)){
                 foreach($this->super_model->select_custom_where("bs_head_adjustment","invoice_no='".$invoice_no_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $address=$p->address;
@@ -4179,7 +4179,7 @@ public function upload_sales_adjustment_test(){
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         for($x=0;$x<$count;$x++){
              $invoice[]=$this->super_model->custom_query_single('invoice_no',"SELECT * FROM sales_adjustment_details sad  INNER JOIN bs_head_adjustment bha ON bha.invoice_no=sad.serial_no WHERE bha.invoice_no='$invoice_no_exp[$x]'");
-            if(in_array($invoice_no_exp[$x],$invoice)){
+            if(array_key_exists($invoice_no_exp[$x],$invoice)){
                 foreach($this->super_model->select_custom_where("bs_head_adjustment","invoice_no='".$invoice_no_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $data['tin'][$x]=$p->tin;
