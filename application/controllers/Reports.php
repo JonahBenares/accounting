@@ -4891,7 +4891,8 @@ class Reports extends CI_Controller {
         $sql="";
 
         if($from!='null' && $to != 'null'){
-            $sql.= "((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND";
+            //$sql.= "((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND";
+            $sql.= " due_date BETWEEN '$from' AND '$to' AND";
         }if($due_date!='null'){
             $sql.= " due_date = '$due_date' AND ";
         } if($participant!='null'){
@@ -4957,7 +4958,8 @@ class Reports extends CI_Controller {
         $sql='';
 
         if($from!='null' && $to != 'null'){
-           $sql.= "((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+           //$sql.= "((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+           $sql.= " due_date BETWEEN '$from' AND '$to' AND ";
         } 
         if($participant!='null'){
              $sql.= "tin = '$participant' AND ";

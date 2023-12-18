@@ -29,10 +29,10 @@
                                         <table width="100%">
                                             <tr>
                                                 <td width="15%">
-                                                    <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Due Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td width="15%">
-                                                    <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Due Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td>
                                                     <select class="form-control select2" name="due_date" id="due_date">
@@ -86,7 +86,7 @@
                                 </tr>
                                 <tr>
                                     <td width="3%"></td>
-                                    <td width="13%"><b>Date From:</b></td>
+                                    <td width="13%"><b>Due Date From:</b></td>
                                     <td width="25%"><?php echo $from ?></td>
                                     <td width="13%"><b>Original Copy:</b></td>
                                     <?php if($original != 'null'){ ?>
@@ -98,7 +98,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><b>Date To:</b></td>
+                                    <td><b>Due Date To:</b></td>
                                     <td><?php echo $to ?></td>
                                     <td><b>Scanned Copy:</b></td>
                                     <?php if($scanned != 'null'){ ?>
@@ -291,12 +291,12 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-lg-6">
-                            <label>Billing Date From</label>
-                            <input placeholder="Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
+                            <label>Due Date From</label>
+                            <input placeholder="Due Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                         <div class="form-group col-lg-6">
-                            <label>Billing Date to</label>
-                            <input placeholder="Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
+                            <label>Due Date to</label>
+                            <input placeholder="Due Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                     </div>
                     <div class="form-group">
