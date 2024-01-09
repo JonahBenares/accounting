@@ -3507,7 +3507,7 @@ public function upload_sales_adjustment_test(){
 
             //echo $count."<br>";
 
-            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no LIMIT 10") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number LIMIT 10") AS $col){
 
                 //echo $col->series_number."-".$col->settlement_id."<br>";
 
