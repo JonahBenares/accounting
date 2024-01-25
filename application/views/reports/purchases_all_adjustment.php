@@ -29,10 +29,10 @@
                                         <table width="100%">
                                             <tr>
                                                 <td width="15%">
-                                                    <input placeholder="Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Due Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td width="15%">
-                                                    <input placeholder="Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Due Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td>
                                                     <select class="form-control select2" name="due_date" id="due_date">
@@ -86,7 +86,7 @@
                                 </tr>
                                 <tr>
                                     <td width="3%"></td>
-                                    <td width="13%"><b>Date From:</b></td>
+                                    <td width="13%"><b>Due Date From:</b></td>
                                     <td width="25%"><?php echo $from ?></td>
                                     <td width="13%"><b>Original Copy:</b></td>
                                     <?php if($original != 'null'){ ?>
@@ -98,7 +98,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><b>Date To:</b></td>
+                                    <td><b>Due Date To:</b></td>
                                     <td><?php echo $to ?></td>
                                     <td><b>Scanned Copy:</b></td>
                                     <?php if($scanned != 'null'){ ?>
@@ -161,7 +161,9 @@
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">Due Date</th> 
                                             <th class="table_td p-2" style="font-size: 12px;" width="10%">Transaction Reference Number</th> 
                                             <th class="table_td p-2" style="font-size: 12px;" width="30%">Company Name</th>
-                                            <th class="table_td p-2" style="font-size: 12px;" width="5%">Vatable Purchases</th> 
+                                            <th class="table_td p-2" style="font-size: 12px;" width="5%">Vatable Purchases</th>
+                                            <th class="table_td p-2" style="font-size: 12px;" width="5%">Zero-rated Purchases</th>    
+                                            <th class="table_td p-2" style="font-size: 12px;" width="5%">Zero-rated Ecozones Purchases</th> 
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">VAT on Purchases</th>    
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">EWT</th>    
                                             <th class="table_td p-2" style="font-size: 12px;" width="5%">Total</th> 
@@ -186,6 +188,8 @@
                                                         'reference_number'=>array(),
                                                         'billing'=>date("M. d, Y",strtotime($pal['billing_from']))." - ".date("M. d, Y",strtotime($pal['billing_to'])),
                                                         'vatables_purchases'=>array(),
+                                                        'zero_rated_purchases'=>array(),
+                                                        'zero_rated_ecozones'=>array(),
                                                         'vat_on_purchases'=>array(),
                                                         'ewt'=>array(),
                                                         'total'=>array(),
@@ -200,6 +204,8 @@
                                                 $data2[$key]['due_date'][] = $pal['due_date'];
                                                 $data2[$key]['reference_number'][] = $pal['reference_number'];
                                                 $data2[$key]['vatables_purchases'][] = "(".number_format($pal['vatables_purchases'],2).")";
+                                                $data2[$key]['zero_rated_purchases'][] = "(".number_format($pal['zero_rated_purchases'],2).")";
+                                                $data2[$key]['zero_rated_ecozones'][] = "(".number_format($pal['zero_rated_ecozones'],2).")";
                                                 $data2[$key]['vat_on_purchases'][] = "(".number_format($pal['vat_on_purchases'],2).")";
                                                 $data2[$key]['ewt'][] = number_format($pal['ewt'],2);
                                                 $data2[$key]['total'][] = "(".number_format($pal['total'],2).")";
@@ -211,7 +217,7 @@
                                             foreach($data2 AS $pa){
                                         ?>
                                         <tr>
-                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="12" style="font-size: 12px; background: #e8f5ff;">
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-2" colspan="14" style="font-size: 12px; background: #e8f5ff;">
                                                 <b><?php echo $pa['billing']; ?></b>
                                             </td>
                                         </tr>
@@ -230,6 +236,12 @@
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin: 0px'>",$pa['vatables_purchases']);?>
+                                            </td>
+                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin: 0px'>",$pa['zero_rated_purchases']);?>
+                                            </td>
+                                            <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
+                                                <?php echo implode("<hr style='margin: 0px'>",$pa['zero_rated_ecozones']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="center" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin: 0px'>",$pa['vat_on_purchases']);?>
@@ -279,12 +291,12 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-lg-6">
-                            <label>Billing Date From</label>
-                            <input placeholder="Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
+                            <label>Due Date From</label>
+                            <input placeholder="Due Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                         <div class="form-group col-lg-6">
-                            <label>Billing Date to</label>
-                            <input placeholder="Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
+                            <label>Due Date to</label>
+                            <input placeholder="Due Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                     </div>
                     <div class="form-group">

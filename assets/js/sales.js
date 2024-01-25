@@ -402,6 +402,9 @@ function filterSales(){
 	var ref_no= document.getElementById("ref_no").value;
 	var due_date= document.getElementById("due_date").value;
 	var in_ex_sub= document.getElementById("in_ex_sub").value;
+	var billing_from= document.getElementById("billing_from").value;
+	var billing_to= document.getElementById("billing_to").value;
+	var participant= document.getElementById("participant").value;
 	var loc= document.getElementById("baseurl").value;
 	if(ref_no!=''){
         var ref=ref_no;
@@ -420,13 +423,33 @@ function filterSales(){
     }else{
         var sub='null';
     }
-	window.location=loc+'sales/sales_wesm/'+ref+'/'+due+'/'+sub;          
+
+    if(billing_from!=''){
+        var billfrom=billing_from;
+    }else{
+        var billfrom='null';
+    }
+
+    if(billing_to!=''){
+        var billto=billing_to;
+    }else{
+        var billto='null';
+    }
+
+    if(participant!=''){
+        var parti=participant;
+    }else{
+        var parti='null';
+    }
+	window.location=loc+'sales/sales_wesm/'+ref+'/'+due+'/'+sub+'/'+billfrom+'/'+billto+'/'+parti;          
 }
 
 function filterSalesAdjustment(){
 	var ref_no= document.getElementById("ref_no").value;
-	var due_date= document.getElementById("due_date").value;
+	var due_date_from= document.getElementById("due_date_from").value;
+	var due_date_to= document.getElementById("due_date_to").value;
 	var in_ex_sub= document.getElementById("in_ex_sub").value;
+	var participant= document.getElementById("participant").value;
 	var loc= document.getElementById("baseurl").value;
 	if(ref_no!=''){
         var ref=ref_no;
@@ -434,10 +457,16 @@ function filterSalesAdjustment(){
         var ref='null';
     }
 
-    if(due_date!=''){
-        var due=due_date;
+    if(due_date_from!=''){
+        var duefrom=due_date_from;
     }else{
-        var due='null';
+        var duefrom='null';
+    }
+
+    if(due_date_to!=''){
+        var dueto=due_date_to;
+    }else{
+        var dueto='null';
     }
 
     if(in_ex_sub!=''){
@@ -445,7 +474,13 @@ function filterSalesAdjustment(){
     }else{
         var sub='null';
     }
-	window.location=loc+'sales/sales_wesm_adjustment/'+ref+'/'+due+'/'+sub;          
+
+    if(participant!=''){
+        var parti=participant;
+    }else{
+        var parti='null';
+    }
+	window.location=loc+'sales/sales_wesm_adjustment/'+ref+'/'+duefrom+'/'+dueto+'/'+sub+'/'+parti;          
 }
 
 
@@ -626,7 +661,7 @@ function calculateSales(){
 }
 
 
-function updateSeries(baseurl,count,collection_id,settlement_id,reference_number){
+function updateSeries(baseurl,count,collection_id,settlement_id,reference_number,item_no){
     var redirect = baseurl+"sales/update_seriesno";
     var series_number=document.getElementById("series_number"+count).value;
     var old_series=document.getElementById("old_series_no"+count).value;
@@ -635,7 +670,7 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'series_number='+series_number+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_series='+old_series,
+		data: 'series_number='+series_number+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_series='+old_series+'&item_no='+item_no,
 		success: function(output){
 			//alert(output);
 			document.getElementById("series_number"+count).setAttribute('value',output);
@@ -646,7 +681,7 @@ function updateSeries(baseurl,count,collection_id,settlement_id,reference_number
 	});
 }
 
-function updateORDate(baseurl,count,collection_id,settlement_id,reference_number){
+function updateORDate(baseurl,count,collection_id,settlement_id,reference_number,item_no){
     var redirect = baseurl+"sales/update_ordate";
     var or_date=document.getElementById("or_date"+count).value;
     var old_or_date=document.getElementById("old_or_date"+count).value;
@@ -654,7 +689,7 @@ function updateORDate(baseurl,count,collection_id,settlement_id,reference_number
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_or_date='+old_or_date,
+		data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_or_date='+old_or_date+'&item_no='+item_no,
 		success: function(output){
 			document.getElementById("or_date"+count).setAttribute('value',output);
 			document.getElementById("old_or_date"+count).value=or_date;
@@ -662,13 +697,13 @@ function updateORDate(baseurl,count,collection_id,settlement_id,reference_number
 	});
 }
 
-function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_number){
+function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_number,item_no){
     var redirect = baseurl+"sales/update_orno_remarks";
     var or_no_remarks=document.getElementById("or_no_remarks"+count).value;
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'or_no_remarks='+or_no_remarks+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number,
+		data: 'or_no_remarks='+or_no_remarks+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&item_no='+item_no,
 		success: function(output){
 			//alert(output);
 			document.getElementById("or_no_remarks"+count).setAttribute('value',output);
@@ -676,13 +711,13 @@ function updateorRemarks(baseurl,count,collection_id,settlement_id,reference_num
 	});
 }
 
-function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number){
+function updateDefInt(baseurl,count,collection_id,settlement_id,reference_number,item_no){
     var redirect = baseurl+"sales/update_defint";
     var def_int=document.getElementById("def_int"+count).value;
 	$.ajax({
 		type: "POST",
 		url: redirect,
-		data: 'def_int='+def_int+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number,
+		data: 'def_int='+def_int+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&item_no='+item_no,
 		success: function(output){
 			//alert(output);
 			document.getElementById("def_int"+count).setAttribute('value',output);

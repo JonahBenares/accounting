@@ -16,6 +16,25 @@
                                             <table class="table-borderded" width="100%">
                                                 <tr>
                                                     <td>
+                                                        <input type='text' class="form-control" name="billing_from" id="billing_from" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing From">
+                                                    </td>
+                                                    <td>
+                                                        <input type='text' class="form-control" name="billing_to" id="billing_to" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing To">
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control select2" name="participant" id="participant">
+                                                            <option value=''>-- Select Participant --</option>
+                                                            <?php 
+                                                                foreach($participant AS $p){
+                                                            ?>
+                                                            <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    
+                                                    <td>
                                                         <select class="form-control select2" name="ref_no" id="ref_no">
                                                             <option value=''>-- Select Reference No --</option>
                                                             <?php 
@@ -58,8 +77,13 @@
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
                                             $due_date=date("F d,Y",strtotime($d['due_date']));
                                         }
-
+                                        if(!empty($participant_name)){
                                     ?>
+                                    <tr>
+                                        <td>Participant Name</td>
+                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                    </tr>
+                                    <?php } ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
                                         <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
@@ -94,8 +118,10 @@
                                                     <th>BS No.</th>
                                                     <th>OR No.</th>
                                                     <th>STL ID / TPShort Name</th>
-                                                    <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
-                                                    <th style="position: sticky;left:140px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
+                                                    <th style="position:sticky; left:0;  z-index: 10;background: rgb(240 240 240);">Billing ID</th>
+                                                    <th style="position:sticky; left:99px; z-index: 10;background: rgb(240 240 240);">Trading Participant Name</th>
+                                                    <th style="position:sticky; left:283px; z-index: 10;background: rgb(240 240 240);">Billing Period</th>
+                                                    <th style="position:sticky; left:462px; z-index: 10;background: rgb(240 240 240);">Reference No</th>
                                                     <th>Facility Type </th>
                                                     <th>WHT Agent Tag</th>
                                                     <th>ITH Tag</th>
@@ -161,7 +187,9 @@
                                                     <?php } ?>
                                                     <td><?php echo $s['short_name'];?></td>
                                                     <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $s['billing_id'];?></td>
-                                                    <td style="position: sticky;left:140px;background:#fff;z-index: 999;"><?php echo $s['company_name'];?></td>
+                                                    <td style="position: sticky;left:99px;background:#fff;z-index: 999;"><?php echo $s['company_name'];?></td>
+                                                    <td style="position: sticky;left:283px;background:#fff;z-index: 999;"><?php echo date("M. d, Y",strtotime($s['billing_from']))." - ".date("M. d, Y",strtotime($s['billing_to']));?></td>
+                                                    <td style="position: sticky;left:462px;background:#fff;z-index: 999;"><?php echo $s['reference_number'];?></td>
                                                     <td align="center"><?php echo $s['facility_type'];?></td>
                                                     <td align="center"><?php echo $s['wht_agent'];?></td>
                                                     <td align="center"><?php echo $s['ith_tag'];?></td>

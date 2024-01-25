@@ -289,6 +289,9 @@ function saveBS(){
 function filterPurchase(){
     var ref_no= document.getElementById("ref_no").value;
     var due_date= document.getElementById("due_date").value;
+    var billing_from= document.getElementById("billing_from").value;
+    var billing_to= document.getElementById("billing_to").value;
+    var participant= document.getElementById("participant").value;
     var loc= document.getElementById("baseurl").value;
     if(ref_no!=''){
         var ref=ref_no;
@@ -301,13 +304,33 @@ function filterPurchase(){
     }else{
         var due='null';
     }
-    window.location=loc+'purchases/purchases_wesm/'+ref+'/'+due;          
+
+    if(billing_from!=''){
+        var billfrom=billing_from;
+    }else{
+        var billfrom='null';
+    }
+
+    if(billing_to!=''){
+        var billto=billing_to;
+    }else{
+        var billto='null';
+    }
+
+    if(participant!=''){
+        var parti=participant;
+    }else{
+        var parti='null';
+    }
+    window.location=loc+'purchases/purchases_wesm/'+ref+'/'+due+'/null/null/null/'+billfrom+'/'+billto+'/'+parti;          
 }
 
 function filterPurchaseAdj(){
     var ref_no= document.getElementById("ref_no").value;
-    var due_date= document.getElementById("due_date").value;
+    var due_date_from= document.getElementById("due_date_from").value;
+    var due_date_to= document.getElementById("due_date_to").value;
     var in_ex_sub= document.getElementById("in_ex_sub").value;
+    var participant= document.getElementById("participant").value;
     var loc= document.getElementById("baseurl").value;
     if(ref_no!=''){
         var ref=ref_no;
@@ -315,10 +338,16 @@ function filterPurchaseAdj(){
         var ref='null';
     }
 
-    if(due_date!=''){
-        var due=due_date;
+    if(due_date_from!=''){
+        var duefrom=due_date_from;
     }else{
-        var due='null';
+        var duefrom='null';
+    }
+
+    if(due_date_to!=''){
+        var dueto=due_date_to;
+    }else{
+        var dueto='null';
     }
 
     if(in_ex_sub!=''){
@@ -326,7 +355,13 @@ function filterPurchaseAdj(){
     }else{
         var inex='null';
     }
-    window.location=loc+'purchases/purchases_wesm_adjustment/'+ref+'/'+due+'/'+inex;          
+
+    if(participant!=''){
+        var parti=participant;
+    }else{
+        var parti='null';
+    }
+    window.location=loc+'purchases/purchases_wesm_adjustment/'+ref+'/'+duefrom+'/'+dueto+'/'+inex+'/null/null/null/'+parti;          
 }
 
 function payment_filter() {

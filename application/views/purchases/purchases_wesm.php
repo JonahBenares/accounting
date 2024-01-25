@@ -17,6 +17,12 @@
 var element = document.getElementById("clickbind");
 element.addEventListener("click", onClick);*/
 </script>
+<style>
+    table#table-6 tr td {
+        vertical-align: top!important;
+        padding-top: 5px!important;
+    }
+</style>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -32,6 +38,22 @@ element.addEventListener("click", onClick);*/
                                     <div class="col-lg-10 offset-lg-1">
                                         <table class="table-borderded" width="100%">
                                             <tr>
+                                                <td>
+                                                    <select class="form-control select2" name="participant" id="participant">
+                                                        <option value=''>-- Select Participant --</option>
+                                                        <?php 
+                                                            foreach($participant AS $p){
+                                                        ?>
+                                                        <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type='text' class="form-control" name="billing_from" id="billing_from" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing From">
+                                                </td>
+                                                <td>
+                                                    <input type='text' class="form-control" name="billing_to" id="billing_to" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing To">
+                                                </td>
                                                 <td>
                                                     <select class="form-control select2" name="ref_no" id="ref_no">
                                                         <option value=''>-- Select Reference No --</option>
@@ -67,8 +89,13 @@ element.addEventListener("click", onClick);*/
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
                                             $due_dates=date("F d,Y",strtotime($d['due_date']));
                                         }
-
+                                        if(!empty($participant_name)){
                                     ?>
+                                    <tr>
+                                        <td>Participant Name</td>
+                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                    </tr>
+                                    <?php } ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
                                         <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
@@ -86,7 +113,9 @@ element.addEventListener("click", onClick);*/
                                         <td>: <?php echo (!empty($due_dates)) ? $due_dates : ''; ?></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4"><center><a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
+                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-primary btn-block">Download Bulk 2307</a>
+                                        </center></td>
+                                         <td colspan="2"><center><a href='<?php echo base_url(); ?>purchases/download_bulk_zoomed/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-info btn-block">Download Bulk 2307 (Zoomed)</a>
                                         </center></td>
                                     </tr>
                                     <tr>
@@ -144,7 +173,7 @@ element.addEventListener("click", onClick);*/
                                             <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-md">Remove Filter</a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
+                                            <a href="<?php echo base_url(); ?>purchases/export_purchasetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -159,27 +188,30 @@ element.addEventListener("click", onClick);*/
                                     <table class="table-bordered table table-hover " id="table-6" style="width:300%;">
                                         <thead>
                                             <tr>
-                                                <th width="3%" align="center" style="background:rgb(245 245 245)">
+                                                <th width="3%" align="center" style="background:rgb(245 245 245);max-width:10px">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th>
-                                                <th>Item No.</th>
-                                                <th  style="position:sticky;min-width: 100px; left:0; z-index: 10;background: rgb(240 240 240);">STL ID / TPShort Name</th>
-                                                <th  style="position:sticky; left:245px;min-width: 90px; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
-                                                <th>Facility Type </th>
-                                                <th>WHT Agent Tag</th>
-                                                <th>ITH Tag</th>
-                                                <th>Non Vatable Tag</th>
-                                                <th>Zero-rated Tag</th>
-                                                <th>Vatable Purchases</th>
-                                                <th>Zero Rated Purchases</th>
-                                                <th>Zero Rated EcoZones Purchases </th>
-                                                <th>Vat On Purchases</th>
-                                                <th>EWT</th>
-                                                <th>Total Amount</th>
-                                                <th>OR Number</th>
-                                                <th>Total Amount</th>
-                                                <th>Original Copy</th>
-                                                <th>Scanned Copy</th>
+                                                <th style="max-width:5px">Item No.</th>
+                                                <th style="max-width:30px">STL ID / TPShort Name</th>
+                                                <th style="position:sticky;max-width: 20px!important; left:0; z-index: 10;background: rgb(240 240 240);">Billing ID</th>
+                                                <th style="position:sticky; left:105px;max-width: 60px!important; z-index: 10;background: rgb(240 240 240);">Trading Participant Name</th>
+                                                <th style="position:sticky; left:280px;max-width: 15px!important; z-index: 10;background: rgb(240 240 240);">Billing Period</th>
+                                                <th style="position:sticky; left:380px;max-width: 10px!important; z-index: 10;background: rgb(240 240 240);">Reference No</th>
+                                                <th style="max-width:20px">Facility Type </th>
+                                                <th style="max-width:20px">WHT Agent Tag</th>
+                                                <th style="max-width:20px">ITH Tag</th>
+                                                <th style="max-width:20px">Non Vatable Tag</th>
+                                                <th style="max-width:20px">Zero-rated Tag</th>
+                                                <th style="max-width:20px">Vatable Purchases</th>
+                                                <th style="max-width:20px">Zero Rated Purchases</th>
+                                                <th style="max-width:40px">Zero Rated EcoZones Purchases </th>
+                                                <th style="max-width:20px">Vat On Purchases</th>
+                                                <th style="max-width:10px">EWT</th>
+                                                <th style="max-width:10px">Total Amount</th>
+                                                <th style="max-width:20px">OR Number</th>
+                                                <th style="max-width:20px">Total Amount</th>
+                                                <th style="max-width:30px">Original Copy</th>
+                                                <th style="max-width:30px">Scanned Copy</th>
                                                 <!-- <th width="2%" align="center" style="background:rgb(245 245 245)">
                                                     <center><span class="fas fa-bars"></span></center>
                                                 </th> -->
@@ -202,8 +234,29 @@ element.addEventListener("click", onClick);*/
                                                     </div>
                                                 </td>
                                                 <td><?php echo $d['item_no'];?></td>
-                                                <td style="position:sticky;min-width: 100px; left:0; z-index: 10;background: #fff"><?php echo $d['short_name'];?></td>
-                                                <td style="position:sticky; left:245px;min-width: 90px; z-index: 10;background: #fff"><?php echo $d['billing_id']; ?></td>
+                                                <td><?php echo $d['short_name'];?></td>
+
+                                                <td style="position:sticky;max-width: 20px!important; left:0; z-index: 10;background: #fff">
+                                                    <div style="width:90px;word-wrap: break-word;font-size:11px!important;">
+                                                        <?php echo $d['billing_id']; ?>
+                                                    </div>
+                                                </td>
+
+                                                <td style="position:sticky; left:105px;max-width: 60px!important; z-index: 10;background: #fff; ">
+                                                    <div style="font-size:11px!important;width: 160px!important;padding:1px;">
+                                                        <?php echo $d['company_name']; ?>
+                                                    </div>
+                                                </td>
+                                                <td style="position:sticky; left:280px;max-width: 15px!important; z-index: 10;background: #fff">
+                                                    <div style="font-size:11px!important;width: 80px!important;padding:1px;">
+                                                        <?php echo date("M. d, Y",strtotime($d['billing_from']))." - ".date("M. d, Y",strtotime($d['billing_to'])); ?>
+                                                    </div>
+                                                </td>
+                                                <td style="position:sticky; left:380px;max-width: 10px!important; z-index: 10;background: #fff">
+                                                    <div style="font-size:11px!important;width: 80px!important;padding:1px;">
+                                                        <?php echo $d['reference_number']; ?>
+                                                    </div>  
+                                                </td>
                                                 <td align="center"><?php echo $d['facility_type']; ?></td>
                                                 <td align="center"><?php echo $d['wht_agent']; ?></td>
                                                 <td align="center"><?php echo $d['ith_tag']; ?></td>
@@ -254,7 +307,7 @@ element.addEventListener("click", onClick);*/
                                 <?php }else{ ?>
                                     <div><center><b>No Available Data...</b></center></div>
                                     <?php if(isset($or_nos) && isset($original_copy) && isset($scanned_copy)){ ?>
-                                        <a href="<?php echo base_url(); ?>purchases/purchases_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>" class="btn btn-warning btn-block">Remove Filter</a>
+                                        <a href="<?php echo base_url(); ?>purchases/purchases_wesm" class="btn btn-warning btn-block">Remove Filter</a>
                                     <?php } ?>
                                 <?php } ?>
                             </div>

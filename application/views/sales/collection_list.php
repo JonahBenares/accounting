@@ -130,6 +130,8 @@
                                                         $key = $value['series_number'].$value['settlement_id'].$value['reference_no'].$value['collection_date'];
                                                         if(!isset($data2[$key])) {
                                                             $data2[$key] = array(
+                                                                'item_no' => $value['item_no'], 
+                                                                'item_no_array' => array(), 
                                                                 'collection_id' => $value['collection_id'], 
                                                                 'collection_details_id' => $value['collection_details_id'], 
                                                                 'series_number' => $value['series_number'], 
@@ -162,6 +164,7 @@
                                                                 'overall_total'=>$value['overall_total'],
                                                             );
                                                         }
+                                                        $data2[$key]['item_no_array'][] = $value['item_no'];
                                                         $data2[$key]['billing_remarks'][] = $value['billing_remarks'];
                                                         $data2[$key]['particulars'][] = $value['particulars'];
                                                         $data2[$key]['settlement_id'][] = $value['settlement_id'];
@@ -181,25 +184,25 @@
                                                     <td class="td-btm pt-1 pb-1" style="vertical-align: middle;" align="center">
                                                         <div style="display:flex">
                                                             <a href="<?php echo base_url(); ?>sales/print_OR_new/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white" style="margin-right: 2px;"><span class="fas fa-print" style="margin:0px"></span></a>
-                                                            <a href="<?php echo base_url();?>sales/PDF_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                            <a href="<?php echo base_url();?>sales/PDF_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>/<?php echo $log['series_number'];?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
                                                         </div>
                                                     </td>
                                                     <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
-                                                        <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onchange="updateSeries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input Series Number'>
+                                                        <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onchange="updateSeries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input Series Number'>
                                                         <span hidden><?php echo $log['series_number'];?></span>
                                                         <input type="hidden" name="old_series_no" id="old_series_no<?php echo $x; ?>" value='<?php echo $log['series_number'];?>'> 
                                                     </td>
                                                     <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
-                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="date" name="or_date" id="or_date<?php echo $x; ?>" value="<?php echo $log['or_date_single'];?>" onchange="updateORDate('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');">
+                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="date" name="or_date" id="or_date<?php echo $x; ?>" value="<?php echo $log['or_date_single'];?>" onchange="updateORDate('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');">
                                                     <span hidden><?php echo $log['or_date_single'];?></span>
                                                     <input type="hidden" name="old_or_date" id="old_or_date<?php echo $x; ?>" value='<?php echo $log['or_date_single'];?>'> 
                                                     </td>
                                                      <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
-                                                        <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="or_no_remarks" id="or_no_remarks<?php echo $x; ?>" value="<?php echo $log['or_no_remarks_single'];?>" onchange="updateorRemarks('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input OR Remarks'>
+                                                        <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="or_no_remarks" id="or_no_remarks<?php echo $x; ?>" value="<?php echo $log['or_no_remarks_single'];?>" onchange="updateorRemarks('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input OR Remarks'>
                                                         <span hidden><?php echo $log['or_no_remarks_single'];?></span>
                                                     </td>
                                                     <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
-                                                        <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="def_int" id="def_int<?php echo $x; ?>" value="<?php echo $log['defint_single'];?>" onchange="updateDefInt('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>');" placeholder='Input Def Int'>
+                                                        <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="def_int" id="def_int<?php echo $x; ?>" value="<?php echo $log['defint_single'];?>" onchange="updateDefInt('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input Def Int'>
                                                         <span hidden><?php echo $log['defint_single'];?></span>
                                                     </td>
                                                     <?php if($log['count_series']>=1){ ?>

@@ -513,8 +513,8 @@ public function print_BS_new(){
         for($x=0;$x<$count;$x++){
             $array_salesdet_id[]=$sales_det_exp[$x];
             $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
-            $sales_det_id=implode(',',$array_salesdet_id);
-            if(in_array($sales_det_id,$bs_id)){
+            //$sales_det_id=implode(',',$array_salesdet_id);
+            if(array_key_exists($sales_det_exp[$x],$bs_id)){
 
                 
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
@@ -892,7 +892,7 @@ public function print_BS_new(){
         //$this->load->view('template/navbar');
         for($x=0;$x<$count;$x++){
              $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
-            if(in_array($sales_det_exp[$x],$bs_id)){
+            if(array_key_exists($sales_det_exp[$x],$bs_id)){
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $data['tin'][$x]=$p->tin;
@@ -1494,13 +1494,13 @@ public function print_BS_new(){
         $data['collection']=array();
 
             foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
-            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
-            $sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id'");
+            $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
+            $sum_def_int = $this->super_model->select_sum_where("collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id='$col->collection_id' AND series_number='$col->series_number'");
             //$total=($col->amount + $col->zero_rated + $col->zero_rated_ecozone + $col->vat)-$col->ewt; 
             //if($count_series>=1){
                 //$overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
@@ -1595,8 +1595,9 @@ public function print_BS_new(){
         $new_series=$this->input->post('series_number');
         $old_series=$this->input->post('old_series');
         $settlement_id=$this->input->post('settlement_id');
-        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
-            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
+        $item_no=$this->input->post('item_no');
+        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $check){
+            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)");
             if($count==0){
                 $old_series_insert = $old_series;
             }else{
@@ -1609,8 +1610,8 @@ public function print_BS_new(){
             'old_series_no'=>$old_series_insert,
         );
 
-        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
-            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_series){
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)")){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $latest_series){
                echo $latest_series->series_number;
             }
         }
@@ -1622,9 +1623,9 @@ public function print_BS_new(){
         $new_or_date=$this->input->post('or_date');
         $old_or_date=$this->input->post('or_date');
         $settlement_id=$this->input->post('settlement_id');
-
-        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $check){
-            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_or_date!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no'");
+        $item_no=$this->input->post('item_no');
+        foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $check){
+            $count=$this->super_model->count_custom_where("collection_details","collection_id = '$check->collection_id' AND old_or_date!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)");
             if($count==0){
                 $old_ordate_insert = $old_or_date;
             }else{
@@ -1637,8 +1638,8 @@ public function print_BS_new(){
             'old_or_date'=>$old_ordate_insert,
         );
 
-        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
-            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_ordate){
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)")){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $latest_ordate){
                echo $latest_ordate->or_date;
             }
         }
@@ -1649,13 +1650,13 @@ public function print_BS_new(){
         $collection_id=$this->input->post('collection_id');
         $def_int=$this->input->post('def_int');
         $settlement_id=$this->input->post('settlement_id');
-
+        $item_no=$this->input->post('item_no');
         $data_update = array(
             'defint'=>$def_int,
         );
 
-        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
-            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_defint){
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)")){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $latest_defint){
                echo $latest_defint->defint;
             }
         }
@@ -1666,12 +1667,12 @@ public function print_BS_new(){
         $collection_id=$this->input->post('collection_id');
         $orno_remarks=$this->input->post('or_no_remarks');
         $settlement_id=$this->input->post('settlement_id');
-
+        $item_no=$this->input->post('item_no');
         $data_update = array(
             'or_no_remarks'=>$orno_remarks,
         );
 
-        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'")){
+        if($this->super_model->update_custom_where("collection_details", $data_update, "collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)")){
             if (strpos($orno_remarks, ',') !== false) {
                 $or_no_remarks=explode(",", $orno_remarks);
                 $or_no=$or_no_remarks[0];
@@ -1689,7 +1690,7 @@ public function print_BS_new(){
                         $remarks='';
                     }
 
-            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no'") AS $latest_or_remarks){
+            foreach($this->super_model->select_custom_where("collection_details","collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $latest_or_remarks){
                echo $latest_or_remarks->or_no_remarks;
             }
         }
@@ -1838,12 +1839,17 @@ public function print_BS_new(){
         $ref_no=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
         $in_ex_sub=$this->uri->segment(5);
+        $billfrom=$this->uri->segment(6);
+        $billto=$this->uri->segment(7);
+        $participants=$this->uri->segment(8);
         $data['ref_no']=$ref_no;
         $data['due_date']=$due_date;
         $data['in_ex_sub']=$in_ex_sub;
         $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE due_date!=''");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
+        $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
@@ -1855,22 +1861,47 @@ public function print_BS_new(){
             if($due_date!='null'){
                 $sql.= "sh.due_date = '$due_date' AND ";
             }
+
+            if($billfrom!='null' && $billto!='null'){ 
+                $sql.= " ((sh.billing_from BETWEEN '$billfrom' AND '$billto') OR (sh.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " sd.short_name IN($imp) AND ";
+            }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu") AS $d){
             // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+
+                $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $d->sales_id);
+                $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $d->sales_detail_id);
+                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    $comp_name=$company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
+                }
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_detail_id,
                     'sales_id'=>$d->sales_id,
                     'item_no'=>$d->item_no,
+                    'billing_from'=>$d->billing_from,
+                    'billing_to'=>$d->billing_to,
+                    'reference_number'=>$d->reference_number,
                     'series_number'=>$series_number,
                     'old_series_no_col'=>$old_series_no,
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
-                    'company_name'=>$d->company_name,
+                    'company_name'=>$comp_name,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
                     'ith_tag'=>$d->ith_tag,
@@ -1902,6 +1933,20 @@ public function print_BS_new(){
 
             if($due_date!='null'){
                 $sql.= "sh.due_date = '$due_date' AND ";
+            }
+
+            if($billfrom!='null' && $billto!='null'){ 
+                $sql.= " ((sh.billing_from BETWEEN '$billfrom' AND '$billto') OR (sh.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
@@ -2674,14 +2719,19 @@ public function print_BS_new(){
 
     public function sales_wesm_adjustment(){
         $ref_no=$this->uri->segment(3);
-        $due_date=$this->uri->segment(4);
-        $in_ex_sub=$this->uri->segment(5);
+        $due_datefrom=$this->uri->segment(4);
+        $due_dateto=$this->uri->segment(5);
+        $in_ex_sub=$this->uri->segment(6);
+        $participants=$this->uri->segment(7);
         $data['ref_no']=$ref_no;
-        $data['due_date']=$due_date;
+        $data['due_date_from']=$due_datefrom;
+        $data['due_date_to']=$due_dateto;
         $data['in_ex_sub']=$in_ex_sub;
         $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_adjustment_head WHERE reference_number!=''");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!=''");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
+        $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 || $in_ex_sub=='null'){
@@ -2690,24 +2740,44 @@ public function print_BS_new(){
                 $sql.= "sah.reference_number = '$ref_no' AND ";
             }
 
-            if($due_date!='null'){
-                $sql.= "sah.due_date = '$due_date' AND ";
+            if($due_datefrom!='null' && $due_dateto!='null'){ 
+                $sql.= " sah.due_date BETWEEN '$due_datefrom' AND '$due_dateto' AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " sad.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu ORDER BY serial_no ASC, item_no ASC") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+
+                $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $d->sales_adjustment_id);
+                $company_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id", $d->adjustment_detail_id);
+                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    $comp_name=$company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
+                }
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->adjustment_detail_id,
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
                     'item_no'=>$d->item_no,
+                    'due_date'=>$d->due_date,
+                    'reference_number'=>$d->reference_number,
                     'series_number'=>$series_number,
                     'old_series_no_col'=>$old_series_no,
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
-                    'company_name'=>$d->company_name,
+                    'company_name'=>$comp_name,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
                     'ith_tag'=>$d->ith_tag,
@@ -2737,8 +2807,18 @@ public function print_BS_new(){
                 $sql.= "sah.reference_number = '$ref_no' AND ";
             }
 
-            if($due_date!='null'){
-                $sql.= "sah.due_date = '$due_date' AND ";
+            if($due_datefrom!='null' && $due_dateto!='null'){ 
+                $sql.= " sah.due_date BETWEEN '$due_datefrom' AND '$due_dateto' AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " sad.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
@@ -3369,10 +3449,12 @@ public function upload_sales_adjustment_test(){
 
     public function PDF_OR(){
         $collection_id=$this->uri->segment(3);
-        $settlement_id=$this->uri->segment(4);
+        $settlement_id=str_replace('%20', ' ', $this->uri->segment(4));
         $reference_no=$this->uri->segment(5);
+        $series_number=$this->uri->segment(6);
         $data['ref_no'] = $reference_no;
         $data['refno'] = preg_replace("/[^0-9]/", "",$reference_no);
+
         //$refno = preg_replace("/[^0-9]/", "",$reference_no);
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
@@ -3384,16 +3466,17 @@ public function upload_sales_adjustment_test(){
         //$data['client']=$this->super_model->select_row_where("participant", "billing_id", $billing_id);
         $data['address']=$this->super_model->select_column_where("participant", "registered_address", "billing_id", $billing_id);
         $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
-        $data['stl_id']=$this->super_model->select_column_custom_where("collection_details","settlement_id","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['or_no']=$this->super_model->select_column_custom_where("collection_details","series_number","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['buyer']=$this->super_model->select_column_custom_where("collection_details","buyer_fullname","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_amount']=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_vat']=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_ewt'] =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['defint'] =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
-        $data['date']=$this->super_model->select_column_custom_where("collection_details","or_date","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['stl_id']=$this->super_model->select_column_custom_where("collection_details","settlement_id","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        //$data['or_no']=$this->super_model->select_column_custom_where("collection_details","series_number","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['or_no']=$series_number;
+        $data['buyer']=$this->super_model->select_column_custom_where("collection_details","buyer_fullname","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' ");
+        $data['sum_amount']=$this->super_model->select_sum_where("collection_details","amount","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['sum_vat']=$this->super_model->select_sum_where("collection_details","vat","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['sum_ewt'] =  $this->super_model->select_sum_where("collection_details", "ewt", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['sum_zero_rated'] =  $this->super_model->select_sum_where("collection_details", "zero_rated", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['defint'] =  $this->super_model->select_sum_where("collection_details", "defint", "settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
+        $data['date']=$this->super_model->select_column_custom_where("collection_details","or_date","settlement_id='$settlement_id' AND collection_id='$collection_id' AND reference_no='$reference_no' AND series_number='$series_number'");
         //$data['date'] = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         $this->load->view('sales/PDF_OR',$data);
     }
@@ -3424,7 +3507,7 @@ public function upload_sales_adjustment_test(){
 
             //echo $count."<br>";
 
-            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no LIMIT 10") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number LIMIT 10") AS $col){
 
                 //echo $col->series_number."-".$col->settlement_id."<br>";
 
@@ -3823,7 +3906,7 @@ public function upload_sales_adjustment_test(){
   
         for($x=0;$x<$count;$x++){
             $invoice[]=$this->super_model->custom_query_single('invoice_no',"SELECT * FROM sales_adjustment_details sad  INNER JOIN bs_head_adjustment bha ON bha.invoice_no=sad.serial_no WHERE bha.invoice_no='$invoice_no_exp[$x]'");
-            if(in_array($invoice_no_exp[$x],$invoice)){
+            if(array_key_exists($invoice_no_exp[$x],$invoice)){
                 foreach($this->super_model->select_custom_where("bs_head_adjustment","invoice_no='".$invoice_no_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $address=$p->address;
@@ -4096,7 +4179,7 @@ public function upload_sales_adjustment_test(){
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         for($x=0;$x<$count;$x++){
              $invoice[]=$this->super_model->custom_query_single('invoice_no',"SELECT * FROM sales_adjustment_details sad  INNER JOIN bs_head_adjustment bha ON bha.invoice_no=sad.serial_no WHERE bha.invoice_no='$invoice_no_exp[$x]'");
-            if(in_array($invoice_no_exp[$x],$invoice)){
+            if(array_key_exists($invoice_no_exp[$x],$invoice)){
                 foreach($this->super_model->select_custom_where("bs_head_adjustment","invoice_no='".$invoice_no_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $data['tin'][$x]=$p->tin;

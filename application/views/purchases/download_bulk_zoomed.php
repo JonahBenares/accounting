@@ -85,7 +85,7 @@
     </div>
      <input type="hidden" class="shortname<?php echo $x; ?>" value="<?php echo $d['shortname']; ?>" id="shortname<?php echo $x; ?>">   
     <input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
-    <input type="hidden" class="billing_month" id="billing_month" value="<?php echo ($d['due_date']=='') ? $billing_month : $d['due_date']; ?>">
+    <input type="hidden" class="billing_month" id="billing_month" value="<?php echo ($due_date=='') ? $billing_month : $due_date; ?>">
     <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
 <?php $x++; } ?>
 <input type="hidden"  id="count" value="<?php echo $x; ?>">
@@ -99,6 +99,7 @@
          
         var counter=document.getElementById('count').value;
         var billing_month=document.getElementById('billing_month').value;
+       
         var timestamp=document.getElementById('timestamp').value;
 
         for(let a=1;a<counter;a++){
@@ -109,7 +110,7 @@
             var HTML_Width = $(".canvas_div_pdf"+a).width();
 
             
-            var HTML_Height = $(".canvas_div_pdf"+a).height();
+            var HTML_Height =1900;
            
 
             var top_left_margin = 10;
@@ -118,7 +119,7 @@
             var canvas_image_width = HTML_Width;
             var canvas_image_height = HTML_Height;
             
-            var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+            var totalPDFPages = 1;
           
             html2canvas($(".canvas_div_pdf"+a)[0],{
                 allowTaint:true, 
@@ -136,8 +137,8 @@
                     var shortname= $(".shortname"+a).val();
                    
                     //for (var i = 1; i <= totalPDFPages; i++) { 
-                        pdf.addPage(PDF_Width, PDF_Height);
-                        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+                        // pdf.addPage(PDF_Width, PDF_Height);
+                        // pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                     //}
                     // let rno = refno.split("-");
                     // let newref = rno[2] + rno[3].slice(0, -1);
