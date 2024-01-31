@@ -15,9 +15,19 @@
                                             <label>Participant Name</label>
                                             <input class="form-control" rows="2" value="<?php echo $det['participant_name'];?>" readonly="">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Billing ID</label>
-                                            <input type="text" class="form-control" value="<?php echo $det['billing_id'];?>" readonly="">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Unique Billing ID</label>
+                                                    <input type="text" class="form-control" value="<?php echo $det['billing_id'];?>" readonly="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Actual Billing ID</label>
+                                                    <input type="text" class="form-control" value="<?php echo $det['actual_billing_id'];?>" readonly="">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Region</label>

@@ -81,6 +81,7 @@
                                         <tr>
                                             <th width="10%">Transaction No</th>
                                             <th width="10%">Billing ID</th>
+                                            <th width="10%">Actual Billing ID</th>
                                             <th width="10%">Invoice No</th>
                                         </tr>
                                     </thead>
@@ -92,7 +93,9 @@
                                     	<tr>
                                             <td><?php echo $d['reference_number']; ?></td>
                                             <!-- <input type='hidden' name='ref_no' id='ref_no'  value="<?php echo $d['reference_number']; ?>"> -->
+                                     
                                             <td><?php echo $d['billing_id']; ?></td>
+                                            <td><?php echo $d['actual_billing_id']; ?></td>
                                     		<td><?php echo $d['serial_no']; ?></td>
                                     	</tr>
                                      <?php } } ?>

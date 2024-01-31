@@ -55,12 +55,15 @@ class Purchases extends CI_Controller {
                 $data['saved']=$h->saved;
                 $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_id",$h->purchase_id) AS $d){
+                    $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
+
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,
                         'purchase_id'=>$d->purchase_id,
                         'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
-                        'billing_id'=>$d->billing_id,
+                        'actual_billing_id'=>$d->billing_id,
+                        'billing_id'=>$unique_bill_id,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
                         'ith_tag'=>$d->ith_tag,
@@ -180,7 +183,10 @@ class Purchases extends CI_Controller {
             $company_name=$this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
             if($shortname!="" || !empty($shortname)){
                 //$billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
-                $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+                $actual_billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+
+                $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
+                
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
                 $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
@@ -209,7 +215,8 @@ class Purchases extends CI_Controller {
                     'purchase_id'=>$purchase_id,
                     'item_no'=>$y,
                     'short_name'=>$shortname,
-                    'billing_id'=>$billing_id,
+                    'billing_id'=>$unique_bill_id,
+                    'actual_billing_id'=>$actual_billing_id,
                     'facility_type'=>$fac_type,
                     'wht_agent'=>$wht_agent,
                     'ith_tag'=>$ith,
@@ -2079,13 +2086,14 @@ class Purchases extends CI_Controller {
         $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number", "adjust_identifier" ,$identifier);
         //echo $ref_no;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier' AND adjustment='1'") AS $d){
-
+            $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
                 'item_no'=>$d->item_no,
                 'short_name'=>$d->short_name,
-                'billing_id'=>$d->billing_id,
+                'billing_id'=>$unique_bill_id,
+                'actual_billing_id'=>$d->billing_id,
                 'facility_type'=>$d->facility_type,
                 'wht_agent'=>$d->wht_agent,
                 'ith_tag'=>$d->ith_tag,
@@ -2318,7 +2326,9 @@ class Purchases extends CI_Controller {
                                 $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 $company_name = $this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if($shortname!="" || !empty($shortname)){
-                                    $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                    $actual_billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                    $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
+                                    
                                     $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue() ?? '');
                                     $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue() ?? '');
                                     $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue() ?? '');
@@ -2351,7 +2361,8 @@ class Purchases extends CI_Controller {
                                         'item_no'=>$y,
                                         'short_name'=>$shortname,
                                         'company_name'=>$company_name,
-                                        'billing_id'=>$billing_id,
+                                        'billing_id'=>$unique_bill_id,
+                                        'actual_billing_id'=>$actual_billing_id,
                                         'facility_type'=>$fac_type,
                                         'wht_agent'=>$wht_agent,
                                         'ith_tag'=>$ith,

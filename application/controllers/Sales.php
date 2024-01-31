@@ -236,12 +236,15 @@ class Sales extends CI_Controller {
                 //$data['adjustment']=$h->adjustment;
             if($sub==0 ||  $sub=='null'){
                 foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
+
+                    $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_detail_id,
                         'sales_id'=>$d->sales_id,
                         'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
-                        'billing_id'=>$d->billing_id,
+                        'actual_billing_id'=>$d->billing_id,
+                        'billing_id'=>$unique_bill_id,
                         'company_name'=>$d->company_name,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
@@ -264,13 +267,17 @@ class Sales extends CI_Controller {
                 //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
                 $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
                 //if($participant_id != $sub_participant){
+
+                    $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
+
                 if($sub_participant==0){
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_detail_id,
                         'sales_id'=>$d->sales_id,
                         'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
-                        'billing_id'=>$d->billing_id,
+                        'actual_billing_id'=>$d->billing_id,
+                        'billing_id'=>$unique_bill_id,
                         'company_name'=>$d->company_name,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
@@ -1353,7 +1360,9 @@ public function print_BS_new(){
 
             if($shortname!="" || !empty($shortname)){
          
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+            $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+
+            $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
 
             $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
             $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getOldCalculatedValue());
@@ -1427,7 +1436,8 @@ public function print_BS_new(){
                     'sales_id'=>$sales_id,
                     'item_no'=>$y,
                     'short_name'=>$shortname,
-                    'billing_id'=>$billing_id,
+                    'billing_id'=>$unique_bill_id,
+                    'actual_billing_id'=>$actual_billing_id,
                     'company_name'=>$company_name,
                     'facility_type'=>$fac_type,
                     'wht_agent'=>$wht_agent,
@@ -2901,7 +2911,11 @@ public function print_BS_new(){
         $sales_adjustment_id=$this->super_model->select_column_where("sales_adjustment_head","sales_adjustment_id","adjust_identifier",$identifier);
         $data['count_name'] = $this->super_model->count_custom_where("sales_adjustment_details", "company_name ='' AND sales_adjustment_id ='$sales_adjustment_id'");
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
-                    $data['details'][]=array(
+                
+                $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");   
+                
+                
+                $data['details'][]=array(
                         // 'transaction_date'=>$h->transaction_date,
                         // 'billing_from'=>$h->billing_from,
                         // 'billing_to'=>$h->billing_to,
@@ -2912,7 +2926,8 @@ public function print_BS_new(){
                         'sales_adjustment_id'=>$d->sales_adjustment_id,
                         'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
-                        'billing_id'=>$d->billing_id,
+                        'actual_billing_id'=>$d->billing_id,
+                        'billing_id'=>$unique_bill_id,
                         'company_name'=>$d->company_name,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
@@ -2996,7 +3011,12 @@ public function print_BS_new(){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
                                 $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 if($shortname!="" || !empty($shortname)){
-                                    $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());
+                                    $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());
+
+                                   
+
+                                    $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
+
                                     $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue());
                                     $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getOldCalculatedValue());
                                     $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue());
@@ -3023,7 +3043,8 @@ public function print_BS_new(){
                                         'sales_adjustment_id'=>$sales_adjustment_id,
                                         'item_no'=>$y,
                                         'short_name'=>$shortname,
-                                        'billing_id'=>$billing_id,
+                                        'billing_id'=>$unique_bill_id,
+                                        'actual_billing_id'=>$actual_billing_id,
                                         'company_name'=>$company_name,
                                         'facility_type'=>$fac_type,
                                         'wht_agent'=>$wht_agent,
@@ -3155,7 +3176,11 @@ public function upload_sales_adjustment_test(){
                             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
                             $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue() ?? '');
                             if($shortname!="" || !empty($shortname)){
-                                $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue() ?? '');   
+                                $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue() ?? '');   
+
+                                $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
+
+
                                 $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue() ?? '');
                                 $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getOldCalculatedValue() ?? '');
                                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue() ?? '');
@@ -3179,7 +3204,8 @@ public function upload_sales_adjustment_test(){
                                     'sales_adjustment_id'=>$sales_adjustment_id,
                                     'item_no'=>$y,
                                     'short_name'=>$shortname,
-                                    'billing_id'=>$billing_id,
+                                    'billing_id'=>$unique_bill_id,
+                                    'actual_billing_id'=>$actual_billing_id,
                                     'company_name'=>$company_name,
                                     'facility_type'=>$fac_type,
                                     'wht_agent'=>$wht_agent,
@@ -3663,6 +3689,7 @@ public function upload_sales_adjustment_test(){
                 'sales_adjustment_id'=>$d->sales_adjustment_id,
                 'reference_number'=>$d->reference_number,
                 'billing_id'=>$d->billing_id,
+                'actual_billing_id'=>$d->actual_billing_id,
                 'serial_no'=>$d->serial_no,
             );
         }
@@ -3728,8 +3755,12 @@ public function upload_sales_adjustment_test(){
         for($x=2;$x<=$highestRow;$x++){
             $identifier = $this->input->post('identifier');
             $reference_no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
-            $invoice_no = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
+            $settlement_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
+            $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
+
+            $billing_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$settlement_id'");
+
+            $invoice_no = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
             // $sales_adjustment_id=array();
             // foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due' AND reference_number='$reference_no'") AS $dues){
             //     $sales_adjustment_id[]="'".$dues->sales_adjustment_id."'";
@@ -3846,12 +3877,19 @@ public function upload_sales_adjustment_test(){
             $count_bs_details = $this->super_model->count_custom_where("bs_details_adjustment", "bs_head_adjustment_id = '$bs_head_adjustment_id' AND billing_id = '$billing_id[$y]' AND billing_from = '$billing_from[$y]' AND billing_to = '$billing_to[$y]' AND reference_number = '$reference_number[$y]'");
             // echo $count_bs_details;
             if($count_bs_details == 0){
+
+                $settlement_id =  $settlement[$y];
+
+                $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$billing_id[$y]' AND settlement_id = '$settlement_id'");
+
+
                    $data_details = array(
                         'bs_head_adjustment_id'=>$bs_head_adjustment_id,
                         'billing_from' => $billing_from[$y],
                         'billing_to' => $billing_to[$y],
                         'reference_number' => $reference_number[$y],
-                        'billing_id' => $billing_id[$y],
+                        'actual_billing_id' => $billing_id[$y],
+                        'billing_id'=>$unique_bill_id,
                         'vatable_sales' => $vatable_sales[$y],
                         'rated_sales' => $rated_sales[$y],
                         'rated_ecozones' => $rated_ecozones[$y],

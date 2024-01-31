@@ -146,6 +146,7 @@ if(!empty($sales_id)){
                                                 <th>Series No.</th>
                                                 <th>STL ID / TPShort Name</th>
                                                 <th>Billing ID</th>
+                                                <th>Unique Billing ID</th>
                                                 <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;" width="15%">Trading Participant Name</th>
                                                 <th>Facility Type </th>
                                                 <th width="3%">WHT Agent Tag</th>
@@ -199,6 +200,7 @@ if(!empty($sales_id)){
                                                 <td><center><?php echo $d['item_no'];?></center></td>
                                                 <td><?php echo $d['serial_no'];?></td>
                                                 <td><?php echo $d['short_name'];?></td>
+                                                <td><?php echo $d['actual_billing_id'];?></td>
                                                 <td><?php echo $d['billing_id'];?></td>
                                                 <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['company_name'];?></td>
                                                 <td align="center"><?php echo $d['facility_type'];?></td>
