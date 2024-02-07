@@ -1911,6 +1911,7 @@ public function print_BS_new(){
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
+                    'actual_billing_id'=>$d->actual_billing_id,
                     'company_name'=>$comp_name,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
@@ -1926,8 +1927,8 @@ public function print_BS_new(){
                     'total_amount'=>$d->total_amount,
                     'reference_number'=>$d->reference_number,
                     'transaction_date'=>$d->transaction_date,
-                    'billing_from'=>$d->billing_from,
-                    'billing_to'=>$d->billing_to,
+                    // 'billing_from'=>$d->billing_from,
+                    // 'billing_to'=>$d->billing_to,
                     'due_date'=>$d->due_date,
                     'print_counter'=>$d->print_counter,
                     'ewt_amount'=>$d->ewt_amount,
@@ -2787,6 +2788,7 @@ public function print_BS_new(){
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
+                    'actual_billing_id'=>$d->actual_billing_id,
                     'company_name'=>$comp_name,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
@@ -3425,10 +3427,11 @@ public function upload_sales_adjustment_test(){
             $identifier = $this->input->post('identifier');
             $due_date = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
             $transaction_no = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
-            $ewt_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
-            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
-            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
+            $settlement_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
+            $ewt_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
+            $original_copy = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
+            $scanned_copy = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue() ?? '');
             $sales_adjustment_id=array();
             $array=array();
             foreach($this->super_model->select_custom_where('sales_adjustment_head',"due_date='$due_date' AND reference_number='$transaction_no'") AS $dues){
@@ -3441,13 +3444,16 @@ public function upload_sales_adjustment_test(){
             }
             //echo $imp_id;
             //$sales_adjust_id=implode(",",$sales_adjustment_id);
+
+             $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$billing_id' AND settlement_id = '$settlement_id'");
+
             $data_adjustment = array(
                 'ewt_amount'=>$ewt_amount,
                 'original_copy'=>$original_copy,
                 'scanned_copy'=>$scanned_copy,
                 'bulk_update_identifier'=>$identifier,
             );
-            $this->super_model->update_custom_where("sales_adjustment_details", $data_adjustment, "sales_adjustment_id IN ($imp_id) AND billing_id='$billing_id'");
+            $this->super_model->update_custom_where("sales_adjustment_details", $data_adjustment, "sales_adjustment_id IN ($imp_id) AND billing_id='$unique_bill_id'");
         }
     }
 

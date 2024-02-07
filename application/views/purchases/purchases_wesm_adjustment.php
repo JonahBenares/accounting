@@ -242,7 +242,7 @@ element.addEventListener("click", onClick);*/
                                                 <td ><?php echo $d['short_name'];?></td>
                                                 <td style="position:sticky;max-width: 20px!important; left:0; z-index: 10;background: #fff">
                                                     <div style="width:90px;word-wrap: break-word;font-size:11px!important;">
-                                                        <?php echo $d['billing_id']; ?>
+                                                        <?php echo $d['actual_billing_id']; ?>
                                                     </div>
                                                 </td>
 

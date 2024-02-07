@@ -982,6 +982,7 @@ class Purchases extends CI_Controller {
                 'reference_number'=>$d->reference_number,
                 'short_name'=>$d->short_name,
                 'billing_id'=>$d->billing_id,
+                'actual_billing_id'=>$d->actual_billing_id,
                 'facility_type'=>$d->facility_type,
                 'wht_agent'=>$d->wht_agent,
                 'ith_tag'=>$d->ith_tag,
@@ -1096,6 +1097,7 @@ class Purchases extends CI_Controller {
                     'reference_number'=>$d->reference_number,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
+                    'actual_billing_id'=>$d->actual_billing_id,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
                     'ith_tag'=>$d->ith_tag,
@@ -2641,7 +2643,7 @@ class Purchases extends CI_Controller {
             foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->actual_billing_id);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $re->facility_type);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $re->wht_agent);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $re->ith_tag);
@@ -2808,7 +2810,7 @@ class Purchases extends CI_Controller {
                     //echo $x."<br>";
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->actual_billing_id);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $re->facility_type);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $re->wht_agent);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $re->ith_tag);
