@@ -1660,18 +1660,29 @@ class Purchases extends CI_Controller {
             $second = array(2,5,8,11);
             $third = array(3,6,9,12);
 
+            $adjustment_flag = $this->super_model->select_column_where("purchase_transaction_head", "adjustment", "purchase_id", $det->purchase_id);
+            
+            if($adjustment_flag==0){
+                $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $det->purchase_id);
+            }else{ 
+                $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $det->purchase_id);
+            }
+
+        $date_ref_year = date("Y",strtotime($det->due_date));
+
+
             if($yearQuarter ==1){
-                $period_from = "0101".date("Y");
-                $period_to = "0331".date("Y");
+                $period_from = "0101".$date_ref_year;
+                $period_to = "0331".$date_ref_year;
             } else if($yearQuarter == 2){
-                $period_from = "0401".date("Y");
-                $period_to = "0630".date("Y");
+                $period_from = "0401".$date_ref_year;
+                $period_to = "0630".$date_ref_year;
             } else if($yearQuarter == 3){
-                $period_from = "0701".date("Y");
-                $period_to = "0930".date("Y");
+                $period_from = "0701".$date_ref_year;
+                $period_to = "0930".$date_ref_year;
             } else if($yearQuarter == 4){
-                $period_from = "1001".date("Y");
-                $period_to = "1231".date("Y");
+                $period_from = "1001".$date_ref_year;
+                $period_to = "1231".$date_ref_year;
             }
 
             $data['period_from']=$period_from;

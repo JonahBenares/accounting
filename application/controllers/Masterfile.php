@@ -608,13 +608,13 @@ class Masterfile extends CI_Controller {
 
     public function duplicate_billing_id_process(){
         
-        foreach($this->super_model->select_all("participant") AS $part){
+        // foreach($this->super_model->select_all("participant") AS $part){
 
-            $data = array(
-                'actual_billing_id'=>$part->billing_id
-            );
-            $this->super_model->update_where("participant", $data, "participant_id", $part->participant_id);
-        }
+        //     $data = array(
+        //         'actual_billing_id'=>$part->billing_id
+        //     );
+        //     $this->super_model->update_where("participant", $data, "participant_id", $part->participant_id);
+        // }
 
         foreach($this->super_model->select_all("purchase_transaction_details") AS $purch){
 
