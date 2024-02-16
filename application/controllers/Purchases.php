@@ -1517,7 +1517,7 @@ class Purchases extends CI_Controller {
 
             // $date_ref_year = date("Y",strtotime($det->due_date));
 
-            if($det->adjustment_flag==0){
+            if($det->adjustment==0){
                 
                   $date_ref_year = date("Y",strtotime($det->billing_to));
             }else{ 
@@ -1693,14 +1693,14 @@ class Purchases extends CI_Controller {
 
             // $date_ref_year = date("Y",strtotime($det->due_date));
 
-                if($det->adjustment_flag==0){
+                if($det->adjustment==0){
                 
                   $date_ref_year = date("Y",strtotime($det->billing_to));
             }else{ 
                
                   $date_ref_year = date("Y",strtotime($det->due_date));
             }
-            
+
  
 
             if($yearQuarter ==1){
@@ -1855,7 +1855,7 @@ class Purchases extends CI_Controller {
 
                
             
-            if($det->adjustment_flag==0){
+            if($det->adjustment==0){
                 
                   $date_ref_year = date("Y",strtotime($det->billing_to));
             }else{ 
@@ -2035,7 +2035,7 @@ class Purchases extends CI_Controller {
 
             // $date_ref_year = date("Y",strtotime($det->due_date));
 
-             if($det->adjustment_flag==0){
+             if($det->adjustment==0){
                 
                   $date_ref_year = date("Y",strtotime($det->billing_to));
             }else{ 
