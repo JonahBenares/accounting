@@ -17,9 +17,19 @@
                                             <label>Participant Name</label>
                                             <textarea class="form-control"  name="participant_name" id="participant_name" rows="2"></textarea>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Billing ID</label>
-                                            <input type="text"  name="billing_id" id="billing_id" class="form-control">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Unique BillingID</label>
+                                                    <input type="text"  name="billing_id" id="billing_id" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Actual BillingID</label>
+                                                    <input type="text"  name="actual_billing_id" id="actual_billing_id" class="form-control">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Region</label>

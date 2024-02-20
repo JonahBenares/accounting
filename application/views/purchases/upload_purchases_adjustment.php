@@ -103,6 +103,7 @@ if(!empty($sales_id)){
                                             <th>Item No.</th>
                                             <th>STL ID / TPShort Name</th>
                                             <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
+                                            <th>Unique Billing ID </th>
                                             <th>Facility Type </th>
                                             <th>WHT Agent Tag</th>
                                             <th>ITH Tag</th>
@@ -135,7 +136,8 @@ if(!empty($sales_id)){
                                             </td>
                                             <td><?php echo $d['item_no'];?></td>
                                             <td><?php echo $d['short_name'];?></td>
-                                            <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['billing_id']; ?></td>
+                                            <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['actual_billing_id']; ?></td>
+                                            <td align="center"><?php echo $d['billing_id']; ?></td>
                                             <td align="center"><?php echo $d['facility_type']; ?></td>
                                             <td align="center"><?php echo $d['wht_agent']; ?></td>
                                             <td align="center"><?php echo $d['ith_tag']; ?></td>

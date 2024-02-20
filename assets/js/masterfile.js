@@ -11,10 +11,14 @@ function saveCustomers(){
             type: "POST",
             url: redirect,
             success: function(output){
-               // alert(output);
-              alert("Successfully saved!");
-              window.location=loc+'masterfile/customer_view/'+output;
-              //location.reload(true);
+                if(output == 'error'){
+                    alert("Duplicate unique Billing ID.");
+                } else {
+                   alert("Successfully saved!");
+                window.location=loc+'masterfile/customer_view/'+output;
+                }
+            
+        
 
             }
 
@@ -37,8 +41,16 @@ function UpdateCustomer(){
             url: redirect,
             success: function(output){
                // alert(output);
-              alert("Successfully udpated!");
-              window.location=loc+'masterfile/customer_list/';
+            //   alert("Successfully udpated!");
+            //   window.location=loc+'masterfile/customer_list/';
+
+              if(output == 'error'){
+                alert("Duplicate unique Billing ID.");
+            } else {
+               alert("Successfully updated!");
+            window.location=loc+'masterfile/customer_view/'+output;
+            }
+
               //location.reload(true);
 
             }

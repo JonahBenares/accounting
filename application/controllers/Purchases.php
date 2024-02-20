@@ -55,12 +55,15 @@ class Purchases extends CI_Controller {
                 $data['saved']=$h->saved;
                 $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_id",$h->purchase_id) AS $d){
+                    $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
+
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,
                         'purchase_id'=>$d->purchase_id,
                         'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
-                        'billing_id'=>$d->billing_id,
+                        'actual_billing_id'=>$d->billing_id,
+                        'billing_id'=>$unique_bill_id,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
                         'ith_tag'=>$d->ith_tag,
@@ -183,7 +186,10 @@ class Purchases extends CI_Controller {
             //echo $shortname."-".$x."<br>";
             if($shortname!="" || !empty($shortname)){
                 //$billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
-                $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+                $actual_billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());   
+
+                $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
+                
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
                 $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
@@ -212,7 +218,8 @@ class Purchases extends CI_Controller {
                     'purchase_id'=>$purchase_id,
                     'item_no'=>$y,
                     'short_name'=>$shortname,
-                    'billing_id'=>$billing_id,
+                    'billing_id'=>$unique_bill_id,
+                    'actual_billing_id'=>$actual_billing_id,
                     'facility_type'=>$fac_type,
                     'wht_agent'=>$wht_agent,
                     'ith_tag'=>$ith,
@@ -978,6 +985,7 @@ class Purchases extends CI_Controller {
                 'reference_number'=>$d->reference_number,
                 'short_name'=>$d->short_name,
                 'billing_id'=>$d->billing_id,
+                'actual_billing_id'=>$d->actual_billing_id,
                 'facility_type'=>$d->facility_type,
                 'wht_agent'=>$d->wht_agent,
                 'ith_tag'=>$d->ith_tag,
@@ -1092,6 +1100,7 @@ class Purchases extends CI_Controller {
                     'reference_number'=>$d->reference_number,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
+                    'actual_billing_id'=>$d->actual_billing_id,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
                     'ith_tag'=>$d->ith_tag,
@@ -1501,18 +1510,39 @@ class Purchases extends CI_Controller {
             $second = array(2,5,8,11);
             $third = array(3,6,9,12);
 
+            //      $adjustment_flag = $this->super_model->select_column_where("purchase_transaction_head", "adjustment", "purchase_id", $det->purchase_id);
+            
+            // if($adjustment_flag==0){
+            //     $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $det->purchase_id);
+            // }else{ 
+            //     $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $det->purchase_id);
+            // }
+
+            // $date_ref_year = date("Y",strtotime($det->due_date));
+
+            if($det->adjustment==0){
+                
+                  $date_ref_year = date("Y",strtotime($det->billing_to));
+            }else{ 
+               
+                  $date_ref_year = date("Y",strtotime($det->due_date));
+            }
+ 
+
+
             if($yearQuarter ==1){
-                $period_from = "0101".date("Y");
-                $period_to = "0331".date("Y");
+                $period_from = "0101".$date_ref_year;
+                $period_to = "0331".$date_ref_year;
+
             } else if($yearQuarter == 2){
-                $period_from = "0401".date("Y");
-                $period_to = "0630".date("Y");
+                $period_from = "0401".$date_ref_year;
+                $period_to = "0630".$date_ref_year;
             } else if($yearQuarter == 3){
-                $period_from = "0701".date("Y");
-                $period_to = "0930".date("Y");
+                $period_from = "0701".$date_ref_year;
+                $period_to = "0930".$date_ref_year;
             } else if($yearQuarter == 4){
-                $period_from = "1001".date("Y");
-                $period_to = "1231".date("Y");
+                $period_from = "1001".$date_ref_year;
+                $period_to = "1231".$date_ref_year;
             }
 
             $data['period_from']=$period_from;
@@ -1656,18 +1686,38 @@ class Purchases extends CI_Controller {
             $second = array(2,5,8,11);
             $third = array(3,6,9,12);
 
+            // $adjustment_flag = $this->super_model->select_column_where("purchase_transaction_head", "adjustment", "purchase_id", $det->purchase_id);
+            
+            // if($adjustment_flag==0){
+            //     $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $det->purchase_id);
+            // }else{ 
+            //     $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $det->purchase_id);
+            // }
+
+            // $date_ref_year = date("Y",strtotime($det->due_date));
+
+                if($det->adjustment==0){
+                
+                  $date_ref_year = date("Y",strtotime($det->billing_to));
+            }else{ 
+               
+                  $date_ref_year = date("Y",strtotime($det->due_date));
+            }
+
+ 
+
             if($yearQuarter ==1){
-                $period_from = "0101".date("Y");
-                $period_to = "0331".date("Y");
+                $period_from = "0101".$date_ref_year;
+                $period_to = "0331".$date_ref_year;
             } else if($yearQuarter == 2){
-                $period_from = "0401".date("Y");
-                $period_to = "0630".date("Y");
+                $period_from = "0401".$date_ref_year;
+                $period_to = "0630".$date_ref_year;
             } else if($yearQuarter == 3){
-                $period_from = "0701".date("Y");
-                $period_to = "0930".date("Y");
+                $period_from = "0701".$date_ref_year;
+                $period_to = "0930".$date_ref_year;
             } else if($yearQuarter == 4){
-                $period_from = "1001".date("Y");
-                $period_to = "1231".date("Y");
+                $period_from = "1001".$date_ref_year;
+                $period_to = "1231".$date_ref_year;
             }
 
             $data['period_from']=$period_from;
@@ -1806,18 +1856,31 @@ class Purchases extends CI_Controller {
             $second = array(2,5,8,11);
             $third = array(3,6,9,12);
 
+               
+            
+            if($det->adjustment==0){
+                
+                  $date_ref_year = date("Y",strtotime($det->billing_to));
+            }else{ 
+               
+                  $date_ref_year = date("Y",strtotime($det->due_date));
+            }
+
+          
+
+
             if($yearQuarter ==1){
-                $period_from = "0101".date("Y");
-                $period_to = "0331".date("Y");
+                $period_from = "0101".$date_ref_year;
+                $period_to = "0331".$date_ref_year;
             } else if($yearQuarter == 2){
-                $period_from = "0401".date("Y");
-                $period_to = "0630".date("Y");
+                $period_from = "0401".$date_ref_year;
+                $period_to = "0630".$date_ref_year;
             } else if($yearQuarter == 3){
-                $period_from = "0701".date("Y");
-                $period_to = "0930".date("Y");
+                $period_from = "0701".$date_ref_year;
+                $period_to = "0930".$date_ref_year;
             } else if($yearQuarter == 4){
-                $period_from = "1001".date("Y");
-                $period_to = "1231".date("Y");
+                $period_from = "1001".$date_ref_year;
+                $period_to = "1231".$date_ref_year;
             }
 
             $data['period_from']=$period_from;
@@ -1965,18 +2028,37 @@ class Purchases extends CI_Controller {
             $second = array(2,5,8,11);
             $third = array(3,6,9,12);
 
+            //    $adjustment_flag = $this->super_model->select_column_where("purchase_transaction_head", "adjustment", "purchase_id", $det->purchase_id);
+            
+            // if($adjustment_flag==0){
+            //     $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "billing_to", "purchase_id", $det->purchase_id);
+            // }else{ 
+            //     $date_ref = $this->super_model->select_column_where("purchase_transaction_head", "due_date", "purchase_id", $det->purchase_id);
+            // }
+
+            // $date_ref_year = date("Y",strtotime($det->due_date));
+
+             if($det->adjustment==0){
+                
+                  $date_ref_year = date("Y",strtotime($det->billing_to));
+            }else{ 
+               
+                  $date_ref_year = date("Y",strtotime($det->due_date));
+            }
+ 
+
             if($yearQuarter ==1){
-                $period_from = "0101".date("Y");
-                $period_to = "0331".date("Y");
+                $period_from = "0101".$date_ref_year;
+                $period_to = "0331".$date_ref_year;
             } else if($yearQuarter == 2){
-                $period_from = "0401".date("Y");
-                $period_to = "0630".date("Y");
+                $period_from = "0401".$date_ref_year;
+                $period_to = "0630".$date_ref_year;
             } else if($yearQuarter == 3){
-                $period_from = "0701".date("Y");
-                $period_to = "0930".date("Y");
+                $period_from = "0701".$date_ref_year;
+                $period_to = "0930".$date_ref_year;
             } else if($yearQuarter == 4){
-                $period_from = "1001".date("Y");
-                $period_to = "1231".date("Y");
+                $period_from = "1001".$date_ref_year;
+                $period_to = "1231".$date_ref_year;
             }
 
             $data['period_from']=$period_from;
@@ -2082,13 +2164,14 @@ class Purchases extends CI_Controller {
         $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number", "adjust_identifier" ,$identifier);
         //echo $ref_no;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier' AND adjustment='1'") AS $d){
-
+            $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
                 'item_no'=>$d->item_no,
                 'short_name'=>$d->short_name,
-                'billing_id'=>$d->billing_id,
+                'billing_id'=>$unique_bill_id,
+                'actual_billing_id'=>$d->billing_id,
                 'facility_type'=>$d->facility_type,
                 'wht_agent'=>$d->wht_agent,
                 'ith_tag'=>$d->ith_tag,
@@ -2321,7 +2404,9 @@ class Purchases extends CI_Controller {
                                 $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 $company_name = $this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if($shortname!="" || !empty($shortname)){
-                                    $billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                    $actual_billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
+                                    $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
+                                    
                                     $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue() ?? '');
                                     $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue() ?? '');
                                     $ith = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue() ?? '');
@@ -2354,7 +2439,8 @@ class Purchases extends CI_Controller {
                                         'item_no'=>$y,
                                         'short_name'=>$shortname,
                                         'company_name'=>$company_name,
-                                        'billing_id'=>$billing_id,
+                                        'billing_id'=>$unique_bill_id,
+                                        'actual_billing_id'=>$actual_billing_id,
                                         'facility_type'=>$fac_type,
                                         'wht_agent'=>$wht_agent,
                                         'ith_tag'=>$ith,
@@ -2622,7 +2708,7 @@ class Purchases extends CI_Controller {
             foreach($this->super_model->select_custom_where("purchase_transaction_details","purchase_id='$head->purchase_id' $qufilt") AS $re){
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->actual_billing_id);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $re->facility_type);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $re->wht_agent);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $re->ith_tag);
@@ -2789,7 +2875,7 @@ class Purchases extends CI_Controller {
                     //echo $x."<br>";
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $re->short_name);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->billing_id);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $re->actual_billing_id);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $re->facility_type);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $re->wht_agent);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $re->ith_tag);

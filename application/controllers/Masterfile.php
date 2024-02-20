@@ -116,6 +116,7 @@ class Masterfile extends CI_Controller {
                 $data['participant'][] = array(
                     'participant_id'=>$part->participant_id,
                     'participant_name'=>$part->participant_name,
+                    'actual_billing_id'=>$part->actual_billing_id,
                     'billing_id'=>$part->billing_id,
                     'settlement_id'=>$part->settlement_id,
                     'category'=>$part->category,
@@ -193,38 +194,46 @@ class Masterfile extends CI_Controller {
         }
 
     public function save_customer(){
-         $data=array(
-            "participant_name"=>$this->input->post('participant_name'),
-            "billing_id"=>$this->input->post('billing_id'),
-            "region"=>$this->input->post('region'),
-            "category"=>$this->input->post('category'),
-            "membership"=>$this->input->post('membership'),
-            "registered_address"=>$this->input->post('registered_address'),
-            "settlement_id"=>$this->input->post('settlement_id'),
-            "resource"=>$this->input->post('resource'),
-            "tin"=>$this->input->post('tin'),
-            "effective_date"=>$this->input->post('effective_date'),
-            "participant_email"=>$this->input->post('participant_email'),
-            "wht_agent"=>$this->input->post('wht_agent'),
-            "vat_zerorated"=>$this->input->post('vat_zerorated'),
-            "income_tax_holiday"=>$this->input->post('income_tax_holiday'),
-            "contact_person"=>$this->input->post('contact_person'),
-            "contact_position"=>$this->input->post('contact_position'),
-            "office_address"=>$this->input->post('office_address'),
-            "status"=>$this->input->post('status'),
-            "mobile"=>$this->input->post('mobile'),
-            "landline"=>$this->input->post('landline'),
-            "contact_email"=>$this->input->post('contact_email'),
-            "documents_submitted"=>$this->input->post('documents_submitted'),
-            "zip_code"=>$this->input->post('zip_code'),
-            "create_date"=>date("Y-m-d H:i:s"),
-            "user_id"=>$_SESSION['user_id'],
-        );
-     
+        $bill_id= $this->input->post('billing_id');
+        $check_unique = $this->super_model->count_custom_where("participant","billing_id = '$bill_id'");
 
-       $participant_id= $this->super_model->insert_return_id("participant", $data);
+        if($check_unique == 0){
+            $data=array(
+                "participant_name"=>$this->input->post('participant_name'),
+                "billing_id"=>$this->input->post('billing_id'),
+                "actual_billing_id"=>$this->input->post('actual_billing_id'),
+                "region"=>$this->input->post('region'),
+                "category"=>$this->input->post('category'),
+                "membership"=>$this->input->post('membership'),
+                "registered_address"=>$this->input->post('registered_address'),
+                "settlement_id"=>$this->input->post('settlement_id'),
+                "resource"=>$this->input->post('resource'),
+                "tin"=>$this->input->post('tin'),
+                "effective_date"=>$this->input->post('effective_date'),
+                "participant_email"=>$this->input->post('participant_email'),
+                "wht_agent"=>$this->input->post('wht_agent'),
+                "vat_zerorated"=>$this->input->post('vat_zerorated'),
+                "income_tax_holiday"=>$this->input->post('income_tax_holiday'),
+                "contact_person"=>$this->input->post('contact_person'),
+                "contact_position"=>$this->input->post('contact_position'),
+                "office_address"=>$this->input->post('office_address'),
+                "status"=>$this->input->post('status'),
+                "mobile"=>$this->input->post('mobile'),
+                "landline"=>$this->input->post('landline'),
+                "contact_email"=>$this->input->post('contact_email'),
+                "documents_submitted"=>$this->input->post('documents_submitted'),
+                "zip_code"=>$this->input->post('zip_code'),
+                "create_date"=>date("Y-m-d H:i:s"),
+                "user_id"=>$_SESSION['user_id'],
+            );
+        
 
-        echo $participant_id;
+            $participant_id= $this->super_model->insert_return_id("participant", $data);
+
+            echo $participant_id;
+        } else {
+            echo 'error';
+        }
     }
 
     public function customer_update()
@@ -242,6 +251,7 @@ class Masterfile extends CI_Controller {
                 $data['details'][] = array(
                     'participant_name'=>$part->participant_name,
                     'billing_id'=>$part->billing_id,
+                    'actual_billing_id'=>$part->actual_billing_id,
                     'registered_address'=>$part->registered_address,
                     'settlement_id'=>$part->settlement_id,
                     'region'=>$part->region,
@@ -273,38 +283,45 @@ class Masterfile extends CI_Controller {
     }
 
     public function edit_customer(){
+        
         $participant_id=$this->input->post('id');
-         $data=array(
-            "participant_name"=>$this->input->post('participant_name'),
-            "billing_id"=>$this->input->post('billing_id'),
-            "region"=>$this->input->post('region'),
-            "category"=>$this->input->post('category'),
-            "membership"=>$this->input->post('membership'),
-            "registered_address"=>$this->input->post('registered_address'),
-            "settlement_id"=>$this->input->post('settlement_id'),
-            "resource"=>$this->input->post('resource'),
-            "tin"=>$this->input->post('tin'),
-            "effective_date"=>$this->input->post('effective_date'),
-            "participant_email"=>$this->input->post('participant_email'),
-            "wht_agent"=>$this->input->post('wht_agent'),
-            "vat_zerorated"=>$this->input->post('vat_zerorated'),
-            "income_tax_holiday"=>$this->input->post('income_tax_holiday'),
-            "contact_person"=>$this->input->post('contact_person'),
-            "contact_position"=>$this->input->post('contact_position'),
-            "office_address"=>$this->input->post('office_address'),
-            "status"=>$this->input->post('status'),
-            "mobile"=>$this->input->post('mobile'),
-            "landline"=>$this->input->post('landline'),
-            "contact_email"=>$this->input->post('contact_email'),
-            "documents_submitted"=>$this->input->post('documents_submitted'),
-            "zip_code"=>$this->input->post('zip_code'),
-            "user_id"=>$_SESSION['user_id'],
-        );
-     
+        $bill_id= $this->input->post('billing_id');
+        $check_unique = $this->super_model->count_custom_where("participant","billing_id = '$bill_id' AND participant_id != '$participant_id'");
+        if($check_unique == 0){
+            $data=array(
+                "participant_name"=>$this->input->post('participant_name'),
+                "billing_id"=>$this->input->post('billing_id'),
+                "region"=>$this->input->post('region'),
+                "category"=>$this->input->post('category'),
+                "membership"=>$this->input->post('membership'),
+                "registered_address"=>$this->input->post('registered_address'),
+                "settlement_id"=>$this->input->post('settlement_id'),
+                "resource"=>$this->input->post('resource'),
+                "tin"=>$this->input->post('tin'),
+                "effective_date"=>$this->input->post('effective_date'),
+                "participant_email"=>$this->input->post('participant_email'),
+                "wht_agent"=>$this->input->post('wht_agent'),
+                "vat_zerorated"=>$this->input->post('vat_zerorated'),
+                "income_tax_holiday"=>$this->input->post('income_tax_holiday'),
+                "contact_person"=>$this->input->post('contact_person'),
+                "contact_position"=>$this->input->post('contact_position'),
+                "office_address"=>$this->input->post('office_address'),
+                "status"=>$this->input->post('status'),
+                "mobile"=>$this->input->post('mobile'),
+                "landline"=>$this->input->post('landline'),
+                "contact_email"=>$this->input->post('contact_email'),
+                "documents_submitted"=>$this->input->post('documents_submitted'),
+                "zip_code"=>$this->input->post('zip_code'),
+                "user_id"=>$_SESSION['user_id'],
+            );
+        
 
-       if($this->super_model->update_where("participant", $data, "participant_id", $participant_id)){
+            if($this->super_model->update_where("participant", $data, "participant_id", $participant_id)){
 
-        echo $participant_id;
+            echo $participant_id;
+            }
+        } else {
+            echo 'error';
         }
     }
 
@@ -322,6 +339,7 @@ class Masterfile extends CI_Controller {
                 $data['details'][] = array(
                     'participant_name'=>$part->participant_name,
                     'billing_id'=>$part->billing_id,
+                    'actual_billing_id'=>$part->actual_billing_id,
                     'registered_address'=>$part->registered_address,
                     'settlement_id'=>$part->settlement_id,
                     'region'=>$part->region,
@@ -584,6 +602,58 @@ class Masterfile extends CI_Controller {
         if($this->super_model->delete_where('subparticipant', 'subparticipant_id ', $subparticipant_id)){
             echo "<script>alert('Succesfully Deleted'); 
                 window.location ='".base_url()."masterfile/add_sub_participant/$participant_id'; </script>";
+        }
+    }
+
+
+    public function duplicate_billing_id_process(){
+        
+        // foreach($this->super_model->select_all("participant") AS $part){
+
+        //     $data = array(
+        //         'actual_billing_id'=>$part->billing_id
+        //     );
+        //     $this->super_model->update_where("participant", $data, "participant_id", $part->participant_id);
+        // }
+
+        foreach($this->super_model->select_all("purchase_transaction_details") AS $purch){
+
+            $data = array(
+                'actual_billing_id'=>$purch->billing_id
+            );
+            $this->super_model->update_where("purchase_transaction_details", $data, "purchase_detail_id", $purch->purchase_detail_id);
+        }
+
+        foreach($this->super_model->select_all("sales_adjustment_details") AS $sadjust){
+
+            $data = array(
+                'actual_billing_id'=>$sadjust->billing_id
+            );
+            $this->super_model->update_where("sales_adjustment_details", $data, "adjustment_detail_id", $sadjust->adjustment_detail_id);
+        }
+
+        foreach($this->super_model->select_all("sales_transaction_details") AS $sales){
+
+            $data = array(
+                'actual_billing_id'=>$sales->billing_id
+            );
+            $this->super_model->update_where("sales_transaction_details", $data, "sales_detail_id", $sales->sales_detail_id);
+        }
+
+        foreach($this->super_model->select_all("bs_details") AS $bs){
+
+            $data = array(
+                'actual_billing_id'=>$bs->billing_id
+            );
+            $this->super_model->update_where("bs_details", $data, "bs_details_id", $bs->bs_details_id);
+        }
+
+        foreach($this->super_model->select_all("bs_details_adjustment") AS $bsadj){
+
+            $data = array(
+                'actual_billing_id'=>$bsadj->billing_id
+            );
+            $this->super_model->update_where("bs_details_adjustment", $data, "bs_details_adjustment_id", $bsadj->bs_details_adjustment_id);
         }
     }
     

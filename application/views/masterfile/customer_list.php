@@ -31,7 +31,8 @@
                                         <tr>
                                             <!-- <th></th> -->
                                             <th>Participant Name</th>
-                                            <th>Billing ID</th>
+                                            <th>Actual Billing ID</th>
+                                            <th>Unique Billing ID</th>
                                             <th>Settlement ID</th>
                                             <th>Category</th>
                                             <th width="1%" align="center">
@@ -74,6 +75,7 @@
                                                       </div>
                                                 </div>
                                             </td>
+                                            <td class="td-vertical"><?php echo $p['actual_billing_id'];?> </td>
                                             <td class="td-vertical"><?php echo $p['billing_id'];?> </td>
                                             <td class="td-vertical"><?php echo $p['settlement_id'];?></td>
                                             <td class="td-vertical"><?php echo $p['category'];?></td>

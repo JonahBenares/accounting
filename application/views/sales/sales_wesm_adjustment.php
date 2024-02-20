@@ -165,7 +165,7 @@
                                                     <td><?php echo $s['series_number'];?></td>
                                                     <?php } ?>
                                                     <td><?php echo $s['short_name'];?></td>
-                                                    <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $s['billing_id'];?></td>
+                                                    <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $s['actual_billing_id'];?></td>
                                                     <td style="position: sticky;left:140px;background:#fff;z-index: 999;"><?php echo $s['company_name'];?></td>
                                                     <td style="position: sticky;left:440px;background:#fff;z-index: 999;"><?php echo date("M. d, Y",strtotime($s['due_date']));?></td>
                                                     <td style="position: sticky;left:534px;background:#fff;z-index: 999;"><?php echo $s['reference_number'];?></td>
