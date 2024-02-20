@@ -32,6 +32,7 @@
                                     <!-- <button onclick="printDiv('printableArea')" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button> -->
                                     <button type="button" onclick="printDiv('printableArea')" class="btn btn-primary btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
                                     <a href="<?php echo base_url(); ?>reports/export_collection_report/<?php echo $date; ?>/<?php echo $ref_no; ?>/<?php echo $stl_id; ?>" class="btn btn-success btn-sm pull-right"><span class="fas fa-file-export"></span> Export</a>
+                                    <a href="<?php echo base_url(); ?>reports/export_iemop/<?php echo $date; ?>/<?php echo $ref_no; ?>/<?php echo $stl_id; ?>" class="btn btn-success btn-sm pull-right"><span class="fas fa-file-export"></span> IEMOP Export</a>
                                 </div>
                             </div>
                         </div>
