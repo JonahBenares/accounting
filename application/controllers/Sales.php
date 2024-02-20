@@ -1977,6 +1977,7 @@ public function print_BS_new(){
                     'old_series_no'=>$d->old_series_no,
                     'short_name'=>$d->short_name,
                     'billing_id'=>$d->billing_id,
+                    'actual_billing_id'=>$d->actual_billing_id,
                     'company_name'=>$d->company_name,
                     'facility_type'=>$d->facility_type,
                     'wht_agent'=>$d->wht_agent,
