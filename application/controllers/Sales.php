@@ -121,7 +121,8 @@ class Sales extends CI_Controller {
         for($y=0;$y<$count_details;$y++){
             if($details_id[$y] != ''){
             $bs_head_id = $this->super_model->select_column_custom_where("bs_head","bs_head_id","sales_detail_id='$details_id[$y]'");
-            $count_bs_details = $this->super_model->count_custom_where("bs_details", "bs_head_id = '$bs_head_id' AND billing_id = '$billing_id[$y]'");
+            $count_bs_details = $this->super_model->count_custom_where("bs_details", "bs_head_id = '$bs_head_id' AND actual_billing_id = '$actual_billing_id[$y]'");
+
             if($count_bs_details == 0){
 
                 $settlement_id =  $settlement[$y];
