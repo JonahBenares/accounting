@@ -71,14 +71,14 @@ class Sales extends CI_Controller {
         $overall_total = $this->input->post('overall_total'); 
         $count_head=is_countable($participant_id);
 
-        $billing_id = $this->input->post('sub_participant');
+        $actual_billing_id = $this->input->post('sub_participant');
         $vatable_sales = $this->input->post('vatable_sales');
         $zero_rated_sales = $this->input->post('zero_rated_sales');
         $vat = $this->input->post('vat_on_sales');
         $ewt = $this->input->post('ewt');
         $net_amount = $this->input->post('net_amount');
         $details_id = $this->input->post('details_id');
-        $count_details=is_countable($billing_id);
+        $count_details=is_countable($actual_billing_id);
        
         for($x=0;$x<$count_head;$x++){
             $count_participant = $this->super_model->count_custom_where("bs_head", "participant_id = '$participant_id[$x]' AND reference_number = '$reference_number[$x]' AND billing_from = '$billing_from[$x]' AND billing_to = '$billing_to[$x]'");
@@ -123,9 +123,15 @@ class Sales extends CI_Controller {
             $bs_head_id = $this->super_model->select_column_custom_where("bs_head","bs_head_id","sales_detail_id='$details_id[$y]'");
             $count_bs_details = $this->super_model->count_custom_where("bs_details", "bs_head_id = '$bs_head_id' AND billing_id = '$billing_id[$y]'");
             if($count_bs_details == 0){
+
+                $settlement_id =  $settlement[$y];
+
+                $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id[$y]' AND settlement_id = '$settlement_id'");
+
                    $data_details = array(
                         'bs_head_id'=>$bs_head_id,
-                        'billing_id' => $billing_id[$y],
+                        'billing_id' => $unique_bill_id,
+                        'actual_billing_id' => $actual_billing_id[$y],
                         'vatable_sales' => $vatable_sales[$y],
                         'zero_rated_sales' => $zero_rated_sales[$y],
                         'vat' => $vat[$y],
@@ -566,7 +572,7 @@ public function print_BS_new(){
                     $participant_id = $p->participant_id;
                     $count_sub_hist=$this->super_model->count_custom_where("bs_details","bs_head_id='$p->bs_head_id'");
                     $data['count_sub_hist'][$x]=$this->super_model->count_custom_where("bs_details","bs_head_id='$p->bs_head_id'");
-                    $billing_id = $this->super_model->select_column_where("bs_details","billing_id","bs_head_id",$p->bs_head_id);
+                    $actual_billing_id = $this->super_model->select_column_where("bs_details","actual_billing_id","bs_head_id",$p->bs_head_id);
                     $vatable_sales = $this->super_model->select_column_where("bs_details","vatable_sales","bs_head_id",$p->bs_head_id);
                     $zero_rated_sales = $this->super_model->select_column_where("bs_details","zero_rated_sales","bs_head_id",$p->bs_head_id);
                     $vat = $this->super_model->select_column_where("bs_details","vat","bs_head_id",$p->bs_head_id);
@@ -574,7 +580,7 @@ public function print_BS_new(){
                     $overall_total = $this->super_model->select_column_where("bs_details","net_amount","bs_head_id",$p->bs_head_id);
                     $total_amount = $vatable_sales + $zero_rated_sales;
 
-                    $data['sub_participant'][$x]=$billing_id;
+                    $data['sub_participant'][$x]=$actual_billing_id;
                     $data['vatable_sales'][$x]=$vatable_sales;
                     $data['vat_on_sales'][$x]=$vat;
                     $data['zero_rated'][$x]=$zero_rated_sales;
@@ -588,7 +594,7 @@ public function print_BS_new(){
                     $data['sub'][]=array(
                         "participant_id"=>$participant_id,
                         "bs_head_id"=>$p->bs_head_id,
-                        "sub_participant"=>$billing_id,
+                        "sub_participant"=>$actual_billing_id,
                         "vatable_sales"=>$vatable_sales,
                         "zero_rated_sales"=>$zero_rated_sales,
                         "zero_ecozones_sales"=>$p->total_zero_ecozones,
@@ -605,7 +611,7 @@ public function print_BS_new(){
                     
                     foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
                     if($u <= 15){
-                            $data['sub_participant_sub']=$s->billing_id;
+                            $data['sub_participant_sub']=$s->actual_billing_id;
                             $data['vatable_sales_sub']=$s->vatable_sales;
                             $data['vat_on_sales_sub']=$s->vat;
                             $data['zero_rated_sales_sub']=$s->zero_rated_sales;
@@ -617,7 +623,7 @@ public function print_BS_new(){
                                 $data['sub_part'][]=array(
                                     "participant_id"=>$participant_id,
                                     "bs_head_id"=>$p->bs_head_id,
-                                    "sub_participant"=>$s->billing_id,
+                                    "sub_participant"=>$s->actual_billing_id,
                                     "vatable_sales"=>$s->vatable_sales,
                                     "zero_rated_sales"=>$s->zero_rated_sales,
                                     "vat_on_sales"=>$s->vat,
@@ -630,7 +636,7 @@ public function print_BS_new(){
                        $u++; 
                     }
 
-                        $data['sub_participant'][$x]=$billing_id;
+                        $data['sub_participant'][$x]=$actual_billing_id;
                         $data['vatable_sales'][$x]=$vatable_sales;
                         $data['vat_on_sales'][$x]=$vat;
                         $data['zero_rated_sales'][$x]=$zero_rated_sales;
@@ -641,7 +647,7 @@ public function print_BS_new(){
                         $data['sub_second'][]=array(
                             "participant_id"=>$participant_id,
                             "bs_head_id"=>$p->bs_head_id,
-                            "sub_participant"=>$billing_id,
+                            "sub_participant"=>$actual_billing_id,
                             "vatable_sales"=>$vatable_sales,
                             "zero_rated_sales"=>$zero_rated_sales,
                             "total_amount"=>$total_amount,
@@ -654,7 +660,7 @@ public function print_BS_new(){
                         $t=1;
                         foreach($this->super_model->select_custom_where("bs_details","bs_head_id='$p->bs_head_id'") AS $s){
                     if($t>=16){
-                                $data['sub_participant_sub'][$z]=$s->billing_id;
+                                $data['sub_participant_sub'][$z]=$s->actual_billing_id;
                                 $data['vatable_sales_sub'][$z]=$s->vatable_sales;
                                 $data['vat_on_sales_sub'][$z]=$s->vat;
                                 $data['zero_rated_sales_sub'][$z]=$s->zero_rated_sales;
@@ -665,7 +671,7 @@ public function print_BS_new(){
                                     "counter_h"=>$t,
                                     "participant_id"=>$participant_id,
                                     "bs_head_id"=>$p->bs_head_id,
-                                    "sub_participant"=>$s->billing_id,
+                                    "sub_participant"=>$s->actual_billing_id,
                                     "vatable_sales"=>$s->vatable_sales,
                                     "zero_rated_sales"=>$s->zero_rated_sales,
                                     //"total_amount"=>$total_amount,
@@ -710,7 +716,7 @@ public function print_BS_new(){
                     $data['bs_head_id'][$x]='';
                     $data['count_sub_hist'][$x]='';
 
-                    $data['sub_participant'][$x]=$p->billing_id;
+                    $data['sub_participant'][$x]=$p->actual_billing_id;
                     $data['vatable_sales'][$x]=$p->vatable_sales;
                     $data['vat_on_sales'][$x]=$p->vat_on_sales;
                     $data['zero_rated'][$x]=$zero_rated;
@@ -723,7 +729,7 @@ public function print_BS_new(){
 
                     $data['sub'][]=array(
                         "participant_id"=>$participant_id,
-                        "sub_participant"=>$p->billing_id,
+                        "sub_participant"=>$p->actual_billing_id,
                         "vatable_sales"=>$p->vatable_sales,
                         "zero_rated_sales"=>$zero_rated,
                         "rated_sales"=>$p->zero_rated_sales,
@@ -788,7 +794,7 @@ public function print_BS_new(){
                         $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
                         $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
 
-                        $data['sub_participant'][$x]=$p->billing_id;
+                        $data['sub_participant'][$x]=$p->actual_billing_id;
                         $data['vatable_sales'][$x]=$p->vatable_sales;
                         $data['vat_on_sales'][$x]=$p->vat_on_sales;
                         $data['zero_rated_sales'][$x]=$zero_rated;
@@ -799,7 +805,7 @@ public function print_BS_new(){
 
                         $data['sub_second'][]=array(
                             "participant_id"=>$participant_id,
-                            "sub_participant"=>$p->billing_id,
+                            "sub_participant"=>$p->actual_billing_id,
                             "vatable_sales"=>$p->vatable_sales,
                             "zero_rated_sales"=>$p->zero_rated_sales,
                             "rated_sales"=>$p->zero_rated_sales,
@@ -4012,7 +4018,7 @@ public function upload_sales_adjustment_test(){
                                     "billing_from"=>$s->billing_from,
                                     "billing_to"=>$s->billing_to,
                                     "bs_head_adjustment_id"=>$p->bs_head_adjustment_id,
-                                    "sub_participant"=>$s->billing_id,
+                                    "sub_participant"=>$s->actual_billing_id,
                                     "vatable_sales"=>$s->vatable_sales,
                                     "rated_sales"=>'',
                                     "zero_rated_ecozones"=>'',
@@ -4033,7 +4039,7 @@ public function upload_sales_adjustment_test(){
                             "ref_no"=>$s->reference_number,
                             "billing_from"=>$s->billing_from,
                             "billing_to"=>$s->billing_to,
-                            "sub_participant"=>$billing_id,
+                            "sub_participant"=>$actual_billing_id,
                             "vatable_sales"=>$vatable_sales,
                             "rated_sales"=>'',
                             "zero_rated_ecozones"=>'',
@@ -4057,7 +4063,7 @@ public function upload_sales_adjustment_test(){
                                     "ref_no"=>$s->reference_number,
                                     "billing_from"=>$s->billing_from,
                                     "billing_to"=>$s->billing_to,
-                                    "sub_participant"=>$s->billing_id,
+                                    "sub_participant"=>$s->actual_billing_id,
                                     "vatable_sales"=>$s->vatable_sales,
                                     "rated_sales"=>'',
                                     "zero_rated_ecozones"=>'',
@@ -4120,8 +4126,8 @@ public function upload_sales_adjustment_test(){
                                         "ref_no"=>$reference_number,
                                         "billing_from"=>$billing_from,
                                         "billing_to"=>$billing_to,
-                                        "sub_participant"=>$s->billing_id,
-                                        "sub_participant"=>$s->billing_id,
+                                        "sub_participant"=>$s->actual_billing_id,
+                                        // "sub_participant"=>$s->billing_id,
                                         "serial_no"=>$s->serial_no,
                                         "vatable_sales"=>$vatable_sales,
                                         "zero_rated_sales"=>$zero_rated,
@@ -4140,7 +4146,7 @@ public function upload_sales_adjustment_test(){
                         $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
 
                         $data['sub_second'][]=array(
-                            "sub_participant"=>$p->billing_id,
+                            "sub_participant"=>$p->actual_billing_id,
                             "ref_no"=>$reference_number,
                             "billing_from"=>$billing_from,
                             "billing_to"=>$billing_to,
@@ -4183,7 +4189,7 @@ public function upload_sales_adjustment_test(){
                                 $data['sub_part_second'][]=array(
                                     "counter"=>$h,
                                     "counter_h"=>'',
-                                    "sub_participant"=>$s->billing_id,
+                                    "sub_participant"=>$s->actual_billing_id,
                                     "ref_no"=>$reference_number,
                                     "billing_from"=>$billing_from,
                                     "billing_to"=>$billing_to,
