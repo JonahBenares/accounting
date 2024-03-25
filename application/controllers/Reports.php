@@ -4947,7 +4947,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-        public function export_purchases_adjustment_all(){
+        public function export_purchases_adjustment_all_persn(){
         $participant=$this->uri->segment(3);
         $from=$this->uri->segment(4);
         $to=$this->uri->segment(5);
@@ -5181,6 +5181,160 @@ class Reports extends CI_Controller {
         // readfile($exportfilename);
     }
 
+        public function export_purchases_adjustment_all_perm(){
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $due=$this->uri->segment(6);
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
+        $exportfilename="Purchases Wesm Adjustment All Transactions.xlsx";
+        $sql='';
+
+        if($from!='null' && $to != 'null'){
+           $sql.= " due_date BETWEEN '$from' AND '$to' AND ";
+        } 
+        if($participant!='null'){
+             $sql.= "tin = '$participant' AND ";
+        } if($due!='null'){
+             $sql.= "due_date = '$due' AND "; 
+        }
+
+
+        $query=substr($sql,0,-4);
+        if($participant !='null' || $from != 'null' || $to != 'null' || $due != 'null'){
+            $qu = " saved = '1' AND adjustment = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1' AND adjustment = '1'";
+        }
+
+        $sheetno=0;
+            // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+            $styleArray = array(
+                'borders' => array(
+                    'allBorders' => array(
+                        'borderStyle' => border::BORDER_THIN
+                    )
+                )
+            );
+            foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE $qu GROUP BY month(due_date) ORDER BY month(due_date) ASC") AS $head){
+            $month=$this->super_model->select_column_custom_where("purchase_transaction_head",'month(due_date)',"purchase_id = '$head->purchase_id' ORDER BY month($head->due_date) ASC LIMIT 1");
+            $year=$this->super_model->select_column_custom_where("purchase_transaction_head",'year(due_date)',"purchase_id = '$head->purchase_id' ORDER BY year($head->due_date) ASC LIMIT 1");
+            $monthName = date("F", mktime(0, 0, 0, $month, 10));
+            $objWorkSheet = $objPHPExcel->createSheet($sheetno);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($monthName."".$year);
+            foreach(range('A','M') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A1', "Item No.");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B1', "Transaction Number");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C1', "Billing Period");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D1', "Due Date");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E1', "STl ID/TPShort name");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F1', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G1', "Company Full Name");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H1', "TIN");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I1', "Vatable Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Zero Rated EcoZones Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Vat On Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L1', "EWT");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M1', "Total");
+            $objPHPExcel->getActiveSheet()->getStyle("A1:M1")->applyFromArray($styleArray);
+
+            $total_vatables_purchases=array();
+            $total_zero_rated_ecozones=array();
+            $total_vat_on_purchases=array();
+            $total_ewt=array();
+            $overall_total=array();
+
+            $num=2;
+            $itemno=1;
+                foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pah INNER JOIN purchase_transaction_details pad ON pah.purchase_id = pad.purchase_id WHERE due_date='$head->due_date' AND $qu ORDER BY billing_from ASC, reference_number ASC") AS $pah){
+                    $billing_date = date("M. d, Y",strtotime($pah->billing_from))." - ".date("M. d, Y",strtotime($pah->billing_to));
+                    $tin=$this->super_model->select_column_where("participant","tin","billing_id",$pah->billing_id);
+                    $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pah->billing_id);
+           
+                    if(!empty($pah->company_name) && date('Y',strtotime($pah->create_date))==date('Y')){
+                        $comp_name=$pah->company_name;
+                    }else{
+                        $comp_name=$participant_name;
+                    }
+
+                    $zero_rated=$pah->zero_rated_purchases+$pah->zero_rated_ecozones;
+                    $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
+
+                    $total_vatables_purchases[]=$pah->vatables_purchases;
+                    $total_zero_rated_ecozones[]=$pah->zero_rated_ecozones;
+                    $total_vat_on_purchases[]=$pah->vat_on_purchases;
+                    $total_ewt[]=$pah->ewt;
+                    $overall_total[]=$total;
+                
+                // //if($value['tin']==$pah->tin){
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $itemno);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $pah->reference_number);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $billing_date);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $pah->due_date);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $pah->short_name);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $pah->actual_billing_id);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $comp_name);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $tin);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, "-".$pah->vatables_purchases);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "-".$pah->zero_rated_ecozones);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "-".$pah->vat_on_purchases);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, $pah->ewt);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "-".$total);
+                // }
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet()->getStyle('G'.$num)->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('BFD7ED');
+                    $objPHPExcel->getActiveSheet()->getStyle('H'.$num)->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('BFD7ED');
+                    $objPHPExcel->getActiveSheet()->getStyle('L'.$num)->getFont()->getColor()->setRGB ('FF0000');
+                     $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":M".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":M".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":M".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $num++;
+                    $itemno++;
+                 }
+
+                $a = $num;
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.":M".$a)->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.":M".$a)->getFont()->setItalic(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.":M".$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.':M'.$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.':M'.$a)->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('FFFF00');
+                    $objPHPExcel->getActiveSheet()->setCellValue('I'.$a, "-".array_sum($total_vatables_purchases));
+                    $objPHPExcel->getActiveSheet()->setCellValue('J'.$a, "-".array_sum($total_zero_rated_ecozones));
+                    $objPHPExcel->getActiveSheet()->setCellValue('K'.$a, "-".array_sum($total_vat_on_purchases));
+                    $objPHPExcel->getActiveSheet()->setCellValue('L'.$a, array_sum($total_ewt));
+                    $objPHPExcel->getActiveSheet()->setCellValue('M'.$a, "-".array_sum($overall_total));
+                $num--;
+                 
+
+                    
+            $sheetno++;
+            }
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Sales Wesm Adjustment All Transcations.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+        // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        // if (file_exists($exportfilename))
+        // unlink($exportfilename);
+        // $objWriter->save($exportfilename);
+        // unset($objPHPExcel);
+        // unset($objWriter);   
+        // ob_end_clean();
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment; filename="Sales Wesm Adjustment All Transcations.xlsx"');
+        // readfile($exportfilename);
+    }
+
     public function sales_all_adjustment(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -5264,7 +5418,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-        public function export_sales_adjustment_all(){
+        public function export_sales_adjustment_all_persn(){
         $participant=$this->uri->segment(3);
         $from=$this->uri->segment(4);
         $to=$this->uri->segment(5);
@@ -5466,6 +5620,166 @@ class Reports extends CI_Controller {
                 $num--;
             $sheetno++;
         }
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Sales Wesm Adjustment All Transcations.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+        // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        // if (file_exists($exportfilename))
+        // unlink($exportfilename);
+        // $objWriter->save($exportfilename);
+        // unset($objPHPExcel);
+        // unset($objWriter);   
+        // ob_end_clean();
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment; filename="Sales Wesm Adjustment All Transcations.xlsx"');
+        // readfile($exportfilename);
+    }
+
+    public function export_sales_adjustment_all_perm(){
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $year=$this->uri->segment(6);
+        //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new Spreadsheet();
+        $exportfilename="Sales Wesm Adjustment All Transcations.xlsx";
+        $sql='';
+
+        if($from!='null' && $to != 'null'){
+            // $sql.= "YEAR(billing_from) >= '$from_year' AND YEAR(billing_to) <= '$to_year' AND ";
+            $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
+        } 
+        if($participant!='null'){
+             $sql.= " tin = '$participant' AND ";
+                /*$par=array();
+                foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
+                    $par[]="'".$p->settlement_id."'";
+                }
+                $imp=implode(',',$par);
+                $sql.= " short_name IN($imp) AND ";*/
+        }
+        if($year!='null'){
+             $sql.= " YEAR(due_date) = '$year' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        if($participant !='null' || $from != 'null' || $to != 'null' || $year != 'null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
+        $sheetno=0;
+            // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+            $styleArray = array(
+                'borders' => array(
+                    'allBorders' => array(
+                        'borderStyle' => border::BORDER_THIN
+                    )
+                )
+            );
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE $qu GROUP BY month(due_date) ORDER BY month(due_date) ASC") AS $head){
+            $month=$this->super_model->select_column_custom_where("sales_adjustment_head",'month(due_date)',"sales_adjustment_id = '$head->sales_adjustment_id' ORDER BY month($head->due_date) ASC LIMIT 1");
+            $year=$this->super_model->select_column_custom_where("sales_adjustment_head",'year(due_date)',"sales_adjustment_id = '$head->sales_adjustment_id' ORDER BY year($head->due_date) ASC LIMIT 1");
+            $monthName = date("F", mktime(0, 0, 0, $month, 10));
+            $objWorkSheet = $objPHPExcel->createSheet($sheetno);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($monthName."".$year);
+            foreach(range('A','M') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A1', "Item No.");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B1', "Transaction Number");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C1', "Billing Period");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D1', "Due Date");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E1', "STl ID/TPShort name");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F1', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G1', "Company Full Name");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H1', "TIN");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I1', "Vatable Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Zero Rated EcoZones Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Vat On Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L1', "EWT");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M1', "Total");
+            $objPHPExcel->getActiveSheet()->getStyle("A1:M1")->applyFromArray($styleArray);
+
+            $total_vatable_sales=array();
+            $total_zero_rated_ecozones=array();
+            $total_vat_on_sales=array();
+            $total_ewt=array();
+            $overall_total=array();
+
+            $num=2;
+            $itemno=1;
+                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE due_date='$head->due_date' AND $qu ORDER BY billing_from ASC, reference_number ASC") AS $sah){
+                    $billing_date = date("M. d, Y",strtotime($sah->billing_from))." - ".date("M. d, Y",strtotime($sah->billing_to));
+                    $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sah->billing_id);
+                    $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
+           
+                    if(!empty($sah->company_name) && date('Y',strtotime($sah->create_date))==date('Y')){
+                        $comp_name=$sah->company_name;
+                    }else{
+                        $comp_name=$participant_name;
+                    }
+
+                    $zero_rated=$sah->zero_rated_sales+$sah->zero_rated_ecozones;
+                    $total=($sah->vatable_sales+$zero_rated+$sah->vat_on_sales)-$sah->ewt;
+
+                    $total_vatable_sales[]=$sah->vatable_sales;
+                    $total_zero_rated_ecozones[]=$sah->zero_rated_ecozones;
+                    $total_vat_on_sales[]=$sah->vat_on_sales;
+                    $total_ewt[]=$sah->ewt;
+                    $overall_total[]=$total;
+                
+                // //if($value['tin']==$sah->tin){
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $itemno);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $sah->reference_number);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $billing_date);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $sah->due_date);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $sah->short_name);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $sah->actual_billing_id);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $comp_name);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, $tin);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $sah->vatable_sales);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, $sah->zero_rated_ecozones);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, $sah->vat_on_sales);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "-".$sah->ewt);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, $total);
+                // }
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet()->getStyle('G'.$num)->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('BFD7ED');
+                    $objPHPExcel->getActiveSheet()->getStyle('H'.$num)->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('BFD7ED');
+                    $objPHPExcel->getActiveSheet()->getStyle('L'.$num)->getFont()->getColor()->setRGB ('FF0000');
+                     $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":M".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":M".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$num.":M".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $num++;
+                    $itemno++;
+                 }
+
+                $a = $num;
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.":M".$a)->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.":M".$a)->getFont()->setItalic(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.":M".$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.':M'.$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('I'.$a.':M'.$a)->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('FFFF00');
+                    $objPHPExcel->getActiveSheet()->setCellValue('I'.$a, array_sum($total_vatable_sales));
+                    $objPHPExcel->getActiveSheet()->setCellValue('J'.$a, array_sum($total_zero_rated_ecozones));
+                    $objPHPExcel->getActiveSheet()->setCellValue('K'.$a, array_sum($total_vat_on_sales));
+                    $objPHPExcel->getActiveSheet()->setCellValue('L'.$a, "-".array_sum($total_ewt));
+                    $objPHPExcel->getActiveSheet()->setCellValue('M'.$a, array_sum($overall_total));
+                $num--;
+                 
+
+                    
+            $sheetno++;
+            }
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="Sales Wesm Adjustment All Transcations.xlsx"');
         header('Cache-Control: max-age=0');

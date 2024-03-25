@@ -715,6 +715,7 @@ function export_sales_adjustment_all() {
      var e_to = document.getElementById("export_to").value;
      var participant = document.getElementById("participant1").value;
      var year = document.getElementById("year_export").value;
+     var sheet = document.getElementById("per_sheet").value;
 
     if(e_from!=''){
         e_from=e_from;
@@ -740,8 +741,22 @@ function export_sales_adjustment_all() {
         years='null';
     }
 
+    if(sheet!=''){
+        per_s=sheet;
+    }else{
+        per_s='null';
+    }
+
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/export_sales_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+years;
+      //window.location=loc+'reports/export_sales_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+years;
+
+        if(per_s=='per_sn') {   
+             window.location=loc+'reports/export_sales_adjustment_all_persn/'+part+'/'+e_from+'/'+e_to+'/'+years;
+        }else if (per_s=='per_m'){  
+             window.location=loc+'reports/export_sales_adjustment_all_perm/'+part+'/'+e_from+'/'+e_to+'/'+years;
+        }else{
+            alert("Sheet must not be empty!");
+        }
 
 }
 
@@ -799,6 +814,7 @@ function export_purchases_adjustment_all() {
      var e_to = document.getElementById("export_to").value;
      var participant = document.getElementById("participant1").value;
      var e_due = document.getElementById("due_date1").value;
+     var sheet = document.getElementById("per_sheet").value;
 
     if(e_from!=''){
         e_from=e_from;
@@ -824,8 +840,21 @@ function export_purchases_adjustment_all() {
         e_due='null';
     }
 
+    if(sheet!=''){
+        per_s=sheet;
+    }else{
+        per_s='null';
+    }
+
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/export_purchases_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+e_due;
+      // window.location=loc+'reports/export_purchases_adjustment_all/'+part+'/'+e_from+'/'+e_to+'/'+e_due;
+        if(per_s=='per_sn') {   
+             window.location=loc+'reports/export_purchases_adjustment_all_persn/'+part+'/'+e_from+'/'+e_to+'/'+e_due;
+        }else if (per_s=='per_m'){  
+            window.location=loc+'reports/export_purchases_adjustment_all_perm/'+part+'/'+e_from+'/'+e_to+'/'+e_due;
+        }else{
+            alert("Sheet must not be empty!");
+        }
 
 }
 

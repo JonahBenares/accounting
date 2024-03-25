@@ -312,6 +312,14 @@
                             <?php } ?>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>Sheet</label>
+                        <select class="form-control select2" name="per_sheet" id="per_sheet">
+                                <option value="">-- Select Sheet --</option>
+                                <option value="per_sn">Per Short name</option>
+                                <option value="per_m">Per Month</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
