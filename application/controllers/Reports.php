@@ -5319,7 +5319,7 @@ class Reports extends CI_Controller {
             $sheetno++;
             }
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Sales Wesm Adjustment All Transcations.xlsx"');
+        header('Content-Disposition: attachment;filename="Purchases Wesm Adjustment All Transactions.xlsx"');
         header('Cache-Control: max-age=0');
         $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
         $objWriter->save('php://output');
