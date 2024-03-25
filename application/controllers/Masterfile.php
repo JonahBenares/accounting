@@ -291,6 +291,7 @@ class Masterfile extends CI_Controller {
             $data=array(
                 "participant_name"=>$this->input->post('participant_name'),
                 "billing_id"=>$this->input->post('billing_id'),
+                "actual_billing_id"=>$this->input->post('actual_billing_id'),
                 "region"=>$this->input->post('region'),
                 "category"=>$this->input->post('category'),
                 "membership"=>$this->input->post('membership'),
