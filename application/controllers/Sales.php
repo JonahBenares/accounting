@@ -1363,11 +1363,11 @@ public function print_BS_new(){
 
           
           
-            $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
+            $shortname = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
 
             if($shortname!="" || !empty($shortname)){
          
-            $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+            $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
 
             $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
 
@@ -3019,9 +3019,9 @@ public function print_BS_new(){
                             for($z=4;$z<$highestRow;$z++){
                                 
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
-                                $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
+                                $shortname = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 if($shortname!="" || !empty($shortname)){
-                                    $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());
+                                    $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());
 
                                    
 
@@ -3184,9 +3184,9 @@ public function upload_sales_adjustment_test(){
                         $y=1;
                         for($z=4;$z<$highestRow;$z++){
                             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
-                            $shortname = trim($objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue() ?? '');
+                            $shortname = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue() ?? '');
                             if($shortname!="" || !empty($shortname)){
-                                $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue() ?? '');   
+                                $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue() ?? '');   
 
                                 $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
 
