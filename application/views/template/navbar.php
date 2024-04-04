@@ -110,6 +110,7 @@
                 <ul class="dropdown-menu">
                     <?php if($_SESSION['department']=='Billing' || $_SESSION['department']=='billing' || $_SESSION['user_id']==1){ ?>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/customer_list">Customer</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/reserve_customer_list">Reserve Customer</a></li>
                     <?php } ?>
                     <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/supplier_list">Supplier</a></li> -->
                     <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/user_list">Users</a></li>
