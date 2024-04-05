@@ -7185,6 +7185,161 @@ class Reports extends CI_Controller {
         // readfile($exportfilename);
     }
 
+        public function res_sales_main_ewt_variance(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $from=$this->uri->segment(3);
+        $to=$this->uri->segment(4);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $sql="";
+
+        if($from!='null' && $to != 'null'){
+            $sql.= "((res_billing_from BETWEEN '$from' AND '$to') OR (res_billing_to BETWEEN '$from' AND '$to')) AND ";
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "res_saved = '1' AND ".$query;
+
+        $total_ewt=array();
+        $total_ewt_amount=array();
+        $variance_total=array();
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head sth INNER JOIN reserve_sales_transaction_details std ON sth.reserve_sales_id = std.reserve_sales_id WHERE $qu ORDER BY std.res_billing_id ASC, res_billing_from ASC") AS $sah){
+            $tin = $this->super_model->select_column_where("reserve_participant","res_tin","res_billing_id",$sah->res_billing_id);
+
+            $par=array();
+            foreach($this->super_model->select_custom_where('reserve_participant',"res_tin='$tin'") AS $p){
+                $par[]="'".$p->res_billing_id."'";
+                $imp=implode(',',$par);
+            }
+            
+
+            $overall_ewt_amount = $this->super_model->select_sum_join("res_ewt","reserve_sales_transaction_details","reserve_sales_transaction_head","res_billing_id IN($imp) AND $qu","reserve_sales_id");
+            $overall_ewt_collected = $this->super_model->select_sum_join("res_ewt_amount","reserve_sales_transaction_details","reserve_sales_transaction_head","res_billing_id IN($imp) AND $qu","reserve_sales_id");
+
+            $variance = $sah->res_ewt - $sah->res_ewt_amount;
+            $total_variance  = $overall_ewt_amount - $overall_ewt_collected;
+
+            $total_ewt[]=$sah->res_ewt;
+            $total_ewt_amount[]=$sah->res_ewt_amount;
+            $variance_total[]=$variance;
+
+            $data['salesmain_ewt'][]=array(
+                'billing_from'=>$sah->res_billing_from,
+                'billing_to'=>$sah->res_billing_to,
+                'billing_id'=>$sah->res_billing_id,
+                'transaction_no'=>$sah->res_reference_number,
+                'ewt_amount'=>$sah->res_ewt,
+                'overall_ewt_amount'=>$overall_ewt_amount,
+                'ewt_collected'=>$sah->res_ewt_amount,
+                'overall_ewt_collected'=>$overall_ewt_collected,
+                'tin'=>$tin,
+                'variance'=>$variance,
+                'total_variance'=>$total_variance,
+            );
+        }
+        $data['b_total_ewt']=array_sum($total_ewt);
+        $data['b_total_ewt_amount']=array_sum($total_ewt_amount);
+        $data['b_total_variance']=array_sum($variance_total);
+        $this->load->view('reports/reserve_sales_main_ewt_variance',$data);
+        $this->load->view('template/footer');
+    }
+
+    public function export_res_sales_main_ewt_variance(){
+        $from=$this->uri->segment(3);
+        $to=$this->uri->segment(4);
+        $objPHPExcel = new Spreadsheet();
+        $exportfilename="Summary of Reserve Sales Total EWT Variance (Main).xlsx";
+        $sql='';
+
+        if($from!='null' && $to != 'null'){
+            $sql.= " ((res_billing_from BETWEEN '$from' AND '$to') OR (res_billing_to BETWEEN '$from' AND '$to')) AND ";
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = " res_saved = '1' AND ".$query;
+            $styleArray = array(
+                'borders' => array(
+                    'allBorders' => array(
+                        'borderStyle' => border::BORDER_THIN,
+                        'color' => ['rgb' => '000000'],
+                    )
+                )
+            );
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Reserve Sales Regular Bill ".$from." - ".$to);
+            foreach(range('A','F') as $columnID){
+            $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "#");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "Short Name");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Company Name");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D2', "EWT Total Amount");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E2', "EWT Amount Collected");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F2', "Variance");
+            $objPHPExcel->getActiveSheet()->getStyle("A2:F2")->applyFromArray($styleArray);
+            $x=1;
+            $num=3;
+            $prevtin='';
+            foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head sth INNER JOIN reserve_sales_transaction_details std ON sth.reserve_sales_id = std.reserve_sales_id WHERE $qu GROUP BY res_short_name ORDER BY res_short_name ASC, res_company_name ASC") AS $sah){
+                $participant_name=$this->super_model->select_column_where("reserve_participant","res_participant_name","res_billing_id",$sah->res_billing_id);
+                $tin = $this->super_model->select_column_where("reserve_participant","res_tin","res_billing_id",$sah->res_billing_id);
+                if(!empty($sah->res_company_name) && date('Y',strtotime($sah->res_create_date))==date('Y')){
+                    $comp_name=$sah->res_company_name;
+                }else{
+                    $comp_name=$participant_name;
+                }
+
+                $par=array();
+                foreach($this->super_model->select_custom_where('reserve_participant',"res_tin='$tin'") AS $p){
+                    $par[]="'".$p->res_billing_id."'";
+                    $imp=implode(',',$par);
+                }
+                
+                $overall_ewt_amount = $this->super_model->select_sum_join("res_ewt","reserve_sales_transaction_details","reserve_sales_transaction_head", "res_billing_id IN($imp) AND $qu","reserve_sales_id");
+                $overall_ewt_collected = $this->super_model->select_sum_join("res_ewt_amount","reserve_sales_transaction_details","reserve_sales_transaction_head", "res_billing_id IN($imp) AND $qu","reserve_sales_id");
+                $variance  = $overall_ewt_amount - $overall_ewt_collected;
+
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $sah->res_short_name);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $comp_name);
+                    if($prevtin == $tin){
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, '');
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, '');
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, '');
+                    }else{
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $overall_ewt_amount);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $overall_ewt_collected);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $variance);
+                    }
+
+                    $objPHPExcel->getActiveSheet()->mergeCells('A1:C1');
+                    $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":F".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":B".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":F".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":F".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    if($variance == 0){
+                        $objPHPExcel->getActiveSheet()->getStyle('F'.$num)->getFont()->getColor()->setRGB('008000');
+                    }else if($overall_ewt_amount < $overall_ewt_collected){
+                        $objPHPExcel->getActiveSheet()->getStyle('F'.$num)->getFont()->getColor()->setRGB('3E94E1');
+                    }else if($overall_ewt_amount > $overall_ewt_collected){
+                        $objPHPExcel->getActiveSheet()->getStyle('F'.$num)->getFont()->getColor()->setRGB('FF0000');
+                    }
+                    $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $num++;
+                    $x++;
+                    $prevtin = $tin;
+                }
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Summary of Reserve Sales Total EWT Variance (Main).xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+    }
+
     public function purchases_main_total_variance(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
