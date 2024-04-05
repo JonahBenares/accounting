@@ -122,6 +122,48 @@ function proceed_btn() {
 	
 }
 
+function proceed_res_btn() {
+	 var data = $("#reservesaleshead").serialize();
+	
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/add_reserve_sales_head";
+    var newurl=loc+"sales/upload_reserve_sales/";
+    var conf = confirm('Are you sure you want to proceed?');
+    if(conf){
+	  $.ajax({
+        type: "POST",
+        url: redirect,
+        data: data,
+        success: function(output){
+        	//alert(output);
+        	var new_url = newurl+output;
+        	document.getElementById("reserve_sales_id").value  = output;
+        	window.history.replaceState('nextState', "Sales Head", new_url);
+ 			var save = document.getElementById("save_head_button");
+            var cancel = document.getElementById("cancel");
+        	document.getElementById('res_transaction_date').readOnly = true;
+        	document.getElementById('res_reference_number').readOnly = true;
+        	document.getElementById('res_billing_from').readOnly = true;
+        	document.getElementById('res_due_date').readOnly = true;
+        	document.getElementById('res_billing_to').readOnly = true;
+        	var x = document.getElementById("upload_res");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+
+					save.style.display = "none";
+                    cancel.style.display = "block";
+			} else {
+				x.style.display = "none";
+				save.style.display = "block";
+                    cancel.style.display = "none";
+			}
+          
+        	}
+        });
+	}
+	
+}
+
 async function upload_btn() {
 	//var sales_doc = document.getElementById("WESM_sales").value;
 	var sales_id = document.getElementById("sales_id").value;
@@ -173,6 +215,55 @@ function cancelSales(){
     }
 }
 
+async function upload_res_btn() {
+	var reserve_sales_id = document.getElementById("reserve_sales_id").value;
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/upload_reserve_sales_process";
+	let doc = document.getElementById("WESM_reserve_sales").files[0];
+	let formData = new FormData();
+	     
+	formData.append("doc", doc);
+	formData.append("reserve_sales_id", reserve_sales_id);
+	var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+		$.ajax({
+			type: "POST",
+			url: redirect,
+			data: formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function(){
+	        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+	        	document.getElementById("proceed_reserve_sales").disabled = true;
+	        	document.getElementById("cancel").disabled = true;
+	        	$("#table-wesm").hide(); 
+	        },
+	        success: function(output){
+	        	/*console.log(output);*/
+	        	$("#alt").hide(); 
+	        	location.reload();
+			}
+		});
+	}
+}
+
+function cancelResSales(){
+    var reserve_sales_id = document.getElementById("reserve_sales_id").value; 
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/cancel_reserve_sales";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+		$.ajax({
+			data: "reserve_sales_id="+reserve_sales_id,
+			type: "POST",
+			url: redirect,
+			success: function(response){
+			    window.location=loc+'sales/upload_reserve_sales/';
+			}
+		});
+    }
+}
+
 function saveAll(){
 	var data = $("#upload_wesm").serialize();
 	var loc= document.getElementById("baseurl").value;
@@ -193,6 +284,33 @@ function saveAll(){
 		        },
 		        success: function(output){
 		        	window.location=loc+'sales/upload_sales/'+output;  
+		        }
+		    }); 
+    	}
+    }	 
+}
+
+function saveAllReserve(){
+	var data = $("#upload_reserve_wesm").serialize();
+	var loc= document.getElementById("baseurl").value;
+	var count_name = document.getElementById("count_name").value;
+  	if(count_name != 0){
+      	alert('Some of the Company Name are empty!');
+  	}  else {
+    var redirect = loc+"sales/save_all_reserve";
+    var conf = confirm('Are you sure you want to save this Reserve Sales?');
+		if(conf){
+		    $.ajax({
+		        data: data,
+		        type: "POST",
+		        url: redirect,
+		        beforeSend: function(){
+		        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+		            $("#submitdata").hide(); 
+		            $("#cancel").hide(); 
+		        },
+		        success: function(output){
+		        	window.location=loc+'sales/upload_reserve_sales/'+output;  
 		        }
 		    }); 
     	}
@@ -398,6 +516,18 @@ function filterUploadSales(){
 	window.location=loc+'sales/upload_sales/'+sales_id+'/'+sub;          
 }
 
+function filterUploadResSales(){
+	var reserve_sales_id= document.getElementById("res_sales_id").value;
+	var in_ex_sub= document.getElementById("in_ex_sub").value;
+	var loc= document.getElementById("baseurl").value;
+    if(in_ex_sub!=''){
+        var sub=in_ex_sub;
+    }else{
+        var sub='null';
+    }
+	window.location=loc+'sales/upload_reserve_sales/'+reserve_sales_id+'/'+sub;          
+}
+
 function filterSales(){
 	var ref_no= document.getElementById("ref_no").value;
 	var due_date= document.getElementById("due_date").value;
@@ -442,6 +572,52 @@ function filterSales(){
         var parti='null';
     }
 	window.location=loc+'sales/sales_wesm/'+ref+'/'+due+'/'+sub+'/'+billfrom+'/'+billto+'/'+parti;          
+}
+
+function filterReserveSales(){
+	var ref_no= document.getElementById("ref_no").value;
+	var due_date= document.getElementById("due_date").value;
+	var in_ex_sub= document.getElementById("in_ex_sub").value;
+	var billing_from= document.getElementById("billing_from").value;
+	var billing_to= document.getElementById("billing_to").value;
+	var participant= document.getElementById("participant").value;
+	var loc= document.getElementById("baseurl").value;
+	if(ref_no!=''){
+        var ref=ref_no;
+    }else{
+        var ref='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+
+    if(in_ex_sub!=''){
+        var sub=in_ex_sub;
+    }else{
+        var sub='null';
+    }
+
+    if(billing_from!=''){
+        var billfrom=billing_from;
+    }else{
+        var billfrom='null';
+    }
+
+    if(billing_to!=''){
+        var billto=billing_to;
+    }else{
+        var billto='null';
+    }
+
+    if(participant!=''){
+        var parti=participant;
+    }else{
+        var parti='null';
+    }
+	window.location=loc+'sales/reserve_sales_wesm/'+ref+'/'+due+'/'+sub+'/'+billfrom+'/'+billto+'/'+parti;          
 }
 
 function filterSalesAdjustment(){
@@ -558,6 +734,22 @@ function saveBseries(baseurl,count,sales_detail_id,serial_no){
 		type: "POST",
 		url: redirect,
 		data: 'sales_detail_id='+sales_detail_id+'&serial_no='+serial_no+'&series_number='+series_number,
+        dataType: "json",
+		success: function(response){
+			document.getElementById("series_number"+count).value=response.series_number;
+			//location.reload();
+		}
+	});
+}
+
+function saveResBseries(baseurl,count,reserve_sales_detail_id,serial_no){
+    var redirect = baseurl+"sales/update_Res_BSeriesno";
+    var series_number=document.getElementById("series_number"+count).value;
+
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'reserve_sales_detail_id='+reserve_sales_detail_id+'&serial_no='+serial_no+'&series_number='+series_number,
         dataType: "json",
 		success: function(response){
 			document.getElementById("series_number"+count).value=response.series_number;
@@ -846,6 +1038,31 @@ function printMultipleAdjustment(){
     });
 }
 
+function printReserveMultiple(){
+	var x = document.getElementsByClassName("multiple_print");
+	var loc= document.getElementById("baseurl").value;
+ 	var redirect = loc+"sales/print_multiple_reserve";
+ 	var form = document.querySelector('#print_mult');
+    var formData = new FormData(form);
+	for(var i =0;i<x.length;i++){
+		if(document.getElementsByClassName('multiple_print')[i].checked){
+			multiple_print= document.querySelector('input[name="multiple_print[]"]').value;
+			formData.append('multiple_print'+[i], multiple_print);
+		}
+    }
+    $.ajax({
+        type: "POST",
+        url: redirect,
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(output){
+            var exp=output.split(",");
+            window.open(loc+'sales/print_BS_reserve/'+exp[0]+'/'+exp[1]+'/'+exp[2],"_blank");
+        }
+    });
+}
+
 function cancelmultipleSales(){
     var save_sales_adjustment = document.getElementById("save_sales_adjustment").value; 
     var loc= document.getElementById("baseurl").value;
@@ -962,6 +1179,36 @@ function updateSales(baseurl,count,sales_detail_id,sales_id,billing_id){
 	});
 }
 
+function updateReserveSales(baseurl,count,reserve_sales_detail_id,reserve_sales_id,billing_id){
+    var redirect = baseurl+"sales/update_reserve_details";
+    var ewt_amount=document.getElementById("ewt_amount"+count).value;
+    var orig_yes=document.getElementById("orig_yes"+count);
+    if(orig_yes.checked){
+        var original_copy=1;
+    }
+    var orig_no=document.getElementById("orig_no"+count);
+    if(orig_no.checked){
+        var original_copy=0;
+    }
+    var scanned_yes=document.getElementById("scanned_yes"+count);
+    if(scanned_yes.checked){
+        var scanned_copy=1;
+    }
+    var scanned_no=document.getElementById("scanned_no"+count);
+    if(scanned_no.checked){
+        var scanned_copy=0;
+    }
+	$.ajax({
+		type: "POST",
+		url: redirect,
+		data: 'reserve_sales_detail_id='+reserve_sales_detail_id+'&reserve_sales_id='+reserve_sales_id+'&billing_id='+billing_id+'&ewt_amount='+ewt_amount+'&original_copy='+original_copy+'&scanned_copy='+scanned_copy,
+        dataType: "json",
+		success: function(response){
+			document.getElementById("ewt_amount"+count).value=response.ewt_amount;
+		}
+	});
+}
+
 function updateSalesAdjustment(baseurl,count,sales_detail_id,sales_adjustment_id,billing_id){
     var redirect = baseurl+"sales/update_adjustment_details";
     var ewt_amount=document.getElementById("ewt_amount"+count).value;
@@ -1028,6 +1275,41 @@ function proceed_bulk_update_main() {
     } 
 }
 
+function proceed_bulk_update_reserve_main() {
+    var data = $("#bulkupdatereservemain").serialize();
+    
+    var loc= document.getElementById("baseurl").value;
+    var reserve_sales_id= document.getElementById("reserve_sales_id").value;
+    if(reserve_sales_id==""){
+        alert('Reference number must not be empty!');
+    }  else {
+    var redirect=loc+"sales/bulk_update_reserve_main/";
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: data,
+            success: function(output){
+                window.location=loc+'sales/bulk_update_reserve_main/'+reserve_sales_id;
+                var redirect = redirect+output;
+                var save = document.getElementById("save_updatebulk_reservemain");
+                var cancel = document.getElementById("cancel_updatebulk_reservemain");
+                document.getElementById('ref_no').readOnly = true;
+                var x = document.getElementById("upload_bulk_update_reserve_main");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+
+                        save.style.display = "none";
+                        cancel.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                    save.style.display = "block";
+                    cancel.style.display = "none";
+                }
+            }
+        });
+    } 
+}
+
 async function upload_bulkupdate_main() {
     //var sales_doc = document.getElementById("WESM_sales").value;
     var sales_id = document.getElementById("sales_id").value;
@@ -1063,12 +1345,69 @@ async function upload_bulkupdate_main() {
     }
 }
 
+async function upload_bulkupdate_reserve_main() {
+    var reserve_sales_id = document.getElementById("reserve_sales_id").value;
+    var identifier = document.getElementById("identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/upload_bulk_update_reserve_main";
+    let doc = document.getElementById("bulkupdate_reserve_main").files[0];
+    let formData = new FormData();
+         
+    formData.append("doc", doc);
+    formData.append("reserve_sales_id", reserve_sales_id);
+    formData.append("identifier", identifier);
+    var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("proceed_bulkupdate_reserve_main").disabled = true;
+                document.getElementById("cancel_updatebulk_reservemain").disabled = true;
+                $("#table-reserve-main").hide(); 
+            },
+            success: function(output){
+                $("#alt").hide(); 
+              
+                window.location=loc+'sales/bulk_update_reserve_main/'+reserve_sales_id+'/'+identifier;
+            }
+        });
+    }
+}
+
 function saveBulkUpdateMain(){
     var data = $("#upload_bulkupdate_main").serialize();
     var sales_id = document.getElementById("sales_id").value;
     var main_identifier = document.getElementById("main_identifier").value;
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"sales/save_bulkupdate_main";
+    var conf = confirm('Are you sure you want to save this Bulk Update?');
+    if(conf){
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: redirect,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#submitbulkmain").hide(); 
+            },
+            success: function(output){
+                window.location=loc+'sales/bulk_update_main/'+sales_id+'/'+main_identifier;
+            }
+        });
+    }
+}
+
+function saveBulkUpdateReserveMain(){
+    var data = $("#upload_bulkupdate_reserve_main").serialize();
+    var reserve_sales_id = document.getElementById("reserve_sales_id").value;
+    var main_identifier = document.getElementById("main_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/save_bulkupdate_reserve_main";
     var conf = confirm('Are you sure you want to save this Bulk Update?');
     if(conf){
         $.ajax({
@@ -1099,6 +1438,24 @@ function cancelBulkUpdateMain(){
             url: redirect,
             success: function(response){
                 window.location=loc+'sales/bulk_update_main/';
+            }
+        });
+    }
+}
+
+function cancelBulkUpdateReserveMain(){
+    var reserve_sales_id= document.getElementById("reserve_sales_id").value;
+    var main_identifier = document.getElementById("main_identifier").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/cancel_bulkupdate_reserve_main";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+        $.ajax({
+            data: 'reserve_sales_id='+reserve_sales_id+'&main_identifier='+main_identifier,
+            type: "POST",
+            url: redirect,
+            success: function(response){
+                window.location=loc+'sales/bulk_update_reserve_main/';
             }
         });
     }
@@ -1250,6 +1607,21 @@ function printbs_adjustment_history(){
 	        }
 	    }); 
 	     //window.print();
+}
+
+function printreservebs_history(){
+	var data = $("#InsertReserveBS").serialize();
+	var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/insert_printreservebs";
+	    $.ajax({
+	        data: data,
+	        type: "POST",
+	        url: redirect,
+	        success: function(output){
+	         window.print();
+	        }
+	    });
+	    
 }
 
 function proceed_sales_invoicing() {

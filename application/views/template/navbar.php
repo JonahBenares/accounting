@@ -127,6 +127,16 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales_adjustment">Adjustment</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span class="line-height">Upload Reserve <br>Transaction</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_reserve_sales">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales_adjustment">Adjustment</a></li> -->
+                </ul>
+            </li>
             <!-- <li class="dropdown">
                 <a href="<?php echo base_url(); ?>sales/collection_list" class="nav-link">
                     <i data-feather="layers"></i>
@@ -153,6 +163,16 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_adjustment">Adjustment</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span class="line-height">Reserve BIR Monitoring Bulk Update</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_reserve_main">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_adjustment">Adjustment</a></li> -->
+                </ul>
+            </li>
              <li>
                 <a href="<?php echo base_url(); ?>sales/bulk_invoicing" ><i data-feather="briefcase"></i><span class="line-height">Bulk Upload - Invoicing of Sales Adjustments</span></a>
             </li>
@@ -164,6 +184,16 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_adjustment">Adjustment</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>Reserve Transaction</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/reserve_sales_wesm">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_adjustment">Adjustment</a></li> -->
                 </ul>
             </li>
             <li class="menu-header">Purchases</li>
