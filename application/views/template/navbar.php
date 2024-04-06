@@ -269,6 +269,13 @@
                 </ul>
             </li>
             <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Unpaid Reserve Invoices</span></a> 
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_reserve_sales">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_salesadj">Adjustment </a></li> -->
+                </ul>
+            </li>
+            <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Sales Total EWT Variance</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_main_ewt_variance">Main</a></li>
