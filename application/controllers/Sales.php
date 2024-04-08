@@ -3005,8 +3005,8 @@ public function print_BS_new(){
             $query=substr($sql,0,-4);
             $qu = " WHERE res_saved='1' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details sd INNER JOIN reserve_sales_transaction_head sh ON sd.reserve_sales_id=sh.reserve_sales_id $qu") AS $d){
-                $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
-                $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
+                $series_number=$this->super_model->select_column_custom_where("collection_reserve_details","series_number","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
+                $old_series_no=$this->super_model->select_column_custom_where("collection_reserve_details","old_series_no","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
 
                 $create_date = $this->super_model->select_column_where("reserve_sales_transaction_head", "res_create_date", "reserve_sales_id", $d->reserve_sales_id);
                 $company_name=$this->super_model->select_column_where("reserve_sales_transaction_details", "res_company_name", "reserve_sales_detail_id", $d->reserve_sales_detail_id);
@@ -3077,8 +3077,8 @@ public function print_BS_new(){
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details sd INNER JOIN reserve_sales_transaction_head sh ON sd.reserve_sales_id=sh.reserve_sales_id $qu") AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("reserve_participant","res_participant_id","res_billing_id='$d->res_billing_id'");
                 $sub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$res_participant_id'");
-                $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","res_reference_no='$d->res_reference_number' AND res_settlement_id='$d->res_short_name'");
-                $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","res_reference_no='$d->res_reference_number' AND res_settlement_id='$d->res_short_name'");
+                $series_number=$this->super_model->select_column_custom_where("collection_reserve_details","series_number","res_reference_no='$d->res_reference_number' AND res_settlement_id='$d->res_short_name'");
+                $old_series_no=$this->super_model->select_column_custom_where("collection_reserve_details","old_series_no","res_reference_no='$d->res_reference_number' AND res_settlement_id='$d->res_short_name'");
                 if($sub_participant==0){
                 $data['details'][]=array(
                     'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
