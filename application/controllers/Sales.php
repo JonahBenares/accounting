@@ -2982,7 +2982,7 @@ public function print_BS_new(){
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant WHERE res_participant_name != '' GROUP BY res_tin ORDER BY res_participant_name");
         $data['participant_name']=$this->super_model->select_column_where('reserve_participant','res_participant_name','res_tin',$participants);
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
             $sql='';
             if($ref_no!='null'){
