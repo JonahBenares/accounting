@@ -248,6 +248,9 @@
             <li>
                 <a href="<?php echo base_url(); ?>reports/collection_report" ><i data-feather="layout"></i><span>Collection Report</span></a>
             </li>
+            <li>
+                <a href="<?php echo base_url(); ?>reports/reserve_collection_report" ><i data-feather="layout"></i><span>Reserve Collection Report</span></a>
+            </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Ledger</span></a>
                 <ul class="dropdown-menu">
