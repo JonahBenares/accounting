@@ -118,7 +118,7 @@ if(!empty($res_sales_id)){
                                             <tr>
                                                 <th width="3%" align="center" style="background:rgb(245 245 245)">
                                                     <?php if($res_saved==1){ ?>
-                                                    <center><button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button></center><br>
+                                                    <center><button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printReserveMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button></center><br>
                                                     <input class="form-control" type="checkbox" id="select-all">
                                                     <input type='hidden'class="form-control" type="checkbox" id="select-all">
                                                     <?php } ?>
