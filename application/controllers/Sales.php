@@ -476,7 +476,6 @@ class Sales extends CI_Controller {
                 $data['res_saved']=$h->res_saved;
             if($res_sub==0 ||  $res_sub=='null'){
                 foreach($this->super_model->select_row_where("reserve_sales_transaction_details","reserve_sales_id",$h->reserve_sales_id) AS $d){
-
                     $data['details'][]=array(
                         'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
                         'reserve_sales_id'=>$d->reserve_sales_id,
@@ -503,31 +502,34 @@ class Sales extends CI_Controller {
         }else if($res_sub==1){
             foreach($this->super_model->select_row_where("reserve_sales_transaction_details","reserve_sales_id",$h->reserve_sales_id) AS $d){
                 $res_participant_id = $this->super_model->select_column_custom_where("reserve_participant","res_participant_id","res_billing_id='$d->res_billing_id'");
-                $ressub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$res_participant_id'");
+                $ressub_part_id = $this->super_model->select_column_custom_where("reserve_subparticipant","res_sub_participant","res_sub_participant='$res_participant_id'");
+                $sub_billing_id = $this->super_model->select_column_custom_where("reserve_participant","res_billing_id","res_participant_id='$ressub_part_id'");
+                // $ressub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$res_participant_id'");
 
-                if($ressub_participant==0){
-                    $data['details'][]=array(
-                        'res_sales_detail_id'=>$d->reserve_sales_detail_id,
-                        'res_sales_id'=>$d->reserve_sales_id,
-                        'res_item_no'=>$d->res_item_no,
-                        'res_short_name'=>$d->res_short_name,
-                        'res_actual_billing_id'=>$d->res_actual_billing_id,
-                        'res_billing_id'=>$d->res_billing_id,
-                        'res_company_name'=>$d->res_company_name,
-                        'res_facility_type'=>$d->res_facility_type,
-                        'res_wht_agent'=>$d->res_wht_agent,
-                        'res_ith_tag'=>$d->res_ith_tag,
-                        'res_non_vatable'=>$d->res_non_vatable,
-                        'res_zero_rated'=>$d->res_zero_rated,
-                        'res_vatable_sales'=>$d->res_vatable_sales,
-                        'res_vat_on_sales'=>$d->res_vat_on_sales,
-                        'res_zero_rated_sales'=>$d->res_zero_rated_sales,
-                        'res_zero_rated_ecozones'=>$d->res_zero_rated_ecozones,
-                        'res_ewt'=>$d->res_ewt,
-                        'res_serial_no'=>$d->res_serial_no,
-                        'res_total_amount'=>$d->res_total_amount,
-                        'res_print_counter'=>$d->res_print_counter
-                    );
+                        // if($ressub_participant==0){
+                        if($d->res_billing_id != $sub_billing_id){
+                            $data['details'][]=array(
+                                'res_sales_detail_id'=>$d->reserve_sales_detail_id,
+                                'res_sales_id'=>$d->reserve_sales_id,
+                                'res_item_no'=>$d->res_item_no,
+                                'res_short_name'=>$d->res_short_name,
+                                'res_actual_billing_id'=>$d->res_actual_billing_id,
+                                'res_billing_id'=>$d->res_billing_id,
+                                'res_company_name'=>$d->res_company_name,
+                                'res_facility_type'=>$d->res_facility_type,
+                                'res_wht_agent'=>$d->res_wht_agent,
+                                'res_ith_tag'=>$d->res_ith_tag,
+                                'res_non_vatable'=>$d->res_non_vatable,
+                                'res_zero_rated'=>$d->res_zero_rated,
+                                'res_vatable_sales'=>$d->res_vatable_sales,
+                                'res_vat_on_sales'=>$d->res_vat_on_sales,
+                                'res_zero_rated_sales'=>$d->res_zero_rated_sales,
+                                'res_zero_rated_ecozones'=>$d->res_zero_rated_ecozones,
+                                'res_ewt'=>$d->res_ewt,
+                                'res_serial_no'=>$d->res_serial_no,
+                                'res_total_amount'=>$d->res_total_amount,
+                                'res_print_counter'=>$d->res_print_counter
+                            );
                         }
                     }
                 }
@@ -535,7 +537,7 @@ class Sales extends CI_Controller {
 
         }
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        //$this->load->view('template/navbar');
         $this->load->view('sales/upload_reserve_sales',$data);
         $this->load->view('template/footer');
     }

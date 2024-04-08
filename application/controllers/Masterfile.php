@@ -324,7 +324,7 @@ class Masterfile extends CI_Controller {
         $res_bill_id= $this->input->post('res_billing_id');
         $check_unique = $this->super_model->count_custom_where("reserve_participant","res_billing_id = '$res_bill_id'");
 
-        if($check_unique == 0){
+        if($check_unique == 0 && $res_bill_id != ''){
             $data=array(
                 "res_participant_name"=>$this->input->post('res_participant_name'),
                 "res_billing_id"=>$this->input->post('res_billing_id'),
