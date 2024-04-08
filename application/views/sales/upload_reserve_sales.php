@@ -144,7 +144,7 @@ if(!empty($res_sales_id)){
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                foreach($details AS $d){ 
+                                                foreach($details AS $d){
                                                     if(!empty($d['reserve_sales_id'])){ 
                                             ?>
                                             <tr>

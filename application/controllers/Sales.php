@@ -499,22 +499,24 @@ class Sales extends CI_Controller {
                         'res_print_counter'=>$d->res_print_counter
                     );
                 }
-        }else if($res_sub==1){
-            foreach($this->super_model->select_row_where("reserve_sales_transaction_details","reserve_sales_id",$h->reserve_sales_id) AS $d){
-                $res_participant_id = $this->super_model->select_column_custom_where("reserve_participant","res_participant_id","res_billing_id='$d->res_billing_id'");
-                $ressub_part_id = $this->super_model->select_column_custom_where("reserve_subparticipant","res_sub_participant","res_sub_participant='$res_participant_id'");
-                $sub_billing_id = $this->super_model->select_column_custom_where("reserve_participant","res_billing_id","res_participant_id='$ressub_part_id'");
-                // $ressub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$res_participant_id'");
+            }else if($res_sub==1){
+                foreach($this->super_model->select_row_where("reserve_sales_transaction_details","reserve_sales_id",$h->reserve_sales_id) AS $d){
+                    $res_participant_id = $this->super_model->select_column_custom_where("reserve_participant","res_participant_id","res_billing_id='$d->res_billing_id'");
+                    $ressub_part_id = $this->super_model->select_column_custom_where("reserve_subparticipant","res_sub_participant","res_sub_participant='$res_participant_id'");
+                    $sub_billing_id = $this->super_model->select_column_custom_where("reserve_participant","res_billing_id","res_participant_id='$ressub_part_id'");
+                    // $ressub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$res_participant_id'");
+
 
                         // if($ressub_participant==0){
                         if($d->res_billing_id != $sub_billing_id){
                             $data['details'][]=array(
-                                'res_sales_detail_id'=>$d->reserve_sales_detail_id,
-                                'res_sales_id'=>$d->reserve_sales_id,
+                                'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
+                                'reserve_sales_id'=>$d->reserve_sales_id,
                                 'res_item_no'=>$d->res_item_no,
                                 'res_short_name'=>$d->res_short_name,
                                 'res_actual_billing_id'=>$d->res_actual_billing_id,
                                 'res_billing_id'=>$d->res_billing_id,
+                                'sub_billing_id'=>$sub_billing_id,
                                 'res_company_name'=>$d->res_company_name,
                                 'res_facility_type'=>$d->res_facility_type,
                                 'res_wht_agent'=>$d->res_wht_agent,
@@ -537,7 +539,7 @@ class Sales extends CI_Controller {
 
         }
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $this->load->view('sales/upload_reserve_sales',$data);
         $this->load->view('template/footer');
     }
@@ -3000,12 +3002,14 @@ public function print_BS_new(){
                $par=array();
                foreach($this->super_model->select_custom_where('reserve_participant',"res_tin='$participants'") AS $p){
                    $par[]="'".$p->res_settlement_id."'";
+                   $imp=implode(',',$par);
+                   $sql.= " sd.res_short_name IN($imp) AND ";
                }
-               $imp=implode(',',$par);
-               $sql.= " sd.res_short_name IN($imp) AND ";
+               
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE res_saved='1' AND ".$query;
+
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details sd INNER JOIN reserve_sales_transaction_head sh ON sd.reserve_sales_id=sh.reserve_sales_id $qu") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_reserve_details","series_number","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_reserve_details","old_series_no","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
@@ -3070,9 +3074,11 @@ public function print_BS_new(){
                $par=array();
                foreach($this->super_model->select_custom_where('reserve_participant',"res_tin='$participants'") AS $p){
                    $par[]="'".$p->res_settlement_id."'";
+                    $imp=implode(',',$par);
+                    $sql.= " sd.res_short_name IN($imp) AND ";
                }
-               $imp=implode(',',$par);
-               $sql.= " sd.res_short_name IN($imp) AND ";
+              
+               
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE res_saved='1' AND ".$query;
