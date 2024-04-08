@@ -331,14 +331,14 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all">Sales</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all">Purchases</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_all">Reserve</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_all">Reserve</a></li> -->
                 </ul>
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Reserve Transaction</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_sales_all">Sales</a></li>
-                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all">Purchases </a></li> -->
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_all">Purchases </a></li>
                 </ul>
             </li>
             <li class="dropdown">
