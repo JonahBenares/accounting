@@ -69,7 +69,7 @@ class Sales extends CI_Controller {
         $total_vat = $this->input->post('vat');
         $ewt_arr = $this->input->post('ewt_arr');
         $overall_total = $this->input->post('overall_total'); 
-        $count_head=is_countable($participant_id);
+        $count_head=count($participant_id);
 
         $actual_billing_id = $this->input->post('sub_participant');
         $vatable_sales = $this->input->post('vatable_sales');
@@ -78,7 +78,7 @@ class Sales extends CI_Controller {
         $ewt = $this->input->post('ewt');
         $net_amount = $this->input->post('net_amount');
         $details_id = $this->input->post('details_id');
-        $count_details=is_countable($actual_billing_id);
+        $count_details=count($actual_billing_id);
        
         for($x=0;$x<$count_head;$x++){
             $count_participant = $this->super_model->count_custom_where("bs_head", "participant_id = '$participant_id[$x]' AND reference_number = '$reference_number[$x]' AND billing_from = '$billing_from[$x]' AND billing_to = '$billing_to[$x]'");
