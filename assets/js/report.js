@@ -564,6 +564,48 @@ function filter_sales_all() {
 
 }
 
+function filter_reserve_sales_all() { 
+     var from = document.getElementById("from").value; 
+     var to = document.getElementById("to").value;
+     var participant = document.getElementById("participant").value;
+     var original = document.getElementById("og_copy").value;
+     var scanned = document.getElementById("s_copy").value;
+
+    if(from!=''){
+        from=from;
+    }else{
+        from='null';
+    }
+
+    if(to!=''){
+        to=to;
+    }else{
+        to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+    if(original!=''){
+        original=original;
+    }else{
+        original='null';
+    }
+
+    if(scanned!=''){
+        scanned=scanned;
+    }else{
+        scanned='null';
+    }
+
+      var loc= document.getElementById("baseurl").value;
+      window.location=loc+'reports/reserve_sales_all/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
+
+}
+
 function export_salesall() { 
      var e_from = document.getElementById("export_from").value; 
      var e_to = document.getElementById("export_to").value;
@@ -589,6 +631,34 @@ function export_salesall() {
 
       var loc= document.getElementById("baseurl1").value;
       window.location=loc+'reports/export_sales_all/'+part+'/'+e_from+'/'+e_to;
+
+}
+
+function export_reserve_salesall() { 
+     var e_from = document.getElementById("export_from").value; 
+     var e_to = document.getElementById("export_to").value;
+     var participant = document.getElementById("participant1").value;
+
+    if(e_from!=''){
+        e_from=e_from;
+    }else{
+        e_from='null';
+    }
+
+    if(e_to!=''){
+        e_to=e_to;
+    }else{
+        e_to='null';
+    }
+
+    if(participant!=''){
+        part=participant;
+    }else{
+        part='null';
+    }
+
+      var loc= document.getElementById("baseurl1").value;
+      window.location=loc+'reports/export_reserve_sales_all/'+part+'/'+e_from+'/'+e_to;
 
 }
 
@@ -884,6 +954,32 @@ function filter_collection() {
     window.location=loc+'reports/collection_report/'+collection_date+'/'+reference_no+'/'+settlement_id;
 }
 
+function filter_reserve_collection() { 
+     var collection_date = document.getElementById("collection_date").value; 
+     var reference_no = document.getElementById("reference_no").value;
+     var settlement_id = document.getElementById("settlement_id").value;
+
+    if(collection_date!=''){
+        collection_date=collection_date;
+    }else{
+        collection_date='null';
+    }
+
+    if(reference_no!=''){
+        reference_no=reference_no;
+    }else{
+        reference_no='null';
+    }
+
+    if(settlement_id!=''){
+        settlement_id=settlement_id;
+    }else{
+        settlement_id='null';
+    }
+    var loc= document.getElementById("baseurl").value;
+    window.location=loc+'reports/reserve_collection_report/'+collection_date+'/'+reference_no+'/'+settlement_id;
+}
+
 
 function export_cs_ledger() { 
     var count = $('#reference_no_export option:selected').length;
@@ -1030,6 +1126,25 @@ function filterUnpaidSalesAdj(){
     window.location=loc+'reports/unpaid_invoices_salesadj/'+years+'/'+due;          
 }
 
+function filterUnpaidReserveSales(){
+    var year= document.getElementById("year").value;
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'reports/unpaid_invoices_reserve_sales/'+years+'/'+due;          
+}
+
 function filterSalesMainEWT(){
     var from= document.getElementById("from").value;
     var to= document.getElementById("to").value;
@@ -1047,6 +1162,25 @@ function filterSalesMainEWT(){
         var date_to='null';
     }
     window.location=loc+'reports/sales_main_ewt_variance/'+date_from+'/'+date_to;          
+}
+
+function filterResSalesMainEWT(){
+    var from= document.getElementById("from").value;
+    var to= document.getElementById("to").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(from!=''){
+        var date_from=from;
+    }else{
+        var date_from='null';
+    }
+
+    if(to!=''){
+        var date_to=to;
+    }else{
+        var date_to='null';
+    }
+    window.location=loc+'reports/res_sales_main_ewt_variance/'+date_from+'/'+date_to;          
 }
 
 function exportSalesMainEWT() { 
@@ -1067,6 +1201,27 @@ function exportSalesMainEWT() {
 
       var loc= document.getElementById("baseurl1").value;
       window.location=loc+'reports/export_sales_main_ewt_variance/'+e_from+'/'+e_to;
+
+}
+
+function exportResSalesMainEWT() { 
+     var e_from = document.getElementById("export_from").value; 
+     var e_to = document.getElementById("export_to").value;
+
+    if(e_from!=''){
+        e_from=e_from;
+    }else{
+        e_from='null';
+    }
+
+    if(e_to!=''){
+        e_to=e_to;
+    }else{
+        e_to='null';
+    }
+
+      var loc= document.getElementById("baseurl1").value;
+      window.location=loc+'reports/export_res_sales_main_ewt_variance/'+e_from+'/'+e_to;
 
 }
 

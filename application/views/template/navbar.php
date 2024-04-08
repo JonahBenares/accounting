@@ -110,6 +110,7 @@
                 <ul class="dropdown-menu">
                     <?php if($_SESSION['department']=='Billing' || $_SESSION['department']=='billing' || $_SESSION['user_id']==1){ ?>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/customer_list">Customer</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/reserve_customer_list">Reserve Customer</a></li>
                     <?php } ?>
                     <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/supplier_list">Supplier</a></li> -->
                     <li><a class="nav-link" href="<?php echo base_url(); ?>masterfile/user_list">Users</a></li>
@@ -124,6 +125,16 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales_adjustment">Adjustment</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span class="line-height">Upload Reserve <br>Transaction</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_reserve_sales">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales_adjustment">Adjustment</a></li> -->
                 </ul>
             </li>
             <!-- <li class="dropdown">
@@ -162,6 +173,16 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_adjustment">Adjustment</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span class="line-height">Reserve BIR Monitoring Bulk Update</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_reserve_main">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_update_adjustment">Adjustment</a></li> -->
+                </ul>
+            </li>
              <li>
                 <a href="<?php echo base_url(); ?>sales/bulk_invoicing" ><i data-feather="briefcase"></i><span class="line-height">Bulk Upload - Invoicing of Sales Adjustments</span></a>
             </li>
@@ -173,6 +194,16 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_adjustment">Adjustment</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>Reserve Transaction</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/reserve_sales_wesm">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_adjustment">Adjustment</a></li> -->
                 </ul>
             </li>
             <li class="menu-header">Purchases</li>
@@ -263,6 +294,9 @@
             <li>
                 <a href="<?php echo base_url(); ?>reports/collection_report" ><i data-feather="layout"></i><span>Collection Report</span></a>
             </li>
+            <li>
+                <a href="<?php echo base_url(); ?>reports/reserve_collection_report" ><i data-feather="layout"></i><span>Reserve Collection Report</span></a>
+            </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Ledger</span></a>
                 <ul class="dropdown-menu">
@@ -301,6 +335,13 @@
                 </ul>
             </li>
             <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Reserve Transaction</span></a> 
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_sales_all">Sales</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all">Purchases </a></li> -->
+                </ul>
+            </li>
+            <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Adjustment Transaction</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all_adjustment">Sales</a></li>
@@ -315,10 +356,24 @@
                 </ul>
             </li>
             <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Unpaid Reserve Invoices</span></a> 
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_reserve_sales">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_salesadj">Adjustment </a></li> -->
+                </ul>
+            </li>
+            <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Sales Total EWT Variance</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_main_ewt_variance">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_adj_ewt_variance">Adjustment</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Reserve Sales Total EWT Variance</span></a> 
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/res_sales_main_ewt_variance">Main</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_adj_ewt_variance">Adjustment</a></li> -->
                 </ul>
             </li>
             <li class="dropdown">
