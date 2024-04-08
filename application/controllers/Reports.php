@@ -6842,7 +6842,7 @@ class Reports extends CI_Controller {
         $data['total_ewt_balance']=0;
         $total_ewt_balance=array();
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details std INNER JOIN reserve_sales_transaction_head sth ON std.reserve_sales_id=sth.reserve_sales_id WHERE $qu ORDER BY res_short_name ASC") AS $ui){
-                $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->res_reference_number' AND settlement_id ='$ui->res_short_name'");
+                $count_collection = $this->super_model->count_custom_where("collection_reserve_details", "reference_no='$ui->res_reference_number' AND settlement_id ='$ui->res_short_name'");
                 $total = $ui->res_vatable_sales+$ui->res_zero_rated_ecozones+$ui->res_vat_on_sales;
                 $days_lapsed=$this->dateDifference($ui->res_due_date, $today);
             if($count_collection == 0 && $total != 0){
@@ -6924,7 +6924,7 @@ class Reports extends CI_Controller {
             $total_vat = array();
             $total_overdue = array();
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details std INNER JOIN reserve_sales_transaction_head sth ON std.reserve_sales_id=sth.reserve_sales_id WHERE $qu ORDER BY res_short_name ASC") AS $ui){
-                $count_collection = $this->super_model->count_custom_where("collection_details", "reference_no='$ui->res_reference_number' AND settlement_id ='$ui->res_short_name'");
+                $count_collection = $this->super_model->count_custom_where("collection_reserve_details", "reference_no='$ui->res_reference_number' AND settlement_id ='$ui->res_short_name'");
                 $total = $ui->res_vatable_sales+$ui->res_zero_rated_ecozones+$ui->res_vat_on_sales;
                 $days_lapsed=$this->dateDifference($ui->res_due_date, $today);
 
