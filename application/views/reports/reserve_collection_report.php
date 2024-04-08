@@ -26,7 +26,7 @@
                         <div class="card-header">                        
                             <div class="row">
                                 <div class="col-4">
-                                    <h4>Collection Report </h4>
+                                    <h4>Reserve Collection Report </h4>
                                 </div>
                                 <div class="col-8">
                                     <!-- <button onclick="printDiv('printableArea')" class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button> -->
