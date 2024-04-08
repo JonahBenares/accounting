@@ -174,7 +174,7 @@
                                             <select class="form-control" name="res_status" id="res_status">
                                                 <option value='' selected></option>
                                                 <?php foreach($status as $s) { ?>
-                                                    <option value='<?php echo $s->res_status; ?>' <?php echo (($s->status == $det['res_status']) ? ' selected' : ''); ?>><?php echo $s->res_status; ?></option>
+                                                    <option value='<?php echo $s->res_status; ?>' <?php echo (($s->res_status == $det['res_status']) ? ' selected' : ''); ?>><?php echo $s->res_status; ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
