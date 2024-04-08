@@ -2982,7 +2982,7 @@ public function print_BS_new(){
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant WHERE res_participant_name != '' GROUP BY res_tin ORDER BY res_participant_name");
         $data['participant_name']=$this->super_model->select_column_where('reserve_participant','res_participant_name','res_tin',$participants);
         $this->load->view('template/header');
-        $this->load->view('template/navbar');
+        //$this->load->view('template/navbar');
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
             $sql='';
             if($ref_no!='null'){
@@ -3081,9 +3081,9 @@ public function print_BS_new(){
             $qu = " WHERE res_saved='1' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details sd INNER JOIN reserve_sales_transaction_head sh ON sd.reserve_sales_id=sh.reserve_sales_id $qu") AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("reserve_participant","res_participant_id","res_billing_id='$d->res_billing_id'");
-                $sub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$res_participant_id'");
-                $series_number=$this->super_model->select_column_custom_where("collection_reserve_details","series_number","res_reference_no='$d->res_reference_number' AND res_settlement_id='$d->res_short_name'");
-                $old_series_no=$this->super_model->select_column_custom_where("collection_reserve_details","old_series_no","res_reference_no='$d->res_reference_number' AND res_settlement_id='$d->res_short_name'");
+                $sub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$participant_id'");
+                $series_number=$this->super_model->select_column_custom_where("collection_reserve_details","series_number","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
+                $old_series_no=$this->super_model->select_column_custom_where("collection_reserve_details","old_series_no","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
                 if($sub_participant==0){
                     $data['details'][]=array(
                         'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
