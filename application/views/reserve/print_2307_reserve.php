@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/reserve.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script>
     function goBack() {
@@ -15,18 +15,17 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print2307-style.css">
     <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
-
 <div class="" id="printbutton">
     <center>
-        <?php foreach($prev_purchase_details_id AS $prev){ ?>
-        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $prev->purchase_detail_id; ?>" class="btn btn-info">Previous</a>
+        <?php foreach($prev_reserve_details_id AS $prev){ ?>
+        <a href="<?php echo base_url(); ?>reserve/print_2307_reserve/<?php echo $reserve_id; ?>/<?php echo $prev->reserve_detail_id; ?>" class="btn btn-info">Previous</a>
         <?php } ?>
         <button class="btn btn-warning " onclick="goBack()">Back</button>
-        <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $purchase_detail_id; ?>'); printDiv('printableArea')">Print</button>
+        <button class="btn btn-success " id="counter_print" onclick="countPrint('<?php echo base_url(); ?>','<?php echo $reserve_detail_id; ?>'); printDiv('printableArea')">Print</button>
         <button class="btn btn-success " onclick="getPDF('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo $billing_month; ?>','<?php echo date("Ymd"); ?>')">Save as PDF</button>
         <button class="btn btn-success " onclick="getPDFZoomed('<?php echo $short_name; ?>', '<?php echo $refno; ?>','<?php echo $billing_month; ?>','<?php echo date("Ymd"); ?>')">Save as PDF (zoomed)</button>
-        <?php foreach($next_purchase_details_id AS $next){ ?>
-        <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $purchase_id; ?>/<?php echo $next->purchase_detail_id; ?>" class="btn btn-primary">Next</a>
+        <?php foreach($next_reserve_details_id AS $next){ ?>
+        <a href="<?php echo base_url(); ?>reserve/print_2307_reserve/<?php echo $reserve_id; ?>/<?php echo $next->reserve_detail_id; ?>" class="btn btn-primary">Next</a>
         <?php } ?>
     </center>
     <br>
@@ -40,14 +39,10 @@
         <label class="period_to"><?php echo $period_to; ?></label>
         <?php $tin=explode("-",$tin); ?>
         <div class="tin1">
-           <!-- <label class=""><?php echo $tin[0]; ?></label> 
-           <label class=""><?php echo $tin[1]; ?></label> 
-           <label class=""><?php echo $tin[2]; ?></label>  -->
            <label class=""><?php echo (!empty($tin[0])) ? $tin[0] : ''; ?></label> 
            <label class=""><?php echo (!empty($tin[1])) ? $tin[1] : ''; ?></label> 
            <label class=""><?php echo (!empty($tin[2])) ? $tin[2] : ''; ?></label> 
            <label class="last1"><?php echo (!empty($tin[3])) ? $tin[3] : ''; ?></label> 
-           <!-- <label class="last1">0000</label>  -->
         </div>
         <label class="payee"><?php echo $name; ?></label>
         <label class="address1"><?php echo $address; ?></label>
@@ -83,121 +78,74 @@
 </div>
 </center>
 <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
-<input type="hidden" name="purchase_detail_id" id="purchase_detail_id" value="<?php echo $purchase_detail_id; ?>">
+<input type="hidden" name="reserve_detail_id" id="reserve_detail_id" value="<?php echo $reserve_detail_id; ?>">
 </html>
-
 <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
 <script type="text/javascript">
     function getPDF(shortname, refno,billing_month, timestamp){
-
         var HTML_Width = $(".canvas_div_pdf").width();
-
-       
-        
-         var HTML_Height = $(".canvas_div_pdf").height();
-        
+        var HTML_Height = $(".canvas_div_pdf").height();
         var top_left_margin = 10;
         var PDF_Width = HTML_Width+(top_left_margin*2);
-         var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
-
-       
-       
+        var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
         var canvas_image_width = HTML_Width;
         var canvas_image_height = HTML_Height;
-
-      
-        
         var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
-        
-
         html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
             useCORS: true,
             logging: false,
             height: window.outerHeight + window.innerHeight,
             windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
             canvas.getContext('2d');
-        
-            
-            
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
             var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
             pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-            
-            
             for (var i = 1; i <= totalPDFPages; i++) { 
                 pdf.addPage(PDF_Width, PDF_Height);
                 pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
             }
-            
-
-           
-           pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+            pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
         });
     };
 
-     function getPDFZoomed(shortname, refno,billing_month, timestamp){
-
+    function getPDFZoomed(shortname, refno,billing_month, timestamp){
         var HTML_Width = $(".canvas_div_pdf").width();
-
-       
-        
-         var HTML_Height = 1495;
-        //  var HTML_Height = 1900;
-        
+        var HTML_Height = 1495;
         var top_left_margin = 10;
         var PDF_Width = HTML_Width+(top_left_margin*2);
-         var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
-
-       
-       
+        var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
         var canvas_image_width = HTML_Width;
         var canvas_image_height = HTML_Height;
-
-      
-        
-        var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-2;
-        
-
+        // var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-2;
+        var totalPDFPages = 1;
         html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
             useCORS: true,
             logging: false,
             height: window.outerHeight + window.innerHeight,
-            windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
+            windowHeight: window.outerHeight + window.innerHeight
+        }).then(function(canvas) {
             canvas.getContext('2d');
-        
-            
-            
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
             var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
             pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-            
-            
             // for (var i = 1; i <= totalPDFPages; i++) { 
             //     pdf.addPage(PDF_Width, PDF_Height);
             //     pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
             // }
-            
-
             // let rno = refno.split("-");
-            //         let newref = rno[2] + rno[3].slice(0, -1);
-           pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+            // let newref = rno[2] + rno[3].slice(0, -1);
+            pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
         });
     };
 </script>
-<!-- <script src="<?php echo base_url(); ?>assets/js/jspdf.umd.min.js"></script> -->
 <script type="text/javascript">
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
-
         document.body.innerHTML = printContents;
-
         window.print();
-
         document.body.innerHTML = originalContents;
     }
-
-   
 </script>

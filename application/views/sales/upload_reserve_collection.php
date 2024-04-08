@@ -2,7 +2,7 @@
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
 <?php
 
-if(!empty($collection_id)){
+if(!empty($res_collection_id)){
     $readonly = 'readonly';
 } else {
     $readonly='';
@@ -21,7 +21,7 @@ if(!empty($saved)){
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Bulk Collection</h4>
+                            <h4>Bulk Reserve Collection</h4>
                         </div>
                         <div class="card-body">
                           <?php if($saved==0){ ?>  
@@ -30,7 +30,7 @@ if(!empty($saved)){
                                     <div class="col-lg-4 col-md-4 col-sm-4 offset-lg-2" >
                                         <div class="form-group">
                                             <label>Collection Date:</label>
-                                            <input type="date" name="collection_date" id="collection_date" value="<?php echo (!empty($collection_id) ? $collection_date : ''); ?>" required <?php echo $readonly; ?> class="form-control">
+                                            <input type="date" name="collection_date" id="collection_date" value="<?php echo (!empty($res_collection_id) ? $collection_date : ''); ?>" required <?php echo $readonly; ?> class="form-control">
                                         </div>
                                     </div>
 
@@ -38,11 +38,11 @@ if(!empty($saved)){
                                         <div class="form-group">
                                             <label><br></label>
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                            <?php if(empty($collection_id)){ ?>
-                                                <input type='button' class="btn btn-primary" id='save_head_button' type="button" onclick="proceed_collection()" value="Proceed" style="width: 100%;">
-                                                <input type='button' class="btn  btn-danger" id="cancel" onclick="cancelCollection()" value="Cancel Transaction" style='display: none;width: 100%;'>
+                                            <?php if(empty($res_collection_id)){ ?>
+                                                <input type='button' class="btn btn-primary" id='save_head_button' type="button" onclick="proceed_collection_reserve()" value="Proceed" style="width: 100%;">
+                                                <input type='button' class="btn  btn-danger" id="cancel" onclick="cancelReserveCollection()" value="Cancel Transaction" style='display: none;width: 100%;'>
                                              <?php } else { ?>
-                                                <input type='button' class="btn btn-danger" id="cancel" onclick="cancelCollection()" value="Cancel Transaction" style="width: 100%;">
+                                                <input type='button' class="btn btn-danger" id="cancel" onclick="cancelReserveCollection()" value="Cancel Transaction" style="width: 100%;">
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -50,7 +50,7 @@ if(!empty($saved)){
                                 
                             </form>
                             <form method="POST" id="upload_bulkcollection">
-                                 <div id="upload" <?php echo (empty($collection_id) ? 'style="display:none"' : ''); ?>>
+                                 <div id="upload" <?php echo (empty($res_collection_id) ? 'style="display:none"' : ''); ?>>
                                     <hr>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
@@ -58,7 +58,7 @@ if(!empty($saved)){
                                                 <div class="input-group mb-0">
                                                     <input type="file" class="form-control" name="doc" placeholder="" id="bulk_collection">
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-primary" id="proceed_collection1" onclick="upload_collection1()"  type="button">Upload</button>
+                                                        <button class="btn btn-primary" id="proceed_collection1" onclick="upload_reserve_collection()"  type="button">Upload</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -66,7 +66,7 @@ if(!empty($saved)){
                                     </div>
                                     <br>
                                 </div>
-                                 <input type='hidden' name='collection_id' id='collection_id'  value="<?php echo (!empty($collection_id) ? $collection_id : ''); ?>">
+                                 <input type='hidden' name='res_collection_id' id='res_collection_id'  value="<?php echo (!empty($res_collection_id) ? $res_collection_id : ''); ?>">
                             </form>
                              <?php } else {?> 
                                 <div class="col-lg-4">
@@ -98,7 +98,6 @@ if(!empty($saved)){
                                                 <th width="3%" align="center">VAT</th>
                                                 <th width="3%" align="center">EWT</th>
                                                 <th width="3%" align="center">Total</th>
-                                                <!-- <th width="5%" align="center">Def Int</th> -->
                                                 <th width="3%" align="center">Overall Total</th>
                                             </tr>
                                         </thead>
@@ -109,8 +108,8 @@ if(!empty($saved)){
                                                     $key = $value['series_number'].$value['settlement_id'].$value['reference_no'];
                                                     if(!isset($data2[$key])) {
                                                         $data2[$key] = array(
-                                                            'collection_id' => $value['collection_id'], 
-                                                            'collection_details_id' => $value['collection_details_id'], 
+                                                            'res_collection_id' => $value['res_collection_id'], 
+                                                            'res_collection_details_id' => $value['res_collection_details_id'], 
                                                             'item_no_array' => array(), 
                                                             'series_number' => $value['series_number'], 
                                                             'billing_remarks' => array(),
@@ -135,7 +134,6 @@ if(!empty($saved)){
                                                             'ewt_single'=>$value['ewt'], 
                                                             'total' => array(),
                                                             'total_single'=>$value['total'],
-                                                            //'defint' => array(),
                                                             'defint_single'=>$value['defint'],
                                                             'or_date_single'=>$value['or_date'],  
                                                             'or_no_remarks_single'=>$value['or_no_remarks'],  
@@ -155,7 +153,6 @@ if(!empty($saved)){
                                                     $data2[$key]['vat'][] = $value['vat'];
                                                     $data2[$key]['ewt'][] = $value['ewt'];
                                                     $data2[$key]['total'][] = $value['total'];
-                                                    //$data2[$key]['defint'][] = $value['defint'];
                                                 }
                                                 $x=1;
                                                 foreach($data2 as $log) {
@@ -163,34 +160,27 @@ if(!empty($saved)){
                                             <tr>
                                                 <td class="td-btm pt-1 pb-1" style="vertical-align: middle;" align="center">
                                                     <div class="btn-group">
-                                                        <a href="<?php echo base_url(); ?>sales/print_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white"><span class="fas fa-print"></span></a>
-                                                    
-                                                        <!-- <button title="Edit Series Number" type="button" class="btn btn-info btn-sm" id="seriesupdate" data-toggle="modal" data-target="#updateSeries" data-name="<?php echo $log['series_number']; ?>" data-id='<?php echo $log['collection_id']; ?>' data-settlement='<?php echo $log['settlement_id_single'];?>' data-reference='<?php echo $log['reference_no_single'];?>'>
-                                                            <span class="m-0 fas fa-edit"></span>
-                                                        </button> -->
+                                                        <a href="<?php echo base_url(); ?>sales/print_OR_reserve/<?php echo $log['res_collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white"><span class="fas fa-print"></span></a>
                                                     </div>
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
-                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onchange="updateSeries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input Series Number'>
+                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $log['series_number'];?>" onchange="updateSeriesReserve('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['res_collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input Series Number'>
                                                     <span hidden><?php echo $log['series_number'];?></span>
-                                                    <!-- <input type="" name="collection_id" id="collection_id<?php echo $x; ?>" value='<?php echo $log['collection_id'];?>'>
-                                                    <input type="" name="settlement_id_single" id="settlement_id_single<?php echo $x; ?>" value='<?php echo $log['settlement_id_single'];?>'>
-                                                    <input type="" name="reference_no_single" id="reference_no_single<?php echo $x; ?>" value='<?php echo $log['reference_no_single'];?>'>-->
                                                     <input type="hidden" name="old_series_no" id="old_series_no<?php echo $x; ?>" value='<?php echo $log['series_number'];?>'> 
                                                 </td>
                                                 <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
-                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="date" name="or_date" id="or_date<?php echo $x; ?>" value="<?php echo $log['or_date_single'];?>" onchange="updateORDate('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');">
+                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="date" name="or_date" id="or_date<?php echo $x; ?>" value="<?php echo $log['or_date_single'];?>" onchange="updateORDateReserve('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['res_collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');">
                                                     <!-- <span hidden><?php echo $log['or_date_single'];?></span> -->
                                                     <input type="hidden" name="old_or_date" id="old_or_date<?php echo $x; ?>" value='<?php echo $log['or_date_single'];?>'> 
                                                 </td>
                                                 <?php if(!empty($collection)){ if($saved!=0){ ?>
                                                 <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
-                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="or_no_remarks" id="or_no_remarks<?php echo $x; ?>" value="<?php echo $log['or_no_remarks_single'];?>" onchange="updateorRemarks('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input OR Remarks'>
+                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="or_no_remarks" id="or_no_remarks<?php echo $x; ?>" value="<?php echo $log['or_no_remarks_single'];?>" onchange="updateorRemarksReserve('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['res_collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input OR Remarks'>
                                                     <span hidden><?php echo $log['or_no_remarks_single'];?></span>
                                                 </td>
                                                 <?php } } ?>
                                                  <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
-                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="def_int" id="def_int<?php echo $x; ?>" value="<?php echo $log['defint_single'];?>" onchange="updateDefInt('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input Def Int'>
+                                                    <input  style="border:0px solid #000;background: #dde1ff;padding: 3px;" type="text" name="def_int" id="def_int<?php echo $x; ?>" value="<?php echo $log['defint_single'];?>" onchange="updateDefIntReserve('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $log['res_collection_id'];?>','<?php echo $log['settlement_id_single'];?>','<?php echo $log['reference_no_single'];?>','<?php echo implode(',',$log['item_no_array']) ?>');" placeholder='Input Def Int'>
                                                     <span hidden><?php echo $log['defint_single'];?></span>
                                                 </td>
                                                 <?php if($log['count_series']>=1){ ?>
@@ -205,7 +195,6 @@ if(!empty($saved)){
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
-                                                    <!-- <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td> -->
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php }else if($log['count_series']<=2){ ?>
                                                     <td class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['billing_remarks']); ?></td>
@@ -219,7 +208,6 @@ if(!empty($saved)){
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['vat']); ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['ewt']); ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo implode("<br /><br />",$log['total']); ?></td>
-                                                    <!-- <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td> -->
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php }else{ ?>
                                                     <td class="td-btm pt-1 pb-1"><?php echo $log['billing_remarks_single']; ?></td>
@@ -233,7 +221,6 @@ if(!empty($saved)){
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['vat_single']; ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['ewt_single']; ?></td>
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['total_single']; ?></td>
-                                                    <!-- <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['defint_single']; ?></td> -->
                                                     <td align="center" class="td-btm pt-1 pb-1"><?php echo $log['overall_total']; ?></td>
                                                 <?php } ?>
                                             </tr>
@@ -245,7 +232,7 @@ if(!empty($saved)){
                         </div>
                         <?php if(!empty($collection)){ if($saved==0){ ?>
                         <div id='alt' style="font-weight:bold"></div>
-                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAllCollection();" value="Save">
+                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAllCollectionReserve();" value="Save">
                         <?php } } ?>
                     </div>
                 </div>

@@ -75,6 +75,11 @@ $("#table-7").dataTable({
 
 });
 
+$("#table-8").dataTable({
+  order: [[1, 'asc']],
+  "scrollX": true,
+});
+
 
 var table = $('#example').DataTable( {
     scrollX:        true,

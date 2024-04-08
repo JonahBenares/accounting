@@ -142,6 +142,16 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_list">Collection List</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>Reserve Collected</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_reserve_collection">Upload Collection</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_reserve_list">Collection List</a></li>
+                </ul>
+            </li>
              <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                     <i data-feather="briefcase"></i>
@@ -177,9 +187,24 @@
                 </ul>
             </li>
             <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span class="line-height">Upload Reserve WESM <br>Transaction</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reserve/upload_reserve">Main</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
                 <a href="<?php echo base_url(); ?>purchases/payment_list" class="nav-link">
                     <i data-feather="dollar-sign"></i>
                     <span>Payment</span>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="<?php echo base_url(); ?>reserve/payment_reserve_list" class="nav-link">
+                    <i data-feather="dollar-sign"></i>
+                    <span>Reserve Payment</span>
                 </a>
             </li>
             <li class="dropdown">
@@ -189,9 +214,21 @@
                 </a>
             </li>
             <li class="dropdown">
+                <a href="<?php echo base_url(); ?>reserve/paid_reserve_list" class="nav-link">
+                    <i data-feather="dollar-sign"></i>
+                    <span>Reserve Paid</span>
+                </a>
+            </li>
+            <li class="dropdown">
                 <a href="<?php echo base_url(); ?>purchases/or_bulk" class="nav-link">
                     <i data-feather="edit"></i>
                     <span>Bulk OR Update</span>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="<?php echo base_url(); ?>reserve/or_reserve_bulk" class="nav-link">
+                    <i data-feather="edit"></i>
+                    <span>Bulk Reserve OR Update</span>
                 </a>
             </li>
             <li class="dropdown">
@@ -202,6 +239,15 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment">Adjustment</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>WESM Reserve Transaction</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reserve/reserve_wesm">Main</a></li>
                 </ul>
             </li>
             <li class="menu-header">Report</li>
@@ -250,7 +296,8 @@
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Transaction</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all">Sales</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all">Purchases </a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all">Purchases</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_all">Reserve</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -279,6 +326,12 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance">Adjustment</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Reserve Total Amount Variance</span></a> 
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_main_total_variance">Main</a></li>
                 </ul>
             </li>
             <br><br>

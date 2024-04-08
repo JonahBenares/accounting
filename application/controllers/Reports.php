@@ -7568,4 +7568,399 @@ class Reports extends CI_Controller {
         // readfile($exportfilename);
     }
 
+    public function reserve_all(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $original=$this->uri->segment(6);
+        $scanned=$this->uri->segment(7);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $part=$this->super_model->select_column_where("reserve_participant","res_participant_name","res_tin",$participant);
+        $data['part'] = $part;
+        $data['original'] = $original;
+        $data['scanned'] = $scanned;
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant WHERE res_participant_name != '' GROUP BY res_tin ORDER BY res_participant_name");
+        $sql="";
+        if(!empty($participant) && $participant!='null'){
+            $par=array();
+            foreach($this->super_model->select_custom_where('reserve_participant',"res_tin='$participant'") AS $p){
+                $par[]="'".$p->res_settlement_id."'";
+            }
+            $imp=implode(',',$par);
+            $sql.= " short_name IN($imp) AND ";
+        } if(!empty($from) && !empty($from) && $from!='null' && $to != 'null'){
+            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+        } if($original!='null' && isset($original)){
+             $sql.= "original_copy = '$original' AND "; 
+        } if($scanned!='null'  && isset($scanned)){
+             $sql.= "scanned_copy = '$scanned' AND ";
+        }
+        $query=substr($sql,0,-4);
+        $qu = "saved='1' AND adjustment !='1' AND ".$query;
+        $total_sum[]=0;
+        if(!empty($query)){
+            foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd ON pth.reserve_id = ptd.reserve_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC") AS $pth){
+                $participant_name=$this->super_model->select_column_where("reserve_participant","res_participant_name","res_billing_id",$pth->billing_id);
+                if(!empty($pth->company_name) && date('Y',strtotime($pth->create_date))==date('Y')){
+                    $comp_name=$pth->company_name;
+                }else{
+                    $comp_name=$participant_name;
+                }
+                $total=($pth->vatables_purchases+$pth->vat_on_purchases)-$pth->ewt;
+                $total_sum[]=$total;
+                $data['reserveall'][]=array(
+                    'participant_name'=>$comp_name,
+                    'billing_id'=>$pth->billing_id,
+                    'reference_number'=>$pth->reference_number,
+                    'billing_from'=>$pth->billing_from,
+                    'billing_to'=>$pth->billing_to,
+                    'vatables_purchases'=>$pth->vatables_purchases,
+                    'vat_on_purchases'=>$pth->vat_on_purchases,
+                    'zero_rated_purchases'=>$pth->zero_rated_purchases,
+                    'zero_rated_ecozones'=>$pth->zero_rated_ecozones,
+                    'ewt'=>$pth->ewt,
+                    'or_no'=>$pth->or_no,
+                    'total_update'=>$pth->total_update,
+                    'original_copy'=>$pth->original_copy,
+                    'scanned_copy'=>$pth->scanned_copy,
+                    'total'=>$total,
+                );
+            }
+        }
+        $data['total_sum']=array_sum($total_sum);
+        $this->load->view('reports/reserve_all',$data);
+        $this->load->view('template/footer');
+    }
+    
+    public function export_reserve_all(){
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $objPHPExcel = new Spreadsheet();
+        $exportfilename="Reserve Wesm All Transcations.xlsx";
+        $sql='';
+        if($participant!='null'){
+            $sql.= " res_tin = '$participant' AND "; 
+        }
+        if($from!='null' && $to != 'null'){
+            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+        }
+        $query=substr($sql,0,-4);
+        if($participant !='null' || $from != 'null' || $to != 'null'){
+            $qu = " saved = '1' AND adjustment != '1' AND ".$query;
+        }else{
+            $qu = " saved = '1' AND adjustment != '1'";
+        }
+        $sheetno=0;
+        $styleArray = array(
+            'borders' => array(
+                'allBorders' => array(
+                    'borderStyle' => border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                )
+            )
+        );
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head pah INNER JOIN reserve_transaction_details pad ON pah.reserve_id = pad.reserve_id INNER JOIN reserve_participant p ON p.res_settlement_id = pad.short_name WHERE res_participant_name != '' AND $qu GROUP BY res_tin ORDER BY res_participant_name") AS $head){
+            $settlement_id=$this->super_model->select_column_custom_where("reserve_participant",'res_settlement_id',"res_tin = '$head->tin' ORDER BY res_settlement_id ASC LIMIT 1");
+            $objWorkSheet = $objPHPExcel->createSheet($sheetno);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
+            foreach(range('A','N') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A1', "Billing Period");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B1', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C1', "Transaction Reference Number");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D1', "Company Name");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E1', "Vatables Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F1', "Zero-rated Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G1', "Zero-rated Ecozones Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H1', "Vat On Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I1', "EWT Purchases");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "Total");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "OR Number");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L1', "Total Amount");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M1', "Original Copy");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N1', "Scanned Copy");
+            $objPHPExcel->getActiveSheet()->getStyle("A1:N1")->applyFromArray($styleArray);
+            $total_vatables=array();
+            $total_zerorated_purchases=array();
+            $total_zerorated_ecozones=array();
+            $total_vat=array();
+            $total_ewt=array();
+            $total_zero_rated=array();
+            $total_ewt_amount=array();
+            $total_update_amount=array();
+            $overall_total=array();
+            $purchaseall=array();
+            foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head pah INNER JOIN reserve_transaction_details pad ON pah.reserve_id = pad.reserve_id INNER JOIN reserve_participant p ON p.res_billing_id = pad.billing_id WHERE res_tin='$head->tin' AND res_participant_name != '' AND $qu ORDER BY billing_from ASC, reference_number ASC, p.res_billing_id ASC") AS $pah){
+                if(!empty($pah->company_name) && date('Y',strtotime($pah->create_date))==date('Y')){
+                    $comp_name=$pah->company_name;
+                }else{
+                    $comp_name=$pah->res_participant_name;
+                }
+                $billing_date = date("M. d, Y",strtotime($pah->billing_from))." - ".date("M. d, Y",strtotime($pah->billing_to));
+                $tin=$this->super_model->select_column_where("reserve_participant","res_tin","res_billing_id",$pah->billing_id);
+                $purchaseall[]=array(
+                    'billing_date'=>$billing_date,
+                    'participant_name'=>$comp_name,
+                    'billing_id'=>$pah->billing_id,
+                    'reference_number'=>$pah->reference_number,
+                    'vatables_purchases'=>$pah->vatables_purchases,
+                    'zero_rated_purchases'=>$pah->zero_rated_purchases,
+                    'zero_rated_ecozones'=>$pah->zero_rated_ecozones,
+                    'vat_on_purchases'=>$pah->vat_on_purchases,
+                    'ewt'=>$pah->ewt,
+                    'or_no'=>$pah->or_no,
+                    'total_update'=>$pah->total_update,
+                    'original_copy'=>$pah->original_copy,
+                    'scanned_copy'=>$pah->scanned_copy,
+                    'zero_rated_purchases'=>$pah->zero_rated_purchases,
+                    'zero_rated_ecozones'=>$pah->zero_rated_ecozones,
+                    'short_name'=>$pah->short_name,
+                    'tin'=>$tin,
+                );
+            }
+            $row = 2;
+            $startRow = -1;
+            $previousKey = '';
+            $num=2;
+            foreach($purchaseall AS $index => $value){
+                if($startRow == -1){
+                    $startRow = $row;
+                    $previousKey = $value['billing_date'];
+                }
+                $zero_rated=$value['zero_rated_purchases']+$value['zero_rated_ecozones'];
+                $total=($value['vatables_purchases']+$zero_rated+$value['vat_on_purchases'])-$value['ewt'];
+                if($value['tin']==$pah->tin){
+                    $total_vatables[]=$value['vatables_purchases'];
+                    $total_zerorated_purchases[]=$value['zero_rated_purchases'];
+                    $total_zerorated_ecozones[]=$value['zero_rated_ecozones'];
+                    $total_vat[]=$value['vat_on_purchases'];
+                    $total_ewt[]=$value['ewt'];
+                    $total_zero_rated[]=$zero_rated;
+                    $total_update_amount[]=$value['total_update'];
+                    $overall_total[]=$total;
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['reference_number']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['participant_name']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, "-".$value['vatables_purchases']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, "-".$value['zero_rated_purchases']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, "-".$value['zero_rated_ecozones']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$value['vat_on_purchases']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $value['ewt']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, "-".$total);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, $value['or_no']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "-".$value['total_update']);
+                    if($value['original_copy']==1){
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "Yes");
+                    }else if($value['original_copy']==0){
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "No");
+                    }else{
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, "");
+                    }
+                    if($value['scanned_copy']==1){
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N'.$num, "Yes");
+                    }else if($value['scanned_copy']==0){
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N'.$num, "No");
+                    }else{
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('N'.$num, "");
+                    }
+                    $nextKey = isset($purchaseall[$index+1]) ? $purchaseall[$index+1]['billing_date'] : null;
+                    if($row >= $startRow && (($previousKey <> $nextKey) || ($nextKey == null))){
+                        $cellToMerge = 'A'.$startRow.':A'.$row;
+                        $objPHPExcel->getActiveSheet()->mergeCells($cellToMerge);
+                        $startRow = -1;
+        
+                    }
+                    $row++;
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":N".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":N".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":J".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('L'.$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $num++;
+                }
+            }
+            $a = $num;
+            $objPHPExcel->getActiveSheet()->getStyle('E'.$a.":J".$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('L'.$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle("E".$a.':J'.$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            $objPHPExcel->getActiveSheet()->getStyle("L".$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$a, "-".array_sum($total_vatables));
+            $objPHPExcel->getActiveSheet()->setCellValue('F'.$a, "-".array_sum($total_zerorated_purchases));
+            $objPHPExcel->getActiveSheet()->setCellValue('G'.$a, "-".array_sum($total_zerorated_ecozones));
+            $objPHPExcel->getActiveSheet()->setCellValue('H'.$a, "-".array_sum($total_vat));
+            $objPHPExcel->getActiveSheet()->setCellValue('I'.$a, array_sum($total_ewt));
+            $objPHPExcel->getActiveSheet()->setCellValue('J'.$a, "-".array_sum($overall_total));
+            $objPHPExcel->getActiveSheet()->setCellValue('L'.$a, "-".array_sum($total_update_amount));
+            $num--;
+            $sheetno++;
+        }
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Reserve Wesm All Transcations.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+    }
+
+    public function reserve_main_total_variance(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $from=$this->uri->segment(3);
+        $to=$this->uri->segment(4);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $sql="";
+        if($from!='null' && $to != 'null'){
+            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+        }
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND adjustment = '0' AND ".$query;
+        $total_amount=array();
+        $total_amount_collected=array();
+        $variance_total=array();
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd ON pth.reserve_id = ptd.reserve_id WHERE $qu") AS $pah){
+            $tin = $this->super_model->select_column_where("reserve_participant","res_tin","res_billing_id",$pah->billing_id);
+            $par=array();
+            foreach($this->super_model->select_custom_where('reserve_participant',"res_tin='$tin'") AS $p){
+                $par[]="'".$p->res_billing_id."'";
+                $imp=implode(',',$par);
+            }
+            $overall_total_amount = $this->super_model->select_sum_join("total_amount","reserve_transaction_details","reserve_transaction_head", "billing_id IN($imp) AND $qu ","reserve_id");
+            $overall_total_amount_collected = $this->super_model->select_sum_join("total_update","reserve_transaction_details","reserve_transaction_head", "billing_id IN($imp) AND $qu","reserve_id");
+            $variance  = $pah->total_amount - $pah->total_update;
+            $total_variance  = $overall_total_amount - $overall_total_amount_collected;
+            $total_amount[]=$pah->total_amount;
+            $total_amount_collected[]=$pah->total_update;
+            $variance_total[]=$variance;
+            $data['purchasesmain_total'][]=array(
+                'due_date'=>$pah->due_date,
+                'billing_from'=>$pah->billing_from,
+                'billing_to'=>$pah->billing_to,
+                'billing_id'=>$pah->billing_id,
+                'transaction_no'=>$pah->reference_number,
+                'total_amount'=>$pah->total_amount,
+                'overall_total_amount'=>$overall_total_amount,
+                'amount_collected'=>$pah->total_update,
+                'overall_total_amount_collected'=>$overall_total_amount_collected,
+                'tin'=>$tin,
+                'variance'=>$variance,
+                'total_variance'=>$total_variance,
+            );
+        }
+        $data['b_total_amount']=array_sum($total_amount);
+        $data['b_total_amount_collected']=array_sum($total_amount_collected);
+        $data['b_total_variance']=array_sum($variance_total);
+        $this->load->view('reports/reserve_main_total_variance',$data);
+        $this->load->view('template/footer');
+    }
+
+    public function export_reserve_main_total_variance(){
+        $from=$this->uri->segment(3);
+        $to=$this->uri->segment(4);
+        $objPHPExcel = new Spreadsheet();
+        $exportfilename="Summary of Reserve Total Variance (Main).xlsx";
+        $sql='';
+
+        if($from!='null' && $to != 'null'){
+            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+        }
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND adjustment = '0' AND ".$query;
+        $styleArray = array(
+            'borders' => array(
+                'allBorders' => array(
+                    'borderStyle' => border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                )
+            )
+        );
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Reserve Regular Bill ".$from." - ".$to);
+        foreach(range('A','F') as $columnID){
+            $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+        }
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "#");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "Short Name");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Company Name");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D2', "Total Amount");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E2', "Total Collected Amount");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F2', "Variance");
+        $objPHPExcel->getActiveSheet()->getStyle("A2:F2")->applyFromArray($styleArray);
+        $total_amount=array();
+        $total_amount_collected=array();
+        $total_varince=array();
+        $x=1;
+        $num=3;
+        $prevtin='';
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd ON pth.reserve_id = ptd.reserve_id WHERE $qu GROUP BY short_name ORDER BY short_name ASC, company_name ASC") AS $ph){
+            $participant_name=$this->super_model->select_column_where("reserve_participant","res_participant_name","res_billing_id",$ph->billing_id);
+            $tin = $this->super_model->select_column_where("reserve_participant","res_tin","res_billing_id",$ph->billing_id);
+            if(!empty($ph->company_name) && date('Y',strtotime($ph->create_date))==date('Y')){
+                $comp_name=$ph->company_name;
+            }else{
+                $comp_name=$participant_name;
+            }
+
+            $par=array();
+            foreach($this->super_model->select_custom_where('reserve_participant',"res_tin='$tin'") AS $p){
+                $par[]="'".$p->res_billing_id."'";
+                $imp=implode(',',$par);
+            }
+            $overall_total_amount = $this->super_model->select_sum_join("total_amount","reserve_transaction_head","reserve_transaction_details", "billing_id IN($imp) AND $qu","reserve_id");
+            $overall_total_amount_collected = $this->super_model->select_sum_join("total_update","reserve_transaction_head","reserve_transaction_details", "billing_id IN($imp) AND $qu","reserve_id");
+            $variance  = $overall_total_amount - $overall_total_amount_collected;
+
+            $total_amount[]=$overall_total_amount;
+            $total_amount_collected[]=$overall_total_amount_collected;
+            $total_varince[]=$variance;
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $ph->short_name);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $comp_name);
+
+            if($prevtin == $tin){
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, '');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, '');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, '');
+            }else{
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $overall_total_amount);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $overall_total_amount_collected);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $variance);
+            }
+
+            $objPHPExcel->getActiveSheet()->mergeCells('A1:C1');
+            $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+            $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFont()->getColor()->setRGB ('FFFFFF');
+            $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":F".$num)->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":B".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":F".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('D'.$num.":F".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            if($variance == 0){
+                $objPHPExcel->getActiveSheet()->getStyle('F'.$num)->getFont()->getColor()->setRGB('008000');
+            }else if($overall_total_amount < $overall_total_amount_collected){
+                $objPHPExcel->getActiveSheet()->getStyle('F'.$num)->getFont()->getColor()->setRGB('3E94E1');
+            }else if($overall_total_amount > $overall_total_amount_collected){
+                $objPHPExcel->getActiveSheet()->getStyle('F'.$num)->getFont()->getColor()->setRGB('FF0000');
+            }
+            $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+            $x++;
+            $num++;
+            $prevtin = $tin;
+        }
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Summary of Reserve Total Variance (Main).xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+    }
+
 }
