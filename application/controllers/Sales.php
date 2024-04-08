@@ -538,7 +538,7 @@ class Sales extends CI_Controller {
 
         }
         $this->load->view('template/header');
-        //$this->load->view('template/navbar');
+        $this->load->view('template/navbar');
         $this->load->view('sales/upload_reserve_sales',$data);
         $this->load->view('template/footer');
     }
@@ -3004,8 +3004,8 @@ public function print_BS_new(){
                    $imp=implode(',',$par);
                    $sql.= " sd.res_short_name IN($imp) AND ";
                }
-               
             }
+
             $query=substr($sql,0,-4);
             $qu = " WHERE res_saved='1' AND ".$query;
 
@@ -3075,9 +3075,7 @@ public function print_BS_new(){
                    $par[]="'".$p->res_settlement_id."'";
                     $imp=implode(',',$par);
                     $sql.= " sd.res_short_name IN($imp) AND ";
-               }
-              
-               
+               } 
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE res_saved='1' AND ".$query;
@@ -3087,39 +3085,39 @@ public function print_BS_new(){
                 $series_number=$this->super_model->select_column_custom_where("collection_reserve_details","series_number","res_reference_no='$d->res_reference_number' AND res_settlement_id='$d->res_short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_reserve_details","old_series_no","res_reference_no='$d->res_reference_number' AND res_settlement_id='$d->res_short_name'");
                 if($sub_participant==0){
-                $data['details'][]=array(
-                    'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
-                    'reserve_sales_id'=>$d->reserve_sales_id,
-                    'item_no'=>$d->res_item_no,
-                    'series_number'=>$series_number,
-                    'old_series_no_col'=>$old_series_no,
-                    'old_series_no'=>$d->res_old_series_no,
-                    'short_name'=>$d->res_short_name,
-                    'billing_id'=>$d->res_billing_id,
-                    'actual_billing_id'=>$d->res_actual_billing_id,
-                    'company_name'=>$d->res_company_name,
-                    'facility_type'=>$d->res_facility_type,
-                    'wht_agent'=>$d->res_wht_agent,
-                    'ith_tag'=>$d->res_ith_tag,
-                    'non_vatable'=>$d->res_non_vatable,
-                    'zero_rated'=>$d->res_zero_rated,
-                    'vatable_sales'=>$d->res_vatable_sales,
-                    'vat_on_sales'=>$d->res_vat_on_sales,
-                    'zero_rated_sales'=>$d->res_zero_rated_sales,
-                    'zero_rated_ecozones'=>$d->res_zero_rated_ecozones,
-                    'ewt'=>$d->res_ewt,
-                    'serial_no'=>$d->res_serial_no,
-                    'total_amount'=>$d->res_total_amount,
-                    'reference_number'=>$d->res_reference_number,
-                    'transaction_date'=>$d->res_transaction_date,
-                    'billing_from'=>$d->res_billing_from,
-                    'billing_to'=>$d->res_billing_to,
-                    'due_date'=>$d->res_due_date,
-                    'print_counter'=>$d->res_print_counter,
-                    'ewt_amount'=>$d->res_ewt_amount,
-                    'original_copy'=>$d->res_original_copy,
-                    'scanned_copy'=>$d->res_scanned_copy
-                );
+                    $data['details'][]=array(
+                        'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
+                        'reserve_sales_id'=>$d->reserve_sales_id,
+                        'item_no'=>$d->res_item_no,
+                        'series_number'=>$series_number,
+                        'old_series_no_col'=>$old_series_no,
+                        'old_series_no'=>$d->res_old_series_no,
+                        'short_name'=>$d->res_short_name,
+                        'billing_id'=>$d->res_billing_id,
+                        'actual_billing_id'=>$d->res_actual_billing_id,
+                        'company_name'=>$d->res_company_name,
+                        'facility_type'=>$d->res_facility_type,
+                        'wht_agent'=>$d->res_wht_agent,
+                        'ith_tag'=>$d->res_ith_tag,
+                        'non_vatable'=>$d->res_non_vatable,
+                        'zero_rated'=>$d->res_zero_rated,
+                        'vatable_sales'=>$d->res_vatable_sales,
+                        'vat_on_sales'=>$d->res_vat_on_sales,
+                        'zero_rated_sales'=>$d->res_zero_rated_sales,
+                        'zero_rated_ecozones'=>$d->res_zero_rated_ecozones,
+                        'ewt'=>$d->res_ewt,
+                        'serial_no'=>$d->res_serial_no,
+                        'total_amount'=>$d->res_total_amount,
+                        'reference_number'=>$d->res_reference_number,
+                        'transaction_date'=>$d->res_transaction_date,
+                        'billing_from'=>$d->res_billing_from,
+                        'billing_to'=>$d->res_billing_to,
+                        'due_date'=>$d->res_due_date,
+                        'print_counter'=>$d->res_print_counter,
+                        'ewt_amount'=>$d->res_ewt_amount,
+                        'original_copy'=>$d->res_original_copy,
+                        'scanned_copy'=>$d->res_scanned_copy
+                    );
                 }
             }
         }
