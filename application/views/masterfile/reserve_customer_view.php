@@ -124,7 +124,7 @@
                                             <label>Income tax holiday</label>
                                             <div class="form-group mb-2">
                                                 <div class="pretty p-icon p-curve p-jelly">
-                                                    <input type="radio" name="income_tax_holiday" value="Yes" <?php if($det['res_income_tax_holiday']=='YES'){ ?> checked <?php } else { ?> <?php } ?>>
+                                                    <input type="radio" name="income_tax_holiday" value="Yes" <?php if($det['res_income_tax_holiday']=='Yes'){ ?> checked <?php } else { ?> <?php } ?>>
                                                     <div class="state p-warning">
                                                         <i class="icon material-icons">done</i>
                                                         <label> YES</label>
