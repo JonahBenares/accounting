@@ -613,7 +613,8 @@ class Purchases extends CI_Controller {
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!=''");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
-        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY billing_id");
+        // $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql="";
         if($participant!='null'){
             $sql.= "pd.short_name = '$participant' AND ";

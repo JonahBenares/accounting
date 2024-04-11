@@ -524,7 +524,8 @@ class Reserve extends CI_Controller {
         $data['ref_no']=$ref_no;
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM reserve_transaction_head WHERE reference_number!=''");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!=''");
-        $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_settlement_id");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_billing_id");
+        // $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_settlement_id");
         $sql="";
         if($participant!='null'){
             $sql.= "pd.short_name = '$participant' AND ";
@@ -869,6 +870,12 @@ class Reserve extends CI_Controller {
         $billto =  $this->uri->segment(7);
         $participants =  $this->uri->segment(8);
         $sql='';
+        if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
+        }
+        if($refno!='null'){
+            $sql.= "reference_number = '$refno' AND ";
+        }
         if($billfrom!='null' && $billto!='null'){ 
             $sql.= " ((pth.billing_from BETWEEN '$billfrom' AND '$billto') OR (pth.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
         }
