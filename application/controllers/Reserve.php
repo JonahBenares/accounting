@@ -869,6 +869,12 @@ class Reserve extends CI_Controller {
         $billto =  $this->uri->segment(7);
         $participants =  $this->uri->segment(8);
         $sql='';
+        if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
+        }
+        if($refno!='null'){
+            $sql.= "reference_number = '$refno' AND ";
+        }
         if($billfrom!='null' && $billto!='null'){ 
             $sql.= " ((pth.billing_from BETWEEN '$billfrom' AND '$billto') OR (pth.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
         }
