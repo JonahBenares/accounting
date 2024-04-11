@@ -8782,7 +8782,7 @@ class Reports extends CI_Controller {
             )
         );
         foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head pah INNER JOIN reserve_transaction_details pad ON pah.reserve_id = pad.reserve_id INNER JOIN reserve_participant p ON p.res_settlement_id = pad.short_name WHERE res_participant_name != '' AND $qu GROUP BY res_tin ORDER BY res_participant_name") AS $head){
-            $settlement_id=$this->super_model->select_column_custom_where("reserve_participant",'res_settlement_id',"res_tin = '$head->tin' ORDER BY res_settlement_id ASC LIMIT 1");
+            $settlement_id=$this->super_model->select_column_custom_where("reserve_participant",'res_settlement_id',"res_tin = '$head->res_tin' ORDER BY res_settlement_id ASC LIMIT 1");
             $objWorkSheet = $objPHPExcel->createSheet($sheetno);
             $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
             foreach(range('A','N') as $columnID){
