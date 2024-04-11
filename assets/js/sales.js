@@ -1769,17 +1769,17 @@ function proceed_collection_reserve() {
 }
 
 function cancelReserveCollection(){
-    var collection_id = document.getElementById("collection_id").value; 
+    var res_collection_id = document.getElementById("res_collection_id").value; 
     var loc= document.getElementById("baseurl").value;
-    var redirect = loc+"sales/cancel_collection";
+    var redirect = loc+"sales/cancel_reserve_sales";
     var conf = confirm('Are you sure you want to cancel this transaction?');
     if(conf){
 		$.ajax({
-			data: "collection_id="+collection_id,
+			data: "res_collection_id="+res_collection_id,
 			type: "POST",
 			url: redirect,
 			success: function(response){
-			    window.location=loc+'sales/upload_collection/';
+			    window.location=loc+'sales/upload_reserve_collection';
 			}
 		});
     }
