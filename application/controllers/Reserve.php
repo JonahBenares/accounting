@@ -782,6 +782,7 @@ class Reserve extends CI_Controller {
         $vatable_purchase = $this->super_model->select_column_where("reserve_transaction_details", "vatables_purchases", "reserve_detail_id", $reserve_detail_id);
         $zero_rated = $this->super_model->select_column_where("reserve_transaction_details", "zero_rated_purchases", "reserve_detail_id", $reserve_detail_id);
         $zero_rated_ecozone = $this->super_model->select_column_where("reserve_transaction_details", "zero_rated_ecozones", "reserve_detail_id", $reserve_detail_id);
+        $amount = 0;
         if($vatable_purchase != 0){
             $amount=$vatable_purchase;
         }
