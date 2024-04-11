@@ -281,10 +281,10 @@
         <?php 
             if(!empty($client)){ foreach($client AS $c){ 
         ?>
-            <div class="cusname"><?php echo $c->participant_name; ?></div>
+            <div class="cusname"><?php echo $c->res_participant_name; ?></div>
             <div class="date"><?php echo date("F j, Y", strtotime($date)); ?></div>
-            <div class="address" style="padding-left: 5px"><?php echo $c->registered_address; ?></div>
-            <div class="tin"><?php echo $c->tin; ?></div>
+            <div class="address" style="padding-left: 5px"><?php echo $c->res_registered_address; ?></div>
+            <div class="tin"><?php echo $c->res_tin; ?></div>
         <?php } } else { ?>
             <div class="cusname"><br></div>
             <div class="date"><br></div>
