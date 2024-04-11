@@ -199,7 +199,7 @@
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                     <i data-feather="briefcase"></i>
-                    <span>Reserve Transaction</span>
+                    <span>WESM Reserve Transaction</span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/reserve_sales_wesm">Main</a></li>
@@ -384,7 +384,7 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Reserve Total Amount Variance</span></a> 
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Reserve Purchases Total Amount Variance</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_main_total_variance">Main</a></li>
                 </ul>
