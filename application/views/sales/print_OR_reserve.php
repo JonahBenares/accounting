@@ -220,28 +220,28 @@
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 12px;">AMOUNT: NET OF VAT</td>
-                                        <td style="border: 0px solid #000;font-size: 10px;" align="right"><?php echo number_format($sum_amount,2); ?></td>
+                                        <td style="border: 0px solid #000;font-size: 10px;" align="right"><?php echo number_format((float)$sum_amount,2); ?></td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 12px;">ADD: VAT</td>
-                                        <td style="border: 0px solid #000;padding-top:3px;font-size: 10px;" align="right"><?php echo number_format($sum_vat,2); ?></td>
+                                        <td style="border: 0px solid #000;padding-top:3px;font-size: 10px;" align="right"><?php echo number_format((float)$sum_vat,2); ?></td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 12px;">TOTAL</td>
-                                        <td style="border: 0px solid #000;padding-top:10px;font-size: 10px;" align="right"><?php echo number_format($total,2); ?></td>
+                                        <td style="border: 0px solid #000;padding-top:10px;font-size: 10px;" align="right"><?php echo number_format((float)$total,2); ?></td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 12px;">LESS WITHHOLDING</td>
-                                        <td style="border: 0px solid #000;padding-top:10px;font-size: 10px;" align="right"><?php echo number_format($sum_ewt,2); ?></td>
+                                        <td style="border: 0px solid #000;padding-top:10px;font-size: 10px;" align="right"><?php echo number_format((float)$sum_ewt,2); ?></td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 12px;">TOTAL AMOUNT DUE</td>
-                                        <td style="border: 0px solid #000;padding-top:5px;font-size: 10px;" align="right"><?php echo number_format($total_due,2); ?></td>
+                                        <td style="border: 0px solid #000;padding-top:5px;font-size: 10px;" align="right"><?php echo number_format((float)$total_due,2); ?></td>
                                     </tr>
 
                                       <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 12px;" width="60%"> VATABLE (V) </td>
-                                        <td width="40%" align="right" style="font-size: 11px;padding-top:5px;"><?php echo number_format($sum_amount,2); ?></td>
+                                        <td width="40%" align="right" style="font-size: 11px;padding-top:5px;"><?php echo number_format((float)$sum_amount,2); ?></td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 10px;">VAT EXEMPT (E)</td>
@@ -249,15 +249,15 @@
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 10px;">ZERO-RATED (Z)</td>
-                                        <td align="right"><?php echo number_format($zero_rated,2); ?></td>
+                                        <td align="right"><?php echo number_format((float)$zero_rated,2); ?></td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 10px;">VAT (12%) </td>
-                                        <td align="right"><?php echo number_format($sum_vat,2); ?></td>
+                                        <td align="right"><?php echo number_format((float)$sum_vat,2); ?></td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid #000;color: #fff;font-size: 12px;">TOTAL</td>
-                                        <td align="right" style="font-size: 11px;"><?php echo number_format($total,2); ?></td>
+                                        <td align="right" style="font-size: 11px;"><?php echo number_format((float)$total,2); ?></td>
                                     </tr>
 
 
@@ -277,19 +277,19 @@
                             <td class="bor-btm3" colspan="8" align="right" style="font-size:12px">DEF. INTEREST</td>
                             <td class="bor-btm3" colspan="2"></td>
                             <td class="bor-btm3" colspan="3"></td>
-                            <td class="bor-btm3" colspan="2" style="font-size:12px"><?php echo number_format($defint,2); ?></td>
+                            <td class="bor-btm3" colspan="2" style="font-size:12px"><?php echo number_format((float)$defint,2); ?></td>
                         </tr>
                         <tr>
                             <td class="bor-btm3" colspan="8" align="right" style="font-size:12px">ENERGY</td>
                             <td class="bor-btm3" colspan="2"></td>
                             <td class="bor-btm3" colspan="3"></td>
-                            <td class="bor-btm3" colspan="2" style="font-size:12px"><?php echo number_format($sum_amount,2); ?></td>
+                            <td class="bor-btm3" colspan="2" style="font-size:12px"><?php echo number_format((float)$sum_amount,2); ?></td>
                         </tr>
                         <tr>
                             <td class="bor-btm3" colspan="8" align="right" style="font-size:12px">VAT</td>
                             <td class="bor-btm3" colspan="2"></td>
                             <td class="bor-btm3" colspan="3"></td>
-                            <td class="bor-btm3" colspan="2" style="font-size:12px"><?php echo number_format($sum_vat,2); ?></td>
+                            <td class="bor-btm3" colspan="2" style="font-size:12px"><?php echo number_format((float)$sum_vat,2); ?></td>
                         </tr>
                         <tr>
                             <td class="bor-btm3" colspan="8"><br></td>
