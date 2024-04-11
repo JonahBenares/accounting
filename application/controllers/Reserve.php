@@ -524,7 +524,8 @@ class Reserve extends CI_Controller {
         $data['ref_no']=$ref_no;
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM reserve_transaction_head WHERE reference_number!=''");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!=''");
-        $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_settlement_id");
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_billing_id");
+        // $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_settlement_id");
         $sql="";
         if($participant!='null'){
             $sql.= "pd.short_name = '$participant' AND ";
