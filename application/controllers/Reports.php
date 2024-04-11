@@ -6714,14 +6714,14 @@ class Reports extends CI_Controller {
 
             $row=7;
             $row_final=7;
-         foreach($this->super_model->custom_query("SELECT DISTINCT  reference_no, settlement_id, collection_date, series_number FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu ORDER BY series_number ASC") AS $q){
+         foreach($this->super_model->custom_query("SELECT DISTINCT reference_no, settlement_id, collection_date, series_number FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu ORDER BY series_number ASC") AS $q){
 
 
              
               $x=1;
               $final=1;
                 $count = $this->super_model->count_custom("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu AND reference_no = '$q->reference_no' AND settlement_id = '$q->settlement_id' AND collection_date = '$q->collection_date' AND series_number='$q->series_number'");
-                foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu AND reference_no = '$q->reference_no' 
+                foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu AND reference_no = '$q->reference_no' 
                     AND settlement_id = '$q->settlement_id' AND collection_date = '$q->collection_date' AND series_number='$q->series_number' ORDER BY series_number ASC") AS $col){
 
                     $sum_amount= $this->super_model->select_sum_where("collection_reserve_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND res_collection_id = '$col->res_collection_id' AND series_number = '$col->series_number'");
@@ -6874,7 +6874,7 @@ class Reports extends CI_Controller {
         //$data=array();
 
             $row=7;
-                foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu GROUP BY series_number ORDER BY series_number ASC") AS $col){
+                foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu AND series_number != 0 GROUP BY series_number ORDER BY series_number ASC") AS $col){
 
                     $tin = $this->super_model->select_column_where("reserve_participant","res_tin","res_settlement_id",$col->settlement_id);
                     $address = $this->super_model->select_column_where("reserve_participant","res_registered_address","res_settlement_id",$col->settlement_id);
@@ -6953,7 +6953,7 @@ class Reports extends CI_Controller {
                 //$data=array();
 
                     $row=7;
-                        foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu GROUP BY series_number ORDER BY series_number ASC") AS $col){
+                        foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu AND series_number != 0 GROUP BY series_number ORDER BY series_number ASC") AS $col){
 
                             $tin = $this->super_model->select_column_where("reserve_participant","res_tin","res_settlement_id",$col->settlement_id);
                             $address = $this->super_model->select_column_where("reserve_participant","res_registered_address","res_settlement_id",$col->settlement_id);
@@ -7027,7 +7027,7 @@ class Reports extends CI_Controller {
                 //$data=array();
 
                     $row=7;
-                        foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu GROUP BY series_number ORDER BY series_number ASC") AS $col){
+                        foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu AND series_number != 0 GROUP BY series_number ORDER BY series_number ASC") AS $col){
 
                             $tin = $this->super_model->select_column_where("reserve_participant","res_tin","res_settlement_id",$col->settlement_id);
                             $address = $this->super_model->select_column_where("reserve_participant","res_registered_address","res_settlement_id",$col->settlement_id);
