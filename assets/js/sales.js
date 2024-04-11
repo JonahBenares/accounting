@@ -1419,7 +1419,7 @@ function saveBulkUpdateReserveMain(){
                 $("#submitbulkmain").hide(); 
             },
             success: function(output){
-                window.location=loc+'sales/bulk_update_main/'+sales_id+'/'+main_identifier;
+                window.location=loc+'sales/bulk_update_main/'+reserve_sales_id+'/'+main_identifier;
             }
         });
     }

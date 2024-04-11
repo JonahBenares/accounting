@@ -57,7 +57,7 @@ if(!empty($res_sales_id)){
                                         <div class="form-group">
                                             <label><br></label>
                                             <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                             <?php if(empty($sales_id)){ ?>
+                                             <?php if(empty($res_sales_id)){ ?>
                                                 <input type='button' class="btn btn-primary" id='save_head_button' type="button" onclick="proceed_res_btn()" value="Proceed" style="width: 100%;">
                                                 <input type='button' class="btn  btn-danger" id="cancel" onclick="cancelResSales()" value="Cancel Transaction" style='display: none;width: 100%;'>
                                                 <?php } else { ?>
@@ -144,7 +144,7 @@ if(!empty($res_sales_id)){
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                foreach($details AS $d){ 
+                                                foreach($details AS $d){
                                                     if(!empty($d['reserve_sales_id'])){ 
                                             ?>
                                             <tr>
