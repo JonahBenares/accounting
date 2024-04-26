@@ -192,7 +192,8 @@ class Reserve extends CI_Controller {
                 $zero_rated_ecozone = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue());
                 $vat_on_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
                 $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
-                $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('P'.$x)->getOldCalculatedValue());
+                // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('P'.$x)->getOldCalculatedValue());
+                $total_amount = ($vatables_purchases+$zero_rated_purchases+$zero_rated_ecozone+$vat_on_purchases)-$ewt;
                 $data_reserve = array(
                     'reserve_id'=>$reserve_id,
                     'item_no'=>$y,
