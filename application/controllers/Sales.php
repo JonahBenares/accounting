@@ -5345,9 +5345,9 @@ public function upload_sales_adjustment_test(){
                         foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
                             if($h<=10){
 
-                                    $reference_number=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$p->sales_adjustment_id);
-                                    $billing_from=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$p->sales_adjustment_id);
-                                    $billing_to=$this->super_model->select_column_where("sales_adjustment_head","billing_to","sales_adjustment_id",$p->sales_adjustment_id);
+                                    $reference_number=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$s->sales_adjustment_id);
+                                    $billing_from=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$s->sales_adjustment_id);
+                                    $billing_to=$this->super_model->select_column_where("sales_adjustment_head","billing_to","sales_adjustment_id",$s->sales_adjustment_id);
                                     $vatable_sales=$this->super_model->select_column_where("sales_adjustment_details","vatable_sales","adjustment_detail_id",$s->adjustment_detail_id);
                                     $zero_rated_sales=$this->super_model->select_column_where("sales_adjustment_details","zero_rated_sales","adjustment_detail_id",$s->adjustment_detail_id);
                                     $zero_rated_ecozones=$this->super_model->select_column_where("sales_adjustment_details","zero_rated_ecozones","adjustment_detail_id",$s->adjustment_detail_id);
@@ -5401,9 +5401,9 @@ public function upload_sales_adjustment_test(){
                         $z=1;
                         foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
                                 
-                                $reference_number=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$p->sales_adjustment_id);
-                                $billing_from=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$p->sales_adjustment_id);
-                                $billing_to=$this->super_model->select_column_where("sales_adjustment_head","billing_to","sales_adjustment_id",$p->sales_adjustment_id);
+                                $reference_number=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$s->sales_adjustment_id);
+                                $billing_from=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$s->sales_adjustment_id);
+                                $billing_to=$this->super_model->select_column_where("sales_adjustment_head","billing_to","sales_adjustment_id",$s->sales_adjustment_id);
                                 $vatable_sales=$this->super_model->select_column_where("sales_adjustment_details","vatable_sales","adjustment_detail_id",$s->adjustment_detail_id);
                                 $zero_rated_sales=$this->super_model->select_column_where("sales_adjustment_details","zero_rated_sales","adjustment_detail_id",$s->adjustment_detail_id);
                                 $zero_rated_ecozones=$this->super_model->select_column_where("sales_adjustment_details","zero_rated_ecozones","adjustment_detail_id",$s->adjustment_detail_id);
