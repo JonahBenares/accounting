@@ -5317,18 +5317,37 @@ public function upload_sales_adjustment_test(){
                 }
             }else{
                     foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP BY serial_no ORDER BY serial_no ASC")AS $p){
-                    $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                    $data['company_name'][$x]=$p->company_name;
-                    $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
-                    $tin=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                    $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+                    $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
+
+                    if($mother_participant_id != ''){
+                            $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
+                            $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                            $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
+                            $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                    }else{
+                            $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                            $company_name = $p->company_name;
+                            $tin = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                            $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                    }
+
+                    // $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                    $data['address'][$x]= $address;
+                    // $data['company_name'][$x]=$p->company_name;
+                    $data['company_name'][$x]=$company_name;
+                    // $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                    $data['tin'][$x]=$tin_no;
+                    // $tin=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                    $tin=$tin_no;
                     $data['serial_no'][$x]=$this->super_model->select_column_where("sales_adjustment_details","serial_no","serial_no",$p->serial_no);
                     $serial_no=$this->super_model->select_column_where("sales_adjustment_details","serial_no","serial_no",$p->serial_no);
-                    $data['settlement'][$x]=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                    // $data['settlement'][$x]=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                    $data['settlement'][$x]=$settlement;
                     $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
                     $transaction_date=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
                     $data['due_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
                     $due_date=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
-                    $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                     $count_sub=$this->super_model->count_custom_where("subparticipant","participant_id='$participant_id'");
                     $zero_rated= $p->zero_rated_sales + $p->zero_rated_ecozones;
                     $total_amount = $p->vatable_sales + $p->zero_rated_sales + $p->zero_rated_ecozones;
@@ -5539,9 +5558,26 @@ public function upload_sales_adjustment_test(){
 
         }else{
             foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."'") AS $p){
-                $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
-                $data['company_name'][$x]=$p->company_name;
+                $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+                $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
+
+                    if($mother_participant_id != ''){
+                            $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
+                            $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                            $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
+                    }else{
+                            $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                            $company_name = $p->company_name;
+                            $tin = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                    }
+
+
+                // $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                // $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                // $data['company_name'][$x]=$p->company_name;
+                    $data['address'][$x]=$address;
+                $data['tin'][$x]=$tin_no;
+                $data['company_name'][$x]=$company_name;
                 $data['due_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
                 $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
                 $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$p->serial_no'");
