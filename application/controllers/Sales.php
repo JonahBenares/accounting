@@ -5328,7 +5328,7 @@ public function upload_sales_adjustment_test(){
                     }else{
                             $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                             $company_name = $p->company_name;
-                            $tin = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                            $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                             $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
                     }
 
@@ -5568,14 +5568,14 @@ public function upload_sales_adjustment_test(){
                     }else{
                             $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                             $company_name = $p->company_name;
-                            $tin = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                            $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                     }
 
 
                 // $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                 // $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                 // $data['company_name'][$x]=$p->company_name;
-                    $data['address'][$x]=$address;
+                $data['address'][$x]=$address;
                 $data['tin'][$x]=$tin_no;
                 $data['company_name'][$x]=$company_name;
                 $data['due_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
