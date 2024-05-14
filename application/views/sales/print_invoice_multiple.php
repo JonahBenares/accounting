@@ -38,7 +38,7 @@
         .tin{
             position: absolute;
             left:410px;
-            top:102px;
+            top:98px;
             width: 125px;
             line-height: 13px;
             font-size: 13px;
@@ -53,7 +53,7 @@
         .address{
             position: absolute;
             left:20px;
-            top:128px;
+            top:115px;
             width: 500px;
             line-height: 13px;
             font-size: 13px;
@@ -76,8 +76,6 @@
             font-style: normal; 
             font-variant: normal;
             letter-spacing: 1px;
-/*            background: yellow;*/
-            
         }
         .vatable{
             position: absolute;
@@ -488,7 +486,7 @@
         .total_1{
             position: absolute;
             left:563px;
-            top:229px;
+            top:224px;
             width: 100px;
             line-height: 13px;
             font-size: 12px;
@@ -501,8 +499,8 @@
         }
         .total_2{
             position: absolute;
-            left:669px;
-            top:229px;
+            left:673px;
+            top:224px;
             width: 30px;
             line-height: 13px;
             font-size: 12px;
@@ -517,7 +515,7 @@
         .total_sub_1{
             position: absolute;
             left:563px;
-            top:229px;
+            top:224px;
             width: 100px;
             line-height: 13px;
             font-size: 12px;
@@ -530,8 +528,8 @@
         }
         .total_sub_2{
             position: absolute;
-            left:669px;
-            top:229px;
+            left:673px;
+            top:224px;
             width: 30px;
             line-height: 13px;
             font-size: 12px;
@@ -547,8 +545,8 @@
         .amount_1{
             position: absolute;
             left:120px;
-            top:270px;
-            width: 600px;
+            top:250px;
+            width: 570px;
             line-height: 13px;
             font-size: 13px;
             font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
@@ -561,8 +559,8 @@
         .amount_2{
             position: absolute;
             left:120px;
-            top:270px;
-            width: 600px;
+            top:250px;
+            width: 570px;
             line-height: 13px;
             font-size: 13px;
             font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
