@@ -212,7 +212,7 @@ class Purchases extends CI_Controller {
                 $vat_on_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('L'.$x)->getFormattedValue());
                 $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue());
                 // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getOldCalculatedValue());
-                $total_amount = ($vatables_purchases+$zero_rated_purchases+$zero_rated_ecozone+$vat_on_purchases)-$ewt;
+                $total_amount = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases)-(double)$ewt;
             //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
          
                 $data_purchase = array(
@@ -2278,7 +2278,7 @@ class Purchases extends CI_Controller {
                                     $vat_on_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue());
                                     $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                     // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getOldCalculatedValue());
-                                    $total_amount = ($vatables_purchases+$zero_rated_purchases+$zero_rated_ecozone+$vat_on_purchases)-$ewt;
+                                    $total_amount = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases)-(double)$ewt;
                                     //$zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                     //$zero_rated_purchases = trim($zero_rated_purchases,"-");
                                     //$zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
@@ -2421,7 +2421,7 @@ class Purchases extends CI_Controller {
                                     $vat_on_purchases = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('L'.$z)->getFormattedValue());
                                     $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                     // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getOldCalculatedValue());
-                                    $total_amount = ($vatables_purchases+$zero_rated_purchases+$zero_rated_ecozone+$vat_on_purchases)-$ewt;
+                                    $total_amount = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases)-(double)$ewt;
                                     //$zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                     //$zero_rated_purchases = trim($zero_rated_purchases,"-");
                                     //$zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
