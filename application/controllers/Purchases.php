@@ -55,15 +55,15 @@ class Purchases extends CI_Controller {
                 $data['saved']=$h->saved;
                 $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_id",$h->purchase_id) AS $d){
-                    $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
+                    // $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
 
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,
                         'purchase_id'=>$d->purchase_id,
                         'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
-                        'actual_billing_id'=>$d->billing_id,
-                        'billing_id'=>$unique_bill_id,
+                        'actual_billing_id'=>$d->actual_billing_id,
+                        'billing_id'=>$d->billing_id,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
                         'ith_tag'=>$d->ith_tag,
