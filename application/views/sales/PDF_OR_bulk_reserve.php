@@ -121,8 +121,8 @@
                 var billing_month= $(".billing_month"+a).val();
                 var ref_no= $(".ref_no"+a).val();
                 pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-                var fname = "OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf";
-                pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
+                var fname = "OR_CENPRIASP_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf";
+                pdf.save("OR_CENPRIASP_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
                 $.ajax({
                     data: 'series_no='+series_no+'&stl_id='+stl_id+'&reference_no='+reference_no+'&res_collection_id='+res_collection_id+'&filename='+fname,
                     type: "POST",
