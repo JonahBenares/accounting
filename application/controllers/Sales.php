@@ -2243,7 +2243,7 @@ public function print_BS_new(){
             $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
 
             // $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getOldCalculatedValue());
-            $total_amount = ($vatable_sales+$zero_rated_ecozone+$vat_on_sales)-$ewt;
+            $total_amount = ((double)$vatable_sales+(double)$zero_rated_ecozone+(double)$vat_on_sales)-(double)$ewt;
 
             $series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$x)->getFormattedValue();
             
@@ -4174,7 +4174,7 @@ public function print_BS_new(){
                                     $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                     $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
                                     // $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue());
-                                    $total_amount = ($vatable_sales+$zero_rated_ecozone+$vat_on_sales)-$ewt;
+                                    $total_amount = ((double)$vatable_sales+(double)$zero_rated_ecozone+(double)$vat_on_sales)-(double)$ewt;
                                     //$series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$z)->getFormattedValue();
 
 
@@ -4338,7 +4338,7 @@ public function upload_sales_adjustment_test(){
                                 $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                 $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
                                 // $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue());
-                                $total_amount = ($vatable_sales+$zero_rated_ecozone+$vat_on_sales)-$ewt;
+                                $total_amount = ((double)$vatable_sales+(double)$zero_rated_ecozone+(double)$vat_on_sales)-(double)$ewt;
                                 $count_max=$this->super_model->count_rows("sales_adjustment_head");
                                 if($count_max==0){
                                     $sales_adjustment_id=1;
