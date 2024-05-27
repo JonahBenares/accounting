@@ -6379,11 +6379,11 @@ class Reports extends CI_Controller {
                     $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->settlement_id);
                     $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->settlement_id);
 
-                    $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                    $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                    $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                    $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                    $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                    $sum_amount= $this->super_model->select_sum_where("collection_details","amount","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                    $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                    $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                    $sum_vat = $this->super_model->select_sum_where("collection_details","vat","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                    $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
                     $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$row, $col->series_number);
@@ -6458,11 +6458,11 @@ class Reports extends CI_Controller {
                             $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->settlement_id);
                             $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->settlement_id);
 
-                            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
                             $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
 
                                 $objPHPExcel->setActiveSheetIndex(1)->setCellValue('A'.$row, $col->series_number);
@@ -6532,11 +6532,11 @@ class Reports extends CI_Controller {
                             $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->settlement_id);
                             $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->settlement_id);
 
-                            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
-                            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_amount= $this->super_model->select_sum_where("collection_details","amount","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_zero_rated= $this->super_model->select_sum_where("collection_details","zero_rated","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("collection_details","zero_rated_ecozone","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_vat = $this->super_model->select_sum_where("collection_details","vat","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
+                            $sum_ewt= $this->super_model->select_sum_where("collection_details","ewt","collection_id = '$col->collection_id' AND series_number = '$col->series_number'");
                             $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
 
                                 $objPHPExcel->setActiveSheetIndex(2)->setCellValue('A'.$row, $col->series_number);
