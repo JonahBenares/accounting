@@ -86,8 +86,8 @@
        /* background: #0001; */
         font-size: 22px;
         width: 70px;
-        left: 635px; 
-        top: 130px;
+        left: 650px; 
+        top: 155px;
         position: absolute;
         text-align: center;  
         font-weight: 700;
@@ -137,9 +137,9 @@
        /* background: #0001; */
         font-size: 13px;
         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 280px;
+        width: 200px;
         left: 55px; 
-        top: 275px;
+        top: 270px;
         position: absolute;  
         text-align: right;
     }
@@ -147,9 +147,9 @@
        /* background: #0001; */
         font-size: 12px;
         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 280px;
+        width: 200px;
         left: 55px; 
-        top: 298px;
+        top: 293px;
         position: absolute;  
         text-align: right;
     }
@@ -158,8 +158,8 @@
         font-size: 12px;
         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
         width: 90px;
-        left: 480px; 
-        top: 298px;
+        left: 420px; 
+        top: 293px;
         position: absolute;  
         text-align: right;
     }
@@ -167,9 +167,9 @@
        /* background: #0001; */
         font-size: 12px;
         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 280px;
+        width: 200px;
         left: 55px; 
-        top: 318px;
+        top: 313px;
         position: absolute;  
         text-align: right;
     }
@@ -178,8 +178,8 @@
         font-size: 12px;
         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
         width: 90px;
-        left: 480px; 
-        top: 318px;
+        left: 420px; 
+        top: 313px;
         position: absolute;  
         text-align: right;
     }
@@ -187,9 +187,9 @@
        /* background: #0001; */
         font-size: 12px;
         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 280px;
+        width: 200px;
         left: 55px; 
-        top: 338px;
+        top: 333px;
         position: absolute;  
         text-align: right;
     }
@@ -198,8 +198,8 @@
         font-size: 12px;
         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
         width: 90px;
-        left: 480px; 
-        top: 338px;
+        left: 420px; 
+        top: 333px;
         position: absolute;  
         text-align: right; 
     }
@@ -327,9 +327,9 @@
          /* background: #0001; */
          font-size: 12px;
          font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-         width: 350px;
+         width: 320px;
          left: 55px; 
-         top: 378px;
+         top: 370px;
          position: absolute;  
          text-align: right;
      }
