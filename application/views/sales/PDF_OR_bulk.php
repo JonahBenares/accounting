@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>FEBA SYSTEM</title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/pdf_or.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/pdf_or_bulk.css">
     <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
 
@@ -61,6 +61,7 @@
             <label class="zero_rated_1"><?php echo number_format($zero_rated,2); ?></label>
             <label class="vat_percent_1"><?php echo number_format($d['sum_vat'],2); ?></label>
             <label class="grand_total_1"><?php echo number_format($total,2); ?></label>
+            <label class="claim">This Document is Not Valid for Claiming Input Taxes</label>
             <label class="signature_1">
                 <img src="<?php echo base_url()."uploads/".$user_signature; ?>" width="100px">
             </label>
