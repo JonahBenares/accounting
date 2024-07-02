@@ -9,6 +9,7 @@
         <button onclick="goBack()" class="btn btn-warning ">Back</button>
         <button href="#" class="btn btn-success " onclick="window.print()">Print</button>
         <a href='<?php echo base_url(); ?>sales/print_invoice_multiple/<?php echo $sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button" target="_blank">Invoice</a> 
+        
         <!-- <button class="btn btn-info btn-fill" data-toggle="modal" data-target="#basicModal"></span> Update Serial No.</button><br> -->
         <br>
         <br>
