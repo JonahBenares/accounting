@@ -5557,19 +5557,33 @@ public function upload_sales_adjustment_test(){
             $data['total_cents'][$x]=$total_exp[1];
 
         }else{
-            foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."'") AS $p){
+            foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP by serial_no") AS $p){
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
+                // $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
+
+                //     if($mother_participant_id != ''){
+                //             $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
+                //             $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                //             $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
+                //     }else{
+                //             $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                //             $company_name = $p->company_name;
+                //             $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                //     }
+
                 $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
 
-                    if($mother_participant_id != ''){
-                            $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
-                            $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
-                            $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
-                    }else{
-                            $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                            $company_name = $p->company_name;
-                            $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
-                    }
+                if($mother_participant_id != ''){
+                        $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
+                        $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                        $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
+                        $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                }else{
+                        $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                        $company_name = $p->company_name;
+                        $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                        $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                }
 
 
                 // $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
