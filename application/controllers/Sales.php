@@ -6308,65 +6308,71 @@ public function upload_sales_adjustment_test(){
                     $data['transaction_date'][$x]=$p->statement_date;
                     $participant_id = $p->participant_id;
                     $data['participant_id'][$x] = $p->participant_id;
+                    $reference_number = $p->reference_number;
+                    $data['reference_number'][$x] = $this->super_model->select_column_where("bs_details_adjustment","reference_number","bs_head_adjustment_id",$p->bs_head_adjustment_id);
                 }
 
-            $sum_vs_exp = explode(".", $p->total_vatable_sales);
-            $sum_vatable_sales_peso=$sum_vs_exp[0];
-            $sum_vatable_sales_cents=$sum_vs_exp[1];
+            // $sum_vs_exp = explode(".", $p->total_vatable_sales);
+            // $sum_vatable_sales_peso=$sum_vs_exp[0];
+            // $sum_vatable_sales_cents=$sum_vs_exp[1];
 
-            $sum_vos_exp=explode(".", $p->vat);
-            $sum_vat_on_sales_peso=$sum_vos_exp[0];
-            $sum_vat_on_sales_cents=$sum_vos_exp[1];
+            // $sum_vos_exp=explode(".", $p->vat);
+            // $sum_vat_on_sales_peso=$sum_vos_exp[0];
+            // $sum_vat_on_sales_cents=$sum_vos_exp[1];
 
-            $sum_e_exp=explode(".", $p->total_ewt);
-            $sum_ewt_peso=$sum_e_exp[0];
-            $sum_ewt_cents=$sum_e_exp[1];
+            // $sum_e_exp=explode(".", $p->total_ewt);
+            // $sum_ewt_peso=$sum_e_exp[0];
+            // $sum_ewt_cents=$sum_e_exp[1];
 
-            $sum_zr_exp=explode(".", $p->total_zero_rated);
-            $sum_zero_rated_peso=$sum_zr_exp[0];
-            $sum_zero_rated_cents=$sum_zr_exp[1];
+            // $sum_zr_exp=explode(".", $p->total_zero_rated);
+            // $sum_zero_rated_peso=$sum_zr_exp[0];
+            // $sum_zero_rated_cents=$sum_zr_exp[1];
 
-            $total_vs=$p->total_vatable_sales;
-            $vatable_sales = explode(".",$total_vs);
-            $data['vat_sales_peso'][$x] = $vatable_sales[0];
-            $data['vat_sales_cents'][$x] = $vatable_sales[1];
+            $data['total_vs'][$x] = $p->total_vatable_sales;
+            // $total_vs=$p->total_vatable_sales;
+            // $vatable_sales = explode(".",$total_vs);
+            // $data['vat_sales_peso'][$x] = $vatable_sales[0];
+            // $data['vat_sales_cents'][$x] = $vatable_sales[1];
 
-            $total_zr=$p->total_zero_sales;
-            $data['total_zr'][$x]=$total_zr;
-            $zero_rated_sales = explode(".",$total_zr);
-            $data['zero_rated_peso'][$x] = $zero_rated_sales[0];
-            $data['zero_rated_cents'][$x] = $zero_rated_sales[1];
+            // $total_zr=$p->total_zero_sales;
+            // $data['total_zr'][$x]=$total_zr;
+            // $zero_rated_sales = explode(".",$total_zr);
+            // $data['zero_rated_peso'][$x] = $zero_rated_sales[0];
+            // $data['zero_rated_cents'][$x] = $zero_rated_sales[1];
 
-            $data['total_zr_sub'][$x]=0;
-            $data['zero_rated_peso_sub'][$x] = 0;
-            $data['zero_rated_cents_sub'][$x] = 0;
+            // $data['total_zr_sub'][$x]=0;
+            // $data['zero_rated_peso_sub'][$x] = 0;
+            // $data['zero_rated_cents_sub'][$x] = 0;
 
-            $total_zra=$p->total_zero_ecozones;
-            $data['total_zra'][$x]=$total_zra;
-            $zero_rated_ecozones_exp=explode(".", $total_zra);
-            $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
-            $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
+            $data['total_zra'][$x] = $p->total_zero_ecozones;
+            // $total_zra=$p->total_zero_ecozones;
+            // $data['total_zra'][$x]=$total_zra;
+            // $zero_rated_ecozones_exp=explode(".", $total_zra);
+            // $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
+            // $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
 
-            $total_vos=$p->total_vat;
-            $vat_on_sales = explode(".",$total_vos);
-            $data['vat_peso'][$x] = $vat_on_sales[0];
-            $data['vat_cents'][$x] = $vat_on_sales[1];
+            $data['total_vos'][$x] = $p->total_vat;
+            // $total_vos=$p->total_vat;
+            // $vat_on_sales = explode(".",$total_vos);
+            // $data['vat_peso'][$x] = $vat_on_sales[0];
+            // $data['vat_cents'][$x] = $vat_on_sales[1];
 
-            $total_ewt=$p->total_ewt;
-            $ewt_exp=explode(".", $total_ewt);
-            $data['ewt_peso'][$x]=$ewt_exp[0];
-            $data['ewt_cents'][$x]=$ewt_exp[1];
+            $data['total_ewt'][$x] = $p->total_vat;
+            // $total_ewt=$p->total_ewt;
+            // $ewt_exp=explode(".", $total_ewt);
+            // $data['ewt_peso'][$x]=$ewt_exp[0];
+            // $data['ewt_cents'][$x]=$ewt_exp[1];
 
-            $total= $p->total_net_amount;
+            // $total= $p->total_net_amount;
 
-            $total_amount=str_replace(',','',number_format($total,2));
+            // $total_amount=str_replace(',','',number_format($total,2));
            
-            $total_amount_sub=0;
-            $data['total_amount'][$x]=$total_amount;
-            $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
-            $total_exp=explode(".", $total_amount);
-            $data['total_peso'][$x]=$total_exp[0];
-            $data['total_cents'][$x]=$total_exp[1];
+            // $total_amount_sub=0;
+            // $data['total_amount'][$x]=$total_amount;
+            // $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
+            // $total_exp=explode(".", $total_amount);
+            // $data['total_peso'][$x]=$total_exp[0];
+            // $data['total_cents'][$x]=$total_exp[1];
 
         }else{
             foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP by serial_no") AS $p){
@@ -6406,6 +6412,7 @@ public function upload_sales_adjustment_test(){
                 $data['company_name'][$x]=$company_name;
                 $data['due_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
                 $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
+                $data['reference_number'][$x]=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$p->sales_adjustment_id);
                 $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$p->serial_no'");
                 $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$p->serial_no'");
                 $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$p->serial_no'");
@@ -6413,41 +6420,45 @@ public function upload_sales_adjustment_test(){
                 $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$p->serial_no'");
             }
 
-            $total_vs=$vatable_sales;
-            $vatable_sales = explode(".",$total_vs);
-            $data['vat_sales_peso'][$x] = $vatable_sales[0];
-            $data['vat_sales_cents'][$x] = $vatable_sales[1];
+            $data['total_vs'][$x]= $vatable_sales;
+            // $total_vs=$vatable_sales;
+            // $vatable_sales = explode(".",$total_vs);
+            // $data['vat_sales_peso'][$x] = $vatable_sales[0];
+            // $data['vat_sales_cents'][$x] = $vatable_sales[1];
 
-            $total_zr=$zero_rated_sales;
-            $data['total_zr'][$x]=$total_zr;
-            $zero_rated_sales = explode(".",$total_zr);
-            $data['zero_rated_peso'][$x] = $zero_rated_sales[0];
-            $data['zero_rated_cents'][$x] = $zero_rated_sales[1];
+            // $total_zr=$zero_rated_sales;
+            // $data['total_zr'][$x]=$total_zr;
+            // $zero_rated_sales = explode(".",$total_zr);
+            // $data['zero_rated_peso'][$x] = $zero_rated_sales[0];
+            // $data['zero_rated_cents'][$x] = $zero_rated_sales[1];
 
-            $total_zra=$zero_rated_ecozones;
-            $data['total_zra'][$x]=$total_zra;
-            $zero_rated_ecozones_exp=explode(".", $total_zra);
-            $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
-            $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
+            $data['total_zra'][$x]= $zero_rated_ecozones;
+            // $total_zra=$zero_rated_ecozones;
+            // $data['total_zra'][$x]=$total_zra;
+            // $zero_rated_ecozones_exp=explode(".", $total_zra);
+            // $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
+            // $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
 
-            $total_vos=$vat_on_sales;
-            $vat_on_sales = explode(".",$total_vos);
-            $data['vat_peso'][$x] = $vat_on_sales[0];
-            $data['vat_cents'][$x] = $vat_on_sales[1];
+            $data['total_vos'][$x]= $vat_on_sales;
+            // $total_vos=$vat_on_sales;
+            // $vat_on_sales = explode(".",$total_vos);
+            // $data['vat_peso'][$x] = $vat_on_sales[0];
+            // $data['vat_cents'][$x] = $vat_on_sales[1];
 
-            $total_ewt=$ewt;
-            $ewt_exp=explode(".", $total_ewt);
-            $data['ewt_peso'][$x]=$ewt_exp[0];
-            $data['ewt_cents'][$x]=$ewt_exp[1];
+            $data['total_ewt'][$x]= $ewt;
+            // $total_ewt=$ewt;
+            // $ewt_exp=explode(".", $total_ewt);
+            // $data['ewt_peso'][$x]=$ewt_exp[0];
+            // $data['ewt_cents'][$x]=$ewt_exp[1];
 
-            $total= ($total_vs + $total_vos + $total_zra + $total_zr) - $total_ewt;
-            $total_amount=str_replace(',','',number_format($total,2));
+            // $total= ($total_vs + $total_vos + $total_zra + $total_zr) - $total_ewt;
+            // $total_amount=str_replace(',','',number_format($total,2));
 
-            $data['total_amount'][$x]=$total_amount;
-            $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
-            $total_exp=explode(".", $total_amount);
-            $data['total_peso'][$x]=$total_exp[0];
-            $data['total_cents'][$x]=$total_exp[1];
+            // $data['total_amount'][$x]=$total_amount;
+            // $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
+            // $total_exp=explode(".", $total_amount);
+            // $data['total_peso'][$x]=$total_exp[0];
+            // $data['total_cents'][$x]=$total_exp[1];
             }
         }
         $this->load->view('template/print_head');

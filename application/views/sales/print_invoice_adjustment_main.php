@@ -276,52 +276,47 @@
         <br>
     </center>
 </div>
-<page size="A4" style="">
+<?php for($x=0;$x<$count;$x++){ ?>
+<page size="A4">
     <div style="margin-left: 20px;margin-right: 80px;">
-        <?php 
-            if(!empty($client)){ foreach($client AS $c){ 
-        ?>
-            <div class="cusname"><?php echo $c->participant_name; ?></div>
-            <div class="date"><?php echo date("F j, Y", strtotime($date)); ?></div>
-            <div class="address" style="padding-left: 5px"><?php echo $c->registered_address; ?></div>
-            <div class="tin"><?php echo $c->tin; ?></div>
-        <?php } } else { ?>
-            <div class="cusname"><br></div>
-            <div class="date"><br></div>
-            <div class="address"><br></div>
-        <?php }?>
-        <div class="ref px-5"><?php echo $ref_no; ?></div>
+            <div class="cusname"><?php echo $company_name[$x]; ?></div>
+            <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
+            <div class="tin"><?php echo $tin[$x]; ?></div>
+            <div class="address"><?php echo $address[$x];?></div>
+
+        <div class="ref px-5"><?php echo $reference_number[$x]; ?></div>
         <div class="desc">
-            <div class="marg-5">DEF. INTEREST</div>
-            <div class="marg-5">ENERGY</div>
+            <div class="marg-5">Vatable Sales</div>
+            <div class="marg-5">Zero Rated Ecozones Sales</div>
             <div class="marg-5">VAT</div>
         </div>
         <div class="amount">
-            <div class="marg-5"><?php echo number_format($defint,2); ?></div>
-            <div class="marg-5"><?php echo number_format($sum_amount,2); ?></div>
-            <div class="marg-5"><?php echo number_format($sum_vat,2); ?></div>
+            <div class="marg-5"><?php echo "₱ ".number_format($total_vs[$x],2); ?></div>
+            <div class="marg-5"><?php echo "₱ ".number_format($total_zra[$x],2); ?></div>
+            <div class="marg-5"><?php echo "₱ ".number_format($total_vos[$x],2); ?></div>
         </div>
         <?php
-            $zero_rated = $sum_zero_rated + $sum_zero_rated_ecozone; 
-            $total = $sum_amount +$zero_rated + $sum_vat; 
-            $total_due = $total - $sum_ewt;
+            $total_sales = $total_vs[$x] + $total_zra[$x] + $total_vos[$x];
+            $net_of_vat = $total_vs[$x] + $total_zra[$x];
+            $total_amount_due = $total_vs[$x] + $total_zra[$x] + $total_vos[$x] + $total_ewt[$x];
         ?>
         <div class="sales">
-            <div class="pb-10 pt-2"> <!--TOTAL SALES (VAT INCLUSIVE) --><?php echo number_format($total,2); ?></div>
-            <div class="pb-10"> <!--AMOUNT: NET OF VAT --><?php echo number_format($sum_amount,2); ?></div>
-            <div class="pb-10"> <!--ADD: VAT --><?php echo number_format($sum_vat,2); ?></div>
-            <div class="pb-10"> <!--TOTAL --><?php echo number_format($total,2); ?></div>
-            <div class="pb-10"> <!--LESS WITHHOLDING --><?php echo number_format($sum_ewt,2); ?></div>
-            <div class="pb-5"> <!--TOTAL AMOUNT DUE --><?php echo number_format($total_due,2); ?></div>
-            <span class="font-10"> <!--VATABLE (V)  --><?php echo number_format($sum_amount,2); ?></span><br>
+            <div class="pb-10 pt-2"> <!--TOTAL SALES (VAT INCLUSIVE) --><?php echo number_format($total_sales,2); ?></div>
+            <div class="pb-10"> <!--AMOUNT: NET OF VAT --><?php echo number_format($net_of_vat,2); ?></div>
+            <div class="pb-10"> <!--ADD: VAT --><?php echo number_format($total_vos[$x],2); ?></div>
+            <div class="pb-10"> <!--TOTAL --><?php echo number_format($total_sales,2); ?></div>
+            <div class="pb-10"> <!--LESS WITHHOLDING --><?php echo number_format($total_ewt[$x],2); ?></div>
+            <div class="pb-5"> <!--TOTAL AMOUNT DUE --><?php echo number_format($total_amount_due,2); ?></div>
+            <span class="font-10"> <!--VATABLE (V)  --><?php echo number_format($total_vs[$x],2); ?></span><br>
             <span class="font-10"> <!--VAT EXEMPT (E) --> 0.00</span><br>
-            <span class="font-10"> <!--ZERO-RATED (Z)  --><?php echo number_format($zero_rated,2); ?></span><br>
-            <span class="font-10"> <!--VAT (12%)  --><?php echo number_format($sum_vat,2); ?></span><br>
-            <span class="font-10"> <!--TOTAL  --><?php echo number_format($total,2); ?></span><br>
+            <span class="font-10"> <!--ZERO-RATED (Z)  --><?php echo number_format($total_zra[$x],2); ?></span><br>
+            <span class="font-10"> <!--VAT (12%)  --><?php echo number_format($total_vos[$x],2); ?></span><br>
+            <span class="font-10"> <!--TOTAL  --><?php echo number_format($total_sales,2); ?></span><br>
         </div>
-        <?php  ?>
+
     </div>
 </page>
+<?php } ?>
 
                 
                                        
