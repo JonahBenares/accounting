@@ -144,7 +144,7 @@
                        
                        
                                 $.ajax({
-                                    data: '&serial_no='+serial_no+'&stl_id='+stl_id+'&sales_id='+sales_id+'&filename='+fname,
+                                    data: '&serial_no='+serial_no+'&sales_id='+sales_id+'&filename='+fname,
                                     type: "POST",
                                     url: redirect,
                                     success: function(output){

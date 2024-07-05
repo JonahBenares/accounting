@@ -3645,14 +3645,14 @@ public function print_BS_new(){
 
         public function update_sales_wesm_flag(){
         $serial_no = $this->input->post('serial_no');
-        $settlement_id = $this->input->post('stl_id');
+        // $settlement_id = $this->input->post('stl_id');
         $sales_id = $this->input->post('sales_id');
         $filename = $this->input->post('filename');
         $data_update = array(
                 "bulk_pdf_flag"=>1,
                 "filename"=>$filename
             );
-            $this->super_model->update_custom_where("sales_transaction_details", $data_update, "serial_no='$serial_no' AND short_name='$settlement_id' AND sales_id='$sales_id'");
+            $this->super_model->update_custom_where("sales_transaction_details", $data_update, "serial_no='$serial_no' AND sales_id='$sales_id'");
     }
 
         public function export_not_download_sales_wesm()
@@ -3705,7 +3705,7 @@ public function print_BS_new(){
              }
         }
         
-       foreach($this->super_model->custom_query("SELECT filename FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu GROUP BY serial_no,short_name,sales_id") AS $db){
+       foreach($this->super_model->custom_query("SELECT filename FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu GROUP BY serial_no,sd.sales_id") AS $db){
         $db_files[] = $db->filename;
        }
 
@@ -3737,7 +3737,7 @@ public function print_BS_new(){
 
 
 
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu GROUP BY serial_no,short_name,sales_id") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu GROUP BY serial_no,sd.sales_id") AS $d){
 
             if(!empty($d->company_name) && date('Y',strtotime($d->create_date))==date('Y')){
                     $comp_name=$d->company_name;
