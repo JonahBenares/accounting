@@ -918,14 +918,20 @@ public function print_BS_new(){
                 }
             }else{
                 foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
+                    $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $p->sales_id);
+                    if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                        $comp_name=$p->company_name;
+                    }else{
+                        $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
+                    }
                     $data['detail_id'][$x]=$p->sales_detail_id;
                     $detail_id=$p->sales_detail_id;
                     $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                     $address=$this->super_model->select_column_where("participant","office_address","billing_id",$p->billing_id);
                     $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                     $tin=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
-                    $data['company_name'][$x]=$p->company_name;
-                    $company_name=$p->company_name;
+                    $data['company_name'][$x]=$comp_name;
+                    $company_name=$comp_name;
                     $data['serial_no'][$x]=$p->serial_no;
                     $serial_no=$p->serial_no;
                     $data['settlement'][$x]=$this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
@@ -6465,12 +6471,24 @@ public function upload_sales_adjustment_test(){
 
                     if($mother_participant_id != ''){
                             $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
-                            $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                            $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $p->sales_id);
+                            if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                                $comp_name= $this->super_model->select_column_where("sales_transaction_head","company_name","billing_id",$p->billing_id);
+                            }else{
+                                $comp_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                            }
                             $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
                             $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
                     }else{
                             $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                            $company_name = $p->company_name;
+
+                            $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $p->sales_id);
+                            if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                                $comp_name=$p->company_name;
+                            }else{
+                                $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
+                            }
+                            // $company_name = $p->company_name;
                             $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                             $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
                     }
@@ -6478,7 +6496,7 @@ public function upload_sales_adjustment_test(){
                     // $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                     $data['address'][$x]= $address;
                     // $data['company_name'][$x]=$p->company_name;
-                    $data['company_name'][$x]=$company_name;
+                    $data['company_name'][$x]=$comp_name;
                     // $data['tin'][$x]=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                     $data['tin'][$x]=$tin_no;
                     // $tin=$this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
