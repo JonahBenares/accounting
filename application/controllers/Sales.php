@@ -3590,11 +3590,11 @@ public function print_BS_new(){
                 $h=0;
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id='$billing_id' AND sales_id='$d->sales_id'");
-                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id='$billing_id' AND sales_id='$d->sales_id'");
-                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id='$billing_id' AND sales_id='$d->sales_id'");
-                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_id='$d->sales_id'");
-                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_id='$d->sales_id'");
+                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
+                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
+                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
+                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
+                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
                     $h++;
                 }
 
@@ -3621,7 +3621,7 @@ public function print_BS_new(){
                 if($ref_no!='null'){
                     $reference_number = $ref_no;
                 }else{
-                    $reference_number = $d->reference_no;
+                    $reference_number = $d->reference_number;
                 }
 
                 $billing_month = date('my',strtotime($d->transaction_date));
@@ -3793,7 +3793,7 @@ public function print_BS_new(){
                 if($ref_no!='null'){
                     $reference_number = $ref_no;
                 }else{
-                    $reference_number = $d->reference_no;
+                    $reference_number = $d->reference_number;
                 }
 
                 $billing_month = date('my',strtotime($d->transaction_date));
