@@ -3586,6 +3586,7 @@ public function print_BS_new(){
                 $tin = $this->super_model->select_column_where("participant","tin","billing_id",$d->billing_id);
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$d->billing_id);
 
+                $count_sub = $this->super_model->count_custom_where("subparticipant", "participant_id='$participant_id'");
                 $h=0;
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
@@ -3603,12 +3604,19 @@ public function print_BS_new(){
                  $sum_zero_rated_ecozone=array_sum($zero_rated_ecozone_bs);
                  $sum_zero_rated=array_sum($zero_rated_bs);
 
-
-                $total_vs = $d->vatable_sales + $sum_vatable_sales;
-                $total_zr = $d->zero_rated_sales + $sum_zero_rated;
-                $total_zra = $d->zero_rated_ecozones + $sum_zero_rated_ecozone;
-                $total_vos = $d->vat_on_sales + $sum_vat_on_sales;
-                $total_ewt = $d->ewt + $sum_ewt;
+                if($count_sub != 0){
+                    $total_vs = $d->vatable_sales + $sum_vatable_sales;
+                    $total_zr = $d->zero_rated_sales + $sum_zero_rated;
+                    $total_zra = $d->zero_rated_ecozones + $sum_zero_rated_ecozone;
+                    $total_vos = $d->vat_on_sales + $sum_vat_on_sales;
+                    $total_ewt = $d->ewt + $sum_ewt;
+                }else{
+                    $total_vs = $d->vatable_sales;
+                    $total_zr = $d->zero_rated_sales;
+                    $total_zra = $d->zero_rated_ecozones;
+                    $total_vos = $d->vat_on_sales;
+                    $total_ewt = $d->ewt;
+                }
 
                 if($ref_no!='null'){
                     $reference_number = $ref_no;
@@ -3749,6 +3757,7 @@ public function print_BS_new(){
                 $tin = $this->super_model->select_column_where("participant","tin","billing_id",$d->billing_id);
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$d->billing_id);
 
+                $count_sub = $this->super_model->count_custom_where("subparticipant", "participant_id='$participant_id'");
                 $h=0;
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
@@ -3767,11 +3776,19 @@ public function print_BS_new(){
                  $sum_zero_rated=array_sum($zero_rated_bs);
 
 
-                $total_vs = $d->vatable_sales + $sum_vatable_sales;
-                $total_zr = $d->zero_rated_sales + $sum_zero_rated;
-                $total_zra = $d->zero_rated_ecozones + $sum_zero_rated_ecozone;
-                $total_vos = $d->vat_on_sales + $sum_vat_on_sales;
-                $total_ewt = $d->ewt + $sum_ewt;
+               if($count_sub != 0){
+                    $total_vs = $d->vatable_sales + $sum_vatable_sales;
+                    $total_zr = $d->zero_rated_sales + $sum_zero_rated;
+                    $total_zra = $d->zero_rated_ecozones + $sum_zero_rated_ecozone;
+                    $total_vos = $d->vat_on_sales + $sum_vat_on_sales;
+                    $total_ewt = $d->ewt + $sum_ewt;
+                }else{
+                    $total_vs = $d->vatable_sales;
+                    $total_zr = $d->zero_rated_sales;
+                    $total_zra = $d->zero_rated_ecozones;
+                    $total_vos = $d->vat_on_sales;
+                    $total_ewt = $d->ewt;
+                }
 
                 if($ref_no!='null'){
                     $reference_number = $ref_no;
