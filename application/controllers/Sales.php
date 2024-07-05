@@ -4963,11 +4963,11 @@ public function print_BS_new(){
                 $h=0;
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","vatable_sales","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
-                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","vat_on_sales","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
-                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","ewt","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
-                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
-                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","zero_rated","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","vatable_sales","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","vat_on_sales","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","ewt","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_adjustment_details","zero_rated","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
                     $h++;
                 }
 
@@ -5105,7 +5105,7 @@ public function print_BS_new(){
 
 
 
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id $qu GROUP BY serial_no,short_name,sales_id") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id $qu GROUP BY serial_no,short_name,sales_adjustment_id") AS $d){
 
             if(!empty($d->company_name) && date('Y',strtotime($d->create_date))==date('Y')){
                     $comp_name=$d->company_name;
@@ -5120,11 +5120,11 @@ public function print_BS_new(){
                 $h=0;
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
-                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
-                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
-                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
-                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","serial_no='$d->serial_no'' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","serial_no='$d->serial_no'' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","serial_no='$d->serial_no'' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","serial_no='$d->serial_no'' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","serial_no='$d->serial_no'' AND sales_adjustment_id='$d->sales_adjustment_id'");
                     $h++;
                 }
 
