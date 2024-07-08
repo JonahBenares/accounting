@@ -28,9 +28,9 @@
 <?php 
     $x=1;
     foreach($details AS $d){
-        $total_sales = $d['total_vs'] + $d['total_zra'] + $d['total_vos'];
-        $net_of_vat = $d['total_vs'] + $d['total_zra'];
-        $total_amount_due = $d['total_vs'] + $d['total_zra'] + $d['total_vos'] + $d['total_ewt'];
+        // $total_sales = $d['total_vs'] + $d['total_zra'] + $d['total_vos'];
+        // $net_of_vat = $d['total_vs'] + $d['total_zra'];
+        // $total_amount_due = $d['total_vs'] + $d['total_zra'] + $d['total_vos'] + $d['total_ewt'];
 
          ?>
 <div style="padding-bottom:90px;">
@@ -50,17 +50,17 @@
             <label class="energy_value_1"><?php echo number_format($d['total_zra'],2); ?></label>
             <label class="vat_1">VAT</label>
             <label class="vat_value_1"><?php echo number_format($d['total_vos'],2); ?></label>
-            <label class="total_sales_1"><?php echo number_format($total_sales,2); ?></label>
-            <label class="net_vat_1"><?php echo number_format($net_of_vat,2); ?></label>
+            <label class="total_sales_1"><?php echo number_format($d['total_sales'],2); ?></label>
+            <label class="net_vat_1"><?php echo number_format($d['net_of_vat'],2); ?></label>
             <label class="add_vat_1"><?php echo number_format($d['total_vos'],2); ?></label>
-            <label class="total_1"><?php echo number_format($total_sales,2); ?></label>
+            <label class="total_1"><?php echo number_format($d['total_sales'],2); ?></label>
             <label class="less_withholding_1"><?php echo number_format($d['total_ewt'],2); ?></label>
-            <label class="total_amount_1"><?php echo number_format($total_amount_due,2); ?></label>
+            <label class="total_amount_1"><?php echo number_format($d['total_amount_due'],2); ?></label>
             <label class="vatable_1"><?php echo number_format($d['total_vs'],2); ?></label>
             <label class="vat_exempt_1">0.00</label>
             <label class="zero_rated_1"><?php echo number_format($d['total_zra'],2); ?></label>
             <label class="vat_percent_1"><?php echo number_format($d['total_vos'],2); ?></label>
-            <label class="grand_total_1"><?php echo number_format($total_sales,2); ?></label>
+            <label class="grand_total_1"><?php echo number_format($d['total_sales'],2); ?></label>
             <!-- <label class="claim">This Document is Not Valid for Claiming Input Taxes</label> -->
             <label class="signature_1">
                 <img src="<?php echo base_url()."uploads/".$user_signature; ?>" width="100px">
