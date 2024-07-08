@@ -3510,8 +3510,8 @@ public function print_BS_new(){
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $data['participant_id_sub'][$h]=$s->participant_id;
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","serial_no='$d->serial_no' AND vatable_sales","billing_id='$billing_id' AND sales_id='$d->sales_id'");
-                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","serial_no='$d->serial_no' AND vat_on_sales","billing_id='$billing_id' AND sales_id='$d->sales_id'");
+                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
+                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
                     $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
                     $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
                     $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
