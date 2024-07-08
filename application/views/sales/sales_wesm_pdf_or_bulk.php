@@ -33,7 +33,7 @@
         // $total_amount_due = $d['total_vs'] + $d['total_zra'] + $d['total_vos'] + $d['total_ewt'];
 
          ?>
-<div style="padding-bottom:90px;">
+<div style="padding-bottom:800px;">
     <div id="contentPDF" >
     <page size="Long" id="printableArea" class="canvas_div_pdf<?php echo $x; ?>" >
         <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.jpg" style="width: 100%;">

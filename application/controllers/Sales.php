@@ -3588,6 +3588,12 @@ public function print_BS_new(){
 
                 // $count_sub = $this->super_model->count_custom_where("subparticipant", "participant_id='$participant_id'");
                 $h=0;
+                
+            $vatable_sales_bs=array();
+            $vat_on_sales_bs=array();
+            $ewt_bs=array();
+            $zero_rated_ecozone_bs=array();
+            $zero_rated_bs=array();
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
                     $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_id='$d->sales_id'");
