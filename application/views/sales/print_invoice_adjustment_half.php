@@ -7,6 +7,14 @@
 </script>
 <style type="text/css">
     @media print{
+        .first-main{
+            position: relative;
+        }
+        .main{
+            position: absolute;
+            top: 10px;
+            margin-top: 5px; 
+        }
         .company{
             position: absolute;
             left:40px;
@@ -62,7 +70,7 @@
         }
         .charges{
             position: absolute;
-            left:40px;
+            left:20px;
             top:270px;
             width: 520px;
             line-height: 13px;
@@ -75,7 +83,7 @@
         }
         .vatable{
             position: absolute;
-            left:60px;
+            left:40px;
             top:290px;
             width: 500px;
             line-height: 13px;
@@ -89,7 +97,7 @@
         }
         .vatable_1{
             position: absolute;
-            left:580px;
+            left:570px;
             top:290px;
             width: 100px;
             line-height: 13px;
@@ -103,7 +111,7 @@
         }
         .vatable_2{
             position: absolute;
-            left:690px;
+            left:680px;
             top:290px;
             width: 30px;
             line-height: 13px;
@@ -117,7 +125,7 @@
         }
         .zero_rated{
             position: absolute;
-            left:-630px;
+            left:-650px;
             top:23px;
             width: 500px;
             line-height: 13px;
@@ -553,9 +561,11 @@
             margin-left:20px;
         }
     }
+    .first-main{
+        position: relative;
+    }
     .esig{
         position:relative;
-        left:;
         top:470px;
     }
 </style>
@@ -569,7 +579,8 @@
     </center>
 </div>
 <?php for($x=0;$x<$count;$x++){ ?>
-<page size="A4">
+<page size="A4" class="first-main">
+    <div class="main">
     <img class="esig" src="<?php echo base_url()."uploads/".$user_signature; ?>" style="width: 100px;">
     <div class="company"><?php echo $company_name[$x]; ?></div>
     <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
@@ -679,7 +690,7 @@
     <?php } else { ?>
         <div class="amount_2"><?php echo ($total_amount_sub[$x]!=0) ? $amount_words_sub[$x] : ''; ?></div>
     <?php } ?>
-
+    </div>
     
 
 

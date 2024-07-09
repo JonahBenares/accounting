@@ -7,10 +7,19 @@
 </script>
 <style type="text/css">
 	@media print{
+        .first-main{
+            position: relative;
+        }
+        .main{
+            position: absolute;
+            top: 10px;
+            margin-top: 23px; 
+            left: 20px;
+        }
         .company{
             position: absolute;
             left:20px;
-            top:70px;
+            top:55px;
             width: 500px;
             line-height: 13px;
             font-size: 13px;
@@ -24,7 +33,7 @@
         .date{
             position: absolute;
             left:607px;
-            top:70px;
+            top:55px;
             width: 100px;
             line-height: 13px;
             font-size: 13px;
@@ -38,7 +47,7 @@
         .tin{
             position: absolute;
             left:410px;
-            top:98px;
+            top:83px;
             width: 125px;
             line-height: 13px;
             font-size: 13px;
@@ -53,7 +62,7 @@
         .address{
             position: absolute;
             left:20px;
-            top:115px;
+            top:100px;
             width: 500px;
             line-height: 13px;
             font-size: 13px;
@@ -584,8 +593,10 @@
         position:absolute;
             left:500px;
             top:240px;
-        }
     }
+    .first-main{
+            position: relative;
+        }
 </style>
 <div style="margin-top:10px" id="printbutton">
     <center>
@@ -597,7 +608,8 @@
     </center>
 </div>
 <?php for($x=0;$x<$count;$x++){ ?>
-<page size="A4">
+<page size="A4" class="first-main">
+    <div class="main">
     <img class="esig" src="<?php echo base_url()."uploads/".$user_signature; ?>" style="width: 100px;">
     <div class="company"><?php echo $company_name[$x]; ?></div>
     <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
@@ -779,7 +791,7 @@
         <div class="amount_2"><?php echo ($total_amount_sub[$x]!=0) ? $amount_words_sub[$x] : ''; ?></div>
     <?php } ?>
 
-    
+    </div>
 
 
 </page>

@@ -7,10 +7,16 @@
 </script>
 <style type="text/css">
     @media print{
+        .main{
+            position: absolute;
+            top: 10px;
+            margin-top: 23px; 
+            left: 20px;
+        }
         .company{
             position: absolute;
             left:20px;
-            top:70px;
+            top:55px;
             width: 500px;
             line-height: 13px;
             font-size: 13px;
@@ -20,11 +26,12 @@
             font-variant: normal;
             letter-spacing: 1px;
             
+            
         }
         .date{
             position: absolute;
             left:607px;
-            top:70px;
+            top:55px;
             width: 100px;
             line-height: 13px;
             font-size: 13px;
@@ -38,7 +45,7 @@
         .tin{
             position: absolute;
             left:410px;
-            top:102px;
+            top:83px;
             width: 125px;
             line-height: 13px;
             font-size: 13px;
@@ -53,7 +60,7 @@
         .address{
             position: absolute;
             left:20px;
-            top:115px;
+            top:100px;
             width: 500px;
             line-height: 13px;
             font-size: 13px;
@@ -109,7 +116,7 @@
         }
         .vatable_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:158px;
             width: 30px;
             line-height: 13px;
@@ -154,7 +161,7 @@
         }
         .zero_rated_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:171px;
             width: 30px;
             line-height: 13px;
@@ -202,7 +209,7 @@
         }
         .zero_rated_sub_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:171px;
             width: 30px;
             line-height: 13px;
@@ -248,7 +255,7 @@
         }
         .ecozone_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:184px;
             width: 30px;
             line-height: 13px;
@@ -294,7 +301,7 @@
         }
         .ecozone_sub_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:184px;
             width: 30px;
             line-height: 13px;
@@ -341,7 +348,7 @@
         }
         .vat_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:197px;
             width: 30px;
             line-height: 13px;
@@ -384,7 +391,7 @@
         }
         .vat_sub_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:197px;
             width: 30px;
             line-height: 13px;
@@ -427,7 +434,7 @@
         }
         .ewt_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:210px;
             width: 30px;
             line-height: 13px;
@@ -470,7 +477,7 @@
         }
         .ewt_sub_2{
             position: absolute;
-            left:673px;
+            left:669px;
             top:210px;
             width: 30px;
             line-height: 13px;
@@ -579,12 +586,17 @@
             display: flex;
             justify-content: space-between;
         }
+        .first-main{
+            position: relative;
+        }
     }
+    .first-main{
+            position: relative;
+        }
     .esig{
         position:absolute;
             left:500px;
             top:240px;
-        }
     }
 </style>
 <div style="margin-top:10px" id="printbutton">
@@ -597,7 +609,8 @@
     </center>
 </div>
 <?php for($x=0;$x<$count;$x++){ ?>
-<page size="A4">
+<page size="A4" class="first-main">
+    <div class="main">
     <img class="esig" src="<?php echo base_url()."uploads/".$user_signature; ?>" style="width: 100px;">
     <div class="company"><?php echo $company_name[$x]; ?></div>
     <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
@@ -642,5 +655,6 @@
     <div class="total_1"><?php echo "₱ ".number_format($total_peso[$x],0); ?></div>
     <div class="total_2"><?php echo $cents; ?></div>
     <div class="amount_1"><?php echo ($total_amount[$x]!=0) ? $amount_words[$x] : ''; ?></div>
+    </div>
 </page>
 <?php } ?>

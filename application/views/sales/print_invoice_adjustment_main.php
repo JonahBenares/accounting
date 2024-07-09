@@ -7,6 +7,9 @@
 </script>
 
 <style type="text/css">
+    .first-main{
+            position: relative;
+        }
     .table-size td{
         font-size: 10px;
         padding: 0px;
@@ -129,6 +132,13 @@
         padding: 5px;
     }
     @media print{
+        .first-main{
+            position: relative;
+        }
+        .main{
+            position: absolute;
+            top:30px;
+        }
         .cusname{
             position: absolute;
             left:90px;
@@ -161,9 +171,9 @@
         .address{
             position: absolute;
             top:70px;
-            left:490px;
-            width: 250px;
-/*            background: #7fef7f8c;*/
+            left:400px;
+            width: 310px;
+            /* background: #7fef7f8c; */
             font-size: 11px;
             line-height: 12px;
             font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
@@ -175,7 +185,7 @@
         .tin{
             position: absolute;
             top:105px;
-            left:490px;
+            left:470px;
             padding-right: 10px;
             width: 250px;
 /*            background: #7fef7f8c;*/
@@ -205,9 +215,9 @@
         }
         .desc{
             position: absolute;
-            left:0px;
-            top:180px;
-/*            background: #7fcf7f8c;*/
+            left:10px;
+            top:185px;
+           /* background: #7fcf7f8c; */
             font-size: 12px;
             line-height: 15px;
             width: 200px;
@@ -220,12 +230,12 @@
         }
         .amount{
             position: absolute;
-            left:380px;
-            top:180px;
-/*            background: #7fcf7f8c;*/
+            left:410px;
+            top:185px;
+           /* background: #7fcf7f8c; */
             font-size: 12px;
             line-height: 15px;
-            width: 100px;
+            width: 120px;
             font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
             font-weight: 400;
             font-style: normal; 
@@ -277,8 +287,8 @@
     </center>
 </div>
 <?php for($x=0;$x<$count;$x++){ ?>
-<page size="A4">
-    <div style="margin-left: 20px;margin-right: 80px;">
+<page size="A4" class="first-main">
+    <div class="main">
             <div class="cusname"><?php echo $company_name[$x]; ?></div>
             <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
             <div class="tin"><?php echo $tin[$x]; ?></div>
