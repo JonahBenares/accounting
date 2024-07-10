@@ -6510,7 +6510,7 @@ public function upload_sales_adjustment_test(){
                             $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
                             $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
                             if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
-                                $comp_name= $this->super_model->select_column_where("sales_adjustment_head","company_name","billing_id",$p->billing_id);
+                                $comp_name= $p->company_name;
                             }else{
                                 $comp_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                             }
