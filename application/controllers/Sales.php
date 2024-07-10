@@ -7156,7 +7156,7 @@ public function upload_sales_adjustment_test(){
 
                 if($mother_participant_id != ''){
                         $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
-                        $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_id", $p->sales_id);
+                        $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
                         if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
                            $company_name=$p->company_name;
                         }else{
@@ -7166,7 +7166,7 @@ public function upload_sales_adjustment_test(){
                         $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
                 }else{
                         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                        $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_id", $p->sales_id);
+                        $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
                         if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
                            $company_name=$p->company_name;
                         }else{
