@@ -3359,10 +3359,10 @@ public function print_BS_new(){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
 
-                $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $d->sales_id);
-                $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $d->sales_detail_id);
-                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
-                    $comp_name=$company_name;
+                // $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $d->sales_id);
+                // $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $d->sales_detail_id);
+                if(!empty($d->company_name)){
+                    $comp_name=$d->company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
                 }
@@ -3489,8 +3489,8 @@ public function print_BS_new(){
                 $data['stl_id']=$d->short_name;
                 $data['address']=$this->super_model->select_column_where("participant","registered_address","billing_id",$d->billing_id);
                 $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$d->billing_id);
-                $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $d->sales_id);
-                if(!empty($d->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                // $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $d->sales_id);
+                if(!empty($d->company_name)){
                      $data['company_name']=$d->company_name;
                 }else{
                     $data['company_name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
@@ -3576,7 +3576,7 @@ public function print_BS_new(){
             $zero_rated_ecozone_bs=array();
             $zero_rated_bs=array();
            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu GROUP BY serial_no LIMIT 10") AS $d){
-                if(!empty($d->company_name) && date('Y',strtotime($d->create_date))==date('Y')){
+                if(!empty($d->company_name)){
                     $comp_name=$d->company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
@@ -3766,7 +3766,7 @@ public function print_BS_new(){
 
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu GROUP BY serial_no,sd.sales_id") AS $d){
 
-            if(!empty($d->company_name) && date('Y',strtotime($d->create_date))==date('Y')){
+            if(!empty($d->company_name)){
                     $comp_name=$d->company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
@@ -3890,10 +3890,10 @@ public function print_BS_new(){
                 $series_number=$this->super_model->select_column_custom_where("collection_reserve_details","series_number","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_reserve_details","old_series_no","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
 
-                $create_date = $this->super_model->select_column_where("reserve_sales_transaction_head", "res_create_date", "reserve_sales_id", $d->reserve_sales_id);
+                // $create_date = $this->super_model->select_column_where("reserve_sales_transaction_head", "res_create_date", "reserve_sales_id", $d->reserve_sales_id);
                 $date=$this->super_model->select_column_where("reserve_sales_transaction_details", "res_company_name", "reserve_sales_detail_id", $d->reserve_sales_detail_id);
-                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
-                    $comp_name=$company_name;
+                if(!empty($d->company_name)){
+                    $comp_name=$d->company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $d->res_billing_id);
                 }
@@ -4792,10 +4792,10 @@ public function print_BS_new(){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
 
-                $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $d->sales_adjustment_id);
-                $company_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id", $d->adjustment_detail_id);
-                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
-                    $comp_name=$company_name;
+                // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $d->sales_adjustment_id);
+                // $company_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id", $d->adjustment_detail_id);
+                if(!empty($d->company_name)){
+                    $comp_name=$d->company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
                 }
@@ -4915,7 +4915,7 @@ public function print_BS_new(){
                 $data['address']=$this->super_model->select_column_where("participant","registered_address","billing_id",$d->billing_id);
                 $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$d->billing_id);
                 $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $d->sales_adjustment_id);
-                if(!empty($d->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                if(!empty($d->company_name)){
                      $data['company_name']=$d->company_name;
                 }else{
                     $data['company_name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
@@ -4982,7 +4982,7 @@ public function print_BS_new(){
 
             
            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sd INNER JOIN sales_adjustment_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id $qu GROUP BY serial_no LIMIT 10") AS $d){
-                if(!empty($d->company_name) && date('Y',strtotime($d->create_date))==date('Y')){
+                if(!empty($d->company_name)){
                     $comp_name=$d->company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
@@ -5144,7 +5144,7 @@ public function print_BS_new(){
 
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id $qu GROUP BY serial_no,short_name,sales_adjustment_id") AS $d){
 
-            if(!empty($d->company_name) && date('Y',strtotime($d->create_date))==date('Y')){
+            if(!empty($d->company_name)){
                     $comp_name=$d->company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
@@ -6508,8 +6508,8 @@ public function upload_sales_adjustment_test(){
 
                     if($mother_participant_id != ''){
                             $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
-                            $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
-                            if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                            // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
+                            if(!empty($p->company_name)){
                                 $comp_name= $p->company_name;
                             }else{
                                 $comp_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
@@ -6519,8 +6519,8 @@ public function upload_sales_adjustment_test(){
                     }else{
                             $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
 
-                            $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
-                            if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                            // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
+                             if(!empty($p->company_name)){
                                 $comp_name=$p->company_name;
                             }else{
                                 $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
@@ -6787,7 +6787,7 @@ public function upload_sales_adjustment_test(){
                 if($mother_participant_id != ''){
                         $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
                         $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_id", $p->sales_id);
-                        if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                        if(!empty($p->company_name)){
                            $company_name=$p->company_name;
                         }else{
                             $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
@@ -6797,7 +6797,7 @@ public function upload_sales_adjustment_test(){
                 }else{
                         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                         $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_id", $p->sales_id);
-                        if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                        if(!empty($p->company_name)){
                            $company_name=$p->company_name;
                         }else{
                            $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
@@ -6974,7 +6974,7 @@ public function upload_sales_adjustment_test(){
                 if($mother_participant_id != ''){
                         $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
                         $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_id", $p->sales_id);
-                        if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                        if(!empty($p->company_name)){
                            $company_name=$p->company_name;
                         }else{
                             $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
@@ -6984,7 +6984,7 @@ public function upload_sales_adjustment_test(){
                 }else{
                         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                         $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_id", $p->sales_id);
-                        if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                        if(!empty($p->company_name)){
                            $company_name=$p->company_name;
                         }else{
                            $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
@@ -7157,7 +7157,7 @@ public function upload_sales_adjustment_test(){
                 if($mother_participant_id != ''){
                         $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
                         $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
-                        if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                        if(!empty($p->company_name)){
                            $company_name=$p->company_name;
                         }else{
                             $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
@@ -7167,7 +7167,7 @@ public function upload_sales_adjustment_test(){
                 }else{
                         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
                         $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
-                        if(!empty($p->company_name) && date('Y',strtotime($create_date))==date('Y')){
+                        if(!empty($p->company_name)){
                            $company_name=$p->company_name;
                         }else{
                            $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
@@ -7336,14 +7336,37 @@ public function upload_sales_adjustment_test(){
 
                 $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
 
+                // if($mother_participant_id != ''){
+                //         $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
+                //         $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                //         $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
+                //         $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                // }else{
+                //         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                //         $company_name = $p->company_name;
+                //         $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                //         $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                // }
+
                 if($mother_participant_id != ''){
                         $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
-                        $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                        $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
+                        if(!empty($p->company_name)){
+                           $company_name=$p->company_name;
+                        }else{
+                            $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                        }
                         $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
                         $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
                 }else{
                         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                        $company_name = $p->company_name;
+                        $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
+                        if(!empty($p->company_name)){
+                           $company_name=$p->company_name;
+                        }else{
+                           $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
+                        }
+                        // $company_name = $p->company_name;
                         $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
                         $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
                 }
