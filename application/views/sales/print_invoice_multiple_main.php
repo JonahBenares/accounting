@@ -282,7 +282,16 @@
         .font-10{
             font-size: 9px!important;
         }
+        .esig{
+            position: absolute;
+            top:270px!important;
+            left: 560px!important;
+        }
     }   
+    .esig{
+        position: absolute;
+        top:390px;
+    }
 </style>
 <div style="margin-top:10px" id="printbutton">
     <center>
@@ -295,6 +304,7 @@
 <?php for($x=0;$x<$count;$x++){ ?>
 <page size="A4" class="first-main">
     <div class="main" >
+        <img class="esig" src="<?php echo base_url()."assets/img/sign_DeLosSantos.png" ?>" style="width: 180px;">
         <div class="cusname"><?php echo $company_name[$x]; ?></div>
         <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
         <div class="tin"><?php echo $tin[$x]; ?></div>
