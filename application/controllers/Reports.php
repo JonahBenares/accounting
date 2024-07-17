@@ -108,7 +108,8 @@ class Reports extends CI_Controller {
 
             $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sales->sales_id);
             $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sales->sales_detail_id);
-            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+            // if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+            if(!empty($company_name)){
                 $comp_name=$company_name;
             }else{
                 $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $sales->billing_id);
@@ -208,7 +209,7 @@ class Reports extends CI_Controller {
             $registered_address=$this->super_model->select_column_where("participant","registered_address","billing_id",$purchase->billing_id);
             $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $purchase->purchase_id);
             $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $purchase->purchase_detail_id);
-            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+            if(!empty($company_name)){
                 $comp_name=$company_name;
             }else{
                 $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $purchase->billing_id);
@@ -314,7 +315,7 @@ class Reports extends CI_Controller {
             //$company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$s->billing_id);
             $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $s->purchase_id);
             $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $s->purchase_detail_id);
-            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+            if(!empty($company_name)){
                 $comp_name=$company_name;
             }else{
                 $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $s->billing_id);
@@ -364,7 +365,7 @@ class Reports extends CI_Controller {
             $company_name=$this->super_model->select_column_where("participant","participant_name","settlement_id",$s->short_name);
             $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $s->sales_id);
             $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $s->sales_detail_id);
-            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+            if(!empty($company_name)){
                 $comp_name=$company_name;
             }else{
                 $comp_name=$this->super_model->select_column_where("participant", "participant_name", "settlement_id", $s->short_name);
@@ -495,7 +496,7 @@ class Reports extends CI_Controller {
 
                 $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $b->sales_id);
                 $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $b->sales_detail_id);
-                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                if(!empty($company_name)){
                     $comp_name=$company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $b->billing_id);
@@ -622,7 +623,7 @@ class Reports extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id INNER JOIN participant p ON std.short_name=p.settlement_id WHERE reference_number='$head->reference_number' GROUP BY p.tin ORDER BY billing_from ASC, std.short_name ASC, sth.transaction_date ASC") AS $details){
 
                 $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$details->billing_id);
-                if(!empty($details->company_name) && date('Y',strtotime($details->create_date))==date('Y')){
+                if(!empty($details->company_name)){
                     $comp_name=$details->company_name;
                 }else{
                     $comp_name=$company_name;
@@ -986,7 +987,7 @@ class Reports extends CI_Controller {
                 //$company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$b->billing_id);
                 $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $b->purchase_id);
                 $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $b->purchase_detail_id);
-                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                if(!empty($company_name)){
                     $comp_name=$company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $b->billing_id);
@@ -1415,7 +1416,7 @@ class Reports extends CI_Controller {
                     $cewt_amount=$cewt." <span class='td-30 td-yellow'> Total: ".number_format(floatval($this->collection_sum($cs->short_name,$cs->reference_number,'ewt')),2)."</span>";
                     $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $cs->sales_id);
                     $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $cs->sales_detail_id);
-                    if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    if(!empty($company_name)){
                         $comp_name=$company_name;
                     }else{
                         $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $cs->billing_id);
@@ -2380,7 +2381,7 @@ class Reports extends CI_Controller {
                     $cewt_amount=$cewt." <span class='td-30 td-yellow'> Total: ".number_format((float)$this->collection_sum($cs->short_name,$cs->reference_number,'ewt'),2)."</span>";
                     $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $cs->sales_adjustment_id);
                     $company_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id", $cs->adjustment_detail_id);
-                    if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    if(!empty($company_name)){
                         $comp_name=$company_name;
                     }else{
                         $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $cs->billing_id);
@@ -3270,7 +3271,7 @@ class Reports extends CI_Controller {
                     $cewt_amount=$cewt." <span class='td-30 td-yellow'> Total: ".number_format((float)$this->payment_sum($cs->short_name,$payment_id,'ewt'),2)."</span>";
                     $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $cs->purchase_id);
                     $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $cs->purchase_detail_id);
-                    if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                    if(!empty($company_name)){
                         $comp_name=$company_name;
                     }else{
                         $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $cs->billing_id);
@@ -3837,7 +3838,7 @@ class Reports extends CI_Controller {
                 $ewt= $this->super_model->select_sum_where("payment_details","ewt","payment_id ='$payment_id' AND short_name='$ss->short_name'");
 
                 //$company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$ss->billing_id);
-                if(!empty($ss->company_name) && date('Y',strtotime($ss->create_date))==date('Y')){
+                if(!empty($ss->company_name)){
                     $comp_name=$ss->company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $ss->billing_id);
@@ -4340,7 +4341,7 @@ class Reports extends CI_Controller {
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
             // $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $pth->purchase_id);
             // $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $pth->purchase_detail_id);
-            if(!empty($pth->company_name) && date('Y',strtotime($pth->create_date))==date('Y')){
+            if(!empty($pth->company_name)){
                 $comp_name=$pth->company_name;
             }else{
                 $comp_name=$participant_name;
@@ -4456,7 +4457,7 @@ class Reports extends CI_Controller {
             // $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
             // $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $pah->purchase_id);
             // $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $pah->purchase_detail_id);
-            if(!empty($pah->company_name) && date('Y',strtotime($pah->create_date))==date('Y')){
+            if(!empty($pah->company_name)){
                 $comp_name=$pah->company_name;
             }else{
                 $comp_name=$pah->participant_name;
@@ -5276,7 +5277,7 @@ class Reports extends CI_Controller {
             // $total=($pah->vatables_purchases+$zero_rated+$pah->vat_on_purchases)-$pah->ewt;
             // $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $pah->purchase_id);
             // $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $pah->purchase_detail_id);
-            if(!empty($pah->company_name) && date('Y',strtotime($pah->create_date))==date('Y')){
+            if(!empty($pah->company_name)){
                 $comp_name=$pah->company_name;
             }else{
                 $comp_name=$pah->participant_name;

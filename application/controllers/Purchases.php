@@ -637,7 +637,7 @@ class Purchases extends CI_Controller {
                 'purchase_id'=>$d->purchase_id,
                 'payment_date'=>$d->payment_date,
                 //'company_name'=>$company_name,
-                'company_name'=>(!empty($d->company_name) && date('Y',strtotime($d->create_date)) == date('Y')) ? $d->company_name : $company_name,
+                'company_name'=>(!empty($d->company_name)) ? $d->company_name : $company_name,
                 'payment_mode'=>$d->payment_mode,
                 'purchase_mode'=>$d->purchase_mode,
                 'purchase_amount'=>$d->purchase_amount,
@@ -971,7 +971,7 @@ class Purchases extends CI_Controller {
 
             $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $d->purchase_id);
             $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $d->purchase_detail_id);
-            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+            if(!empty($company_name)){
                 $comp_name=$company_name;
             }else{
                 $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
@@ -1086,7 +1086,7 @@ class Purchases extends CI_Controller {
 
                 $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $d->purchase_id);
                 $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $d->purchase_detail_id);
-                if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+                if(!empty($company_name)){
                     $comp_name=$company_name;
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
@@ -1244,7 +1244,7 @@ class Purchases extends CI_Controller {
         $data['tin']=$this->super_model->select_column_where("participant", "tin", "billing_id", $billing_id);
         $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $purchase_id);
         $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $purchase_detail_id);
-        if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+        if(!empty($company_name)){
             $data['name']=$company_name;
         }else{
             $data['name']=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $billing_id);

@@ -546,7 +546,7 @@ class Reserve extends CI_Controller {
                 'reserve_id'=>$d->reserve_id,
                 'payment_date'=>$d->payment_date,
                 //'company_name'=>$company_name,
-                'company_name'=>(!empty($d->company_name) && date('Y',strtotime($d->create_date)) == date('Y')) ? $d->company_name : $company_name,
+                'company_name'=>(!empty($d->company_name)) ? $d->company_name : $company_name,
                 'payment_mode'=>$d->payment_mode,
                 'purchase_mode'=>$d->purchase_mode,
                 'purchase_amount'=>$d->purchase_amount,
@@ -701,7 +701,7 @@ class Reserve extends CI_Controller {
             $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.reserve_id='$d->reserve_id' AND saved='1' AND adjustment='0' ORDER BY or_no ASC");
             $create_date = $this->super_model->select_column_where("reserve_transaction_head", "create_date", "reserve_id", $d->reserve_id);
             $company_name=$this->super_model->select_column_where("reserve_transaction_details", "company_name", "reserve_detail_id", $d->reserve_detail_id);
-            if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+            if(!empty($company_name)){
                 $comp_name=$company_name;
             }else{
                 $comp_name=$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $d->billing_id);
@@ -767,7 +767,7 @@ class Reserve extends CI_Controller {
         $data['tin']=$this->super_model->select_column_where("reserve_participant", "res_tin", "res_billing_id", $billing_id);
         $create_date = $this->super_model->select_column_where("reserve_transaction_head", "create_date", "reserve_id", $reserve_id);
         $company_name=$this->super_model->select_column_where("reserve_transaction_details", "company_name", "reserve_detail_id", $reserve_detail_id);
-        if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
+        if(!empty($company_name)){
             $data['name']=$company_name;
         }else{
             $data['name']=$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $billing_id);
