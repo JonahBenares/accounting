@@ -1133,7 +1133,7 @@
             <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
             <div class="tin"><?php echo $tin[$x]; ?></div>
             <div class="address"><?php echo $address[$x];?></div>
-            <div class="charges"><?php echo "Billing Charges for ".date("M d,Y",strtotime($billing_from[$x]))." to ".date("M d,Y",strtotime($billing_to[$x]))?></div>
+            <div class="charges"><?php echo "Sales Adjustment for ".date("F Y",strtotime($due_date[$x]))?></div>
 
             <!-- //vatable sales -->
 
