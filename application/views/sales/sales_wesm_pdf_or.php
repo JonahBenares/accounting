@@ -62,8 +62,8 @@
                 <label class="grand_total_1"><?php echo number_format($total_sales,2); ?></label>
             </div>
             <!-- <label class="claim">This Document is Not Valid for Claiming Input Taxes</label> -->
-            <label class="signature_1">
-                <img src="<?php echo base_url()."uploads/".$user_signature; ?>" width="100px">
+            <label class="signature_1" >
+                <img src="<?php echo base_url()."assets/img/sign_DeLosSantos.png" ?>" width="180px">
             </label>
         </div>
     </page>
