@@ -318,7 +318,7 @@
         <?php
             $total_sales = $total_vs[$x] + $total_zra[$x] + $total_vos[$x];
             $net_of_vat = $total_vs[$x] + $total_zra[$x];
-            $total_amount_due = $total_vs[$x] + $total_zra[$x] + $total_vos[$x] - $total_ewt[$x];
+            $total_amount_due = ($total_vs[$x] + $total_zra[$x] + $total_vos[$x]) - $total_ewt[$x];
         ?>
         <div class="sales">
             <div class="pb-10 pt-2"> <!--TOTAL SALES (VAT INCLUSIVE) --><?php echo number_format($total_sales,2); ?></div>
