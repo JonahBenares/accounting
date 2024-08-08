@@ -81,9 +81,9 @@
                                                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
                                                     <input type='button' class="btn btn-primary btn-block"  onclick="collection_filter()" value="Filter">
                                                 </td>
-                                                <td width="9%">
+                                                <!-- <td width="9%">
                                                     <a href="<?php echo base_url();?>sales/PDF_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $stl_id;?>" target='_blank' class="btn btn-success btn-block">Export Bulk PDF</a>   
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </table>
                                     </div>
@@ -100,7 +100,24 @@
                                 <?php } ?>
                                 <hr>
                                 <?php if(!empty($collection)){ ?>
+                                    <div class="row">
+                                        <div class="col-lg-3 offset-lg-3">
+                                            <select name="signatory" id="signatory" class="form-control" onchange="select_signatory()">
+                                                <option value="">--Select Signatory--</option>
+                                                <?php foreach($employees AS $emp){ ?>
+                                                    <option value="<?php echo $emp->user_id; ?>"><?php echo $emp->fullname; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <a href="<?php echo base_url();?>sales/PDF_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $stl_id;?>" target='_blank' class="btn btn-success btn-block" id="export">Export Bulk PDF</a> 
+                                        </div>
+                                        <input type="hidden" id="date_collect" value="<?php echo $date; ?>">
+                                        <input type="hidden" id="refno" value="<?php echo $ref_no; ?>">
+                                        <input type="hidden" id="stlid" value="<?php echo $stl_id; ?>">
+                                    </div>
                                     <div style="overflow-x:scroll;">
+                                        
                                         <table class="table-bordered table table-hosver" id="table-3" width="200%"> 
                                             <thead>
                                                 <tr>
@@ -184,7 +201,11 @@
                                                     <td class="td-btm pt-1 pb-1" style="vertical-align: middle;" align="center">
                                                         <div style="display:flex">
                                                             <a href="<?php echo base_url(); ?>sales/print_OR_new/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white" style="margin-right: 2px;"><span class="fas fa-print" style="margin:0px"></span></a>
-                                                            <a href="<?php echo base_url();?>sales/PDF_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>/<?php echo $log['series_number'];?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                            <a href="<?php echo base_url();?>sales/PDF_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>/<?php echo $log['series_number'];?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white print_pdf" id="print_pdf<?php echo $x; ?>"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                            <input type="hidden" id="collection_idurl<?php echo $x; ?>" value="<?php echo $log['collection_id']; ?>">
+                                                            <input type="hidden" id="settlement_id_singleurl<?php echo $x; ?>" value="<?php echo $log['settlement_id_single']; ?>">
+                                                            <input type="hidden" id="reference_no_singleurl<?php echo $x; ?>" value="<?php echo $log['reference_no_single']; ?>">
+                                                            <input type="hidden" id="series_numberurl<?php echo $x; ?>" value="<?php echo $log['series_number']; ?>">
                                                         </div>
                                                     </td>
                                                     <td class="td-btm pt-1 pb-1" align="center" style="padding:0px">
@@ -255,7 +276,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>

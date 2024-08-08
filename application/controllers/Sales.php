@@ -2952,7 +2952,7 @@ public function print_BS_new(){
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'");
         $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
-
+        $data['employees']=$this->super_model->select_all_order_by("users","fullname",'ASC');
         $sql="";
        
 
@@ -5916,12 +5916,13 @@ public function upload_sales_adjustment_test(){
         $settlement_id=str_replace('%20', ' ', $this->uri->segment(4));
         $reference_no=$this->uri->segment(5);
         $series_number=$this->uri->segment(6);
+        $signatory= ($this->uri->segment(7)!='' || !empty($this->uri->segment(7))) ? $this->uri->segment(7) : $_SESSION['user_id'];
         $data['ref_no'] = $reference_no;
         $data['refno'] = preg_replace("/[^0-9]/", "",$reference_no);
 
         //$refno = preg_replace("/[^0-9]/", "",$reference_no);
 
-        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id", $signatory);
         $collection_date = $this->super_model->select_column_where("collection_head", "collection_date", "collection_id", $collection_id);
         $data['billing_month'] = date('my',strtotime($collection_date));
         $data['timestamp'] = date('Ymd');
@@ -5949,6 +5950,7 @@ public function upload_sales_adjustment_test(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
         $stl_id=$this->uri->segment(5);
+        $signatory=($this->uri->segment(6)!='' || !empty($this->uri->segment(6))) ? $this->uri->segment(6) : $_SESSION['user_id'];
 
         $sql="";
 
@@ -5964,7 +5966,7 @@ public function upload_sales_adjustment_test(){
         $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
 
         $data['details']=array();
-        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$signatory);
         $data['timestamp'] = date('Ymd');
 
             //$count = $this->super_model->count_custom("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu GROUP BY series_number,settlement_id,reference_no");
@@ -7509,6 +7511,7 @@ public function upload_sales_adjustment_test(){
         $data['date'] = $date;
         $data['ref_no'] = $ref_no;
         $data['stl_id'] = $stl_id;
+        $data['employees']=$this->super_model->select_all_order_by('users','fullname','ASC');
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_reserve_head WHERE saved != '0'");
         $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
@@ -7839,9 +7842,10 @@ public function upload_sales_adjustment_test(){
         $settlement_id=str_replace('%20', ' ', $this->uri->segment(4));
         $reference_no=$this->uri->segment(5);
         $series_number=$this->uri->segment(6);
+        $signatory=($this->uri->segment(7)!='' || !empty($this->uri->segment(7))) ? $this->uri->segment(7) : $_SESSION['user_id'];
         $data['ref_no'] = $reference_no;
         $data['refno'] = preg_replace("/[^0-9]/", "",$reference_no);
-        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$signatory);
         $collection_date = $this->super_model->select_column_where("collection_reserve_head", "collection_date", "res_collection_id", $res_collection_id);
         $data['billing_month'] = date('my',strtotime($collection_date));
         $data['timestamp'] = date('Ymd');
@@ -7865,6 +7869,7 @@ public function upload_sales_adjustment_test(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
         $stl_id=$this->uri->segment(5);
+        $signatory=($this->uri->segment(6)!='' || !empty($this->uri->segment(6))) ? $this->uri->segment(6) : $_SESSION['user_id'];
         $sql="";
         if($date!='null'){
             $sql.= "ch.collection_date = '$date' AND ";
@@ -7876,7 +7881,7 @@ public function upload_sales_adjustment_test(){
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
         $data['details']=array();
-        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
+        $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id", $signatory);
         $data['timestamp'] = date('Ymd');
         foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu GROUP BY series_number LIMIT 10") AS $col){
             if($ref_no!='null'){

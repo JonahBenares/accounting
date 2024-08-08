@@ -1917,8 +1917,51 @@ function collection_reserve_filter() {
        stl_id='null';
    }
 
-
      var loc= document.getElementById("baseurl").value;
      window.location=loc+'sales/collection_reserve_list/'+collection_date+'/'+reference_no+'/'+stl_id;
+}
 
+function select_signatory() {
+    var signatory = document.getElementById("signatory").value; 
+    var collection_date = document.getElementById("date_collect").value; 
+    var reference_no = document.getElementById("refno").value;
+    var stl_id = document.getElementById("stlid").value;
+    var loc= document.getElementById("baseurl").value;
+    var exported = loc+'sales/PDF_OR_bulk/'+collection_date+'/'+reference_no+'/'+stl_id;
+    $('#export').prop('href', exported+'/'+signatory);
+
+    var count = document.getElementsByClassName("print_pdf"); 
+    for(var i = 1; i<=count.length;i++){
+        var collection_id = document.getElementById("collection_idurl"+i).value; 
+        var settlement_id_single = document.getElementById("settlement_id_singleurl"+i).value; 
+        var reference_no_single = document.getElementById("reference_no_singleurl"+i).value; 
+        var series_number = document.getElementById("series_numberurl"+i).value; 
+        var printed = loc+'sales/PDF_OR/'+collection_id+'/'+settlement_id_single+'/'+reference_no_single+'/'+series_number;
+        // alert(printed+'/'+signatory)
+        $('#print_pdf'+i).prop('href', printed+'/'+signatory);
+       
+    }
+}
+
+function select_signatory_reserve() {
+    var signatory = document.getElementById("signatory").value; 
+    var collection_date = document.getElementById("date_collect").value; 
+    var reference_no = document.getElementById("refno").value;
+    var stl_id = document.getElementById("stlid").value;
+    var loc= document.getElementById("baseurl").value;
+    var exported = loc+'sales/PDF_OR_bulk_reserve/'+collection_date+'/'+reference_no+'/'+stl_id;
+    $('#export').prop('href', exported+'/'+signatory);
+
+    var count = document.getElementsByClassName("print_pdf"); 
+    for(var i = 1; i<=count.length;i++){
+        var collection_id = document.getElementById("collection_idurl"+i).value; 
+        var settlement_id_single = document.getElementById("settlement_id_singleurl"+i).value; 
+        var reference_no_single = document.getElementById("reference_no_singleurl"+i).value; 
+        var series_number = document.getElementById("series_numberurl"+i).value; 
+        var printed = loc+'sales/PDF_OR_reserve/'+collection_id+'/'+settlement_id_single+'/'+reference_no_single+'/'+series_number;
+        // alert(printed+'/'+signatory)
+        $('#print_pdf'+i).prop('href', printed+'/'+signatory);
+       
+    }
+    
 }
