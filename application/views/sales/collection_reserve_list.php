@@ -102,7 +102,7 @@
                                 <?php if(!empty($collection)){ ?>
                                     <div class="row">
                                         <div class="col-lg-3 offset-lg-3">
-                                            <select name="signatory" id="signatory" class="form-control" onchange="select_signatory_reserve()">
+                                            <select name="signatory" id="signatory" class="form-control select2" onchange="select_signatory_reserve()">
                                                 <option value="">--Select Signatory--</option>
                                                 <?php foreach($employees AS $emp){ ?>
                                                     <option value="<?php echo $emp->user_id; ?>"><?php echo $emp->fullname; ?></option>
