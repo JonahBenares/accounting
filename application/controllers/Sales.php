@@ -5502,7 +5502,8 @@ public function upload_sales_adjustment_test(){
                         );
                         $this->super_model->insert_into("sales_adjustment_head", $data_insert);
                         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
-                        $highestRow = $highestRow-1;
+                        // $highestRow = $highestRow-1;
+                        // $highestRow = $highestRow-1;
                         $y=1;
                         for($z=4;$z<$highestRow;$z++){
                             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
@@ -5510,7 +5511,7 @@ public function upload_sales_adjustment_test(){
                             if($shortname!="" || !empty($shortname)){
                                 $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue() ?? '');
 
-                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue() ?? '');
+                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue() ?? '');
                                 // $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getOldCalculatedValue() ?? '');
                                 $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue() ?? '');
 
