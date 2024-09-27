@@ -6514,7 +6514,8 @@ public function upload_sales_adjustment_test(){
                             // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
                             // // $comp_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                             $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
-                            $mother_company_name = $this->super_model->select_column_custom_where("sales_adjustment_details","company_name","actual_billing_id = '$mother_billing_id'");
+                            // $mother_company_name = $this->super_model->select_column_custom_where("sales_adjustment_details","company_name","actual_billing_id = '$mother_billing_id'");
+                            $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                             if(!empty($mother_company_name)){
                                 $comp_name= $mother_company_name;
                             }else{
@@ -6796,7 +6797,7 @@ public function upload_sales_adjustment_test(){
                         // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
                         // // $comp_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                         $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
-                        $mother_company_name = $this->super_model->select_column_custom_where("sales_adjustment_details","company_name","actual_billing_id = '$mother_billing_id'");
+                        $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                         if(!empty($mother_company_name)){
                             $company_name= $mother_company_name;
                         }else{
@@ -6995,7 +6996,7 @@ public function upload_sales_adjustment_test(){
                         // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
                         // // $comp_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                         $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
-                        $mother_company_name = $this->super_model->select_column_custom_where("sales_adjustment_details","company_name","actual_billing_id = '$mother_billing_id'");
+                        $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                         if(!empty($mother_company_name)){
                             $company_name= $mother_company_name;
                         }else{
@@ -7183,7 +7184,7 @@ public function upload_sales_adjustment_test(){
                         // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id", $p->sales_adjustment_id);
                         // // $comp_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                         $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
-                        $mother_company_name = $this->super_model->select_column_custom_where("sales_adjustment_details","company_name","actual_billing_id = '$mother_billing_id'");
+                        $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
                         if(!empty($mother_company_name)){
                             $company_name= $mother_company_name;
                         }else{
