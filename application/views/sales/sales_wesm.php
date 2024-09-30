@@ -36,10 +36,11 @@
                                                     </td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                      <?php if(!empty($details)) {?>
-                                                    <td width="10%" rowspan="2">
-                                                        <a href="<?php echo base_url();?>sales/sales_wesm_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-success btn-block">Bulk OR PDF </a>   
-                                                        <a href="<?php echo base_url();?>sales/sales_wesm_pdf_si_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-warning btn-block">Bulk SI PDF</a>  
-                                                    </td>
+                                                        <td width="10%" rowspan="2">
+                                                            <a href="<?php echo base_url();?>sales/sales_wesm_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-success btn-block">Bulk OR PDF </a>   
+                                                            <a href="<?php echo base_url();?>sales/sales_wesm_pdf_si_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-warning btn-block">Bulk SI PDF</a>  
+                                                        </td>
+                                                    <?php } ?>
                                                 </tr>
                                                 <tr>
                                                     
@@ -69,7 +70,6 @@
                                                         </select>
                                                     </td>
                                                     
-                                                <?php } ?>
                                                 </tr>
                                             </table>
                                         </div>
