@@ -12,8 +12,8 @@
                             <div class="card-body">
                                 <form method="POST">
                                     <div class="row">
-                                        <div class="col-lg-10 offset-lg-1">
-                                            <table class="table-borderded" width="100%">
+                                        <div class="col-lg-12">
+                                            <table class="table-bordsadered" width="100%">
                                                 <tr>
                                                     <td>
                                                         <input type='text' class="form-control" name="billing_from" id="billing_from" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing From">
@@ -30,6 +30,15 @@
                                                             <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
                                                             <?php } ?>
                                                         </select>
+                                                    </td>
+                                                    <td  width="2%" rowspan="2">
+                                                        <button type="button" onclick="filterSales();" class="btn btn-primary btn-block">Filter</button>
+                                                    </td>
+                                                    <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
+                                                     <?php if(!empty($details)) {?>
+                                                    <td width="10%" rowspan="2">
+                                                        <a href="<?php echo base_url();?>sales/sales_wesm_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-success btn-block">Bulk OR PDF </a>   
+                                                        <a href="<?php echo base_url();?>sales/sales_wesm_pdf_si_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-warning btn-block">Bulk SI PDF</a>  
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -59,12 +68,7 @@
                                                                 <option value="1">Exclude Sub-participant</option>
                                                         </select>
                                                     </td>
-                                                    <td  width="1%"><button type="button" onclick="filterSales();" class="btn btn-primary btn-block">Filter</button></td>
-                                                    <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
-                                                     <?php if(!empty($details)) {?>
-                                                    <td width="1%">
-                                                    <a href="<?php echo base_url();?>sales/sales_wesm_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-success btn-block">Bulk PDF</a>   
-                                                    </td>
+                                                    
                                                 <?php } ?>
                                                 </tr>
                                             </table>
@@ -189,7 +193,10 @@
                                                         </button> -->
                                                         <input type="text" class="form-control" onblur="saveBseries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['sales_detail_id']; ?>','<?php echo $s['serial_no']; ?>')" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $s['serial_no']; ?>">
                                                     </td>
-                                                    <td><a href="<?php echo base_url();?>sales/sales_wesm_pdf_or/<?php echo $s['sales_detail_id']; ?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a></td>
+                                                    <td>
+                                                        <a href="<?php echo base_url();?>sales/sales_wesm_pdf_or/<?php echo $s['sales_detail_id']; ?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                        <a href="<?php echo base_url();?>sales/sales_wesm_pdf_si/<?php echo $s['sales_detail_id']; ?>" title="Export PDF" target='_blank' class="btn btn-warning btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                    </td>
                                                     <td><center><?php echo $s['item_no'];?></center></td>
                                                     <?php if(!empty($s['old_series_no'])) {?>
                                                     <td width="7%"><a href="" data-toggle="modal" id="BSNo" data-target="#olSeries" data-bs="<?php echo $s['serial_no']; ?>" data-old-bs="<?php echo $s['old_series_no'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
