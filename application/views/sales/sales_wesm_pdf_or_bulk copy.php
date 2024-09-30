@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>FEBA SYSTEM</title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/pdf_or.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/pdf_or_bulk.css">
     <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
 
@@ -28,15 +28,19 @@
 <?php 
     $x=1;
     foreach($details AS $d){
-?>
+        // $total_sales = $d['total_vs'] + $d['total_zra'] + $d['total_vos'];
+        // $net_of_vat = $d['total_vs'] + $d['total_zra'];
+        // $total_amount_due = $d['total_vs'] + $d['total_zra'] + $d['total_vos'] + $d['total_ewt'];
+
+         ?>
 <div style="padding-bottom:800px;">
-<div id="contentPDF" >
+    <div id="contentPDF" >
     <page size="Long" id="printableArea" class="canvas_div_pdf<?php echo $x; ?>" >
-        <img class="img2307" src="<?php echo base_url(); ?>assets/img/SI.png" style="width: 100%;">
+        <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.jpg" style="width: 100%;">
         <div class="">
-            <label class="date_1"><?php echo date("F j, Y", strtotime($d['transaction_date'])); ?></label>
+            <label class="date_1"><?php echo date("F j, Y", strtotime($d['date'])); ?></label>
             <label class="ornumber_1"><?php echo $d['or_no']; ?></label>
-            <label class="cusname_1"><?php echo $d['company_name']; ?> </label>
+            <label class="cusname_1"><?php echo $d['buyer']; ?> </label>
             <label class="address_1"><?php echo $d['address']; ?> </label>
             <label class="tin_1"><?php echo $d['tin']; ?> </label>
             <label class="desc_1"><?php echo $d['ref_no']; ?></label>
@@ -46,26 +50,19 @@
             <label class="energy_value_1"><?php echo number_format($d['total_zra'],2); ?></label>
             <label class="vat_1">VAT</label>
             <label class="vat_value_1"><?php echo number_format($d['total_vos'],2); ?></label>
-            <?php
-                // $total_sales = $total_vs + $total_zra + $total_vos;
-                // $net_of_vat = $total_vs + $total_zra;
-                // $total_amount_due = $total_vs + $total_zra + $total_vos + $total_ewt;
-            ?>
             <label class="total_sales_1"><?php echo number_format($d['total_sales'],2); ?></label>
             <label class="net_vat_1"><?php echo number_format($d['net_of_vat'],2); ?></label>
             <label class="add_vat_1"><?php echo number_format($d['total_vos'],2); ?></label>
             <label class="total_1"><?php echo number_format($d['total_sales'],2); ?></label>
             <label class="less_withholding_1"><?php echo number_format($d['total_ewt'],2); ?></label>
             <label class="total_amount_1"><?php echo number_format($d['total_amount_due'],2); ?></label>
-            <div style="position: absolute;top:5px">  
-                <label class="vatable_1"><?php echo number_format($d['total_vs'],2); ?></label>
-                <label class="vat_exempt_1">0.00</label>
-                <label class="zero_rated_1"><?php echo number_format($d['total_zra'],2); ?></label>
-                <label class="vat_percent_1"><?php echo number_format($d['total_vos'],2); ?></label>
-                <label class="grand_total_1"><?php echo number_format($d['total_sales'],2); ?></label>
-            </div>
+            <label class="vatable_1"><?php echo number_format($d['total_vs'],2); ?></label>
+            <label class="vat_exempt_1">0.00</label>
+            <label class="zero_rated_1"><?php echo number_format($d['total_zra'],2); ?></label>
+            <label class="vat_percent_1"><?php echo number_format($d['total_vos'],2); ?></label>
+            <label class="grand_total_1"><?php echo number_format($d['total_sales'],2); ?></label>
             <!-- <label class="claim">This Document is Not Valid for Claiming Input Taxes</label> -->
-            <label class="signature_1" >
+            <label class="signature_1">
                 <img src="<?php echo base_url()."assets/img/sign_DeLosSantos.png" ?>" width="180px">
             </label>
         </div>
@@ -73,12 +70,14 @@
     </div>
 </div>
 <input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
+<input type="hidden" class="serial_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="serial_no<?php echo $x; ?>">
 <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
 <input type="hidden" class="reference_no<?php echo $x; ?>" id="reference_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
-<input type="hidden" class="serial_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="serial_no<?php echo $x; ?>">
+<input type="hidden" class="sales_id<?php echo $x; ?>" id="sales_id<?php echo $x; ?>" value="<?php echo $d['sales_id']; ?>">
+<!-- <input type="hidden" class="collection_details_id<?php echo $x; ?>" id="collection_details_id<?php echo $x; ?>" value="<?php echo $d['collection_details_id']; ?>"> -->
 <input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $d['billing_month']; ?>">
 <input type="hidden" class="date_uploaded<?php echo $x; ?>" id="date_uploaded<?php echo $x; ?>" value="<?php echo $d['date_uploaded']; ?>">
-<input type="hidden" class="sales_id<?php echo $x; ?>" id="sales_id<?php echo $x; ?>" value="<?php echo $d['sales_id']; ?>">
+<!-- <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>"> -->
 <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
 <?php $x++; } ?>
 <input type="hidden"  id="count" value="<?php echo $x; ?>">
