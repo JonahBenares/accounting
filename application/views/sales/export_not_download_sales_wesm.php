@@ -29,7 +29,7 @@
                             <div class="card-header">
                                 <div class="d-flex justify-content-start">  
                                     <div>
-                                        <a href="<?php echo base_url(); ?>accounting/sales/sales_wesm" class="btn btn-warning mr-2">Back</a>
+                                        <a href="#" onclick="window.close()" class="btn btn-warning mr-2">Back</a>
                                     </div>
                                     <div>
                                         <h4 class="pt-1">WESM Transaction - Sales</h4>

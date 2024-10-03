@@ -1016,6 +1016,12 @@ class Purchases extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function export_not_download_purchase_wesm(){
+        $this->load->view('purchases/export_not_download_purchase_wesm');
+        $this->load->view('template/footer');
+    }
+
+
     public function purchases_wesm_adjustment(){
         $ref_no=$this->uri->segment(3);
         $due_date_from=$this->uri->segment(4);
@@ -1195,7 +1201,12 @@ class Purchases extends CI_Controller {
         $this->load->view('purchases/purchases_wesm_adjustment',$data);
         $this->load->view('template/footer');
     }
-    
+
+    public function export_not_download_purchase_wesm_adjustment(){
+        $this->load->view('purchases/export_not_download_purchase_wesm_adjustment');
+        $this->load->view('template/footer');
+    }
+
     public function add_details_wesm()
     {
         $purchase_detail_id = $this->uri->segment(3);

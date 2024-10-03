@@ -20,10 +20,10 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-10 offset-lg-1">
+                                    <div class="col-lg-12">
                                         <table class="table-borderded" width="100%">
                                             <tr>
-                                                <td>
+                                                <td width="20%"> 
                                                     <select class="form-control select2" name="participant" id="participant">
                                                         <option value=''>-- Select Participant --</option>
                                                         <?php 
@@ -33,12 +33,14 @@
                                                         <?php } ?>
                                                     </select>
                                                 </td>
-                                                <td>
+                                                <td width="20%"> 
                                                     <input type='text' class="form-control" name="billing_from" id="billing_from" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing From">
                                                 </td>
-                                                <td>
+                                                <td width="20%"> 
                                                     <input type='text' class="form-control" name="billing_to" id="billing_to" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing To">
                                                 </td>
+                                            </tr>
+                                            <tr>
                                                 <td>
                                                     <select class="form-control select2" name="ref_no" id="ref_no">
                                                         <option value=''>-- Select Reference No --</option>
@@ -78,74 +80,74 @@
                                     ?>
                                     <tr>
                                         <td>Participant Name</td>
-                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                        <td width="45%">: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                        <td width="15%">Billing Period (From)</td>
+                                        <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
                                     </tr>
-                                    <?php } ?>
+                                    <?php } else {?>
+                                        <tr>
+                                            <td>Participant Name</td>
+                                            <td width="45%">: --</td>
+                                            <td width="15%">Billing Period (From)</td>
+                                            <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
+                                        </tr>
+                                    <?php }?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
                                         <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
-                                        <td width="15%">Billing Period (From)</td>
-                                        <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
+                                        <td>Billing Period (To)</td>
+                                        <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
                                     </tr>
                                     <tr>
                                         <td>Date</td>
                                         <td>: <?php echo (!empty($transaction_date)) ? $transaction_date : ''; ?></td>
-                                        <td>Billing Period (To)</td>
-                                        <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
-                                    </tr>                                    
-                                    <tr>
                                         <td>Due Date</td>
                                         <td>: <?php echo (!empty($due_dates)) ? $due_dates : ''; ?></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><center><a href='<?php echo base_url(); ?>reserve/download_reserve_bulk/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-primary btn-block">Download Reserve Bulk 2307</a>
-                                        </center></td>
-                                         <td colspan="2"><center><a href='<?php echo base_url(); ?>reserve/download_reserve_bulk_zoomed/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-info btn-block">Download Reserve Bulk 2307 (Zoomed)</a>
-                                        </center></td>
+                                        <td class="pt-2"  colspan="4" align="center">
+                                            <a href='<?php echo base_url(); ?>reserve/download_reserve_bulk/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-link ">Download Reserve Bulk 2307</a>
+                                            <a href='<?php echo base_url(); ?>reserve/download_reserve_bulk_zoomed/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-link ">Download Reserve Bulk 2307 (Zoomed)</a>
+                                            <a href='<?php echo base_url(); ?>purchases/export_not_download_purchase_reserve/' target="_blank" class="btn btn-link ">Quick Scan Here. If downloaded files are complete</a>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td id="append"></td>
                                     </tr>
                                 </table>
-                                <br>
+                                <hr class="mt-0">
                                 <table width="100%">
                                     <tr>
-                                        <td width="20%" rowspan="2"></td>
-                                        <td width="30%">OR Number</td>
-                                        <td width="10%" align="center">Original Copy</td>
-                                        <td width="10%" align="center">Scanned Copy</td>
-                                        <td width="5%" align="center"></td>
-                                        <td width="10%" align="center"></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            
-                                            <select name="or_no" class="form-control select2" id="or_no">
+                                        <td width="30%">
+                                            <select name="or_no" class="form-control select2" id="or_no" style="padding:2px 2px!important;">
                                                 <option value="^">--Select OR No.--</option>
                                                 <?php foreach($or_no AS $o){ ?>
                                                     <option value="<?php echo ($o->or_no!='') ? $o->or_no : '-'; ?>"><?php echo ($o->or_no!='') ? $o->or_no : '-'; ?></option>
                                                 <?php } ?>
                                             </select>
                                         </td>
-                                        <td align="center">
-                                            <label for="">
-                                                    <span style="vertical-align:middle;padding:0px">Yes</span>
-                                                    <input type="radio" class="form-control m-b-0" name="original_copy" id="original_yes" value="1" style="width:20px">
-                                            </label>
-                                            <label for="">
-                                                    <span style="vertical-align:middle;padding: 0px">No</span>
-                                                    <input type="radio" class="form-control m-b-0" name="original_copy" id="original_no" value="0" style="width:20px">
-                                            </label>
+                                        <td class="p-t-5 p-b-5" align="center">
+                                            <p class="m-0 p-t-2" style="line-height: 20px;">Original Copy</p>
+                                            <div class="m-t-1">
+                                                <label for="" class="d-inline-flex mr-3">
+                                                        <span class="mr-1">Yes</span>
+                                                        <input type="radio" class="" name="original_copy" id="original_yes" value="1" >
+                                                </label>
+                                                <label for="" class="d-inline-flex">
+                                                        <span class="mr-1">No</span>
+                                                        <input type="radio" class="" name="original_copy" id="original_no" value="0" >
+                                                </label>
+                                            </div>
                                         </td>
-                                        <td align="center">
-                                            <label for="">
-                                                    <span style="vertical-align:middle;padding: 0px">Yes</span>
-                                                    <input type="radio" class="form-control m-b-0" name="scanned_copy" id="scanned_yes" value="1" style="width:20px">
+                                        <td class="p-t-5 p-b-5" align="center">
+                                            <p class="m-0 p-t-2" style="line-height: 20px;">Scanned Copy</p>
+                                            <label for="" class="d-inline-flex mr-3">
+                                                <span class="mr-1">Yes</span>
+                                                <input type="radio" class="" name="scanned_copy" id="scanned_yes" value="1" >
                                             </label>
-                                            <label for="">
-                                                    <span style="vertical-align:middle;padding: 0px">No</span>
-                                                    <input type="radio" class="form-control m-b-0" name="scanned_copy" id="scanned_no" value="0" style="width:20px">
+                                            <label for="" class="d-inline-flex">
+                                                    <span class="mr-1" >No</span>
+                                                    <input type="radio" class="" name="scanned_copy" id="scanned_no" value="0" >
                                             </label>
                                         </td>
                                         <td>
@@ -155,13 +157,11 @@
                                             <input type="hidden" name="billto" id="billto" value="<?php echo $billto; ?>">
                                             <input type="hidden" name="participants" id="participants" value="<?php echo $participants; ?>">
                                             <input name="baseurl" id="base_url" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
-                                            <button type="button" class="btn btn-primary btn-md" onclick="filterReserveOr()">Filter</button>
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="filterReserveOr()">Filter</button>
+                                            <a href="<?php echo base_url(); ?>reserve/reserve_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo 'null'; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>" class="btn btn-warning btn-sm">Remove Filter</a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url(); ?>reserve/reserve_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo 'null'; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>" class="btn btn-warning btn-md">Remove Filter</a>
-                                        </td>
-                                        <td>
-                                            <a href="<?php echo base_url(); ?>reserve/export_reservetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>" class="btn btn-success btn-md pull-right m-l-20">Export</a>
+                                            <a href="<?php echo base_url(); ?>reserve/export_reservetrans/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $or_nos; ?>/<?php echo $original_copy; ?>/<?php echo $scanned_copy; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>" class="btn btn-success btn-sm pull-right m-l-20">Export</a>
                                         </td>
                                     </tr>
                                 </table>
