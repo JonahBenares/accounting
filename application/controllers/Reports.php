@@ -8341,11 +8341,17 @@ class Reports extends CI_Controller {
             $total_amount_collected[]=$pah->total_update;
             $variance_total[]=$variance;
 
+            if(empty($pah->billing_id)){
+                $billing_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$pah->actual_billing_id' AND settlement_id = '$pah->short_name'");
+            } else {
+                $billing_id =$pah->billing_id;
+            }
+
             $data['purchasesmain_total'][]=array(
                 'due_date'=>$pah->due_date,
                 'billing_from'=>$pah->billing_from,
                 'billing_to'=>$pah->billing_to,
-                'billing_id'=>$pah->billing_id,
+                'billing_id'=>$billing_id,
                 'transaction_no'=>$pah->reference_number,
                 'total_amount'=>$pah->total_amount,
                 'overall_total_amount'=>$overall_total_amount,
