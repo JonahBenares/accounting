@@ -109,9 +109,6 @@
         var redirect = loc+"reserve/update_filename";
 
         for(let a=1;a<counter;a++){
-        
-        
-            var refno=document.getElementById('ref_no'+a).value;
           
             var HTML_Width = $(".canvas_div_pdf"+a).width();
 
@@ -136,6 +133,7 @@
 
             }).then(function(canvas) {
                 var reserve_detail_id= document.getElementById("reservedetailid"+a).value;
+                var refno=document.getElementById('ref_no'+a).value;
                     canvas.getContext('2d');   
                     var imgData = canvas.toDataURL("image/jpeg", 1.0);
                     var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
