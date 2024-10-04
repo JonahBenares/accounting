@@ -108,7 +108,7 @@
                                         <td class="pt-2"  colspan="4" align="center">
                                             <a href='<?php echo base_url(); ?>reserve/download_reserve_bulk/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-link ">Download Reserve Bulk 2307</a>
                                             <a href='<?php echo base_url(); ?>reserve/download_reserve_bulk_zoomed/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-link ">Download Reserve Bulk 2307 (Zoomed)</a>
-                                            <a href='<?php echo base_url(); ?>purchases/export_not_download_purchase_reserve/' target="_blank" class="btn btn-link ">Quick Scan Here. If downloaded files are complete</a>
+                                            <a href='<?php echo base_url(); ?>reserve/export_not_download_purchase_reserve/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-link ">Quick Scan Here. If downloaded files are complete</a>
                                         </td>
                                     </tr>
                                     <tr>

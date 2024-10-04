@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                        <form method="POST" action="">
+                        <form method="POST" action="http://tradingsvr/accounting/purchases/purchases_adjustment_pdf_scan_directory">
                             <div class="card-header">
                                 <div class="d-flex justify-content-start">  
                                     <div>
@@ -35,6 +35,7 @@
                                     </div>
                                 </div>
                             </div>
+                           <?php if(!empty($result)){ ?>
                             <div class="card-body">
                                 <div class="alert alert-danger  alert-dismissible fade show mt-2" role="alert">
                                     <span class="p-2">The following file/s are not downloaded. Please click Download button below.</span>
@@ -49,10 +50,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="td-btm pt-1 pb-1">File</td>
-                                            <input type="hidden" name="filenames[]" value="">
-                                        </tr>
+                                        <?php 
+                                            foreach($result AS $r){ ?>
+                                            <tr>
+                                                <td class="td-btm pt-1 pb-1"><?php echo $r ?></td>
+                                                <input type="hidden" name="filenames[]" value="<?php echo $r; ?>">
+                                            </tr>
+                                        <?php }  ?>
                                     </tbody>
                                 </table>
                                 <div class="">
@@ -60,6 +64,12 @@
                                         <input type="submit" class="btn btn-success" value="Download All">
                                     </center>
                                 </div>
+                                 <?php } else {?>
+                                    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                                        <span class="p-2">All files were successfully downloaded!</span>
+                                    </div> 
+                                    
+                                <?php } ?>
                                 <!-- <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
                                     <span class="p-2">All files were successfully downloaded!</span>
                                     <button class="close" onclick="history.back()" aria-label="Close">

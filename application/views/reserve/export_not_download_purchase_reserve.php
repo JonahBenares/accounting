@@ -15,7 +15,6 @@
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css">
     <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 </head>
 <br>
@@ -25,18 +24,18 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                        <form method="POST" action="http://tradingsvr/accounting/purchases/purchases_wesm_pdf_scan_directory">
+                        <form method="POST" action="">
                             <div class="card-header">
                                 <div class="d-flex justify-content-start">  
                                     <div>
                                         <a href="#" onclick="window.close()" class="btn btn-warning mr-2">Back</a>
                                     </div>
                                     <div>
-                                        <h4 class="pt-1">WESM Transaction - Purchases</h4>
+                                        <h4 class="pt-1">WESM Transaction - Purchases Reserve</h4>
                                     </div>
                                 </div>
                             </div>
-                            <?php if(!empty($result)){ ?>
+                           <?php if(!empty($result)){ ?>
                             <div class="card-body">
                                 <div class="alert alert-danger  alert-dismissible fade show mt-2" role="alert">
                                     <span class="p-2">The following file/s are not downloaded. Please click Download button below.</span>

@@ -123,7 +123,7 @@ element.addEventListener("click", onClick);*/
                                         <td class="pt-2"  colspan="4" align="center">
                                             <a href='<?php echo base_url(); ?>purchases/download_bulk/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-link ">Download Bulk 2307</a>
                                             <a href='<?php echo base_url(); ?>purchases/download_bulk_zoomed/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo 'null'; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-link ">Download Bulk 2307 (Zoomed)</a>
-                                            <a href='<?php echo base_url(); ?>purchases/export_not_download_purchase_wesm/' target="_blank" class="btn btn-link ">Quick Scan Here. If downloaded files are complete</a>
+                                            <a href='<?php echo base_url(); ?>purchases/export_not_download_purchase_wesm/<?php echo $ref_no; ?>/<?php echo $due_date; ?>/<?php echo $billfrom; ?>/<?php echo $billto; ?>/<?php echo $participants; ?>' target="_blank" class="btn btn-link ">Quick Scan Here. If downloaded files are complete</a>
                                         </td>
                                     </tr>
                                     <tr>
