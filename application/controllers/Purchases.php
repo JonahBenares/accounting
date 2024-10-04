@@ -1046,7 +1046,7 @@ class Purchases extends CI_Controller {
                $sql.= " pd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE pd.bulk_print_flag = '1' AND saved = '1' AND ".$query;
+            $qu = " WHERE adjustment='0' AND pd.bulk_print_flag = '1' AND saved = '1' AND ".$query;
 
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -1954,11 +1954,11 @@ class Purchases extends CI_Controller {
         $query=substr($sql,0,-3) . ")";
 
         
-        $qu = "saved='1' AND adjustment='0' AND bulk_print_flag = '0' AND ewt > '0' AND ".$query;
+        $qu = "saved='1' AND adjustment='0' AND ewt > '0' AND ".$query;
 
         $data['details']=array();
         $x=1;
-       foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE $qu ORDER BY ptd.purchase_detail_id LIMIT 10") AS $det){
+       foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id $qu ORDER BY ptd.purchase_detail_id LIMIT 10") AS $det){
           $month= date("n",strtotime($det->billing_to ?? ''));
             $yearQuarter = ceil($month / 3);
             $first = array(1,4,7,10);
