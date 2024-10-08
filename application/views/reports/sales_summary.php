@@ -13,6 +13,9 @@
                                     <h4>Sales Summary</h4>
                                 </div>
                                 <div class="col-8">
+                                    <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
+                                        <span class="fas fa-file-export"></span> Export Monthly IEMOP Sales
+                                    </button>
                                     <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
                                 </div>
                             </div>
@@ -128,3 +131,32 @@
     </section>
 </div>
 
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Export to Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>Due Date</label>
+                            <input placeholder="Date From" class="form-control" id="due_date" name="due_date" type="text" onfocus="(this.type='date')" id="date">
+                        </div>
+                    
+                    </div>
+                 
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type='hidden' name='baseurl1' id='baseurl1' value="<?php echo base_url(); ?>">
+                    <input type='button' class="btn btn-primary"  onclick="export_monthlyIEMOP()" value="Export">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
