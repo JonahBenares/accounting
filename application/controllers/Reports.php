@@ -9163,7 +9163,7 @@ class Reports extends CI_Controller {
                     $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
                     $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
 
-                    $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","total_amount","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                    $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
                    
                     $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
                     $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
@@ -9246,7 +9246,7 @@ class Reports extends CI_Controller {
                         $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
                         $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
     
-                        $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","total_amount","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                        $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
                        
                         $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
                         $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
@@ -9327,7 +9327,7 @@ class Reports extends CI_Controller {
                         $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
                         $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
     
-                        $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","total_amount","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                        $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
                        
                         $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
                         $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
