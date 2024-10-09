@@ -165,6 +165,7 @@ class Reports extends CI_Controller {
        // $data['total_collection'] = $total_c;
         $data['total_balance'] = $total_am - $total_c;
 
+        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM sales_transaction_head WHERE saved = '1' ORDER BY due_date desc");
         $this->load->view('reports/sales_summary',$data);
         $this->load->view('template/footer');
     }
@@ -9157,16 +9158,17 @@ class Reports extends CI_Controller {
         //$data=array();
 
             $row=7;
-                foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu GROUP BY serial_no ORDER BY serial_no ASC") AS $col){
+            
+                foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
 
                     $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
                     $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
                     $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
 
-                    $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
-                   
-                    $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
-                    $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                    //$sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND billing_id = '$col->billing_id'");
+                    //$sum_amount
+                   // $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                  //  $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
                  
 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$row, $col->serial_no);
@@ -9180,9 +9182,9 @@ class Reports extends CI_Controller {
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$row, $address);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$row, $zip);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$row, $col->reference_number);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$row, $sum_amount);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row, $sum_vat);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row, $sum_zero_rated_ecozone);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$row, $col->vatable_sales);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row, $col->vat_on_sales);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row, $col->zero_rated_ecozones);
                         
 
                         $objPHPExcel->getActiveSheet(0)->getStyle('A'.$row.":N".$row)->applyFromArray($styleArray);
@@ -9240,7 +9242,7 @@ class Reports extends CI_Controller {
            
 
                     $row=7;
-                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu GROUP BY serial_no ORDER BY serial_no ASC") AS $col){
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
 
                         $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
                         $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
@@ -9321,7 +9323,7 @@ class Reports extends CI_Controller {
               
 
                     $row=7;
-                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu GROUP BY serial_no ORDER BY serial_no ASC") AS $col){
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
 
                         $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
                         $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
