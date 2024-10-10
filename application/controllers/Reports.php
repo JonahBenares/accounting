@@ -9108,6 +9108,7 @@ class Reports extends CI_Controller {
 
         if($due != 'null'){
             $due_date = date('F d, Y', strtotime($due));
+            $fname = date('FY', strtotime($due));
         }
 
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
@@ -9364,7 +9365,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Monthly IEMOP Collection Reports.xlsx"');
+        header('Content-Disposition: attachment;filename="IEMOP Sales_'.$fname.'.xlsx"');
         header('Cache-Control: max-age=0');
         $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
         $objWriter->save('php://output');
@@ -9390,6 +9391,7 @@ class Reports extends CI_Controller {
 
         if($due != 'null'){
             $due_date = date('F d, Y', strtotime($due));
+            $fname = date('FY', strtotime($due));
         }
 
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
@@ -9646,7 +9648,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Monthly IEMOP Collection Reports - Adjustment.xlsx"');
+        header('Content-Disposition: attachment;filename="IEMOP Sales Adjustment_'.$fname.'.xlsx"');
         header('Cache-Control: max-age=0');
         $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
         $objWriter->save('php://output');
