@@ -1437,3 +1437,17 @@ function exportReserveMainTotal() {
     window.location=loc+'reports/export_reserve_main_total_variance/'+e_from+'/'+e_to;
 
 }
+
+function export_monthlyIEMOP() { 
+    var due_date = document.getElementById("due_date").value; 
+  
+   if(due_date!=''){
+       due=due_date;
+   }else{
+    due='null';
+   }
+
+     var loc= document.getElementById("baseurl1").value;
+     window.location=loc+'reports/export_monthly_IEMOP/'+due;
+
+}

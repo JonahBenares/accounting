@@ -60,7 +60,7 @@
                             <div class="card-header">
                                 <div class="d-flex justify-content-start">  
                                     <div>
-                                        <a href="<?php echo base_url(); ?>accounting/sales/collection_list" class="btn btn-warning mr-2">Back</a>
+                                        <a href="#" onclick="window.close()" class="btn btn-warning mr-2">Back</a>
                                     </div>
                                     <div>
                                         <h4 class="pt-1">Collection List</h4>

@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>assets/js/reserve.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/purchases.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script>
     function goBack() {
@@ -39,17 +39,14 @@
         <label class="period_from "><?php echo $period_from; ?></label>
         <label class="period_to"><?php echo $period_to; ?></label>
         <?php 
+       
             $tin=explode("-",$d['tin']);
-        ?>
+       ?>
         <div class="tin1">
-           <!-- <label class=""><?php echo $tin[0]; ?></label> 
+           <label class=""><?php echo $tin[0]; ?></label> 
            <label class=""><?php echo $tin[1]; ?></label> 
            <label class=""><?php echo $tin[2]; ?></label> 
-           <label class="last1">0000</label>  -->
-           <label class=""><?php echo (!empty($tin[0])) ? $tin[0] : ''; ?></label> 
-           <label class=""><?php echo (!empty($tin[1])) ? $tin[1] : ''; ?></label> 
-           <label class=""><?php echo (!empty($tin[2])) ? $tin[2] : ''; ?></label> 
-           <label class="last1"><?php echo (!empty($tin[3])) ? $tin[3] : ''; ?></label> 
+           <label class="last1">0000</label> 
         </div>
         <label class="payee"><?php echo $d['name']; ?></label>
         <label class="address1"><?php echo $d['address']; ?></label>
@@ -89,6 +86,7 @@
      <input type="hidden" class="shortname<?php echo $x; ?>" value="<?php echo $d['shortname']; ?>" id="shortname<?php echo $x; ?>">   
     <input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
     <input type="text" class="reserve_detail_id" id="reservedetailid<?php echo $x; ?>" value="<?php echo $d['reserve_detail_id']; ?>">
+    <input type="hidden" class="purchase_detail_id" id="purchasedetailid<?php echo $x; ?>" value="<?php echo $d['purchase_detail_id']; ?>">
     <input type="hidden" class="billing_month" id="billing_month" value="<?php echo ($d['due_date']=='') ? $billing_month : $d['due_date']; ?>">
     <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
     <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
@@ -132,8 +130,8 @@
                 windowHeight: window.outerHeight + window.innerHeight,
 
             }).then(function(canvas) {
-                var reserve_detail_id= document.getElementById("reservedetailid"+a).value;
-                var refno=document.getElementById('ref_no'+a).value;
+                    var reserve_detail_id= document.getElementById("reservedetailid"+a).value;
+                    var refno=document.getElementById('ref_no'+a).value;
                     canvas.getContext('2d');   
                     var imgData = canvas.toDataURL("image/jpeg", 1.0);
                     var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
@@ -150,7 +148,8 @@
                     var fname = "BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf";
                      pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
 
-                     $.ajax({
+
+                        $.ajax({
                             data: 'reserve_detail_id='+reserve_detail_id+'&filename='+fname,
                             type: "POST",
                             url: redirect,

@@ -81,8 +81,10 @@
     </div>
      <input type="hidden" class="shortname<?php echo $x; ?>" value="<?php echo $d['shortname']; ?>" id="shortname<?php echo $x; ?>">   
     <input type="hidden" class="ref_no" id="ref_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
+    <input type="text" class="reserve_detail_id" id="reservedetailid<?php echo $x; ?>" value="<?php echo $d['reserve_detail_id']; ?>">
     <input type="hidden" class="billing_month" id="billing_month" value="<?php echo ($due_date=='') ? $billing_month : $due_date; ?>">
     <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
+    <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
 <?php $x++; } ?>
 <input type="hidden"  id="count" value="<?php echo $x; ?>">
 
@@ -95,13 +97,11 @@
          
         var counter=document.getElementById('count').value;
         var billing_month=document.getElementById('billing_month').value;
-       
         var timestamp=document.getElementById('timestamp').value;
+        var loc= document.getElementById("baseurl").value;
+        var redirect = loc+"reserve/update_filename";
 
         for(let a=1;a<counter;a++){
-        
-        
-            var refno=document.getElementById('ref_no'+a).value;
           
             var HTML_Width = $(".canvas_div_pdf"+a).width();
 
@@ -125,6 +125,8 @@
                 windowHeight: window.outerHeight + window.innerHeight,
 
             }).then(function(canvas) {
+                var reserve_detail_id= document.getElementById("reservedetailid"+a).value;
+                var refno=document.getElementById('ref_no'+a).value;
                     canvas.getContext('2d');   
                     var imgData = canvas.toDataURL("image/jpeg", 1.0);
                     var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
@@ -138,7 +140,19 @@
                     //}
                     // let rno = refno.split("-");
                     // let newref = rno[2] + rno[3].slice(0, -1);
+                    var fname = "BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf";
                      pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+
+                     $.ajax({
+                            data: 'reserve_detail_id='+reserve_detail_id+'&filename='+fname,
+                            type: "POST",
+                            url: redirect,
+                            success: function(output){
+                                //console.log(output);
+                            
+                               
+                            }
+                        });
                  
                   
               });

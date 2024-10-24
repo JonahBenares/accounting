@@ -745,6 +745,66 @@ class Reserve extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function export_not_download_purchase_reserve(){
+        $ref_no=$this->uri->segment(3);
+        $due_date=$this->uri->segment(4);
+        $billfrom=$this->uri->segment(5);
+        $billto=$this->uri->segment(6);
+        $participants=$this->uri->segment(7);
+
+            $sql='';
+             if($ref_no!='null'){
+            $sql.= "ph.reference_number = '$ref_no' AND ";
+            }
+
+            if($due_date!='null'){
+                $sql.= "ph.due_date = '$due_date' AND ";
+            }
+
+            if($billfrom!='null' && $billto!='null'){ 
+                $sql.= " ((ph.billing_from BETWEEN '$billfrom' AND '$billto') OR (ph.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
+            }
+
+            if(!empty($participants) && $participants!='null'){
+                //$sql.= " tin = '$participant' AND "; 
+               $par=array();
+               foreach($this->super_model->select_custom_where('participant',"tin='$participants'") AS $p){
+                   $par[]="'".$p->settlement_id."'";
+               }
+               $imp=implode(',',$par);
+               $sql.= " pd.short_name IN($imp) AND ";
+            }
+            $query=substr($sql,0,-4);
+            $qu = " WHERE pd.bulk_print_flag = '1' AND saved = '1' AND ".$query;
+
+        $dir=realpath(APPPATH . '../uploads/excel/');
+        $files = scandir($dir,1);
+
+       
+        $db_files = array();
+        $pdffiles = array();
+        $valid_files = array('pdf');
+        if(is_dir($dir)){
+        foreach(scandir($dir) as $file){
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+                if(in_array($ext, $valid_files)){
+                    array_push($pdffiles, $file);
+                }      
+             }
+        }
+       foreach($this->super_model->custom_query("SELECT filename FROM reserve_transaction_details pd INNER JOIN reserve_transaction_head ph ON pd.reserve_id=ph.reserve_id $qu") AS $db){
+        $db_files[] = $db->filename;
+       }
+
+        $data['result'] = array_diff($db_files, $pdffiles);
+
+        $result=array_diff($db_files, $pdffiles);
+        $x=1;
+       
+        $this->load->view('reserve/export_not_download_purchase_reserve',$data);
+        $this->load->view('template/footer');
+    }
+
     public function print_2307_reserve(){
         $reserve_id = $this->uri->segment(3);
         $reserve_detail_id = $this->uri->segment(4);
@@ -963,6 +1023,7 @@ class Reserve extends CI_Controller {
             }
             if($in_ex_sub==0 || $in_ex_sub=='null'){
                 $data['details'][] = array(
+                    'reserve_detail_id'=>$det->reserve_detail_id,
                     'due_date'=>'',
                     'tin'=>$tin,
                     'name'=>$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $det->billing_id),
@@ -983,6 +1044,7 @@ class Reserve extends CI_Controller {
                 $sub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$participant_id'");
                 if($sub_participant==0){
                     $data['details'][] = array(
+                        'reserve_detail_id'=>$det->reserve_detail_id,
                         'due_date'=>'',
                         'tin'=>$tin,
                         'name'=>$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $det->billing_id),
@@ -1103,6 +1165,7 @@ class Reserve extends CI_Controller {
             }
             if($in_ex_sub==0 || $in_ex_sub=='null'){
                 $data['details'][] = array(
+                    'reserve_detail_id'=>$det->reserve_detail_id,
                     'due_date'=>'',
                     'tin'=>$tin,
                     'name'=>$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $det->billing_id),
@@ -1123,6 +1186,7 @@ class Reserve extends CI_Controller {
                 $sub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$participant_id'");
                 if($sub_participant==0){
                     $data['details'][] = array(
+                        'reserve_detail_id'=>$det->reserve_detail_id,
                         'due_date'=>'',
                         'tin'=>$tin,
                         'name'=>$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $det->billing_id),
@@ -1142,6 +1206,140 @@ class Reserve extends CI_Controller {
             }
         }
         $this->load->view('reserve/download_reserve_bulk_zoomed',$data);
+    }
+
+    public function purchases_reserve_pdf_scan_directory(){
+
+        $filenames = $this->input->post('filenames');
+        $sql="(";
+        foreach($filenames AS $f){
+            $sql .= " filename =  '$f'  OR ";
+        }
+        $query=substr($sql,0,-3) . ")";
+
+        $data['details']=array();
+        $x=1;
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_details ptd INNER JOIN reserve_transaction_head pth ON ptd.reserve_id=pth.reserve_id WHERE $query AND saved='1' AND adjustment='0' AND  ewt > '0' ORDER BY ptd.reserve_detail_id LIMIT 10") AS $det){
+            $month= date("n",strtotime($det->billing_to ?? ''));
+            $yearQuarter = ceil($month / 3);
+            $first = array(1,4,7,10);
+            $second = array(2,5,8,11);
+            $third = array(3,6,9,12);
+            if($det->adjustment==0){
+                $date_ref_year = date("Y",strtotime($det->billing_to));
+            }else{ 
+                $date_ref_year = date("Y",strtotime($det->due_date));
+            }
+            if($yearQuarter ==1){
+                $period_from = "0101".$date_ref_year;
+                $period_to = "0331".$date_ref_year;
+            } else if($yearQuarter == 2){
+                $period_from = "0401".$date_ref_year;
+                $period_to = "0630".$date_ref_year;
+            } else if($yearQuarter == 3){
+                $period_from = "0701".$date_ref_year;
+                $period_to = "0930".$date_ref_year;
+            } else if($yearQuarter == 4){
+                $period_from = "1001".$date_ref_year;
+                $period_to = "1231".$date_ref_year;
+            }
+
+            $data['period_from']=$period_from;
+            $data['period_to'] = $period_to;
+            if($det->vatables_purchases != 0){
+                $amount=$det->vatables_purchases;
+            }
+            if($det->zero_rated_purchases != 0){
+                $amount=$det->zero_rated_purchases;
+            }
+            if($det->zero_rated_ecozones != 0){
+                $amount=$det->zero_rated_ecozones;
+            }
+            $total = $amount;
+            if(in_array($month, $first)){
+                $firstmonth = $amount; 
+            } else {
+                $firstmonth = "-"; 
+            }
+
+            if(in_array($month, $second)){
+                $secondmonth = $amount; 
+            } else {
+                $secondmonth = "-"; 
+            }
+
+            if(in_array($month, $third)){
+                $thirdmonth = $amount; 
+            } else {
+                $thirdmonth = "-"; 
+            }
+
+            $data_update = array(
+                "bulk_print_flag"=>1
+            );
+            
+            $this->super_model->update_where("reserve_transaction_details", $data_update, "reserve_detail_id",$det->reserve_detail_id);
+            $data['billing_month'] = date('my',strtotime($det->billing_to));
+            $data['due_date'] = '';
+            $data['timestamp']=date('Ymd');
+            $count=$this->super_model->count_custom_where("reserve_participant","res_billing_id='$det->billing_id'");
+            if($count>0){
+                $tin=$this->super_model->select_column_where("reserve_participant", "res_tin", "res_billing_id", $det->billing_id);
+            } else {
+                $tin='000-000-000';
+            }
+            if($in_ex_sub==0 || $in_ex_sub=='null'){
+                $data['details'][] = array(
+                    'reserve_detail_id'=>$det->reserve_detail_id,
+                    'due_date'=>'',
+                    'tin'=>$tin,
+                    'name'=>$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $det->billing_id),
+                    'address'=>$this->super_model->select_column_where("reserve_participant", "res_registered_address", "res_billing_id", $det->billing_id),
+                    'zip'=>$this->super_model->select_column_where("reserve_participant", "res_zip_code", "res_billing_id", $det->billing_id),
+                    'total'=>$amount,
+                    'ewt'=>$det->ewt,
+                    'firstmonth'=>$firstmonth,
+                    'secondmonth'=>$secondmonth,
+                    'thirdmonth'=>$thirdmonth,
+                    'item_no'=>$det->item_no,
+                    'shortname'=>$det->short_name,
+                    'reference_no'=>$det->reference_number,
+                    'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
+                );
+            }else if($in_ex_sub==1){
+                $participant_id = $this->super_model->select_column_custom_where("reserve_participant","res_participant_id","res_billing_id='$det->billing_id'");
+                $sub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$participant_id'");
+                if($sub_participant==0){
+                    $data['details'][] = array(
+                        'reserve_detail_id'=>$det->reserve_detail_id,
+                        'due_date'=>'',
+                        'tin'=>$tin,
+                        'name'=>$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $det->billing_id),
+                        'address'=>$this->super_model->select_column_where("reserve_participant", "res_registered_address", "res_billing_id", $det->billing_id),
+                        'zip'=>$this->super_model->select_column_where("reserve_participant", "res_zip_code", "res_billing_id", $det->billing_id),
+                        'total'=>$amount,
+                        'ewt'=>$det->ewt,
+                        'firstmonth'=>$firstmonth,
+                        'secondmonth'=>$secondmonth,
+                        'thirdmonth'=>$thirdmonth,
+                        'item_no'=>$det->item_no,
+                        'shortname'=>$det->short_name,
+                        'reference_no'=>$det->reference_number,
+                        'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
+                    );
+                }
+            }
+        }
+        $this->load->view('reserve/purchases_reserve_pdf_scan_directory',$data);
+    }
+
+    public function update_filename(){
+        $reserve_detail_id = $this->input->post('reserve_detail_id');
+        $filename = $this->input->post('filename');
+        $data_update = array(
+                "filename"=>$filename
+            );
+            $this->super_model->update_custom_where("reserve_transaction_details", $data_update, "reserve_detail_id='$reserve_detail_id'");
     }
 
     public function update_reserve_details(){

@@ -165,6 +165,7 @@ class Reports extends CI_Controller {
        // $data['total_collection'] = $total_c;
         $data['total_balance'] = $total_am - $total_c;
 
+        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM sales_transaction_head WHERE saved = '1' ORDER BY due_date desc");
         $this->load->view('reports/sales_summary',$data);
         $this->load->view('template/footer');
     }
@@ -4061,7 +4062,7 @@ class Reports extends CI_Controller {
         // $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
-        $data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved='1' GROUP BY due_date");
+        $data['date']=$this->super_model->custom_query("SELECT due_date FROM sales_adjustment_head WHERE saved='1' GROUP BY due_date ORDER BY due_date DESC");
         //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
         //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND saved='1'") AS $ads){
         foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE due_date='$due_date' AND saved='1' ORDER BY billing_to ASC") AS $ads){
@@ -8341,11 +8342,17 @@ class Reports extends CI_Controller {
             $total_amount_collected[]=$pah->total_update;
             $variance_total[]=$variance;
 
+            if(empty($pah->billing_id)){
+                $billing_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$pah->actual_billing_id' AND settlement_id = '$pah->short_name'");
+            } else {
+                $billing_id =$pah->billing_id;
+            }
+
             $data['purchasesmain_total'][]=array(
                 'due_date'=>$pah->due_date,
                 'billing_from'=>$pah->billing_from,
                 'billing_to'=>$pah->billing_to,
-                'billing_id'=>$pah->billing_id,
+                'billing_id'=>$billing_id,
                 'transaction_no'=>$pah->reference_number,
                 'total_amount'=>$pah->total_amount,
                 'overall_total_amount'=>$overall_total_amount,
@@ -9082,4 +9089,569 @@ class Reports extends CI_Controller {
         $objWriter->save('php://output');
     }
 
+    public function export_monthly_IEMOP(){
+
+        $due=$this->uri->segment(3);
+        $objPHPExcel = new Spreadsheet();
+        $exportfilename="Monthly IEMOP Collection Reports.xlsx";
+        $sql='';
+        if($due!='null'){
+             $sql.= " due_date = '$due' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        if($due !='null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
+
+        if($due != 'null'){
+            $due_date = date('F d, Y', strtotime($due));
+            $fname = date('FY', strtotime($due));
+        }
+
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', "MP ID No.: CENPRI");
+        if($due != 'null'){
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', "$due_date");
+        }else{
+             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', "");
+        }
+
+            $styleArray = array(
+                'borders' => array(
+                    'allBorders' => array(
+                        'borderStyle' => border::BORDER_THIN,
+                        'color' => ['rgb' => '000000'],
+                    )
+                )
+            );
+
+            $objPHPExcel->getActiveSheet(0)->setTitle('BIR SLSP');
+            $objPHPExcel->setActiveSheetIndex(0);
+            foreach(range('A','O') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+
+            foreach(range('B2','B4') as $columnID1) {
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID1)
+                    ->setAutoSize(false);
+            }
+            
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A6', "Serial #");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B6', "Transaction Date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C6', "Date From");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D6', "Date To");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E6', "Due Date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F6', "Received From (Buyer STL ID)");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G6', "Received From (Buyer Full name)");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H6', "TIN No");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I6', "Address");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J6', "Zip Code");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K6', "Statement No (Seller)");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L6', "Vatable Sales");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M6', "VAT on Sales");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N6', "Zero Rated Ecozone");
+           
+            $objPHPExcel->getActiveSheet()->getStyle("A6:N6")->applyFromArray($styleArray);
+
+        //$data=array();
+
+            $row=7;
+            
+                foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+
+                    $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
+                    $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
+                    $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
+
+                    //$sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND billing_id = '$col->billing_id'");
+                    //$sum_amount
+                   // $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                  //  $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                 
+
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$row, $col->serial_no);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$row, date('F d, Y', strtotime($col->transaction_date)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$row, date('F d, Y', strtotime($col->billing_from)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$row, date('F d, Y', strtotime($col->billing_to)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$row, date('F d, Y', strtotime($col->due_date)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$row, $col->short_name);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$row, $col->company_name);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$row, $tin);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$row, $address);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$row, $zip);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$row, $col->reference_number);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$row, $col->vatable_sales);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row, $col->vat_on_sales);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row, $col->zero_rated_ecozones);
+                        
+
+                        $objPHPExcel->getActiveSheet(0)->getStyle('A'.$row.":N".$row)->applyFromArray($styleArray);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":N".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":N".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                        $row++;
+                    }
+
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getAlignment()->setWrapText(true);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+
+                    $objPHPExcel->createSheet();
+                    $objPHPExcel->setActiveSheetIndex(1);
+                    $objPHPExcel->getActiveSheet(1)->setTitle('BIR SLSP - Vat on Sales');
+
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B3', "MP ID No.: CENPRI");
+                    if($due != 'null'){
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B4', "As of $due_date");
+                    }else{
+                         $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B4', "");
+                    }
+
+
+                    $objPHPExcel->setActiveSheetIndex(1);
+                    foreach(range('A','I') as $columnID){
+                        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+                    }
+
+                    foreach(range('B2','B4') as $columnID1) {
+                        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID1)
+                            ->setAutoSize(false);
+                    }
+                    
+                               
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('A6', "Serial #");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B6', "Transaction Date");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('C6', "Date From");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('D6', "Date To");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('E6', "Due Date");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('F6', "Received From (Buyer STL ID)");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('G6', "Received From (Buyer Full name)");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('H6', "TIN No");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('I6', "Address");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('J6', "Zip Code");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('K6', "Statement No (Seller)");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('L6', "Vatable Sales");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('M6', "VAT on Sales");
+                    $objPHPExcel->getActiveSheet(1)->getStyle("A6:M6")->applyFromArray($styleArray);
+
+           
+
+                    $row=7;
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+
+                        $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
+                        $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
+                        $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
+    
+                        // $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                       
+                        // $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                        // $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                     
+    
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('A'.$row, $col->serial_no);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B'.$row, date('F d, Y', strtotime($col->transaction_date)));
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('C'.$row, date('F d, Y', strtotime($col->billing_from)));
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('D'.$row, date('F d, Y', strtotime($col->billing_to)));
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('E'.$row, date('F d, Y', strtotime($col->due_date)));
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('F'.$row, $col->short_name);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('G'.$row, $col->company_name);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('H'.$row, $tin);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('I'.$row, $address);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('J'.$row, $zip);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('K'.$row, $col->reference_number);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('L'.$row, $col->vatable_sales);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('M'.$row, $col->vat_on_sales);
+
+                                $objPHPExcel->getActiveSheet(1)->getStyle('A'.$row.":I".$row)->applyFromArray($styleArray);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('I'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('I'.$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                                $row++;
+                            }
+
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getAlignment()->setWrapText(true);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+
+            
+                    $objPHPExcel->createSheet();
+                    $objPHPExcel->setActiveSheetIndex(2);
+                    $objPHPExcel->getActiveSheet(2)->setTitle('BIR SLSP - Zero Rated Ecozone');
+
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B3', "MP ID No.: CENPRI");
+                    if($due != 'null'){
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B4', "As of $due_date");
+                    }else{
+                         $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B4', "");
+                    }
+
+
+                    $objPHPExcel->setActiveSheetIndex(2);
+                    foreach(range('A','O') as $columnID){
+                        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+                    }
+
+                    foreach(range('B2','B4') as $columnID1) {
+                        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID1)
+                            ->setAutoSize(false);
+                    }
+                    
+                                 
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('A6', "Serial #");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B6', "Transaction Date");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('C6', "Date From");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('D6', "Date To");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('E6', "Due Date");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('F6', "Received From (Buyer STL ID)");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('G6', "Received From (Buyer Full name)");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('H6', "TIN No");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('I6', "Address");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('J6', "Zip Code");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('K6', "Statement No (Seller)");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('L6', "Zero Rated Ecozone");
+                    $objPHPExcel->getActiveSheet(2)->getStyle("A6:L6")->applyFromArray($styleArray);
+
+              
+
+                    $row=7;
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+
+                        $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
+                        $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
+                        $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
+    
+                        // $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                       
+                        // $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                        // $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                     
+    
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('A'.$row, $col->serial_no);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B'.$row, date('F d, Y', strtotime($col->transaction_date)));
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('C'.$row, date('F d, Y', strtotime($col->billing_from)));
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('D'.$row, date('F d, Y', strtotime($col->billing_to)));
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('E'.$row, date('F d, Y', strtotime($col->due_date)));
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('F'.$row, $col->short_name);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('G'.$row, $col->company_name);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('H'.$row, $tin);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('I'.$row, $address);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('J'.$row, $zip);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('K'.$row, $col->reference_number);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('L'.$row, $col->zero_rated_ecozones);
+                            
+    
+                            $objPHPExcel->getActiveSheet(2)->getStyle('A'.$row.":L".$row)->applyFromArray($styleArray);
+                            $objPHPExcel->getActiveSheet(2)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                            $objPHPExcel->getActiveSheet(2)->getStyle('L'.$row.":L".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                            $objPHPExcel->getActiveSheet(2)->getStyle('L'.$row.":L".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                            $row++;
+                        }
+
+
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getAlignment()->setWrapText(true);
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getFont()->getColor()->setRGB ('FFFFFF');
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="IEMOP Sales_'.$fname.'.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+
+    }
+
+    public function export_monthly_IEMOP_adjustment(){
+
+        $due=$this->uri->segment(3);
+        $objPHPExcel = new Spreadsheet();
+        $exportfilename="Monthly IEMOP Collection Reports - Adjustment.xlsx";
+        $sql='';
+        if($due!='null'){
+             $sql.= " due_date = '$due' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        if($due !='null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
+
+        if($due != 'null'){
+            $due_date = date('F d, Y', strtotime($due));
+            $fname = date('FY', strtotime($due));
+        }
+
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', "MP ID No.: CENPRI");
+        if($due != 'null'){
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', "$due_date");
+        }else{
+             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', "");
+        }
+
+            $styleArray = array(
+                'borders' => array(
+                    'allBorders' => array(
+                        'borderStyle' => border::BORDER_THIN,
+                        'color' => ['rgb' => '000000'],
+                    )
+                )
+            );
+
+            $objPHPExcel->getActiveSheet(0)->setTitle('BIR SLSP');
+            $objPHPExcel->setActiveSheetIndex(0);
+            foreach(range('A','O') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+
+            foreach(range('B2','B4') as $columnID1) {
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID1)
+                    ->setAutoSize(false);
+            }
+            
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A6', "Serial #");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B6', "Transaction Date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C6', "Date From");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D6', "Date To");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E6', "Due Date");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F6', "Received From (Buyer STL ID)");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G6', "Received From (Buyer Full name)");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H6', "TIN No");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I6', "Address");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J6', "Zip Code");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K6', "Statement No (Seller)");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L6', "Vatable Sales");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M6', "VAT on Sales");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N6', "Zero Rated Ecozone");
+           
+            $objPHPExcel->getActiveSheet()->getStyle("A6:N6")->applyFromArray($styleArray);
+
+        //$data=array();
+
+            $row=7;
+            
+                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sh INNER JOIN sales_adjustment_details sd ON sh.sales_adjustment_id = sd.sales_adjustment_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+
+                    $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
+                    $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
+                    $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
+
+                    //$sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND billing_id = '$col->billing_id'");
+                    //$sum_amount
+                   // $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                  //  $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                 
+
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$row, $col->serial_no);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$row, date('F d, Y', strtotime($col->transaction_date)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$row, date('F d, Y', strtotime($col->billing_from)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$row, date('F d, Y', strtotime($col->billing_to)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$row, date('F d, Y', strtotime($col->due_date)));
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$row, $col->short_name);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$row, $col->company_name);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$row, $tin);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$row, $address);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$row, $zip);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$row, $col->reference_number);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$row, $col->vatable_sales);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row, $col->vat_on_sales);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row, $col->zero_rated_ecozones);
+                        
+
+                        $objPHPExcel->getActiveSheet(0)->getStyle('A'.$row.":N".$row)->applyFromArray($styleArray);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":N".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":N".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                        $row++;
+                    }
+
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getAlignment()->setWrapText(true);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+
+                    $objPHPExcel->createSheet();
+                    $objPHPExcel->setActiveSheetIndex(1);
+                    $objPHPExcel->getActiveSheet(1)->setTitle('BIR SLSP - Vat on Sales');
+
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B3', "MP ID No.: CENPRI");
+                    if($due != 'null'){
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B4', "As of $due_date");
+                    }else{
+                         $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B4', "");
+                    }
+
+
+                    $objPHPExcel->setActiveSheetIndex(1);
+                    foreach(range('A','I') as $columnID){
+                        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+                    }
+
+                    foreach(range('B2','B4') as $columnID1) {
+                        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID1)
+                            ->setAutoSize(false);
+                    }
+                    
+                               
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('A6', "Serial #");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B6', "Transaction Date");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('C6', "Date From");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('D6', "Date To");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('E6', "Due Date");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('F6', "Received From (Buyer STL ID)");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('G6', "Received From (Buyer Full name)");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('H6', "TIN No");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('I6', "Address");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('J6', "Zip Code");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('K6', "Statement No (Seller)");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('L6', "Vatable Sales");
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('M6', "VAT on Sales");
+                    $objPHPExcel->getActiveSheet(1)->getStyle("A6:M6")->applyFromArray($styleArray);
+
+           
+
+                    $row=7;
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sh INNER JOIN sales_adjustment_details sd ON sh.sales_adjustment_id = sd.sales_adjustment_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+
+                        $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
+                        $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
+                        $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
+    
+                        // $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                       
+                        // $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                        // $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                     
+    
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('A'.$row, $col->serial_no);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B'.$row, date('F d, Y', strtotime($col->transaction_date)));
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('C'.$row, date('F d, Y', strtotime($col->billing_from)));
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('D'.$row, date('F d, Y', strtotime($col->billing_to)));
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('E'.$row, date('F d, Y', strtotime($col->due_date)));
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('F'.$row, $col->short_name);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('G'.$row, $col->company_name);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('H'.$row, $tin);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('I'.$row, $address);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('J'.$row, $zip);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('K'.$row, $col->reference_number);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('L'.$row, $col->vatable_sales);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('M'.$row, $col->vat_on_sales);
+
+                                $objPHPExcel->getActiveSheet(1)->getStyle('A'.$row.":I".$row)->applyFromArray($styleArray);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('I'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('I'.$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                                $row++;
+                            }
+
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getAlignment()->setWrapText(true);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+
+            
+                    $objPHPExcel->createSheet();
+                    $objPHPExcel->setActiveSheetIndex(2);
+                    $objPHPExcel->getActiveSheet(2)->setTitle('BIR SLSP - Zero Rated Ecozone');
+
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B3', "MP ID No.: CENPRI");
+                    if($due != 'null'){
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B4', "As of $due_date");
+                    }else{
+                         $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B4', "");
+                    }
+
+
+                    $objPHPExcel->setActiveSheetIndex(2);
+                    foreach(range('A','O') as $columnID){
+                        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+                    }
+
+                    foreach(range('B2','B4') as $columnID1) {
+                        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID1)
+                            ->setAutoSize(false);
+                    }
+                    
+                                 
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('A6', "Serial #");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B6', "Transaction Date");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('C6', "Date From");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('D6', "Date To");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('E6', "Due Date");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('F6', "Received From (Buyer STL ID)");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('G6', "Received From (Buyer Full name)");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('H6', "TIN No");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('I6', "Address");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('J6', "Zip Code");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('K6', "Statement No (Seller)");
+                    $objPHPExcel->setActiveSheetIndex(2)->setCellValue('L6', "Zero Rated Ecozone");
+                    $objPHPExcel->getActiveSheet(2)->getStyle("A6:L6")->applyFromArray($styleArray);
+
+              
+
+                    $row=7;
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sh INNER JOIN sales_adjustment_details sd ON sh.sales_adjustment_id = sd.sales_adjustment_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+
+                        $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
+                        $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
+                        $zip = $this->super_model->select_column_where("participant","zip_code","settlement_id",$col->short_name);
+    
+                        // $sum_amount= $this->super_model->select_sum_where("sales_transaction_details","vatable_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                       
+                        // $sum_zero_rated_ecozone= $this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                        // $sum_vat = $this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","sales_id = '$col->sales_id' AND serial_no = '$col->serial_no'");
+                     
+    
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('A'.$row, $col->serial_no);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B'.$row, date('F d, Y', strtotime($col->transaction_date)));
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('C'.$row, date('F d, Y', strtotime($col->billing_from)));
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('D'.$row, date('F d, Y', strtotime($col->billing_to)));
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('E'.$row, date('F d, Y', strtotime($col->due_date)));
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('F'.$row, $col->short_name);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('G'.$row, $col->company_name);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('H'.$row, $tin);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('I'.$row, $address);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('J'.$row, $zip);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('K'.$row, $col->reference_number);
+                            $objPHPExcel->setActiveSheetIndex(2)->setCellValue('L'.$row, $col->zero_rated_ecozones);
+                            
+    
+                            $objPHPExcel->getActiveSheet(2)->getStyle('A'.$row.":L".$row)->applyFromArray($styleArray);
+                            $objPHPExcel->getActiveSheet(2)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                            $objPHPExcel->getActiveSheet(2)->getStyle('L'.$row.":L".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                            $objPHPExcel->getActiveSheet(2)->getStyle('L'.$row.":L".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                            $row++;
+                        }
+
+
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getAlignment()->setWrapText(true);
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getFont()->getColor()->setRGB ('FFFFFF');
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getFont()->setBold(true);
+                $objPHPExcel->getActiveSheet(2)->getStyle('A6:L6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="IEMOP Sales Adjustment_'.$fname.'.xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+
+    }
 }
