@@ -94,6 +94,15 @@ if(!empty($sales_id)){
                                     </tr>
                                 </table>
                                 <br>
+                                
+                                <?php if($count_empty_actual!=0){ ?>
+                                <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                                    <center>
+                                        <strong><?php echo $count_empty_actual; ?> </strong> 
+                                        <span>non-existing participant/s in masterfile.</span>
+                                    </center>
+                                </div> 
+                                <?php } ?>
                                 <table class="table-bordered table table-hover " id="adjust-<?php echo $x; ?>" style="width:170%;">
                                     <thead>
                                          <tr>
@@ -124,8 +133,9 @@ if(!empty($sales_id)){
                                             foreach($details AS $d){ 
                                                 if($d['reference_number']==$h->reference_number){
                                         ?>
-                                        <tr>
-                                            <td align="center" style="background: #fff;">
+                                        <tr <?php echo ($d['billing_id']=='') ? 'class="bg-red"' : ''; ?>>
+                                            <td align="center" <?php echo ($d['billing_id']=='') ? '' : 'style="background:#fff;"'?>>
+                                                <span hidden><?php echo $d['billing_id']; ?></span>
                                                 <?php if($saved==1){ ?>
                                                <div class="btn-group mb-0">
                                                     <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $h->purchase_id; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
@@ -136,7 +146,7 @@ if(!empty($sales_id)){
                                             </td>
                                             <td><?php echo $d['item_no'];?></td>
                                             <td><?php echo $d['short_name'];?></td>
-                                            <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['actual_billing_id']; ?></td>
+                                            <td <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:0;z-index: 999;"' : 'style="position: sticky;left:0;background:#fff;z-index: 999;"'?>><?php echo $d['actual_billing_id']; ?></td>
                                             <td align="center"><?php echo $d['billing_id']; ?></td>
                                             <td align="center"><?php echo $d['facility_type']; ?></td>
                                             <td align="center"><?php echo $d['wht_agent']; ?></td>
@@ -192,7 +202,7 @@ if(!empty($sales_id)){
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
                         <div id='alt' style="font-weight:bold"></div>
                         <input type="hidden" name="saveadjust_identifier" id="saveadjust_identifier" value="<?php echo $identifier;?>">
-                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAlladjust();" value="Save">
+                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAlladjust();" value="Save" <?php echo ($count_empty_actual==0) ? '' : 'disabled';?>>
                         <?php } } ?>
                     </div>
                 </div>

@@ -376,6 +376,7 @@ class Sales extends CI_Controller {
         $data['sub'] = $sub;
         $data['identifier_code']=$this->generateRandomString();
         $data['count_name'] = $this->super_model->count_custom_where("sales_transaction_details", "company_name = '' AND sales_id ='$id'"); 
+        $data['count_empty_actual']=0;
         if(!empty($id)){
             foreach($this->super_model->select_row_where("sales_transaction_head", "sales_id",$id) AS $h){
                 $data['transaction_date']=$h->transaction_date;
@@ -385,72 +386,71 @@ class Sales extends CI_Controller {
                 $data['due_date']=$h->due_date;
                 $data['saved']=$h->saved;
                 //$data['adjustment']=$h->adjustment;
-            if($sub==0 ||  $sub=='null'){
-                foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
+                if($sub==0 ||  $sub=='null'){
+                    foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
+                        $data['count_empty_actual']=$this->super_model->count_custom_where('sales_transaction_details',"sales_id='$h->sales_id' AND billing_id IS NULL");
+                        //$unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
+                        $data['details'][]=array(
+                            'sales_detail_id'=>$d->sales_detail_id,
+                            'sales_id'=>$d->sales_id,
+                            'item_no'=>$d->item_no,
+                            'short_name'=>$d->short_name,
+                            'actual_billing_id'=>$d->actual_billing_id,
+                            'billing_id'=>$d->billing_id,
+                            // 'billing_id'=>$unique_bill_id,
+                            'company_name'=>$d->company_name,
+                            'facility_type'=>$d->facility_type,
+                            'wht_agent'=>$d->wht_agent,
+                            'ith_tag'=>$d->ith_tag,
+                            'non_vatable'=>$d->non_vatable,
+                            'zero_rated'=>$d->zero_rated,
+                            'vatable_sales'=>$d->vatable_sales,
+                            'vat_on_sales'=>$d->vat_on_sales,
+                            'zero_rated_sales'=>$d->zero_rated_sales,
+                            'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                            'ewt'=>$d->ewt,
+                            'serial_no'=>$d->serial_no,
+                            'total_amount'=>$d->total_amount,
+                            'print_counter'=>$d->print_counter
+                        );
+                    }
+                }else if($sub==1){
+                    foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
+                        $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
+                        //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
+                        $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
+                        //if($participant_id != $sub_participant){
 
-                    //$unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
-                    $data['details'][]=array(
-                        'sales_detail_id'=>$d->sales_detail_id,
-                        'sales_id'=>$d->sales_id,
-                        'item_no'=>$d->item_no,
-                        'short_name'=>$d->short_name,
-                        'actual_billing_id'=>$d->actual_billing_id,
-                        'billing_id'=>$d->billing_id,
-                        // 'billing_id'=>$unique_bill_id,
-                        'company_name'=>$d->company_name,
-                        'facility_type'=>$d->facility_type,
-                        'wht_agent'=>$d->wht_agent,
-                        'ith_tag'=>$d->ith_tag,
-                        'non_vatable'=>$d->non_vatable,
-                        'zero_rated'=>$d->zero_rated,
-                        'vatable_sales'=>$d->vatable_sales,
-                        'vat_on_sales'=>$d->vat_on_sales,
-                        'zero_rated_sales'=>$d->zero_rated_sales,
-                        'zero_rated_ecozones'=>$d->zero_rated_ecozones,
-                        'ewt'=>$d->ewt,
-                        'serial_no'=>$d->serial_no,
-                        'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter
-                    );
-                }
-        }else if($sub==1){
-            foreach($this->super_model->select_row_where("sales_transaction_details","sales_id",$h->sales_id) AS $d){
-                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
-                //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
-                $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
-                //if($participant_id != $sub_participant){
+                        // $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
 
-                    // $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
-
-                if($sub_participant==0){
-                    $data['details'][]=array(
-                        'sales_detail_id'=>$d->sales_detail_id,
-                        'sales_id'=>$d->sales_id,
-                        'item_no'=>$d->item_no,
-                        'short_name'=>$d->short_name,
-                        'actual_billing_id'=>$d->actual_billing_id,
-                        'billing_id'=>$d->billing_id,
-                        // 'billing_id'=>$unique_bill_id,
-                        'company_name'=>$d->company_name,
-                        'facility_type'=>$d->facility_type,
-                        'wht_agent'=>$d->wht_agent,
-                        'ith_tag'=>$d->ith_tag,
-                        'non_vatable'=>$d->non_vatable,
-                        'zero_rated'=>$d->zero_rated,
-                        'vatable_sales'=>$d->vatable_sales,
-                        'vat_on_sales'=>$d->vat_on_sales,
-                        'zero_rated_sales'=>$d->zero_rated_sales,
-                        'zero_rated_ecozones'=>$d->zero_rated_ecozones,
-                        'ewt'=>$d->ewt,
-                        'serial_no'=>$d->serial_no,
-                        'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter
-                    );
+                        if($sub_participant==0){
+                            $data['details'][]=array(
+                                'sales_detail_id'=>$d->sales_detail_id,
+                                'sales_id'=>$d->sales_id,
+                                'item_no'=>$d->item_no,
+                                'short_name'=>$d->short_name,
+                                'actual_billing_id'=>$d->actual_billing_id,
+                                'billing_id'=>$d->billing_id,
+                                // 'billing_id'=>$unique_bill_id,
+                                'company_name'=>$d->company_name,
+                                'facility_type'=>$d->facility_type,
+                                'wht_agent'=>$d->wht_agent,
+                                'ith_tag'=>$d->ith_tag,
+                                'non_vatable'=>$d->non_vatable,
+                                'zero_rated'=>$d->zero_rated,
+                                'vatable_sales'=>$d->vatable_sales,
+                                'vat_on_sales'=>$d->vat_on_sales,
+                                'zero_rated_sales'=>$d->zero_rated_sales,
+                                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                                'ewt'=>$d->ewt,
+                                'serial_no'=>$d->serial_no,
+                                'total_amount'=>$d->total_amount,
+                                'print_counter'=>$d->print_counter
+                            );
                         }
                     }
                 }
             }
-
         }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -5242,41 +5242,40 @@ public function print_BS_new(){
         //$ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number", "adjust_identifier" ,$identifier);
         $sales_adjustment_id=$this->super_model->select_column_where("sales_adjustment_head","sales_adjustment_id","adjust_identifier",$identifier);
         $data['count_name'] = $this->super_model->count_custom_where("sales_adjustment_details", "company_name ='' AND sales_adjustment_id ='$sales_adjustment_id'");
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
-                
-                //$unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");   
-                
-                
-                $data['details'][]=array(
-                        // 'transaction_date'=>$h->transaction_date,
-                        // 'billing_from'=>$h->billing_from,
-                        // 'billing_to'=>$h->billing_to,
-                        // 'reference_number'=>$h->reference_number,
-                        // 'due_date'=>$h->due_date,
-                        // 'saved'=>$h->saved,
-                        'adjustment_detail_id'=>$d->adjustment_detail_id,
-                        'sales_adjustment_id'=>$d->sales_adjustment_id,
-                        'item_no'=>$d->item_no,
-                        'short_name'=>$d->short_name,
-                        'actual_billing_id'=>$d->actual_billing_id,
-                        'billing_id'=>$d->billing_id,
-                        'company_name'=>$d->company_name,
-                        'facility_type'=>$d->facility_type,
-                        'wht_agent'=>$d->wht_agent,
-                        'ith_tag'=>$d->ith_tag,
-                        'non_vatable'=>$d->non_vatable,
-                        'zero_rated'=>$d->zero_rated,
-                        'vatable_sales'=>$d->vatable_sales,
-                        'vat_on_sales'=>$d->vat_on_sales,
-                        'zero_rated_sales'=>$d->zero_rated_sales,
-                        'zero_rated_ecozones'=>$d->zero_rated_ecozones,
-                        'ewt'=>$d->ewt,
-                        'serial_no'=>$d->serial_no,
-                        'total_amount'=>$d->total_amount,
-                        'print_counter'=>$d->print_counter,
-                        'reference_number'=>$d->reference_number
-                    );
-                }
+        $data['count_empty_actual']=0;
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
+            $data['count_empty_actual']=$this->super_model->count_custom_where('sales_adjustment_details',"sales_adjustment_id='$sales_adjustment_id' AND billing_id IS NULL");
+            //$unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");   
+            $data['details'][]=array(
+                // 'transaction_date'=>$h->transaction_date,
+                // 'billing_from'=>$h->billing_from,
+                // 'billing_to'=>$h->billing_to,
+                // 'reference_number'=>$h->reference_number,
+                // 'due_date'=>$h->due_date,
+                // 'saved'=>$h->saved,
+                'adjustment_detail_id'=>$d->adjustment_detail_id,
+                'sales_adjustment_id'=>$d->sales_adjustment_id,
+                'item_no'=>$d->item_no,
+                'short_name'=>$d->short_name,
+                'actual_billing_id'=>$d->actual_billing_id,
+                'billing_id'=>$d->billing_id,
+                'company_name'=>$d->company_name,
+                'facility_type'=>$d->facility_type,
+                'wht_agent'=>$d->wht_agent,
+                'ith_tag'=>$d->ith_tag,
+                'non_vatable'=>$d->non_vatable,
+                'zero_rated'=>$d->zero_rated,
+                'vatable_sales'=>$d->vatable_sales,
+                'vat_on_sales'=>$d->vat_on_sales,
+                'zero_rated_sales'=>$d->zero_rated_sales,
+                'zero_rated_ecozones'=>$d->zero_rated_ecozones,
+                'ewt'=>$d->ewt,
+                'serial_no'=>$d->serial_no,
+                'total_amount'=>$d->total_amount,
+                'print_counter'=>$d->print_counter,
+                'reference_number'=>$d->reference_number
+            );
+        }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/upload_sales_adjustment',$data);
@@ -5502,7 +5501,8 @@ public function upload_sales_adjustment_test(){
                         );
                         $this->super_model->insert_into("sales_adjustment_head", $data_insert);
                         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
-                        $highestRow = $highestRow-1;
+                        $highestRow = $highestRow;
+                        // $highestRow = $highestRow-1;
                         $y=1;
                         for($z=4;$z<$highestRow;$z++){
                             $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
@@ -5510,9 +5510,10 @@ public function upload_sales_adjustment_test(){
                             if($shortname!="" || !empty($shortname)){
                                 $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue() ?? '');
 
-                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue() ?? '');
-                                // $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getOldCalculatedValue() ?? '');
-                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue() ?? '');
+                                // $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue() ?? '');
+                                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue() ?? '');
+                                $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getOldCalculatedValue() ?? '');
+                                // $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue() ?? '');
 
                                 $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin'");
                                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue() ?? '');

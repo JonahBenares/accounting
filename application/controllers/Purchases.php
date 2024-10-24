@@ -45,6 +45,7 @@ class Purchases extends CI_Controller {
         $data['purchase_id'] = $purchase_id;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
+        $data['count_empty_actual']=0;
         if(!empty($purchase_id)){
             foreach($this->super_model->select_row_where("purchase_transaction_head", "purchase_id",$purchase_id) AS $h){
                 $data['transaction_date']=$h->transaction_date;
@@ -56,7 +57,7 @@ class Purchases extends CI_Controller {
                 $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_id",$h->purchase_id) AS $d){
                     // $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
-
+                    $data['count_empty_actual']=$this->super_model->count_custom_where('purchase_transaction_details',"purchase_id='$h->purchase_id' AND billing_id IS NULL");
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,
                         'purchase_id'=>$d->purchase_id,
@@ -2165,8 +2166,10 @@ class Purchases extends CI_Controller {
         $data['head']=$this->super_model->select_row_where("purchase_transaction_head","adjust_identifier",$identifier);
         $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number", "adjust_identifier" ,$identifier);
         //echo $ref_no;
+        $data['count_empty_actual']=0;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier' AND adjustment='1'") AS $d){
             $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
+            $data['count_empty_actual']=$this->super_model->count_custom_where('purchase_transaction_details',"purchase_id='$d->purchase_id' AND billing_id IS NULL");
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,

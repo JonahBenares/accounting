@@ -96,7 +96,14 @@ if(!empty($sales_id)){
                                     </tr>
                                 </table>
                                 <br>
-                                
+                                <?php if($count_empty_actual!=0){ ?>
+                                <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                                    <center>
+                                        <strong><?php echo $count_empty_actual; ?> </strong> 
+                                        <span>non-existing participant/s in masterfile.</span>
+                                    </center>
+                                </div> 
+                                <?php } ?>
                                 <table class="table-bordered table table-hover " id="adjust-<?php echo $x; ?>" style="width:190%;">
                                     <thead>
                                         <tr>    
@@ -127,7 +134,7 @@ if(!empty($sales_id)){
                                     <tbody>
                                         <?php foreach($details AS $d){ 
                                             if($d['reference_number'] == $h->reference_number) {?>
-                                        <tr>
+                                        <tr <?php echo ($d['billing_id']=='') ? 'class="bg-red"' : ''; ?>>
                                             <!-- <td class="p-2" align="center" style="background: #fff;">
                                                 <?php 
                                                     if($saved==1){ 
@@ -151,12 +158,15 @@ if(!empty($sales_id)){
                                                     }
                                                 ?>
                                             </td> -->
-                                            <td class="p-2"><center><?php echo $d['item_no'];?></center></td>
+                                            <td class="p-2">
+                                                <span hidden><?php echo $d['billing_id'];?></span>
+                                                <center><?php echo $d['item_no'];?></center>
+                                            </td>
                                             <!-- <td class="p-2"><?php echo $d['serial_no'];?></td> -->
                                             <td class="p-2"><?php echo $d['short_name'];?></td>
-                                            <td class="p-2" style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['actual_billing_id'];?></td>
-                                            <td class="p-2" style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['billing_id'];?></td>
-                                            <td class="p-2" style="position: sticky;left:125px;background:#fff;z-index: 999;"><?php echo $d['company_name'];?></td>
+                                            <td class="p-2" <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:0;z-index: 999;"' : 'style="position: sticky;left:0;background:#fff;z-index: 999;"'?>><?php echo $d['actual_billing_id'];?></td>
+                                            <td class="p-2" <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:0;z-index: 999;"' : 'style="position: sticky;left:0;background:#fff;z-index: 999;"'?>><?php echo $d['billing_id'];?></td>
+                                            <td class="p-2" <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:125;z-index: 999;"' : 'style="position: sticky;left:125;background:#fff;z-index: 999;"'?>><?php echo $d['company_name'];?></td>
                                             <td class="p-2" align="center"><?php echo $d['facility_type'];?></td>
                                             <td class="p-2" align="center"><?php echo $d['wht_agent'];?></td>
                                             <td class="p-2" align="center"><?php echo $d['ith_tag'];?></td>
@@ -212,7 +222,7 @@ if(!empty($sales_id)){
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
                         <div id='alt1' style="font-weight:bold"></div>
                         <input type="hidden" name="save_sales_adjustment" id="save_sales_adjustment" value="<?php echo $identifier;?>">
-                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAllAdjust();" value="Save">
+                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAllAdjust();" value="Save"  <?php echo ($count_empty_actual==0) ? '' : 'disabled';?>>
                         <?php } } ?>
                     </div>
                 </div>
@@ -246,7 +256,6 @@ if(!empty($sales_id)){
         for(var a=1;a<=counter;a++){
             $("#adjust-"+a).dataTable({
                 "scrollX": true,
-                // order: [[2, 'asc']],
                 // "scrollX": true,
             });
         }

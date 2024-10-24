@@ -40,6 +40,11 @@ $("#table-2").dataTable({
   order: [[1, "asc"]] //column indexes is zero based
 
 });
+$("#tables").dataTable({
+  "columnDefs": [
+    { "sortable": false, "targets": [0, 0] }
+  ],
+});
 $("#table-3").dataTable({
   // "scrollX": true,
   // "ordering": true,
@@ -65,7 +70,7 @@ $('#save-stage').DataTable({
 
 
 $("#table-6").dataTable({
-  order: [[2, 'asc']],
+  // order: [[2, 'asc']],
   "scrollX": true,
   
 });
