@@ -64,6 +64,14 @@
                                     </div>
                                 </div> 
                             </form>
+                            <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" id="alert_error" style="display:none">
+                                <center>
+                                    <strong>Excel file incorrect format, kindly check excel file format.</strong> 
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </center>
+                            </div>  
                             <form method="POST" id="upload_wesm">
                                 <div id="upload" <?php echo (empty($purchase_id) ? 'style="display:none"' : ''); ?>>
                                     <hr>
@@ -83,7 +91,7 @@
                                 </div>
                                 <input type='hidden' name='purchase_id' id='purchase_id'  value="<?php echo (!empty($purchase_id) ? $purchase_id : ''); ?>">
                             </form>
-                            <center><span id="alt"></span></center>
+                            <center><span id="alt" style="display:none"><b>Please wait, Saving Data...</b></span></center>
                             <style type="text/css">
                                 table#table-6 tr td{
                                     border: 1px solid #efefef;
@@ -192,7 +200,7 @@
                             <?php } ?>
                         </div>
                         <?php if(!empty($details)){ if($saved==0){ ?>
-                        <div id='alt' style="font-weight:bold"></div>
+                        <div id='alt1' style="font-weight:bold;display:none"><b>Please wait, Saving Data...</b></div>
                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save" <?php echo ($count_empty_actual==0) ? '' : 'disabled';?>>
                         <?php } } ?>
                     </div>

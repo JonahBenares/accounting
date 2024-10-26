@@ -18,6 +18,14 @@ if(!empty($sales_id)){
                             <h4 style="line-height: 1.3;" class="p-0">Upload WESM Transaction - Purchases <br><small style="letter-spacing:2px">ADJUSTMENT</small></h4>
                         </div>
                         <div class="card-body">
+                            <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" id="alert_error" style="display:none">
+                                <center>
+                                    <strong>Excel file incorrect format, kindly check excel file format.</strong> 
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </center>
+                            </div>  
                             <form id='uploadadjust'>
                                 <!-- <div class="row">
                                     <div class="col-lg-5 col-md-5 col-sm-5 offset-lg-1 offset-md-1 offset-sm-1">
@@ -70,7 +78,7 @@ if(!empty($sales_id)){
                                             ?>
                                             <input type='button' class="btn btn-danger" id="cancel" onclick="cancelmultiplePurchase()" value="Cancel Transaction" style="width:100%">
                                             <?php } } ?>
-                                            <center><span id="alt"></span></center>
+                                            <center><span id="alt" style="display:none"><b>Please wait, Saving Data...</b></span></center>
                                         </div>
                                     </div>
                                 </div>
@@ -200,7 +208,7 @@ if(!empty($sales_id)){
                             <?php } ?>
                         </div>
                         <?php if(!empty($identifier)){ if($saved==0){ ?>
-                        <div id='alt' style="font-weight:bold"></div>
+                        <center><div id='alt1' style="font-weight:bold;display:none"><b>Please wait, Saving Data...</b></div></center>
                         <input type="hidden" name="saveadjust_identifier" id="saveadjust_identifier" value="<?php echo $identifier;?>">
                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAlladjust();" value="Save" <?php echo ($count_empty_actual==0) ? '' : 'disabled';?>>
                         <?php } } ?>

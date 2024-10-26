@@ -28,6 +28,14 @@ if(!empty($sales_id)){
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                 </div>
                             </div> -->
+                            <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" id="alert_error" style="display:none">
+                                <center>
+                                    <strong>Excel file incorrect format, kindly check excel file format.</strong> 
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </center>
+                            </div>  
                             <form id='uploadsalesadjust'>
                                 <div class="row append">
                                     <div class="col-lg-10 col-md-10 col-sm-10 offset-lg-1 offset-md-1 offset-sm-1">
@@ -72,7 +80,7 @@ if(!empty($sales_id)){
                                             ?>
                                             <input type='button' class="btn btn-danger" id="cancel" onclick="cancelmultipleSales()" value="Cancel Transaction" style="width: 100%;">
                                             <?php } } ?>
-                                            <center><span id="alt"></span></center>
+                                            <center><span id="alt" style="display:none"><b>Please wait, Saving Data...</b></span></center>
                                         </div>
                                     </div>
                                 </div>

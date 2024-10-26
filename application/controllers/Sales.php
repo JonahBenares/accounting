@@ -2755,7 +2755,73 @@ public function print_BS_new(){
 
             $series_no = $objPHPExcel->getActiveSheet()->getCell('P'.$x)->getFormattedValue();
             
-  
+
+            // $cellDataType = $objPHPExcel->getActiveSheet()->getCell('K'.$x)->getDataType();
+            // if ($cellDataType === \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NULL) {
+            //     echo "This cell contains a formula.-".$actual_billing_id.'*';
+            // }
+            if ($vatable_sales === '') {
+                $vatable_checker=0;
+            }else{
+                $vatable_checker=str_replace(array('-','',' '),'0',$vatable_sales); 
+            }
+            if ($zero_rated_ecozone === '') {
+                $zero_rated_ecozone_checker=0;
+            }else{
+                $zero_rated_ecozone_checker=str_replace(array('-','',' '),'0',$zero_rated_ecozone);
+            }
+            if ($vat_on_sales === '') {
+                $vat_on_sales_checker=0;
+            }else{
+                $vat_on_sales_checker=str_replace(array('-','',' '),'0',$vat_on_sales); 
+            }
+            if ($ewt === '') {
+                $ewt_checker=0;
+            }else{
+                $ewt_checker=str_replace(array('-','',' '),'0',$ewt); 
+            }
+            $error=array();
+            if (!is_numeric($vatable_checker)){
+                $error[]='error';
+            }
+            if(!is_numeric($zero_rated_ecozone_checker)){
+                $error[]='error';
+            }
+            if(!is_numeric($vat_on_sales_checker)){
+                $error[]='error';
+            }
+            if(!is_numeric($ewt_checker)){
+                $error[]='error';
+            }
+
+            if(in_array('error',$error)){
+                echo 'error';
+                $this->super_model->delete_where('sales_transaction_details', 'sales_id', $sales_id);
+                break;
+            }else{
+                $data_sales = array(
+                    'sales_id'=>$sales_id,
+                    'item_no'=>$y,
+                    'short_name'=>$shortname,
+                    'billing_id'=>$unique_bill_id,
+                    'actual_billing_id'=>$actual_billing_id,
+                    'company_name'=>$company_name,
+                    'facility_type'=>$fac_type,
+                    'wht_agent'=>$wht_agent,
+                    'ith_tag'=>$ith,
+                    'non_vatable'=>$non_vatable,
+                    'zero_rated'=>$zero_rated,
+                    'vatable_sales'=>$vatable_sales,
+                    'vat_on_sales'=>$vat_on_sales,
+                    'serial_no'=>$series_no,
+                    'zero_rated_ecozones'=>$zero_rated_ecozone,
+                    'ewt'=>$ewt,
+                    'total_amount'=>$total_amount,
+                    'balance'=>$total_amount
+                );
+                $this->super_model->insert_into("sales_transaction_details", $data_sales);
+                $y++;
+            }
    /*
           if($vatable_sales!=''){
                 $vatable_sales_disp=$vatable_sales;
@@ -2789,29 +2855,30 @@ public function print_BS_new(){
 
             $total_amount = ($vatable_sales + $zero_rated_sales + $vat_on_sales) - $ewt;
             $total_amount = ($vatable_sales_disp + $zero_rated_ecozone_disp + $vat_on_sales_disp) - $ewt_disp;
+            
+            //dri asta
          */
-                $data_sales = array(
-                    'sales_id'=>$sales_id,
-                    'item_no'=>$y,
-                    'short_name'=>$shortname,
-                    'billing_id'=>$unique_bill_id,
-                    'actual_billing_id'=>$actual_billing_id,
-                    'company_name'=>$company_name,
-                    'facility_type'=>$fac_type,
-                    'wht_agent'=>$wht_agent,
-                    'ith_tag'=>$ith,
-                    'non_vatable'=>$non_vatable,
-                    'zero_rated'=>$zero_rated,
-                    'vatable_sales'=>$vatable_sales,
-                    'vat_on_sales'=>$vat_on_sales,
-                    'serial_no'=>$series_no,
-                    'zero_rated_ecozones'=>$zero_rated_ecozone,
-                    'ewt'=>$ewt,
-                    'total_amount'=>$total_amount,
-                    'balance'=>$total_amount
-                );
-                $this->super_model->insert_into("sales_transaction_details", $data_sales);
-                $y++;
+                // $data_sales = array(
+                //     'sales_id'=>$sales_id,
+                //     'item_no'=>$y,
+                //     'short_name'=>$shortname,
+                //     'billing_id'=>$unique_bill_id,
+                //     'actual_billing_id'=>$actual_billing_id,
+                //     'company_name'=>$company_name,
+                //     'facility_type'=>$fac_type,
+                //     'wht_agent'=>$wht_agent,
+                //     'ith_tag'=>$ith,
+                //     'non_vatable'=>$non_vatable,
+                //     'zero_rated'=>$zero_rated,
+                //     'vatable_sales'=>$vatable_sales,
+                //     'vat_on_sales'=>$vat_on_sales,
+                //     'serial_no'=>$series_no,
+                //     'zero_rated_ecozones'=>$zero_rated_ecozone,
+                //     'ewt'=>$ewt,
+                //     'total_amount'=>$total_amount,
+                //     'balance'=>$total_amount
+                // );
+                // $this->super_model->insert_into("sales_transaction_details", $data_sales);
                 
             }
         }
@@ -5676,33 +5743,74 @@ public function upload_sales_adjustment_test(){
                                 $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getFormattedValue());
                                 // $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('O'.$z)->getOldCalculatedValue());
                                 $total_amount = ((double)$vatable_sales+(double)$zero_rated_ecozone+(double)$vat_on_sales)-(double)$ewt;
+
+                                if ($vatable_sales === '') {
+                                    $vatable_checker=0;
+                                }else{
+                                    $vatable_checker=str_replace(array('-','',' '),'0',$vatable_sales); 
+                                }
+                                if ($zero_rated_ecozone === '') {
+                                    $zero_rated_ecozone_checker=0;
+                                }else{
+                                    $zero_rated_ecozone_checker=str_replace(array('-','',' '),'0',$zero_rated_ecozone);
+                                }
+                                if ($vat_on_sales === '') {
+                                    $vat_on_sales_checker=0;
+                                }else{
+                                    $vat_on_sales_checker=str_replace(array('-','',' '),'0',$vat_on_sales); 
+                                }
+                                if ($ewt === '') {
+                                    $ewt_checker=0;
+                                }else{
+                                    $ewt_checker=str_replace(array('-','',' '),'0',$ewt); 
+                                }
+                                $error=array();
+                                if (!is_numeric($vatable_checker)){
+                                    $error[]='error';
+                                }
+                                if(!is_numeric($zero_rated_ecozone_checker)){
+                                    $error[]='error';
+                                }
+                                if(!is_numeric($vat_on_sales_checker)){
+                                    $error[]='error';
+                                }
+                                if(!is_numeric($ewt_checker)){
+                                    $error[]='error';
+                                }
                                 $count_max=$this->super_model->count_rows("sales_adjustment_head");
                                 if($count_max==0){
                                     $sales_adjustment_id=1;
                                 }else{
                                     $sales_adjustment_id = $this->super_model->get_max("sales_adjustment_head", "sales_adjustment_id");
                                 }
-                                $data_sales = array(
-                                    'sales_adjustment_id'=>$sales_adjustment_id,
-                                    'item_no'=>$y,
-                                    'short_name'=>$shortname,
-                                    'billing_id'=>$unique_bill_id,
-                                    'actual_billing_id'=>$actual_billing_id,
-                                    'company_name'=>$company_name,
-                                    'facility_type'=>$fac_type,
-                                    'wht_agent'=>$wht_agent,
-                                    'ith_tag'=>$ith,
-                                    'non_vatable'=>$non_vatable,
-                                    'zero_rated'=>$zero_rated,
-                                    'vatable_sales'=>$vatable_sales,
-                                    'vat_on_sales'=>$vat_on_sales,
-                                    'zero_rated_ecozones'=>$zero_rated_ecozone,
-                                    'ewt'=>$ewt,
-                                    'total_amount'=>$total_amount,
-                                    'balance'=>$total_amount,
-                                );
-                                $this->super_model->insert_into("sales_adjustment_details", $data_sales);
-                                $y++;
+                                if(in_array('error',$error)){
+                                    // echo 'error';
+                                    $this->super_model->delete_where('sales_adjustment_head', 'adjust_identifier', $adjust_identifier);
+                                    $this->super_model->delete_where('sales_adjustment_details', 'sales_adjustment_id', $sales_adjustment_id);
+                                    break;
+                                }else{
+                                    $data_sales = array(
+                                        'sales_adjustment_id'=>$sales_adjustment_id,
+                                        'item_no'=>$y,
+                                        'short_name'=>$shortname,
+                                        'billing_id'=>$unique_bill_id,
+                                        'actual_billing_id'=>$actual_billing_id,
+                                        'company_name'=>$company_name,
+                                        'facility_type'=>$fac_type,
+                                        'wht_agent'=>$wht_agent,
+                                        'ith_tag'=>$ith,
+                                        'non_vatable'=>$non_vatable,
+                                        'zero_rated'=>$zero_rated,
+                                        'vatable_sales'=>$vatable_sales,
+                                        'vat_on_sales'=>$vat_on_sales,
+                                        'zero_rated_ecozones'=>$zero_rated_ecozone,
+                                        'ewt'=>$ewt,
+                                        'total_amount'=>$total_amount,
+                                        'balance'=>$total_amount,
+                                    );
+                                    $this->super_model->insert_into("sales_adjustment_details", $data_sales);
+                                    $y++;
+                                }
                             }
                         }
                         $x++;
@@ -5711,7 +5819,11 @@ public function upload_sales_adjustment_test(){
                 }
             }
         }
-        echo $adjust_identifier;
+        if(count($error)==0){
+            echo $adjust_identifier;
+        }else{
+            echo 'error';
+        }
     }
 
     public function bulk_update_main(){
