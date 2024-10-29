@@ -985,11 +985,11 @@ public function print_BS_new(){
                         foreach($this->super_model->select_custom_where("sales_transaction_details","billing_id = '$subparticipant' AND sales_id = '$p->sales_id' AND total_amount != '0'") AS $s){
                             if($h<=15){
 
-                                    $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","sales_detail_id",$s->sales_detail_id);
-                                    $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","sales_detail_id",$s->sales_detail_id);
-                                    $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","sales_detail_id",$s->sales_detail_id);
-                                    $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","sales_detail_id",$s->sales_detail_id);
-                                    $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","sales_detail_id",$s->sales_detail_id);
+                                    $vatable_sales=$s->vatable_sales;
+                                    $zero_rated_sales=$s->zero_rated_sales;
+                                    $zero_rated_ecozones=$s->zero_rated_ecozones;
+                                    $vat_on_sales=$s->vat_on_sales;
+                                    $ewt=$s->ewt;
 
 
                                     // $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
@@ -1064,11 +1064,12 @@ public function print_BS_new(){
                         foreach($this->super_model->select_custom_where("sales_transaction_details","billing_id = '$subparticipant' AND sales_id = '$p->sales_id' AND total_amount != '0'") AS $s){
 
                             
-                                $vatable_sales=$this->super_model->select_column_where("sales_transaction_details","vatable_sales","sales_detail_id",$s->sales_detail_id);
-                                $zero_rated_sales=$this->super_model->select_column_where("sales_transaction_details","zero_rated_sales","sales_detail_id",$s->sales_detail_id);
-                                $zero_rated_ecozones=$this->super_model->select_column_where("sales_transaction_details","zero_rated_ecozones","sales_detail_id",$s->sales_detail_id);
-                                $vat_on_sales=$this->super_model->select_column_where("sales_transaction_details","vat_on_sales","sales_detail_id",$s->sales_detail_id);
-                                $ewt=$this->super_model->select_column_where("sales_transaction_details","ewt","sales_detail_id",$s->sales_detail_id);
+                              
+                            $vatable_sales=$s->vatable_sales;
+                            $zero_rated_sales=$s->zero_rated_sales;
+                            $zero_rated_ecozones=$s->zero_rated_ecozones;
+                            $vat_on_sales=$s->vat_on_sales;
+                            $ewt=$s->ewt;
                                 // $vatable_sales=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
                                 // $zero_rated_sales=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_sales","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
                                 // $zero_rated_ecozones=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id = '$billing_id' AND sales_id = '$p->sales_id'");
@@ -1637,90 +1638,8 @@ public function print_BS_new(){
                     $data['or_no'][$x]=$p->invoice_no;
                 }
 
-            // $sum_vs_exp = explode(".", $p->total_vatable_sales);
-            // $sum_vatable_sales_peso=$sum_vs_exp[0];
-            // $sum_vatable_sales_cents=$sum_vs_exp[1];
 
-            // $sum_vos_exp=explode(".", $p->vat);
-            // $sum_vat_on_sales_peso=$sum_vos_exp[0];
-            // $sum_vat_on_sales_cents=$sum_vos_exp[1];
-
-            // $sum_e_exp=explode(".", $p->total_ewt);
-            // $sum_ewt_peso=$sum_e_exp[0];
-            // $sum_ewt_cents=$sum_e_exp[1];
-
-            // $sum_zr_exp=explode(".", $p->total_zero_rated);
-            // $sum_zero_rated_peso=$sum_zr_exp[0];
-            // $sum_zero_rated_cents=$sum_zr_exp[1];
-
-            $data['total_vs'][$x]=$p->total_vatable_sales;
-            // $total_vs=$p->total_vatable_sales;
-            // $vatable_sales = explode(".",$total_vs);
-            // $data['vat_sales_peso'][$x] = $vatable_sales[0];
-            // $data['vat_sales_cents'][$x] = $vatable_sales[1];
-
-            // $data['vat_sales_peso_sub'][$x] = 0;
-            // $data['vat_sales_cents_sub'][$x] = 0;
-
-            $data['total_zr'][$x]=$p->total_zero_sales;
-            // $total_zr=$p->total_zero_sales;
-            // $data['total_zr'][$x]=$total_zr;
-            // $zero_rated_sales = explode(".",$total_zr);
-            // $data['zero_rated_peso'][$x] = $zero_rated_sales[0];
-            // $data['zero_rated_cents'][$x] = $zero_rated_sales[1];
-
-            // $data['total_zr_sub'][$x]=0;
-            // $data['zero_rated_peso_sub'][$x] = 0;
-            // $data['zero_rated_cents_sub'][$x] = 0;
-
-             $data['total_zra'][$x]=$p->total_zero_ecozones;
-            // $total_zra=$p->total_zero_ecozones;
-            // $data['total_zra'][$x]=$total_zra;
-            // $zero_rated_ecozones_exp=explode(".", $total_zra);
-            // $data['zero_rated_ecozones_peso'][$x]=$zero_rated_ecozones_exp[0];
-            // $data['zero_rated_ecozones_cents'][$x]=$zero_rated_ecozones_exp[1];
-
-            // $data['total_zra_sub']=0;
-            // $data['zero_rated_ecozones_peso_sub'][$x]=0;
-            // $data['zero_rated_ecozones_cents_sub'][$x]=0;
-
-            $data['total_vos'][$x]=$p->total_vat;
-            // $total_vos=$p->total_vat;
-            // $vat_on_sales = explode(".",$total_vos);
-            // $data['vat_peso'][$x] = $vat_on_sales[0];
-            // $data['vat_cents'][$x] = $vat_on_sales[1];
-
-            // $data['vat_peso_sub'][$x] = 0;
-            // $data['vat_cents_sub'][$x] = 0;
-
-            $data['total_ewt'][$x]=$p->total_ewt;
-            // $total_ewt=$p->total_ewt;
-            // $ewt_exp=explode(".", $total_ewt);
-            // $data['ewt_peso'][$x]=$ewt_exp[0];
-            // $data['ewt_cents'][$x]=$ewt_exp[1];
-
-            // $data['ewt_peso_sub'][$x]=0;
-            // $data['ewt_cents_sub'][$x]=0;
-            // $total= $p->total_net_amount;
-
-            
-            // //$total_sub= ($sum_vatable_sales + $sum_vat_on_sales + $sum_zero_rated_ecozone + $sum_zero_rated) - $sum_ewt;
-            // $total_amount=str_replace(',','',number_format($total,2));
-           
-            // $total_amount_sub=0;
-            // $data['total_amount'][$x]=$total_amount;
-            // $data['total_amount_sub'][$x]=0;
-            // $data['amount_words'][$x]=strtoupper($this->convertNumber($total_amount));
-            // $data['amount_words_sub'][$x]=strtoupper($this->convertNumber(str_replace(',','',number_format($total_amount_sub,2))));
-            // $total_exp=explode(".", $total_amount);
-            // $data['total_peso'][$x]=$total_exp[0];
-            // $data['total_cents'][$x]=$total_exp[1];
-
-            // $total_exp_sub=explode(".", $total_amount_sub);
-            // $data['total_peso_sub'][$x]=$total_exp_sub[0];
-            // $data['total_cents_sub'][$x]=$total_exp_sub[1];
-
-        }else{
+            }else{
                 //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
             foreach($this->super_model->select_custom_where("sales_transaction_details","print_identifier='$print_identifier' AND sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                 $data['address'][$x]=$this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
@@ -1750,12 +1669,17 @@ public function print_BS_new(){
                 $zero_rated_bs=array();
                 foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
                     $data['participant_id_sub'][$h]=$s->participant_id;
-                    $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vatable_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","vat_on_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","ewt","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_id='$p->sales_id'");
-                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+                    $billing_id=trim($this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant));
+                    
+                //    $data['billing_id']= $billing_id;
+                //    $data['sales_id']= $p->sales_id;
+                    $vatable_sales_bs[]=$this->super_model->select_sum_where("sales_transaction_details","vatable_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+                    $vat_on_sales_bs[]=$this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+                    $ewt_bs[]=$this->super_model->select_sum_where("sales_transaction_details","ewt","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+                    $zero_rated_ecozone_bs[]=$this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_id='$p->sales_id'");
+
+                    //echo $billing_id . " "  . $p->sales_id . " = ". $this->super_model->select_column_custom_where("sales_transaction_details","zero_rated_ecozones","billing_id='$billing_id' AND sales_id='$p->sales_id'"). "<br>";
+                    $zero_rated_bs[]=$this->super_model->select_sum_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                     $h++;
                 }
             }
@@ -1767,6 +1691,7 @@ public function print_BS_new(){
             $sum_vatable_sales_cents=$sum_vs_exp[1];
 
             $sum_zero_rated_ecozone=array_sum($zero_rated_ecozone_bs);
+           // echo $sum_zero_rated_ecozone;
             $sum_zre_exp=explode(".", $sum_zero_rated_ecozone);
             $sum_zero_rated_ecozone_peso=$sum_zre_exp[0];
             $sum_zero_rated_ecozone_cents=$sum_zre_exp[1];
@@ -1788,7 +1713,7 @@ public function print_BS_new(){
 
             $ewt=str_replace("-", '', $p->ewt);
             
-            $data['total_vs'][$x]=$p->vatable_sales + $sum_vatable_sales;
+            $data['total_vs'][$x]= $sum_vatable_sales;
             //$total_vs=$p->vatable_sales + $sum_vatable_sales;
             // $total_vs=$p->vatable_sales;
             // $vatable_sales = explode(".",$total_vs);
@@ -1800,7 +1725,7 @@ public function print_BS_new(){
             // $data['vat_sales_peso_sub'][$x] = $vatable_sales_sub[0];
             // $data['vat_sales_cents_sub'][$x] = $vatable_sales_sub[1];
 
-            $data['total_zr'][$x]=$p->zero_rated_sales + $sum_zero_rated;
+            $data['total_zr'][$x]=$sum_zero_rated;
             // $total_zr=$p->zero_rated_sales;
             // $data['total_zr'][$x]=$total_zr;
             // $zero_rated_sales = explode(".",$total_zr);
@@ -1813,7 +1738,7 @@ public function print_BS_new(){
             // $data['zero_rated_peso_sub'][$x] = $zero_rated_sales_sub[0];
             // $data['zero_rated_cents_sub'][$x] = $zero_rated_sales_sub[1];
 
-            $data['total_zra'][$x]=$p->zero_rated_ecozones + $sum_zero_rated_ecozone;
+            $data['total_zra'][$x]= $sum_zero_rated_ecozone;
             // $total_zra=$p->zero_rated_ecozones;
             // $data['total_zra'][$x]=$total_zra;
             // $zero_rated_ecozones_exp=explode(".", $total_zra);
@@ -1826,7 +1751,7 @@ public function print_BS_new(){
             // $data['zero_rated_ecozones_peso_sub'][$x]=$zero_rated_ecozones_exp_sub[0];
             // $data['zero_rated_ecozones_cents_sub'][$x]=$zero_rated_ecozones_exp_sub[1];
 
-            $data['total_vos'][$x]=$p->vat_on_sales + $sum_vat_on_sales;
+            $data['total_vos'][$x]=$sum_vat_on_sales;
             // $total_vos=$p->vat_on_sales;
             // $vat_on_sales = explode(".",$total_vos);
             // $data['vat_peso'][$x] = $vat_on_sales[0];
@@ -1837,7 +1762,7 @@ public function print_BS_new(){
             // $data['vat_peso_sub'][$x] = $vat_on_sales_sub[0];
             // $data['vat_cents_sub'][$x] = $vat_on_sales_sub[1];
 
-            $data['total_ewt'][$x]=$p->ewt + $sum_ewt;
+            $data['total_ewt'][$x]= $sum_ewt;
             // $total_ewt=$p->ewt;
             // $ewt_exp=explode(".", $total_ewt);
             // $data['ewt_peso'][$x]=$ewt_exp[0];
