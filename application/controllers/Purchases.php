@@ -1062,7 +1062,7 @@ class Purchases extends CI_Controller {
                     array_push($pdffiles, $file);
                 }      
              }
-        }
+        }   
        foreach($this->super_model->custom_query("SELECT filename FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $db){
         $db_files[] = $db->filename;
        }
