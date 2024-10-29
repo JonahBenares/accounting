@@ -134,15 +134,26 @@ async function upload_btn() {
             processData: false,
             contentType: false,
             beforeSend: function(){
-                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                // document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("alt").style.display = 'block';  
+                document.getElementById("alert_error").style.display = 'none';  
                 document.getElementById("proceed_purchase").disabled = true;
                 document.getElementById("cancel").disabled = true;
                 $("#table-wesm").hide(); 
             },
             success: function(output){
-                $("#alt").hide(); 
-              
-                location.reload();
+                if(output=='error'){
+                    // $("#alt").hide();
+                    document.getElementById("alt").style.display = 'none';  
+                    document.getElementById("WESM_purchase").value = '';
+                    document.getElementById("proceed_purchase").disabled = false;
+	        	    document.getElementById("cancel").disabled = false;
+                    document.getElementById("alert_error").style.display = 'block';  
+                }else{
+                    // $("#alt").hide(); 
+                    document.getElementById("alt").style.display = 'none';  
+	        	    location.reload();
+                }
             }
         });
     }
@@ -252,7 +263,8 @@ function saveAll(){
             type: "POST",
             url: redirect,
             beforeSend: function(){
-                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                // document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("alt1").style.display = 'block'; 
                 $("#submitdata").hide(); 
             },
             success: function(output){
@@ -765,7 +777,8 @@ async function upload_adjust_btn() {
             type: "POST",
             url: redirect,
             beforeSend: function(){
-                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                // document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("alt1").style.display = 'block';  
                 $("#submitdata").hide(); 
             },
             success: function(output){
@@ -848,15 +861,25 @@ $(document).ready(function() {
 			cache: false,
 			processData: false,
 			beforeSend: function(){
-				document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+				// document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("alt").style.display = 'block';  
+                document.getElementById("alert_error").style.display = 'none';  
 				document.getElementById("selectfile").disabled = true;
 			},
 			success: function(output) {
-				$(".loading").removeClass("d-block").addClass("d-none");
-				//$("#showThumb").append(data);
-				$("#alt").hide();
-                //alert(output);
-				window.location=loc+'purchases/upload_purchases_adjustment/'+output;
+                if(output=='error'){
+                    $(".loading").removeClass("d-block").addClass("d-none");
+                    document.getElementById("selectfile").disabled = false;
+                    document.getElementById("alt").style.display = 'none';  
+                    document.getElementById("selectfile").value = '';
+                    document.getElementById("alert_error").style.display = 'block';  
+                }else{
+                    $(".loading").removeClass("d-block").addClass("d-none");
+                    $("#alt").hide();
+                    window.location=loc+'purchases/upload_purchases_adjustment/'+output;
+                    //$("#showThumb").append(data);
+                    //alert(output);
+                }
 			}
 		});
 	}

@@ -45,6 +45,7 @@ class Purchases extends CI_Controller {
         $data['purchase_id'] = $purchase_id;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
+        $data['count_empty_actual']=0;
         if(!empty($purchase_id)){
             foreach($this->super_model->select_row_where("purchase_transaction_head", "purchase_id",$purchase_id) AS $h){
                 $data['transaction_date']=$h->transaction_date;
@@ -56,7 +57,7 @@ class Purchases extends CI_Controller {
                 $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("purchase_transaction_details","purchase_id",$h->purchase_id) AS $d){
                     // $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
-
+                    $data['count_empty_actual']=$this->super_model->count_custom_where('purchase_transaction_details',"purchase_id='$h->purchase_id' AND billing_id IS NULL");
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,
                         'purchase_id'=>$d->purchase_id,
@@ -214,30 +215,77 @@ class Purchases extends CI_Controller {
                 // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getOldCalculatedValue());
                 $total_amount = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases)-(double)$ewt;
             //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
-         
-                $data_purchase = array(
-                    'purchase_id'=>$purchase_id,
-                    'item_no'=>$y,
-                    'short_name'=>$shortname,
-                    'billing_id'=>$unique_bill_id,
-                    'actual_billing_id'=>$actual_billing_id,
-                    'facility_type'=>$fac_type,
-                    'wht_agent'=>$wht_agent,
-                    'ith_tag'=>$ith,
-                    'non_vatable'=>$non_vatable,
-                    'zero_rated'=>$zero_rated,
-                    'vatables_purchases'=>$vatables_purchases,
-                    'vat_on_purchases'=>$vat_on_purchases,
-                    'zero_rated_purchases'=>$zero_rated_purchases,
-                    'zero_rated_ecozones'=>$zero_rated_ecozone,
-                    'ewt'=>$ewt,
-                    'total_amount'=>$total_amount,
-                    'balance'=>$total_amount,
-                    'company_name'=>$company_name,
-                    //'balance'=>$total_amount
-                );
-                $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
-                $y++;
+                if ($vatables_purchases === '') {
+                    $vatable_checker=0;
+                }else{
+                    $vatable_checker=str_replace(array('-','',' '),'0',$vatables_purchases); 
+                }
+                if ($zero_rated_purchases === '') {
+                    $zero_rated_purchases_checker=0;
+                }else{
+                    $zero_rated_purchases_checker=str_replace(array('-','',' '),'0',$zero_rated_purchases);
+                }
+                if ($zero_rated_ecozone === '') {
+                    $zero_rated_ecozone_checker=0;
+                }else{
+                    $zero_rated_ecozone_checker=str_replace(array('-','',' '),'0',$zero_rated_ecozone);
+                }
+                if ($vat_on_purchases === '') {
+                    $vat_on_purchases_checker=0;
+                }else{
+                    $vat_on_purchases_checker=str_replace(array('-','',' '),'0',$vat_on_purchases); 
+                }
+                if ($ewt === '') {
+                    $ewt_checker=0;
+                }else{
+                    $ewt_checker=str_replace(array('-','',' '),'0',$ewt); 
+                }
+                $error=array();
+                if (!is_numeric($vatable_checker)){
+                    $error[]='error';
+                }
+                if(!is_numeric($zero_rated_purchases_checker)){
+                    $error[]='error';
+                }
+                if(!is_numeric($zero_rated_ecozone_checker)){
+                    $error[]='error';
+                }
+                if(!is_numeric($vat_on_purchases_checker)){
+                    $error[]='error';
+                }
+                if(!is_numeric($ewt_checker)){
+                    $error[]='error';
+                }
+
+                if(in_array('error',$error)){
+                    echo 'error';
+                    $this->super_model->delete_where('purchase_transaction_details', 'purchase_id', $purchase_id);
+                    break;
+                }else{
+                    $data_purchase = array(
+                        'purchase_id'=>$purchase_id,
+                        'item_no'=>$y,
+                        'short_name'=>$shortname,
+                        'billing_id'=>$unique_bill_id,
+                        'actual_billing_id'=>$actual_billing_id,
+                        'facility_type'=>$fac_type,
+                        'wht_agent'=>$wht_agent,
+                        'ith_tag'=>$ith,
+                        'non_vatable'=>$non_vatable,
+                        'zero_rated'=>$zero_rated,
+                        'vatables_purchases'=>$vatables_purchases,
+                        'vat_on_purchases'=>$vat_on_purchases,
+                        'zero_rated_purchases'=>$zero_rated_purchases,
+                        'zero_rated_ecozones'=>$zero_rated_ecozone,
+                        'ewt'=>$ewt,
+                        'total_amount'=>$total_amount,
+                        'balance'=>$total_amount,
+                        'company_name'=>$company_name,
+                        //'balance'=>$total_amount
+                    );
+                    $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
+                    $y++;
+                }
             }
         }
            
@@ -2587,8 +2635,10 @@ class Purchases extends CI_Controller {
         $data['head']=$this->super_model->select_row_where("purchase_transaction_head","adjust_identifier",$identifier);
         $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number", "adjust_identifier" ,$identifier);
         //echo $ref_no;
+        $data['count_empty_actual']=0;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier' AND adjustment='1'") AS $d){
             $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
+            $data['count_empty_actual']=$this->super_model->count_custom_where('purchase_transaction_details',"purchase_id='$d->purchase_id' AND billing_id IS NULL");
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
@@ -2854,35 +2904,83 @@ class Purchases extends CI_Controller {
                                     //$total_amount = trim($objPHPExcel->getActiveSheet()->getCell('N'.$z)->getOldCalculatedValue(),'()');
                                     //$total_amount = trim($total_amount,"-");
                                     //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
+                                    if ($vatables_purchases === '') {
+                                        $vatable_checker=0;
+                                    }else{
+                                        $vatable_checker=str_replace(array('-','',' '),'0',$vatables_purchases); 
+                                    }
+                                    if ($zero_rated_purchases === '') {
+                                        $zero_rated_purchases_checker=0;
+                                    }else{
+                                        $zero_rated_purchases_checker=str_replace(array('-','',' '),'0',$zero_rated_purchases);
+                                    }
+                                    if ($zero_rated_ecozone === '') {
+                                        $zero_rated_ecozone_checker=0;
+                                    }else{
+                                        $zero_rated_ecozone_checker=str_replace(array('-','',' '),'0',$zero_rated_ecozone);
+                                    }
+                                    if ($vat_on_purchases === '') {
+                                        $vat_on_purchases_checker=0;
+                                    }else{
+                                        $vat_on_purchases_checker=str_replace(array('-','',' '),'0',$vat_on_purchases); 
+                                    }
+                                    if ($ewt === '') {
+                                        $ewt_checker=0;
+                                    }else{
+                                        $ewt_checker=str_replace(array('-','',' '),'0',$ewt); 
+                                    }
+                                    $error=array();
+                                    if (!is_numeric($vatable_checker)){
+                                        $error[]='error';
+                                    }
+                                    if(!is_numeric($zero_rated_purchases_checker)){
+                                        $error[]='error';
+                                    }
+                                    if(!is_numeric($zero_rated_ecozone_checker)){
+                                        $error[]='error';
+                                    }
+                                    if(!is_numeric($vat_on_purchases_checker)){
+                                        $error[]='error';
+                                    }
+                                    if(!is_numeric($ewt_checker)){
+                                        $error[]='error';
+                                    }
                                     $count_max=$this->super_model->count_rows("purchase_transaction_head");
                                     if($count_max==0){
                                         $purchase_id=1;
                                     }else{
                                         $purchase_id = $this->super_model->get_max("purchase_transaction_head", "purchase_id");
                                     }
-                                    $data_purchase = array(
-                                        'purchase_id'=>$purchase_id,
-                                        'item_no'=>$y,
-                                        'short_name'=>$shortname,
-                                        'company_name'=>$company_name,
-                                        'billing_id'=>$unique_bill_id,
-                                        'actual_billing_id'=>$actual_billing_id,
-                                        'facility_type'=>$fac_type,
-                                        'wht_agent'=>$wht_agent,
-                                        'ith_tag'=>$ith,
-                                        'non_vatable'=>$non_vatable,
-                                        'zero_rated'=>$zero_rated,
-                                        'vatables_purchases'=>$vatables_purchases,
-                                        'vat_on_purchases'=>$vat_on_purchases,
-                                        'zero_rated_purchases'=>$zero_rated_purchases,
-                                        'zero_rated_ecozones'=>$zero_rated_ecozone,
-                                        'ewt'=>$ewt,
-                                        'total_amount'=>$total_amount,
-                                        'balance'=>$total_amount
-                                        //'balance'=>$total_amount
-                                    );
-                                    $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
-                                    $y++;
+                                    if(in_array('error',$error)){
+                                        // echo 'error';
+                                        $this->super_model->delete_where('purchase_transaction_head', 'adjust_identifier', $adjust_identifier);
+                                        $this->super_model->delete_where('purchase_transaction_details', 'purchase_id', $purchase_id);
+                                        break;
+                                    }else{
+                                        $data_purchase = array(
+                                            'purchase_id'=>$purchase_id,
+                                            'item_no'=>$y,
+                                            'short_name'=>$shortname,
+                                            'company_name'=>$company_name,
+                                            'billing_id'=>$unique_bill_id,
+                                            'actual_billing_id'=>$actual_billing_id,
+                                            'facility_type'=>$fac_type,
+                                            'wht_agent'=>$wht_agent,
+                                            'ith_tag'=>$ith,
+                                            'non_vatable'=>$non_vatable,
+                                            'zero_rated'=>$zero_rated,
+                                            'vatables_purchases'=>$vatables_purchases,
+                                            'vat_on_purchases'=>$vat_on_purchases,
+                                            'zero_rated_purchases'=>$zero_rated_purchases,
+                                            'zero_rated_ecozones'=>$zero_rated_ecozone,
+                                            'ewt'=>$ewt,
+                                            'total_amount'=>$total_amount,
+                                            'balance'=>$total_amount
+                                            //'balance'=>$total_amount
+                                        );
+                                        $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
+                                        $y++;
+                                    }
                                 }
                             }
                             $x++;
@@ -2892,7 +2990,12 @@ class Purchases extends CI_Controller {
                 }
             }
         }
-        echo $adjust_identifier;
+        if(count($error)==0){
+            echo $adjust_identifier;
+        }else{
+            echo 'error';
+        }
+        // echo $adjust_identifier;
     }
 
     public function update_details(){

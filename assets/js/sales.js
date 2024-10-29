@@ -184,15 +184,26 @@ async function upload_btn() {
 			processData: false,
 			contentType: false,
 			beforeSend: function(){
-	        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+	        	// document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("alt").style.display = 'block';  
+                document.getElementById("alert_error").style.display = 'none';  
 	        	document.getElementById("proceed_sales").disabled = true;
 	        	document.getElementById("cancel").disabled = true;
 	        	$("#table-wesm").hide(); 
 	        },
 	        success: function(output){
-	        	/*console.log(output);*/
-	        	$("#alt").hide(); 
-	        	location.reload();
+                if(output=='error'){
+                    // $("#alt").hide();
+                    document.getElementById("alt").style.display = 'none';  
+                    document.getElementById("WESM_sales").value = '';
+                    document.getElementById("proceed_sales").disabled = false;
+	        	    document.getElementById("cancel").disabled = false;
+                    document.getElementById("alert_error").style.display = 'block';  
+                }else{
+                    // $("#alt").hide(); 
+                    document.getElementById("alt").style.display = 'none';  
+	        	    location.reload();
+                }
 			}
 		});
 	}
@@ -279,7 +290,8 @@ function saveAll(){
 		        type: "POST",
 		        url: redirect,
 		        beforeSend: function(){
-		        	document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+		        	// document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                    document.getElementById("alt1").style.display = 'block';  
 		            $("#submitdata").hide(); 
 		        },
 		        success: function(output){
@@ -1136,14 +1148,26 @@ $(document).ready(function() {
 			cache: false,
 			processData: false,
 			beforeSend: function(){
-				document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+				// document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("alt").style.display = 'block';  
+                document.getElementById("alert_error").style.display = 'none';  
 				document.getElementById("selectfile").disabled = true;
 			},
 			success: function(output) {
-				$(".loading").removeClass("d-block").addClass("d-none");
+                if(output=='error'){
+                    $(".loading").removeClass("d-block").addClass("d-none");
+                    document.getElementById("selectfile").disabled = false;
+                    document.getElementById("alt").style.display = 'none';  
+                    document.getElementById("selectfile").value = '';
+                    document.getElementById("alert_error").style.display = 'block';  
+                }else{
+                    $(".loading").removeClass("d-block").addClass("d-none");
+                    document.getElementById("alt").style.display = 'none';  
+                    window.location=loc+'sales/upload_sales_adjustment/'+output;
+                }
 				//$("#showThumb").append(data);
-				$("#alt").hide();
-				window.location=loc+'sales/upload_sales_adjustment/'+output;
+				// $("#alt").hide();
+				
 			}
 		});
 	}

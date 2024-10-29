@@ -80,6 +80,14 @@ if(!empty($sales_id)){
                                     </div>
                                 </div>
                             </form>   
+                            <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" id="alert_error" style="display:none">
+                                <center>
+                                    <strong>Excel file incorrect format, kindly check excel file format.</strong> 
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </center>
+                            </div>  
                             <form method="POST" id="upload_wesm">        
                                 <div id="upload" <?php echo (empty($sales_id) ? 'style="display:none"' : ''); ?>>
                                     <br>
@@ -90,7 +98,7 @@ if(!empty($sales_id)){
                                                         <input type="file" class="form-control" placeholder="" id="WESM_sales">
 
                                                         <div class="input-group-append">
-                                                            <button class="btn btn-primary" id="proceed_sales" onclick="upload_btn()"  type="button">Upload</button>
+                                                            <button class="btn btn-primary" id="proceed_sales" onclick="upload_btn()"  type="button" <?php echo ($count_empty_actual==0) ? '' : 'disabled';?>>Upload</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -101,7 +109,7 @@ if(!empty($sales_id)){
                                 <input type='hidden' name='sales_id' id='sales_id'  value="<?php echo (!empty($sales_id) ? $sales_id : ''); ?>">
                                 <input type='hidden' name='count_name' id='count_name'  value="<?php echo (!empty($count_name) ? $count_name : ''); ?>">
                             </form>
-                            <center><span id="alt"></span></center>
+                            <center><span id="alt" style="display:none"><b>Please wait, Saving Data...</b></span></center>
                             <?php if(!empty($details)){ ?>
                             <div class="table-responsive"  id="table-wesm">
                                 <hr>
@@ -125,8 +133,17 @@ if(!empty($sales_id)){
                                         </div>
                                     </div>
                                 </form>
+                                <br>
+                                <?php if($count_empty_actual!=0){ ?>
+                                <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                                    <center>
+                                        <strong><?php echo $count_empty_actual; ?> </strong> 
+                                        <span>non-existing participant/s in masterfile.</span>
+                                    </center>
+                                </div> 
+                                <?php } ?>
                                 <form method="POST" id="print_mult">
-                                    <table class="table-bordered table table-hover " id="table-2" style="width:200%;">
+                                    <table class="table-bordered table table-hover " id="tables" style="width:200%;">
                                         <thead>
                                             <tr>
                                             <?php if($saved==1){ ?>
@@ -169,9 +186,10 @@ if(!empty($sales_id)){
                                                 foreach($details AS $d){ 
                                                     if(!empty($d['sales_id'])){ 
                                             ?>
-                                            <tr>
+                                            <tr <?php echo ($d['billing_id']=='') ? 'class="bg-red"' : ''; ?>>
                                                 
                                                 <td align="center" >
+                                                    <span hidden><?php echo $d['billing_id'];?></span>
                                                     <?php if($saved==1){ ?>
                                                     <input type="checkbox" class="form-control multiple_print" name="multiple_print[]" id="print_checked" style="width: 25px;" value="<?php echo $identifier_code.','.$d['sales_detail_id'].','.$reference_number; ?>">
                                                     <?php } ?>
@@ -202,7 +220,7 @@ if(!empty($sales_id)){
                                                 <td><?php echo $d['short_name'];?></td>
                                                 <td><?php echo $d['actual_billing_id'];?></td>
                                                 <td><?php echo $d['billing_id'];?></td>
-                                                <td style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['company_name'];?></td>
+                                                <td <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:0;z-index: 999;"' : 'style="position: sticky;left:0;background:#fff;z-index: 999;"'?>><?php echo $d['company_name'];?></td>
                                                 <td align="center"><?php echo $d['facility_type'];?></td>
                                                 <td align="center"><?php echo $d['wht_agent'];?></td>
                                                 <td align="center"><?php echo $d['ith_tag'];?></td>
@@ -246,8 +264,8 @@ if(!empty($sales_id)){
                             <?php } ?>
                         </div>
                         <?php if(!empty($details)){ if($saved==0){ ?>
-                        <div id='alt' style="font-weight:bold"></div>
-                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save">
+                            <center><div id='alt1' style="font-weight:bold; display:none"><b>Please wait, Saving Data...</b></div></center>
+                            <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save" <?php echo ($count_empty_actual==0) ? '' : 'disabled';?>>
 
                         <?php } } ?>
                     </div>

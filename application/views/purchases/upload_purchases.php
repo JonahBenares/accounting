@@ -64,6 +64,14 @@
                                     </div>
                                 </div> 
                             </form>
+                            <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" id="alert_error" style="display:none">
+                                <center>
+                                    <strong>Excel file incorrect format, kindly check excel file format.</strong> 
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </center>
+                            </div>  
                             <form method="POST" id="upload_wesm">
                                 <div id="upload" <?php echo (empty($purchase_id) ? 'style="display:none"' : ''); ?>>
                                     <hr>
@@ -83,7 +91,7 @@
                                 </div>
                                 <input type='hidden' name='purchase_id' id='purchase_id'  value="<?php echo (!empty($purchase_id) ? $purchase_id : ''); ?>">
                             </form>
-                            <center><span id="alt"></span></center>
+                            <center><span id="alt" style="display:none"><b>Please wait, Saving Data...</b></span></center>
                             <style type="text/css">
                                 table#table-6 tr td{
                                     border: 1px solid #efefef;
@@ -93,6 +101,14 @@
                             <?php if(!empty($details)){ ?>
                             <div class="table-responsive" id="table-wesm" >
                                 <hr>
+                                <?php if($count_empty_actual!=0){ ?>
+                                <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                                    <center>
+                                        <strong><?php echo $count_empty_actual; ?> </strong> 
+                                        <span>non-existing participant/s in masterfile.</span>
+                                    </center>
+                                </div> 
+                                <?php } ?>
                                 <table class="table-bordered table table-hover" id="table-6" style="width:300%;">
                                     <thead>
                                         <tr>
@@ -124,8 +140,9 @@
                                             foreach($details AS $d){ 
                                                 if(!empty($d['purchase_id'])){ 
                                         ?>
-                                        <tr>
-                                            <td align="center" style="background: #fff;">
+                                        <tr <?php echo ($d['billing_id']=='') ? 'class="bg-red"' : ''; ?>>
+                                            <td align="center" <?php echo ($d['billing_id']=='') ? '' : 'style="background:#fff;"'?>>
+                                                <span hidden><?php echo $d['billing_id']; ?></span>
                                                 <?php if($saved==1){ ?>
                                                <div class="btn-group mb-0">
                                                     <a href="<?php echo base_url(); ?>purchases/print_2307/<?php echo $d['purchase_id']; ?>/<?php echo $d['purchase_detail_id']; ?>" target="_blank" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print BIR Form No.2307">
@@ -135,8 +152,8 @@
                                             <?php } ?>
                                             </td>
                                             <td><?php echo $d['item_no'];?></td>
-                                            <td style="position:sticky; left:0; z-index: 10;background: #fff"><?php echo $d['short_name'];?></td>
-                                            <td style="position:sticky; left:166px; z-index: 10;background: #fff;"><?php echo $d['actual_billing_id']; ?></td>
+                                            <td <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:0;z-index: 10;"' : 'style="position: sticky;left:0;background:#fff;z-index: 10;"'?>><?php echo $d['short_name'];?></td>
+                                            <td <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:166px;z-index: 10;"' : 'style="position: sticky;left:166px;background:#fff;z-index: 10;"'?>><?php echo $d['actual_billing_id']; ?></td>
                                             <td align="center"><?php echo $d['billing_id']; ?></td>
                                             <td align="center"><?php echo $d['facility_type']; ?></td>
                                             <td align="center"><?php echo $d['wht_agent']; ?></td>
@@ -183,8 +200,8 @@
                             <?php } ?>
                         </div>
                         <?php if(!empty($details)){ if($saved==0){ ?>
-                        <div id='alt' style="font-weight:bold"></div>
-                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save">
+                        <div id='alt1' style="font-weight:bold;display:none"><b>Please wait, Saving Data...</b></div>
+                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save" <?php echo ($count_empty_actual==0) ? '' : 'disabled';?>>
                         <?php } } ?>
                     </div>
                 </div>
