@@ -1682,31 +1682,37 @@ public function print_BS_new(){
                     $zero_rated_bs[]=$this->super_model->select_sum_where("sales_transaction_details","zero_rated","billing_id='$billing_id' AND sales_id='$p->sales_id'");
                     $h++;
                 }
+
+                $vatable_sales_bs_parent[]=$this->super_model->select_sum_where("sales_transaction_details","vatable_sales","billing_id='$p->billing_id' AND sales_id='$p->sales_id'");
+                $vat_on_sales_bs_parent[]=$this->super_model->select_sum_where("sales_transaction_details","vat_on_sales","billing_id='$p->billing_id' AND sales_id='$p->sales_id'");
+                $zero_rated_ecozone_bs_parent[]=$this->super_model->select_sum_where("sales_transaction_details","zero_rated_ecozones","billing_id='$p->billing_id' AND sales_id='$p->sales_id'");
+                $zero_rated_bs_parent[]=$this->super_model->select_sum_where("sales_transaction_details","zero_rated","billing_id='$p->billing_id' AND sales_id='$p->sales_id'");
+                $ewt_bs_parent[]=$this->super_model->select_sum_where("sales_transaction_details","ewt","billing_id='$p->billing_id' AND sales_id='$p->sales_id'");
             }
 
             //echo array_sum($vatable_sales_bs)."-".array_sum($vatable_sales_bs_sub)."<br>";
-            $sum_vatable_sales=array_sum($vatable_sales_bs);
+            $sum_vatable_sales=array_sum($vatable_sales_bs) + array_sum($vatable_sales_bs_parent);
             $sum_vs_exp = explode(".", $sum_vatable_sales);
             $sum_vatable_sales_peso=$sum_vs_exp[0];
             $sum_vatable_sales_cents=$sum_vs_exp[1];
 
-            $sum_zero_rated_ecozone=array_sum($zero_rated_ecozone_bs);
+            $sum_zero_rated_ecozone=array_sum($zero_rated_ecozone_bs) + array_sum($zero_rated_ecozone_bs_parent);
            // echo $sum_zero_rated_ecozone;
             $sum_zre_exp=explode(".", $sum_zero_rated_ecozone);
             $sum_zero_rated_ecozone_peso=$sum_zre_exp[0];
             $sum_zero_rated_ecozone_cents=$sum_zre_exp[1];
 
-            $sum_vat_on_sales=array_sum($vat_on_sales_bs);
+            $sum_vat_on_sales=array_sum($vat_on_sales_bs) + array_sum($vat_on_sales_bs_parent);
             $sum_vos_exp=explode(".", $sum_vat_on_sales);
             $sum_vat_on_sales_peso=$sum_vos_exp[0];
             $sum_vat_on_sales_cents=$sum_vos_exp[1];
 
-            $sum_ewt=array_sum($ewt_bs);
+            $sum_ewt=array_sum($ewt_bs)  + array_sum($ewt_bs_parent);
             $sum_e_exp=explode(".", $sum_ewt);
             $sum_ewt_peso=$sum_e_exp[0];
             $sum_ewt_cents=$sum_e_exp[1];
 
-            $sum_zero_rated=array_sum($zero_rated_bs);
+            $sum_zero_rated=array_sum($zero_rated_bs) + array_sum($zero_rated_bs_parent);
             $sum_zr_exp=explode(".", $sum_zero_rated);
             $sum_zero_rated_peso=$sum_zr_exp[0];
             $sum_zero_rated_cents=$sum_zr_exp[1];
