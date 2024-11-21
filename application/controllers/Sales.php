@@ -1144,7 +1144,8 @@ public function print_BS_new(){
         //$this->load->view('template/navbar');
         for($x=0;$x<$count;$x++){
              $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
-            if(array_key_exists($sales_det_exp[$x],$bs_id)){
+            // if(array_key_exists($sales_det_exp[$x],$bs_id)){
+            if(in_array($sales_det_exp[$x],$bs_id)){
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $data['tin'][$x]=$p->tin;
@@ -1383,7 +1384,8 @@ public function print_BS_new(){
         //$this->load->view('template/navbar');
         for($x=0;$x<$count;$x++){
              $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
-            if(array_key_exists($sales_det_exp[$x],$bs_id)){
+            // if(array_key_exists($sales_det_exp[$x],$bs_id)){
+            if(in_array($sales_det_exp[$x],$bs_id)){
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $data['tin'][$x]=$p->tin;
@@ -1623,7 +1625,8 @@ public function print_BS_new(){
         //$this->load->view('template/navbar');
         for($x=0;$x<$count;$x++){
              $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std  INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
-            if(array_key_exists($sales_det_exp[$x],$bs_id)){
+            // if(array_key_exists($sales_det_exp[$x],$bs_id)){
+            if(in_array($sales_det_exp[$x],$bs_id)){
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
                     $data['tin'][$x]=$p->tin;
@@ -1637,6 +1640,11 @@ public function print_BS_new(){
                     $data['or_no'][$x]=$p->invoice_no;
                 }
 
+            $data['total_vs'][$x]= $p->total_vatable_sales;
+            $data['total_zr'][$x]=$p->total_zero_sales;
+            $data['total_zra'][$x]= $p->total_zero_ecozones;
+            $data['total_vos'][$x]=$p->total_vat;
+            $data['total_ewt'][$x]= $p->total_ewt;
 
             }else{
                 //foreach($this->super_model->select_row_where("sales_transaction_details","sales_detail_id",$sales_detail_id) AS $p){
