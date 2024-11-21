@@ -759,9 +759,8 @@ public function print_BS_new(){
             $array_salesdet_id[]=$sales_det_exp[$x];
             $bs_id[]=$this->super_model->custom_query_single('sales_detail_id',"SELECT * FROM sales_transaction_details std INNER JOIN bs_head bh ON bh.sales_detail_id=std.sales_detail_id WHERE bh.sales_detail_id='$sales_det_exp[$x]'");
             //$sales_det_id=implode(',',$array_salesdet_id);
-            if(array_key_exists($sales_det_exp[$x],$bs_id)){
-
-                
+            if(in_array($sales_det_exp[$x],$bs_id)){
+            // if(array_key_exists($sales_det_exp[$x],$bs_id)){
                 foreach($this->super_model->select_custom_where("bs_head","sales_detail_id='".$sales_det_exp[$x]."'") AS $p){
                     $data['detail_id'][$x]=$p->sales_detail_id;
                     $detail_id=$p->sales_detail_id;
