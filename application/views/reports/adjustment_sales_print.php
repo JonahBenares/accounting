@@ -242,13 +242,42 @@
                         <tr>
                             <td width="19%" align="center" class="font-11">Billing</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">EMG</td>
+                            <td width="19%" align="center" class="font-11">EMG Head</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Accounting</td>
+                            <td width="19%" align="center" class="font-11">Accounting Head</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Finance</td>
+                            <td width="19%" align="center" class="font-11">Senior Finance Officer</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">General Manager</td>
+                            <td width="19%" align="center" class="font-11">President</td>
+                            <td width="1%"></td>
+                        </tr>
+                    </table>
+                    <table width="100%">
+                        <tr>
+                            <td colspan="20"><br><br></td>
+                        </tr>
+                        <tr>
+                            <td width="19%" align="center" class="font-11 "></td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">CHARMAINE RIE ORTALIZ</td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11 "></td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">RHEA SUBADE </td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11 "></td>
+                            <td width="1%"></td>
+                        </tr>
+                        <tr>
+                            <td width="19%" align="center" class="font-11"></td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11">Billing & Compliance Officer</td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11"></td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11">Lead Trader</td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11"></td>
                             <td width="1%"></td>
                         </tr>
                     </table>
@@ -256,7 +285,6 @@
             </tr>
             <tr>
                 <td colspan="20">
-                    <br>
                     <br>
                     <br>
                 </td>
@@ -480,13 +508,42 @@
                         <tr>
                             <td width="19%" align="center" class="font-11">Billing</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">EMG</td>
+                            <td width="19%" align="center" class="font-11">EMG Head</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Accounting</td>
+                            <td width="19%" align="center" class="font-11">Accounting Head</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Finance</td>
+                            <td width="19%" align="center" class="font-11">Senior Finance Officer</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">General Manager</td>
+                            <td width="19%" align="center" class="font-11">President</td>
+                            <td width="1%"></td>
+                        </tr>
+                    </table>
+                    <table width="100%">
+                        <tr>
+                            <td colspan="20"><br><br></td>
+                        </tr>
+                        <tr>
+                            <td width="19%" align="center" class="font-11 "></td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">CHARMAINE RIE ORTALIZ</td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11 "></td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="bor-btm font-11 ">RHEA SUBADE </td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11 "></td>
+                            <td width="1%"></td>
+                        </tr>
+                        <tr>
+                            <td width="19%" align="center" class="font-11"></td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11">Billing & Compliance Officer</td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11"></td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11">Lead Trader</td>
+                            <td width="1%"></td>
+                            <td width="19%" align="center" class="font-11"></td>
                             <td width="1%"></td>
                         </tr>
                     </table>
@@ -494,7 +551,6 @@
             </tr>
             <tr>
                 <td colspan="20">
-                    <br>
                     <br>
                     <br>
                 </td>
