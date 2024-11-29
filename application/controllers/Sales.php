@@ -3868,7 +3868,7 @@ public function print_BS_new(){
                $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE sd.bulk_pdf_flag = '1' AND serial_no != '' AND saved = '1' AND ".$query;
+            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
 
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -7668,7 +7668,7 @@ public function upload_sales_adjustment_test(){
              $sql.= "cd.settlement_id = '$stl_id' AND "; 
         }
         $query=substr($sql,0,-4);
-        $qu = "bulk_pdf_flag = '1' AND series_number != '0' AND saved = '1' AND ".$query;
+        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
 
         //$dir    = "C:\Users\Henne\Downloads\/";
         $dir=realpath(APPPATH . '../uploads/excel/');
@@ -8164,7 +8164,7 @@ public function upload_sales_adjustment_test(){
              $sql.= "cd.settlement_id = '$stl_id' AND "; 
         }
         $query=substr($sql,0,-4);
-        $qu = "bulk_pdf_flag = '1' AND series_number != '0' AND saved = '1' AND ".$query;
+        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
         // $dir    = "C:\Users\steph\Downloads\/";
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
