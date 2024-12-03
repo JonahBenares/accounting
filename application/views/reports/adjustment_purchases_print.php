@@ -210,37 +210,41 @@
             </tr>
             <tr>
                 <td colspan="20">
-                    <table width="100%">
+                    <table width="100%" class="table-borsdered">
                         <tr>
                             <td colspan="2" style="background:#e5e5e5; border-right:5px solid #fff"><b>Prepared by:</b></td>
-                            <td colspan="6" style="background:#e5e5e5; border-right:5px solid #fff"><b>Checked by:</b></td>
+                            <td colspan="8" style="background:#e5e5e5; border-right:5px solid #fff"><b>Checked by:</b></td>
                             <td colspan="2" style="background:#e5e5e5;"><b>Noted by:</b></td>
                         </tr>
                         <tr>
-                            <td colspan="20"><br><br></td>
+                            <td colspan="20"><br></td>
                         </tr>
                         <tr>
-                            <td width="19%" align="center" class="bor-btm font-11 "><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <td width="%" align="center" class="bor-btm font-10 "><?php echo strtoupper($_SESSION['fullname']);?></td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">JOEMAR DELOS SANTOS</td>
+                            <td width="%" align="center" class="bor-btm font-10 ">CHARMAINE REI ORTALIZ</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">CRISTY CESAR</td>
+                            <td width="%" align="center" class="bor-btm font-10 ">JOEMAR DELOS SANTOS</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">ZYNDYRYN PASTERA</td>
+                            <td width="%" align="center" class="bor-btm font-10 ">CRISTY CESAR</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">MILA ARANA</td>
+                            <td width="%" align="center" class="bor-btm font-10 ">ZYNDYRYN PASTERA</td>
+                            <td width="1%"></td>
+                            <td width="%" align="center" class="bor-btm font-10 ">MILA ARANA</td>
                             <td width="1%"></td>
                         </tr>
                         <tr>
-                            <td width="19%" align="center" class="font-11">Billing</td>
+                            <td width="%" align="center" class="font-11">Billing</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">EMG</td>
+                            <td width="%" align="center" class="font-11">Billing & Compliance Officer</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Accounting</td>
+                            <td width="%" align="center" class="font-11">EMG Head</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Finance</td>
+                            <td width="%" align="center" class="font-11">Accounting Head</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">General Manager</td>
+                            <td width="%" align="center" class="font-11">Senior Finance Officer</td>
+                            <td width="1%"></td>
+                            <td width="%" align="center" class="font-11">President</td>
                             <td width="1%"></td>
                         </tr>
                     </table>
@@ -398,37 +402,41 @@
             </tr>
             <tr>
                 <td colspan="20">
-                    <table width="100%">
+                    <table width="100%" class="table-borsdered">
                         <tr>
                             <td colspan="2" style="background:#e5e5e5; border-right:5px solid #fff"><b>Prepared by:</b></td>
-                            <td colspan="6" style="background:#e5e5e5; border-right:5px solid #fff"><b>Checked by:</b></td>
+                            <td colspan="8" style="background:#e5e5e5; border-right:5px solid #fff"><b>Checked by:</b></td>
                             <td colspan="2" style="background:#e5e5e5;"><b>Noted by:</b></td>
                         </tr>
                         <tr>
-                            <td colspan="20"><br><br></td>
+                            <td colspan="20"><br></td>
                         </tr>
                         <tr>
-                            <td width="19%" align="center" class="bor-btm font-11 "><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <td width="%" align="center" class="bor-btm font-10 "><?php echo strtoupper($_SESSION['fullname']);?></td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">JOEMAR DELOS SANTOS</td>
+                            <td width="%" align="center" class="bor-btm font-10 ">CHARMAINE REI ORTALIZ</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">CRISTY CESAR</td>
+                            <td width="%" align="center" class="bor-btm font-10 ">JOEMAR DELOS SANTOS</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">ZYNDYRYN PASTERA</td>
+                            <td width="%" align="center" class="bor-btm font-10 ">CRISTY CESAR</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="bor-btm font-11 ">MILA ARANA</td>
+                            <td width="%" align="center" class="bor-btm font-10 ">ZYNDYRYN PASTERA</td>
+                            <td width="1%"></td>
+                            <td width="%" align="center" class="bor-btm font-10 ">MILA ARANA</td>
                             <td width="1%"></td>
                         </tr>
                         <tr>
-                            <td width="19%" align="center" class="font-11">Billing</td>
+                            <td width="%" align="center" class="font-11">Billing</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">EMG</td>
+                            <td width="%" align="center" class="font-11">Billing & Compliance Officer</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Accounting</td>
+                            <td width="%" align="center" class="font-11">EMG Head</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">Finance</td>
+                            <td width="%" align="center" class="font-11">Accounting Head</td>
                             <td width="1%"></td>
-                            <td width="19%" align="center" class="font-11">General Manager</td>
+                            <td width="%" align="center" class="font-11">Senior Finance Officer</td>
+                            <td width="1%"></td>
+                            <td width="%" align="center" class="font-11">President</td>
                             <td width="1%"></td>
                         </tr>
                     </table>

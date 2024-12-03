@@ -78,7 +78,7 @@
                                 <?php if(!empty($details)){ ?>
                                 <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
                                     <strong>Quick Scan!</strong> 
-                                    <a href="http://localhost/accounting/sales/export_not_download_sales_wesm/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
+                                    <a href="<?php echo base_url(); ?>sales/export_not_download_sales_wesm/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
