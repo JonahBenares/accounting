@@ -4745,9 +4745,15 @@ class Reports extends CI_Controller {
             $salesall=array();
             /*foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  WHERE $qu AND short_name = '$head->short_name' ORDER BY billing_from ASC, reference_number ASC") AS $sth){*/
 
+            $par=array();
+            foreach($this->super_model->select_custom_where('participant',"tin='$head->tin'") AS $p){
+                $par[]="'".$p->settlement_id."'";
+            }
+            $imp=implode(',',$par);
+
             // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  INNER JOIN participant p ON p.billing_id = std.billing_id WHERE tin='$head->tin' AND participant_name != '' AND $qu ORDER BY billing_from ASC, reference_number ASC, p.billing_id ASC") AS $sth){
             $imp_partloop="'".implode("','",$participant_loop)."'";
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  WHERE ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND short_name = '$head->settlement_id' AND saved='1' ORDER BY billing_from ASC, reference_number ASC, billing_id ASC") AS $sth){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  WHERE ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND short_name IN($imp) AND saved='1' ORDER BY billing_from ASC, reference_number ASC, billing_id ASC") AS $sth){
                 //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
                 // $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sth->sales_id);
                 $or_no=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$sth->reference_number' AND settlement_id='$sth->short_name'");
