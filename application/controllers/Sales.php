@@ -3750,6 +3750,7 @@ public function print_BS_new(){
             $ewt_bs=array();
             $zero_rated_ecozone_bs=array();
             $zero_rated_bs=array();
+            $data['details']=array();
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu GROUP BY serial_no LIMIT 10") AS $d){
                 $stl_id=$d->short_name;
                 $address=$this->super_model->select_column_where("participant","registered_address","billing_id",$d->billing_id);
