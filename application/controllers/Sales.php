@@ -3742,7 +3742,7 @@ public function print_BS_new(){
             $sql.= " sd.short_name IN($imp) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "WHERE sd.bulk_pdf_flag != '' AND serial_no != '' AND saved = '1' AND ".$query;
+        $qu = "WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         
