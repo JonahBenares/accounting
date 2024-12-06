@@ -3768,7 +3768,7 @@ public function print_BS_new(){
                 $reference_number=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$d->sales_id);
                 $or_no=$d->serial_no;
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$d->billing_id);
-                $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$d->billing_id);
+                // $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$d->billing_id);
 
                 $billing_month = date('my',strtotime($d->transaction_date));
                 $date_uploaded = date('Ymd',strtotime($d->create_date));
