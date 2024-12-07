@@ -47,7 +47,7 @@
     <div style="padding-bottom:90px;">
         <div id="contentPDF" >
         <page size="Long" id="printableArea" class="canvas_div_pdf<?php echo $x; ?>" >
-            <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.jpg" style="width: 100%;">
+            <img class="img2307" src="<?php echo base_url(); ?>assets/img/SI_bulk.png" style="width: 100%;">
             <div class="">
                 <label class="date_1"><?php echo date("F j, Y", strtotime($d['date'])); ?></label>
                 <label class="ornumber_1"><?php echo $d['or_no']; ?></label>

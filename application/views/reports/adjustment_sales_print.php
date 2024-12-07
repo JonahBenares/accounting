@@ -480,7 +480,7 @@
                             <td width="1%"></td>
                             <td width="%" align="center" class="bor-btm font-10 ">ZYNDYRYN PASTERA</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">MILA ARANA</td>
+                            <td width="10%" align="center" class="bor-btm font-10 ">MILA ARANA</td>
                             <td width="1%"></td>
                         </tr>
                         <tr>
@@ -494,7 +494,7 @@
                             <td width="1%"></td>
                             <td width="%" align="center" class="font-11">Senior Finance Officer</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">President</td>
+                            <td width="10%" align="center" class="font-11">President</td>
                             <td width="1%"></td>
                         </tr>
                     </table>
