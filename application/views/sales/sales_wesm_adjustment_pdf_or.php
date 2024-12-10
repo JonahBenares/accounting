@@ -37,12 +37,14 @@
             <label class="address_1"><?php echo $address; ?> </label>
             <label class="tin_1"><?php echo $tin; ?> </label>
             <label class="desc_1"><?php echo $reference_number; ?></label>
-            <label class="defint_1">Vatable Sales</label>
-            <label class="defint_value_1"><?php echo number_format($total_vs,2); ?></label>
-            <label class="energy_1">Zero Rated Ecozones Sales</label>
-            <label class="energy_value_1"><?php echo number_format($total_zra,2); ?></label>
-            <label class="vat_1">VAT</label>
-            <label class="vat_value_1"><?php echo number_format($total_vos,2); ?></label>
+            <div style="position: absolute; top:35px">
+                <label class="defint_1">Vatable Sales</label>
+                <label class="defint_value_1"><?php echo number_format($total_vs,2); ?></label>
+                <label class="energy_1">Zero Rated Ecozones Sales</label>
+                <label class="energy_value_1"><?php echo number_format($total_zra,2); ?></label>
+                <label class="vat_1">VAT</label>
+                <label class="vat_value_1"><?php echo number_format($total_vos,2); ?></label>
+            </div>
             <?php
                 $total_sales = $total_vs + $total_zra + $total_vos;
                 $net_of_vat = $total_vs + $total_zra;
