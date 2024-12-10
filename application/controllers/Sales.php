@@ -5155,9 +5155,6 @@ public function print_BS_new(){
             $data['details']=array();
             $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
             $data['timestamp'] = date('Ymd');
-
-
-            echo $qu;
             
            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sd INNER JOIN sales_adjustment_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id $qu GROUP BY serial_no LIMIT 10") AS $d){
                 if(!empty($d->company_name)){
