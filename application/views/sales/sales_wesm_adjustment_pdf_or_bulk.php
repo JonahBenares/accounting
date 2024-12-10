@@ -97,7 +97,7 @@
     <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
       $(document).ready(function() {
              
             var counter=document.getElementById('count').value;
@@ -177,7 +177,7 @@
                   });
             }
        });
-    </script> -->
+    </script>
     <script type="text/javascript">
         function printDiv(divName) {
             var printContents = document.getElementById(divName).innerHTML;
