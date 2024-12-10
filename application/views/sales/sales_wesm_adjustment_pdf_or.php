@@ -29,7 +29,7 @@
 <div style="padding-bottom:90px;">
     <div id="contentPDF" >
     <page size="Long" id="printableArea" class="canvas_div_pdf" >
-        <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.png" style="width: 100%;">
+        <img class="img2307" src="<?php echo base_url(); ?>assets/img/SI_bulk.png" style="width: 100%;">
         <div class="">
             <label class="date_1"><?php echo date("F j, Y", strtotime($transaction_date)); ?></label>
             <label class="ornumber_1"><?php echo $or_no; ?></label>
@@ -71,6 +71,7 @@
 </div>
 <input type="hidden" class="stl_id" value="<?php echo $stl_id; ?>" id="stl_id">
 <input type="hidden" class="ref_no" id="ref_no" value="<?php echo $refno; ?>">
+<input type="hidden" class="csr_number" id="csr_number" value="<?php echo $csrnumber; ?>">
 <input type="hidden" class="billing_month" id="billing_month" value="<?php echo $billing_month; ?>">
 <input type="hidden" class="date_uploaded" id="date_uploaded" value="<?php echo $date_uploaded; ?>">
 <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
@@ -86,6 +87,7 @@
             var stl_id=document.getElementById('stl_id').value;
             var billing_month=document.getElementById('billing_month').value;
             var refno=document.getElementById('ref_no').value;
+            var csrnumber=document.getElementById('csr_number').value;
             var dateuploaded=document.getElementById('date_uploaded').value;
           
             var HTML_Width = $(".canvas_div_pdf").width();
@@ -114,7 +116,8 @@
                     pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
 
                     pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-                    pdf.save("SI_CENPRI_"+stl_id+"_"+refno+"_"+billing_month+"_"+dateuploaded+".pdf");
+                    // pdf.save("SI_CENPRI_"+stl_id+"_"+refno+"_"+billing_month+"_"+dateuploaded+".pdf");
+                    pdf.save("SI_CENPRI_"+stl_id+"_"+csrnumber+"_"+billing_month+"_"+dateuploaded+".pdf");
 
               });
    });

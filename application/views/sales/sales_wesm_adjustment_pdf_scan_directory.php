@@ -47,14 +47,14 @@
     <div style="padding-bottom:90px;">
         <div id="contentPDF" >
         <page size="Long" id="printableArea" class="canvas_div_pdf<?php echo $x; ?>" >
-            <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.jpg" style="width: 100%;">
+            <img class="img2307" src="<?php echo base_url(); ?>assets/img/SI_bulk.png" style="width: 100%;">
             <div class="">
                 <label class="date_1"><?php echo date("F j, Y", strtotime($d['date'])); ?></label>
                 <label class="ornumber_1"><?php echo $d['or_no']; ?></label>
                 <label class="cusname_1"><?php echo $d['buyer']; ?> </label>
                 <label class="address_1"><?php echo $d['address']; ?> </label>
                 <label class="tin_1"><?php echo $d['tin']; ?> </label>
-                <label class="desc_1"><?php echo $d['ref_no']; ?></label>
+                <label class="desc_1"><?php echo $d['all_ref_no']; ?></label>
                 <label class="defint_1">DEF INTEREST</label>
                 <label class="defint_value_1"><?php echo number_format($d['defint'],2); ?></label>
                 <label class="energy_1">ENERGY</label>
@@ -112,6 +112,7 @@
     </div>
     <input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
     <input type="hidden" class="series_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="series_no<?php echo $x; ?>">
+    <input type="hidden" class="csr_number<?php echo $x; ?>" id="csr_number<?php echo $x; ?>" value="<?php echo $d['csrnumber']; ?>">
     <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
     <input type="hidden" class="reference_no<?php echo $x; ?>" id="reference_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
     <input type="hidden" class="collection_id<?php echo $x; ?>" id="collection_id<?php echo $x; ?>" value="<?php echo $d['collection_id']; ?>">
@@ -174,12 +175,16 @@
                         var stl_id= $(".stl_id"+a).val();
                         var billing_month= $(".billing_month"+a).val();
                         var ref_no= $(".ref_no"+a).val();
+                        var csr_number= $(".csr_number"+a).val();
 
                             //pdf.addPage(PDF_Width, PDF_Height);
                             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                            
-                            var fname = "OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf";
-                           pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
+                           //  var fname = "OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf";
+                           // pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
+
+                           var fname = "OR_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf";
+                           pdf.save("OR_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
                            
                            
                                     $.ajax({

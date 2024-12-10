@@ -54,7 +54,7 @@
                 <label class="cusname_1"><?php echo $d['buyer']; ?> </label>
                 <label class="address_1"><?php echo $d['address']; ?> </label>
                 <label class="tin_1"><?php echo $d['tin']; ?> </label>
-                <label class="desc_1"><?php echo $d['ref_no']; ?></label>
+                <label class="desc_1"><?php echo $d['all_ref_no']; ?></label>
                 <label class="defint_1">Vatable Sales</label>
                 <label class="defint_value_1"><?php echo number_format($d['total_vs'],2); ?></label>
                 <label class="energy_1">Zero Rated Ecozones Sales</label>
@@ -83,6 +83,7 @@
     <input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
     <input type="hidden" class="serial_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="serial_no<?php echo $x; ?>">
     <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
+    <input type="hidden" class="csr_number<?php echo $x; ?>" id="csr_number<?php echo $x; ?>" value="<?php echo $d['csrnumber']; ?>">
     <input type="hidden" class="reference_no<?php echo $x; ?>" id="reference_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
     <input type="hidden" class="sales_id<?php echo $x; ?>" id="sales_id<?php echo $x; ?>" value="<?php echo $d['sales_id']; ?>">
     <!-- <input type="hidden" class="collection_details_id<?php echo $x; ?>" id="collection_details_id<?php echo $x; ?>" value="<?php echo $d['collection_details_id']; ?>"> -->
@@ -146,12 +147,16 @@
                         var stl_id= $(".stl_id"+a).val();
                         var billing_month= $(".billing_month"+a).val();
                         var ref_no= $(".ref_no"+a).val();
+                        var csr_number= $(".csr_number"+a).val();
 
                             //pdf.addPage(PDF_Width, PDF_Height);
                             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                            
-                            var fname = "SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf";
-                            pdf.save("SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf");
+                            // var fname = "SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf";
+                            // pdf.save("SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf");
+
+                            var fname = "SI_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf";
+                            pdf.save("SI_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf");
                            
                            
                                     $.ajax({
