@@ -67,7 +67,7 @@
                 <label class="net_vat_1"><?php echo number_format($d['net_of_vat'],2); ?></label>
                 <label class="add_vat_1"><?php echo number_format($d['total_vos'],2); ?></label>
                 <label class="total_1"><?php echo number_format($d['total_sales'],2); ?></label>
-                <label class="less_withholding_1"><?php echo number_format($d['total_ewt'],2); ?></label>
+                <label class="less_withholding_1">(<?php echo number_format($d['total_ewt'],2); ?>)</label>
                 <label class="total_amount_1"><?php echo number_format($d['total_amount_due'],2); ?></label>
                 <div style="position: absolute;top:5px">  
                     <label class="vatable_1"><?php echo number_format($d['total_vs'],2); ?></label>

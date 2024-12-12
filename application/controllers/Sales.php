@@ -3684,7 +3684,7 @@ public function print_BS_new(){
                 $total_ewt=$d->ewt + $sum_ewt;
                 $total_sales = $total_vs + $total_zra + $total_vos;
                 $net_of_vat = $total_vs + $total_zra;
-                $total_amount_due = $total_vs + $total_zra + $total_vos + $total_ewt;
+                $total_amount_due = ($total_vs + $total_zra + $total_vos) - $total_ewt;
 
                 $data['details'][]=array(
                     'sales_id'=>$d->sales_id,
@@ -3809,7 +3809,7 @@ public function print_BS_new(){
                 $total_ewt=$ewt_bs;
                 $total_sales = $total_vs + $total_zra + $total_vos;
                 $net_of_vat = $total_vs + $total_zra;
-                $total_amount_due = $total_vs + $total_zra + $total_vos + $total_ewt;
+                $total_amount_due = ($total_vs + $total_zra + $total_vos) - $total_ewt;
 
                 $data['details'][]=array(
                     'sales_id'=>$d->sales_id,
