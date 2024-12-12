@@ -48,13 +48,13 @@
             <?php
                 $total_sales = $total_vs + $total_zra + $total_vos;
                 $net_of_vat = $total_vs + $total_zra;
-                $total_amount_due = $total_vs + $total_zra + $total_vos + $total_ewt;
+                $total_amount_due = ($total_vs + $total_zra + $total_vos) - $total_ewt;
             ?>
             <label class="total_sales_1"><?php echo number_format($total_sales,2); ?></label>
             <label class="net_vat_1"><?php echo number_format($net_of_vat,2); ?></label>
             <label class="add_vat_1"><?php echo number_format($total_vos,2); ?></label>
             <label class="total_1"><?php echo number_format($total_sales,2); ?></label>
-            <label class="less_withholding_1"><?php echo number_format($total_ewt,2); ?></label>
+            <label class="less_withholding_1">(<?php echo number_format($total_ewt,2); ?>)</label>
             <label class="total_amount_1"><?php echo number_format($total_amount_due,2); ?></label>
             <div style="position: absolute;top:5px">  
                 <label class="vatable_1"><?php echo number_format($total_vs,2); ?></label>

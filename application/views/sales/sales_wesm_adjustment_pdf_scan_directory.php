@@ -67,7 +67,7 @@
                 <label class="net_vat_1"><?php echo number_format($d['sum_amount'],2); ?></label>
                 <label class="add_vat_1"><?php echo number_format($d['sum_vat'],2); ?></label>
                 <label class="total_1"><?php echo number_format($total,2); ?></label>
-                <label class="less_withholding_1"><?php echo number_format($d['sum_ewt'],2); ?></label>
+                <label class="less_withholding_1">(<?php echo number_format($d['sum_ewt'],2); ?>)</label>
                 <label class="total_amount_1"><?php echo number_format($total_due,2); ?></label>
                 <label class="vatable_1"><?php echo number_format($d['sum_amount'],2); ?></label>
                 <label class="vat_exempt_1">0.00</label>
