@@ -166,8 +166,8 @@ if(!empty($sales_id)){
                                                     }
                                                 ?>
                                             </td> -->
+                                            <!-- <span hidden><?php echo $d['billing_id'];?></span> -->
                                             <td class="p-2">
-                                                <span hidden><?php echo $d['billing_id'];?></span>
                                                 <center><?php echo $d['item_no'];?></center>
                                             </td>
                                             <!-- <td class="p-2"><?php echo $d['serial_no'];?></td> -->
