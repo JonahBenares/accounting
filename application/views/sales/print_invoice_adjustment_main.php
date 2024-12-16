@@ -325,7 +325,7 @@
             <div class="pb-10"> <!--AMOUNT: NET OF VAT --><?php echo number_format($net_of_vat,2); ?></div>
             <div class="pb-10"> <!--ADD: VAT --><?php echo number_format($total_vos[$x],2); ?></div>
             <div class="pb-10"> <!--TOTAL --><?php echo number_format($total_sales,2); ?></div>
-            <div class="pb-10"> <!--LESS WITHHOLDING --><?php echo number_format($total_ewt[$x],2); ?></div>
+            <div class="pb-10"> <!--LESS WITHHOLDING -->(<?php echo number_format($total_ewt[$x],2); ?>)</div>
             <div class="pb-5"> <!--TOTAL AMOUNT DUE --><?php echo number_format($total_amount_due,2); ?></div>
             <span class="font-10"> <!--VATABLE (V)  --><?php echo number_format($total_vs[$x],2); ?></span><br>
             <span class="font-10"> <!--VAT EXEMPT (E) --> 0.00</span><br>

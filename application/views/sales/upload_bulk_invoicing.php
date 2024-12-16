@@ -83,6 +83,7 @@
                                             <th width="10%">Billing ID</th>
                                             <th width="10%">Actual Billing ID</th>
                                             <th width="10%">Invoice No</th>
+                                            <th width="10%">CSR Number</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -96,7 +97,8 @@
                                      
                                             <td><?php echo $d['billing_id']; ?></td>
                                             <td><?php echo $d['actual_billing_id']; ?></td>
-                                    		<td><?php echo $d['serial_no']; ?></td>
+                                            <td><?php echo $d['serial_no']; ?></td>
+                                    		<td><?php echo $d['csr_number']; ?></td>
                                     	</tr>
                                      <?php } } ?>
                                     </tbody>

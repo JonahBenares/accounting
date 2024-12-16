@@ -41,31 +41,33 @@
         foreach($details AS $d){
             $total_sales = $d['total_vs'] + $d['total_zra'] + $d['total_vos'];
             $net_of_vat = $d['total_vs'] + $d['total_zra'];
-            $total_amount_due = $d['total_vs'] + $d['total_zra'] + $d['total_vos'] + $d['total_ewt'];
+            $total_amount_due = ($d['total_vs'] + $d['total_zra'] + $d['total_vos']) - $d['total_ewt'];
 
              ?>
     <div style="padding-bottom:90px;">
         <div id="contentPDF" >
         <page size="Long" id="printableArea" class="canvas_div_pdf<?php echo $x; ?>" >
-            <img class="img2307" src="<?php echo base_url(); ?>assets/img/OR.jpg" style="width: 100%;">
+            <img class="img2307" src="<?php echo base_url(); ?>assets/img/SI_bulk.png" style="width: 100%;">
             <div class="">
                 <label class="date_1"><?php echo date("F j, Y", strtotime($d['date'])); ?></label>
                 <label class="ornumber_1"><?php echo $d['or_no']; ?></label>
                 <label class="cusname_1"><?php echo $d['buyer']; ?> </label>
                 <label class="address_1"><?php echo $d['address']; ?> </label>
                 <label class="tin_1"><?php echo $d['tin']; ?> </label>
-                <label class="desc_1"><?php echo $d['ref_no']; ?></label>
-                <label class="defint_1">Vatable Sales</label>
-                <label class="defint_value_1"><?php echo number_format($d['total_vs'],2); ?></label>
-                <label class="energy_1">Zero Rated Ecozones Sales</label>
-                <label class="energy_value_1"><?php echo number_format($d['total_zra'],2); ?></label>
-                <label class="vat_1">VAT</label>
-                <label class="vat_value_1"><?php echo number_format($d['total_vos'],2); ?></label>
+                <label class="desc_1"><?php echo $d['all_ref_no']; ?></label>
+                <div style="position: absolute; top:35px">
+                    <label class="defint_1">Vatable Sales</label>
+                    <label class="defint_value_1"><?php echo number_format($d['total_vs'],2); ?></label>
+                    <label class="energy_1">Zero Rated Ecozones Sales</label>
+                    <label class="energy_value_1"><?php echo number_format($d['total_zra'],2); ?></label>
+                    <label class="vat_1">VAT</label>
+                    <label class="vat_value_1"><?php echo number_format($d['total_vos'],2); ?></label>
+                </div>
                 <label class="total_sales_1"><?php echo number_format($total_sales,2); ?></label>
                 <label class="net_vat_1"><?php echo number_format($net_of_vat,2); ?></label>
                 <label class="add_vat_1"><?php echo number_format($d['total_vos'],2); ?></label>
                 <label class="total_1"><?php echo number_format($total_sales,2); ?></label>
-                <label class="less_withholding_1"><?php echo number_format($d['total_ewt'],2); ?></label>
+                <label class="less_withholding_1">(<?php echo number_format($d['total_ewt'],2); ?>)</label>
                 <label class="total_amount_1"><?php echo number_format($total_amount_due,2); ?></label>
                 <label class="vatable_1"><?php echo number_format($d['total_vs'],2); ?></label>
                 <label class="vat_exempt_1">0.00</label>
@@ -83,6 +85,7 @@
     <input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
     <input type="hidden" class="serial_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="serial_no<?php echo $x; ?>">
     <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
+    <input type="hidden" class="csr_number<?php echo $x; ?>" id="csr_number<?php echo $x; ?>" value="<?php echo $d['csrnumber']; ?>">
     <input type="hidden" class="reference_no<?php echo $x; ?>" id="reference_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
     <input type="hidden" class="sales_id<?php echo $x; ?>" id="sales_id<?php echo $x; ?>" value="<?php echo $d['sales_id']; ?>">
     <!-- <input type="hidden" class="collection_details_id<?php echo $x; ?>" id="collection_details_id<?php echo $x; ?>" value="<?php echo $d['collection_details_id']; ?>"> -->
@@ -146,12 +149,16 @@
                         var stl_id= $(".stl_id"+a).val();
                         var billing_month= $(".billing_month"+a).val();
                         var ref_no= $(".ref_no"+a).val();
+                        var csr_number= $(".csr_number"+a).val();
 
                             //pdf.addPage(PDF_Width, PDF_Height);
                             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                            
-                            var fname = "SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf";
-                            pdf.save("SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf");
+                            // var fname = "SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf";
+                            // pdf.save("SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf");
+
+                            var fname = "SI_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf";
+                            pdf.save("SI_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf");
                            
                            
                                     $.ajax({

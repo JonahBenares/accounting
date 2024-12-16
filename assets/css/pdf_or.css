@@ -1,368 +1,368 @@
-    body{
-       background: rgb(204,204,204);
-    }
-    page {
-        background: white;
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 0.5cm;
-        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-    }
-    page[size="A4"] {  
-        width: 21cm;
-        height: 29.7cm; 
-    }
-    page[size="Long"] {
-        background: white;
-        position: absolute;
-        width: 8.5in;
-        height: 13in; 
-        display: block;
-        margin: 0 auto;
-        left: 20%;
-        right: 20%;
-        margin-bottom: 0.5cm;
-        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-    }
-    page[size="A4"][layout="landscape"] {
-        width: 29.7cm;
-        height: 21cm;  
-    }
-    page[size="A3"] {
-        width: 29.7cm;
-        height: 42cm;
-    }
-    page[size="A3"][layout="landscape"] {
-        width: 42cm;
-        height: 29.7cm;  
-    }
-    page[size="A5"] {
-        width: 14.8cm;
-        height: 21cm;
-    }
-    page[size="A5"][layout="landscape"] {
-        width: 21cm;
-        height: 14.8cm;  
-    }
-    .btn-success, .btn-success.disabled {
-        box-shadow: 0 2px 6px #8edc9c;
-        background-color: #54ca68;
-        border-color: #54ca68;
-        color: #fff;
-    }
-    .btn-warning, .btn-warning.disabled {
-        box-shadow: 0 2px 6px #ffc473;
-        background-color: #ffa426;
-        border-color: #ffa426;
-        color: #fff;
-    }
+body{
+    background: rgb(204,204,204);
+ }
+ page {
+     background: white;
+     display: block;
+     margin: 0 auto;
+     margin-bottom: 0.5cm;
+     box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+ }
+ page[size="A4"] {  
+     width: 21cm;
+     height: 29.7cm; 
+ }
+ page[size="Long"] {
+     background: white;
+     position: absolute;
+     width: 8.5in;
+     height: 13in; 
+     display: block;
+     margin: 0 auto;
+     left: 20%;
+     right: 20%;
+     margin-bottom: 0.5cm;
+     box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+ }
+ page[size="A4"][layout="landscape"] {
+     width: 29.7cm;
+     height: 21cm;  
+ }
+ page[size="A3"] {
+     width: 29.7cm;
+     height: 42cm;
+ }
+ page[size="A3"][layout="landscape"] {
+     width: 42cm;
+     height: 29.7cm;  
+ }
+ page[size="A5"] {
+     width: 14.8cm;
+     height: 21cm;
+ }
+ page[size="A5"][layout="landscape"] {
+     width: 21cm;
+     height: 14.8cm;  
+ }
+ .btn-success, .btn-success.disabled {
+     box-shadow: 0 2px 6px #8edc9c;
+     background-color: #54ca68;
+     border-color: #54ca68;
+     color: #fff;
+ }
+ .btn-warning, .btn-warning.disabled {
+     box-shadow: 0 2px 6px #ffc473;
+     background-color: #ffa426;
+     border-color: #ffa426;
+     color: #fff;
+ }
 
-    .btn {
-        font-weight: 600;
-        font-size: 12px;
-        line-height: 24px;
-        padding: 0.1rem 0.5rem;
-        letter-spacing: 0.5px;
-        border-radius: 5px;
-    }
-    #printbutton{
-        /*position: fixed;*/
-        width: 100%;
-        align-content: center;
-        z-index: 999;
-    }
-   
-    .date_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 112px;
-        left: 470px; 
-        top: 175px;
-        position: absolute;
-        text-align: center;    
-    }
-    .ornumber_1{
-       /* background: #0001; */
-        font-size: 22px;
-        width: 70px;
-        left: 635px; 
-        top: 130px;
-        position: absolute;
-        text-align: center;  
-        font-weight: 700;
-        color: red;  letter-spacing: 1;
-    }
-    .cusname_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 235px;
-        left: 170px; 
-        top: 190px;
-        position: absolute;  
-        text-align: left;
-    }
-    .address_1{
-       /* background: #0001; */
-        font-size: 10px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 225px;
-        left: 525px; 
-        top: 190px;
-        position: absolute;  
-        text-align: left;
-    }
-    .address_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 275px;
-        left: 475px; 
-        top: 190px;
-        position: absolute;  
-        text-align: left;
-    }
-    .tin_1{
-       /* background: #0001; */
-        font-size: 12px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 143px;
-        left: 605px; 
-        top: 215px;
-        position: absolute;  
-        text-align: right;
-    }
-    .desc_1{
-       /* background: #0001; */
-        font-size: 13px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 280px;
-        left: 55px; 
-        top: 275px;
-        position: absolute;  
-        text-align: right;
-    }
-    .defint_1{
-       /* background: #0001; */
-        font-size: 12px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 280px;
-        left: 55px; 
-        top: 298px;
-        position: absolute;  
-        text-align: right;
-    }
-    .defint_value_1{
-       /* background: #0001; */
-        font-size: 12px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 90px;
-        left: 480px; 
-        top: 298px;
-        position: absolute;  
-        text-align: right;
-    }
-    .energy_1{
-       /* background: #0001; */
-        font-size: 12px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 280px;
-        left: 55px; 
-        top: 318px;
-        position: absolute;  
-        text-align: right;
-    }
-    .energy_value_1{
-       /* background: #0001; */
-        font-size: 12px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 90px;
-        left: 480px; 
-        top: 318px;
-        position: absolute;  
-        text-align: right;
-    }
-    .vat_1{
-       /* background: #0001; */
-        font-size: 12px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 280px;
-        left: 55px; 
-        top: 338px;
-        position: absolute;  
-        text-align: right;
-    }
-    .vat_value_1{
-       /* background: #0001; */
-        font-size: 12px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 90px;
-        left: 480px; 
-        top: 338px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .total_sales_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 245px;
-        position: absolute;  
-        text-align: right;   
-    }
-    .net_vat_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 263px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .add_vat_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 280px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .total_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 298px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .less_withholding_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 318px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .total_amount_1{
-       /* background: #0001; */
-        font-size: 11px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 337px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .vatable_1{
-       /* background: #0001; */
-        font-size: 9px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 352px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .vat_exempt_1{
-       /* background: #0001; */
-        font-size: 9px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 362px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .zero_rated_1{
-       /* background: #0001; */
-        font-size: 9px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 372px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .vat_percent_1{
-       /* background: #0001; */
-        font-size: 9px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 382px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .grand_total_1{
-       /* background: #0001; */
-        font-size: 9px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 70px;
-        left: 670px; 
-        top: 392px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .signature_1{
-       /* background: #0001; */
-        font-size: 9px;
-        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        width: 100px;
-        left: 580px; 
-        top: 400px;
-        position: absolute;  
-        text-align: right; 
-    }
-    .claim{
-         /* background: #0001; */
-         font-size: 12px;
-         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-         width: 350px;
-         left: 55px; 
-         top: 378px;
-         position: absolute;  
-         text-align: right;
+ .btn {
+     font-weight: 600;
+     font-size: 12px;
+     line-height: 24px;
+     padding: 0.1rem 0.5rem;
+     letter-spacing: 0.5px;
+     border-radius: 5px;
+ }
+ #printbutton{
+     /*position: fixed;*/
+     width: 100%;
+     align-content: center;
+     z-index: 999;
+ }
+
+ .date_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 112px;
+     left: 470px; 
+     top: 175px;
+     position: absolute;
+     text-align: center;    
+ }
+ .ornumber_1{
+    /* background: #0001; */
+     font-size: 22px;
+     width: 70px;
+     left: 650px; 
+     top: 155px;
+     position: absolute;
+     text-align: center;  
+     font-weight: 700;
+     color: red;  letter-spacing: 1;
+ }
+ .cusname_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 235px;
+     left: 170px; 
+     top: 190px;
+     position: absolute;  
+     text-align: left;
+ }
+ .address_1{
+    /* background: #0001; */
+     font-size: 10px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 225px;
+     left: 525px; 
+     top: 190px;
+     position: absolute;  
+     text-align: left;
+ }
+ .address_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 275px;
+     left: 475px; 
+     top: 190px;
+     position: absolute;  
+     text-align: left;
+ }
+ .tin_1{
+    /* background: #0001; */
+     font-size: 12px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 143px;
+     left: 605px; 
+     top: 215px;
+     position: absolute;  
+     text-align: right;
+ }
+ .desc_1{
+    /* background: #0001; */
+     font-size: 13px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 200px;
+     left: 55px; 
+     top: 270px;
+     position: absolute;  
+     text-align: right;
+ }
+ .defint_1{
+    /* background: #0001; */
+     font-size: 12px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 200px;
+     left: 55px; 
+     top: 293px;
+     position: absolute;  
+     text-align: right;
+ }
+ .defint_value_1{
+    /* background: #0001; */
+     font-size: 12px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 90px;
+     left: 420px; 
+     top: 293px;
+     position: absolute;  
+     text-align: right;
+ }
+ .energy_1{
+    /* background: #0001; */
+     font-size: 12px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 200px;
+     left: 55px; 
+     top: 313px;
+     position: absolute;  
+     text-align: right;
+ }
+ .energy_value_1{
+    /* background: #0001; */
+     font-size: 12px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 90px;
+     left: 420px; 
+     top: 313px;
+     position: absolute;  
+     text-align: right;
+ }
+ .vat_1{
+    /* background: #0001; */
+     font-size: 12px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 200px;
+     left: 55px; 
+     top: 333px;
+     position: absolute;  
+     text-align: right;
+ }
+ .vat_value_1{
+    /* background: #0001; */
+     font-size: 12px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 90px;
+     left: 420px; 
+     top: 333px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .total_sales_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 245px;
+     position: absolute;  
+     text-align: right;   
+ }
+ .net_vat_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 263px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .add_vat_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 280px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .total_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 298px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .less_withholding_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 318px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .total_amount_1{
+    /* background: #0001; */
+     font-size: 11px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 337px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .vatable_1{
+    /* background: #0001; */
+     font-size: 9px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 352px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .vat_exempt_1{
+    /* background: #0001; */
+     font-size: 9px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 362px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .zero_rated_1{
+    /* background: #0001; */
+     font-size: 9px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 372px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .vat_percent_1{
+    /* background: #0001; */
+     font-size: 9px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 382px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .grand_total_1{
+    /* background: #0001; */
+     font-size: 9px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 70px;
+     left: 670px; 
+     top: 392px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .signature_1{
+    /* background: #0001; */
+     font-size: 9px;
+     font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+     width: 100px;
+     left: 580px; 
+     top: 400px;
+     position: absolute;  
+     text-align: right; 
+ }
+ .claim{
+      /* background: #0001; */
+      font-size: 12px;
+      font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+      width: 320px;
+      left: 55px; 
+      top: 370px;
+      position: absolute;  
+      text-align: right;
+  }
+ @media print {
+     body,page {
+         margin: 0;
+         box-shadow: 0;
+         font-size: auto;
      }
-    @media print {
-        body,page {
-            margin: 0;
-            box-shadow: 0;
-            font-size: auto;
-        }
-        body{
-            background: #fff;
-        }
-        page[size="Long"] {
-            background: white;
-            width: 8.5in;
-            height: 13in; 
-            display: block;
-            margin: 0 auto;
-            margin-bottom: 0.5cm;
-            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-        }
-        /*table td{ border:1px solid #fff!important; }*/
-        .bor-btm{border-bottom:1px solid #000!important;}
-        .bor-all{
-            border: 1px solid #000;
-        }
-        #printbutton, #br, #br1{display: none}
-        page {
-        background: white;
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 0.5cm;
-        box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-        }
-       
-    }
+     body{
+         background: #fff;
+     }
+     page[size="Long"] {
+         background: white;
+         width: 8.5in;
+         height: 13in; 
+         display: block;
+         margin: 0 auto;
+         margin-bottom: 0.5cm;
+         box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+     }
+     /*table td{ border:1px solid #fff!important; }*/
+     .bor-btm{border-bottom:1px solid #000!important;}
+     .bor-all{
+         border: 1px solid #000;
+     }
+     #printbutton, #br, #br1{display: none}
+     page {
+     background: white;
+     display: block;
+     margin: 0 auto;
+     margin-bottom: 0.5cm;
+     box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+     }
+    
+ }
