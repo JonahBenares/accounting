@@ -2637,7 +2637,7 @@ class Purchases extends CI_Controller {
         //echo $ref_no;
         $data['count_empty_actual']=0;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE adjust_identifier='$identifier' AND adjustment='1'") AS $d){
-            $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");
+            $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->actual_billing_id' AND settlement_id = '$d->short_name'");
             $data['count_empty_actual']=$this->super_model->count_custom_where('purchase_transaction_details',"purchase_id='$d->purchase_id' AND billing_id IS NULL");
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
