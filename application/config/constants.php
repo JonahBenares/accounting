@@ -101,4 +101,4 @@ define('COMPANY_ZIP','6101');
 define('COMPANY_TIN1','008');
 define('COMPANY_TIN2','691');
 define('COMPANY_TIN3','287');
-define('COMPANY_TIN4','0000');
+define('COMPANY_TIN4','00000');
