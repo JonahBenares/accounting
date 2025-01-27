@@ -629,19 +629,33 @@ class Purchases extends CI_Controller {
 
     public function getpayment(){
         $reference_number=$this->input->post('reference_number');
-        $ref_exp=explode(".",$reference_number);
-        $purchase_id=$ref_exp[0];
-        $ref_no=$ref_exp[1];
-        $total_amount= $this->super_model->select_sum("purchase_transaction_details", "balance", "purchase_id", $purchase_id);
-        $total_purchase= $this->super_model->select_sum("purchase_transaction_details", "vatables_purchases", "purchase_id", $purchase_id);
-        $zero_rated= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_purchases", "purchase_id", $purchase_id);
-        $ecozone= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_ecozones", "purchase_id", $purchase_id);
-        $total_vatable_purchase = $total_purchase + $zero_rated + $ecozone;
-        $total_vat= $this->super_model->select_sum("purchase_transaction_details", "vat_on_purchases", "purchase_id", $purchase_id);
-        $total_ewt= $this->super_model->select_sum("purchase_transaction_details", "ewt", "purchase_id", $purchase_id);
+        $purchase_id=$this->input->post('purchase_id');
+        // $ref_exp=explode(".",$reference_number);
+        // $purchase_id=$ref_exp[0];
+        // $ref_no=$ref_exp[1];
+        if($purchase_id!=0){ 
+            $total_amount= ($this->super_model->select_sum("purchase_transaction_details", "balance", "purchase_id", $purchase_id) + (float) $this->input->post('market_fee')) - (float) $this->input->post('ewt');
+            $total_purchase= $this->super_model->select_sum("purchase_transaction_details", "vatables_purchases", "purchase_id", $purchase_id);
+            $zero_rated= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_purchases", "purchase_id", $purchase_id);
+            $ecozone= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_ecozones", "purchase_id", $purchase_id);
+            $total_vatable_purchase = $total_purchase + $zero_rated + $ecozone;
+            $total_vat= $this->super_model->select_sum("purchase_transaction_details", "vat_on_purchases", "purchase_id", $purchase_id);
+            $total_ewt= $this->super_model->select_sum("purchase_transaction_details", "ewt", "purchase_id", $purchase_id);
+        }else{
+            $total_amount= (float)$this->input->post('market_fee') - (float)$this->input->post('ewt');
+            $total_purchase= 0;
+            $zero_rated= 0;
+            $ecozone= 0;
+            $total_vatable_purchase = 0;
+            $total_vat= 0;
+            $total_ewt= $this->input->post('ewt');
+        }
         $data['list'] = array(
             'purchase_id'=>$purchase_id,
-            'reference_number'=>$ref_no,
+            'reference_number'=>$reference_number,
+            // 'reference_number'=>$ref_no,
+            'market_fee'=>$this->input->post('market_fee'),
+            'ewt'=>$this->input->post('ewt'),
             'total_amount'=>$total_amount,
             'total_vatable_purchase'=>$total_vatable_purchase,
             'total_vat'=>$total_vat,
@@ -885,6 +899,7 @@ class Purchases extends CI_Controller {
 
     public function save_payment_all(){
         $purchase_id=$this->input->post('purchase_id');
+        $reference_number=$this->input->post('reference_number');
         $counter=$this->input->post('counter');
         $payment_date=$this->input->post('payment_date');
         $particulars=$this->input->post('particulars');
@@ -892,6 +907,8 @@ class Purchases extends CI_Controller {
         $total_vat=$this->input->post('total_vat');
         $total_ewt=$this->input->post('total_ewt');
         $total_amount=$this->input->post('total_amount');
+        $market_fee=$this->input->post('market_fee');
+        $ewt=$this->input->post('ewt');
         $payment_mode=$this->input->post('customRadioInline1');
         $check_no=$this->input->post('check_no');
         $cv_no=$this->input->post('cv_no');
@@ -901,12 +918,14 @@ class Purchases extends CI_Controller {
         for($a=0;$a<$counter;$a++){
             $data_insert=array(
                 'purchase_id'=>$purchase_id[$a],
+                'reference_number'=> ($purchase_id[$a]==0) ? $reference_number[$a] : '',
                 'payment_date'=>$payment_date,
                 'particulars'=>$particulars,
                 'payment_identifier'=>$payment_identifier,
                 'total_purchase'=>$total_vatable_purchase[$a],
                 'total_vat'=>$total_vat[$a],
-                'total_ewt'=>$total_ewt[$a],
+                'total_market_fee'=> $market_fee[$a],
+                'total_ewt'=> ($purchase_id[$a]!=0) ? (float)$total_ewt[$a] + (float)$ewt[$a] : $ewt[$a],
                 'total_amount'=>$total_amount[$a],
                 'payment_mode'=>$payment_mode,
                 'pcv'=>$pcv,
@@ -917,34 +936,51 @@ class Purchases extends CI_Controller {
                 'user_id'=>$_SESSION['user_id'],
             );
             $payment_id = $this->super_model->insert_return_id("payment_head", $data_insert);
-            foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id= '".$purchase_id[$a]."' AND balance != '0'") AS $det ){
-                if($det->vatables_purchases!=0){
-                    $mode= "Vatable Purchase";
-                    $amount = $det->vatables_purchases;
-                } else if($det->zero_rated_purchases!=0){
-                    $mode = "Zero Rated Purchase";
-                    $amount = $det->zero_rated_purchases;
-                } else if($det->zero_rated_ecozones!=0){
-                    $mode = "Zero Rated Ecozones";
-                    $amount = $det->zero_rated_ecozones;
+            if($purchase_id[$a]!=0){
+                foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id= '".$purchase_id[$a]."' AND balance != '0'") AS $det ){
+                    if($det->vatables_purchases!=0){
+                        $mode= "Vatable Purchase";
+                        $amount = $det->vatables_purchases;
+                    } else if($det->zero_rated_purchases!=0){
+                        $mode = "Zero Rated Purchase";
+                        $amount = $det->zero_rated_purchases;
+                    } else if($det->zero_rated_ecozones!=0){
+                        $mode = "Zero Rated Ecozones";
+                        $amount = $det->zero_rated_ecozones;
+                    }
+                    $data_details = array(
+                        'payment_id'=>$payment_id,
+                        'purchase_details_id'=>$det->purchase_detail_id,
+                        'short_name'=>$det->short_name,
+                        'purchase_mode'=>$mode,
+                        'purchase_amount'=>$amount,
+                        'vat'=>$det->vat_on_purchases,
+                        'market_fee'=>$market_fee[$a],
+                        'ewt'=>$det->ewt + (float)$ewt[$a],
+                        'total_amount'=>($det->balance + (float)$market_fee[$a]) - (float)$ewt[$a],
+
+                    );
+                    $this->super_model->insert_into("payment_details", $data_details);
+                    $new_balance = $det->balance - $det->total_amount;
+                    $update=array(
+                        'balance'=>$new_balance
+                    );
+                    $this->super_model->update_where("purchase_transaction_details", $update, "purchase_detail_id", $det->purchase_detail_id);
                 }
+            }else{
                 $data_details = array(
                     'payment_id'=>$payment_id,
-                    'purchase_details_id'=>$det->purchase_detail_id,
-                    'short_name'=>$det->short_name,
-                    'purchase_mode'=>$mode,
-                    'purchase_amount'=>$amount,
-                    'vat'=>$det->vat_on_purchases,
-                    'ewt'=>$det->ewt,
-                    'total_amount'=>$det->balance,
+                    'purchase_details_id'=>0,
+                    'short_name'=>'',
+                    'purchase_mode'=>'',
+                    'purchase_amount'=>0,
+                    'vat'=>0,
+                    'market_fee'=>$market_fee[$a],
+                    'ewt'=>$ewt[$a],
+                    'total_amount'=>$market_fee[$a] - $ewt[$a],
 
                 );
                 $this->super_model->insert_into("payment_details", $data_details);
-                $new_balance = $det->balance - $det->total_amount;
-                $update=array(
-                    'balance'=>$new_balance
-                );
-                $this->super_model->update_where("purchase_transaction_details", $update, "purchase_detail_id", $det->purchase_detail_id);
             }
         }
         echo $payment_identifier;
@@ -1622,22 +1658,32 @@ class Purchases extends CI_Controller {
             $energy_total= $this->super_model->select_sum("payment_head", "total_purchase", "payment_identifier", $p->payment_identifier);
             $vat_on_purchases= $this->super_model->select_sum("payment_head", "total_vat", "purchase_id", $p->purchase_id);
             $vat_on_purchases_total= $this->super_model->select_sum("payment_head", "total_vat", "payment_identifier", $p->payment_identifier);
-            $ewt= $this->super_model->select_sum("payment_head", "total_ewt", "purchase_id", $p->purchase_id);
             $ewt_total= $this->super_model->select_sum("payment_head", "total_ewt", "payment_identifier", $p->payment_identifier);
-            $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
-            $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
+            $marketfee_total= $this->super_model->select_sum("payment_head", "total_market_fee", "payment_identifier", $p->payment_identifier);
+            if($p->purchase_id!=0){
+                $ewt= $this->super_model->select_sum("payment_head", "total_ewt", "purchase_id", $p->purchase_id);
+                $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
+                $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
+            }else{
+                $ewt= $this->super_model->select_sum_where("payment_head", "total_ewt", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                $reference_number= $this->super_model->select_column_custom_where("payment_head", "reference_number", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                $total_amount= $this->super_model->select_sum_where("payment_head", "total_amount", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+            }
             $total_amount_disp= $this->super_model->select_sum("payment_head", "total_amount", "payment_identifier", $p->payment_identifier);
+            $market_fee= $this->super_model->select_column_where("payment_details", "market_fee", "payment_id", $p->payment_id);
             //$total_amount=($energy + $vat_on_purchases) - $ewt;
             $data['count']=$this->super_model->count_custom_where("payment_head","payment_identifier='$payment_identifier'");
             $data['total']=$total_amount_disp;
             $data['energy']=$energy_total;
             $data['vat_on_purchases']=$vat_on_purchases_total;
             $data['ewt']=$ewt_total;
+            $data['total_market_fee']=$marketfee_total;
             $data['payment'][]=array(
                 "transaction_date"=>$p->payment_date,
                 "reference_number"=>$reference_number,
                 "energy"=>$energy,
                 "vat_on_purchases"=>$vat_on_purchases,
+                "market_fee"=> ($market_fee!=0) ? $market_fee : 0,
                 "ewt"=>$ewt,
                 "total_amount"=>$total_amount,
             );

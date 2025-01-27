@@ -551,28 +551,44 @@ function isNumberKey(txt, evt){
 function add_reference(){
     var loc= document.getElementById("baseurl").value;
     var redirect=loc+'purchases/getpayment';
+    const dataList = document.getElementById("reflist");
+    const options = dataList.options;
     var reference_number =$('#reference_number').val();
+    var market_fee =$('#market_fee').val() ?? 0;
+    var ewt =$('#ewt').val() ?? 0;
+    // Loop through the options to find the matching one
+    var purchase_id = 0;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === reference_number) {
+            purchase_id = options[i].getAttribute("data-id");
+        }
+    }
     var rowCount = $('#item_body tr').length;
     count=rowCount+1;
     $.ajax({
             type: "POST",
             url:redirect,
-            data: "reference_number="+reference_number,
+            data: 'purchase_id='+purchase_id+'&reference_number='+reference_number+'&market_fee='+market_fee+'&ewt='+ewt,
+            beforeSend: function(){
+                document.getElementById("addref").disabled = true;
+            },
             success: function(html){
-            $('#item_body').append(html);
-
-            var total =0;
-            $('.total_amount').each(function(){
-              total += parseFloat($(this).val());
-            });
-            document.getElementById("grand").innerHTML=total.toFixed(2);
-            document.getElementById("payment_amount").value=total.toFixed(2);
-            $("#reference_number option[value='"+reference_number+"']").remove();
-            //internationalNumberFormat = new Intl.NumberFormat('en-US')
-            //document.getElementById("grand").innerHTML=internationalNumberFormat.format(total);
-            document.getElementById("reference_number").value = '';
-            document.getElementById("counter").value = count;
-        }
+                document.getElementById("addref").disabled = false;
+                $('#item_body').append(html);
+                var total =0;
+                $('.total_amount').each(function(){
+                    total += parseFloat($(this).val());
+                });
+                document.getElementById("grand").innerHTML=total.toFixed(2);
+                document.getElementById("payment_amount").value=total.toFixed(2);
+                $("#reference_number option[value='"+reference_number+"']").remove();
+                //internationalNumberFormat = new Intl.NumberFormat('en-US')
+                //document.getElementById("grand").innerHTML=internationalNumberFormat.format(total);
+                document.getElementById("reference_number").value = '';
+                document.getElementById("market_fee").value = '';
+                document.getElementById("ewt").value = '';
+                document.getElementById("counter").value = count;
+            }
     });  
 }
 

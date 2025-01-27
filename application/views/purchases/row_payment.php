@@ -3,6 +3,12 @@
         <input type="hidden" name="purchase_id[]" value="<?php echo $list['purchase_id']; ?>">
         <input type="text" name="reference_number[]" style = "width:100%;border:1px transparent;color:#020202" value="<?php echo $list['reference_number']; ?>" readonly>       
     </td>
+    <td>
+        <input type="text" name="market_fee[]" style = "width:100%;border:1px transparent;color:#020202" value="<?php echo $list['market_fee']; ?>" readonly> 
+    </td>
+    <td>
+        <input type="text" name="ewt[]" style = "width:100%;border:1px transparent;color:#020202" value="<?php echo $list['ewt']; ?>" readonly> 
+    </td>
     <td align="right" >
         <input type="text" name="total_amount[]" class="total_amount" style = "text-align:center;width:100%;border:1px transparent;color:#020202" value="<?php echo $list['total_amount']; ?>" readonly>
 

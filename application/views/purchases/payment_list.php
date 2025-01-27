@@ -40,16 +40,29 @@
                                         <table width="100%" class="table-bordsered">
                                             <tr>
                                                 <td>
-                                                    <select class="form-control select2" name="reference_number" id="reference_number">
+                                                    <input type="datalist" class="form-control" name="reference_number" id="reference_number" list="reflist" placeholder="Reference Number" autocomplete="off">	
+                                                    <datalist id="reflist">
+                                                        <option value="">-- Select Reference Number --</option>
+                                                        <?php foreach($head AS $r){ ?>
+                                                            <option data-id="<?php echo $r->purchase_id; ?>" value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                        <?php } ?>
+                                                    </datalist>
+                                                    <!-- <select class="form-control select2" name="reference_number" id="reference_number">
                                                         <option value="">-- Select Reference Number --</option>
                                                         <?php foreach($head AS $r){ ?>
                                                             <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
                                                         <?php } ?>
-                                                    </select>
+                                                    </select> -->
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="market_fee" id="market_fee" placeholder="Market Fee" autocomplete="off">	
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="ewt" id="ewt" placeholder="Withholding Tax" autocomplete="off">	
                                                 </td>
                                                 <td width="1%">
                                                     <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url();?>">
-                                                    <button class="btn btn-primary" type="button" onclick="add_reference()">Add</button>
+                                                    <button class="btn btn-primary" id="addref" type="button" onclick="add_reference()">Add</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -57,13 +70,15 @@
                                         <table class="table-bordered" width="100%">
                                             <tr class="td-head">
                                                 <td><b>Reference Number</b></td>
+                                                <td><b>Market Fee</b></td>
+                                                <td><b>Withholding Tax</b></td>
                                                 <td width="15%" align="center"><b>Total Amount</b></td>
                                             </tr>
                                             <tbody id="item_body"></tbody>
                                             <tfooter>
                                                 <tr class="td-yellow">
-                                                    <td align="right"><b>Total Amount Due</b></td>
-                                                    <td align="right" id="grand" style="font-weight:800"></td>
+                                                    <td align="right" colspan='3'><b>Total Amount Due</b></td>
+                                                    <td align="center" id="grand" style="font-weight:800"></td>
                                                     <input type="hidden" name="counter" id="counter">
                                                 </tr>
                                             </tfooter>
