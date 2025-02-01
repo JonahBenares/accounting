@@ -551,25 +551,48 @@ function isNumberKey(txt, evt){
 function add_reference(){
     var loc= document.getElementById("baseurl").value;
     var redirect=loc+'purchases/getpayment';
-    const dataList = document.getElementById("reflist");
+    const dataList = document.getElementById("reference_number");
     const options = dataList.options;
     var reference_number =$('#reference_number').val();
-    var market_fee =$('#market_fee').val() ?? 0;
-    var ewt =$('#ewt').val() ?? 0;
+    // var market_fee =$('#market_fee').val() ?? 0;
+    // var ewt =$('#ewt').val() ?? 0;
     // Loop through the options to find the matching one
-    var purchase_id = 0;
-    for (let i = 0; i < options.length; i++) {
-        if (options[i].value === reference_number) {
-            purchase_id = options[i].getAttribute("data-id");
+    // let purchase_id = 0;
+    // var array = [];
+    // for (let i = 0; i < options.length; i++) {
+    //     const myarray = String(reference_number).split(",");
+    //     alert(myarray[i])
+    //     if (myarray[i]!=undefined && options[i].value === myarray[i]) {
+    //         purchase_id = options[i].getAttribute("data-id");
+    //         array.push(purchase_id)
+    //     }
+    // }
+
+    var selectedPurchaseIds = []; // Array to store purchase IDs
+    // Get all selected reference numbers from the Select2 dropdown
+    const selectedReferenceNumbers = $('#reference_number').val(); // This returns an array of selected values
+
+    if (selectedReferenceNumbers && selectedReferenceNumbers.length > 0) {
+        for (let i = 0; i < options.length; i++) {
+            // Check if the current option's value is in the selectedReferenceNumbers array
+            if (selectedReferenceNumbers.includes(options[i].value)) {
+                const purchase_id = options[i].getAttribute("data-id"); // Get purchase_id
+                selectedPurchaseIds.push(purchase_id); // Add it to the result array
+            }
         }
     }
-    var rowCount = $('#item_body tr').length;
+    
+    var rowCount = selectedReferenceNumbers.length;
+    // var rowCount = $('#item_body tr').length;
+    // count=rowCount+1;
     count=rowCount+1;
     $.ajax({
             type: "POST",
             url:redirect,
-            data: 'purchase_id='+purchase_id+'&reference_number='+reference_number+'&market_fee='+market_fee+'&ewt='+ewt,
+            data: 'purchase_id='+selectedPurchaseIds+'&reference_number='+reference_number,
+            // data: 'purchase_id='+purchase_id+'&reference_number='+reference_number+'&market_fee='+market_fee+'&ewt='+ewt,
             beforeSend: function(){
+                // console.log(selectedPurchaseIds)
                 document.getElementById("addref").disabled = true;
             },
             success: function(html){
@@ -581,15 +604,67 @@ function add_reference(){
                 });
                 document.getElementById("grand").innerHTML=total.toFixed(2);
                 document.getElementById("payment_amount").value=total.toFixed(2);
-                $("#reference_number option[value='"+reference_number+"']").remove();
+                let selectedValues = $("#reference_number").val() || [];
+                selectedValues.forEach(value => {
+                    $("#reference_number option[value='" + value + "']").remove();
+                });
+                $("#select2").val(null).trigger("change"); // Clear selection
+                $("#select2").select2(); // Reinitialize if needed
+
+                // $("#reference_number option[value='"+reference_number+"']").remove();
                 //internationalNumberFormat = new Intl.NumberFormat('en-US')
                 //document.getElementById("grand").innerHTML=internationalNumberFormat.format(total);
-                document.getElementById("reference_number").value = '';
-                document.getElementById("market_fee").value = '';
-                document.getElementById("ewt").value = '';
+                // document.getElementById("reference_number").value = '';
+                // document.getElementById("market_fee").value = '';
+                // document.getElementById("ewt").value = '';
                 document.getElementById("counter").value = count;
             }
     });  
+}
+
+function remove_item(i,ref_no,purchase_id){
+    var newOption = $('<option>', {
+        value: ref_no,
+        text: ref_no,
+        'data-id': purchase_id
+    });
+    $('#reference_number').append(newOption).trigger('change');
+
+    $('#item_row'+i).remove();
+    var counter = document.getElementById("counter").value;
+    alert(counter)
+    document.getElementById("counter").value = counter-1 
+    var total =0;
+    $('.total_amount').each(function(){
+        total += parseFloat($(this).val());
+    });
+    document.getElementById("grand").innerHTML=total.toFixed(2);
+    document.getElementById("payment_amount").value=total.toFixed(2);
+}
+
+function calculateMarketFee(){
+    var market_fee = document.getElementById("market_fee").value;
+    var withholding_tax = document.getElementById("withholding_tax").value;
+    if(market_fee!=0){
+        var mf=market_fee;
+    }else{
+        var mf=0;
+    }
+
+    if(withholding_tax!=0){
+        var wt=withholding_tax;
+    }else{
+        var wt=0;
+    }
+    var total_mf = parseFloat(mf) - parseFloat(wt);
+    var total =0;
+    $('.total_amount').each(function(){
+        total += parseFloat($(this).val());
+    });
+    var overall_total=parseFloat(total)  + parseFloat(total_mf)
+    document.getElementById("total_amount").value  = parseFloat(total_mf).toFixed(2);
+    document.getElementById("grand").innerHTML=overall_total.toFixed(2);
+    document.getElementById("payment_amount").value=overall_total.toFixed(2);
 }
 
 function savePaymentall(){
@@ -613,6 +688,7 @@ function savePaymentall(){
                 //document.getElementById("reference_number").disabled = true;
             },
             success: function(output){
+                // console.log(output)
                 document.getElementById("pay").disabled = false;
                 $('#reference_number').show();
                 //alert(output);
