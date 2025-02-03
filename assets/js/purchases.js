@@ -632,7 +632,7 @@ function remove_item(i,ref_no,purchase_id){
 
     $('#item_row'+i).remove();
     var counter = document.getElementById("counter").value;
-    alert(counter)
+    // alert(counter)
     document.getElementById("counter").value = counter-1 
     var total =0;
     $('.total_amount').each(function(){
