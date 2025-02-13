@@ -2893,7 +2893,8 @@ public function print_BS_new(){
                 $vat_on_sales = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getFormattedValue());
                 $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
                 // $total_amount = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('P'.$x)->getOldCalculatedValue());
-                $total_amount = ($vatable_sales+$zero_rated_sales+$zero_rated_ecozone+$vat_on_sales)-$ewt;
+                // $total_amount = ($vatable_sales+$zero_rated_sales+$zero_rated_ecozone+$vat_on_sales)-$ewt;
+                $total_amount = ((double)$vatable_sales+(double)$zero_rated_sales+(double)$zero_rated_ecozone+(double)$vat_on_sales)-(double)$ewt;
                 $series_no = $objPHPExcel->getActiveSheet()->getCell('Q'.$x)->getFormattedValue();
                 $data_sales = array(
                     'reserve_sales_id'=>$res_sales_id,
