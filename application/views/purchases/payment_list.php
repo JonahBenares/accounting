@@ -40,16 +40,30 @@
                                         <table width="100%" class="table-bordsered">
                                             <tr>
                                                 <td>
-                                                    <select class="form-control select2" name="reference_number" id="reference_number">
+                                                    <!-- <input type="datalist" class="form-control" name="reference_number" id="reference_number" list="reflist" placeholder="Reference Number" autocomplete="off">	
+                                                    <datalist id="reflist">
                                                         <option value="">-- Select Reference Number --</option>
                                                         <?php foreach($head AS $r){ ?>
-                                                            <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                            <option data-id="<?php echo $r->purchase_id; ?>" value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                        <?php } ?>
+                                                    </datalist> -->
+
+                                                    <select class="form-control select2 reference_number" name="reference_number" id="reference_number" multiple>
+                                                        <?php foreach($head AS $r){ ?>
+                                                            <option data-id="<?php echo $r->purchase_id; ?>" value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                            <!-- <option value="<?php echo $r->purchase_id.".".$r->reference_number; ?>"><?php echo $r->reference_number; ?></option> -->
                                                         <?php } ?>
                                                     </select>
                                                 </td>
+                                                <!-- <td>
+                                                    <input type="text" class="form-control" name="market_fee" id="market_fee" placeholder="Market Fee" autocomplete="off">	
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="ewt" id="ewt" placeholder="Withholding Tax" autocomplete="off">	
+                                                </td> -->
                                                 <td width="1%">
                                                     <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url();?>">
-                                                    <button class="btn btn-primary" type="button" onclick="add_reference()">Add</button>
+                                                    <button class="btn btn-primary" id="addref" type="button" onclick="add_reference()">Add</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -57,13 +71,37 @@
                                         <table class="table-bordered" width="100%">
                                             <tr class="td-head">
                                                 <td><b>Reference Number</b></td>
+                                                <td><b>Market Fee</b></td>
+                                                <td><b>Withholding Tax</b></td>
                                                 <td width="15%" align="center"><b>Total Amount</b></td>
+                                                <td width="15%" align="center"><b>x</b></td>
                                             </tr>
-                                            <tbody id="item_body"></tbody>
+                                            <tbody id="item_body">
+                                                
+                                            </tbody>
                                             <tfooter>
+                                            <tr>
+                                                    <td>
+                                                        <input type="hidden" name="purchase_id[]" value="0">
+                                                        <input style="width:100%;border:0px transparent" name="manual_reference" type="text" placeholder="Reference Number">
+                                                    </td>
+                                                    <td>
+                                                        <input style="width:100%;border:0px transparent" name="market_fee[]" id="market_fee" type="text" onkeyup="calculateMarketFee()" onkeypress="return isNumberKey(this, event)" placeholder="Market Fee">
+                                                    </td>
+                                                    <td>
+                                                        <input style="width:100%;border:0px transparent" name="withholding_tax[]" id="withholding_tax" type="text" onkeyup="calculateMarketFee()" onkeypress="return isNumberKey(this, event)" placeholder="Withholding Tax">
+                                                    </td>
+                                                    <td>
+                                                        <input class="text-center" style="width:100%;border:0px transparent" name="total_amount[]" id="total_amount" type="text" readonly>
+                                                        <input type="hidden" id="total_vatable_purchase" name="total_vatable_purchase[]" value="0">
+                                                        <input type="hidden" id="total_vat" name="total_vat[]" value="0">
+                                                        <input type="hidden" id="total_ewt" name="total_ewt[]" value="0">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
                                                 <tr class="td-yellow">
-                                                    <td align="right"><b>Total Amount Due</b></td>
-                                                    <td align="right" id="grand" style="font-weight:800"></td>
+                                                    <td align="right" colspan='4'><b>Total Amount Due</b></td>
+                                                    <td align="center" id="grand" style="font-weight:800"></td>
                                                     <input type="hidden" name="counter" id="counter">
                                                 </tr>
                                             </tfooter>
@@ -250,7 +288,6 @@
         </div>
     </section>
 </div>
-
 
                 
                                        

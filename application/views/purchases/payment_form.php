@@ -100,7 +100,7 @@
                                 <td align="center"><?php echo $p['reference_number'];?></td>
                                 <td align="right">(<?php echo number_format($p['energy'],2);?>)</td>
                                 <td align="right">(<?php echo number_format($p['vat_on_purchases'],2);?>)</td>
-                                <td align="right"></td>
+                                <td align="right">(<?php echo number_format($p['market_fee'],2);?>)</td>
                                 <td align="right"><?php echo number_format($p['ewt'],2);?></td>
                                 <td align="right"></td>
                                 <td align="right"></td>
@@ -112,7 +112,7 @@
                                 <td align="center" colspan="2"><b>TOTAL AMOUNT PAID</b></td>
                                 <td align="right"><b>(<?php echo number_format($energy,2);?>)</b></td>
                                 <td align="right"><b>(<?php echo number_format($vat_on_purchases,2);?>)</b></td>
-                                <td align="right"><b>-</b></td>
+                                <td align="right"><b>(<?php echo number_format($total_market_fee,2);?>)</b></td>
                                 <td align="right"><b><?php echo number_format($ewt,2);?></b></td>
                                 <td align="right"><b>-</b></td>
                                 <td align="right"><b>-</b></td>

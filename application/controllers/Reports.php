@@ -4762,7 +4762,7 @@ class Reports extends CI_Controller {
                 if(!empty($sth->company_name) && date('Y',strtotime($sth->create_date))==date('Y')){
                         $comp_name=$sth->company_name;
                     }else{
-                        $comp_name=$sth->participant_name;
+                        $comp_name=$head->participant_name;
                     }
                 $billing_date = date("M. d, Y",strtotime($sth->billing_from))." - ".date("M. d, Y",strtotime($sth->billing_to));
                 $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sth->billing_id);
