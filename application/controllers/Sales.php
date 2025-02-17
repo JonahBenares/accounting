@@ -2877,7 +2877,7 @@ public function print_BS_new(){
             if($shortname!="" || !empty($shortname)){
 
                 $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
-                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
+                $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
                 $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
 
