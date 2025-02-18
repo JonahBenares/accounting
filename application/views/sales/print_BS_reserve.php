@@ -15,7 +15,10 @@
        <!--  <button class="btn btn-success " oid="saved" name="submit" onclick="printbs_history()">Print</button> -->
         <input type="button" id="saved" name="submit" class="btn btn-success btn-block  btn-md" value = "Print" onclick="printreservebs_history(this);return false;">
         <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-        <a href='<?php echo base_url(); ?>sales/print_reserve_invoice_multiple/<?php echo $res_sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button" target="_blank">Invoice</a> 
+        <!-- <a href='<?php echo base_url(); ?>sales/print_reserve_invoice_multiple/<?php echo $res_sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button" target="_blank">Invoice</a> -->
+        <a href='<?php echo base_url(); ?>sales/print_reserve_invoice_multiple_small/<?php echo $res_sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button" target="_blank">Invoice (small)</a>
+        <a href='<?php echo base_url(); ?>sales/print_reserve_invoice_multiple_half/<?php echo $res_sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button" target="_blank">Invoice (half) </a>
+        <a href='<?php echo base_url(); ?>sales/print_reserve_invoice_multiple_main/<?php echo $res_sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button " style="margin-left:3px" target="_blank">Invoice New </a>
         <!-- <button class="btn btn-info btn-fill" data-toggle="modal" data-target="#basicModal"></span> Update Serial No.</button><br> -->
         <br>
         <br>
