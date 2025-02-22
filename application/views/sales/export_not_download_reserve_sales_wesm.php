@@ -25,8 +25,8 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                    <!-- <form method="POST" action="http://tradingsvr/accounting/sales/reserve_sales_wesm_pdf_scan_directory"> -->
-                    <form method="POST" action="http://localhost/accounting/sales/reserve_sales_wesm_pdf_scan_directory">
+                    <form method="POST" action="http://tradingsvr/accounting/sales/reserve_sales_wesm_pdf_scan_directory">
+                    <!-- <form method="POST" action="http://localhost/accounting/sales/reserve_sales_wesm_pdf_scan_directory"> -->
                             <div class="card-header">
                                 <div class="d-flex justify-content-start">  
                                     <div>
