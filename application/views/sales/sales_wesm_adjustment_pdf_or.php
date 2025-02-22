@@ -119,7 +119,7 @@
 
                     pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
                     // pdf.save("SI_CENPRI_"+stl_id+"_"+refno+"_"+billing_month+"_"+dateuploaded+".pdf");
-                    pdf.save("SI_CENPRI_"+stl_id+"_"+csrnumber+"_"+billing_month+"_"+dateuploaded+".pdf");
+                    pdf.save("OR_CENPRI_"+stl_id+"_"+csrnumber+"_"+billing_month+"_"+dateuploaded+".pdf");
 
               });
    });

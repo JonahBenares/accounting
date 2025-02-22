@@ -61,11 +61,26 @@
                                                     </td>
                                                     <td  width="1%"><button type="button" onclick="filterReserveSales();" class="btn btn-primary btn-block">Filter</button></td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
+                                                     <?php if(!empty($details)) {?>
+                                                        <td width="10%" rowspan="2">
+                                                            <a href="<?php echo base_url();?>sales/reserve_sales_wesm_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-success btn-block">Bulk OR PDF </a>   
+                                                            <a href="<?php echo base_url();?>sales/reserve_sales_wesm_pdf_si_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-warning btn-block">Bulk SI PDF</a>
+                                                        </td>
+                                                    <?php } ?>
                                                 </tr>
                                             </table>
                                         </div>
                                     </div>
                                 </form>
+                                 <?php if(!empty($details)){ ?>
+                                <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                                    <strong>Quick Scan!</strong> 
+                                    <a href="<?php echo base_url(); ?>sales/export_not_download_reserve_sales_wesm/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>  
+                                <?php } ?>
                                 <hr>
                                <?php if(!empty($details) && (!empty($ref_no) || !empty($due_date))){ ?>
                                 <table class="table-bsordered" width="100%">
@@ -114,6 +129,7 @@
                                                         <!-- <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a> -->
                                                         <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printReserveMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button>
                                                     </th>
+                                                    <th>PDF</th>
                                                     <th>Item No</th>
                                                     <th>BS No.</th>
                                                     <th>OR No.</th>
@@ -153,6 +169,10 @@
                                                     <td hidden=""></td>
                                                     <td style="width:100px;margin: 0px 6px;">
                                                         <input type="text" class="form-control" onblur="saveResBseries('<?php echo base_url(); ?>','<?php echo $x; ?>','<?php echo $s['reserve_sales_detail_id']; ?>','<?php echo $s['serial_no']; ?>')" name="series_number" id="series_number<?php echo $x; ?>" value="<?php echo $s['serial_no']; ?>">
+                                                    </td>
+                                                    <td>
+                                                        <a href="<?php echo base_url();?>sales/reserve_sales_wesm_pdf_or/<?php echo $s['reserve_sales_detail_id']; ?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                        <a href="<?php echo base_url();?>sales/reserve_sales_wesm_pdf_si/<?php echo $s['reserve_sales_detail_id']; ?>" title="Export PDF" target='_blank' class="btn btn-warning btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
                                                     </td>
                                                     <td><center><?php echo $s['item_no'];?></center></td>
                                                     <?php if(!empty($s['old_series_no'])) {?>

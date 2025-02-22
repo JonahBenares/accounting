@@ -157,8 +157,8 @@
                             // var fname = "SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf";
                             // pdf.save("SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf");
 
-                            var fname = "SI_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf";
-                            pdf.save("SI_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf");
+                            var fname = "OR_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf";
+                            pdf.save("OR_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf");
                            
                            
                                     $.ajax({

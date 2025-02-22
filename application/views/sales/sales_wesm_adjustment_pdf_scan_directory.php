@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>FEBA SYSTEM</title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/pdf_or.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/pdf_or_bulk.css">
     <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
 <body>
@@ -39,9 +39,9 @@
     <?php 
         $x=1;
         foreach($details AS $d){
-            $zero_rated = $d['sum_zero_rated'] + $d['sum_zero_rated_ecozone']; 
-            $total = $d['sum_amount'] +$zero_rated + $d['sum_vat']; 
-            $total_due = $total - $d['sum_ewt'];
+            $total_sales = $d['total_vs'] + $d['total_zra'] + $d['total_vos'];
+            $net_of_vat = $d['total_vs'] + $d['total_zra'];
+            $total_amount_due = ($d['total_vs'] + $d['total_zra'] + $d['total_vos']) - $d['total_ewt'];
 
              ?>
     <div style="padding-bottom:90px;">
@@ -56,71 +56,42 @@
                 <label class="tin_1"><?php echo $d['tin']; ?> </label>
                 <label class="desc_1"><?php echo $d['all_ref_no']; ?></label>
                 <div style="position: absolute; top:35px">
-                    <label class="defint_1">DEF INTEREST</label>
-                    <label class="defint_value_1"><?php echo number_format($d['defint'],2); ?></label>
-                    <label class="energy_1">ENERGY</label>
-                    <label class="energy_value_1"><?php echo number_format($d['sum_amount'],2); ?></label>
+                    <label class="defint_1">Vatable Sales</label>
+                    <label class="defint_value_1"><?php echo number_format($d['total_vs'],2); ?></label>
+                    <label class="energy_1">Zero Rated Ecozones Sales</label>
+                    <label class="energy_value_1"><?php echo number_format($d['total_zra'],2); ?></label>
                     <label class="vat_1">VAT</label>
-                    <label class="vat_value_1"><?php echo number_format($d['sum_vat'],2); ?></label>
+                    <label class="vat_value_1"><?php echo number_format($d['total_vos'],2); ?></label>
                 </div>
-                <label class="total_sales_1"><?php echo number_format($total,2); ?></label>
-                <label class="net_vat_1"><?php echo number_format($d['sum_amount'],2); ?></label>
-                <label class="add_vat_1"><?php echo number_format($d['sum_vat'],2); ?></label>
-                <label class="total_1"><?php echo number_format($total,2); ?></label>
-                <label class="less_withholding_1">(<?php echo number_format($d['sum_ewt'],2); ?>)</label>
-                <label class="total_amount_1"><?php echo number_format($total_due,2); ?></label>
-                <label class="vatable_1"><?php echo number_format($d['sum_amount'],2); ?></label>
+                <label class="total_sales_1"><?php echo number_format($total_sales,2); ?></label>
+                <label class="net_vat_1"><?php echo number_format($net_of_vat,2); ?></label>
+                <label class="add_vat_1"><?php echo number_format($d['total_vos'],2); ?></label>
+                <label class="total_1"><?php echo number_format($total_sales,2); ?></label>
+                <label class="less_withholding_1">(<?php echo number_format($d['total_ewt'],2); ?>)</label>
+                <label class="total_amount_1"><?php echo number_format($total_amount_due,2); ?></label>
+                <label class="vatable_1"><?php echo number_format($d['total_vs'],2); ?></label>
                 <label class="vat_exempt_1">0.00</label>
-                <label class="zero_rated_1"><?php echo number_format($zero_rated,2); ?></label>
-                <label class="vat_percent_1"><?php echo number_format($d['sum_vat'],2); ?></label>
-                <label class="grand_total_1"><?php echo number_format($total,2); ?></label>
+                <label class="zero_rated_1"><?php echo number_format($d['total_zra'],2); ?></label>
+                <label class="vat_percent_1"><?php echo number_format($d['total_vos'],2); ?></label>
+                <label class="grand_total_1"><?php echo number_format($total_sales,2); ?></label>
+                <!-- <label class="claim">This Document is Not Valid for Claiming Input Taxes</label> -->
                 <label class="signature_1">
-                    <img src="<?php echo base_url()."uploads/".$user_signature; ?>" width="100px">
+                    <img src="<?php echo base_url()."assets/img/sign_DeLosSantos.png" ?>" width="180px">
                 </label>
-
-
-
             </div>
-            <!-- <div class="" style="position:absolute;top: 420px;left:-5px">
-                <label class="date_1">December 10, 2023</label>
-                <label class="ornumber_1">8951</label>
-                <label class="cusname_1">1590 Energy Corporation 1590 Energy Corporation 1590 Energy Corporation 1590 </label>
-                <label class="address_1">907-908 Ayala Life FGU Ctr. Cebu Business Park Luz Cebu City, Cebu City (Capital) Philippines </label>
-                <label class="tin_1">007-099-179-000 </label>
-                <label class="desc_1">TS-WAD-1b5F'2-00000</label>
-                <label class="defint_1">DEF INTEREST</label>
-                <label class="defint_value_1">0.00</label>
-                <label class="energy_1">ENERGY</label>
-                <label class="energy_value_1">2.23</label>
-                <label class="vat_1">VAT</label>
-                <label class="vat_value_1">2.23</label>
-                <label class="total_sales_1">019.23</label>
-                <label class="net_vat_1">019.23</label>
-                <label class="add_vat_1">019.23</label>
-                <label class="total_1">019.23</label>
-                <label class="less_withholding_1">500.23</label>
-                <label class="total_amount_1">500.23</label>
-                <label class="vatable_1">500.23</label>
-                <label class="vat_exempt_1">500.23</label>
-                <label class="zero_rated_1">500.23</label>
-                <label class="vat_percent_1">500.23</label>
-                <label class="grand_total_1">500.23</label>
-                <label class="signature_1">
-                    <img src="<?php echo base_url(); ?>assets/img/signature.png" width="100px">
-                </label>
-            </div> -->
         </page>
         </div>
     </div>
     <input type="hidden" class="stl_id<?php echo $x; ?>" value="<?php echo $d['stl_id']; ?>" id="stl_id<?php echo $x; ?>">
-    <input type="hidden" class="series_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="series_no<?php echo $x; ?>">
-    <input type="hidden" class="csr_number<?php echo $x; ?>" id="csr_number<?php echo $x; ?>" value="<?php echo $d['csrnumber']; ?>">
+    <input type="hidden" class="serial_no<?php echo $x; ?>" value="<?php echo $d['or_no']; ?>" id="serial_no<?php echo $x; ?>">
     <input type="hidden" class="ref_no<?php echo $x; ?>" id="ref_no<?php echo $x; ?>" value="<?php echo $d['refno']; ?>">
+    <input type="hidden" class="csr_number<?php echo $x; ?>" id="csr_number<?php echo $x; ?>" value="<?php echo $d['csrnumber']; ?>">
     <input type="hidden" class="reference_no<?php echo $x; ?>" id="reference_no<?php echo $x; ?>" value="<?php echo $d['ref_no']; ?>">
-    <input type="hidden" class="collection_id<?php echo $x; ?>" id="collection_id<?php echo $x; ?>" value="<?php echo $d['collection_id']; ?>">
-    <input type="hidden" class="collection_details_id<?php echo $x; ?>" id="collection_details_id<?php echo $x; ?>" value="<?php echo $d['collection_details_id']; ?>">
+    <input type="hidden" class="sales_id<?php echo $x; ?>" id="sales_id<?php echo $x; ?>" value="<?php echo $d['sales_id']; ?>">
+    <!-- <input type="hidden" class="collection_details_id<?php echo $x; ?>" id="collection_details_id<?php echo $x; ?>" value="<?php echo $d['collection_details_id']; ?>"> -->
     <input type="hidden" class="billing_month<?php echo $x; ?>" id="billing_month<?php echo $x; ?>" value="<?php echo $d['billing_month']; ?>">
-    <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>">
+    <input type="hidden" class="date_uploaded<?php echo $x; ?>" id="date_uploaded<?php echo $x; ?>" value="<?php echo $d['date_uploaded']; ?>">
+    <!-- <input type="hidden" class="timestamp"  id="timestamp" value="<?php echo $timestamp; ?>"> -->
     <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
     <?php $x++; } ?>
     <input type="hidden"  id="count" value="<?php echo $x; ?>">
@@ -132,9 +103,9 @@
       $(document).ready(function() {
              
             var counter=document.getElementById('count').value;
-            var timestamp=document.getElementById('timestamp').value;
+            // var timestamp=document.getElementById('timestamp').value;
             var loc= document.getElementById("baseurl").value;
-            var redirect = loc+"sales/update_flag";
+            var redirect = loc+"sales/update_sales_wesm_adjustment_flag";
 
 
             for(let a=1;a<counter;a++){
@@ -143,6 +114,7 @@
                 var billing_month=document.getElementById('billing_month'+a).value;
                 var refno=document.getElementById('ref_no'+a).value;
                 var shortname=document.getElementById('stl_id'+a).value;
+                var dateuploaded=document.getElementById('date_uploaded'+a).value;
               
                 var HTML_Width = $(".canvas_div_pdf"+a).width();
                 var HTML_Height = $(".canvas_div_pdf"+a).height();
@@ -165,9 +137,9 @@
                     windowHeight: window.outerHeight,
             
                 }).then(function(canvas) {
-                     var series_no= document.getElementById("series_no"+a).value;
+                     var serial_no= document.getElementById("serial_no"+a).value;
                      var reference_no= document.getElementById("reference_no"+a).value;
-                     var collection_id= document.getElementById("collection_id"+a).value;
+                     var sales_id= document.getElementById("sales_id"+a).value;
 
                         canvas.getContext('2d');   
                         var imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -182,15 +154,15 @@
                             //pdf.addPage(PDF_Width, PDF_Height);
                             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                            
-                           //  var fname = "OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf";
-                           // pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
+                            // var fname = "SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf";
+                            // pdf.save("SI_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf");
 
-                           var fname = "OR_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf";
-                           pdf.save("OR_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+timestamp+"_"+series_no+".pdf");
+                            var fname = "OR_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf";
+                            pdf.save("OR_CENPRI_"+stl_id+"_"+csr_number+"_"+billing_month+"_"+dateuploaded+".pdf");
                            
                            
                                     $.ajax({
-                                        data: 'series_no='+series_no+'&stl_id='+stl_id+'&reference_no='+reference_no+'&collection_id='+collection_id+'&filename='+fname,
+                                        data: '&serial_no='+serial_no+'&sales_id='+sales_id+'&filename='+fname,
                                         type: "POST",
                                         url: redirect,
                                         beforeSend: function(){
