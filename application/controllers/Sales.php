@@ -7842,11 +7842,13 @@ public function upload_sales_adjustment_test(){
                     );
 
                         $h=1;
-                            $data['total_sub']=$this->super_model->count_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'");
+                            // $data['total_sub']=$this->super_model->count_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'");
+                            $data['total_sub']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id WHERE sad.serial_no = '$p->serial_no' AND sad.total_amount != '0' AND sah.saved != '0'");
+                            // $data['total_sub'] = $this->super_model->count_custom_where("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id","sad.serial_no = '$p->serial_no' AND sad.total_amount != '0' AND sah.saved != '0'");
                             $data['total_sub_h']='';
-                        foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
+                        // foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
+                            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id WHERE sad.serial_no = '$p->serial_no' AND sad.total_amount != '0' AND sah.saved != '0'") AS $s){
                             if($h<=10){
-
                                     $reference_number=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$s->sales_adjustment_id);
                                     $billing_from=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$s->sales_adjustment_id);
                                     $billing_to=$this->super_model->select_column_where("sales_adjustment_head","billing_to","sales_adjustment_id",$s->sales_adjustment_id);
@@ -7901,7 +7903,9 @@ public function upload_sales_adjustment_test(){
                         );
 
                         $z=1;
-                        foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
+                        // foreach($this->super_model->select_custom_where("sales_adjustment_details","serial_no = '$p->serial_no' AND total_amount != '0'") AS $s){
+                        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id WHERE sad.serial_no = '$p->serial_no' AND sad.total_amount != '0' AND sah.saved != '0'") AS $s){
+
                                 
                                 $reference_number=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$s->sales_adjustment_id);
                                 $billing_from=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$s->sales_adjustment_id);
@@ -8041,7 +8045,8 @@ public function upload_sales_adjustment_test(){
             $data['total_cents'][$x]=$total_exp[1];
 
         }else{
-            foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP by serial_no") AS $p){
+            // foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP by serial_no") AS $p){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sah.saved != '0' GROUP by serial_no") AS $p){
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                 // $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
 
@@ -8105,11 +8110,12 @@ public function upload_sales_adjustment_test(){
                 $data['company_name'][$x]=$company_name;
                 $data['due_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","due_date","sales_adjustment_id",$p->sales_adjustment_id);
                 $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
-                $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$p->serial_no'");
-                $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$p->serial_no'");
-                $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$p->serial_no'");
-                $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$p->serial_no'");
-                $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$p->serial_no'");
+
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
             }
 
             $total_vs=$vatable_sales;
@@ -8241,7 +8247,9 @@ public function upload_sales_adjustment_test(){
             $data['total_cents_sub'][$x]=$total_exp_sub[1];
 
         }else{
-            foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP by serial_no") AS $p){
+            // foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP by serial_no") AS $p){
+            // foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sah.saved != '0' GROUP by serial_no") AS $p){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sah.saved != '0' GROUP by serial_no") AS $p){
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                 // $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
 
@@ -8306,11 +8314,16 @@ public function upload_sales_adjustment_test(){
                 $data['billing_from'][$x]=$this->super_model->select_column_where("sales_adjustment_head","billing_from","sales_adjustment_id",$p->sales_adjustment_id);
                 $data['billing_to'][$x]=$this->super_model->select_column_where("sales_adjustment_head","billing_to","sales_adjustment_id",$p->sales_adjustment_id);
                 $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
-                $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$p->serial_no'");
-                $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$p->serial_no'");
-                $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$p->serial_no'");
-                $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$p->serial_no'");
-                $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$p->serial_no'");
+                // $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$p->serial_no'");
+                // $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$p->serial_no'");
+                // $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$p->serial_no'");
+                // $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$p->serial_no'");
+                // $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$p->serial_no'");
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
             }
 
             $total_vs=$vatable_sales;
@@ -8441,7 +8454,8 @@ public function upload_sales_adjustment_test(){
             // $data['total_cents'][$x]=$total_exp[1];
 
         }else{
-            foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP by serial_no") AS $p){
+            // foreach($this->super_model->select_custom_where("sales_adjustment_details","print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' GROUP by serial_no") AS $p){
+                 foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sah.saved != '0' GROUP by serial_no") AS $p){
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
                 // $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
 
@@ -8494,11 +8508,16 @@ public function upload_sales_adjustment_test(){
                 $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_adjustment_head","transaction_date","sales_adjustment_id",$p->sales_adjustment_id);
                 $data['reference_number'][$x]=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$p->sales_adjustment_id);
                 $data['or_no'][$x]=$p->serial_no;
-                $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$p->serial_no'");
-                $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$p->serial_no'");
-                $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$p->serial_no'");
-                $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$p->serial_no'");
-                $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$p->serial_no'");
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_adjustment_details","sales_adjustment_head", "serial_no='$p->serial_no' AND saved = '1'","sales_adjustment_id");
+                // $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$p->serial_no'");
+                // $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$p->serial_no'");
+                // $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$p->serial_no'");
+                // $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$p->serial_no'");
+                // $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$p->serial_no'");
             }
 
             $data['total_vs'][$x]= $vatable_sales;
