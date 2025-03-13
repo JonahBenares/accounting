@@ -6123,7 +6123,7 @@ public function print_BS_new(){
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         
-                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sd INNER JOIN sales_adjustment_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id WHERE adjustment_detail_id='$id' AND serial_no != '0' GROUP BY serial_no") AS $d){
+                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sd INNER JOIN sales_adjustment_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id WHERE adjustment_detail_id='$id' AND sh.saved != '0' AND serial_no != '0' GROUP BY serial_no") AS $d){
                 $data['stl_id']=$d->short_name;
                 $data['address']=$this->super_model->select_column_where("participant","registered_address","billing_id",$d->billing_id);
                 $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$d->billing_id);
@@ -6155,12 +6155,12 @@ public function print_BS_new(){
                 $data['refno'] = preg_replace("/[^0-9]/", "",$d->reference_number);
                 $data['csrnumber'] = $d->collection_report_number;
 
-                $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$d->serial_no'");
-                $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$d->serial_no'");
-                $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$d->serial_no'");
-                $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$d->serial_no'");
-                $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$d->serial_no'");
-                
+                $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+
                 $data['total_vs'] = $vatable_sales;
                 $data['total_zr'] = $zero_rated_sales;
                 $data['total_zra'] = $zero_rated_ecozones;
@@ -6229,11 +6229,11 @@ public function print_BS_new(){
                 //     $h++;
                 // }
 
-                $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$d->serial_no'");
-                $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$d->serial_no'");
-                $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$d->serial_no'");
-                $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$d->serial_no'");
-                $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$d->serial_no'");
+                $vatable_sales= $this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                $zero_rated_sales= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                $zero_rated_ecozones= $this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                $vat_on_sales= $this->super_model->select_sum_where("sales_adjustment_details","vat_on_sales","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
+                $ewt= $this->super_model->select_sum_where("sales_adjustment_details","ewt","serial_no='$d->serial_no' AND sales_adjustment_id='$d->sales_adjustment_id'");
 
                 //  $sum_vatable_sales=array_sum($vatable_sales_bs);
                 //  $sum_vat_on_sales=array_sum($vat_on_sales_bs);
@@ -7661,7 +7661,7 @@ public function upload_sales_adjustment_test(){
         $data['total_sub'][]='';
   
         for($x=0;$x<$count;$x++){
-            $invoice[]=$this->super_model->custom_query_single('invoice_no',"SELECT * FROM sales_adjustment_details sad  INNER JOIN bs_head_adjustment bha ON bha.invoice_no=sad.serial_no WHERE bha.invoice_no='$invoice_no_exp[$x]'");
+            $invoice[]=$this->super_model->custom_query_single('invoice_no',"SELECT * FROM sales_adjustment_details sad INNER JOIN bs_head_adjustment bha ON bha.invoice_no=sad.serial_no WHERE bha.invoice_no='$invoice_no_exp[$x]'");
             if(array_key_exists($invoice_no_exp[$x],$invoice)){
                 foreach($this->super_model->select_custom_where("bs_head_adjustment","invoice_no='".$invoice_no_exp[$x]."'") AS $p){
                     $data['address'][$x]=$p->address;
