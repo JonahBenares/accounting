@@ -151,8 +151,8 @@
                             //pdf.addPage(PDF_Width, PDF_Height);
                             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                            
-                            var fname = "OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf";
-                            pdf.save("OR_CENPRI_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf");
+                            var fname = "OR_CENPRIASP_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf";
+                            pdf.save("OR_CENPRIASP_"+stl_id+"_"+ref_no+"_"+billing_month+"_"+dateuploaded+".pdf");
                            
                            
                                     $.ajax({
