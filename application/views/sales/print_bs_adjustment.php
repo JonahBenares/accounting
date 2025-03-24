@@ -205,7 +205,7 @@
                             <input type="hidden" id="invoice_no" name="invoice_no[]" class="form-control" value="<?php echo $serial_no[$y]; ?>">
                         </tr> 
                         <?php } $h++; } $x++; } } ?>
-                        <?php if($total_sub <=10 && $total_sub_h <=10){ ?>
+                        <?php if(($total_sub <=14 && $total_sub_h <=15) || ($total_sub !=1 && $total_sub_h !=1)){ ?>
                         <tr>
                             <td class="p-r-10 p-b-5"><b>TOTAL AMOUNT</b></td>
                             <td class="p-r-10 p-b-5 bor-btm" align="right"></td>
