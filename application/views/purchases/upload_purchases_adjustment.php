@@ -219,6 +219,85 @@ if(!empty($sales_id)){
     </section>
 </div>
 <script type="text/javascript">
+$(document).ready(function() {
+    $("#ddArea").on("dragover", function() {
+        $(this).addClass("drag_over");
+        return false;
+    });
+
+    $("#ddArea").on("dragleave", function() {
+        $(this).removeClass("drag_over");
+        return false;
+    });
+
+    $("#ddArea").on("click", function(e) {
+        file_explorer();
+    });
+
+    $("#ddArea").on("drop", function(e) {
+        e.preventDefault();
+        $(this).removeClass("drag_over");
+        var formData = new FormData();
+        var files = e.originalEvent.dataTransfer.files;
+        adjust_identifier = document.getElementById("adjust_identifier").value;
+        for (var i = 0; i < files.length; i++) {
+            formData.append("file[]", files[i]);
+            formData.append('adjust_identifier', adjust_identifier);
+        }
+        uploadmultipleFiles(formData); 
+    });
+
+    function file_explorer() {
+        document.getElementById("selectfile").click();
+        document.getElementById("selectfile").onchange = function() {
+            files = document.getElementById("selectfile").files;
+            adjust_identifier = document.getElementById("adjust_identifier").value;
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formData.append("file[]", files[i]);
+                formData.append('adjust_identifier', adjust_identifier);
+            }
+            uploadmultipleFiles(formData); 
+        };
+    }
+
+    function uploadmultipleFiles(form_data) {
+        $(".loading").removeClass("d-none").addClass("d-block");
+        var loc= document.getElementById("baseurl").value;
+        var identifier= document.getElementById("adjust_identifier").value;
+        var redirect = loc+"purchases/display_upload_purchase_adjust";
+        $.ajax({
+            url: redirect,
+            method: "POST",
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function(){
+                // document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("alt").style.display = 'block';  
+                document.getElementById("alert_error").style.display = 'none';  
+                document.getElementById("selectfile").disabled = true;
+            },
+            success: function(output) {
+                if(output=='error'){
+                    $(".loading").removeClass("d-block").addClass("d-none");
+                    document.getElementById("selectfile").disabled = false;
+                    document.getElementById("alt").style.display = 'none';  
+                    document.getElementById("selectfile").value = '';
+                    document.getElementById("alert_error").style.display = 'block';  
+                }else{
+                    $(".loading").removeClass("d-block").addClass("d-none");
+                    $("#alt").hide();
+                    window.location=loc+'purchases/upload_purchases_adjustment/'+output;
+                    //$("#showThumb").append(data);
+                    //alert(output);
+                }
+            }
+        });
+    }
+});
+
     var  z = 1;
     $("body").on("click", ".addUpload", function() {
         z++;
@@ -240,14 +319,17 @@ if(!empty($sales_id)){
     });
 
     window.onload = function(){
-        var counter = document.getElementById("counter").value;
-        for(var a=1;a<=counter;a++){
-            $("#adjust-"+a).dataTable({
-                order: [[2, 'asc']],
-                "scrollX": true,
-            });
+        var counterElement = document.getElementById("counter");
+        if (counter) {
+            var counter = counterElement.value;
+            for(var a=1;a<=counter;a++){
+                $("#adjust-"+a).dataTable({
+                    order: [[2, 'asc']],
+                    "scrollX": true,
+                });
+            }
+            document.getElementById("selectfile").disabled = true;
         }
-        document.getElementById("selectfile").disabled = true;
     }
 </script>      
                                        
