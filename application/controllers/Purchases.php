@@ -3674,4 +3674,18 @@ class Purchases extends CI_Controller {
         // header('Content-Disposition: attachment; filename="Purchase Wesm Transcation Adjustment.xlsx"');
         //readfile($exportfilename);
     }
+    public function purchases_wesm_merge(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('purchases/purchases_wesm_merge');
+        $this->load->view('template/footer');
+    }
+
+    public function purchases_wesm_adjustment_merge(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('purchases/purchases_wesm_adjustment_merge');
+        $this->load->view('template/footer');
+    }
 }
+

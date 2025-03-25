@@ -2404,3 +2404,5 @@ table tfoot {
   line-height: 1.3;
   letter-spacing: 2;
 }
+
+.main-sidebar .sidebar-menu li.menu-header{background: #93a0ffd9;color:white;}

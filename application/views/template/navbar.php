@@ -151,6 +151,7 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_collection">Upload Collection</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_list">Collection List</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_list_merge">Collection List Merge</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -206,6 +207,7 @@
                     <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_adjustment">Adjustment</a></li> -->
                 </ul>
             </li>
+
             <li class="menu-header">Purchases</li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
@@ -281,6 +283,16 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reserve/reserve_wesm">Main</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>WESM Transaction Merge</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm_merge">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment_merge">Adjustment</a></li>
+                </ul>
+            </li>
             <li class="menu-header">Report</li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>BIR</span></a>
@@ -291,12 +303,22 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/cwht_summary">Creditable Withholding Tax Summary</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Collection Report</span></a> 
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/collection_report">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_collection_report">Reserve</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/collection_report_merge">Main Merge</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_collection_report_merge">Reserve Merge</a></li>
+                </ul>
+            </li>
+            <!-- <li>
                 <a href="<?php echo base_url(); ?>reports/collection_report" ><i data-feather="layout"></i><span>Collection Report</span></a>
             </li>
             <li>
                 <a href="<?php echo base_url(); ?>reports/reserve_collection_report" ><i data-feather="layout"></i><span>Reserve Collection Report</span></a>
-            </li>
+            </li> -->
+           
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Ledger</span></a>
                 <ul class="dropdown-menu">
@@ -319,68 +341,72 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/ss_ledger">Supplier Subsidiary Ledger</a></li>
                 </ul>
             </li>
-             <li class="dropdown">
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Adjustment Billing Statement</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/adjustment_sales">Sales</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/adjustment_purchases">Purchases</a></li>
                 </ul>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Transaction</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all">Sales</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all">Purchases</a></li>
-                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_all">Reserve</a></li> -->
                 </ul>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Reserve Transaction</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_sales_all">Sales</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_all">Purchases </a></li>
                 </ul>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Adjustment Transaction</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all_adjustment">Sales</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all_adjustment">Purchases </a></li>
                 </ul>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Unpaid Invoices</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_sales">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_salesadj">Adjustment </a></li>
                 </ul>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of All Unpaid Reserve Invoices</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_reserve_sales">Main</a></li>
-                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_salesadj">Adjustment </a></li> -->
                 </ul>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Sales Total EWT Variance</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_main_ewt_variance">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_adj_ewt_variance">Adjustment</a></li>
                 </ul>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Reserve Sales Total EWT Variance</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/res_sales_main_ewt_variance">Main</a></li>
-                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_adj_ewt_variance">Adjustment</a></li> -->
                 </ul>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <!-- <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Purchases Total Amount Variance</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance">Adjustment</a></li>
+                </ul>
+            </li> -->
+            <!-- <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Summary of Purchases Total Amount Variance Merge</span></a> 
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance_merge">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance_merge">Adjustment</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -388,9 +414,52 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_main_total_variance">Main</a></li>
                 </ul>
+            </li> -->
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Sales Report</span></a>
+                <ul class="dropdown-menu">
+                
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/adjustment_sales">Summary of Adjustment Billing Statement</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all">Summary of All Transaction</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_sales_all">Summary of All Reserve Transaction</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all_adjustment">Summary of All Adjustment Transaction</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Purchases Report</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/adjustment_purchases">Summary of Adjustment Billing Statement</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all">Summary of All Transaction</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_all">Summary of All Reserve Transaction</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_all_adjustment">Summary of All Adjustment Transaction</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Main Report</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_sales">Summary of All Unpaid Invoices</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_reserve_sales">Summary of All Unpaid Reserve Invoices</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_main_ewt_variance">Summary of Sales Total EWT Variance</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/res_sales_main_ewt_variance">Summary of Reserve Sales Total EWT Variance</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance">Summary of Purchases Total Amount Variance</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance_merge">Summary of Purchases Total Amount Variance Merge</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_main_total_variance">Summary of Reserve Purchases Total Amount Variance</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Adjustment Report</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_salesadj">Summary of All Unpaid Invoices</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_adj_ewt_variance">Summary of Sales Total EWT Variance</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance">Summary of Purchases Total Amount Variance</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance_merge">Summary of Purchases Total Amount Variance Merge</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_ledger">Purchases Ledger</a></li>
+                </ul>
             </li>
             <br><br>
             <br>
+
         </ul>
     </aside>
 </div>

@@ -9693,4 +9693,27 @@ class Reports extends CI_Controller {
         $objWriter->save('php://output');
 
     }
+
+    public function purchases_main_total_variance_merge(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/purchases_main_total_variance_merge');
+        $this->load->view('template/footer');
+    }
+
+    public function purchases_adj_total_variance_merge(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/purchases_adj_total_variance_merge');
+        $this->load->view('template/footer');
+    }
+    public function collection_report_merge(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('reports/collection_report_merge');
+        $this->load->view('template/footer');
+    }
+
+
 }
+
