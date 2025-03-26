@@ -7385,7 +7385,7 @@ public function upload_sales_adjustment_test(){
     }
 
   
-     public function bulk_invoicing(){
+    public function bulk_invoicing(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $identifier_code=$this->generateRandomString();
@@ -7411,6 +7411,14 @@ public function upload_sales_adjustment_test(){
         $this->load->view('sales/upload_bulk_invoicing', $data);
         $this->load->view('template/footer');
     }
+
+    public function bulk_invoicing_main(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/upload_bulk_invoicing_main');
+        $this->load->view('template/footer');
+    }
+
 
     public function cancel_sales_invoicing(){
         $due_date = $this->input->post('due_date');
@@ -9349,22 +9357,6 @@ public function upload_sales_adjustment_test(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $this->load->view('sales/collection_list_merge');
-        $this->load->view('template/footer');
-    }
-
-    public function upload_sales_merge()
-    {
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $this->load->view('sales/upload_sales_merge');
-        $this->load->view('template/footer');
-    }
-
-    public function sales_wesm_merge()
-    {
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $this->load->view('sales/sales_wesm_merge');
         $this->load->view('template/footer');
     }
 }
