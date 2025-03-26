@@ -9351,4 +9351,20 @@ public function upload_sales_adjustment_test(){
         $this->load->view('sales/collection_list_merge');
         $this->load->view('template/footer');
     }
+
+    public function upload_sales_merge()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/upload_sales_merge');
+        $this->load->view('template/footer');
+    }
+
+    public function sales_wesm_merge()
+    {
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/sales_wesm_merge');
+        $this->load->view('template/footer');
+    }
 }
