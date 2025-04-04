@@ -153,7 +153,6 @@ if(!empty($sales_id)){
                                                 <th width="3%" align="center" style="background:rgb(245 245 245)">
                                                     <!-- <a href="" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple"><span class="fas fa-print mr-1 mt-1 mb-1"></span></a> -->
                                                     <?php if($saved==1){ ?>
-
                                                     <center><button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button></center><br>
                                                     <input class="form-control" type="checkbox" id="select-all">
                                                     <input type='hidden'class="form-control" type="checkbox" id="select-all">

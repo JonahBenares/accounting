@@ -9344,27 +9344,4 @@ public function upload_sales_adjustment_test(){
         );
         $this->super_model->update_custom_where("collection_reserve_details", $data_update, "series_number='$series_number' AND settlement_id='$settlement_id' AND reference_no='$reference_no' AND res_collection_id='$res_collection_id'");
     }
-    public function collection_list_merge()
-    {
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $this->load->view('sales/collection_list_merge');
-        $this->load->view('template/footer');
-    }
-
-    public function upload_sales_merge()
-    {
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $this->load->view('sales/upload_sales_merge');
-        $this->load->view('template/footer');
-    }
-
-    public function sales_wesm_merge()
-    {
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $this->load->view('sales/sales_wesm_merge');
-        $this->load->view('template/footer');
-    }
 }

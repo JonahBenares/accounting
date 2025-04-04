@@ -125,7 +125,7 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales_adjustment">Adjustment</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_sales_merge">Merge</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>salesmerge/upload_sales_merge">Merge</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -196,7 +196,7 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_adjustment">Adjustment</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_merge">Merge</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>salesmerge/sales_wesm_merge">Merge</a></li>
                 </ul>
             </li>
             <li class="dropdown">
