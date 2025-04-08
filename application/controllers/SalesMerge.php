@@ -1458,12 +1458,6 @@ class SalesMerge extends CI_Controller {
         $id=$this->uri->segment(3);
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
-        
-            $vatable_sales_bs=array();
-            $vat_on_sales_bs=array();
-            $ewt_bs=array();
-            $zero_rated_ecozone_bs=array();
-            $zero_rated_bs=array();
                 foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details sd INNER JOIN sales_merge_transaction_head sh ON sd.sales_merge_id=sh.sales_merge_id WHERE sales_merge_detail_id='$id'") AS $d){
                 $data['stl_id']=$d->short_name;
                 $data['address']=$this->super_model->select_column_where("participant","registered_address","billing_id",$d->billing_id);
@@ -1491,29 +1485,17 @@ class SalesMerge extends CI_Controller {
                 $data['billing_month'] = date('my',strtotime($d->transaction_date));
                 $data['date_uploaded'] = date('Ymd',strtotime($d->create_date));
                 $data['refno'] = preg_replace("/[^0-9]/", "",$reference_number);
-                $h=0;
-                foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
-                    $data['participant_id_sub'][$h]=$s->participant_id;
-                    $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","vatable_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","vat_on_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","ewt","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","zero_rated_ecozones","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","zero_rated","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $h++;
-                }
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
 
-            $sum_vatable_sales=array_sum($vatable_sales_bs);
-            $sum_zero_rated_ecozone=array_sum($zero_rated_ecozone_bs);
-            $sum_vat_on_sales=array_sum($vat_on_sales_bs);
-            $sum_ewt=array_sum($ewt_bs);
-            $sum_zero_rated=array_sum($zero_rated_bs);
-            
-            $data['total_vs']=$d->vatable_sales + $sum_vatable_sales;
-            $data['total_zr']=$d->zero_rated_sales + $sum_zero_rated;
-            $data['total_zra']=$d->zero_rated_ecozones + $sum_zero_rated_ecozone;
-            $data['total_vos']=$d->vat_on_sales + $sum_vat_on_sales;
-            $data['total_ewt']=$d->ewt + $sum_ewt;
+                    $data['total_vs']=$vatable_sales;
+                    $data['total_zr']=$zero_rated_sales;
+                    $data['total_zra']=$zero_rated_ecozones;
+                    $data['total_vos']=$vat_on_sales;
+                    $data['total_ewt']=$ewt;
             }
         $this->load->view('sales_merge/sales_wesm_merge_pdf_si',$data);
     }
@@ -1585,29 +1567,11 @@ class SalesMerge extends CI_Controller {
                 $billing_month = date('my',strtotime($d->transaction_date));
                 $date_uploaded = date('Ymd',strtotime($d->create_date));
                 $refno = preg_replace("/[^0-9]/", "",$reference_number);
-                $h=0;
-                foreach($this->super_model->select_custom_where("subparticipant","participant_id='$participant_id'") AS $s){
-                    $data['participant_id_sub'][$h]=$s->participant_id;
-                    $billing_id=$this->super_model->select_column_where("participant","billing_id","participant_id",$s->sub_participant);
-                    $vatable_sales_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","vatable_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $vat_on_sales_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","vat_on_sales","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $ewt_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","ewt","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $zero_rated_ecozone_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","zero_rated_ecozones","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $zero_rated_bs[]=$this->super_model->select_column_custom_where("sales_merge_transaction_details","zero_rated","serial_no='$d->serial_no' AND billing_id='$billing_id' AND sales_merge_id='$d->sales_merge_id'");
-                    $h++;
-                }
-
-                $sum_vatable_sales=array_sum($vatable_sales_bs);
-                $sum_zero_rated_ecozone=array_sum($zero_rated_ecozone_bs);
-                $sum_vat_on_sales=array_sum($vat_on_sales_bs);
-                $sum_ewt=array_sum($ewt_bs);
-                $sum_zero_rated=array_sum($zero_rated_bs);
-                
-                $total_vs=$d->vatable_sales + $sum_vatable_sales;
-                $total_zr=$d->zero_rated_sales + $sum_zero_rated;
-                $total_zra=$d->zero_rated_ecozones + $sum_zero_rated_ecozone;
-                $total_vos=$d->vat_on_sales + $sum_vat_on_sales;
-                $total_ewt=$d->ewt + $sum_ewt;
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
 
                 $data['details'][]=array(
                     'sales_id'=>$d->sales_merge_id,
@@ -1623,11 +1587,11 @@ class SalesMerge extends CI_Controller {
                     'billing_month'=>$billing_month,
                     'date_uploaded'=>$date_uploaded,
                     'refno'=>$refno,
-                    'total_vs'=>$total_vs,
-                    'total_zr'=>$total_zr,
-                    'total_zra'=>$total_zra,
-                    'total_vos'=>$total_vos,
-                    'total_ewt'=>$total_ewt,
+                    'total_vs'=>$vatable_sales,
+                    'total_zr'=>$zero_rated_sales,
+                    'total_zra'=>$zero_rated_ecozones,
+                    'total_vos'=>$vat_on_sales,
+                    'total_ewt'=>$ewt,
                     // 'total_sales'=>$total_sales,
                     // 'net_of_vat'=>$net_of_vat,
                     // 'total_amount_due'=>$total_amount_due,
@@ -1750,12 +1714,11 @@ class SalesMerge extends CI_Controller {
                 $billing_month = date('my',strtotime($d->transaction_date));
                 $date_uploaded = date('Ymd',strtotime($d->create_date));
                 $refno = preg_replace("/[^0-9]/", "",$reference_number);
-
-                $vatable_sales_bs=$this->super_model->select_sum_where("sales_merge_transaction_details","vatable_sales","serial_no='$d->serial_no' AND sales_merge_id='$d->sales_merge_id'");
-                $vat_on_sales_bs=$this->super_model->select_sum_where("sales_merge_transaction_details","vat_on_sales","serial_no='$d->serial_no' AND sales_merge_id='$d->sales_merge_id'");
-                $ewt_bs=$this->super_model->select_sum_where("sales_merge_transaction_details","ewt","serial_no='$d->serial_no' AND sales_merge_id='$d->sales_merge_id'");
-                $zero_rated_ecozone_bs=$this->super_model->select_sum_where("sales_merge_transaction_details","zero_rated_ecozones","serial_no='$d->serial_no' AND sales_merge_id='$d->sales_merge_id'");
-                $zero_rated_bs=$this->super_model->select_sum_where("sales_merge_transaction_details","zero_rated_sales","serial_no='$d->serial_no' AND sales_merge_id='$d->sales_merge_id'");
+                $vatable_sales_bs = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $vat_on_sales_bs = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $ewt_bs = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $zero_rated_ecozone_bs = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $zero_rated_bs = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
 
                 $total_vs=$vatable_sales_bs;
                 $total_zr=$zero_rated_bs;

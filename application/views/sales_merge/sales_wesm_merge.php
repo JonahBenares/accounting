@@ -174,7 +174,9 @@
                                                     </td>
                                                      <?php if(!empty($s['serial_no'])) {?>
                                                       <td>
+                                                        <?php if($previousBS=='' || $previousBS!=$s['serial_no']){ ?>
                                                         <a href="<?php echo base_url();?>salesmerge/sales_wesm_merge_pdf_si/<?php echo $s['sales_detail_id']; ?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                        <?php } ?>  
                                                     </td>
                                                      <?php }else{ ?>  
                                                     <td></td>
