@@ -76,7 +76,7 @@ if(!empty($sales_id)){
                                 </center>
                             </div>  
                             <form method="POST" id="upload_wesm">        
-                                <div id="upload" <?php echo (!empty($sales_id) ? 'style="display:none"' : ''); ?>>
+                                <div id="upload" <?php echo (empty($sales_id) ? 'style="display:none"' : ''); ?>>
                                     <br>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 offset-md-3 offset-lg-3">
