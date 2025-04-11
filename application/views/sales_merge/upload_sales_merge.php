@@ -15,7 +15,7 @@ if(!empty($sales_id)){
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="p-0">Upload WESM Transaction - Sales
+                            <h4 class="p-0">Upload WESM Transaction - Sales (Merge)
                             </h4>
                         </div>
                         <div class="card-body">
@@ -135,7 +135,7 @@ if(!empty($sales_id)){
                                             <tr>
                                                 <th width="3%" align="center" style="background:rgb(245 245 245)">
                                                     <?php if($saved==1){ ?>
-                                                        <center><button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printMultiple()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button></center><br>
+                                                        <center><button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Print Multiple" onclick="printMultipleMerge()"><span class="fas fa-print mr-1 mt-1 mb-1"></span></button></center><br>
                                                         <input class="form-control" type="checkbox" id="select-all">
                                                         <input type='hidden'class="form-control" type="checkbox" id="select-all">
                                                     <?php } ?>
@@ -161,19 +161,22 @@ if(!empty($sales_id)){
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php 
-                                                foreach($details AS $d){ 
-                                                    if(!empty($d['sales_id'])){ 
+                                            <?php
+                                                 if(!empty($details)){
+                                                    $x=1;
+                                                    $previousBS = '';
+                                                    foreach($details AS $d){ 
+                                                        $showCheckbox = ($previousBS != $d['serial_no']);
                                             ?>
                                             <tr <?php echo ($d['billing_id']=='') ? 'class="bg-red"' : ''; ?>>
                                                 <td align="center" >
-                                                     <span hidden><?php echo $d['billing_id'];?></span>
-                                                    <?php if($saved==1){ ?>
-                                                    <input type="checkbox" class="form-control multiple_print" name="multiple_print[]" id="print_checked" style="width: 25px;" value="<?php echo $identifier_code.','.$d['sales_detail_id'].','.$reference_number; ?>">
-                                                    <?php } ?>
-
+                                                     <?php if($showCheckbox){ ?>
+                                                        <span hidden><?php echo $d['billing_id'];?></span>
+                                                        <?php if($saved==1){ ?>
+                                                        <input type="checkbox" class="form-control multiple_print" name="multiple_print[]" id="print_checked" style="width: 25px;" value="<?php echo $identifier_code.','.$d['sales_detail_id'].','.$reference_number; ?>">
+                                                    <?php } } ?>
                                                 </td>
-                                                <td><center><?php echo $d['item_no'];?></center></td>
+                                                <td><center><?php echo $d['item_no']; ?></center></td>
                                                 <td><?php echo $d['serial_no'];?></td>
                                                 <td><?php echo $d['reference_no'];?></td>
                                                 <td><?php echo $d['short_name'];?></td>
@@ -192,7 +195,7 @@ if(!empty($sales_id)){
                                                 <td align="right">(<?php echo $d['ewt'];?>)</td>
                                                 <td align="right"><?php echo $d['total_amount'];?></td>
                                             </tr>
-                                           <?php } } ?>
+                                           <?php $x++; $previousBS = $d['serial_no']; } } ?>
                                         </tbody>
                                     </table>
                                 </form>

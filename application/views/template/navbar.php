@@ -192,6 +192,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_invoicing_main">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>salesmerge/bulk_invoicing_merge">Merge</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/bulk_invoicing">Adjustment</a></li>
                 </ul>
             </li>

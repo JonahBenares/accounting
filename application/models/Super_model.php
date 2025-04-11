@@ -419,4 +419,11 @@ class super_model extends CI_Model
         $rows=$query->num_rows();
         return $rows;
     }*/
+
+    public function select_row_where_ordered($table, $column, $value, $order_by) {
+        $this->db->where($column, $value);
+        $this->db->order_by($order_by);
+        $query = $this->db->get($table);
+        return $query->result();
+    }
 }

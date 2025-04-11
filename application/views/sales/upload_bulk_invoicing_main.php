@@ -3,7 +3,7 @@
     <section class="section">
         <div class="section-body">
             <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-sm-6">
+                <div class="col-12 col-md-12 col-lg-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>Bulk Upload - Invoicing of Sales Adjustment</h4>
@@ -11,16 +11,39 @@
                         <div class="card-body">
                             <form id='bulkinvoicing'> 
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4 offset-lg-2" >
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
                                         <div class="form-group">
-                                            <label>Due Date</label>
-                                            <select class="form-control select2" name="due_date" id="due_date">
-                                                <option value=''>-- Select Due Date --</option>
+                                            <label>Year</label>
+                                            <select class="form-control select2" name="year" id="year">
+                                                <option value=''>-- Select Year --</option>
                                             </select>
-                                            <!-- <input type="text" class="form-control" name='due_date' id="due_date" value="" readonly> -->
                                         </div>
                                     </div>
-
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label>Transaction Reference</label>
+                                            <select class="form-control select2" name="transaction_ref" id="transaction_ref">
+                                                <option value=''>-- Select Transaction Reference --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <div class="form-group">
+                                            <label>Due Date</label>
+                                            <?php if(empty($due_date)){ ?>
+                                            <select class="form-control select2" name="due_date" id="due_date">
+                                                <option value=''>-- Select Due Date --</option>
+                                                <?php 
+                                                    foreach($due AS $r){
+                                                ?>
+                                                <option value="<?php echo $r->due_date; ?>"><?php echo $r->due_date; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                            <?php } else { ?>
+                                            <input type="text" class="form-control" name='due_date' id="due_date" value="<?php echo $due_date ?>" readonly>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label><br></label>
@@ -61,7 +84,6 @@
                                             <th width="10%">Billing ID</th>
                                             <th width="10%">Actual Billing ID</th>
                                             <th width="10%">Invoice No</th>
-                                            <th width="10%">CSR Number</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -70,7 +92,6 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                    		<td></td>
                                     	</tr>
                                     </tbody>
                                 </table>

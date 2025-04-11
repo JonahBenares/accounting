@@ -7,7 +7,7 @@
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
                             <div class="card-header">
-                                <h4>WESM Transaction - Merge Sales</h4>
+                                <h4>WESM Transaction - Sales (Merge)</h4>
                             </div>
                             <div class="card-body">
                                 <form method="POST">
@@ -158,13 +158,14 @@
                                             <tbody>
                                                 <?php 
                                                     if(!empty($details)){
-                                                    $x=1;
+                                                     $x=1;
                                                     $previousBS = '';
                                                     foreach($details AS $s){ 
+                                                        $showCheckbox = ($previousBS != $s['serial_no']);
                                                 ?>
                                                 <tr>
                                                     <td align="center">
-                                                        <?php if($previousBS=='' || $previousBS!=$s['serial_no']){ ?>
+                                                        <?php if($showCheckbox){ ?>
                                                         <input type="checkbox" class="form-control multiple_print" name="multiple_print[]" id="print_checked" style="width: 25px;" value="<?php echo $identifier_code.','.$s['serial_no']; ?>">
                                                         <?php } ?>  
                                                     </td>

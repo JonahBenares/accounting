@@ -7415,7 +7415,26 @@ public function upload_sales_adjustment_test(){
     public function bulk_invoicing_main(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('sales/upload_bulk_invoicing_main');
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $due_date=$this->uri->segment(3);
+        $data['due_date'] = $due_date;
+        $identifier=$this->uri->segment(4);
+        $data['identifier']=$this->uri->segment(4);
+        $data['saved']=$this->super_model->select_column_where("sales_adjustment_details","saved_bulk_invoicing","bulk_invoicing_identifier",$identifier);
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_adjustment_id FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' ");
+        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE saved='1' ORDER BY due_date ASC");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE due_date='$due_date' AND saved='1' AND bulk_invoicing_identifier ='$identifier'") AS $d){
+            $data['details'][]=array(
+                'sales_detail_id'=>$d->sales_detail_id,
+                'sales_id'=>$d->sales_id,
+                'reference_number'=>$d->reference_number,
+                'billing_id'=>$d->billing_id,
+                'actual_billing_id'=>$d->actual_billing_id,
+                'serial_no'=>$d->serial_no,
+            );
+        }
+        $this->load->view('sales/upload_bulk_invoicing_main', $data);
         $this->load->view('template/footer');
     }
 
