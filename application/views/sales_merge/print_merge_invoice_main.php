@@ -84,7 +84,7 @@
 /*            background: #7fcf7f8c;*/
         font-size: 12px;
         line-height: 15px;
-        width: 200px;
+        width: 280px;
         font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
         font-weight: 400;
         font-style: normal; 
@@ -205,7 +205,7 @@
 /*            background: #7fcf7f8c;*/
             font-size: 12px;
             line-height: 15px;
-            width: 200px;
+            width: 280px;
             font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
             font-weight: 400;
             font-style: normal; 
