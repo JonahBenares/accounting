@@ -7384,7 +7384,137 @@ public function upload_sales_adjustment_test(){
             //echo $series_number."-".$settlement_id."-".$reference_no."-".$collection_id;
     }
 
-  
+    public function bulk_invoicing_main(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $identifier_code=$this->generateRandomString();
+        $data['identifier_code']=$identifier_code;
+        $yeardisp=$this->uri->segment(3);
+        $reference=$this->uri->segment(4);
+        $due_date=$this->uri->segment(5);
+        $identifier=$this->uri->segment(6);
+        $data['year_disp'] = $yeardisp;
+        $data['reference_number'] = $reference;
+        $data['due_date'] = $due_date;
+        $data['identifier']=$this->uri->segment(6);
+        $sql="";
+
+        if($yeardisp!='null'){
+            $sql.= "YEAR(billing_to) = '$yeardisp'  AND ";
+        } if($reference!='null'){
+             $sql.= "reference_number = '$reference' AND "; 
+        } if($due_date!='null'){
+            $sql.= "due_date = '$due_date' AND ";
+        }
+     
+        $query=substr($sql,0,-4);
+        $qu = "saved='1' AND bulk_invoicing_identifier ='$identifier' AND ".$query;
+
+        $data['saved']=$this->super_model->select_column_where("sales_transaction_details","saved_bulk_invoicing","bulk_invoicing_identifier",$identifier);
+        $data['years'] = $this->super_model->custom_query("SELECT DISTINCT YEAR(billing_to) AS year FROM sales_transaction_head WHERE saved='1' ORDER BY year DESC");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' ORDER BY due_date ASC");
+        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' ORDER BY due_date ASC");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $qu") AS $d){
+            $data['details'][]=array(
+                'sales_detail_id'=>$d->sales_detail_id,
+                'sales_id'=>$d->sales_id,
+                'reference_number'=>$d->reference_number,
+                'billing_id'=>$d->billing_id,
+                'actual_billing_id'=>$d->actual_billing_id,
+                'serial_no'=>$d->serial_no,
+            );
+        }
+        $this->load->view('sales/upload_bulk_invoicing_main', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function cancel_main_sales_invoicing(){
+        $main_identifier = $this->input->post('main_identifier');
+        $data_main = array(
+            'serial_no'=>Null,
+            'bulk_invoicing_identifier'=>Null,
+        );
+        $this->super_model->update_custom_where("sales_transaction_details", $data_main, "bulk_invoicing_identifier='$main_identifier'");
+    }
+
+    public function upload_bulk_invoicing_main(){
+        $year = $this->input->post('year');
+        $reference = $this->input->post('reference');
+        $due = $this->input->post('due');
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $error_ext=0;
+        if(!empty($_FILES['doc']['name'])){
+            $exc= basename($_FILES['doc']['name']);
+            $exc=explode('.',$exc);
+            $ext1=$exc[1];
+            if($ext1=='php' || $ext1!='xlsx'){
+                $error_ext++;
+            }else{
+                $filename1='bulk_upload_sales_main.'.$ext1;
+                if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
+                     $this->readExcel_bulkinvoicing_main($year,$reference,$due);
+                }
+            }
+        }
+    }
+
+    public function readExcel_bulkinvoicing_main($year,$reference,$due){
+        $objPHPExcel = new Spreadsheet();
+        $inputFileName =realpath(APPPATH.'../uploads/excel/bulk_upload_sales_main.xlsx');
+           try {
+                $inputFileType = io_factory::identify($inputFileName);
+                $objReader = io_factory::createReader($inputFileType);
+            
+       
+                $objPHPExcel = $objReader->load($inputFileName);
+            } 
+        catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow();
+        for($x=2;$x<=$highestRow;$x++){
+            $identifier = $this->input->post('identifier');
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
+            $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
+            $invoice_no = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
+
+            $sql="";
+            if($year!='null'){
+                $sql.= "YEAR(billing_to) = '$year'  AND ";
+            } if($reference!='null'){
+                 $sql.= "reference_number = '$reference' AND "; 
+            } if($due!='null'){
+                $sql.= "due_date = '$due' AND ";
+            }
+         
+            $query=substr($sql,0,-4);
+
+           $sales_id = array();
+            foreach ($this->super_model->select_custom_where('sales_transaction_head', "$query") as $dues) {
+                $sales_id[] = $dues->sales_id;
+            }
+
+            if (!empty($sales_id)) {
+                $salesid_str = "'" . implode("','", $sales_id) . "'";
+
+                $data_main = array(
+                    'serial_no' => $invoice_no,
+                    'bulk_invoicing_identifier' => $identifier,
+                );
+
+                $this->super_model->update_custom_where("sales_transaction_details",$data_main,"sales_id IN ($salesid_str) AND billing_id='$billing_id' AND actual_billing_id='$actual_billing_id'");
+            }
+        }
+    }
+
+    public function save_bulkinvoicing_main(){
+        $bulk_invoicing_identifier = $this->input->post('main_identifier');
+        $data_head = array(
+            'saved_bulk_invoicing'=>1
+        );
+        $this->super_model->update_custom_where("sales_transaction_details", $data_head, "bulk_invoicing_identifier='$bulk_invoicing_identifier'");
+    }
+
     public function bulk_invoicing(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -7411,33 +7541,6 @@ public function upload_sales_adjustment_test(){
         $this->load->view('sales/upload_bulk_invoicing', $data);
         $this->load->view('template/footer');
     }
-
-    public function bulk_invoicing_main(){
-        $this->load->view('template/header');
-        $this->load->view('template/navbar');
-        $identifier_code=$this->generateRandomString();
-        $data['identifier_code']=$identifier_code;
-        $due_date=$this->uri->segment(3);
-        $data['due_date'] = $due_date;
-        $identifier=$this->uri->segment(4);
-        $data['identifier']=$this->uri->segment(4);
-        $data['saved']=$this->super_model->select_column_where("sales_adjustment_details","saved_bulk_invoicing","bulk_invoicing_identifier",$identifier);
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_adjustment_id FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' ");
-        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE saved='1' ORDER BY due_date ASC");
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE due_date='$due_date' AND saved='1' AND bulk_invoicing_identifier ='$identifier'") AS $d){
-            $data['details'][]=array(
-                'sales_detail_id'=>$d->sales_detail_id,
-                'sales_id'=>$d->sales_id,
-                'reference_number'=>$d->reference_number,
-                'billing_id'=>$d->billing_id,
-                'actual_billing_id'=>$d->actual_billing_id,
-                'serial_no'=>$d->serial_no,
-            );
-        }
-        $this->load->view('sales/upload_bulk_invoicing_main', $data);
-        $this->load->view('template/footer');
-    }
-
 
     public function cancel_sales_invoicing(){
         $due_date = $this->input->post('due_date');
