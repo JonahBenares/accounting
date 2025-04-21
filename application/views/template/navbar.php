@@ -152,7 +152,17 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/upload_collection">Upload Collection</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_list">Collection List</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_list_merge">Collection List Merge</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>sales/collection_list_merge">Collection List Merge</a></li> -->
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i>
+                    <span>Merge Collected</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>salesmerge/upload_merge_collection">Upload Merge Collection</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>salesmerge/merge_collection_list">Merge Collection List</a></li>
                 </ul>
             </li>
             <li class="dropdown">

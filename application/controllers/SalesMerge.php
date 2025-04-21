@@ -462,8 +462,8 @@ class SalesMerge extends CI_Controller {
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details sd INNER JOIN sales_merge_transaction_head sh ON sd.sales_merge_id=sh.sales_merge_id $qu ORDER BY serial_no ASC") AS $d){
-                $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
-                $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                $series_number=$this->super_model->select_column_custom_where("merge_collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                $old_series_no=$this->super_model->select_column_custom_where("merge_collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
 
                 if(!empty($d->company_name)){
                     $comp_name=$d->company_name;
@@ -532,8 +532,8 @@ class SalesMerge extends CI_Controller {
                 foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details sd INNER JOIN sales_merge_transaction_head sh ON sd.sales_merge_id=sh.sales_merge_id $qu ORDER BY serial_no ASC") AS $d){
                     $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
                     $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
-                    $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
-                    $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                    $series_number=$this->super_model->select_column_custom_where("merge_collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
+                    $old_series_no=$this->super_model->select_column_custom_where("merge_collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                     if($sub_participant==0){
                     $data['details'][]=array(
                         'sales_detail_id'=>$d->sales_merge_detail_id,
@@ -1890,14 +1890,348 @@ class SalesMerge extends CI_Controller {
         $this->super_model->update_custom_where("sales_merge_transaction_details", $data_head, "bulk_invoicing_identifier='$bulk_invoicing_identifier'");
     }
 
-
-    public function collection_list_merge()
-    {
+    public function upload_merge_collection(){
+        $id=$this->uri->segment(3);
+        $data['collection_id'] = $id;
+        $data['collection']=array();
+        if(!empty($id)){
+            foreach($this->super_model->select_row_where("merge_collection_head", "merge_collection_id", $id) AS $h){
+                $data['saved']=$h->saved;
+                $data['collection_date']=$h->collection_date;
+            foreach($this->super_model->select_row_where("merge_collection_details","merge_collection_id",$h->merge_collection_id) AS $col){
+            $count_series=$this->super_model->count_custom_where("merge_collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id'");
+            $sum_amount= $this->super_model->select_sum_where("merge_collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id'");
+            $sum_zero_rated= $this->super_model->select_sum_where("merge_collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id'");
+            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("merge_collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id'");
+            $sum_vat = $this->super_model->select_sum_where("merge_collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id'");
+            $sum_ewt= $this->super_model->select_sum_where("merge_collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id'");
+                    $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+                    $data['collection'][]=array(
+                        "count_series"=>$count_series,
+                        "collection_details_id"=>$col->merge_collection_details_id,
+                        "collection_id"=>$col->merge_collection_id,
+                        "settlement_id"=>$col->settlement_id,
+                        "series_number"=>$col->series_number,
+                        "or_date"=>$col->or_date,
+                        "billing_remarks"=>$col->billing_remarks,
+                        "particulars"=>$col->particulars,
+                        "item_no"=>$col->item_no,
+                        "defint"=>$col->defint,
+                        "reference_no"=>$col->reference_no,
+                        "vat"=>$col->vat,
+                        "zero_rated"=>$col->zero_rated,
+                        "zero_rated_ecozone"=>$col->zero_rated_ecozone,
+                        "ewt"=>$col->ewt,
+                        "total"=>$col->total,
+                        "company_name"=>$col->buyer_fullname,
+                        "amount"=>$col->amount,
+                        "or_no_remarks"=>$col->or_no_remarks,
+                        "overall_total"=>$overall_total,
+                    );
+                }
+            }
+        }
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('sales_merge/collection_list_merge');
+        $this->load->view('sales_merge/upload_merge_collection', $data);
         $this->load->view('template/footer');
     }
 
+    public function add_merge_collection_head(){
+        $data=array(
+            "collection_date"=>$this->input->post('collection_date'),
+            "user_id"=>$_SESSION['user_id'],
+        );
+        $collection_id = $this->super_model->insert_return_id("merge_collection_head",$data);
+
+        echo $collection_id;
+    }
+
+    public function cancel_merge_collection(){
+        $collection_id = $this->input->post('collection_id');
+        $this->super_model->delete_where("merge_collection_head", "merge_collection_id", $collection_id);
+        $this->super_model->delete_where("merge_collection_details", "merge_collection_id", $collection_id);
+    }
+    
+    public function merge_collection_list(){
+        $date=$this->uri->segment(3);
+        $ref_no=$this->uri->segment(4);
+        $stl_id=$this->uri->segment(5);
+        $data['date'] = $date;
+        $data['ref_no'] = $ref_no;
+        $data['stl_id'] = $stl_id;
+        $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM merge_collection_head WHERE saved != '0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0'");
+        $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
+        $data['employees']=$this->super_model->select_all_order_by("users","fullname",'ASC');
+        $sql="";
+       
+
+        if($date!='null'){
+            $sql.= "ch.collection_date = '$date' AND ";
+        } if($ref_no!='null'){
+             $sql.= "cd.reference_no = '$ref_no' AND "; 
+        } if($stl_id!='null'){
+             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND ".$query;
+        $data['collection']=array();
+
+            foreach($this->super_model->custom_query("SELECT * FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE $qu") AS $col){
+            $count_series=$this->super_model->count_custom_where("merge_collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id' AND series_number='$col->series_number'");
+            $sum_amount= $this->super_model->select_sum_where("merge_collection_details","amount","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id' AND series_number='$col->series_number'");
+            $sum_zero_rated= $this->super_model->select_sum_where("merge_collection_details","zero_rated","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id' AND series_number='$col->series_number'");
+            $sum_zero_rated_ecozone= $this->super_model->select_sum_where("merge_collection_details","zero_rated_ecozone","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id' AND series_number='$col->series_number'");
+            $sum_vat = $this->super_model->select_sum_where("merge_collection_details","vat","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id' AND series_number='$col->series_number'");
+            $sum_ewt= $this->super_model->select_sum_where("merge_collection_details","ewt","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id' AND series_number='$col->series_number'");
+            $sum_def_int = $this->super_model->select_sum_where("merge_collection_details","defint","reference_no='$col->reference_no' AND settlement_id='$col->settlement_id' AND merge_collection_id='$col->merge_collection_id' AND series_number='$col->series_number'");
+            $overall_total=($sum_amount + $sum_zero_rated + $sum_zero_rated_ecozone + $sum_vat)-$sum_ewt;
+            $data['collection'][]=array(
+                "count_series"=>$count_series,
+                "collection_details_id"=>$col->merge_collection_details_id,
+                "collection_date"=>$col->collection_date,
+                "collection_id"=>$col->merge_collection_id,
+                "settlement_id"=>$col->settlement_id,
+                "series_number"=>$col->series_number,
+                "or_date"=>$col->or_date,
+                "billing_remarks"=>$col->billing_remarks,
+                "particulars"=>$col->particulars,
+                "item_no"=>$col->item_no,
+                "defint"=>$col->defint,
+                "reference_no"=>$col->reference_no,
+                "vat"=>$col->vat,
+                "zero_rated"=>$col->zero_rated,
+                "zero_rated_ecozone"=>$col->zero_rated_ecozone,
+                "ewt"=>$col->ewt,
+                "total"=>$col->total,
+                "company_name"=>$col->buyer_fullname,
+                "amount"=>$col->amount,
+                "or_no_remarks"=>$col->or_no_remarks,
+                "overall_total"=>$overall_total,
+            );
+            $data['details_id']=$col->merge_collection_details_id;
+    }
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales_merge/merge_collection_list', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function upload_bulk_merge_collection(){
+        $collection_id=$this->input->post('collection_id');
+        $dest= realpath(APPPATH . '../uploads/excel/');
+        $error_ext=0;
+        if(!empty($_FILES['doc']['name'])){
+            $exc= basename($_FILES['doc']['name']);
+            $exc=explode('.',$exc);
+            $ext1=$exc[1];
+            
+            if($ext1=='php'){
+                $error_ext++;
+            } else {
+                $filename1='bulkmergecollection.'.$ext1;
+                if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
+                     $this->readBulkMergeCollection($collection_id,$ext1);
+                } 
+            }
+        }
+    }
+
+    public function readBulkMergeCollection($collection_id,$doc_type){
+        $objPHPExcel = new Spreadsheet();
+
+        if($doc_type=='xlsx'){
+            $inputFileName =realpath(APPPATH.'../uploads/excel/bulkmergecollection.xlsx');
+        }else if($doc_type=='xlsm'){
+            $inputFileName =realpath(APPPATH.'../uploads/excel/bulkmergecollection.xlsm');
+        }
+       try {
+            $inputFileType = io_factory::identify($inputFileName);
+            $objReader = io_factory::createReader($inputFileType);
+            $objPHPExcel = $objReader->load($inputFileName);
+        } 
+
+        catch(Exception $e) {
+            die('Error loading file"'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+        }
+         
+        $objPHPExcel->setActiveSheetIndex(0);
+        $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+      
+        $data_head=array(
+            "date_uploaded"=>date('Y-m-d H:i:s'),
+        );
+        $this->super_model->update_where("merge_collection_head", $data_head, "merge_collection_id", $collection_id);
+        $a=1;
+        echo $highestRow;
+            for($x=6;$x<=$highestRow;$x++){
+                $remarks = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
+                if($remarks!='' ){
+                $particulars = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
+                $stl_id = str_replace(array('_FIT'), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
+                $buyer = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
+                $statement_no = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
+                $vatable_sales = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
+                $zero_rated = str_replace(array( '(', ')',','), '',$objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
+                $zero_rated_ecozone = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
+                $vat = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('I'.$x)->getFormattedValue());
+                $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('J'.$x)->getFormattedValue());
+                $total = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('K'.$x)->getFormattedValue());
+             
+                 $data_details = array(
+                        'merge_collection_id'=>$collection_id,
+                        'or_date'=>$this->super_model->select_column_where("merge_collection_head","collection_date","merge_collection_id",$collection_id),
+                        'item_no'=>$a,
+                        'billing_remarks'=>$remarks,
+                        'particulars'=>$particulars,
+                        'reference_no'=>rtrim($statement_no,"S"),
+                        'settlement_id'=>$stl_id,
+                        'buyer_fullname'=>$buyer,
+                        'amount'=>$vatable_sales,
+                        'vat'=>$vat,
+                        'zero_rated'=>$zero_rated,
+                        'zero_rated_ecozone'=>$zero_rated_ecozone,
+                        'ewt'=>$ewt,
+                        'total'=>$total,
+                    );
+                    $this->super_model->insert_into("merge_collection_details", $data_details);
+                    $a++;
+            }
+        }
+    }
+
+    public function save_all_merge_collection(){
+        $collection_id = $this->input->post('collection_id');
+        $data_head = array(
+            'saved'=>1,
+        );
+        $this->super_model->update_where("merge_collection_head",$data_head, "merge_collection_id", $collection_id);
+    }
+
+    public function print_merge_OR(){
+               $collection_id=$this->uri->segment(3);
+        $settlement_id=$this->uri->segment(4);
+        $reference_no=$this->uri->segment(5);
+        $data['ref_no'] = $reference_no;
+        $data['client']=$this->super_model->select_row_where("participant", "billing_id", $settlement_id);
+        $data['sum_amount']=$this->super_model->select_sum_where("merge_collection_details","amount","settlement_id='$settlement_id' AND merge_collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_vat']=$this->super_model->select_sum_where("merge_collection_details","vat","settlement_id='$settlement_id' AND merge_collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_ewt'] =  $this->super_model->select_sum_where("merge_collection_details", "ewt", "settlement_id='$settlement_id' AND merge_collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_zero_rated'] =  $this->super_model->select_sum_where("merge_collection_details", "zero_rated", "settlement_id='$settlement_id' AND merge_collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['sum_zero_rated_ecozone'] =  $this->super_model->select_sum_where("merge_collection_details", "zero_rated_ecozone", "settlement_id='$settlement_id' AND merge_collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['defint'] =  $this->super_model->select_sum_where("merge_collection_details", "defint", "settlement_id='$settlement_id' AND merge_collection_id='$collection_id' AND reference_no='$reference_no'");
+        $data['date'] =  $this->super_model->select_column_custom_where("merge_collection_details","or_date","settlement_id='$settlement_id' AND merge_collection_id='$collection_id' AND reference_no='$reference_no'");
+        $this->load->view('template/print_head');
+        $this->load->view('sales_merge/print_merge_OR',$data);
+    }
+
+    public function update_merge_seriesno(){
+        $ref_no=$this->input->post('reference_number');
+        $collection_id=$this->input->post('collection_id');
+        $new_series=$this->input->post('series_number');
+        $old_series=$this->input->post('old_series');
+        $settlement_id=$this->input->post('settlement_id');
+        $item_no=$this->input->post('item_no');
+        foreach($this->super_model->select_custom_where("merge_collection_details","merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $check){
+            $count=$this->super_model->count_custom_where("merge_collection_details","merge_collection_id = '$check->collection_id' AND old_series_no!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)");
+            if($count==0){
+                $old_series_insert = $old_series;
+            }else{
+                $old_series_insert = $old_series.", ".$check->old_series_no;
+            }
+        }
+
+        $data_update = array(
+            'series_number'=>$new_series,
+            'old_series_no'=>$old_series_insert,
+        );
+
+        if($this->super_model->update_custom_where("merge_collection_details", $data_update, "merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)")){
+            foreach($this->super_model->select_custom_where("merge_collection_details","merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $latest_series){
+               echo $latest_series->series_number;
+            }
+        }
+    }
+
+    public function update_merge_ordate(){
+        $ref_no=$this->input->post('reference_number');
+        $collection_id=$this->input->post('collection_id');
+        $new_or_date=$this->input->post('or_date');
+        $old_or_date=$this->input->post('or_date');
+        $settlement_id=$this->input->post('settlement_id');
+        $item_no=$this->input->post('item_no');
+        foreach($this->super_model->select_custom_where("merge_collection_details","merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $check){
+            $count=$this->super_model->count_custom_where("merge_collection_details","merge_collection_id = '$check->collection_id' AND old_or_date!='' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)");
+            if($count==0){
+                $old_ordate_insert = $old_or_date;
+            }else{
+                $old_ordate_insert = $old_or_date.", ".$check->old_or_date;
+            }
+        }
+
+        $data_update = array(
+            'or_date'=>$new_or_date,
+            'old_or_date'=>$old_ordate_insert,
+        );
+
+        if($this->super_model->update_custom_where("merge_collection_details", $data_update, "merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)")){
+            foreach($this->super_model->select_custom_where("merge_collection_details","merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $latest_ordate){
+               echo $latest_ordate->or_date;
+            }
+        }
+    }
+
+    public function update_merge_defint(){
+        $ref_no=$this->input->post('reference_number');
+        $collection_id=$this->input->post('collection_id');
+        $def_int=$this->input->post('def_int');
+        $settlement_id=$this->input->post('settlement_id');
+        $item_no=$this->input->post('item_no');
+        $data_update = array(
+            'defint'=>$def_int,
+        );
+
+        if($this->super_model->update_custom_where("merge_collection_details", $data_update, "merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)")){
+            foreach($this->super_model->select_custom_where("merge_collection_details","merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $latest_defint){
+               echo $latest_defint->defint;
+            }
+        }
+    }
+
+    public function update_merge_orno_remarks(){
+        $ref_no=$this->input->post('reference_number');
+        $collection_id=$this->input->post('collection_id');
+        $orno_remarks=$this->input->post('or_no_remarks');
+        $settlement_id=$this->input->post('settlement_id');
+        $item_no=$this->input->post('item_no');
+        $data_update = array(
+            'or_no_remarks'=>$orno_remarks,
+        );
+
+        if($this->super_model->update_custom_where("merge_collection_details", $data_update, "merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)")){
+            if (strpos($orno_remarks, ',') !== false) {
+                $or_no_remarks=explode(",", $orno_remarks);
+                $or_no=$or_no_remarks[0];
+                $remarks=$or_no_remarks[1];
+                $now = date("Y-m-d H:i:s");
+                    $or_remarks = array(
+                       "or_no"=>$or_no,
+                       "remarks"=>$remarks,
+                       "create_date"=>$now,
+                       "user_id"=>$_SESSION['user_id'],
+                    );
+                    $this->super_model->insert_into("or_remarks", $or_remarks);
+                    }else{
+                        $or_no='';
+                        $remarks='';
+                    }
+
+            foreach($this->super_model->select_custom_where("merge_collection_details","merge_collection_id='$collection_id' AND settlement_id='$settlement_id' AND reference_no='$ref_no' AND item_no IN($item_no)") AS $latest_or_remarks){
+               echo $latest_or_remarks->or_no_remarks;
+            }
+        }
+    }
 
 }
