@@ -4647,6 +4647,7 @@ class Reports extends CI_Controller {
 
             $data['salesall'][]=array(
                 'participant_name'=>$comp_name,
+                'actual_billing_id'=>$sth->actual_billing_id,
                 'billing_id'=>$sth->billing_id,
                 'reference_number'=>$sth->reference_number,
                 'sales_detail_id'=>$sth->sales_detail_id,
@@ -4769,6 +4770,7 @@ class Reports extends CI_Controller {
                 $salesall[]=array(
                     'billing_date'=>$billing_date,
                     'participant_name'=>$comp_name,
+                    'actual_billing_id'=>$sth->actual_billing_id,
                     'billing_id'=>$sth->billing_id,
                     'reference_number'=>$sth->reference_number,
                     'vatable_sales'=>$sth->vatable_sales,
@@ -4805,7 +4807,7 @@ class Reports extends CI_Controller {
                 $total_ewt_amount[]=$value['ewt_amount'];
                 //$overall_total[]=$total;
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
-                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['billing_id']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['actual_billing_id']);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['reference_number']);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['participant_name']);
                     $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $value['vatable_sales']);

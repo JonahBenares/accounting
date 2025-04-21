@@ -128,7 +128,7 @@
                                                     $data2[$key] = array(
                                                         'particular'=>array(),
                                                         'participant_name'=>array(),
-                                                        'billing_id'=>array(),
+                                                        'actual_billing_id'=>array(),
                                                         'reference_number'=>array(),
                                                         'billing'=>date("M. d, Y",strtotime($sal['billing_from']))." - ".date("M. d, Y",strtotime($sal['billing_to'])),
                                                         'vatable_sales'=>array(),
@@ -144,7 +144,7 @@
                                                     );
                                                 }
                                                 $data2[$key]['participant_name'][] = ($sal['participant_name'] != '') ? $sal['participant_name'] : '<span style="background-color:#ffafaf;width:100%;display:block;color:#ffafaf">No Company Name</span>';
-                                                $data2[$key]['billing_id'][] = $sal['billing_id'];
+                                                $data2[$key]['actual_billing_id'][] = $sal['actual_billing_id'];
                                                 $data2[$key]['reference_number'][] = $sal['reference_number'];
                                                 $data2[$key]['sales_detail_id'][] = $sal['sales_detail_id'];
                                                 $data2[$key]['vatable_sales'][] = number_format($sal['vatable_sales'],2);
@@ -166,7 +166,7 @@
                                         </tr>
                                         <tr>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
-                                                <?php echo implode("<hr style='margin:0px'>",$sa['billing_id']);?>
+                                                <?php echo implode("<hr style='margin:0px'>",$sa['actual_billing_id']);?>
                                             </td>
                                             <td class="pt-1 table_td pb-1 pr-0 pl-0" align="left" style="font-size: 12px;vertical-align: top;">
                                                 <?php echo implode("<hr style='margin:0px'>",$sa['reference_number']);?>
