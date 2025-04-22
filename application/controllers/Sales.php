@@ -7419,6 +7419,7 @@ public function upload_sales_adjustment_test(){
                 'sales_detail_id'=>$d->sales_detail_id,
                 'sales_id'=>$d->sales_id,
                 'reference_number'=>$d->reference_number,
+                'settlement_id'=>$d->short_name,
                 'billing_id'=>$d->billing_id,
                 'actual_billing_id'=>$d->actual_billing_id,
                 'serial_no'=>$d->serial_no,
@@ -7474,8 +7475,8 @@ public function upload_sales_adjustment_test(){
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow();
         for($x=2;$x<=$highestRow;$x++){
             $identifier = $this->input->post('identifier');
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
-            $actual_billing_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
+            $settlement_id = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
             $invoice_no = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
 
             $sql="";
@@ -7502,7 +7503,7 @@ public function upload_sales_adjustment_test(){
                     'bulk_invoicing_identifier' => $identifier,
                 );
 
-                $this->super_model->update_custom_where("sales_transaction_details",$data_main,"sales_id IN ($salesid_str) AND billing_id='$billing_id' AND actual_billing_id='$actual_billing_id'");
+                $this->super_model->update_custom_where("sales_transaction_details",$data_main,"sales_id IN ($salesid_str) AND short_name='$settlement_id' AND billing_id='$billing_id'");
             }
         }
     }
