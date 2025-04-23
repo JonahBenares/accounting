@@ -385,3 +385,227 @@ function saveBulkInvoicingMerge(){
         });
     }
 }
+
+function proceed_merge_collection() {
+    var data = $("#collection_bulk").serialize();
+    
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"salesmerge/add_merge_collection_head";
+    var newurl=loc+"salesmerge/upload_merge_collection/";
+    var conf = confirm('Are you sure you want to proceed?');
+    if(conf){
+      $.ajax({
+        type: "POST",
+        url: redirect,
+        data: data,
+        success: function(output){
+            var new_url = newurl+output;
+            document.getElementById("collection_id").value  = output;
+            window.history.replaceState('nextState', "Collection Head", new_url);
+            var save = document.getElementById("save_head_button");
+            var cancel = document.getElementById("cancel");
+            document.getElementById('collection_date').readOnly = true;
+            var x = document.getElementById("upload");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+
+                    save.style.display = "none";
+                    cancel.style.display = "block";
+            } else {
+                x.style.display = "none";
+                save.style.display = "block";
+                    cancel.style.display = "none";
+            }
+          
+            }
+        });
+    }
+}
+
+function cancelMergeCollection(){
+    var collection_id = document.getElementById("collection_id").value; 
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"salesmerge/cancel_merge_collection";
+    var conf = confirm('Are you sure you want to cancel this transaction?');
+    if(conf){
+        $.ajax({
+            data: "collection_id="+collection_id,
+            type: "POST",
+            url: redirect,
+            success: function(response){
+                window.location=loc+'salesmerge/upload_merge_collection/';
+            }
+        });
+    }
+}
+
+async function upload_merge_collection() {
+    var collection_id = document.getElementById("collection_id").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"salesmerge/upload_bulk_merge_collection";
+    let doc = document.getElementById("bulk_collection").files[0];
+    let formData = new FormData();
+         
+    formData.append("doc", doc);
+    formData.append("collection_id", collection_id);
+    var conf = confirm('Are you sure you want to upload this file?');
+    if(conf){
+        $.ajax({
+            type: "POST",
+            url: redirect,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                document.getElementById("proceed_collection").disabled = true;
+                document.getElementById("cancel").disabled = true;
+                $("#table-collection").hide(); 
+            },
+            success: function(output){
+                $("#alt").hide(); 
+                location.reload();
+            }
+        });
+    }
+}
+
+function saveAllMergeCollection(){
+    var data = $("#upload_bulkcollection").serialize();
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"salesmerge/save_all_merge_collection";
+    var conf = confirm('Are you sure you want to save this Collection?');
+        if(conf){
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: redirect,
+                beforeSend: function(){
+                    document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                    $("#submitdata").hide(); 
+                },
+                success: function(output){
+                    location.reload(); 
+                }
+            }); 
+    }    
+}
+
+function updateMergeSeries(baseurl,count,collection_id,settlement_id,reference_number,item_no){
+    var redirect = baseurl+"salesmerge/update_merge_seriesno";
+    var series_number=document.getElementById("series_number"+count).value;
+    var old_series=document.getElementById("old_series_no"+count).value;
+    document.getElementById("old_series_no"+count).setAttribute('value','');
+    $.ajax({
+        type: "POST",
+        url: redirect,
+        data: 'series_number='+series_number+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_series='+old_series+'&item_no='+item_no,
+        success: function(output){
+            document.getElementById("series_number"+count).setAttribute('value',output);
+            document.getElementById("old_series_no"+count).value=series_number;
+        }
+    });
+}
+
+function updateMergeORDate(baseurl,count,collection_id,settlement_id,reference_number,item_no){
+    var redirect = baseurl+"salesmerge/update_merge_ordate";
+    var or_date=document.getElementById("or_date"+count).value;
+    var old_or_date=document.getElementById("old_or_date"+count).value;
+    document.getElementById("old_or_date"+count).setAttribute('value','');
+    $.ajax({
+        type: "POST",
+        url: redirect,
+        data: 'or_date='+or_date+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&old_or_date='+old_or_date+'&item_no='+item_no,
+        success: function(output){
+            document.getElementById("or_date"+count).setAttribute('value',output);
+            document.getElementById("old_or_date"+count).value=or_date;
+        }
+    });
+}
+
+function updateMergeorRemarks(baseurl,count,collection_id,settlement_id,reference_number,item_no){
+    var redirect = baseurl+"salesmerge/update_merge_orno_remarks";
+    var or_no_remarks=document.getElementById("or_no_remarks"+count).value;
+    $.ajax({
+        type: "POST",
+        url: redirect,
+        data: 'or_no_remarks='+or_no_remarks+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&item_no='+item_no,
+        success: function(output){
+            document.getElementById("or_no_remarks"+count).setAttribute('value',output);
+        }
+    });
+}
+
+function updateMergeDefInt(baseurl,count,collection_id,settlement_id,reference_number,item_no){
+    var redirect = baseurl+"salesmerge/update_merge_defint";
+    var def_int=document.getElementById("def_int"+count).value;
+    $.ajax({
+        type: "POST",
+        url: redirect,
+        data: 'def_int='+def_int+'&collection_id='+collection_id+'&settlement_id='+settlement_id+'&reference_number='+reference_number+'&item_no='+item_no,
+        success: function(output){
+            document.getElementById("def_int"+count).setAttribute('value',output);
+        }
+    });
+}
+
+function merge_collection_filter() {
+    var collection_date = document.getElementById("col_date").value; 
+    var reference_no = document.getElementById("reference_no").value;
+    var stl_id = document.getElementById("stl_id").value;
+
+    if(collection_date!=''){
+        collection_date=collection_date;
+    }else{
+        collection_date='null';
+    }
+
+    if(reference_no!=''){
+        reference_no=reference_no;
+    }else{
+        reference_no='null';
+    }
+
+    if(stl_id!=''){
+        stl_id=stl_id;
+    }else{
+        stl_id='null';
+    }
+
+  var loc= document.getElementById("baseurl").value;
+  window.location=loc+'salesmerge/merge_collection_list/'+collection_date+'/'+reference_no+'/'+stl_id;
+}
+
+function saveMergeSeries(){
+    var data = $("#update").serialize();
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"salesmerge/update_seriesno";
+    $.ajax({
+        data: data,
+        type: "POST",
+        url: redirect,
+        success: function(output){
+            window.location=loc+'salesmerge/merge_collection_list/'+output;  
+        }
+    });  
+}
+
+function select_merge_signatory() {
+    var signatory = document.getElementById("signatory").value; 
+    var collection_date = document.getElementById("date_collect").value; 
+    var reference_no = document.getElementById("refno").value;
+    var stl_id = document.getElementById("stlid").value;
+    var loc= document.getElementById("baseurl").value;
+    var exported = loc+'salesmerge/PDF_merge_OR_bulk/'+collection_date+'/'+reference_no+'/'+stl_id;
+    $('#export').prop('href', exported+'/'+signatory);
+
+    var count = document.getElementsByClassName("print_pdf"); 
+    for(var i = 1; i<=count.length;i++){
+        var collection_id = document.getElementById("collection_idurl"+i).value; 
+        var settlement_id_single = document.getElementById("settlement_id_singleurl"+i).value; 
+        var reference_no_single = document.getElementById("reference_no_singleurl"+i).value; 
+        var series_number = document.getElementById("series_numberurl"+i).value; 
+        var printed = loc+'salesmerge/PDF_merge_OR/'+collection_id+'/'+settlement_id_single+'/'+reference_no_single+'/'+series_number;
+        $('#print_pdf'+i).prop('href', printed+'/'+signatory);
+    }
+}
