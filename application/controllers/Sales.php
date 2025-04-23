@@ -6931,7 +6931,7 @@ public function upload_sales_adjustment_test(){
                 'scanned_copy'=>$scanned_copy,
                 'bulk_update_identifier'=>$identifier,
             );
-           $this->super_model->update_custom_where("sales_transaction_details", $data_main, "sales_id='$sales_id' AND billing_id='$unique_bill_id'");
+           $this->super_model->update_custom_where("sales_transaction_details", $data_main, "sales_id='$sales_id' AND billing_id='$unique_bill_id' AND actual_billing_id='$billing_id'");
         }
     }
 
@@ -6991,7 +6991,7 @@ public function upload_sales_adjustment_test(){
                 'res_scanned_copy'=>$scanned_copy,
                 'res_bulk_update_identifier'=>$identifier,
             );
-           $this->super_model->update_custom_where("reserve_sales_transaction_details", $data_main, "reserve_sales_id='$reserve_sales_id' AND res_billing_id='$unique_bill_id'");
+           $this->super_model->update_custom_where("reserve_sales_transaction_details", $data_main, "reserve_sales_id='$reserve_sales_id' AND res_billing_id='$unique_bill_id' AND res_actual_billing_id='$billing_id'");
         }
     }
 
@@ -7159,7 +7159,7 @@ public function upload_sales_adjustment_test(){
                 'scanned_copy'=>$scanned_copy,
                 'bulk_update_identifier'=>$identifier,
             );
-            $this->super_model->update_custom_where("sales_adjustment_details", $data_adjustment, "sales_adjustment_id IN ($imp_id) AND billing_id='$unique_bill_id'");
+            $this->super_model->update_custom_where("sales_adjustment_details", $data_adjustment, "sales_adjustment_id IN ($imp_id) AND billing_id='$unique_bill_id' AND actual_billing_id='$billing_id'");
         }
     }
 
