@@ -24,7 +24,7 @@
                     <input type="hidden" id="collection_id" name="collection_id" class="form-control">
                     <input type="hidden" id="settlement_id" name="settlement_id" class="form-control">
                     <input type="hidden" id="baseurl" name="baseurl" value="<?php echo base_url(); ?>">
-                    <button type="button" class="btn btn-primary" onclick="saveSeries()">Save Changes</button>
+                    <button type="button" class="btn btn-primary" onclick="saveMergeSeries()">Save Changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -91,7 +91,7 @@
                                 <?php if(!empty($collection)){ ?>
                                 <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
                                     <strong>Quick Scan!</strong> 
-                                    <a href="http://localhost/accounting/sales/export_not_download/<?php echo $date; ?>/<?php echo $ref_no; ?>/<?php echo $stl_id; ?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
+                                    <a href="http://localhost/accounting/salesmerge/export_not_download_merge_collection/<?php echo $date; ?>/<?php echo $ref_no; ?>/<?php echo $stl_id; ?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -101,7 +101,7 @@
                                 <?php if(!empty($collection)){ ?>
                                     <div class="row">
                                         <div class="col-lg-3 offset-lg-3">
-                                            <select name="signatory" id="signatory" class="form-control select2" onchange="select_signatory()">
+                                            <select name="signatory" id="signatory" class="form-control select2" onchange="select_merge_signatory()">
                                                 <option value="">--Select Authorized Person--</option>
                                                 <?php foreach($employees AS $emp){ ?>
                                                     <option value="<?php echo $emp->user_id; ?>"><?php echo $emp->fullname; ?></option>
@@ -109,7 +109,7 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-3">
-                                            <a href="<?php echo base_url();?>sales/PDF_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $stl_id;?>" target='_blank' class="btn btn-success btn-block" id="export">Export Bulk PDF</a> 
+                                            <a href="<?php echo base_url();?>salesmerge/PDF_merge_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $stl_id;?>" target='_blank' class="btn btn-success btn-block" id="export">Export Bulk PDF</a> 
                                         </div>
                                         <input type="hidden" id="date_collect" value="<?php echo $date; ?>">
                                         <input type="hidden" id="refno" value="<?php echo $ref_no; ?>">
@@ -200,7 +200,7 @@
                                                     <td class="td-btm pt-1 pb-1" style="vertical-align: middle;" align="center">
                                                         <div style="display:flex">
                                                             <a href="<?php echo base_url(); ?>salesmerge/print_merge_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>" target='_blank' class="btn btn-primary btn-sm text-white" style="margin-right: 2px;"><span class="fas fa-print" style="margin:0px"></span></a>
-                                                            <a href="<?php echo base_url();?>salesmerge/PDF_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>/<?php echo $log['series_number'];?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white print_pdf" id="print_pdf<?php echo $x; ?>"><span class="fas fa-file-export" style="margin:0px"></span></a>
+                                                            <a href="<?php echo base_url();?>salesmerge/PDF_merge_OR/<?php echo $log['collection_id'];?>/<?php echo $log['settlement_id_single'];?>/<?php echo $log['reference_no_single'];?>/<?php echo $log['series_number'];?>" title="Export PDF" target='_blank' class="btn btn-success btn-sm text-white print_pdf" id="print_pdf<?php echo $x; ?>"><span class="fas fa-file-export" style="margin:0px"></span></a>
                                                             <input type="hidden" id="collection_idurl<?php echo $x; ?>" value="<?php echo $log['collection_id']; ?>">
                                                             <input type="hidden" id="settlement_id_singleurl<?php echo $x; ?>" value="<?php echo $log['settlement_id_single']; ?>">
                                                             <input type="hidden" id="reference_no_singleurl<?php echo $x; ?>" value="<?php echo $log['reference_no_single']; ?>">
@@ -278,102 +278,4 @@
             </div>
         </div>
     </section>
-</div>
-
-
-                
-                                       
-<div class="modal fade" id="bulk_upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="max-width:1000px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">Bulk Upload</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method='POST' enctype="multipart/form-data" target='_blank'>
-                <div class="modal-body">
-                    <span class="m-b-20">
-                        <b>Important Note: </b>Make sure the columns are correct before uploading the file to make sure the data are correctly captured. Refer to the details below to ensure your columns are correctly formatted:
-                    </span>
-                    <br>
-                    <br>
-                    <table class="table-bordered" width="100%" style="font-size: 13px;">
-                        <tr>
-                            <td colspan="15">Column Description</td>
-                        </tr>
-                        <tr>
-                            <td width="6%" align="center">A</td>
-                            <td width="6%" align="center">B</td>
-                            <td width="6%" align="center">C</td>
-                            <td width="6%" align="center">D</td>
-                            <td width="6%" align="center">E</td>
-                            <td width="6%" align="center">F</td>
-                            <td width="6%" align="center">G</td>
-                            <td width="6%" align="center">H</td>
-                            <td width="6%" align="center">I</td>
-                            <td width="6%" align="center">J</td>
-                            <td width="6%" align="center">K</td>
-                            <td width="6%" align="center">L</td>
-                            <td width="6%" align="center">M</td>
-                            <td width="6%" align="center">N</td>
-                            <td width="6%" align="center">O</td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: top;">Item No</td>
-                            <td style="vertical-align: top;">Billing Remarks</td>
-                            <td style="vertical-align: top;">Particulars</td>
-                            <td style="vertical-align: top;">Received From (STL ID)</td>
-                            <td style="vertical-align: top;">Buyer Full Name</td>
-                            <td style="vertical-align: top;">Statement No</td>
-                            <td style="vertical-align: top;">Vatable Sales</td>
-                            <td style="vertical-align: top;">Zero Rated Sales</td>
-                            <td style="vertical-align: top;">Zero Rated Ecozone</td>
-                            <td style="vertical-align: top;">VAT on Sales</td>
-                            <td style="vertical-align: top;">Withholding Tax</td>
-                            <td style="vertical-align: top;">Total</td>
-                            <td style="vertical-align: top;">OR #</td>
-                            <td style="vertical-align: top;">Def Int</td>
-                            <td style="vertical-align: top;">Series #  </td>
-                        </tr>
-                    </table>
-                    <br>
-                    <span class="">
-                        <b>Additional Notes:</b> "Subtotal" word should be in column F. There must be a an empty row every after subtotal. DefInt and Series # should be encoded inline with the "Subtotal" row at the N and O columns, consecutively.
-                    </span>
-                    <br>
-                    <br>
-                    <br>
-                     <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Collection Date:</label>
-                               <input type="date" name="collection_date" id="collection_date" class="form-control">
-                            </div>
-                        </div>
-                       
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Upload File here:</label>
-                               <input type="file" name="collectionbulk" id="collectionbulk" class="form-control">
-                               <center><span id='alt'></span></center>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label><br></label>
-                                <input type="button" class="btn btn-primary btn-block" id="upload" value='Upload' onclick="uploadCollection()">
-                            </div>
-                        </div>
-                        <div class="col-lg-2"></div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
