@@ -448,7 +448,14 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_all_adjustment">Summary of All Adjustment Transaction</a></li>
                 </ul>
             </li>
-
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Merge Report</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_merge_all">Summary of All Merge Transaction</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_sales_merge">Summary of All Unpaid Merge Invoices</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_merge_ewt_variance">Summary of Sales Merge Total EWT Variance</a></li>
+                </ul>
+            </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Purchases Report</span></a>
                 <ul class="dropdown-menu">
