@@ -213,6 +213,11 @@ if(!empty($sales_id)){
     </section>
 </div>
 <script type="text/javascript">
+    document.getElementById("transaction_date").addEventListener("change", function () {
+        let selectedDate = this.value;
+        document.getElementById("billing_to").value = selectedDate;
+    });
+    
     $(document).ready(function() {
     $('#select-all').click(function() {
         var checked = this.checked;
