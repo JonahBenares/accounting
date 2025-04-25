@@ -4884,6 +4884,252 @@ class Reports extends CI_Controller {
         // readfile($exportfilename);
     }
 
+    public function sales_merge_all(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $original=$this->uri->segment(6);
+        $scanned=$this->uri->segment(7);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $part=$this->super_model->select_column_where("participant","participant_name","tin",$participant);
+        $data['part'] = $part;
+        $data['original'] = $original;
+        $data['scanned'] = $scanned;
+
+        $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
+        $sql="";
+
+        if(!empty($participant) && $participant!='null'){
+            $par=array();
+            foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
+                $par[]="'".$p->settlement_id."'";
+            }
+            $imp=implode(',',$par);
+            $sql.= " short_name IN($imp) AND ";
+        } if(!empty($from) && !empty($from) && $from!='null' && $to != 'null'){
+            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+        } if($original!='null' && isset($original)){
+             $sql.= "original_copy = '$original' AND "; 
+        } if($scanned!='null'  && isset($scanned)){
+             $sql.= "scanned_copy = '$scanned' AND "; 
+        }
+
+        $query=substr($sql,0,-4);
+        $qu = "saved = '1' AND ".$query;
+        $total_sum[]=0;
+        if(!empty($query)){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head sth INNER JOIN sales_merge_transaction_details std ON sth.sales_merge_id = std.sales_merge_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC") AS $sth){
+            $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
+            $short_name=$this->super_model->select_column_where("sales_merge_transaction_details", "short_name", "sales_merge_detail_id", $sth->sales_merge_detail_id);
+            $or_no=$this->super_model->select_column_custom_where("merge_collection_details","series_number","reference_no='$sth->reference_no' AND settlement_id='$short_name'");
+            if(!empty($sth->company_name) && date('Y',strtotime($sth->create_date))==date('Y')){
+                    $comp_name=$sth->company_name;
+                }else{
+                    $comp_name=$participant_name;
+                }
+            $zero_rated=$sth->zero_rated_sales+$sth->zero_rated_ecozones;
+            $total=($sth->vatable_sales+$zero_rated+$sth->vat_on_sales)-$sth->ewt;
+
+            $data['salesall'][]=array(
+                'participant_name'=>$comp_name,
+                'actual_billing_id'=>$sth->actual_billing_id,
+                'billing_id'=>$sth->billing_id,
+                'reference_number'=>$sth->reference_no,
+                'sales_detail_id'=>$sth->sales_merge_detail_id,
+                'billing_from'=>$sth->billing_from,
+                'billing_to'=>$sth->billing_to,
+                'vatable_sales'=>$sth->vatable_sales,
+                'vat_on_sales'=>$sth->vat_on_sales,
+                'ewt'=>$sth->ewt,
+                'ewt_amount'=>$sth->ewt_amount,
+                'original_copy'=>$sth->original_copy,
+                'scanned_copy'=>$sth->scanned_copy,
+                'zero_rated'=>$zero_rated,
+                'total'=>$total,
+                'or_no'=>$or_no,
+                );
+            }
+        }
+        $data['total_sum']=array_sum($total_sum);
+        $this->load->view('reports/sales_merge_all',$data);
+        $this->load->view('template/footer');
+    }
+
+    public function export_sales_merge_all(){
+        $participant=$this->uri->segment(3);
+        $from=$this->uri->segment(4);
+        $to=$this->uri->segment(5);
+        $objPHPExcel = new Spreadsheet();
+        $exportfilename="Sales Wesm All Transactions (Merge).xlsx";
+        $sql='';
+
+        if($participant!='null'){
+             $sql.= " tin = '$participant' AND ";
+        }
+        if($from!='null' && $to != 'null'){
+            $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
+        }
+
+        $query=substr($sql,0,-4);
+        if($participant != 'null' || $from != 'null' || $to != 'null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
+        $sheetno=0;
+            $styleArray = array(
+                'borders' => array(
+                    'allBorders' => array(
+                        'borderStyle' => border::BORDER_THIN,
+                        'color' => ['rgb' => '000000'],
+                    )
+                )
+            );
+
+        $participant_loop=array();
+        foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head sth INNER JOIN sales_merge_transaction_details std ON sth.sales_merge_id = std.sales_merge_id INNER JOIN participant p ON p.settlement_id = std.short_name WHERE participant_name != '' AND $qu GROUP BY tin ORDER BY settlement_id ASC") AS $head){
+            $settlement_id=$this->super_model->select_column_custom_where("participant",'settlement_id',"tin = '$head->tin' ORDER BY settlement_id ASC LIMIT 1");
+            $objWorkSheet = $objPHPExcel->createSheet($sheetno);
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setTitle($settlement_id);
+            $participant_loop[]=$head->settlement_id;
+        
+            foreach(range('A','M') as $columnID){
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A1', "Billing Period");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B1', "Billing ID");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C1', "Transaction Reference Number");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D1', "Company Name");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E1', "Vatables Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F1', "Zero-rated Ecozones Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G1', "Vat on Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H1', "EWT Sales");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I1', "Total");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J1', "EWT Amount");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K1', "Original Copy");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L1', "Scanned Copy");
+            $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M1', "OR Number");
+            $objPHPExcel->getActiveSheet()->getStyle("A1:M1")->applyFromArray($styleArray);
+
+            $total_ewt=array();
+            $total_ewt_amount=array();
+            $salesall=array();
+
+            $par=array();
+            foreach($this->super_model->select_custom_where('participant',"tin='$head->tin'") AS $p){
+                $par[]="'".$p->settlement_id."'";
+            }
+            $imp=implode(',',$par);
+
+            $imp_partloop="'".implode("','",$participant_loop)."'";
+            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head sth INNER JOIN sales_merge_transaction_details std ON sth.sales_merge_id = std.sales_merge_id  WHERE ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND short_name IN($imp) AND saved='1' ORDER BY billing_from ASC, reference_number ASC, billing_id ASC") AS $sth){
+                $or_no=$this->super_model->select_column_custom_where("merge_collection_details","series_number","reference_no='$sth->reference_number' AND settlement_id='$sth->short_name'");
+                if(!empty($sth->company_name) && date('Y',strtotime($sth->create_date))==date('Y')){
+                        $comp_name=$sth->company_name;
+                    }else{
+                        $comp_name=$head->participant_name;
+                    }
+                $billing_date = date("M. d, Y",strtotime($sth->billing_from))." - ".date("M. d, Y",strtotime($sth->billing_to));
+                $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sth->billing_id);
+                $salesall[]=array(
+                    'billing_date'=>$billing_date,
+                    'participant_name'=>$comp_name,
+                    'actual_billing_id'=>$sth->actual_billing_id,
+                    'billing_id'=>$sth->billing_id,
+                    'reference_number'=>$sth->reference_no,
+                    'vatable_sales'=>$sth->vatable_sales,
+                    'vat_on_sales'=>$sth->vat_on_sales,
+                    'ewt'=>$sth->ewt,
+                    'ewt_amount'=>$sth->ewt_amount,
+                    'short_name'=>$sth->short_name,
+                    'original_copy'=>$sth->original_copy,
+                    'scanned_copy'=>$sth->scanned_copy,
+                    'zero_rated_sales'=>$sth->zero_rated_sales,
+                    'zero_rated_ecozones'=>$sth->zero_rated_ecozones,
+                    'tin'=>$tin,
+                    'or_no'=>$or_no,
+                );
+            }
+            $row = 2;
+            $startRow = -1;
+            $previousKey = '';
+            $num=2;
+
+            foreach($salesall AS $index => $value){
+                if($startRow == -1){
+                    $startRow = $row;
+                    $previousKey = $value['billing_date'];
+                }
+                $zero_rated=$value['zero_rated_sales']+$value['zero_rated_ecozones'];
+                $total=($value['vatable_sales']+$zero_rated+$value['vat_on_sales'])-$value['ewt'];
+                if($value['tin']==$tin){
+                $total_ewt[]=$value['ewt'];
+                $total_ewt_amount[]=$value['ewt_amount'];
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('A'.$num, $value['billing_date']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('B'.$num, $value['actual_billing_id']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('C'.$num, $value['reference_number']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('D'.$num, $value['participant_name']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('E'.$num, $value['vatable_sales']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('F'.$num, $zero_rated);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('G'.$num, $value['vat_on_sales']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('H'.$num, "-".$value['ewt']);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('I'.$num, $total);
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('J'.$num, $value['ewt_amount']);
+                    if($value['original_copy']==1){
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "Yes");
+                    }else if($value['original_copy']==0){
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "No");
+                    }else{
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('K'.$num, "");
+                    }
+                    if($value['scanned_copy']==1){
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "Yes");
+                    }else if($value['scanned_copy']==0){
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "No");
+                    }else{
+                        $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('L'.$num, "");
+                    }
+                    $objPHPExcel->setActiveSheetIndex($sheetno)->setCellValue('M'.$num, $value['or_no']);
+
+                    $nextKey = isset($salesall[$index+1]) ? $salesall[$index+1]['billing_date'] : null;
+
+                    if($row >= $startRow && (($previousKey <> $nextKey) || ($nextKey == null))){
+                        $cellToMerge = 'A'.$startRow.':A'.$row;
+                        $objPHPExcel->getActiveSheet()->mergeCells($cellToMerge);
+                        $startRow = -1;
+
+                    }
+                    $row++;
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":M".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":M".$num)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('E'.$num.":I".$num)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('A1:M1')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $num++;
+                    }
+                 }
+                $a = $num;
+                    $objPHPExcel->getActiveSheet()->getStyle('E'.$a.":J".$a)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle("E".$a.':J'.$a)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $objPHPExcel->getActiveSheet()->setCellValue('H'.$a, "-".array_sum($total_ewt));
+                    $objPHPExcel->getActiveSheet()->setCellValue('J'.$a, array_sum($total_ewt_amount));
+                $num--;
+            $sheetno++;
+        }
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Sales Wesm All Transactions (Merge).xlsx"');
+        header('Cache-Control: max-age=0');
+        $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
+        $objWriter->save('php://output');
+    }
+
         public function reserve_sales_all(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
