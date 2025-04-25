@@ -330,9 +330,9 @@
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span class="line-height">Collection Report</span></a> 
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/collection_report">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/collection_report_merge">Merge</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_collection_report">Reserve</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/collection_report_merge">Main Merge</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_collection_report_merge">Reserve Merge</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_collection_report_merge">Reserve Merge</a></li> -->
                 </ul>
             </li>
             <!-- <li>
@@ -466,7 +466,7 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_main_ewt_variance">Summary of Sales Total EWT Variance</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/res_sales_main_ewt_variance">Summary of Reserve Sales Total EWT Variance</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance">Summary of Purchases Total Amount Variance</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance_merge">Summary of Purchases Total Amount Variance Merge</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_main_total_variance_merge">Summary of Purchases Total Amount Variance Merge</a></li> -->
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/reserve_main_total_variance">Summary of Reserve Purchases Total Amount Variance</a></li>
                 </ul>
             </li>
@@ -476,7 +476,7 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/unpaid_invoices_salesadj">Summary of All Unpaid Invoices</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_adj_ewt_variance">Summary of Sales Total EWT Variance</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance">Summary of Purchases Total Amount Variance</a></li>
-                    <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance_merge">Summary of Purchases Total Amount Variance Merge</a></li>
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance_merge">Summary of Purchases Total Amount Variance Merge</a></li> -->
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_ledger">Purchases Ledger</a></li>
                 </ul>
             </li>
