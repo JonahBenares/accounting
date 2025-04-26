@@ -1203,6 +1203,25 @@ function filterUnpaidSales(){
     window.location=loc+'reports/unpaid_invoices_sales/'+years+'/'+due;          
 }
 
+function filterUnpaidSalesMerge(){
+    var year= document.getElementById("year").value;
+    var due_date= document.getElementById("due_date").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(year!=''){
+        var years=year;
+    }else{
+        var years='null';
+    }
+
+    if(due_date!=''){
+        var due=due_date;
+    }else{
+        var due='null';
+    }
+    window.location=loc+'reports/unpaid_invoices_sales_merge/'+years+'/'+due;          
+}
+
 function filterUnpaidSalesAdj(){
     var year= document.getElementById("year").value;
     var due_date= document.getElementById("due_date").value;
@@ -1260,6 +1279,25 @@ function filterSalesMainEWT(){
     window.location=loc+'reports/sales_main_ewt_variance/'+date_from+'/'+date_to;          
 }
 
+function filterSalesMergeEWT(){
+    var from= document.getElementById("from").value;
+    var to= document.getElementById("to").value;
+    var loc= document.getElementById("baseurl").value;
+
+    if(from!=''){
+        var date_from=from;
+    }else{
+        var date_from='null';
+    }
+
+    if(to!=''){
+        var date_to=to;
+    }else{
+        var date_to='null';
+    }
+    window.location=loc+'reports/sales_merge_ewt_variance/'+date_from+'/'+date_to;          
+}
+
 function filterResSalesMainEWT(){
     var from= document.getElementById("from").value;
     var to= document.getElementById("to").value;
@@ -1298,6 +1336,26 @@ function exportSalesMainEWT() {
       var loc= document.getElementById("baseurl1").value;
       window.location=loc+'reports/export_sales_main_ewt_variance/'+e_from+'/'+e_to;
 
+}
+
+function exportSalesMergeEWT() { 
+     var e_from = document.getElementById("export_from").value; 
+     var e_to = document.getElementById("export_to").value;
+
+    if(e_from!=''){
+        e_from=e_from;
+    }else{
+        e_from='null';
+    }
+
+    if(e_to!=''){
+        e_to=e_to;
+    }else{
+        e_to='null';
+    }
+
+      var loc= document.getElementById("baseurl1").value;
+      window.location=loc+'reports/export_sales_merge_ewt_variance/'+e_from+'/'+e_to;
 }
 
 function exportResSalesMainEWT() { 

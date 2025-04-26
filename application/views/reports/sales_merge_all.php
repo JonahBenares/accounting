@@ -57,7 +57,7 @@
                                                 </td>
                                                 <td  width="5%">
                                                     <input type='hidden' name='baseurl' id='baseurl' value="<?php echo base_url(); ?>">
-                                                <input type='button' class="btn btn-primary"  onclick="filter_sales_merge_all()" value="Filter">
+                                                    <input type='button' class="btn btn-primary"  onclick="filter_sales_merge_all()" value="Filter">
                                                 </td>
                                             </tr>
                                         </table>
