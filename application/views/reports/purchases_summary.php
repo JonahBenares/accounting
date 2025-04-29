@@ -12,10 +12,10 @@
                                     <h4>Purchases Summary</h4>
                                 </div>
                                 <div class="col-8">
+                                    <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
+                                        <span class="fas fa-file-export"></span> Export Monthly IEMOP Sales
+                                    </button>
                                     <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
-                                    <a class="btn btn-success btn-sm pull-right"  href="<?php echo base_url(); ?>reports/export_monthly_IEMOP_purchases/<?php echo $ref_no; ?>/<?php echo $part; ?>/<?php echo $from; ?>/<?php echo $to; ?>">
-                                        <span class="fas fa-file-export"></span> Export Monthly IEMOP Purchases
-                                                </a>
                                 </div>
                             </div>
                         </div>
@@ -113,5 +113,38 @@
             </div>
         </div>
     </section>
+</div>
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Export to Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>Due Date</label>
+                            <select name="due_date" class="form-control select2" id="due_date">
+                            <?php foreach($due_dates AS $dd){ ?>
+                                <option value="<?php echo $dd->due_date;?>"><?php echo $dd->due_date; ?></option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                    
+                    </div>
+                 
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <input type='hidden' name='baseurl1' id='baseurl1' value="<?php echo base_url(); ?>">
+                    <input type='button' class="btn btn-primary"  onclick="export_monthlyIEMOP_purchases()" value="Export">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 

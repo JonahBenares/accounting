@@ -143,9 +143,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-12">
                             <label>Due Date</label>
-                            <select name="due_date" class="form-control" id="due_date">
+                            <select name="due_date" class="form-control select2"  id="due_date">
                             <?php foreach($due_dates AS $dd){ ?>
                                 <option value="<?php echo $dd->due_date;?>"><?php echo $dd->due_date; ?></option>
                             <?php } ?>

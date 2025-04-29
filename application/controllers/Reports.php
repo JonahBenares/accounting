@@ -281,7 +281,8 @@ class Reports extends CI_Controller {
      
         $total_p = array_sum($total_pay);
         $data['total_paid'] = $total_p;
-        $data['total_balance'] = (abs($total_am - $total_p)); 
+        $data['total_balance'] = (abs($total_am - $total_p));
+        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM purchase_transaction_head WHERE saved = '1' AND adjustment = '0' ORDER BY due_date desc");
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
     }
@@ -10319,32 +10320,24 @@ class Reports extends CI_Controller {
     }
 
     public function export_monthly_IEMOP_purchases(){
-        $ref_no=$this->uri->segment(3);
-        $participant=$this->uri->segment(4);
-        $from=$this->uri->segment(5);
-        $to=$this->uri->segment(6);
+        $due=$this->uri->segment(3);
         $objPHPExcel = new Spreadsheet();
         $exportfilename="Monthly IEMOP Collection Reports - Purchases.xlsx";
-        $sql="";
-
-        if($from!='null' && $to != 'null'){
-            $sql.= "billing_from >= '$from' AND billing_to <= '$to' AND ";
-        } if($participant!='null'){
-             $sql.= "short_name = '$participant' AND "; 
-        } if($ref_no!='null'){
-            $sql.= "reference_number = '$ref_no' AND ";
+        $sql='';
+        if($due!='null'){
+             $sql.= " due_date = '$due' AND "; 
         }
 
         $query=substr($sql,0,-4);
-        $qu = " saved = '1' AND adjustment = '0' AND ".$query;
+        if($due !='null'){
+            $qu = " saved = '1' AND ".$query;
+        }else{
+             $qu = " saved = '1'";
+        }
 
-        $due=$this->super_model->select_column_join_where("due_date","purchase_transaction_head","purchase_transaction_details",$qu,"purchase_id");
-        if ($due) {
+        if($due != 'null'){
             $due_date = date('F d, Y', strtotime($due));
             $fname = date('FY', strtotime($due));
-        } else {
-            $due_date = "";
-            $fname = "";
         }
 
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
