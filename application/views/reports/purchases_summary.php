@@ -13,6 +13,9 @@
                                 </div>
                                 <div class="col-8">
                                     <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
+                                    <a class="btn btn-success btn-sm pull-right"  href="<?php echo base_url(); ?>reports/export_monthly_IEMOP_purchases/<?php echo $ref_no; ?>/<?php echo $part; ?>/<?php echo $from; ?>/<?php echo $to; ?>">
+                                        <span class="fas fa-file-export"></span> Export Monthly IEMOP Purchases
+                                                </a>
                                 </div>
                             </div>
                         </div>
