@@ -13,7 +13,7 @@
                                 </div>
                                 <div class="col-8">
                                     <button class="btn btn-success btn-sm pull-right"  data-toggle="modal" data-target="#basicModal">
-                                        <span class="fas fa-file-export"></span> Export Monthly IEMOP Sales
+                                        <span class="fas fa-file-export"></span> Export Monthly IEMOP Purchases
                                     </button>
                                     <button class="btn btn-success btn-sm pull-right"><span class="fas fa-print"></span> Print</button>
                                 </div>
