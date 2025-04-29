@@ -10382,8 +10382,9 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L6', "Vatable Purchases");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M6', "VAT on Purchases");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N6', "Zero Rated Ecozone");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O6', "EWT Purchases");
            
-            $objPHPExcel->getActiveSheet()->getStyle("A6:N6")->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyle("A6:O6")->applyFromArray($styleArray);
 
             $row=7;
             
@@ -10407,20 +10408,21 @@ class Reports extends CI_Controller {
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$row, $col->vatables_purchases);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row, $col->vat_on_purchases);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row, $col->zero_rated_ecozones);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$row, $col->ewt);
                         
 
-                        $objPHPExcel->getActiveSheet(0)->getStyle('A'.$row.":N".$row)->applyFromArray($styleArray);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('A'.$row.":O".$row)->applyFromArray($styleArray);
                         $objPHPExcel->getActiveSheet(0)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":N".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":N".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":O".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":O".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
                         $row++;
                     }
 
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getAlignment()->setWrapText(true);
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFont()->getColor()->setRGB ('FFFFFF');
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFont()->setBold(true);
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getAlignment()->setWrapText(true);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
 
                     $objPHPExcel->createSheet();
                     $objPHPExcel->setActiveSheetIndex(1);
@@ -10436,7 +10438,7 @@ class Reports extends CI_Controller {
 
 
                     $objPHPExcel->setActiveSheetIndex(1);
-                    foreach(range('A','M') as $columnID){
+                    foreach(range('A','O') as $columnID){
                         $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
                     }
 
@@ -10459,7 +10461,8 @@ class Reports extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('K6', "Statement No (Seller)");
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('L6', "Vatable Purchases");
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('M6', "VAT on Purchases");
-                    $objPHPExcel->getActiveSheet(1)->getStyle("A6:M6")->applyFromArray($styleArray);
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('O6', "EWT Purchases");
+                    $objPHPExcel->getActiveSheet(1)->getStyle("A6:O6")->applyFromArray($styleArray);
 
            
 
@@ -10483,19 +10486,20 @@ class Reports extends CI_Controller {
                             $objPHPExcel->setActiveSheetIndex(1)->setCellValue('K'.$row, $col->reference_number);
                             $objPHPExcel->setActiveSheetIndex(1)->setCellValue('L'.$row, $col->vatables_purchases);
                             $objPHPExcel->setActiveSheetIndex(1)->setCellValue('M'.$row, $col->vat_on_purchases);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('O'.$row, $col->ewt);
 
-                                $objPHPExcel->getActiveSheet(1)->getStyle('A'.$row.":M".$row)->applyFromArray($styleArray);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('A'.$row.":O".$row)->applyFromArray($styleArray);
                                 $objPHPExcel->getActiveSheet(1)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                                $objPHPExcel->getActiveSheet(1)->getStyle('L'.$row.":M".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('L'.$row.":O".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
                                 $objPHPExcel->getActiveSheet(1)->getStyle('L'.$row.":M".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
                                 $row++;
                             }
 
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getAlignment()->setWrapText(true);
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFont()->getColor()->setRGB ('FFFFFF');
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFont()->setBold(true);
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getAlignment()->setWrapText(true);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
 
             
                     $objPHPExcel->createSheet();
@@ -10643,8 +10647,9 @@ class Reports extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L6', "Vatable Purchases");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M6', "VAT on Purchases");
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N6', "Zero Rated Ecozone");
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O6', "EWT Purchases");
            
-            $objPHPExcel->getActiveSheet()->getStyle("A6:N6")->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyle("A6:O6")->applyFromArray($styleArray);
 
             $row=7;
             
@@ -10668,20 +10673,21 @@ class Reports extends CI_Controller {
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$row, $col->vatables_purchases);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$row, $col->vat_on_purchases);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$row, $col->zero_rated_ecozones);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$row, $col->ewt);
                         
 
-                        $objPHPExcel->getActiveSheet(0)->getStyle('A'.$row.":N".$row)->applyFromArray($styleArray);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('A'.$row.":O".$row)->applyFromArray($styleArray);
                         $objPHPExcel->getActiveSheet(0)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":N".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":N".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":O".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                        $objPHPExcel->getActiveSheet(0)->getStyle('L'.$row.":O".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
                         $row++;
                     }
 
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getAlignment()->setWrapText(true);
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFont()->getColor()->setRGB ('FFFFFF');
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getFont()->setBold(true);
-                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:N6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getAlignment()->setWrapText(true);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet(0)->getStyle('A6:O6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
 
                     $objPHPExcel->createSheet();
                     $objPHPExcel->setActiveSheetIndex(1);
@@ -10697,7 +10703,7 @@ class Reports extends CI_Controller {
 
 
                     $objPHPExcel->setActiveSheetIndex(1);
-                    foreach(range('A','M') as $columnID){
+                    foreach(range('A','O') as $columnID){
                         $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
                     }
 
@@ -10720,7 +10726,8 @@ class Reports extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('K6', "Statement No (Seller)");
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('L6', "Vatable Purchases");
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('M6', "VAT on Purchases");
-                    $objPHPExcel->getActiveSheet(1)->getStyle("A6:M6")->applyFromArray($styleArray);
+                    $objPHPExcel->setActiveSheetIndex(1)->setCellValue('O6', "EWT Purchases");
+                    $objPHPExcel->getActiveSheet(1)->getStyle("A6:O6")->applyFromArray($styleArray);
 
            
 
@@ -10744,19 +10751,20 @@ class Reports extends CI_Controller {
                             $objPHPExcel->setActiveSheetIndex(1)->setCellValue('K'.$row, $col->reference_number);
                             $objPHPExcel->setActiveSheetIndex(1)->setCellValue('L'.$row, $col->vatables_purchases);
                             $objPHPExcel->setActiveSheetIndex(1)->setCellValue('M'.$row, $col->vat_on_purchases);
+                            $objPHPExcel->setActiveSheetIndex(1)->setCellValue('O'.$row, $col->ewt);
 
-                                $objPHPExcel->getActiveSheet(1)->getStyle('A'.$row.":M".$row)->applyFromArray($styleArray);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('A'.$row.":O".$row)->applyFromArray($styleArray);
                                 $objPHPExcel->getActiveSheet(1)->getStyle('G'.$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                                $objPHPExcel->getActiveSheet(1)->getStyle('L'.$row.":M".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
-                                $objPHPExcel->getActiveSheet(1)->getStyle('L'.$row.":M".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('L'.$row.":O".$row)->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                                $objPHPExcel->getActiveSheet(1)->getStyle('L'.$row.":O".$row)->getNumberFormat()->setFormatCode(numberformat::FORMAT_NUMBER_COMMA_SEPARATED1);
                                 $row++;
                             }
 
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getAlignment()->setWrapText(true);
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFont()->getColor()->setRGB ('FFFFFF');
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getFont()->setBold(true);
-                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:M6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getAlignment()->setWrapText(true);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getFill()->setFillType(fill::FILL_SOLID)->getStartColor()->setARGB('1c4966');
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getFont()->getColor()->setRGB ('FFFFFF');
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet(1)->getStyle('A6:O6')->getAlignment()->setHorizontal(alignment::HORIZONTAL_CENTER);
 
             
                     $objPHPExcel->createSheet();
