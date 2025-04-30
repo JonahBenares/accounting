@@ -283,6 +283,7 @@ class Reports extends CI_Controller {
         $data['total_paid'] = $total_p;
         $data['total_balance'] = (abs($total_am - $total_p));
         $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM purchase_transaction_head WHERE saved = '1' AND adjustment = '0' ORDER BY due_date desc");
+        $data['reference']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND adjustment = '0' ORDER BY due_date desc");
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
     }
@@ -10320,16 +10321,21 @@ class Reports extends CI_Controller {
     }
 
     public function export_monthly_IEMOP_purchases(){
-        $due=$this->uri->segment(3);
+        $ref=$this->uri->segment(3);
+        $due=$this->uri->segment(4);
         $objPHPExcel = new Spreadsheet();
         $exportfilename="Monthly IEMOP Collection Reports - Purchases.xlsx";
         $sql='';
-        if($due!='null'){
+
+        if($ref!='null'){
+            $sql.= "reference_number = '$ref' AND ";
+        } if($due!='null'){
              $sql.= " due_date = '$due' AND "; 
         }
 
         $query=substr($sql,0,-4);
-        if($due !='null'){
+
+        if($due !='null' || $ref!='null'){
             $qu = " saved = '1' AND ".$query;
         }else{
              $qu = " saved = '1'";
@@ -10338,11 +10344,15 @@ class Reports extends CI_Controller {
         if($due != 'null'){
             $due_date = date('F d, Y', strtotime($due));
             $fname = date('FY', strtotime($due));
+        }else{
+            $dd = $this->super_model->select_column_where("purchase_transaction_head","due_date","reference_number",$ref);
+            $due_date = date('F d, Y', strtotime($dd));
+            $fname = date('FY', strtotime($dd));
         }
 
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', "MP ID No.: CENPRI");
-        if($due != 'null'){
+        if($due_date != ''){
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', "$due_date");
         }else{
              $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', "");
@@ -10430,7 +10440,7 @@ class Reports extends CI_Controller {
 
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B3', "MP ID No.: CENPRI");
-                    if($due != 'null'){
+                    if($due_date != ''){
                     $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B4', "As of $due_date");
                     }else{
                          $objPHPExcel->setActiveSheetIndex(1)->setCellValue('B4', "");
@@ -10508,7 +10518,7 @@ class Reports extends CI_Controller {
 
                     $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B2', "MP Name: CENTRAL NEGROS POWER RELIABILITY, INC");
                     $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B3', "MP ID No.: CENPRI");
-                    if($due != 'null'){
+                    if($due_date != ''){
                     $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B4', "As of $due_date");
                     }else{
                          $objPHPExcel->setActiveSheetIndex(2)->setCellValue('B4', "");

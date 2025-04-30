@@ -1607,8 +1607,14 @@ function export_monthlyIEMOP() {
 }
 
 function export_monthlyIEMOP_purchases() { 
-    var due_date = document.getElementById("due_date").value; 
+    var refno = document.getElementById("reference").value;
+    var due_date = document.getElementById("due_date").value;
   
+   if(refno!=''){
+       ref=refno;
+   }else{
+    ref='null';
+   }
    if(due_date!=''){
        due=due_date;
    }else{
@@ -1616,6 +1622,6 @@ function export_monthlyIEMOP_purchases() {
    }
 
      var loc= document.getElementById("baseurl1").value;
-     window.location=loc+'reports/export_monthly_IEMOP_purchases/'+due;
+     window.location=loc+'reports/export_monthly_IEMOP_purchases/'+ref+'/'+due;
 
 }

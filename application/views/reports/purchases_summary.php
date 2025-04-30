@@ -127,8 +127,18 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-lg-12">
+                            <label>Reference No</label>
+                            <select name="reference" class="form-control select2" id="reference">
+                            <option value="">-- Select Reference Number --</option>
+                            <?php foreach($reference AS $r){ ?>
+                                <option value="<?php echo $r->reference_number;?>"><?php echo $r->reference_number;?></option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                         <div class="form-group col-lg-12">
                             <label>Due Date</label>
                             <select name="due_date" class="form-control select2" id="due_date">
+                            <option value="">-- Select Due Date --</option>
                             <?php foreach($due_dates AS $dd){ ?>
                                 <option value="<?php echo $dd->due_date;?>"><?php echo $dd->due_date; ?></option>
                             <?php } ?>
