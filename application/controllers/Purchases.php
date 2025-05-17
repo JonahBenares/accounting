@@ -2964,7 +2964,8 @@ class Purchases extends CI_Controller {
                             $this->super_model->insert_into("purchase_transaction_head", $data_insert);
 
                             $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
-                            $highestRow = $highestRow-1;
+                            $highestRow = $highestRow;
+                            // $highestRow = $highestRow-1;
                             $y=1;
                             for($z=4;$z<$highestRow;$z++){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
