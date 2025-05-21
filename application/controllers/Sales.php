@@ -3519,10 +3519,10 @@ public function print_BS_new(){
     {
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
         $data['date'] = $date;
         $data['ref_no'] = $ref_no;
-        $data['stl_id'] = $stl_id;
+        $data['buyer_fullname'] = $buyer_fullname;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'");
         $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
@@ -3534,9 +3534,13 @@ public function print_BS_new(){
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
              $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // if($stl_id!='null'){
+        //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
 
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
@@ -7223,7 +7227,8 @@ public function upload_sales_adjustment_test(){
     public function PDF_OR_bulk(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        // $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
         $signatory=($this->uri->segment(6)!='' || !empty($this->uri->segment(6))) ? $this->uri->segment(6) : $_SESSION['user_id'];
 
         $sql="";
@@ -7232,9 +7237,13 @@ public function upload_sales_adjustment_test(){
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
              $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // } if($stl_id!='null'){
+        //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
 
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
@@ -8884,17 +8893,22 @@ public function upload_sales_adjustment_test(){
 
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        // $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
 
         $sql="";
 
         if($date!='null'){
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
-             $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+             $sql.= "cd.reference_no = '$ref_no' AND ";
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // } if($stl_id!='null'){
+        //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
 
@@ -8945,10 +8959,12 @@ public function upload_sales_adjustment_test(){
     public function collection_reserve_list(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        // $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
         $data['date'] = $date;
         $data['ref_no'] = $ref_no;
-        $data['stl_id'] = $stl_id;
+        // $data['stl_id'] = $stl_id;
+        $data['buyer_fullname'] = $buyer_fullname;
         $data['employees']=$this->super_model->select_all_order_by('users','fullname','ASC');
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_reserve_head WHERE saved != '0'");
         $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0'");
@@ -8957,10 +8973,14 @@ public function upload_sales_adjustment_test(){
         if($date!='null'){
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
-             $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+             $sql.= "cd.reference_no = '$ref_no' AND ";
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // } if($stl_id!='null'){
+        //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
         $data['collection']=array();
@@ -9306,16 +9326,21 @@ public function upload_sales_adjustment_test(){
     public function PDF_OR_bulk_reserve(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
+        // $stl_id=$this->uri->segment(5);
         $signatory=($this->uri->segment(6)!='' || !empty($this->uri->segment(6))) ? $this->uri->segment(6) : $_SESSION['user_id'];
         $sql="";
         if($date!='null'){
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
-            $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-            $sql.= "cd.settlement_id = '$stl_id' AND "; 
+            $sql.= "cd.reference_no = '$ref_no' AND ";
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // } if($stl_id!='null'){
+        //     $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
         $data['details']=array();
@@ -9382,15 +9407,20 @@ public function upload_sales_adjustment_test(){
     {
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        // $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
         $sql="";
         if($date!='null'){
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
-             $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+             $sql.= "cd.reference_no = '$ref_no' AND ";
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // } if($stl_id!='null'){
+        //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
         // $dir    = "C:\Users\steph\Downloads\/";

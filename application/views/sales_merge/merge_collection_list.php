@@ -72,10 +72,10 @@
                                                     </select>
                                                 </td>
                                                 <td width="21%">
-                                                    <select class="form-control select2" name="stl_id" id="stl_id">
+                                                    <select class="form-control select2" name="buyer_fn" id="buyer_fn">
                                                         <option value="">-- Select Buyer --</option>
                                                         <?php foreach($buyer AS $b){ ?>
-                                                            <option value="<?php echo $b->settlement_id;?>"><?php echo $b->buyer_fullname;?></option>
+                                                            <option value="<?php echo $b->buyer_fullname;?>"><?php echo $b->buyer_fullname;?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </td>
@@ -91,7 +91,7 @@
                                 <?php if(!empty($collection)){ ?>
                                 <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
                                     <strong>Quick Scan!</strong> 
-                                    <a href="http://localhost/accounting/salesmerge/export_not_download_merge_collection/<?php echo $date; ?>/<?php echo $ref_no; ?>/<?php echo $stl_id; ?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
+                                    <a href="http://localhost/accounting/salesmerge/export_not_download_merge_collection/<?php echo $date; ?>/<?php echo $ref_no; ?>/<?php echo $buyer_fullname; ?>" target="_blank"><u>Click here</u></a> to check if downloaded files are complete.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -109,11 +109,11 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-3">
-                                            <a href="<?php echo base_url();?>salesmerge/PDF_merge_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $stl_id;?>" target='_blank' class="btn btn-success btn-block" id="export">Export Bulk PDF</a> 
+                                            <a href="<?php echo base_url();?>salesmerge/PDF_merge_OR_bulk/<?php echo $date;?>/<?php echo $ref_no;?>/<?php echo $buyer_fullname;?>" target='_blank' class="btn btn-success btn-block" id="export">Export Bulk PDF</a> 
                                         </div>
                                         <input type="hidden" id="date_collect" value="<?php echo $date; ?>">
                                         <input type="hidden" id="refno" value="<?php echo $ref_no; ?>">
-                                        <input type="hidden" id="stlid" value="<?php echo $stl_id; ?>">
+                                        <input type="hidden" id="buyerfn" value="<?php echo $buyer_fullname; ?>">
                                     </div>
                                     <div style="overflow-x:scroll;">
                                         

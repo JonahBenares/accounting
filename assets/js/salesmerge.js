@@ -552,7 +552,7 @@ function updateMergeDefInt(baseurl,count,collection_id,settlement_id,reference_n
 function merge_collection_filter() {
     var collection_date = document.getElementById("col_date").value; 
     var reference_no = document.getElementById("reference_no").value;
-    var stl_id = document.getElementById("stl_id").value;
+    var buyer_fn = document.getElementById("buyer_fn").value;
 
     if(collection_date!=''){
         collection_date=collection_date;
@@ -566,14 +566,14 @@ function merge_collection_filter() {
         reference_no='null';
     }
 
-    if(stl_id!=''){
-        stl_id=stl_id;
+    if(buyer_fn!=''){
+        buyer_fn=buyer_fn;
     }else{
-        stl_id='null';
+        buyer_fn='null';
     }
 
   var loc= document.getElementById("baseurl").value;
-  window.location=loc+'salesmerge/merge_collection_list/'+collection_date+'/'+reference_no+'/'+stl_id;
+  window.location=loc+'salesmerge/merge_collection_list/'+collection_date+'/'+reference_no+'/'+buyer_fn;
 }
 
 function saveMergeSeries(){
@@ -594,9 +594,9 @@ function select_merge_signatory() {
     var signatory = document.getElementById("signatory").value; 
     var collection_date = document.getElementById("date_collect").value; 
     var reference_no = document.getElementById("refno").value;
-    var stl_id = document.getElementById("stlid").value;
+    var buyer_fn = document.getElementById("buyerfn").value;
     var loc= document.getElementById("baseurl").value;
-    var exported = loc+'salesmerge/PDF_merge_OR_bulk/'+collection_date+'/'+reference_no+'/'+stl_id;
+    var exported = loc+'salesmerge/PDF_merge_OR_bulk/'+collection_date+'/'+reference_no+'/'+buyer_fn;
     $('#export').prop('href', exported+'/'+signatory);
 
     var count = document.getElementsByClassName("print_pdf"); 

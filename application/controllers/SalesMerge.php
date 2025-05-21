@@ -1957,10 +1957,12 @@ class SalesMerge extends CI_Controller {
     public function merge_collection_list(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
+        // $stl_id=$this->uri->segment(5);
         $data['date'] = $date;
         $data['ref_no'] = $ref_no;
-        $data['stl_id'] = $stl_id;
+         $data['buyer_fullname'] = $buyer_fullname;
+        // $data['stl_id'] = $stl_id;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM merge_collection_head WHERE saved != '0'");
         $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
@@ -1971,10 +1973,14 @@ class SalesMerge extends CI_Controller {
         if($date!='null'){
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
-             $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+             $sql.= "cd.reference_no = '$ref_no' AND ";
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // } if($stl_id!='null'){
+        //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
 
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND ".$query;
@@ -2267,7 +2273,8 @@ class SalesMerge extends CI_Controller {
     public function PDF_merge_OR_bulk(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
+        // $stl_id=$this->uri->segment(5);
         $signatory=($this->uri->segment(6)!='' || !empty($this->uri->segment(6))) ? $this->uri->segment(6) : $_SESSION['user_id'];
 
         $sql="";
@@ -2275,10 +2282,14 @@ class SalesMerge extends CI_Controller {
         if($date!='null'){
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
-             $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+             $sql.= "cd.reference_no = '$ref_no' AND ";
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // } if($stl_id!='null'){
+        //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
 
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
@@ -2374,7 +2385,8 @@ class SalesMerge extends CI_Controller {
     public function export_not_download_merge_collection(){
         $date=$this->uri->segment(3);
         $ref_no=$this->uri->segment(4);
-        $stl_id=$this->uri->segment(5);
+        $buyer_fullname = urldecode($this->uri->segment(5) ?? '');
+        // $stl_id=$this->uri->segment(5);
 
         $sql="";
 
@@ -2382,9 +2394,13 @@ class SalesMerge extends CI_Controller {
             $sql.= "ch.collection_date = '$date' AND ";
         } if($ref_no!='null'){
              $sql.= "cd.reference_no = '$ref_no' AND "; 
-        } if($stl_id!='null'){
-             $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        }if ($buyer_fullname != 'null') {
+            $normalizedName = strtoupper(str_replace(['-', ',', '.', ' '], '', $buyer_fullname));
+            $sql .= "REPLACE(REPLACE(REPLACE(REPLACE(UPPER(cd.buyer_fullname), '-', ''), ',', ''), '.', ''), ' ', '') = '$normalizedName' AND ";
         }
+        // } if($stl_id!='null'){
+        //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
+        // }
         $query=substr($sql,0,-4);
         $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
 

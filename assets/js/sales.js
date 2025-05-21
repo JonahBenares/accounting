@@ -444,7 +444,7 @@ function saveAllCollection(){
 function collection_filter() {
 	 var collection_date = document.getElementById("col_date").value; 
      var reference_no = document.getElementById("reference_no").value;
-     var stl_id = document.getElementById("stl_id").value;
+     var buyer_fn = document.getElementById("buyer_fn").value;
 
     if(collection_date!=''){
         collection_date=collection_date;
@@ -458,15 +458,15 @@ function collection_filter() {
         reference_no='null';
     }
 
-    if(stl_id!=''){
-        stl_id=stl_id;
+    if(buyer_fn!=''){
+        buyer_fn=buyer_fn;
     }else{
-        stl_id='null';
+        buyer_fn='null';
     }
 
 
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'sales/collection_list/'+collection_date+'/'+reference_no+'/'+stl_id;
+      window.location=loc+'sales/collection_list/'+collection_date+'/'+reference_no+'/'+buyer_fn;
 
 }
 
@@ -2057,7 +2057,7 @@ function saveAllCollectionReserve(){
 function collection_reserve_filter() {
     var collection_date = document.getElementById("col_date").value; 
     var reference_no = document.getElementById("reference_no").value;
-    var stl_id = document.getElementById("stl_id").value;
+    var buyer_fn = document.getElementById("buyer_fn").value;
 
    if(collection_date!=''){
        collection_date=collection_date;
@@ -2071,23 +2071,23 @@ function collection_reserve_filter() {
        reference_no='null';
    }
 
-   if(stl_id!=''){
-       stl_id=stl_id;
-   }else{
-       stl_id='null';
-   }
+   if(buyer_fn!=''){
+        buyer_fn=buyer_fn;
+    }else{
+        buyer_fn='null';
+    }
 
      var loc= document.getElementById("baseurl").value;
-     window.location=loc+'sales/collection_reserve_list/'+collection_date+'/'+reference_no+'/'+stl_id;
+     window.location=loc+'sales/collection_reserve_list/'+collection_date+'/'+reference_no+'/'+buyer_fn;
 }
 
 function select_signatory() {
     var signatory = document.getElementById("signatory").value; 
     var collection_date = document.getElementById("date_collect").value; 
     var reference_no = document.getElementById("refno").value;
-    var stl_id = document.getElementById("stlid").value;
+    var buyer_fn = document.getElementById("buyerfn").value;
     var loc= document.getElementById("baseurl").value;
-    var exported = loc+'sales/PDF_OR_bulk/'+collection_date+'/'+reference_no+'/'+stl_id;
+    var exported = loc+'sales/PDF_OR_bulk/'+collection_date+'/'+reference_no+'/'+buyer_fn;
     $('#export').prop('href', exported+'/'+signatory);
 
     var count = document.getElementsByClassName("print_pdf"); 
@@ -2107,9 +2107,10 @@ function select_signatory_reserve() {
     var signatory = document.getElementById("signatory").value; 
     var collection_date = document.getElementById("date_collect").value; 
     var reference_no = document.getElementById("refno").value;
-    var stl_id = document.getElementById("stlid").value;
+    // var stl_id = document.getElementById("stlid").value;
+    var buyer_fn = document.getElementById("buyerfn").value;
     var loc= document.getElementById("baseurl").value;
-    var exported = loc+'sales/PDF_OR_bulk_reserve/'+collection_date+'/'+reference_no+'/'+stl_id;
+    var exported = loc+'sales/PDF_OR_bulk_reserve/'+collection_date+'/'+reference_no+'/'+buyer_fn;
     $('#export').prop('href', exported+'/'+signatory);
 
     var count = document.getElementsByClassName("print_pdf"); 
