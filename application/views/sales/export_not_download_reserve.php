@@ -56,8 +56,8 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
-                    <!-- <form method="POST" action="<?php echo base_url(); ?>sales/pdf_scan_directory_reserve"> -->
-                    <form method="POST" action="http://tradingsvr/accounting/sales/pdf_scan_directory_reserve">
+                    <form method="POST" action="<?php echo base_url(); ?>sales/pdf_scan_directory_reserve">
+                    <!-- <form method="POST" action="http://tradingsvr/accounting/sales/pdf_scan_directory_reserve"> -->
                             <div class="card-header">
                                 <div class="d-flex justify-content-start">  
                                     <div>

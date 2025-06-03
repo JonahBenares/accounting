@@ -2085,18 +2085,38 @@ class Purchases extends CI_Controller {
     public function purchases_wesm_pdf_scan_directory(){
 
         $filenames = $this->input->post('filenames');
-        $sql="(";
-        foreach($filenames AS $f){
-            $sql .= " filename =  '$f'  OR ";
-        }
-        $query=substr($sql,0,-3) . ")";
+        // $sql="(";
+        // foreach($filenames AS $f){
+        //     $sql .= " filename =  '$f'  OR ";
+        // }
+        // $query=substr($sql,0,-3) . ")";
 
         
-        $qu = "saved='1' AND adjustment='0' AND ewt > '0' AND ".$query;
+        // $qu = "saved='1' AND adjustment='0' AND ewt > '0' AND ".$query;
+
+        // Safety check: Ensure $filenames is an array
+        if (!is_array($filenames)) {
+            $filenames = [];
+        }
+
+        $conditions = [];
+
+        foreach ($filenames as $f) {
+            $f_clean = $this->db->escape_str($f); // sanitize input
+            $conditions[] = "filename = '$f_clean'";
+        }
+
+        if (!empty($conditions)) {
+            $query = "(" . implode(" OR ", $conditions) . ")";
+        } else {
+            $query = "1=0"; // fallback that prevents query if no filenames
+        }
+
+        $where_clause = "WHERE saved='1' AND adjustment='0' AND ewt > '0' AND $query";
 
         $data['details']=array();
         $x=1;
-       foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id $qu ORDER BY ptd.purchase_detail_id LIMIT 10") AS $det){
+       foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id $where_clause ORDER BY ptd.purchase_detail_id LIMIT 10") AS $det){
           $month= date("n",strtotime($det->billing_to ?? ''));
             $yearQuarter = ceil($month / 3);
             $first = array(1,4,7,10);
@@ -2178,7 +2198,7 @@ class Purchases extends CI_Controller {
             } else {
                 $tin='000-000-000';
             }
-            if($in_ex_sub==0 || $in_ex_sub=='null'){
+            // if($in_ex_sub==0 || $in_ex_sub=='null'){
                 $data['details'][] = array(
                     'purchase_detail_id'=>$det->purchase_detail_id,
                     'due_date'=>'',
@@ -2196,31 +2216,31 @@ class Purchases extends CI_Controller {
                     'reference_no'=>$det->reference_number,
                     'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
                 );
-            }else if($in_ex_sub==1){
-                $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$det->billing_id'");
-                $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
-                if($sub_participant==0){
-                    $data['details'][] = array(
-                        'purchase_detail_id'=>$det->purchase_detail_id,
-                        'due_date'=>'',
-                        'tin'=>$tin,
-                        'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
-                        'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
-                        'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
-                        'total'=>$amount,
-                        'ewt'=>$det->ewt,
-                        'firstmonth'=>$firstmonth,
-                        'secondmonth'=>$secondmonth,
-                        'thirdmonth'=>$thirdmonth,
-                        'item_no'=>$det->item_no,
-                        'shortname'=>$det->short_name,
-                        'reference_no'=>$det->reference_number,
-                        'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
-                    );
-                }
-            }
+            // }else if($in_ex_sub==1){
+            //     $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$det->billing_id'");
+            //     $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
+            //     if($sub_participant==0){
+            //         $data['details'][] = array(
+            //             'purchase_detail_id'=>$det->purchase_detail_id,
+            //             'due_date'=>'',
+            //             'tin'=>$tin,
+            //             'name'=>$this->super_model->select_column_where("participant", "participant_name", "billing_id", $det->billing_id),
+            //             'address'=>$this->super_model->select_column_where("participant", "registered_address", "billing_id", $det->billing_id),
+            //             'zip'=>$this->super_model->select_column_where("participant", "zip_code", "billing_id", $det->billing_id),
+            //             'total'=>$amount,
+            //             'ewt'=>$det->ewt,
+            //             'firstmonth'=>$firstmonth,
+            //             'secondmonth'=>$secondmonth,
+            //             'thirdmonth'=>$thirdmonth,
+            //             'item_no'=>$det->item_no,
+            //             'shortname'=>$det->short_name,
+            //             'reference_no'=>$det->reference_number,
+            //             'ref_no'=>preg_replace("/[^0-9]/", "", $det->reference_number),
+            //         );
+            //     }
+            // }
         }
-        $this->load->view('sales/purchases_wesm_pdf_scan_directory',$data);
+        $this->load->view('purchases/purchases_wesm_pdf_scan_directory',$data);
     }
 
     public function update_filename(){
