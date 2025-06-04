@@ -1514,6 +1514,8 @@ class Purchases extends CI_Controller {
         $zero_rated = $this->super_model->select_column_where("purchase_transaction_details", "zero_rated_purchases", "purchase_detail_id", $purchase_detail_id);
         $zero_rated_ecozone = $this->super_model->select_column_where("purchase_transaction_details", "zero_rated_ecozones", "purchase_detail_id", $purchase_detail_id);
 
+        $amount = 0;
+        
         if($vatable_purchase != 0){
             $amount=$vatable_purchase;
         }
