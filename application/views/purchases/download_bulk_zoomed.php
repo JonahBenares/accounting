@@ -48,14 +48,16 @@
              <img class="img2307" src="<?php echo base_url(); ?>assets/img/form2307.jpg" style="width: 100%;"> 
             <label class="period_from "><?php echo $period_from; ?></label>
             <label class="period_to"><?php echo $period_to; ?></label>
-            <?php 
-           
-                $tin=explode("-",$d['tin']);
-           ?>
+           <?php 
+                $tin = explode("-", $d['tin']);
+                $tin1 = $tin[0] ?? '';
+                $tin2 = $tin[1] ?? '';
+                $tin3 = $tin[2] ?? '';
+            ?>
             <div class="tin1">
-               <label class=""><?php echo $tin[0]; ?></label> 
-               <label class=""><?php echo $tin[1]; ?></label> 
-               <label class=""><?php echo $tin[2]; ?></label> 
+               <label class=""><?php echo $tin1; ?></label> 
+               <label class=""><?php echo $tin2; ?></label> 
+               <label class=""><?php echo $tin3; ?></label> 
                <label class="last1">0000</label> 
             </div>
             <label class="payee"><?php echo $d['name']; ?></label>
