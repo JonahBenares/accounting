@@ -52,10 +52,14 @@
                 $tin=explode("-",$d['tin']);
            ?>
             <div class="tin1">
-               <label class=""><?php echo $tin[0]; ?></label> 
+               <!-- <label class=""><?php echo $tin[0]; ?></label> 
                <label class=""><?php echo $tin[1]; ?></label> 
                <label class=""><?php echo $tin[2]; ?></label> 
-               <label class="last1">0000</label> 
+               <label class="last1">0000</label>  -->
+               <label class=""><?php echo (!empty($tin[0])) ? $tin[0] : ''; ?></label> 
+               <label class=""><?php echo (!empty($tin[1])) ? $tin[1] : ''; ?></label> 
+               <label class=""><?php echo (!empty($tin[2])) ? $tin[2] : ''; ?></label> 
+               <label class="last1"><?php echo (!empty($tin[3])) ? $tin[3] : ''; ?></label> 
             </div>
             <label class="payee"><?php echo $d['name']; ?></label>
             <label class="address1"><?php echo $d['address']; ?></label>

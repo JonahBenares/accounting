@@ -306,7 +306,7 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reserve/reserve_wesm">Main</a></li>
                 </ul>
             </li>
-            <li class="dropdown">
+           <!--  <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                     <i data-feather="briefcase"></i>
                     <span>WESM Transaction Merge</span>
@@ -315,7 +315,7 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm_merge">Main</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>purchases/purchases_wesm_adjustment_merge">Adjustment</a></li>
                 </ul>
-            </li>
+            </li> -->
             <li class="menu-header">Report</li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>BIR</span></a>
