@@ -949,8 +949,8 @@ class SalesMerge extends CI_Controller {
                         $overall_total= ($total_amount+$p->vat_on_sales) - $p->ewt;
                         $data['sub_second'][]=array(
                             "sub_participant"=>$p->actual_billing_id,
-                            "sales_id"=>$s->sales_merge_id,
-                            "ref_no"=>$s->reference_no,
+                            "sales_id"=>$p->sales_merge_id,
+                            "ref_no"=>$p->reference_no,
                             "serial_no"=>$serial_no,
                             "vatable_sales"=>$p->vatable_sales,
                             "zero_rated_sales"=>$p->zero_rated_sales,
