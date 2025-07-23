@@ -7429,7 +7429,7 @@ public function upload_sales_adjustment_test(){
                 'sales_id'=>$d->sales_id,
                 'reference_number'=>$d->reference_number,
                 'settlement_id'=>$d->short_name,
-                'billing_id'=>$d->billing_id,
+                'billing_id'=>$d->actual_billing_id,
                 'actual_billing_id'=>$d->actual_billing_id,
                 'serial_no'=>$d->serial_no,
             );
@@ -7512,7 +7512,7 @@ public function upload_sales_adjustment_test(){
                     'bulk_invoicing_identifier' => $identifier,
                 );
 
-                $this->super_model->update_custom_where("sales_transaction_details",$data_main,"sales_id IN ($salesid_str) AND short_name='$settlement_id' AND billing_id='$billing_id'");
+                $this->super_model->update_custom_where("sales_transaction_details",$data_main,"sales_id IN ($salesid_str) AND short_name='$settlement_id' AND actual_billing_id='$billing_id'");
             }
         }
     }
