@@ -59,9 +59,9 @@
                 <label class="vat_1">VAT</label>
                 <label class="vat_value_1"><?php echo number_format($d['total_vos'],2); ?></label>
                 <?php
-                    $total_sales = $total_vs + $total_zra + $total_vos;
-                    $net_of_vat = $total_vs + $total_zra;
-                    $total_amount_due = $total_vs + $total_zra + $total_vos + $total_ewt;
+                    $total_sales = $d['total_vs'] + $d['total_zra'] + $d['total_vos'];
+                    $net_of_vat = $d['total_vs'] + $d['total_zra'];
+                    $total_amount_due = ($d['total_vs'] + $d['total_zra'] + $d['total_vos']) - $d['total_ewt'];
                 ?>
                  <label class="total_sales_1"><?php echo number_format($total_sales,2); ?></label>
                 <label class="net_vat_1"><?php echo number_format($net_of_vat,2); ?></label>
@@ -98,7 +98,7 @@
     <script src="<?php echo base_url(); ?>assets/js/jquery-1.12.4.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
       $(document).ready(function() {
              
             var counter=document.getElementById('count').value;
@@ -171,7 +171,7 @@
                   });
             }
        });
-    </script>
+    </script> -->
     <script type="text/javascript">
         function printDiv(divName) {
             var printContents = document.getElementById(divName).innerHTML;
