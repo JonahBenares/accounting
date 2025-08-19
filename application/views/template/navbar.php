@@ -216,6 +216,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm">Main</a></li>
+                    <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_unsaved">Main (Unsaved)</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>sales/sales_wesm_adjustment">Adjustment</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>salesmerge/sales_wesm_merge">Merge</a></li>
                 </ul>

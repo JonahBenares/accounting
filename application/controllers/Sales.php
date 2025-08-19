@@ -4054,6 +4054,15 @@ public function print_BS_new(){
         $this->load->view('template/footer');
     }
 
+
+    public function sales_wesm_unsaved(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $this->load->view('sales/sales_wesm_unsaved');
+        $this->load->view('template/footer');
+    }
+
+
     public function sales_wesm_pdf_or(){
         $id=$this->uri->segment(3);
 
