@@ -37,7 +37,7 @@
                                                 <a href="" class="btn btn-primary btn-sm text-white" style="margin-right: 2px;">
                                                     <span class="fas fa-print" style="margin:0px"></span>
                                                 </a>
-                                                <a href="" class="btn btn-danger btn-sm text-white print_pdf" >
+                                                <a href="" class="btn btn-danger btn-sm text-white" >
                                                     <span class="fas fa-trash" style="margin:0px"></span>
                                                 </a>
                                             </td>

@@ -99,7 +99,12 @@
                                     ?>
                                     <tr>
                                         <td>Participant Name</td>
-                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                        <td colspan="2">: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                        <td align="right">
+                                            <a href="" class="btn btn-danger btn-sm text-white" >
+                                                <span class="fas fa-trash" style="margin:0px"></span>
+                                            </a>
+                                        </td>
                                     </tr>
                                     <?php } ?>
                                     <tr>
