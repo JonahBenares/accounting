@@ -100,18 +100,23 @@
                                     <tr>
                                         <td>Participant Name</td>
                                         <td colspan="2">: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
-                                        <td align="right">
-                                            <a href="" class="btn btn-danger btn-sm text-white" >
-                                                <span class="fas fa-trash" style="margin:0px"></span>
-                                            </a>
-                                        </td>
+                                        <!-- <td align="right">
+                                            
+                                        </td> -->
                                     </tr>
                                     <?php } ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
                                         <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
                                         <td width="15%">Billing Period (From)</td>
-                                        <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
+                                        <td> 
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></span>
+                                                <a href="" class="btn btn-danger btn-sm text-white">
+                                                    <span class="fas fa-trash m-0"></span>
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Date</td>
