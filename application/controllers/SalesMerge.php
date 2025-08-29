@@ -435,6 +435,7 @@ class SalesMerge extends CI_Controller {
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE due_date!=''");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
+        $data['count_unsaved'] = $this->super_model->count_custom_where("sales_merge_transaction_head", "saved = '0'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
@@ -574,6 +575,34 @@ class SalesMerge extends CI_Controller {
         $this->load->view('sales_merge/sales_wesm_merge', $data);
         $this->load->view('template/footer');
     }
+
+    public function sales_wesm_merge_unsaved(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $data['details']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head WHERE saved = '0'") AS $d){
+            $data['details'][]=array(
+                'sales_merge_id'=>$d->sales_merge_id,
+                // 'date' => date("Y-m-d", strtotime($d->create_date)),
+                'date' => $d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'reference_number'=>$d->reference_number,
+                'due_date'=>$d->due_date,
+            );
+        }
+
+        $this->load->view('sales_merge/sales_wesm_merge_unsaved', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function save_unsaved_merge(){
+            $sales_merge_id = $this->input->post('sales_merge_id');
+            $data_update = array(
+                    "saved"=>1,
+                );
+                $this->super_model->update_custom_where("sales_merge_transaction_head", $data_update, "sales_merge_id='$sales_merge_id'");
+        }
 
     public function print_multiple(){
         $identifier=$this->input->post('multiple_print');

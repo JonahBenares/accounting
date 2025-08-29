@@ -375,7 +375,7 @@ class Sales extends CI_Controller {
         $data['sales_id'] = $id;
         $data['sub'] = $sub;
         $data['identifier_code']=$this->generateRandomString();
-        $data['count_name'] = $this->super_model->count_custom_where("sales_transaction_details", "company_name = '' AND sales_id ='$id'"); 
+        $data['count_name'] = $this->super_model->count_custom_where("sales_transaction_details", "company_name = '' AND sales_id ='$id'");
         $data['count_empty_actual']=0;
         if(!empty($id)){
             foreach($this->super_model->select_row_where("sales_transaction_head", "sales_id",$id) AS $h){
@@ -3906,6 +3906,7 @@ public function print_BS_new(){
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE due_date!=''");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
+        $data['count_unsaved'] = $this->super_model->count_custom_where("sales_transaction_head", "saved = '0'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
@@ -4058,8 +4059,29 @@ public function print_BS_new(){
     public function sales_wesm_unsaved(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $this->load->view('sales/sales_wesm_unsaved');
+        $data['details']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head WHERE saved = '0'") AS $d){
+            $data['details'][]=array(
+                'sales_id'=>$d->sales_id,
+                // 'date' => date("Y-m-d", strtotime($d->create_date)),
+                'date' => $d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'reference_number'=>$d->reference_number,
+                'due_date'=>$d->due_date,
+            );
+        }
+
+        $this->load->view('sales/sales_wesm_unsaved', $data);
         $this->load->view('template/footer');
+    }
+
+    public function save_unsaved(){
+        $sales_id = $this->input->post('sales_id');
+        $data_update = array(
+                "saved"=>1,
+            );
+            $this->super_model->update_custom_where("sales_transaction_head", $data_update, "sales_id='$sales_id'");
     }
 
 
@@ -4418,7 +4440,7 @@ public function print_BS_new(){
 
         $this->load->view('sales/sales_wesm_pdf_si_bulk',$data);
     }
-        public function update_sales_wesm_flag(){
+    public function update_sales_wesm_flag(){
         $serial_no = $this->input->post('serial_no');
         // $settlement_id = $this->input->post('stl_id');
         $sales_id = $this->input->post('sales_id');
@@ -4592,6 +4614,7 @@ public function print_BS_new(){
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT res_due_date FROM reserve_sales_transaction_head WHERE res_due_date!=''");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant WHERE res_participant_name != '' GROUP BY res_tin ORDER BY res_participant_name");
         $data['participant_name']=$this->super_model->select_column_where('reserve_participant','res_participant_name','res_tin',$participants);
+        $data['count_unsaved'] = $this->super_model->count_custom_where("reserve_sales_transaction_head", "res_saved = '0'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
@@ -4735,6 +4758,34 @@ public function print_BS_new(){
         $this->load->view('sales/reserve_sales_wesm',$data);
         $this->load->view('template/footer');
     }
+
+        public function sales_wesm_reserve_unsaved(){
+            $this->load->view('template/header');
+            $this->load->view('template/navbar');
+            $data['details']=array();
+            foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head WHERE res_saved = '0'") AS $d){
+                $data['details'][]=array(
+                    'reserve_sales_id'=>$d->reserve_sales_id,
+                    // 'date' => date("Y-m-d", strtotime($d->create_date)),
+                    'date' => $d->res_transaction_date,
+                    'billing_from'=>$d->res_billing_from,
+                    'billing_to'=>$d->res_billing_to,
+                    'reference_number'=>$d->res_reference_number,
+                    'due_date'=>$d->res_due_date,
+                );
+            }
+
+            $this->load->view('sales/sales_wesm_reserve_unsaved', $data);
+            $this->load->view('template/footer');
+        }
+
+        public function save_unsaved_reserve(){
+            $reserve_sales_id = $this->input->post('reserve_sales_id');
+            $data_update = array(
+                    "res_saved"=>1,
+                );
+                $this->super_model->update_custom_where("reserve_sales_transaction_head", $data_update, "reserve_sales_id='$reserve_sales_id'");
+        }
 
     public function reserve_sales_wesm_pdf_or_bulk(){
         $ref_no=$this->uri->segment(3);
@@ -5990,6 +6041,7 @@ public function print_BS_new(){
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!=''");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
+        $data['count_unsaved'] = $this->super_model->count_custom_where("sales_adjustment_head", "saved = '0'");
         $data['part_name']= $participants;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
@@ -6129,6 +6181,40 @@ public function print_BS_new(){
         }
         $this->load->view('sales/sales_wesm_adjustment',$data);
         $this->load->view('template/footer');
+    }
+
+        public function sales_wesm_adjustment_unsaved(){
+            $this->load->view('template/header');
+            $this->load->view('template/navbar');
+            $data['details']=array();
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved = '0'") AS $d){
+                $data['details'][]=array(
+                    'sales_adjustment_id'=>$d->sales_adjustment_id,
+                    // 'date' => date("Y-m-d", strtotime($d->create_date)),
+                    'date' => $d->transaction_date,
+                    'billing_from'=>$d->billing_from,
+                    'billing_to'=>$d->billing_to,
+                    'reference_number'=>$d->reference_number,
+                    'due_date'=>$d->due_date,
+                );
+            }
+
+            $this->load->view('sales/sales_wesm_adjustment_unsaved', $data);
+            $this->load->view('template/footer');
+        }
+
+        public function save_unsaved_adjustment(){
+            $sales_adjustment_id = $this->input->post('sales_adjustment_id');
+            $data_update = array(
+                    "saved"=>1,
+                );
+                $this->super_model->update_custom_where("sales_adjustment_head", $data_update, "sales_adjustment_id='$sales_adjustment_id'");
+        }
+
+    public function cancel_sales_adjustment(){
+        $sales_adjustment_id = $this->input->post('sales_adjustment_id');
+        $this->super_model->delete_where("sales_adjustment_details", "sales_adjustment_id", $sales_adjustment_id);
+        $this->super_model->delete_where("sales_adjustment_head", "sales_adjustment_id", $sales_adjustment_id);
     }
 
      public function sales_wesm_adjustment_pdf_or(){

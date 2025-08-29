@@ -1,5 +1,25 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/salesmerge.js"></script>
+<style>
+.card-header {
+    display: flex!important ;
+    justify-content: space-between!important;
+    align-items: center!important;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ccc;
+}
+.card-header h4 {
+    margin: 0;
+}
+.card-header a {
+    text-decoration: none;
+    padding: 1px 10px;
+    background: #ffc107;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+}
+</style>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -8,6 +28,9 @@
                     <div class="card">
                             <div class="card-header">
                                 <h4>WESM Transaction - Sales (Merge)</h4>
+                                 <?php if($count_unsaved != 0){?>
+                                <a href="<?php echo base_url(); ?>sales_merge/sales_wesm_merge_unsaved">Unsaved</a>
+                                 <?php } ?>
                             </div>
                             <div class="card-body">
                                 <form method="POST">

@@ -1,13 +1,36 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/sales.js"></script>
+<style>
+.card-header {
+    display: flex!important ;
+    justify-content: space-between!important;
+    align-items: center!important;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ccc;
+}
+.card-header h4 {
+    margin: 0;
+}
+.card-header a {
+    text-decoration: none;
+    padding: 1px 10px;
+    background: #ffc107;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+}
+</style>
 <div class="main-content">
     <section class="section">
         <div class="section-body">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
-                    <div class="card">
+                    <div class="card">                            
                             <div class="card-header">
                                 <h4>WESM Transaction - Sales</h4>
+                                <?php if($count_unsaved != 0){?>
+                                <a href="<?php echo base_url(); ?>sales/sales_wesm_unsaved">Unsaved</a>
+                                 <?php } ?>
                             </div>
                             <div class="card-body">
                                 <form method="POST">
@@ -87,16 +110,20 @@
                                 <hr>
                                <?php if(!empty($details) && (!empty($ref_no) || !empty($due_date))){ ?>
                                 <table class="table-bsordered" width="100%">
-                                    <?php 
-                                        foreach($details AS $d){ 
-                                            $reference_number=$d['reference_number'];
-                                            $transaction_date=date("F d,Y",strtotime($d['transaction_date']));
-                                            $billing_from=date("F d,Y",strtotime($d['billing_from']));
-                                            $billing_to=date("F d,Y",strtotime($d['billing_to']));
-                                            $due_date=date("F d,Y",strtotime($d['due_date']));
+                                   <?php 
+                                       if(!empty($ref_no)){
+                                            foreach($details AS $d){ 
+                                                $reference_number=$d['reference_number'];
+                                                $transaction_date=date("F d,Y",strtotime($d['transaction_date']));
+                                                $billing_from=date("F d,Y",strtotime($d['billing_from']));
+                                                $billing_to=date("F d,Y",strtotime($d['billing_to']));
+                                                $due_date=date("F d,Y",strtotime($d['due_date']));
+                                            }
                                         }
-                                        if(!empty($participant_name)){
+                                        // if(!empty($participant_name)){
                                     ?>
+
+                                    <?php if(!empty($participant_name)){ ?>
                                     <tr>
                                         <td>Participant Name</td>
                                         <td colspan="2">: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>

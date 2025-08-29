@@ -7,7 +7,7 @@
                 <div class="col-12 col-md-12 col-lg-12 col-sm-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4>WESM Transaction - Sales (Unsaved)</h4>
+                            <h4>WESM Transaction - Sales Adjustmnet (Unsaved)</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -34,10 +34,10 @@
                                             <td><?php echo $d['due_date'];?></td>
                                             <td class="text-center">
                                                 <input type='hidden' name='baseurl' id='baseurl' value='<?php echo base_url(); ?>'>
-                                                 <button type="button" class="btn btn-primary btn-sm text-white" style="margin-right: 2px;" onclick="save_unsaved_sales('<?php echo $d['sales_id']; ?>','<?php echo $d['reference_number']; ?>')">
+                                                 <button type="button" class="btn btn-primary btn-sm text-white" style="margin-right: 2px;" onclick="save_unsaved_sales('<?php echo $d['sales_adjustment_id']; ?>','<?php echo $d['reference_number']; ?>')">
                                                     <span class="fas fa-check" style="margin:0px"></span>
                                                 </button>
-                                                <button type="button" class="btn btn-danger btn-sm text-white" onclick="delete_unsaved_sales('<?php echo $d['sales_id']; ?>','<?php echo $d['reference_number']; ?>')">
+                                                <button type="button" class="btn btn-danger btn-sm text-white" onclick="delete_unsaved_sales('<?php echo $d['sales_adjustment_id']; ?>','<?php echo $d['reference_number']; ?>')">
                                                     <span class="fas fa-trash" style="margin:0px"></span>
                                                 </button>
                                             </td>
@@ -65,9 +65,9 @@
 });
 
 
-    function save_unsaved_sales(sales_id,reference_no) {
+    function save_unsaved_sales(sales_adjustment_id,reference_no) {
         var loc= document.getElementById("baseurl").value;
-        var redirect = loc+"sales/save_unsaved";
+        var redirect = loc+"sales/save_unsaved_adjustment";
         var msg = (reference_no && reference_no.trim() !== "")
         ? 'Are you sure you want to save ' + reference_no + '?'
         : 'Are you sure you want to save this transaction?';
@@ -75,7 +75,7 @@
         var conf = confirm(msg);
         if (conf) {
              $.ajax({
-                data: "sales_id="+sales_id,
+                data: "sales_adjustment_id="+sales_adjustment_id,
                 type: "POST",
                 url: redirect,
                 success: function(response){
@@ -85,9 +85,9 @@
         }
     }
 
-    function delete_unsaved_sales(sales_id,reference_no){
+    function delete_unsaved_sales(sales_adjustment_id,reference_no){
         var loc= document.getElementById("baseurl").value;
-        var redirect = loc+"sales/cancel_sales";
+        var redirect = loc+"sales/cancel_sales_adjustment";
         var msg = (reference_no && reference_no.trim() !== "")
         ? 'Are you sure you want to cancel ' + reference_no + '?'
         : 'Are you sure you want to cancel this transaction?';
@@ -95,7 +95,7 @@
         var conf = confirm(msg);
             if(conf){
                 $.ajax({
-                    data: "sales_id="+sales_id,
+                    data: "sales_adjustment_id="+sales_adjustment_id,
                     type: "POST",
                     url: redirect,
                     success: function(response){
