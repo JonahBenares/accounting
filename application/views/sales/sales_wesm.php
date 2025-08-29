@@ -36,44 +36,50 @@
                                 <form method="POST">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <table class="table-bordsadered" width="100%">
+                                            <table class="w-100">
                                                 <tr>
                                                     <td>
-                                                        <input type='text' class="form-control" name="billing_from" id="billing_from" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing From">
+                                                        <input type="text" class="form-control" name="billing_from" id="billing_from" 
+                                                            onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing From">
                                                     </td>
                                                     <td>
-                                                        <input type='text' class="form-control" name="billing_to" id="billing_to" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing To">
+                                                        <input type="text" class="form-control" name="billing_to" id="billing_to" 
+                                                            onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Billing To">
                                                     </td>
                                                     <td>
                                                         <select class="form-control select2" name="participant" id="participant">
-                                                            <option value=''>-- Select Participant --</option>
-                                                            <?php 
-                                                                foreach($participant AS $p){
-                                                            ?>
-                                                            <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
+                                                            <option value="">-- Select Participant --</option>
+                                                            <?php foreach($participant AS $p){ ?>
+                                                                <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </td>
-                                                    <td  width="2%" rowspan="2">
-                                                        <button type="button" onclick="filterSales();" class="btn btn-primary btn-block">Filter</button>
+                                                    <td width="1%" rowspan="2" class="text-center align-middle">
+                                                        <button type="button" onclick="filterSales();" class="btn btn-primary btn-block mb-2">Filter</button>
+                                                        <button type="button" onclick="resetFilters();" class="btn btn-secondary btn-block">Reset</button>
                                                     </td>
-                                                    <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
-                                                     <?php if(!empty($details)) {?>
-                                                        <td width="10%" rowspan="2">
-                                                            <a href="<?php echo base_url();?>sales/sales_wesm_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-success btn-block">Bulk OR PDF </a>   
-                                                            <a href="<?php echo base_url();?>sales/sales_wesm_pdf_si_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" target='_blank' class="btn btn-warning btn-block">Bulk SI PDF</a>  
-                                                        </td>
+                                                    
+                                                    <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" type="hidden">
+                                                    
+                                                    <?php if(!empty($details)) { ?>
+                                                    <td width="15%" rowspan="2" class="text-center align-middle">
+                                                        <a href="<?php echo base_url();?>sales/sales_wesm_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" 
+                                                            target="_blank" class="btn btn-success btn-block mb-2">
+                                                            Bulk OR PDF
+                                                        </a>
+                                                        <a href="<?php echo base_url();?>sales/sales_wesm_pdf_si_bulk/<?php echo $ref_no;?>/<?php echo $due_date;?>/<?php echo $in_ex_sub;?>/<?php echo $billingfrom;?>/<?php echo $billingto;?>/<?php echo $part_name;?>" 
+                                                            target="_blank" class="btn btn-warning btn-block">
+                                                            Bulk SI PDF
+                                                        </a>
+                                                    </td>
                                                     <?php } ?>
                                                 </tr>
                                                 <tr>
-                                                    
                                                     <td>
                                                         <select class="form-control select2" name="ref_no" id="ref_no">
-                                                            <option value=''>-- Select Reference No --</option>
-                                                            <?php 
-                                                                foreach($reference AS $r){
-                                                            ?>
-                                                            <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
+                                                            <option value="">-- Select Reference No --</option>
+                                                            <?php foreach($reference AS $r){ ?>
+                                                                <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </td>
@@ -87,14 +93,14 @@
                                                     </td>
                                                     <td>
                                                         <select class="form-control" name="in_ex_sub" id="in_ex_sub">
-                                                            <option value="">-- Select Include or Exlcude Sub-participant--</option>
-                                                                <option value="0">Include Sub-participant</option>
-                                                                <option value="1">Exclude Sub-participant</option>
+                                                            <option value="">-- Select Include or Exclude Sub-participant --</option>
+                                                            <option value="0">Include Sub-participant</option>
+                                                            <option value="1">Exclude Sub-participant</option>
                                                         </select>
                                                     </td>
-                                                    
                                                 </tr>
                                             </table>
+
                                         </div>
                                     </div>
                                 </form>
