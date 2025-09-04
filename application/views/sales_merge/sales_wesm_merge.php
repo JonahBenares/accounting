@@ -29,7 +29,7 @@
                             <div class="card-header">
                                 <h4>WESM Transaction - Sales (Merge)</h4>
                                  <?php if($count_unsaved != 0){?>
-                                <a href="<?php echo base_url(); ?>sales_merge/sales_wesm_merge_unsaved">Unsaved</a>
+                                <a href="<?php echo base_url(); ?>salesmerge/sales_wesm_merge_unsaved">Unsaved</a>
                                  <?php } ?>
                             </div>
                             <div class="card-body">
