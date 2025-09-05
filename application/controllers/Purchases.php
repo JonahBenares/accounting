@@ -1052,6 +1052,7 @@ class Purchases extends CI_Controller {
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
+        $data['count_unsaved'] = $this->super_model->count_custom_where("purchase_transaction_head", "saved = '0' AND adjustment = '0'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $sql='';
@@ -1144,6 +1145,35 @@ class Purchases extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function purchases_wesm_unsaved(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $data['details']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE saved = '0' AND adjustment = '0'") AS $d){
+            $data['details'][]=array(
+                'purchase_id'=>$d->purchase_id,
+                // 'date' => date("Y-m-d", strtotime($d->create_date)),
+                'date' => $d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'reference_number'=>$d->reference_number,
+                'due_date'=>$d->due_date,
+            );
+        }
+
+        $this->load->view('purchases/purchases_wesm_unsaved', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function save_unsaved(){
+        $purchase_id = $this->input->post('purchase_id');
+        $data_update = array(
+                "saved"=>1,
+            );
+            $this->super_model->update_custom_where("purchase_transaction_head", $data_update, "purchase_id='$purchase_id'");
+    }
+
+
     public function export_not_download_purchase_wesm(){
         $ref_no=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
@@ -1227,6 +1257,7 @@ class Purchases extends CI_Controller {
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
+        $data['count_unsaved'] = $this->super_model->count_custom_where("purchase_transaction_head", "saved = '0' AND adjustment = '1'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 || $in_ex_sub=='null'){
@@ -1383,6 +1414,40 @@ class Purchases extends CI_Controller {
         }
         $this->load->view('purchases/purchases_wesm_adjustment',$data);
         $this->load->view('template/footer');
+    }
+
+    public function purchases_wesm_adjustment_unsaved(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $data['details']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE saved = '0' AND adjustment = '1'") AS $d){
+            $data['details'][]=array(
+                'purchase_id'=>$d->purchase_id,
+                // 'date' => date("Y-m-d", strtotime($d->create_date)),
+                'date' => $d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'reference_number'=>$d->reference_number,
+                'due_date'=>$d->due_date,
+            );
+        }
+
+        $this->load->view('purchases/purchases_wesm_adjustment_unsaved', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function save_unsaved_adjustment(){
+        $purchase_id = $this->input->post('purchase_id');
+        $data_update = array(
+                "saved"=>1,
+            );
+            $this->super_model->update_custom_where("purchase_transaction_head", $data_update, "purchase_id='$purchase_id'");
+    }
+
+    public function cancel_purchase_adjustment(){
+        $purchase_id = $this->input->post('purchase_id');
+        $this->super_model->delete_where("purchase_transaction_details", "purchase_id", $purchase_id);
+        $this->super_model->delete_where("purchase_transaction_head", "purchase_id", $purchase_id);
     }
 
     public function export_not_download_purchase_wesm_adjustment(){

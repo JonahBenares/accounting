@@ -657,6 +657,7 @@ class Reserve extends CI_Controller {
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!='' AND adjustment='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant WHERE res_participant_name != '' GROUP BY res_tin ORDER BY res_participant_name");
         $data['participant_name']=$this->super_model->select_column_where('reserve_participant','res_participant_name','res_tin',$participants);
+        $data['count_unsaved'] = $this->super_model->count_custom_where("reserve_transaction_head", "saved = '0' AND adjustment = '0'");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $sql='';
@@ -743,6 +744,34 @@ class Reserve extends CI_Controller {
         }
         $this->load->view('reserve/reserve_wesm',$data);
         $this->load->view('template/footer');
+    }
+
+    public function purchases_wesm_reserve_unsaved(){
+        $this->load->view('template/header');
+        $this->load->view('template/navbar');
+        $data['details']=array();
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head WHERE saved = '0' AND adjustment = '0'") AS $d){
+            $data['details'][]=array(
+                'reserve_id'=>$d->reserve_id,
+                // 'date' => date("Y-m-d", strtotime($d->create_date)),
+                'date' => $d->transaction_date,
+                'billing_from'=>$d->billing_from,
+                'billing_to'=>$d->billing_to,
+                'reference_number'=>$d->reference_number,
+                'due_date'=>$d->due_date,
+            );
+        }
+
+        $this->load->view('reserve/purchases_wesm_reserve_unsaved', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function save_unsaved_reserve(){
+        $reserve_id = $this->input->post('reserve_id');
+        $data_update = array(
+                "saved"=>1,
+            );
+            $this->super_model->update_custom_where("reserve_transaction_head", $data_update, "reserve_id='$reserve_id'");
     }
 
     public function export_not_download_purchase_reserve(){
