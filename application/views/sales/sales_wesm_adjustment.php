@@ -89,15 +89,13 @@
                                                         <div class="d-flex justify-content-between gap-2" style="width: 100%;">
                                                             <button type="button" onclick="filterSalesAdjustment();" class="mx-1 btn btn-primary flex-fill">Filter</button>
                                                             <button type="button" onclick="resetBulkAdjustment('<?php echo $ref_no; ?>');" class="btn btn-secondary  flex-fill" <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>Reset</button>
+                                                             <?php if(!empty($details)) {?>
                                                             <a href="<?php echo base_url();?>sales/sales_wesm_adjustment_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date_from;?>/<?php echo $due_date_to;?>/<?php echo $in_ex_sub;?>/<?php echo $part_name;?>/" 
                                                                target="_blank" class="mx-1 btn btn-success flex-fill">Bulk PDF</a>
+                                                            <?php } ?>
                                                         </div>
                                                     </td>
-
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
-                                                     <?php if(!empty($details)) {?>
-                                                    
-                                                <?php } ?>
                                                 </tr>
                                             </table>
                                         </div>
