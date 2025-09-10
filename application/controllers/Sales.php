@@ -4084,6 +4084,16 @@ public function print_BS_new(){
             $this->super_model->update_custom_where("sales_transaction_head", $data_update, "sales_id='$sales_id'");
     }
 
+    public function reset_bulk_sales(){
+        $reference_no = $this->input->post('reference_no');
+        $sales_id = $this->super_model->select_column_custom_where("sales_transaction_head","sales_id","reference_number='$reference_no' AND saved='1' AND deleted='0'");
+        $data_update = array(
+                "bulk_pdf_flag"=>0,
+                "filename"=>null,
+            );
+            $this->super_model->update_custom_where("sales_transaction_details", $data_update, "sales_id='$sales_id'");
+    }
+
 
     public function sales_wesm_pdf_or(){
         $id=$this->uri->segment(3);
@@ -4785,6 +4795,16 @@ public function print_BS_new(){
                     "res_saved"=>1,
                 );
                 $this->super_model->update_custom_where("reserve_sales_transaction_head", $data_update, "reserve_sales_id='$reserve_sales_id'");
+        }
+
+        public function reset_bulk_sales_reserve(){
+            $reference_no = $this->input->post('reference_no');
+            $reserve_sales_id = $this->super_model->select_column_custom_where("reserve_sales_transaction_head","reserve_sales_id","res_reference_number='$reference_no' AND res_saved='1' AND res_deleted='0'");
+            $data_update = array(
+                    "res_bulk_pdf_flag"=>0,
+                    "res_filename"=>null,
+                );
+                $this->super_model->update_custom_where("reserve_sales_transaction_details", $data_update, "reserve_sales_id='$reserve_sales_id'");
         }
 
     public function reserve_sales_wesm_pdf_or_bulk(){
@@ -6215,6 +6235,16 @@ public function print_BS_new(){
         $sales_adjustment_id = $this->input->post('sales_adjustment_id');
         $this->super_model->delete_where("sales_adjustment_details", "sales_adjustment_id", $sales_adjustment_id);
         $this->super_model->delete_where("sales_adjustment_head", "sales_adjustment_id", $sales_adjustment_id);
+    }
+
+    public function reset_bulk_sales_adjustment(){
+        $reference_no = $this->input->post('reference_no');
+        $sales_adjustment_id = $this->super_model->select_column_custom_where("sales_adjustment_head","sales_adjustment_id","reference_number='$reference_no' AND saved='1' AND deleted='0'");
+        $data_update = array(
+                "bulk_pdf_flag"=>0,
+                "filename"=>null,
+            );
+            $this->super_model->update_custom_where("sales_adjustment_details", $data_update, "sales_adjustment_id='$sales_adjustment_id'");
     }
 
      public function sales_wesm_adjustment_pdf_or(){

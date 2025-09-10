@@ -35,20 +35,27 @@
                             <div class="card-body">
                                 <form method="POST">
                                     <div class="row">
-                                        <div class="col-lg-10 offset-lg-1">
+                                        <div class="col-lg-12 ">
                                             <table class="table-borderded" width="100%">
                                                 <tr>
-                                                    <td>
-                                                        <select class="form-control select2" name="participant" id="participant">
-                                                            <option value=''>-- Select Participant --</option>
-                                                            <?php 
-                                                                foreach($participant AS $p){
-                                                            ?>
-                                                            <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
+                                                     <td width="15%">
+                                                        <select class="form-control select2" name="due_date_from" id="due_date_from">
+                                                            <option value="">-- Select Due Date From--</option>
+                                                            <?php foreach($date AS $d){ ?>
+                                                                <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </td>
-                                                    <td>
+                                                    <td width="15%">
+                                                        <select class="form-control select2" name="due_date_to" id="due_date_to">
+                                                            <option value="">-- Select Due Date To--</option>
+                                                            <?php foreach($date AS $d){ ?>
+                                                                <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </td>
+                                                    
+                                                    <td width="15%">
                                                         <select class="form-control select2" name="ref_no" id="ref_no">
                                                             <option value=''>-- Select Reference No --</option>
                                                             <?php 
@@ -58,35 +65,38 @@
                                                             <?php } ?>
                                                         </select>
                                                     </td>
-                                                    <td>
-                                                        <select class="form-control select2" name="due_date_from" id="due_date_from">
-                                                            <option value="">-- Select Due Date From--</option>
-                                                            <?php foreach($date AS $d){ ?>
-                                                                <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
+                                                </tr>
+
+                                                <tr>
+                                                    <td width="15%">
+                                                        <select class="form-control select2" name="participant" id="participant">
+                                                            <option value=''>-- Select Participant --</option>
+                                                            <?php 
+                                                                foreach($participant AS $p){
+                                                            ?>
+                                                            <option value="<?php echo $p->tin;?>"><?php echo $p->participant_name;?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </td>
-                                                    <td>
-                                                        <select class="form-control select2" name="due_date_to" id="due_date_to">
-                                                            <option value="">-- Select Due Date To--</option>
-                                                            <?php foreach($date AS $d){ ?>
-                                                                <option value="<?php echo $d->due_date; ?>"><?php echo $d->due_date; ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </td>
-                                                    <td>
+                                                    <td width="15%">
                                                         <select class="form-control" name="in_ex_sub" id="in_ex_sub">
                                                             <option value="">-- Select Include or Exlcude Sub-participant--</option>
                                                                 <option value="0">Include Sub-participant</option>
                                                                 <option value="1">Exclude Sub-participant</option>
                                                         </select>
                                                     </td>
-                                                    <td  width="1%"><button type="button" onclick="filterSalesAdjustment();" class="btn btn-primary btn-block">Filter</button></td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-between gap-2" style="width: 100%;">
+                                                            <button type="button" onclick="filterSalesAdjustment();" class="mx-1 btn btn-primary flex-fill">Filter</button>
+                                                            <button type="button" onclick="resetBulkAdjustment('<?php echo $ref_no; ?>');" class="btn btn-secondary  flex-fill" <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>Reset</button>
+                                                            <a href="<?php echo base_url();?>sales/sales_wesm_adjustment_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date_from;?>/<?php echo $due_date_to;?>/<?php echo $in_ex_sub;?>/<?php echo $part_name;?>/" 
+                                                               target="_blank" class="mx-1 btn btn-success flex-fill">Bulk PDF</a>
+                                                        </div>
+                                                    </td>
+
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                      <?php if(!empty($details)) {?>
-                                                    <td width="1%">
-                                                    <a href="<?php echo base_url();?>sales/sales_wesm_adjustment_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date_from;?>/<?php echo $due_date_to;?>/<?php echo $in_ex_sub;?>/<?php echo $part_name;?>/" target='_blank' class="btn btn-success btn-block">Bulk PDF</a>   
-                                                    </td>
+                                                    
                                                 <?php } ?>
                                                 </tr>
                                             </table>
@@ -121,22 +131,34 @@
                                     </tr>
                                     <?php } ?>
                                     <tr>
-                                        <td width="15%">Reference Number</td>
-                                        <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
-                                        <td width="15%">Billing Period (From)</td>
-                                        <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
+                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
+                                            <td width="15%">Reference Number</td>
+                                            <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $ref_no : ''; ?></td>
+                                            <td width="15%">Billing Period (From)</td>
+                                            <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
+                                        <?php }else{ ?>
+                                            <td width="15%">Due Date (From)</td>
+                                            <td>: <?php echo (!empty($due_date_from)) ? date("F d,Y",strtotime($due_date_from)) : ''; ?></td>
+                                       <?php } ?>
+                                        
                                     </tr>
                                     <tr>
-                                        <td>Date</td>
-                                        <td>: <?php echo (!empty($transaction_date)) ? $transaction_date : ''; ?></td>
-                                        <td>Billing Period (To)</td>
-                                        <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
-                                    </tr>                                    
-                                    <tr>
-                                        <td>Due Date</td>
-                                        <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
-                                    </tr>
-                                
+                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
+                                            <td>Date</td>
+                                            <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $transaction_date : ''; ?></td>
+                                            <td>Billing Period (To)</td>
+                                            <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
+                                        <?php }else{ ?>
+                                            <td>Due Date (To)</td>
+                                            <td>: <?php echo (!empty($due_date_to)) ? date("F d,Y",strtotime($due_date_to)) : ''; ?></td>
+                                            <?php } ?>
+                                    </tr> 
+                                    <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
+                                        <tr>
+                                            <td>Due Date</td>
+                                            <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
+                                        </tr>
+                                    <?php } ?>
                                 </table>
                                 <br>
                                 <div class="table-responsive">
@@ -343,12 +365,29 @@
     </div>
 </div>     
 <script type="text/javascript">
-    $(document).ready(function() {
-    $('#select-all').click(function() {
-        var checked = this.checked;
-        $('input[type="checkbox"]').each(function() {
-        this.checked = checked;
-    });
-    })
-});
+        $(document).ready(function() {
+        $('#select-all').click(function() {
+                var checked = this.checked;
+                $('input[type="checkbox"]').each(function() {
+                this.checked = checked;
+            });
+            })
+        });
+
+        function resetBulkAdjustment(reference_no) {
+        var loc= document.getElementById("baseurl").value;
+        var redirect = loc+"sales/reset_bulk_sales_adjustment";
+
+        var conf = confirm('Do you really want to reset ' + reference_no + ' to be available for bulk download again?');
+        if (conf) {
+             $.ajax({
+                data: "reference_no="+reference_no,
+                type: "POST",
+                url: redirect,
+                success: function(response){
+                    location.reload();
+                }
+            });
+        }
+    }
 </script>                        

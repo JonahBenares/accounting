@@ -597,12 +597,22 @@ class SalesMerge extends CI_Controller {
     }
 
     public function save_unsaved_merge(){
-            $sales_merge_id = $this->input->post('sales_merge_id');
-            $data_update = array(
-                    "saved"=>1,
-                );
-                $this->super_model->update_custom_where("sales_merge_transaction_head", $data_update, "sales_merge_id='$sales_merge_id'");
-        }
+        $sales_merge_id = $this->input->post('sales_merge_id');
+        $data_update = array(
+                "saved"=>1,
+            );
+            $this->super_model->update_custom_where("sales_merge_transaction_head", $data_update, "sales_merge_id='$sales_merge_id'");
+    }
+
+    public function reset_bulk_sales_merge(){
+        $reference_no = $this->input->post('reference_no');
+        $sales_merge_id = $this->super_model->select_column_custom_where("sales_merge_transaction_head","sales_merge_id","reference_number='$reference_no' AND saved='1' AND deleted='0'");
+        $data_update = array(
+                "bulk_pdf_flag"=>0,
+                "filename"=>null,
+            );
+            $this->super_model->update_custom_where("sales_merge_transaction_details", $data_update, "sales_merge_id='$sales_merge_id'");
+    }
 
     public function print_multiple(){
         $identifier=$this->input->post('multiple_print');

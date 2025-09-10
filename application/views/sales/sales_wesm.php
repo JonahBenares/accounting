@@ -56,7 +56,7 @@
                                                     </td>
                                                     <td width="1%" rowspan="2" class="text-center align-middle">
                                                         <button type="button" onclick="filterSales();" class="btn btn-primary btn-block mb-2">Filter</button>
-                                                        <button type="button" onclick="resetFilters();" class="btn btn-secondary btn-block">Reset</button>
+                                                        <button type="button" onclick="resetBulk('<?php echo $ref_no; ?>');" class="btn btn-secondary btn-block" <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>Reset</button>
                                                     </td>
                                                     
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" type="hidden">
@@ -123,14 +123,15 @@
                                                 $transaction_date=date("F d,Y",strtotime($d['transaction_date']));
                                                 $billing_from=date("F d,Y",strtotime($d['billing_from']));
                                                 $billing_to=date("F d,Y",strtotime($d['billing_to']));
-                                                $due_date=date("F d,Y",strtotime($d['due_date']));
+                                                $duedate=date("F d,Y",strtotime($d['due_date']));
                                             }
                                         }
                                         // if(!empty($participant_name)){
                                     ?>
-
-                                    <?php if(!empty($participant_name)){ ?>
+                                    <?php if(!empty($participant_name)){
+                                    ?>
                                     <tr>
+                                       
                                         <td>Participant Name</td>
                                         <td colspan="2">: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
                                         <!-- <td align="right">
@@ -140,11 +141,15 @@
                                     <?php } ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
-                                        <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
+                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $ref_no : ''; ?></td>
                                         <td width="15%">Billing Period (From)</td>
                                         <td> 
                                             <div class="d-flex justify-content-between align-items-center">
+                                            <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                                 <span>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></span>
+                                            <?php }else{ ?>
+                                                <span>: <?php echo (!empty($billingfrom) && $billingfrom != 'null') ? date("F d,Y",strtotime($billingfrom)) : ''; ?></span>
+                                            <?php } ?>
                                                 <a href="" class="btn btn-danger btn-sm text-white">
                                                     <span class="fas fa-trash m-0"></span>
                                                 </a>
@@ -153,13 +158,21 @@
                                     </tr>
                                     <tr>
                                         <td>Date</td>
-                                        <td>: <?php echo (!empty($transaction_date)) ? $transaction_date : ''; ?></td>
+                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $transaction_date : ''; ?></td>
                                         <td>Billing Period (To)</td>
-                                        <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
-                                    </tr>                                    
+                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
+                                            <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
+                                        <?php }else{ ?>
+                                            <td>: <?php echo (!empty($billingto) && $billingto != 'null') ? date("F d,Y",strtotime($billingto)) : ''; ?></td>
+                                        <?php } ?>
+                                    </tr>
                                     <tr>
                                         <td>Due Date</td>
-                                        <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
+                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
+                                            <td>: <?php echo (!empty($duedate)) ? $duedate : ''; ?></td>
+                                        <?php }else{ ?>
+                                            <td>: <?php echo (!empty($due_date) && $due_date != 'null') ? date("F d,Y",strtotime($due_date)) : ''; ?></td>
+                                        <?php } ?>
                                     </tr>
                                 
                                 </table>
@@ -388,11 +401,30 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-    $('#select-all').click(function() {
-        var checked = this.checked;
-        $('input[type="checkbox"]').each(function() {
-        this.checked = checked;
+        $('#select-all').click(function() {
+            var checked = this.checked;
+            $('input[type="checkbox"]').each(function() {
+            this.checked = checked;
+        });
+        })
     });
-    })
-});
+
+
+function resetBulk(reference_no) {
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+"sales/reset_bulk_sales";
+
+    var conf = confirm('Do you really want to reset ' + reference_no + ' to be available for bulk download again?');
+    if (conf) {
+         $.ajax({
+            data: "reference_no="+reference_no,
+            type: "POST",
+            url: redirect,
+            success: function(response){
+                location.reload();
+            }
+        });
+    }
+}
+
 </script>                             
