@@ -16,6 +16,23 @@
 
 var element = document.getElementById("clickbind");
 element.addEventListener("click", onClick);*/
+
+    function resetPurchasesAdjustment(reference_no) {
+        var loc= document.getElementById("baseurl").value;
+        var redirect = loc+"purchases/reset_bulk_purchases_adjustment";
+
+        var conf = confirm('Do you really want to reset ' + reference_no + ' to be available for bulk download again?');
+        if (conf) {
+             $.ajax({
+                data: "reference_no="+reference_no,
+                type: "POST",
+                url: redirect,
+                success: function(response){
+                    location.reload();
+                }
+            });
+        }
+    }
 </script>
 <style>
     table#table-6 tr td {
@@ -105,8 +122,15 @@ element.addEventListener("click", onClick);*/
                                                     </select>
                                                 </td>
                                                 <td >
-                                                    <button type="button" onclick="filterPurchaseAdj();" class="btn btn-primary btn-block">Filter</button>
-                                                    <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
+                                                    <div class="d-flex justify-content-between gap-2">
+                                                        <button type="button" onclick="filterPurchaseAdj();" class="btn btn-primary flex-fill mr-1">Filter</button>
+                                                        <button type="button" onclick="resetPurchasesAdjustment('<?php echo $ref_no; ?>');" 
+                                                            class="btn btn-secondary flex-fill"
+                                                            <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>
+                                                            Reset
+                                                        </button>
+                                                        <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -123,33 +147,34 @@ element.addEventListener("click", onClick);*/
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
                                             $due_dates=date("F d,Y",strtotime($d['due_date']));
                                         }
-                                        if(!empty($participant_name)){
                                     ?>
                                     <tr>
                                         <td>Participant Name</td>
-                                        <td width="45%">: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
-                                        <td width="15%">Billing Period (From)</td>
-                                        <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
-                                    </tr>
-                                    <?php } else { ?>
-                                        <tr>
-                                            <td>Participant Name</td>
-                                            <td width="45%">: --</td>
+                                        <td width="45%">: <?php echo (!empty($participant_name)) ? $participant_name : '--'; ?></td>
+                                         <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                             <td width="15%">Billing Period (From)</td>
-                                            <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
-                                        </tr>
-                                    <?php } ?>
+                                            <td>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></td>
+                                        <?php }else{ ?>
+                                            <td width="15%">Due Date (From)</td>
+                                            <td>: <?php echo (!empty($due_date_from) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_from)) : '--'; ?></td>
+                                       <?php } ?>
+                                    </tr>
                                     <tr>
                                         <td width="15%">Reference Number</td>
-                                        <td>: <?php echo (!empty($reference_number)) ? $reference_number : ''; ?></td>
-                                        <td>Billing Period (To)</td>
-                                        <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
+                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $ref_no : '--'; ?></td>
+                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
+                                            <td>Billing Period (To)</td>
+                                            <td>: <?php echo (!empty($billing_to)) ? $billing_to : '--'; ?></td>
+                                        <?php }else{ ?>
+                                            <td>Due Date (To)</td>
+                                            <td>: <?php echo (!empty($due_date_to) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_to)) : '--'; ?></td>
+                                            <?php } ?>
                                     </tr>
                                     <tr>
                                         <td>Date</td>
-                                        <td>: <?php echo (!empty($transaction_date)) ? $transaction_date : ''; ?></td>
+                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $transaction_date : '--'; ?></td>
                                         <td>Due Date</td>
-                                        <td>: <?php echo (!empty($due_dates)) ? $due_dates : ''; ?></td>
+                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $due_dates : '--'; ?></td>
                                     </tr>    
                                     <tr>
                                         <td class="pt-2"  colspan="4" align="center">

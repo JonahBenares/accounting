@@ -1173,6 +1173,15 @@ class Purchases extends CI_Controller {
             $this->super_model->update_custom_where("purchase_transaction_head", $data_update, "purchase_id='$purchase_id'");
     }
 
+    public function reset_bulk_purchases(){
+        $reference_no = $this->input->post('reference_no');
+        $purchase_id = $this->super_model->select_column_custom_where("purchase_transaction_head","purchase_id","reference_number='$reference_no' AND saved='1' AND adjustment='0' AND deleted='0'");
+        $data_update = array(
+                "bulk_print_flag"=>0,
+            );
+            $this->super_model->update_custom_where("purchase_transaction_details", $data_update, "purchase_id='$purchase_id'");
+    }
+
 
     public function export_not_download_purchase_wesm(){
         $ref_no=$this->uri->segment(3);
@@ -1448,6 +1457,15 @@ class Purchases extends CI_Controller {
         $purchase_id = $this->input->post('purchase_id');
         $this->super_model->delete_where("purchase_transaction_details", "purchase_id", $purchase_id);
         $this->super_model->delete_where("purchase_transaction_head", "purchase_id", $purchase_id);
+    }
+
+    public function reset_bulk_purchases_adjustment(){
+        $reference_no = $this->input->post('reference_no');
+        $purchase_id = $this->super_model->select_column_custom_where("purchase_transaction_head","purchase_id","reference_number='$reference_no' AND saved='1' AND adjustment='1' AND deleted='0'");
+        $data_update = array(
+                "bulk_print_flag"=>0,
+            );
+            $this->super_model->update_custom_where("purchase_transaction_details", $data_update, "purchase_id='$purchase_id'");
     }
 
     public function export_not_download_purchase_wesm_adjustment(){

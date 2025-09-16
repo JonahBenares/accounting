@@ -138,7 +138,7 @@
                                             <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
                                         <?php }else{ ?>
                                             <td width="15%">Due Date (From)</td>
-                                            <td>: <?php echo (!empty($due_date_from)) ? date("F d,Y",strtotime($due_date_from)) : ''; ?></td>
+                                            <td>: <?php echo (!empty($due_date_from) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_from)) : ''; ?></td>
                                        <?php } ?>
                                         
                                     </tr>
@@ -150,7 +150,7 @@
                                             <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
                                         <?php }else{ ?>
                                             <td>Due Date (To)</td>
-                                            <td>: <?php echo (!empty($due_date_to)) ? date("F d,Y",strtotime($due_date_to)) : ''; ?></td>
+                                            <td>: <?php echo (!empty($due_date_to) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_to)) : ''; ?></td>
                                             <?php } ?>
                                     </tr> 
                                     <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>

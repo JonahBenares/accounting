@@ -774,6 +774,15 @@ class Reserve extends CI_Controller {
             $this->super_model->update_custom_where("reserve_transaction_head", $data_update, "reserve_id='$reserve_id'");
     }
 
+    public function reset_bulk_reserve(){
+        $reference_no = $this->input->post('reference_no');
+        $reserve_id = $this->super_model->select_column_custom_where("reserve_transaction_head","reserve_id","reference_number='$reference_no' AND saved='1' AND adjustment='0' AND deleted='0'");
+        $data_update = array(
+                "bulk_print_flag"=>0,
+            );
+            $this->super_model->update_custom_where("reserve_transaction_details", $data_update, "reserve_id='$reserve_id'");
+    }
+
     public function export_not_download_purchase_reserve(){
         $ref_no=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
