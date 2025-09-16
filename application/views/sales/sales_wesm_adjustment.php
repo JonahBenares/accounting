@@ -121,40 +121,39 @@
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
                                             $due_date=date("F d,Y",strtotime($d['due_date']));
                                         }
-                                    if(!empty($participant_name)){
                                     ?>
                                     <tr>
                                         <td>Participant Name</td>
-                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                        <td>: <?php echo (!empty($participant_name)) ? $participant_name : '--'; ?></td>
                                     </tr>
-                                    <?php } ?>
                                     <tr>
-                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                             <td width="15%">Reference Number</td>
-                                            <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $ref_no : ''; ?></td>
+                                            <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $ref_no : '--'; ?></td>
+                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                             <td width="15%">Billing Period (From)</td>
-                                            <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
+                                            <td>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></td>
                                         <?php }else{ ?>
                                             <td width="15%">Due Date (From)</td>
-                                            <td>: <?php echo (!empty($due_date_from) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_from)) : ''; ?></td>
+                                            <td>: <?php echo (!empty($due_date_from) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_from)) : '--'; ?></td>
                                        <?php } ?>
                                         
                                     </tr>
                                     <tr>
-                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
+                                       
                                             <td>Date</td>
-                                            <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $transaction_date : ''; ?></td>
+                                            <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $transaction_date : '--'; ?></td>
+                                        <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                             <td>Billing Period (To)</td>
-                                            <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
+                                            <td>: <?php echo (!empty($billing_to)) ? $billing_to : '--'; ?></td>
                                         <?php }else{ ?>
                                             <td>Due Date (To)</td>
-                                            <td>: <?php echo (!empty($due_date_to) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_to)) : ''; ?></td>
+                                            <td>: <?php echo (!empty($due_date_to) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_to)) : '--'; ?></td>
                                             <?php } ?>
                                     </tr> 
                                     <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                         <tr>
                                             <td>Due Date</td>
-                                            <td>: <?php echo (!empty($due_date)) ? $due_date : ''; ?></td>
+                                            <td>: <?php echo (!empty($due_date)) ? $due_date : '--'; ?></td>
                                         </tr>
                                     <?php } ?>
                                 </table>

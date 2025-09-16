@@ -128,27 +128,24 @@
                                         }
                                         // if(!empty($participant_name)){
                                     ?>
-                                    <?php if(!empty($participant_name)){
-                                    ?>
                                     <tr>
                                        
                                         <td>Participant Name</td>
-                                        <td colspan="2">: <?php echo (!empty($participant_name)) ? $participant_name : ''; ?></td>
+                                        <td colspan="2">: <?php echo (!empty($participant_name)) ? $participant_name : '--'; ?></td>
                                         <!-- <td align="right">
                                             
                                         </td> -->
                                     </tr>
-                                    <?php } ?>
                                     <tr>
                                         <td width="15%">Reference Number</td>
-                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $ref_no : ''; ?></td>
+                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $ref_no : '--'; ?></td>
                                         <td width="15%">Billing Period (From)</td>
                                         <td> 
                                             <div class="d-flex justify-content-between align-items-center">
                                             <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
-                                                <span>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></span>
+                                                <span>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></span>
                                             <?php }else{ ?>
-                                                <span>: <?php echo (!empty($billingfrom) && $billingfrom != 'null') ? date("F d,Y",strtotime($billingfrom)) : ''; ?></span>
+                                                <span>: <?php echo (!empty($billingfrom) && $billingfrom != 'null') ? date("F d,Y",strtotime($billingfrom)) : '--'; ?></span>
                                             <?php } ?>
                                                 <a href="" class="btn btn-danger btn-sm text-white">
                                                     <span class="fas fa-trash m-0"></span>
@@ -158,20 +155,20 @@
                                     </tr>
                                     <tr>
                                         <td>Date</td>
-                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $transaction_date : ''; ?></td>
+                                        <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $transaction_date : '--'; ?></td>
                                         <td>Billing Period (To)</td>
                                         <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
-                                            <td>: <?php echo (!empty($billing_to)) ? $billing_to : ''; ?></td>
+                                            <td>: <?php echo (!empty($billing_to)) ? $billing_to : '--'; ?></td>
                                         <?php }else{ ?>
-                                            <td>: <?php echo (!empty($billingto) && $billingto != 'null') ? date("F d,Y",strtotime($billingto)) : ''; ?></td>
+                                            <td>: <?php echo (!empty($billingto) && $billingto != 'null') ? date("F d,Y",strtotime($billingto)) : '--'; ?></td>
                                         <?php } ?>
                                     </tr>
                                     <tr>
                                         <td>Due Date</td>
                                         <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
-                                            <td>: <?php echo (!empty($duedate)) ? $duedate : ''; ?></td>
+                                            <td>: <?php echo (!empty($duedate)) ? $duedate : '--'; ?></td>
                                         <?php }else{ ?>
-                                            <td>: <?php echo (!empty($due_date) && $due_date != 'null') ? date("F d,Y",strtotime($due_date)) : ''; ?></td>
+                                            <td>: <?php echo (!empty($due_date) && $due_date != 'null') ? date("F d,Y",strtotime($due_date)) : '--'; ?></td>
                                         <?php } ?>
                                     </tr>
                                 
