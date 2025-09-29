@@ -56,7 +56,7 @@
                                                     </td>
                                                     <td  width="1%" rowspan="2" class="text-center align-middle">
                                                         <button type="button" onclick="filterReserveSales();" class="btn btn-primary btn-block mb-2">Filter</button>
-                                                        <button type="button" onclick="resetBulkReserve('<?php echo $ref_no; ?>');" class="btn btn-secondary btn-block" <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>Reset</button>
+                                                        <button type="button" onclick="resetBulkReserve('<?php echo $ref_no; ?>');" class="btn btn-secondary btn-block" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>>Reset</button>
                                                     </td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                      <?php if(!empty($details)) {?>
@@ -136,12 +136,10 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                             <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                                 <span>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></span>
+                                                <button type="button" onclick="DeleteSavedSalesReserve('<?php echo $d['reserve_sales_id']; ?>','<?php echo $ref_no; ?>','<?php echo $total_bs; ?>');" class="btn btn-danger btn-sm text-white" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>><span class="fas fa-trash m-0"></span></button>
                                             <?php }else{ ?>
                                                 <span>: <?php echo (!empty($billingfrom) && $billingfrom != 'null') ? date("F d,Y",strtotime($billingfrom)) : ''; ?></span>
                                             <?php } ?>
-                                                <a href="" class="btn btn-danger btn-sm text-white">
-                                                    <span class="fas fa-trash m-0"></span>
-                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -379,19 +377,44 @@
         });
 
         function resetBulkReserve(reference_no) {
-        var loc= document.getElementById("baseurl").value;
-        var redirect = loc+"sales/reset_bulk_sales_reserve";
+            var loc= document.getElementById("baseurl").value;
+            var redirect = loc+"sales/reset_bulk_sales_reserve";
 
-        var conf = confirm('Do you really want to reset ' + reference_no + ' to be available for bulk download again?');
-        if (conf) {
-             $.ajax({
-                data: "reference_no="+reference_no,
-                type: "POST",
-                url: redirect,
-                success: function(response){
-                    location.reload();
-                }
-            });
+            var conf = confirm('Do you really want to reset ' + reference_no + ' to be available for bulk download again?');
+            if (conf) {
+                 $.ajax({
+                    data: "reference_no="+reference_no,
+                    type: "POST",
+                    url: redirect,
+                    success: function(response){
+                        location.reload();
+                    }
+                });
+            }
         }
-    }
+
+        function DeleteSavedSalesReserve(reserve_sales_id,reference_no,count_bs) {
+            var loc= document.getElementById("baseurl").value;
+            var redirect = loc+"sales/delete_saved_sales_reserve";
+
+
+            // 🔹 Add condition if count_bs is not 0
+            if (count_bs != 0) {
+                msg = "Are you sure you want to delete " + reference_no + "? \n\n⚠️ Note: This transaction is already used.";
+            }else{
+                var msg = "Are you sure you want to delete " + reference_no + "?";
+            }
+
+            var conf = confirm(msg);
+            if (conf) {
+                 $.ajax({
+                    data: "reserve_sales_id="+reserve_sales_id,
+                    type: "POST",
+                    url: redirect,
+                    success: function(response){
+                       window.location=loc+'sales/reserve_sales_Wesm/';
+                    }
+                });
+            }
+        }
 </script>                             

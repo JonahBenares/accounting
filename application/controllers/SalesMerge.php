@@ -462,6 +462,8 @@ class SalesMerge extends CI_Controller {
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
+            $total_bs = 0;
+            $processed_counts = [];
             foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details sd INNER JOIN sales_merge_transaction_head sh ON sd.sales_merge_id=sh.sales_merge_id $qu ORDER BY serial_no ASC") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("merge_collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("merge_collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
@@ -471,6 +473,17 @@ class SalesMerge extends CI_Controller {
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
                 }
+
+                $sid = (int)$d->sales_merge_detail_id;
+
+                // count once per unique sales_detail_id and cache it
+                if (!isset($processed_counts[$sid])){
+                    $processed_counts[$sid] = $this->super_model->count_custom_where(
+                        "bsm_head", "sales_merge_detail_id = '$sid'"
+                    );
+                    $total_bs += $processed_counts[$sid]; // add to grand total only once
+                }
+
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_merge_detail_id,
                     'sales_id'=>$d->sales_merge_id,
@@ -506,6 +519,7 @@ class SalesMerge extends CI_Controller {
                     'scanned_copy'=>$d->scanned_copy
                 );
             }
+            $data['total_bs'] = $total_bs;
         }else if($in_ex_sub==1){
             $sql='';
             if($ref_no!='null'){
@@ -571,6 +585,7 @@ class SalesMerge extends CI_Controller {
                     );
                 }
             }
+            $data['total_bs'] = 0;
         }
         $this->load->view('sales_merge/sales_wesm_merge', $data);
         $this->load->view('template/footer');
@@ -612,6 +627,16 @@ class SalesMerge extends CI_Controller {
                 "filename"=>null,
             );
             $this->super_model->update_custom_where("sales_merge_transaction_details", $data_update, "sales_merge_id='$sales_merge_id'");
+    }
+
+    public function delete_saved_sales_merge(){
+        $sales_merge_id = $this->input->post('sales_merge_id');
+        $data_update = array(
+                "deleted"=>1,
+                "deleted_by"=>$_SESSION['user_id'],
+                "date_deleted"=>date("Y-m-d H:i:s"),
+            );
+            $this->super_model->update_custom_where("sales_merge_transaction_head", $data_update, "sales_merge_id='$sales_merge_id'");
     }
 
     public function print_multiple(){

@@ -33,6 +33,30 @@ element.addEventListener("click", onClick);*/
             });
         }
     }
+
+     function DeleteSavedPurchasesAdjustment(purchase_id,reference_no,exists_payment) {
+        var loc= document.getElementById("baseurl").value;
+        var redirect = loc+"purchases/delete_saved_purchases_adjustment";
+
+        // 🔹 Add condition if count_bs is not 0
+        if (exists_payment != 0) {
+            msg = "Are you sure you want to delete " + reference_no + "? \n\n⚠️ Note: This transaction is already used.";
+        }else{
+            var msg = "Are you sure you want to delete " + reference_no + "?";
+        }
+
+        var conf = confirm(msg);
+        if (conf) {
+             $.ajax({
+                data: "purchase_id="+purchase_id,
+                type: "POST",
+                url: redirect,
+                success: function(response){
+                   window.location=loc+'purchases/purchases_wesm_adjustment/';
+                }
+            });
+        }
+    }
 </script>
 <style>
     table#table-6 tr td {
@@ -126,7 +150,7 @@ element.addEventListener("click", onClick);*/
                                                         <button type="button" onclick="filterPurchaseAdj();" class="btn btn-primary flex-fill mr-1">Filter</button>
                                                         <button type="button" onclick="resetPurchasesAdjustment('<?php echo $ref_no; ?>');" 
                                                             class="btn btn-secondary flex-fill"
-                                                            <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>
+                                                            <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>>
                                                             Reset
                                                         </button>
                                                         <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
@@ -153,7 +177,12 @@ element.addEventListener("click", onClick);*/
                                         <td width="45%">: <?php echo (!empty($participant_name)) ? $participant_name : '--'; ?></td>
                                          <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                             <td width="15%">Billing Period (From)</td>
-                                            <td>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></td>
+                                             <td> 
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></span>
+                                                    <button type="button" onclick="DeleteSavedPurchasesAdjustment('<?php echo $d['purchase_id']; ?>','<?php echo $ref_no; ?>','<?php echo $exists_payment; ?>');" class="btn btn-danger btn-sm text-white" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>><span class="fas fa-trash m-0"></span></button>
+                                                 </div>
+                                            </td>
                                         <?php }else{ ?>
                                             <td width="15%">Due Date (From)</td>
                                             <td>: <?php echo (!empty($due_date_from) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_from)) : '--'; ?></td>
@@ -168,7 +197,7 @@ element.addEventListener("click", onClick);*/
                                         <?php }else{ ?>
                                             <td>Due Date (To)</td>
                                             <td>: <?php echo (!empty($due_date_to) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_to)) : '--'; ?></td>
-                                            <?php } ?>
+                                        <?php } ?>
                                     </tr>
                                     <tr>
                                         <td>Date</td>

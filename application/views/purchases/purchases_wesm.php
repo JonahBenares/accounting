@@ -34,6 +34,30 @@ element.addEventListener("click", onClick);*/
         }
     }
 
+    function DeleteSavedPurchasesMain(purchase_id,reference_no,exists_payment) {
+        var loc= document.getElementById("baseurl").value;
+        var redirect = loc+"purchases/delete_saved_purchases_main";
+
+        // 🔹 Add condition if count_bs is not 0
+        if (exists_payment != 0) {
+            msg = "Are you sure you want to delete " + reference_no + "? \n\n⚠️ Note: This transaction is already used.";
+        }else{
+            var msg = "Are you sure you want to delete " + reference_no + "?";
+        }
+
+        var conf = confirm(msg);
+        if (conf) {
+             $.ajax({
+                data: "purchase_id="+purchase_id,
+                type: "POST",
+                url: redirect,
+                success: function(response){
+                   window.location=loc+'purchases/purchases_wesm/';
+                }
+            });
+        }
+    }
+
 </script>
 <style>
     table#table-6 tr td {
@@ -153,11 +177,16 @@ element.addEventListener("click", onClick);*/
                                             <td>Participant Name</td>
                                             <td width="45%">: --</td>
                                             <td width="15%">Billing Period (From)</td>
-                                            <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
-                                                 <td>: <?php echo (!empty($billing_from)) ? $billing_from : ''; ?></td>
-                                            <?php }else{ ?>
-                                                 <td>: <?php echo (!empty($billfrom) && $billfrom != 'null') ? date("F d,Y",strtotime($billfrom)) : '--'; ?></td>
-                                            <?php } ?>
+                                            <td> 
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
+                                                    <span>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></span>
+                                                    <button type="button" onclick="DeleteSavedPurchasesMain('<?php echo $d['purchase_id']; ?>','<?php echo $ref_no; ?>','<?php echo $exists_payment; ?>');" class="btn btn-danger btn-sm text-white" <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>><span class="fas fa-trash m-0"></span></button>
+                                                <?php }else{ ?>
+                                                     <span>: <?php echo (!empty($billfrom) && $billfrom != 'null') ? date("F d,Y",strtotime($billfrom)) : '--'; ?></span>
+                                                <?php } ?>
+                                                 </div>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                     <tr>

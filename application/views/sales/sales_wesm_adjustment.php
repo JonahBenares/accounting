@@ -88,7 +88,7 @@
                                                     <td>
                                                         <div class="d-flex justify-content-between gap-2" style="width: 100%;">
                                                             <button type="button" onclick="filterSalesAdjustment();" class="mx-1 btn btn-primary flex-fill">Filter</button>
-                                                            <button type="button" onclick="resetBulkAdjustment('<?php echo $ref_no; ?>');" class="btn btn-secondary  flex-fill" <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>Reset</button>
+                                                            <button type="button" onclick="resetBulkAdjustment('<?php echo $ref_no; ?>');" class="btn btn-secondary  flex-fill" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>>Reset</button>
                                                              <?php if(!empty($details)) {?>
                                                             <a href="<?php echo base_url();?>sales/sales_wesm_adjustment_pdf_or_bulk/<?php echo $ref_no;?>/<?php echo $due_date_from;?>/<?php echo $due_date_to;?>/<?php echo $in_ex_sub;?>/<?php echo $part_name;?>/" 
                                                                target="_blank" class="mx-1 btn btn-success flex-fill">Bulk PDF</a>
@@ -125,13 +125,19 @@
                                     <tr>
                                         <td>Participant Name</td>
                                         <td>: <?php echo (!empty($participant_name)) ? $participant_name : '--'; ?></td>
+
                                     </tr>
                                     <tr>
                                             <td width="15%">Reference Number</td>
                                             <td>: <?php echo (!empty($ref_no) && $ref_no != 'null') ? $ref_no : '--'; ?></td>
                                         <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                             <td width="15%">Billing Period (From)</td>
-                                            <td>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></td>
+                                            <td>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                <span>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></span>
+                                                <button type="button" onclick="DeleteSavedSalesAdjustment('<?php echo $d['sales_adjustment_id']; ?>','<?php echo $ref_no; ?>','<?php echo $total_bs; ?>');" class="btn btn-danger btn-sm text-white" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>><span class="fas fa-trash m-0"></span></button>
+                                                </div>
+                                            </td>
                                         <?php }else{ ?>
                                             <td width="15%">Due Date (From)</td>
                                             <td>: <?php echo (!empty($due_date_from) && $due_date_to != 'null') ? date("F d,Y",strtotime($due_date_from)) : '--'; ?></td>
@@ -372,19 +378,43 @@
         });
 
         function resetBulkAdjustment(reference_no) {
-        var loc= document.getElementById("baseurl").value;
-        var redirect = loc+"sales/reset_bulk_sales_adjustment";
+            var loc= document.getElementById("baseurl").value;
+            var redirect = loc+"sales/reset_bulk_sales_adjustment";
 
-        var conf = confirm('Do you really want to reset ' + reference_no + ' to be available for bulk download again?');
-        if (conf) {
-             $.ajax({
-                data: "reference_no="+reference_no,
-                type: "POST",
-                url: redirect,
-                success: function(response){
-                    location.reload();
-                }
-            });
+            var conf = confirm('Do you really want to reset ' + reference_no + ' to be available for bulk download again?');
+            if (conf) {
+                 $.ajax({
+                    data: "reference_no="+reference_no,
+                    type: "POST",
+                    url: redirect,
+                    success: function(response){
+                        location.reload();
+                    }
+                });
+            }
         }
-    }
+
+        function DeleteSavedSalesAdjustment(sales_adjustment_id, reference_no, count_bs) {
+            var loc = document.getElementById("baseurl").value;
+            var redirect = loc + "sales/delete_saved_sales_adjustment";
+
+            // 🔹 Add condition if count_bs is not 0
+            if (count_bs != 0) {
+                msg = "Are you sure you want to delete " + reference_no + "? \n\n⚠️ Note: This transaction is already used.";
+            }else{
+                var msg = "Are you sure you want to delete " + reference_no + "?";
+            }
+
+            var conf = confirm(msg);
+            if (conf) {
+                $.ajax({
+                        data: "sales_adjustment_id="+sales_adjustment_id,
+                        type: "POST",
+                        url: redirect,
+                        success: function(response){
+                           window.location=loc+'sales/sales_wesm_adjustment/';
+                    }
+                });
+            }
+        }
 </script>                        

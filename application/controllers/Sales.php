@@ -3934,6 +3934,8 @@ public function print_BS_new(){
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
+            $total_bs = 0;
+            $processed_counts = [];
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu") AS $d){
             // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id WHERE saved='1' AND (reference_number LIKE '%$ref_no%' OR due_date = '$due_date')") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
@@ -3946,6 +3948,17 @@ public function print_BS_new(){
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
                 }
+
+                $sid = (int)$d->sales_detail_id;
+
+                // count once per unique sales_detail_id and cache it
+                if (!isset($processed_counts[$sid])){
+                    $processed_counts[$sid] = $this->super_model->count_custom_where(
+                        "bs_head", "sales_detail_id = '$sid'"
+                    );
+                    $total_bs += $processed_counts[$sid]; // add to grand total only once
+                }
+
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->sales_detail_id,
                     'sales_id'=>$d->sales_id,
@@ -3980,9 +3993,10 @@ public function print_BS_new(){
                     'print_counter'=>$d->print_counter,
                     'ewt_amount'=>$d->ewt_amount,
                     'original_copy'=>$d->original_copy,
-                    'scanned_copy'=>$d->scanned_copy
+                    'scanned_copy'=>$d->scanned_copy,
                 );
             }
+            $data['total_bs'] = $total_bs;
         }else if($in_ex_sub==1){
             $sql='';
             if($ref_no!='null'){
@@ -4046,10 +4060,11 @@ public function print_BS_new(){
                     'print_counter'=>$d->print_counter,
                     'ewt_amount'=>$d->ewt_amount,
                     'original_copy'=>$d->original_copy,
-                    'scanned_copy'=>$d->scanned_copy
+                    'scanned_copy'=>$d->scanned_copy,
                 );
                 }
             }
+            $data['total_bs'] = 0;
         }
         $this->load->view('sales/sales_wesm',$data);
         $this->load->view('template/footer');
@@ -4094,6 +4109,15 @@ public function print_BS_new(){
             $this->super_model->update_custom_where("sales_transaction_details", $data_update, "sales_id='$sales_id'");
     }
 
+     public function delete_saved_sales_main(){
+        $sales_id = $this->input->post('sales_id');
+        $data_update = array(
+                "deleted"=>1,
+                "deleted_by"=>$_SESSION['user_id'],
+                "date_deleted"=>date("Y-m-d H:i:s"),
+            );
+            $this->super_model->update_custom_where("sales_transaction_head", $data_update, "sales_id='$sales_id'");
+    }
 
     public function sales_wesm_pdf_or(){
         $id=$this->uri->segment(3);
@@ -4652,7 +4676,8 @@ public function print_BS_new(){
 
             $query=substr($sql,0,-4);
             $qu = " WHERE res_saved='1' AND ".$query;
-
+            $total_bs = 0;
+            $processed_counts = [];
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details sd INNER JOIN reserve_sales_transaction_head sh ON sd.reserve_sales_id=sh.reserve_sales_id $qu") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_reserve_details","series_number","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_reserve_details","old_series_no","reference_no='$d->res_reference_number' AND settlement_id='$d->res_short_name'");
@@ -4664,6 +4689,17 @@ public function print_BS_new(){
                 }else{
                     $comp_name=$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $d->res_billing_id);
                 }
+
+                 $sid = (int)$d->reserve_sales_detail_id;
+
+                // count once per unique sales_detail_id and cache it
+                if (!isset($processed_counts[$sid])){
+                    $processed_counts[$sid] = $this->super_model->count_custom_where(
+                        "reserve_bs_head", "reserve_sales_detail_id = '$sid'"
+                    );
+                    $total_bs += $processed_counts[$sid]; // add to grand total only once
+                }
+
                 $data['details'][]=array(
                     'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
                     'reserve_sales_id'=>$d->reserve_sales_id,
@@ -4699,6 +4735,7 @@ public function print_BS_new(){
                     'scanned_copy'=>$d->res_scanned_copy
                 );
             }
+        $data['total_bs'] = $total_bs;
         }else if($in_ex_sub==1){
             $sql='';
             if($ref_no!='null'){
@@ -4764,6 +4801,7 @@ public function print_BS_new(){
                     );
                 }
             }
+            $data['total_bs'] = 0;
         }
         $this->load->view('sales/reserve_sales_wesm',$data);
         $this->load->view('template/footer');
@@ -4805,6 +4843,16 @@ public function print_BS_new(){
                     "res_filename"=>null,
                 );
                 $this->super_model->update_custom_where("reserve_sales_transaction_details", $data_update, "reserve_sales_id='$reserve_sales_id'");
+        }
+
+         public function delete_saved_sales_reserve(){
+            $reserve_sales_id = $this->input->post('reserve_sales_id');
+            $data_update = array(
+                    "res_deleted"=>1,
+                    "res_deleted_by"=>$_SESSION['user_id'],
+                    "res_date_deleted"=>date("Y-m-d H:i:s"),
+                );
+                $this->super_model->update_custom_where("reserve_sales_transaction_head", $data_update, "reserve_sales_id='$reserve_sales_id'");
         }
 
     public function reserve_sales_wesm_pdf_or_bulk(){
@@ -6086,6 +6134,8 @@ public function print_BS_new(){
             }
             $query=substr($sql,0,-4);
             $qu = " WHERE saved='1' AND ".$query;
+            $total_bs = 0;
+            $processed_counts = [];
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu ORDER BY serial_no ASC, item_no ASC") AS $d){
                 $series_number=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
                 $old_series_no=$this->super_model->select_column_custom_where("collection_details","old_series_no","reference_no='$d->reference_number' AND settlement_id='$d->short_name'");
@@ -6097,6 +6147,17 @@ public function print_BS_new(){
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
                 }
+
+                $sn = (int)$d->serial_no;
+
+                // count once per unique invoice_no and cache it
+                if (!isset($processed_counts[$sn])){
+                    $processed_counts[$sn] = $this->super_model->count_custom_where(
+                        "bs_head_adjustment", "invoice_no = '$sn'"
+                    );
+                    $total_bs += $processed_counts[$sn]; // add to grand total only once
+                }
+
                 $data['details'][]=array(
                     'sales_detail_id'=>$d->adjustment_detail_id,
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
@@ -6133,6 +6194,7 @@ public function print_BS_new(){
                     'scanned_copy'=>$d->scanned_copy
                 );
             }
+            $data['total_bs'] = $total_bs;
         }else if($in_ex_sub==1){
             $sql='';
             if($ref_no!='null'){
@@ -6198,6 +6260,7 @@ public function print_BS_new(){
                 );
                 }
             }
+            $data['total_bs'] = 0;
         }
         $this->load->view('sales/sales_wesm_adjustment',$data);
         $this->load->view('template/footer');
@@ -6245,6 +6308,16 @@ public function print_BS_new(){
                 "filename"=>null,
             );
             $this->super_model->update_custom_where("sales_adjustment_details", $data_update, "sales_adjustment_id='$sales_adjustment_id'");
+    }
+
+    public function delete_saved_sales_adjustment(){
+        $sales_adjustment_id = $this->input->post('sales_adjustment_id');
+        $data_update = array(
+                "deleted"=>1,
+                "deleted_by"=>$_SESSION['user_id'],
+                "date_deleted"=>date("Y-m-d H:i:s"),
+            );
+            $this->super_model->update_custom_where("sales_adjustment_head", $data_update, "sales_adjustment_id='$sales_adjustment_id'");
     }
 
      public function sales_wesm_adjustment_pdf_or(){

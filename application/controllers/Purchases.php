@@ -1106,6 +1106,7 @@ class Purchases extends CI_Controller {
                 $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
             }
 
+            $data['exists_payment'] = $this->super_model->count_custom_where("payment_head", "purchase_id = '$d->purchase_id'");
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
@@ -1178,8 +1179,19 @@ class Purchases extends CI_Controller {
         $purchase_id = $this->super_model->select_column_custom_where("purchase_transaction_head","purchase_id","reference_number='$reference_no' AND saved='1' AND adjustment='0' AND deleted='0'");
         $data_update = array(
                 "bulk_print_flag"=>0,
+                "filename"=>null,
             );
             $this->super_model->update_custom_where("purchase_transaction_details", $data_update, "purchase_id='$purchase_id'");
+    }
+
+    public function delete_saved_purchases_main(){
+        $purchase_id = $this->input->post('purchase_id');
+        $data_update = array(
+                "deleted"=>1,
+                "deleted_by"=>$_SESSION['user_id'],
+                "date_deleted"=>date("Y-m-d H:i:s"),
+            );
+            $this->super_model->update_custom_where("purchase_transaction_head", $data_update, "purchase_id='$purchase_id'");
     }
 
 
@@ -1320,7 +1332,7 @@ class Purchases extends CI_Controller {
                 }else{
                     $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
                 }
-
+                $data['exists_payment'] = $this->super_model->count_custom_where("payment_head", "purchase_id = '$d->purchase_id'");
                 $data['details'][]=array(
                     'purchase_detail_id'=>$d->purchase_detail_id,
                     'purchase_id'=>$d->purchase_id,
@@ -1362,8 +1374,11 @@ class Purchases extends CI_Controller {
                 $sql.= "ph.reference_number = '$ref_no' AND ";
             }
 
-            if($due_date!='null'){
-                $sql.= "ph.due_date = '$due_date' AND ";
+            // if($due_date!='null'){
+            //     $sql.= "ph.due_date = '$due_date' AND ";
+            // }
+            if($due_date_from!='null' && $due_date_to!='null'){ 
+                $sql.= " ph.due_date BETWEEN '$due_date_from' AND '$due_date_to' AND ";
             }
 
             if($or_no!='null' && !empty($or_no) && $or_no!="%5E"){
@@ -1388,13 +1403,24 @@ class Purchases extends CI_Controller {
                 $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");
                 //$sub_participant = $this->super_model->select_column_custom_where("subparticipant","sub_participant","sub_participant='$participant_id'");
                 //if($participant_id != $sub_participant){
+
+                $create_date = $this->super_model->select_column_where("purchase_transaction_head", "create_date", "purchase_id", $d->purchase_id);
+                $company_name=$this->super_model->select_column_where("purchase_transaction_details", "company_name", "purchase_detail_id", $d->purchase_detail_id);
+                if(!empty($company_name)){
+                    $comp_name=$company_name;
+                }else{
+                    $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $d->billing_id);
+                }
+                $data['exists_payment'] = 0;
                 if($sub_participant==0){
                     $data['details'][]=array(
                         'purchase_detail_id'=>$d->purchase_detail_id,
                         'purchase_id'=>$d->purchase_id,
                         'item_no'=>$d->item_no,
+                        'company_name'=>$comp_name,
                         'short_name'=>$d->short_name,
                         'billing_id'=>$d->billing_id,
+                        'actual_billing_id'=>$d->actual_billing_id,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
                         'ith_tag'=>$d->ith_tag,
@@ -1464,9 +1490,21 @@ class Purchases extends CI_Controller {
         $purchase_id = $this->super_model->select_column_custom_where("purchase_transaction_head","purchase_id","reference_number='$reference_no' AND saved='1' AND adjustment='1' AND deleted='0'");
         $data_update = array(
                 "bulk_print_flag"=>0,
+                "filename"=>null,
             );
             $this->super_model->update_custom_where("purchase_transaction_details", $data_update, "purchase_id='$purchase_id'");
     }
+
+    public function delete_saved_purchases_adjustment(){
+        $purchase_id = $this->input->post('purchase_id');
+        $data_update = array(
+                "deleted"=>1,
+                "deleted_by"=>$_SESSION['user_id'],
+                "date_deleted"=>date("Y-m-d H:i:s"),
+            );
+            $this->super_model->update_custom_where("purchase_transaction_head", $data_update, "purchase_id='$purchase_id'");
+    }
+
 
     public function export_not_download_purchase_wesm_adjustment(){
         $ref_no=$this->uri->segment(3);

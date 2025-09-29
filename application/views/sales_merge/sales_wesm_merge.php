@@ -56,7 +56,7 @@
                                                     </td>
                                                     <td  width="2%" rowspan="2">
                                                         <button type="button" onclick="filterMergeSales();" class="btn btn-primary btn-block">Filter</button>
-                                                        <button type="button" onclick="resetBulkMerge('<?php echo $ref_no; ?>');" class="btn btn-secondary btn-block" <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>Reset</button>
+                                                        <button type="button" onclick="resetBulkMerge('<?php echo $ref_no; ?>');" class="btn btn-secondary btn-block" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>>Reset</button>
                                                     </td>
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" class="form-control" type="hidden" >
                                                      <?php if(!empty($details)) {?>
@@ -111,7 +111,7 @@
                                 <table class="table-bsordered" width="100%">
                                     <?php 
                                         foreach($details AS $d){ 
-                                            $reference_number=$d['reference_number'];
+                                            $reference_number=$d['reference_no'];
                                             $transaction_date=date("F d,Y",strtotime($d['transaction_date']));
                                             $billing_from=date("F d,Y",strtotime($d['billing_from']));
                                             $billing_to=date("F d,Y",strtotime($d['billing_to']));
@@ -130,12 +130,10 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                             <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                                 <span>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></span>
+                                                <button type="button" onclick="DeleteSavedSalesMerge('<?php echo $d['sales_id']; ?>','<?php echo $ref_no; ?>','<?php echo $total_bs; ?>');" class="btn btn-danger btn-sm text-white" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>><span class="fas fa-trash m-0"></span></button>
                                             <?php }else{ ?>
                                                 <span>: <?php echo (!empty($billingfrom) && $billingfrom != 'null') ? date("F d,Y",strtotime($billingfrom)) : '--'; ?></span>
                                             <?php } ?>
-                                                <a href="" class="btn btn-danger btn-sm text-white">
-                                                    <span class="fas fa-trash m-0"></span>
-                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -387,6 +385,30 @@
                     url: redirect,
                     success: function(response){
                         location.reload();
+                    }
+                });
+            }
+        }
+
+        function DeleteSavedSalesMerge(sales_merge_id,reference_no, count_bs) {
+            var loc= document.getElementById("baseurl").value;
+            var redirect = loc+"salesmerge/delete_saved_sales_merge";
+
+            // 🔹 Add condition if count_bs is not 0
+            if (count_bs != 0) {
+                msg = "Are you sure you want to delete " + reference_no + "? \n\n⚠️ Note: This transaction is already used.";
+            }else{
+                var msg = "Are you sure you want to delete " + reference_no + "?";
+            }
+            
+            var conf = confirm(msg);
+            if (conf) {
+                 $.ajax({
+                    data: "sales_merge_id="+sales_merge_id,
+                    type: "POST",
+                    url: redirect,
+                    success: function(response){
+                       window.location=loc+'salesmerge/sales_wesm_merge/';
                     }
                 });
             }

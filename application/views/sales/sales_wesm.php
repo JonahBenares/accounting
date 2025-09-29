@@ -56,7 +56,7 @@
                                                     </td>
                                                     <td width="1%" rowspan="2" class="text-center align-middle">
                                                         <button type="button" onclick="filterSales();" class="btn btn-primary btn-block mb-2">Filter</button>
-                                                        <button type="button" onclick="resetBulk('<?php echo $ref_no; ?>');" class="btn btn-secondary btn-block" <?php echo (!empty($ref_no) && $ref_no != 'null') ? '' : 'disabled'; ?>>Reset</button>
+                                                        <button type="button" onclick="resetBulk('<?php echo $ref_no; ?>');" class="btn btn-secondary btn-block" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>>Reset</button>
                                                     </td>
                                                     
                                                     <input name="baseurl" id="baseurl" value="<?php echo base_url(); ?>" type="hidden">
@@ -144,12 +144,10 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                             <?php if(!empty($ref_no) && $ref_no != 'null'){ ?>
                                                 <span>: <?php echo (!empty($billing_from)) ? $billing_from : '--'; ?></span>
+                                                <button type="button" onclick="DeleteSavedSalesMain('<?php echo $d['sales_id']; ?>','<?php echo $ref_no; ?>','<?php echo $total_bs; ?>');" class="btn btn-danger btn-sm text-white" <?php echo (!empty($ref_no) && $ref_no != 'null' && ($in_ex_sub == '0' || $in_ex_sub == 'null')) ? '' : 'disabled'; ?>><span class="fas fa-trash m-0"></span></button>
                                             <?php }else{ ?>
                                                 <span>: <?php echo (!empty($billingfrom) && $billingfrom != 'null') ? date("F d,Y",strtotime($billingfrom)) : '--'; ?></span>
                                             <?php } ?>
-                                                <a href="" class="btn btn-danger btn-sm text-white">
-                                                    <span class="fas fa-trash m-0"></span>
-                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -419,6 +417,30 @@ function resetBulk(reference_no) {
             url: redirect,
             success: function(response){
                 location.reload();
+            }
+        });
+    }
+}
+
+function DeleteSavedSalesMain(sales_id, reference_no, count_bs) {
+    var loc = document.getElementById("baseurl").value;
+    var redirect = loc + "sales/delete_saved_sales_main";
+
+    // 🔹 Add condition if count_bs is not 0
+    if (count_bs != 0) {
+        msg = "Are you sure you want to delete " + reference_no + "? \n\n⚠️ Note: This transaction is already used.";
+    }else{
+        var msg = "Are you sure you want to delete " + reference_no + "?";
+    }
+
+    var conf = confirm(msg);
+    if (conf) {
+        $.ajax({
+            data: "sales_id=" + sales_id,
+            type: "POST",
+            url: redirect,
+            success: function(response) {
+                window.location = loc + 'sales/sales_wesm/';
             }
         });
     }

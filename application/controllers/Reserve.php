@@ -707,6 +707,7 @@ class Reserve extends CI_Controller {
             }else{
                 $comp_name=$this->super_model->select_column_where("reserve_participant", "res_participant_name", "res_billing_id", $d->billing_id);
             }
+            $data['exists_payment'] = $this->super_model->count_custom_where("payment_reserve_head", "reserve_id = '$d->reserve_id'");
             $data['details'][]=array(
                 'reserve_detail_id'=>$d->reserve_detail_id,
                 'reserve_id'=>$d->reserve_id,
@@ -779,8 +780,19 @@ class Reserve extends CI_Controller {
         $reserve_id = $this->super_model->select_column_custom_where("reserve_transaction_head","reserve_id","reference_number='$reference_no' AND saved='1' AND adjustment='0' AND deleted='0'");
         $data_update = array(
                 "bulk_print_flag"=>0,
+                "filename"=>null,
             );
             $this->super_model->update_custom_where("reserve_transaction_details", $data_update, "reserve_id='$reserve_id'");
+    }
+
+    public function delete_saved_purchases_reserve(){
+        $reserve_id = $this->input->post('reserve_id');
+        $data_update = array(
+                "deleted"=>1,
+                "deleted_by"=>$_SESSION['user_id'],
+                "date_deleted"=>date("Y-m-d H:i:s"),
+            );
+            $this->super_model->update_custom_where("reserve_transaction_head", $data_update, "reserve_id='$reserve_id'");
     }
 
     public function export_not_download_purchase_reserve(){
