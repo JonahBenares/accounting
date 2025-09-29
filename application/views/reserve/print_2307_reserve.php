@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>FEBA SYSTEM</title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print2307-style.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/print2307-new.css">
     <link rel='shortcut icon' type='image/x-icon' href='<?php echo base_url(); ?>assets/img/logo.png' />
 </head>
 <div class="" id="printbutton">
@@ -84,61 +84,119 @@
 <script src="<?php echo base_url(); ?>assets/js/jspdf.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/html2canvas.js"></script>
 <script type="text/javascript">
-    function getPDF(shortname, refno,billing_month, timestamp){
-        var HTML_Width = $(".canvas_div_pdf").width();
-        var HTML_Height = $(".canvas_div_pdf").height();
-        var top_left_margin = 10;
-        var PDF_Width = HTML_Width+(top_left_margin*2);
-        var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
-        var canvas_image_width = HTML_Width;
-        var canvas_image_height = HTML_Height;
-        var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
-        html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
+    function getPDF(shortname, refno, billing_month, timestamp) {
+        html2canvas($(".canvas_div_pdf")[0], {
+            allowTaint: true,
             useCORS: true,
             logging: false,
-            height: window.outerHeight + window.innerHeight,
-            windowHeight: window.outerHeight + window.innerHeight}).then(function(canvas) {
-            canvas.getContext('2d');
-            var imgData = canvas.toDataURL("image/jpeg", 1.0);
-            var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
-            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-            for (var i = 1; i <= totalPDFPages; i++) { 
-                pdf.addPage(PDF_Width, PDF_Height);
-                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-            }
-            pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
-        });
-    };
+            scale: 2
+        }).then(function (canvas) {
+            var imgData = canvas.toDataURL("image/png", 0.7);
 
-    function getPDFZoomed(shortname, refno,billing_month, timestamp){
-        var HTML_Width = $(".canvas_div_pdf").width();
-        var HTML_Height = 1495;
-        var top_left_margin = 10;
-        var PDF_Width = HTML_Width+(top_left_margin*2);
-        var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
-        var canvas_image_width = HTML_Width;
-        var canvas_image_height = HTML_Height;
-        // var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-2;
-        var totalPDFPages = 1;
-        html2canvas($(".canvas_div_pdf")[0],{allowTaint:true, 
+            // PDF size (Long bond: 210mm × 330mm)
+            var pdf = new jsPDF('p', 'mm', [210, 330]);
+
+            var margin = 5; // mm
+            var pageWidth = 210 - margin * 2;
+            var pageHeight = 330 - margin * 2;
+
+            var imgWidth = pageWidth;
+            var imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            var heightLeft = imgHeight;
+            var position = margin;
+
+            // First page
+            pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // Extra pages if content exceeds one page
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight + margin;
+                pdf.addPage(210, 330);
+                pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            // Filename
+            var fname = "BIR2307_CENPRI_" + shortname + "_" + refno + "_" + billing_month + "_" + timestamp + ".pdf";
+            pdf.save(fname);
+
+            // Optional: Send filename to server
+            $.ajax({
+                data: 'purchase_detail_id=' + $("#purchase_detail_id").val() + '&filename=' + fname,
+                type: "POST",
+                url: $("#baseurl").val() + "purchases/save_pdf_filename",
+                beforeSend: function () {
+                    document.getElementById("loading").style.display = 'block';
+                },
+                success: function (output) {
+                    setTimeout(() => {
+                        document.getElementById("loading").style.display = 'none';
+                    }, 3000);
+                }
+            });
+        });
+    }
+
+
+
+
+    function getPDFZoomed(shortname, refno, billing_month, timestamp) {
+        html2canvas($(".canvas_div_pdf")[0], {
+            allowTaint: true,
             useCORS: true,
             logging: false,
-            height: window.outerHeight + window.innerHeight,
-            windowHeight: window.outerHeight + window.innerHeight
-        }).then(function(canvas) {
-            canvas.getContext('2d');
-            var imgData = canvas.toDataURL("image/jpeg", 1.0);
-            var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
-            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
-            // for (var i = 1; i <= totalPDFPages; i++) { 
-            //     pdf.addPage(PDF_Width, PDF_Height);
-            //     pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-            // }
-            // let rno = refno.split("-");
-            // let newref = rno[2] + rno[3].slice(0, -1);
-            pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
+            scale: 2
+        }).then(function (canvas) {
+            var imgData = canvas.toDataURL("image/png", 0.7);
+
+            // PDF size (Long bond: 210mm × 330mm)
+            var pdf = new jsPDF('p', 'mm', [210, 330]);
+
+            var margin = 5; // mm
+            var pageWidth = 210 - margin * 2;
+            var pageHeight = 330 - margin * 2;
+
+            var imgWidth = pageWidth;
+            var imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            var heightLeft = imgHeight;
+            var position = margin;
+
+            // First page
+            pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // Extra pages if content exceeds one page
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight + margin;
+                pdf.addPage(210, 330);
+                pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            // Filename
+            var fname = "BIR2307_CENPRI_" + shortname + "_" + refno + "_" + billing_month + "_" + timestamp + ".pdf";
+            pdf.save(fname);
+
+            // Optional: Send filename to server
+            $.ajax({
+                data: 'purchase_detail_id=' + $("#purchase_detail_id").val() + '&filename=' + fname,
+                type: "POST",
+                url: $("#baseurl").val() + "purchases/save_pdf_filename",
+                beforeSend: function () {
+                    document.getElementById("loading").style.display = 'block';
+                },
+                success: function (output) {
+                    setTimeout(() => {
+                        document.getElementById("loading").style.display = 'none';
+                    }, 3000);
+                }
+            });
         });
-    };
+}
+
 </script>
 <script type="text/javascript">
     function printDiv(divName) {

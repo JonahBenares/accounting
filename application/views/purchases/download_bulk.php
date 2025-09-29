@@ -8,9 +8,35 @@
 </script>
 
 <style>
-    body{
-        margin:0px;
+    body {
+        margin: 0;
         overflow: hidden;
+    }
+
+    /* Ensure print output fits on one page */
+    @media print {
+        body {
+            margin: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        #printbutton {
+            display: none !important; /* Hide buttons during print */
+        }
+
+        page[size="Long"] {
+            width: 100% !important;
+            height: auto !important;
+            transform: scale(0.95); /* Adjust scale to fit */
+            transform-origin: top left;
+            page-break-after: always;
+        }
+
+        img.img2307 {
+            max-width: 100% !important;
+            height: auto !important;
+        }
     }
 </style>
 <!DOCTYPE html>
@@ -145,35 +171,46 @@
                         var purchase_detail_id= document.getElementById("purchasedetailid"+a).value;
                         var refno=document.getElementById('ref_no'+a).value;
                         canvas.getContext('2d');   
-                        var imgData = canvas.toDataURL("image/jpeg", 1.0);
-                        var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
-                        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+                        var imgData = canvas.toDataURL("image/jpeg", 0.5); 
+                        // change the  "image/jpeg", 0.5 - 1.0 - 2.0 if you want higher resolution
 
-                        var shortname= $(".shortname"+a).val();
-                       
-                        //for (var i = 1; i <= totalPDFPages; i++) { 
-                            pdf.addPage(PDF_Width, PDF_Height);
-                            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*a)+(top_left_margin*4),canvas_image_width,canvas_image_height);
-                        //}
-                        // let rno = refno.split("-");
-                        // let newref = rno[2] + rno[3].slice(0, -1);
-                        var fname = "BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf";
-                         pdf.save("BIR2307_CENPRI_"+shortname+"_"+refno+"_"+billing_month+"_"+timestamp+".pdf");
-                        
-                         $.ajax({
-                                data: 'purchase_detail_id='+purchase_detail_id+'&filename='+fname,
-                                type: "POST",
-                                url: redirect,
-                                beforeSend: function(){
-                                    document.getElementById("loading").style.display = 'block';  
-                                },
-                                success: function(output){
-                                    //console.log(output);
-                                    setTimeout(() => {
-                                        document.getElementById("loading").style.display = 'none'; 
-                                    }, 3000);
-                                }
-                            });
+                        // PDF size: Long bond paper (8.5" × 13") in millimeters
+                        var pdf = new jsPDF('p', 'mm', [210, 330]);
+
+                        // Set margin
+                        var margin = 10; // mm
+                        var pageWidth = 210;
+                        var pageHeight = 330;
+
+                        // Scale image to fit inside margins
+                        var imgWidth = pageWidth - margin * 2;
+                        var imgHeight = canvas.height * imgWidth / canvas.width;
+
+                        // Add image to PDF with margins
+                        pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
+
+                        // Build filename
+                        var shortname = $(".shortname" + a).val();
+                        var fname = "BIR2307_CENPRI_" + shortname + "_" + refno + "_" + billing_month + "_" + timestamp + ".pdf";
+
+                        // Save PDF
+                        pdf.save(fname);
+
+                        // Send filename to server
+                        $.ajax({
+                            data: 'purchase_detail_id=' + purchase_detail_id + '&filename=' + fname,
+                            type: "POST",
+                            url: redirect,
+                            beforeSend: function() {
+                                document.getElementById("loading").style.display = 'block';  
+                            },
+                            success: function(output) {
+                                setTimeout(() => {
+                                    document.getElementById("loading").style.display = 'none'; 
+                                }, 3000);
+                            }
+                        });
+
                       
                   });
 
