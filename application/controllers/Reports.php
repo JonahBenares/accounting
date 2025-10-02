@@ -4768,7 +4768,7 @@ class Reports extends CI_Controller {
                         $comp_name=$head->participant_name;
                     }
                 $billing_date = date("M. d, Y",strtotime($sth->billing_from))." - ".date("M. d, Y",strtotime($sth->billing_to));
-                $tin=$this->super_model->select_column_where("participant","tin","billing_id",$sth->billing_id);
+                $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$sth->short_name);
                 $salesall[]=array(
                     'billing_date'=>$billing_date,
                     'participant_name'=>$comp_name,
