@@ -431,7 +431,7 @@ class SalesMerge extends CI_Controller {
         $data['billingto']=$billto;
         $data['part_name']=$participants;
         $data['identifier_code']=$this->generateRandomString();
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_merge_transaction_head WHERE reference_number!=''");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_merge_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE due_date!=''");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
@@ -461,7 +461,7 @@ class SalesMerge extends CI_Controller {
                $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE saved='1' AND ".$query;
+            $qu = " WHERE saved='1' AND deleted='0' AND ".$query;
             $total_bs = 0;
             $processed_counts = [];
             foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details sd INNER JOIN sales_merge_transaction_head sh ON sd.sales_merge_id=sh.sales_merge_id $qu ORDER BY serial_no ASC") AS $d){
@@ -543,7 +543,7 @@ class SalesMerge extends CI_Controller {
                $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE saved='1' AND ".$query;
+            $qu = " WHERE saved='1' AND deleted='1' AND ".$query;
                 foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details sd INNER JOIN sales_merge_transaction_head sh ON sd.sales_merge_id=sh.sales_merge_id $qu ORDER BY serial_no ASC") AS $d){
                     $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");
                     $sub_participant = $this->super_model->count_custom_where("subparticipant","sub_participant='$participant_id'");

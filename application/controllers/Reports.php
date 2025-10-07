@@ -64,7 +64,7 @@ class Reports extends CI_Controller {
         $data['part'] = $part;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql="";
@@ -81,7 +81,7 @@ class Reports extends CI_Controller {
         //echo $sql;
      
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
         $total_am = $this->super_model->select_sum_join("total_amount","sales_transaction_details","sales_transaction_head", $qu,"sales_id");
         $data['total_amount'] = $total_am;
         $data['total_collection']=0;
@@ -349,7 +349,7 @@ class Reports extends CI_Controller {
         $data['part'] = $part;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant ORDER BY participant_name ASC");
         $sql='';
         if($participant!='null'){
@@ -417,7 +417,7 @@ class Reports extends CI_Controller {
     public function sales_ledger(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
         $year=$this->uri->segment(3);
         $month=$this->uri->segment(4);
         $referenceno=str_replace("%60","",$this->uri->segment(5) ?? '');
@@ -1311,7 +1311,7 @@ class Reports extends CI_Controller {
             $sql.= " short_name IN($imp) AND ";
         }
         $query=substr($sql,0,-4);
-        $cs_qu = " saved = '1' AND ".$query;
+        $cs_qu = " saved = '1' AND deleted='0' AND ".$query;
         $data['csledger']=array();
         $shortlast="";
         $data['bal_amountarr']=0;
@@ -2238,7 +2238,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/navbar');
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_adjustment_head WHERE reference_number!='' AND saved='1'");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
         $participant=$this->uri->segment(3);
         $referenceno=$this->uri->segment(4);
@@ -2276,7 +2276,7 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         //echo $participant;
-        $cs_qu = " saved = '1' AND ".$query;
+        $cs_qu = " saved = '1' AND deleted='0' AND ".$query;
         $data['csledger']=array();
         $shortlast="";
         $data['bal_amountarr']=0;
@@ -4064,10 +4064,10 @@ class Reports extends CI_Controller {
         // $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
-        $data['date']=$this->super_model->custom_query("SELECT due_date FROM sales_adjustment_head WHERE saved='1' GROUP BY due_date ORDER BY due_date DESC");
+        $data['date']=$this->super_model->custom_query("SELECT due_date FROM sales_adjustment_head WHERE saved='1' AND deleted='0' GROUP BY due_date ORDER BY due_date DESC");
         //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
         //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND saved='1'") AS $ads){
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE due_date='$due_date' AND saved='1' ORDER BY billing_to ASC") AS $ads){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE due_date='$due_date' AND saved='1' AND deleted='0' ORDER BY billing_to ASC") AS $ads){
             $vatable_sales=$this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_sales=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","sales_adjustment_id='$ads->sales_adjustment_id'");
@@ -4629,7 +4629,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
         $total_sum[]=0;
         if(!empty($query)){
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC") AS $sth){
@@ -4920,7 +4920,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
         $total_sum[]=0;
         if(!empty($query)){
         foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head sth INNER JOIN sales_merge_transaction_details std ON sth.sales_merge_id = std.sales_merge_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC") AS $sth){
@@ -5167,7 +5167,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "res_saved = '1' AND ".$query;
+        $qu = "res_saved = '1' AND deleted='0' AND ".$query;
         $total_sum[]=0;
         if(!empty($query)){
         foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head sth INNER JOIN reserve_sales_transaction_details std ON sth.reserve_sales_id = std.reserve_sales_id WHERE $qu ORDER BY res_billing_from ASC, res_reference_number ASC") AS $sth){
@@ -5224,9 +5224,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant != 'null' || $from != 'null' || $to != 'null'){
-            $qu = " res_saved = '1' AND ".$query;
+            $qu = " res_saved = '1' AND deleted='0' AND  ".$query;
         }else{
-             $qu = " res_saved = '1'";
+             $qu = " res_saved = '1' AND deleted='0'";
         }
         $sheetno=0;
             $styleArray = array(
@@ -5868,7 +5868,7 @@ class Reports extends CI_Controller {
         $data['years'] = $year;
 
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!='' AND saved = '1'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!='' AND saved = '1' AND deleted='0'");
         $sql="";
 
         if($from!='null' && $to != 'null'){
@@ -5891,7 +5891,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
 
         $total_sum[]=0;
                 foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE $qu ORDER BY billing_from ASC, due_date ASC, sad.short_name ASC") AS $sah){
@@ -7366,7 +7366,7 @@ class Reports extends CI_Controller {
     public function unpaid_invoices_sales(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' ORDER BY due_date ASC");
+        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' AND deleted='0' ORDER BY due_date ASC");
         $year=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
         $data['year'] = $year;
@@ -7385,9 +7385,9 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
 
         if(!empty($year) && !empty($due_date)){
-             $qu = " saved = '1' AND ".$query;
+             $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = "saved = '1' ";
+             $qu = "saved = '1' AND deleted='0' ";
         }
         $data['bill']=array();
         $data['total_vatable_balance']=0;
@@ -7602,7 +7602,7 @@ class Reports extends CI_Controller {
     public function unpaid_invoices_sales_merge(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE saved='1' ORDER BY due_date ASC");
+        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE saved='1' AND deleted='0' ORDER BY due_date ASC");
         $year=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
         $data['year'] = $year;
@@ -7824,7 +7824,7 @@ class Reports extends CI_Controller {
     public function unpaid_invoices_salesadj(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' ORDER BY due_date ASC");
+        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' AND deleted='0' ORDER BY due_date ASC");
         $year=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
         $data['year'] = $year;
@@ -7843,9 +7843,9 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
 
         if(!empty($year) && !empty($due_date)){
-             $qu = " saved = '1' AND ".$query;
+             $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = "saved = '1' ";
+             $qu = "saved = '1' AND deleted='0' ";
         }
         $data['bill']=array();
         $data['total_vatable_balance']=0;
@@ -8061,7 +8061,7 @@ class Reports extends CI_Controller {
         public function unpaid_invoices_reserve_sales(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT res_due_date FROM reserve_sales_transaction_head WHERE res_saved='1' ORDER BY res_due_date ASC");
+        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT res_due_date FROM reserve_sales_transaction_head WHERE res_saved='1' AND deleted='0' ORDER BY res_due_date ASC");
         $year=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
         $data['year'] = $year;
@@ -8080,9 +8080,9 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
 
         if(!empty($year) && !empty($due_date)){
-             $qu = " res_saved = '1' AND ".$query;
+             $qu = " res_saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = "res_saved = '1' ";
+             $qu = "res_saved = '1' AND deleted='0' ";
         }
         $data['bill']=array();
         $data['total_vatable_balance']=0;
@@ -8294,7 +8294,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
 
         $total_ewt=array();
         $total_ewt_amount=array();
@@ -8479,7 +8479,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
 
         $total_ewt=array();
         $total_ewt_amount=array();
@@ -8633,7 +8633,7 @@ class Reports extends CI_Controller {
         }   
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
 
         $total_ewt=array();
         $total_ewt_amount=array();
@@ -8829,7 +8829,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "res_saved = '1' AND ".$query;
+        $qu = "res_saved = '1' AND deleted='0' AND ".$query;
 
         $total_ewt=array();
         $total_ewt_amount=array();
