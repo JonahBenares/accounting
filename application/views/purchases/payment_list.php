@@ -69,42 +69,48 @@
                                         </table>
                                         <br>
                                         <table class="table-bordered" width="100%">
-                                            <tr class="td-head">
-                                                <td><b>Reference Number</b></td>
-                                                <td><b>Market Fee</b></td>
-                                                <td><b>Withholding Tax</b></td>
-                                                <td width="15%" align="center"><b>Total Amount</b></td>
-                                                <td width="15%" align="center"><b>x</b></td>
-                                            </tr>
+                                            <thead>
+                                                <tr class="td-head">
+                                                    <td><b>Reference Number</b></td>
+                                                    <td><b>Market Fee</b></td>
+                                                    <td><b>Withholding Tax</b></td>
+                                                    <td width="15%" align="center"><b>Total Amount</b></td>
+                                                    <td width="15%" align="center"><b>Action</b></td>
+                                                </tr>
+                                            </thead>
                                             <tbody id="item_body">
-                                                
-                                            </tbody>
-                                            <tfooter>
-                                            <tr>
+                                                <!-- Default first row -->
+                                                <tr id="row_template">
                                                     <td>
                                                         <input type="hidden" name="purchase_id[]" value="0">
-                                                        <input style="width:100%;border:0px transparent" name="manual_reference" type="text" placeholder="Reference Number">
+                                                        <input style="width:100%;border:0px transparent" name="manual_reference[]" type="text" placeholder="Reference Number">
                                                     </td>
                                                     <td>
-                                                        <input style="width:100%;border:0px transparent" name="market_fee[]" id="market_fee" type="text" onkeyup="calculateMarketFee()" onkeypress="return isNumberKey(this, event)" placeholder="Market Fee">
+                                                        <input style="width:100%;border:0px transparent" name="market_fee[]" type="text" onkeyup="calculateMarketFee()" onkeypress="return isNumberKey(this, event)" placeholder="Market Fee">
                                                     </td>
                                                     <td>
-                                                        <input style="width:100%;border:0px transparent" name="withholding_tax[]" id="withholding_tax" type="text" onkeyup="calculateMarketFee()" onkeypress="return isNumberKey(this, event)" placeholder="Withholding Tax">
+                                                        <input style="width:100%;border:0px transparent" name="withholding_tax[]" type="text" onkeyup="calculateMarketFee()" onkeypress="return isNumberKey(this, event)" placeholder="Withholding Tax">
                                                     </td>
                                                     <td>
-                                                        <input class="text-center" style="width:100%;border:0px transparent" name="total_amount[]" id="total_amount" type="text" readonly>
-                                                        <input type="hidden" id="total_vatable_purchase" name="total_vatable_purchase[]" value="0">
-                                                        <input type="hidden" id="total_vat" name="total_vat[]" value="0">
-                                                        <input type="hidden" id="total_ewt" name="total_ewt[]" value="0">
+                                                        <input class="text-center" style="width:100%;border:0px transparent" name="total_amount[]" type="text" readonly>
+                                                        <input type="hidden" name="total_vatable_purchase[]" value="0">
+                                                        <input type="hidden" name="total_vat[]" value="0">
+                                                        <input type="hidden" name="total_ewt[]" value="0">
                                                     </td>
-                                                    <td></td>
+                                                    <td align="center">
+                                                        <button type="button" class="btn btn-primary btn-sm" onclick="addRow()">
+                                                            <span class=" fa fa-plus"></span>
+                                                        </button>
+                                                    </td>
                                                 </tr>
+                                            </tbody>
+                                            <tfoot>
                                                 <tr class="td-yellow">
                                                     <td align="right" colspan='4'><b>Total Amount Due</b></td>
                                                     <td align="center" id="grand" style="font-weight:800"></td>
-                                                    <input type="hidden" name="counter" id="counter">
+                                                    <input type="hidden" name="counter" id="counter" value="1">
                                                 </tr>
-                                            </tfooter>
+                                            </tfoot>
                                         </table>
                                         <br>
 
@@ -288,6 +294,37 @@
         </div>
     </section>
 </div>
+<script>
+let rowCount = 1;
+
+function addRow() {
+    rowCount++;
+    let original = document.getElementById("row_template");
+    let clone = original.cloneNode(true);
+
+    clone.id = "row_" + rowCount;
+
+    let inputs = clone.querySelectorAll("input");
+    inputs.forEach(inp => {
+        if (inp.type === "text") inp.value = "";
+    });
+
+    let btn = clone.querySelector("button");
+    btn.innerHTML = "<span class='fa fa-times'></span>";
+    btn.setAttribute("onclick", "removeRow(" + rowCount + ")");
+    btn.className = "btn btn-danger btn-sm"; // Bootstrap red button
+
+    document.getElementById("item_body").appendChild(clone);
+
+    document.getElementById("counter").value = rowCount;
+}
+
+function removeRow(id) {
+    let row = document.getElementById("row_" + id);
+    if (row) row.remove();
+    calculateMarketFee();
+}
+</script>
 
                 
                                        

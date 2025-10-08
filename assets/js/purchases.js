@@ -596,29 +596,29 @@ function add_reference(){
                 document.getElementById("addref").disabled = true;
             },
             success: function(html){
-                document.getElementById("addref").disabled = false;
-                $('#item_body').append(html);
-                var total =0;
-                $('.total_amount').each(function(){
-                    total += parseFloat($(this).val());
-                });
-                document.getElementById("grand").innerHTML=total.toFixed(2);
-                document.getElementById("payment_amount").value=total.toFixed(2);
-                let selectedValues = $("#reference_number").val() || [];
-                selectedValues.forEach(value => {
-                    $("#reference_number option[value='" + value + "']").remove();
-                });
-                $("#select2").val(null).trigger("change"); // Clear selection
-                $("#select2").select2(); // Reinitialize if needed
+            document.getElementById("addref").disabled = false;
 
-                // $("#reference_number option[value='"+reference_number+"']").remove();
-                //internationalNumberFormat = new Intl.NumberFormat('en-US')
-                //document.getElementById("grand").innerHTML=internationalNumberFormat.format(total);
-                // document.getElementById("reference_number").value = '';
-                // document.getElementById("market_fee").value = '';
-                // document.getElementById("ewt").value = '';
-                document.getElementById("counter").value = count;
-            }
+            // Always insert above manual row
+            $('#item_body tr#row_template').before(html);
+
+            var total = 0;
+            $('.total_amount').each(function(){
+                total += parseFloat($(this).val()) || 0;
+            });
+
+            $('#grand').html(total.toFixed(2));
+            $('#payment_amount').val(total.toFixed(2));
+
+            // Remove used options from dropdown
+            let selectedValues = $("#reference_number").val() || [];
+            selectedValues.forEach(value => {
+                $("#reference_number option[value='" + value + "']").remove();
+            });
+
+            $("#reference_number").val(null).trigger("change");
+
+            document.getElementById("counter").value = count;
+        }
     });  
 }
 
@@ -642,65 +642,75 @@ function remove_item(i,ref_no,purchase_id){
     document.getElementById("payment_amount").value=total.toFixed(2);
 }
 
-function calculateMarketFee(){
-    var market_fee = document.getElementById("market_fee").value;
-    var withholding_tax = document.getElementById("withholding_tax").value;
-    if(market_fee!=0){
-        var mf=market_fee;
-    }else{
-        var mf=0;
-    }
+function calculateMarketFee() {
+    var total = 0;
 
-    if(withholding_tax!=0){
-        var wt=withholding_tax;
-    }else{
-        var wt=0;
-    }
-    var total_mf = parseFloat(mf) - parseFloat(wt);
-    var total =0;
-    $('.total_amount').each(function(){
-        total += parseFloat($(this).val());
+    // Loop through all table rows inside #item_body
+    $("#item_body tr").each(function() {
+        var row = $(this);
+
+        var market_fee_input = row.find("input[name='market_fee[]']");
+        var withholding_tax_input = row.find("input[name='withholding_tax[]']");
+        var total_amount_input = row.find("input[name='total_amount[]']");
+
+        // Only compute if this row has editable fields (manual reference)
+        if (market_fee_input.length && !market_fee_input.prop("readonly")) {
+            var market_fee = parseFloat(market_fee_input.val()) || 0;
+            var withholding_tax = parseFloat(withholding_tax_input.val()) || 0;
+
+            // Example total: you can modify the formula if different
+            var total_row = market_fee - withholding_tax;
+
+            total_amount_input.val(total_row.toFixed(2));
+        }
+
+        // Sum all totals (including dropdown reference rows)
+        var row_total = parseFloat(total_amount_input.val()) || 0;
+        total += row_total;
     });
-    var overall_total=parseFloat(total)  + parseFloat(total_mf)
-    document.getElementById("total_amount").value  = parseFloat(total_mf).toFixed(2);
-    document.getElementById("grand").innerHTML=overall_total.toFixed(2);
-    document.getElementById("payment_amount").value=overall_total.toFixed(2);
+
+    // Update grand total
+    $("#grand").html(total.toFixed(2));
+    $("#payment_amount").val(total.toFixed(2));
 }
 
 function savePaymentall(){
-    var req = $("#Paymentfrm").serialize();
-    var loc= document.getElementById("baseurl").value;
-    //var redirect = loc+'index.php/request/insertRequest';
+    var loc = document.getElementById("baseurl").value;
     var conf = confirm('Are you sure you want to save this record?');
-    if(conf==true){
-        var redirect = loc+'purchases/save_payment_all';
-    }else {
-        var redirect = '';
-    }
-     $.ajax({
-            type: "POST",
-            url: redirect,
-            data: req,
-            beforeSend: function(){
-                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
-                document.getElementById("pay").disabled = true;
-                $('#reference_number').hide();
-                //document.getElementById("reference_number").disabled = true;
-            },
-            success: function(output){
-                // console.log(output)
-                document.getElementById("pay").disabled = false;
-                $('#reference_number').show();
-                //alert(output);
-                //var conf = confirm('Are you sure you want to save this record?');
-                if(conf==true){
-                    alert("Successfully Saved!");
-                    location.reload();
-                    window.open(loc+'purchases/payment_form/'+output, '_blank');
-                    //window.location=loc+'purchases/payment_form/'+output;;
-                }
-            }
-      });
+    if(!conf) return;
+
+    // ✅ Reindex all manual inputs before serializing
+    $("#item_body tr").each(function(i){
+        $(this).find("input[name='manual_reference[]']").attr("name", "manual_reference[" + i + "]");
+        $(this).find("input[name='market_fee[]']").attr("name", "market_fee[" + i + "]");
+        $(this).find("input[name='withholding_tax[]']").attr("name", "withholding_tax[" + i + "]");
+        $(this).find("input[name='total_amount[]']").attr("name", "total_amount[" + i + "]");
+        $(this).find("input[name='total_vatable_purchase[]']").attr("name", "total_vatable_purchase[" + i + "]");
+        $(this).find("input[name='total_vat[]']").attr("name", "total_vat[" + i + "]");
+        $(this).find("input[name='total_ewt[]']").attr("name", "total_ewt[" + i + "]");
+        $(this).find("input[name='purchase_id[]']").attr("name", "purchase_id[" + i + "]");
+    });
+
+    var req = $("#Paymentfrm").serialize();
+    var redirect = loc+'purchases/save_payment_all';
+
+    $.ajax({
+        type: "POST",
+        url: redirect,
+        data: req,
+        beforeSend: function(){
+            document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+            document.getElementById("pay").disabled = true;
+            $('#reference_number').hide();
+        },
+        success: function(output){
+            document.getElementById("pay").disabled = false;
+            $('#reference_number').show();
+            alert("Successfully Saved!");
+            location.reload();
+            window.open(loc+'purchases/payment_form/'+output, '_blank');
+        }
+    });
 }
 
 /*function downloadbulk2307(baseurl,refno){

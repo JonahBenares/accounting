@@ -918,117 +918,149 @@ class Purchases extends CI_Controller {
         return $randomString;
     }
 
-    public function save_payment_all(){
-        $purchase_id=$this->input->post('purchase_id');
-        $reference_number=$this->input->post('manual_reference');
-        $counter=$this->input->post('counter');
-        $payment_date=$this->input->post('payment_date');
-        $particulars=$this->input->post('particulars');
-        $total_vatable_purchase=$this->input->post('total_vatable_purchase');
-        $total_vat=$this->input->post('total_vat');
-        $total_ewt=$this->input->post('total_ewt');
-        $total_amount=$this->input->post('total_amount');
-        $market_fee=$this->input->post('market_fee');
-        $withholding_tax=$this->input->post('withholding_tax');
-        $payment_mode=$this->input->post('customRadioInline1');
-        $check_no=$this->input->post('check_no');
-        $cv_no=$this->input->post('cv_no');
-        $check_date=$this->input->post('check_date');
-        $pcv=$this->input->post('pcv');
-        $payment_identifier=$this->generateRandomString();
-        for($a=0;$a<$counter;$a++){
-            if($purchase_id[$a]!=0){
-                $data_insert=array(
-                    'purchase_id'=>$purchase_id[$a],
-                    'payment_date'=>$payment_date,
-                    'particulars'=>$particulars,
-                    'payment_identifier'=>$payment_identifier,
-                    'total_purchase'=>$total_vatable_purchase[$a],
-                    'total_vat'=>$total_vat[$a],
-                    'total_ewt'=> $total_ewt[$a],
-                    'total_amount'=>$total_amount[$a],
-                    'payment_mode'=>$payment_mode,
-                    'pcv'=>$pcv,
-                    'check_no'=>$check_no,
-                    'cv_no'=>$cv_no,
-                    'check_date'=>$check_date,
-                    'create_date'=>date("Y-m-d h:i:s"),
-                    'user_id'=>$_SESSION['user_id'],
+public function save_payment_all(){
+    $purchase_id        = (array)$this->input->post('purchase_id');
+    $manual_reference   = (array)$this->input->post('manual_reference');
+    $market_fee         = (array)$this->input->post('market_fee');
+    $withholding_tax    = (array)$this->input->post('withholding_tax');
+    $total_vatable      = (array)$this->input->post('total_vatable_purchase');
+    $total_vat          = (array)$this->input->post('total_vat');
+    $total_ewt          = (array)$this->input->post('total_ewt');
+    $total_amount       = (array)$this->input->post('total_amount');
+    $payment_date       = $this->input->post('payment_date');
+    $particulars        = $this->input->post('particulars');
+    $payment_mode       = $this->input->post('customRadioInline1');
+    $check_no           = $this->input->post('check_no');
+    $cv_no              = $this->input->post('cv_no');
+    $check_date         = $this->input->post('check_date');
+    $pcv                = $this->input->post('pcv');
+    $payment_identifier = $this->generateRandomString();
+
+    // Use the max array length instead of posted counter
+    $max_rows = max(
+        count($purchase_id),
+        count($manual_reference),
+        count($market_fee),
+        count($withholding_tax),
+        count($total_vatable),
+        count($total_vat),
+        count($total_ewt),
+        count($total_amount)
+    );
+
+    for ($i = 0; $i < $max_rows; $i++) {
+        $pid = isset($purchase_id[$i]) ? trim($purchase_id[$i]) : 0;
+        $ref = isset($manual_reference[$i]) ? trim($manual_reference[$i]) : '';
+        $mf  = isset($market_fee[$i]) ? floatval($market_fee[$i]) : 0;
+        $wt  = isset($withholding_tax[$i]) ? floatval($withholding_tax[$i]) : 0;
+        $tvp = isset($total_vatable[$i]) ? floatval($total_vatable[$i]) : 0;
+        $tvat= isset($total_vat[$i]) ? floatval($total_vat[$i]) : 0;
+        $tewt= isset($total_ewt[$i]) ? floatval($total_ewt[$i]) : 0;
+        $tamt= isset($total_amount[$i]) ? floatval($total_amount[$i]) : 0;
+
+        // --- For Dropdown Reference (purchase_id)
+        if (!empty($pid) && $pid != 0) {
+            $data_head = [
+                'purchase_id'        => $pid,
+                'payment_date'       => $payment_date,
+                'particulars'        => $particulars,
+                'payment_identifier' => $payment_identifier,
+                'total_purchase'     => $tvp,
+                'total_vat'          => $tvat,
+                'total_market_fee'   => $mf,
+                'total_ewt'          => $tewt + $wt,
+                'total_amount'       => $tamt,
+                'payment_mode'       => $payment_mode,
+                'pcv'                => $pcv,
+                'check_no'           => $check_no,
+                'cv_no'              => $cv_no,
+                'check_date'         => $check_date,
+                'create_date'        => date("Y-m-d H:i:s"),
+                'user_id'            => $_SESSION['user_id'],
+            ];
+            $payment_id = $this->super_model->insert_return_id("payment_head", $data_head);
+
+            // Save details per purchase
+            foreach ($this->super_model->select_custom_where(
+                "purchase_transaction_details",
+                "purchase_id = '$pid' AND balance != '0'"
+            ) as $det) {
+
+                $mode = '';
+                $amount = 0;
+                if ($det->vatables_purchases != 0) {
+                    $mode = "Vatable Purchase";
+                    $amount = $det->vatables_purchases;
+                } elseif ($det->zero_rated_purchases != 0) {
+                    $mode = "Zero Rated Purchase";
+                    $amount = $det->zero_rated_purchases;
+                } elseif ($det->zero_rated_ecozones != 0) {
+                    $mode = "Zero Rated Ecozones";
+                    $amount = $det->zero_rated_ecozones;
+                }
+
+                $data_details = [
+                    'payment_id'         => $payment_id,
+                    'purchase_details_id'=> $det->purchase_detail_id,
+                    'short_name'         => $det->short_name,
+                    'purchase_mode'      => $mode,
+                    'purchase_amount'    => $amount,
+                    'vat'                => $det->vat_on_purchases,
+                    'market_fee'         => $mf,
+                    'ewt'                => $det->ewt + $wt,
+                    'total_amount'       => $det->balance,
+                ];
+                $this->super_model->insert_into("payment_details", $data_details);
+
+                // update balance
+                $this->super_model->update_where(
+                    "purchase_transaction_details",
+                    ['balance' => $det->balance - $det->total_amount],
+                    "purchase_detail_id",
+                    $det->purchase_detail_id
                 );
-            }else{
-                if($reference_number!=''){
-                    $data_insert=array(
-                        'purchase_id'=>$purchase_id[$a],
-                        'reference_number'=> $reference_number,
-                        'payment_date'=>$payment_date,
-                        'particulars'=>$particulars,
-                        'payment_identifier'=>$payment_identifier,
-                        'total_purchase'=>0,
-                        'total_vat'=>0,
-                        'total_market_fee'=> $market_fee[$a],
-                        'total_ewt'=> $withholding_tax[$a],
-                        'total_amount'=>(float)$market_fee[$a] - (float)$withholding_tax[$a],
-                        'payment_mode'=>$payment_mode,
-                        'pcv'=>$pcv,
-                        'check_no'=>$check_no,
-                        'cv_no'=>$cv_no,
-                        'check_date'=>$check_date,
-                        'create_date'=>date("Y-m-d h:i:s"),
-                        'user_id'=>$_SESSION['user_id'],
-                    );
-                }
-            }
-            $payment_id = $this->super_model->insert_return_id("payment_head", $data_insert);
-            if($purchase_id[$a]!=0){
-                foreach($this->super_model->select_custom_where("purchase_transaction_details", "purchase_id= '".$purchase_id[$a]."' AND balance != '0'") AS $det ){
-                    if($det->vatables_purchases!=0){
-                        $mode= "Vatable Purchase";
-                        $amount = $det->vatables_purchases;
-                    } else if($det->zero_rated_purchases!=0){
-                        $mode = "Zero Rated Purchase";
-                        $amount = $det->zero_rated_purchases;
-                    } else if($det->zero_rated_ecozones!=0){
-                        $mode = "Zero Rated Ecozones";
-                        $amount = $det->zero_rated_ecozones;
-                    }
-                    $data_details = array(
-                        'payment_id'=>$payment_id,
-                        'purchase_details_id'=>$det->purchase_detail_id,
-                        'short_name'=>$det->short_name,
-                        'purchase_mode'=>$mode,
-                        'purchase_amount'=>$amount,
-                        'vat'=>$det->vat_on_purchases,
-                        'ewt'=>$det->ewt,
-                        'total_amount'=>$det->balance,
-
-                    );
-                    $this->super_model->insert_into("payment_details", $data_details);
-                    $new_balance = $det->balance - $det->total_amount;
-                    $update=array(
-                        'balance'=>$new_balance
-                    );
-                    $this->super_model->update_where("purchase_transaction_details", $update, "purchase_detail_id", $det->purchase_detail_id);
-                }
-            }else{
-                if($reference_number!=''){
-                    $data_details = array(
-                        'payment_id'=>$payment_id,
-                        'purchase_details_id'=>0,
-                        'short_name'=>'',
-                        'purchase_mode'=>'',
-                        'purchase_amount'=>0,
-                        'vat'=>0,
-                        'market_fee'=>$market_fee[$a],
-                        'ewt'=>$withholding_tax[$a],
-                        'total_amount'=>(float)$market_fee[$a] - (float)$withholding_tax[$a],
-
-                    );
-                    $this->super_model->insert_into("payment_details", $data_details);
-                }
             }
         }
-        echo $payment_identifier;
+
+        // --- For Manual Reference (now properly unique per row)
+        if (!empty($ref)) {
+            $total_manual = $mf - $wt;
+
+            $data_head = [
+                'purchase_id'        => 0,
+                'reference_number'   => $ref,
+                'payment_date'       => $payment_date,
+                'particulars'        => $particulars,
+                'payment_identifier' => $payment_identifier,
+                'total_purchase'     => 0,
+                'total_vat'          => 0,
+                'total_market_fee'   => $mf,
+                'total_ewt'          => $wt,
+                'total_amount'       => $total_manual,
+                'payment_mode'       => $payment_mode,
+                'pcv'                => $pcv,
+                'check_no'           => $check_no,
+                'cv_no'              => $cv_no,
+                'check_date'         => $check_date,
+                'create_date'        => date("Y-m-d H:i:s"),
+                'user_id'            => $_SESSION['user_id'],
+            ];
+            $payment_id = $this->super_model->insert_return_id("payment_head", $data_head);
+
+            // Each manual gets its own row
+            $data_details = [
+                'payment_id'   => $payment_id,
+                'market_fee'   => $mf,
+                'ewt'          => $wt,
+                'total_amount' => $total_manual,
+            ];
+            $this->super_model->insert_into("payment_details", $data_details);
+        }
     }
+
+    echo $payment_identifier;
+}
+
 
     public function purchases_wesm(){
         $ref_no=$this->uri->segment(3);
@@ -1810,7 +1842,8 @@ class Purchases extends CI_Controller {
     public function payment_form(){
         $payment_identifier = $this->uri->segment(3);
         $this->load->view('template/print_head');
-        foreach($this->super_model->custom_query("SELECT * FROM payment_head WHERE payment_identifier='$payment_identifier' GROUP BY purchase_id ORDER BY create_date ASC") AS $p){
+        // foreach($this->super_model->custom_query("SELECT * FROM payment_head WHERE payment_identifier='$payment_identifier' GROUP BY purchase_id ORDER BY create_date ASC") AS $p){
+        foreach($this->super_model->custom_query("SELECT * FROM (SELECT ph.* FROM payment_head ph INNER JOIN (SELECT MIN(payment_id) AS payment_id FROM payment_head WHERE payment_identifier = '$payment_identifier' AND purchase_id != 0 GROUP BY purchase_id) t ON ph.payment_id = t.payment_id UNION ALL SELECT ph2.* FROM payment_head ph2 WHERE ph2.payment_identifier = '$payment_identifier' AND ph2.purchase_id = 0) AS combined ORDER BY combined.payment_id ASC") as $p) {
            /* $vatable_purchase= $this->super_model->select_sum("purchase_transaction_details", "vatables_purchases", "purchase_id", $p->purchase_id);
             $zero_rated= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_purchases", "purchase_id", $p->purchase_id);
             $zero_rated_ecozone= $this->super_model->select_sum("purchase_transaction_details", "zero_rated_ecozones", "purchase_id", $p->purchase_id);
@@ -1832,9 +1865,12 @@ class Purchases extends CI_Controller {
                 $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
                 $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
             }else{
-                $ewt= $this->super_model->select_sum_where("payment_head", "total_ewt", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
-                $reference_number= $this->super_model->select_column_custom_where("payment_head", "reference_number", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
-                $total_amount= $this->super_model->select_sum_where("payment_head", "total_amount", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                // $ewt= $this->super_model->select_sum_where("payment_head", "total_ewt", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                // $reference_number= $this->super_model->select_column_custom_where("payment_head", "reference_number", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                // $total_amount= $this->super_model->select_sum_where("payment_head", "total_amount", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                 $ewt= $this->super_model->select_column_where("payment_details", "ewt", "payment_id", $p->payment_id);
+                 $reference_number= $this->super_model->select_column_custom_where("payment_head", "reference_number", "payment_identifier='$p->payment_identifier' AND payment_id=$p->payment_id");
+                 $total_amount= $this->super_model->select_column_where("payment_details", "total_amount", "payment_id", $p->payment_id);
             }
             $total_amount_disp= $this->super_model->select_sum("payment_head", "total_amount", "payment_identifier", $p->payment_identifier);
             $market_fee= $this->super_model->select_column_where("payment_details", "market_fee", "payment_id", $p->payment_id);
