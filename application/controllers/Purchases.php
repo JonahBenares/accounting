@@ -3015,8 +3015,8 @@ public function purchases_adjustment_pdf_scan_directory() {
         $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$purchaseid);
         $data['refno']=$ref_no;
         $data['saved']=$this->super_model->select_column_where("purchase_transaction_details","saved_or_bulk","or_bulk_identifier",$identifier);
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,purchase_id FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0' ");
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number='$ref_no' AND adjustment='0' AND or_bulk_identifier ='$identifier'") AS $d){
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,purchase_id FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0' AND saved = '1' AND deleted = '0'");
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number='$ref_no' AND adjustment='0'  AND saved = '1' AND deleted = '0' AND or_bulk_identifier ='$identifier'") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,
