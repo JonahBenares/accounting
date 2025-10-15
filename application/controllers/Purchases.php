@@ -591,7 +591,7 @@ class Purchases extends CI_Controller {
         $data['ref_no']=$ref_no;
         $data['purchase_id'] =$this->super_model->select_column_where("purchase_transaction_head","purchase_id","reference_number",$ref_no);
         /* $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd WHERE reference_number!='' AND balance!='0'");*/
-        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id,pth.due_date FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number!='' AND balance!='0' AND due_date='$due_date' AND saved='1'");
+        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id,pth.due_date FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number!='' AND balance!='0' AND due_date='$due_date' AND saved='1' AND deleted = '0'");
         //$data['due_date']=$this->super_model->select_all_order_by("purchase_transaction_head","due_date","ASC");
         $data['due_date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE purchase_id NOT IN (SELECT purchase_id FROM payment_head) GROUP BY due_date");
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
@@ -694,7 +694,7 @@ class Purchases extends CI_Controller {
         $participant=$this->uri->segment(4);
         $due_date=$this->uri->segment(5);
         $data['ref_no']=$ref_no;
-        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0'");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!=''");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY billing_id");
@@ -711,7 +711,7 @@ class Purchases extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " WHERE saved='1' AND ".$query;
+        $qu = " WHERE saved='1' AND deleted = '0' AND ".$query;
         //$query=substr($sql,0,-3);
         foreach($this->super_model->custom_query("SELECT pd.purchase_details_id,ph.purchase_id,ph.payment_date,ph.payment_mode,pd.purchase_mode,pd.purchase_amount,pd.vat,pd.ewt,pd.total_amount,ptd.company_name,pth.create_date FROM payment_head ph INNER JOIN payment_details pd ON ph.payment_id=pd.payment_id INNER JOIN purchase_transaction_head pth ON ph.purchase_id=pth.purchase_id INNER JOIN purchase_transaction_details ptd ON pd.purchase_details_id=ptd.purchase_detail_id $qu") AS $d){
             $billing_id=$this->super_model->select_column_where("purchase_transaction_details","billing_id","purchase_detail_id",$d->purchase_details_id);
@@ -3015,8 +3015,8 @@ public function purchases_adjustment_pdf_scan_directory() {
         $ref_no=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$purchaseid);
         $data['refno']=$ref_no;
         $data['saved']=$this->super_model->select_column_where("purchase_transaction_details","saved_or_bulk","or_bulk_identifier",$identifier);
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,purchase_id FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0' ");
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number='$ref_no' AND adjustment='0' AND or_bulk_identifier ='$identifier'") AS $d){
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,purchase_id FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0' AND saved = '1' AND deleted = '0'");
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number='$ref_no' AND adjustment='0'  AND saved = '1' AND deleted = '0' AND or_bulk_identifier ='$identifier'") AS $d){
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
                 'purchase_id'=>$d->purchase_id,

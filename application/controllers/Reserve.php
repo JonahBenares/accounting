@@ -456,7 +456,7 @@ class Reserve extends CI_Controller {
         $ref_no=$this->uri->segment(4);
         $data['ref_no']=$ref_no;
         $data['reserve_id'] =$this->super_model->select_column_where("reserve_transaction_head","reserve_id","reference_number",$ref_no);
-        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.reserve_id,pth.due_date FROM reserve_transaction_details ptd INNER JOIN reserve_transaction_head pth ON ptd.reserve_id=pth.reserve_id WHERE reference_number!='' AND balance!='0' AND due_date='$due_date' AND saved='1'");
+        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.reserve_id,pth.due_date FROM reserve_transaction_details ptd INNER JOIN reserve_transaction_head pth ON ptd.reserve_id=pth.reserve_id WHERE reference_number!='' AND balance!='0' AND due_date='$due_date' AND saved='1' AND deleted = '0'");
         $data['due_date']=$this->super_model->custom_query("SELECT * FROM reserve_transaction_head WHERE reserve_id NOT IN (SELECT reserve_id FROM payment_reserve_head) GROUP BY due_date");
         foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_details pd INNER JOIN reserve_transaction_head ph ON pd.reserve_id=ph.reserve_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
             $company_name=$this->super_model->select_column_where("reserve_participant","res_participant_name","res_billing_id",$d->billing_id);
@@ -523,7 +523,7 @@ class Reserve extends CI_Controller {
         $participant=$this->uri->segment(4);
         $due_date=$this->uri->segment(5);
         $data['ref_no']=$ref_no;
-        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM reserve_transaction_head WHERE reference_number!=''");
+        $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM reserve_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0'");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!=''");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_billing_id");
         // $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_settlement_id");
@@ -538,7 +538,7 @@ class Reserve extends CI_Controller {
             $sql.= "pth.due_date = '$due_date' AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = " WHERE saved='1' AND ".$query;
+        $qu = " WHERE saved='1' AND deleted = '0' AND ".$query;
         foreach($this->super_model->custom_query("SELECT pd.reserve_details_id,ph.reserve_id,ph.payment_date,ph.payment_mode,pd.purchase_mode,pd.purchase_amount,pd.vat,pd.ewt,pd.total_amount,ptd.company_name,pth.create_date FROM payment_reserve_head ph INNER JOIN payment_reserve_details pd ON ph.reserve_payment_id=pd.reserve_payment_id INNER JOIN reserve_transaction_head pth ON ph.reserve_id=pth.reserve_id INNER JOIN reserve_transaction_details ptd ON pd.reserve_details_id=ptd.reserve_detail_id $qu") AS $d){
             $billing_id=$this->super_model->select_column_where("reserve_transaction_details","billing_id","reserve_detail_id",$d->reserve_details_id);
             $company_name=$this->super_model->select_column_where("reserve_participant","res_participant_name","res_billing_id",$billing_id);
@@ -653,7 +653,7 @@ class Reserve extends CI_Controller {
         $data['billfrom']=$billfrom;
         $data['billto']=$billto;
         $data['participants']=$participants;
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM reserve_transaction_head WHERE reference_number!='' AND adjustment='0'");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM reserve_transaction_head WHERE reference_number!='' AND adjustment='0' AND saved = '1' AND deleted = '0'");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!='' AND adjustment='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant WHERE res_participant_name != '' GROUP BY res_tin ORDER BY res_participant_name");
         $data['participant_name']=$this->super_model->select_column_where('reserve_participant','res_participant_name','res_tin',$participants);
@@ -697,9 +697,9 @@ class Reserve extends CI_Controller {
             $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
+        $qu = " WHERE adjustment='0' AND saved='1' AND deleted = '0' AND ".$query;
         foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_details pd INNER JOIN reserve_transaction_head ph ON pd.reserve_id=ph.reserve_id $qu") AS $d){
-            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.reserve_id='$d->reserve_id' AND saved='1' AND adjustment='0' ORDER BY or_no ASC");
+            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.reserve_id='$d->reserve_id' AND saved='1' AND adjustment='0' AND deleted = '0' ORDER BY or_no ASC");
             $create_date = $this->super_model->select_column_where("reserve_transaction_head", "create_date", "reserve_id", $d->reserve_id);
             $company_name=$this->super_model->select_column_where("reserve_transaction_details", "company_name", "reserve_detail_id", $d->reserve_detail_id);
             if(!empty($company_name)){
@@ -751,7 +751,7 @@ class Reserve extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['details']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head WHERE saved = '0' AND adjustment = '0'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head WHERE saved = '1' AND adjustment = '0' AND deleted = '0'") AS $d){
             $data['details'][]=array(
                 'reserve_id'=>$d->reserve_id,
                 // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -825,7 +825,7 @@ class Reserve extends CI_Controller {
                $sql.= " pd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE pd.bulk_print_flag = '1' AND saved = '1' AND ".$query;
+            $qu = " WHERE pd.bulk_print_flag = '1' AND saved = '1' AND deleted = '0' AND ".$query;
 
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -1008,6 +1008,7 @@ class Reserve extends CI_Controller {
 
         $conditions[] = "saved='1'";
         $conditions[] = "adjustment='0'";
+        $conditions[] = "deleted='0'";
         $conditions[] = "bulk_print_flag='0'";
         $conditions[] = "ewt > '0'";
 
@@ -1147,7 +1148,7 @@ class Reserve extends CI_Controller {
         SELECT * 
         FROM reserve_transaction_details ptd 
         INNER JOIN reserve_transaction_head pth ON ptd.reserve_id = pth.reserve_id 
-        WHERE $query AND saved = '1' AND adjustment = '0' AND bulk_print_flag = '0' AND ewt > '0' 
+        WHERE $query AND saved = '1' AND adjustment = '0' AND deleted = '0' AND bulk_print_flag = '0' AND ewt > '0' 
         ORDER BY ptd.reserve_detail_id 
         LIMIT 10
     ");
@@ -1235,7 +1236,7 @@ class Reserve extends CI_Controller {
     }, $filenames);
 
     $queryCondition = !empty($conditions) ? '(' . implode(' OR ', $conditions) . ')' : '1=0';
-    $whereClause = "WHERE saved='1' AND adjustment='0' AND ewt > '0' AND $queryCondition";
+    $whereClause = "WHERE saved='1' AND adjustment='0' AND deleted = '0' AND ewt > '0' AND $queryCondition";
 
     $data['details'] = [];
     $data['timestamp'] = date('Ymd');
@@ -1407,8 +1408,8 @@ class Reserve extends CI_Controller {
         $ref_no=$this->super_model->select_column_where("reserve_transaction_head","reference_number","reserve_id",$reserveid);
         $data['refno']=$ref_no;
         $data['saved']=$this->super_model->select_column_where("reserve_transaction_details","saved_or_bulk","or_bulk_identifier",$identifier);
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,reserve_id FROM reserve_transaction_head WHERE reference_number!='' AND adjustment='0' ");
-        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_details ptd INNER JOIN reserve_transaction_head pth ON ptd.reserve_id=pth.reserve_id WHERE reference_number='$ref_no' AND adjustment='0' AND or_bulk_identifier ='$identifier'") AS $d){
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,reserve_id FROM reserve_transaction_head WHERE reference_number!='' AND adjustment='0' AND saved = '1' AND deleted = '0' ");
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_details ptd INNER JOIN reserve_transaction_head pth ON ptd.reserve_id=pth.reserve_id WHERE reference_number='$ref_no' AND adjustment='0' AND saved = '1' AND deleted = '0' AND or_bulk_identifier ='$identifier'") AS $d){
             $data['details'][]=array(
                 'reserve_detail_id'=>$d->reserve_detail_id,
                 'reserve_id'=>$d->reserve_id,
@@ -1524,9 +1525,9 @@ class Reserve extends CI_Controller {
         }
         $query=substr($sql,0,-4);
         if($query!=''){
-            $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
+            $qu = " WHERE adjustment='0' AND saved='1' AND deleted = '0' AND ".$query;
         }else{
-            $qu = " WHERE adjustment='0' AND saved='1'";
+            $qu = " WHERE adjustment='0' AND saved='1' AND deleted = '0'";
         }
         $query_filter=substr($sql1,0,-4);
         $qufilt='';

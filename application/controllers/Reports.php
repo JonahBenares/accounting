@@ -184,7 +184,7 @@ class Reports extends CI_Controller {
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
         $data['part'] = $part;
         $this->load->view('template/header');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0'");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql="";
@@ -198,7 +198,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $pur = "saved = '1' AND ".$query;
+        $pur = "saved = '1' AND deleted = '0' AND ".$query;
         $total_am = $this->super_model->select_sum_join("total_amount","purchase_transaction_details","purchase_transaction_head", $pur,"purchase_id");
         $data['total_amount'] = $total_am;
         $data['total_paid']=0;
@@ -282,8 +282,8 @@ class Reports extends CI_Controller {
         $total_p = array_sum($total_pay);
         $data['total_paid'] = $total_p;
         $data['total_balance'] = (abs($total_am - $total_p));
-        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM purchase_transaction_head WHERE saved = '1' AND adjustment = '0' ORDER BY due_date desc");
-        $data['reference']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND adjustment = '0' ORDER BY due_date desc");
+        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM purchase_transaction_head WHERE saved = '1' AND adjustment = '0' AND deleted = '0' ORDER BY due_date desc");
+        $data['reference']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND adjustment = '0' AND deleted = '0' ORDER BY due_date desc");
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
     }
@@ -297,7 +297,7 @@ class Reports extends CI_Controller {
         $data['part'] = $part;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0'");
          $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $sql='';
@@ -309,7 +309,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " WHERE saved='1' AND ewt!='0' AND ".$query;
+        $qu = " WHERE saved='1' AND deleted = '0' AND ewt!='0' AND ".$query;
         $data['total']=0;
         //foreach($this->super_model->select_innerjoin_where("purchase_transaction_details","purchase_transaction_head", $qu,"purchase_id","short_name") AS $s){
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id $qu") AS $s){
@@ -913,7 +913,7 @@ class Reports extends CI_Controller {
     {
         $this->load->view('template/header');
        $this->load->view('template/navbar');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!=''");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0'");
         $ref_no=$this->uri->segment(3);
         $date_from=$this->uri->segment(4);
         $date_to=$this->uri->segment(5);
@@ -929,7 +929,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $purchases = "saved = '1' AND ".$query;
+        $purchases = "saved = '1' AND deleted = '0' AND ".$query;
         $data['bill']=array();
 
         $data['total_vatable_purchases']=0;
@@ -2202,7 +2202,7 @@ class Reports extends CI_Controller {
 
     public function purchase_adjustment_display_export($short_name,$reference_no,$type){
         $amount='';
-        foreach($this->super_model->custom_query("SELECT $type FROM purchase_transaction_details std INNER JOIN purchase_transaction_head sth ON sth.purchase_id=std.purchase_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 ORDER BY $type ASC") AS $col){
+        foreach($this->super_model->custom_query("SELECT $type FROM purchase_transaction_details std INNER JOIN purchase_transaction_head sth ON sth.purchase_id=std.purchase_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 AND deleted = '0' ORDER BY $type ASC") AS $col){
             $amount.=number_format($col->$type,2)."\n";
         }
         return $amount;
@@ -3162,7 +3162,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/navbar');
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND saved='1'");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND saved='1' AND deleted = '0'");
         $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND saved='1' ORDER BY due_date ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
         $participant=$this->uri->segment(3);
@@ -3200,7 +3200,7 @@ class Reports extends CI_Controller {
         } 
 
         $query=substr($sql,0,-4);
-        $cs_qu = " saved = '1' AND adjustment='1' AND ".$query;
+        $cs_qu = " saved = '1' AND adjustment='1' AND deleted = '0' AND ".$query;
         $data['csledger']=array();
         $shortlast="";
         $data['bal_amountarr']=0;
@@ -3330,7 +3330,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $cslpa_qu = " saved = '1' AND adjustment='1' AND ".$query;
+        $cslpa_qu = " saved = '1' AND adjustment='1' AND deleted = '0' AND ".$query;
         $sheetno=0;
             $styleArray = array(
                 'borders' => array(
@@ -3788,7 +3788,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $ss_qu = "saved = '1' AND ".$query;
+        $ss_qu = "saved = '1' AND deleted = '0' AND ".$query;
         $data['ssledger']=array();
 
         $data['total_vatable_purchases']=0;
@@ -4164,7 +4164,7 @@ class Reports extends CI_Controller {
         // $year=date("Y",strtotime($billing_month));
         // $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
-        $data['date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE adjustment='1' AND saved='1' GROUP BY due_date");
+        $data['date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE adjustment='1' AND saved='1' AND deleted = '0' GROUP BY due_date");
         //$data['date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE adjustment='1' AND saved='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
         //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
         //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND adjustment='1' AND saved='1'") AS $ad){
@@ -4335,7 +4335,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved='1' AND adjustment !='1' AND ".$query;
+        $qu = "saved='1' AND adjustment !='1' AND deleted = '0' AND ".$query;
         $total_sum[]=0;
 
         //echo $query;
@@ -4400,9 +4400,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant !='null' || $from != 'null' || $to != 'null'){
-            $qu = " saved = '1' AND adjustment != '1' AND ".$query;
+            $qu = " saved = '1' AND adjustment != '1' AND deleted = '0' AND ".$query;
         }else{
-             $qu = " saved = '1' AND adjustment != '1'";
+             $qu = " saved = '1' AND adjustment != '1' AND deleted = '0'";
         }
 
         $sheetno=0;
@@ -5390,7 +5390,7 @@ class Reports extends CI_Controller {
         $data['due'] = $due_date;
 
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND saved = '1'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND saved = '1' AND deleted = '0'");
         $sql="";
 
         if($from!='null' && $to != 'null'){
@@ -5413,7 +5413,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND adjustment = '1' AND ".$query;
+        $qu = "saved = '1' AND adjustment = '1' AND deleted = '0' AND ".$query;
         $total_sum[]=0;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd ON pth.purchase_id = ptd.purchase_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC") AS $pth){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$pth->billing_id);
@@ -5479,9 +5479,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant !='null' || $from != 'null' || $to != 'null' || $due != 'null'){
-            $qu = " saved = '1' AND adjustment = '1' AND ".$query;
+            $qu = " saved = '1' AND adjustment = '1' AND deleted = '0' AND ".$query;
         }else{
-             $qu = " saved = '1' AND adjustment = '1'";
+             $qu = " saved = '1' AND adjustment = '1' AND deleted = '0'";
         }
 
         $sheetno=0;
@@ -5710,9 +5710,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant !='null' || $from != 'null' || $to != 'null' || $due != 'null'){
-            $qu = " saved = '1' AND adjustment = '1' AND ".$query;
+            $qu = " saved = '1' AND adjustment = '1' AND deleted = '0' AND ".$query;
         }else{
-             $qu = " saved = '1' AND adjustment = '1'";
+             $qu = " saved = '1' AND adjustment = '1' AND deleted = '0'";
         }
 
         $sheetno=0;
@@ -8983,7 +8983,7 @@ class Reports extends CI_Controller {
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND adjustment = '0' AND ".$query;
+        $qu = "saved = '1' AND adjustment = '0' AND deleted = '0' AND ".$query;
 
         $total_amount=array();
         $total_amount_collected=array();
@@ -9047,7 +9047,7 @@ class Reports extends CI_Controller {
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND adjustment = '0' AND ".$query;
+        $qu = "saved = '1' AND adjustment = '0' AND deleted = '0' AND ".$query;
 
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -9181,7 +9181,7 @@ class Reports extends CI_Controller {
             $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND adjustment = '1' AND ".$query;
+        $qu = "saved = '1' AND adjustment = '1' AND deleted = '0' AND ".$query;
 
         $total_amount=array();
         $total_amount_collected=array();
@@ -9239,7 +9239,7 @@ class Reports extends CI_Controller {
             $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND adjustment = '1' AND ".$query;
+        $qu = "saved = '1' AND adjustment = '1' AND deleted = '0' AND ".$query;
 
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -9390,7 +9390,7 @@ class Reports extends CI_Controller {
              $sql.= "scanned_copy = '$scanned' AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "saved='1' AND adjustment !='1' AND ".$query;
+        $qu = "saved='1' AND adjustment !='1' AND deleted = '0' AND ".$query;
         $total_sum[]=0;
         if(!empty($query)){
             foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd ON pth.reserve_id = ptd.reserve_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC") AS $pth){
@@ -9441,9 +9441,9 @@ class Reports extends CI_Controller {
         }
         $query=substr($sql,0,-4);
         if($participant !='null' || $from != 'null' || $to != 'null'){
-            $qu = " saved = '1' AND adjustment != '1' AND ".$query;
+            $qu = " saved = '1' AND adjustment != '1' AND deleted = '0' AND ".$query;
         }else{
-            $qu = " saved = '1' AND adjustment != '1'";
+            $qu = " saved = '1' AND adjustment != '1' AND deleted = '0'";
         }
         $sheetno=0;
         $styleArray = array(
@@ -9614,7 +9614,7 @@ class Reports extends CI_Controller {
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND adjustment = '0' AND ".$query;
+        $qu = "saved = '1' AND adjustment = '0' AND deleted = '0' AND ".$query;
         $total_amount=array();
         $total_amount_collected=array();
         $variance_total=array();
@@ -9665,7 +9665,7 @@ class Reports extends CI_Controller {
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND adjustment = '0' AND ".$query;
+        $qu = "saved = '1' AND adjustment = '0' AND deleted = '0' AND ".$query;
         $styleArray = array(
             'borders' => array(
                 'allBorders' => array(
@@ -10340,9 +10340,9 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
 
         if($due !='null' || $ref!='null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted = '0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted = '0' ";
         }
 
         if($due != 'null'){
@@ -10609,9 +10609,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($due !='null'){
-            $qu = " saved = '1' AND adjustment = '1' AND".$query;
+            $qu = " saved = '1' AND adjustment = '1' AND deleted = '0' AND".$query;
         }else{
-             $qu = " saved = '1' AND adjustment = '1'";
+             $qu = " saved = '1' AND adjustment = '1' AND deleted = '0'";
         }
 
         if($due != 'null'){
