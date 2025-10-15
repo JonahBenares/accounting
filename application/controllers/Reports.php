@@ -2064,7 +2064,7 @@ class Reports extends CI_Controller {
             $sql.= " YEAR(due_date) = '$year' AND ";
         }
         $query=substr($sql,0,-4);
-        $cs_qu = " saved = '1' AND ".$query;
+        $cs_qu = " saved = '1' AND deleted='0' AND".$query;
         echo "<option value=''>--Select Reference Number--</option>";
         foreach($this->super_model->select_inner_join_where('sales_adjustment_details','sales_adjustment_head',"$cs_qu",'sales_adjustment_id','reference_number') AS $slct){
             echo "<option value=".$slct->reference_number.">".$slct->reference_number."</option>";
@@ -2088,7 +2088,7 @@ class Reports extends CI_Controller {
             $sql.= " YEAR(due_date) = '$year' AND ";
         }
         $query=substr($sql,0,-4);
-        $cs_qu = " saved = '1' AND ".$query;
+        $cs_qu = " saved = '1' AND deleted='0' AND".$query;
         echo "<option value=''>--Select Reference Number--</option>";
         foreach($this->super_model->select_inner_join_where('sales_adjustment_details','sales_adjustment_head',"$cs_qu",'sales_adjustment_id','reference_number') AS $slct){
             echo "<option value=".$slct->reference_number.">".$slct->reference_number."</option>";
@@ -2118,7 +2118,7 @@ class Reports extends CI_Controller {
             $sql.= " YEAR(due_date) = '$year' AND ";
         }
         $query=substr($sql,0,-4);
-        $cs_qu = " saved = '1' AND adjustment='1' AND ".$query;
+        $cs_qu = " saved = '1' AND adjustment='1' AND deleted='0' AND".$query;
         echo "<option value=''>--Select Reference Number--</option>";
         foreach($this->super_model->select_inner_join_where('purchase_transaction_details','purchase_transaction_head',"$cs_qu",'purchase_id','reference_number') AS $slct){
             echo "<option value=".$slct->reference_number.">".$slct->reference_number."</option>";
@@ -2128,7 +2128,7 @@ class Reports extends CI_Controller {
     public function sales_display($short_name,$reference_no,$type){
         //foreach($this->super_model->custom_query("SELECT $type FROM collection_details WHERE settlement_id = '$short_name' AND reference_no IN($reference_no)") AS $col){
         $amount='';
-        foreach($this->super_model->custom_query("SELECT $type FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0  AND saved!=0 ORDER BY $type ASC") AS $col){
+        foreach($this->super_model->custom_query("SELECT $type FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0  AND saved!=0 AND deleted=0 ORDER BY $type ASC") AS $col){
             $amount.=number_format($col->$type,2)."<br>";
         }
         return $amount;
@@ -2138,37 +2138,37 @@ class Reports extends CI_Controller {
         //foreach($this->super_model->custom_query("SELECT $type FROM collection_details WHERE settlement_id = '$short_name' AND reference_no IN($reference_no)") AS $col){
         $amount='';
         $count=0;
-        foreach($this->super_model->custom_query("SELECT $type,short_name,reference_number,saved FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 ORDER BY $type ASC") AS $col){
+        foreach($this->super_model->custom_query("SELECT $type,short_name,reference_number,saved FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 AND deleted=0 ORDER BY $type ASC") AS $col){
             $amount.=number_format($col->$type,2)."\n";
-            $count=$this->super_model->count_custom("SELECT $type FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$col->short_name' AND reference_number='$col->reference_number' AND $type!=0 AND saved!=0");
+            $count=$this->super_model->count_custom("SELECT $type FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$col->short_name' AND reference_number='$col->reference_number' AND $type!=0 AND saved!=0 AND deleted=0");
         }
         return $amount."-".$count;
     }
 
     public function sales_sum($short_name,$reference_no,$type){
-        $sum=$this->super_model->select_sum_join("$type","sales_transaction_details","sales_transaction_head","short_name = '$short_name' AND reference_number='$reference_no' AND saved!=0",'sales_id');
+        $sum=$this->super_model->select_sum_join("$type","sales_transaction_details","sales_transaction_head","short_name = '$short_name' AND reference_number='$reference_no' AND saved!=0 AND deleted=0",'sales_id');
         return $sum;
     }
 
     public function sales_adjustment_display($short_name,$reference_no,$type){
         //foreach($this->super_model->custom_query("SELECT $type FROM collection_details WHERE settlement_id = '$short_name' AND reference_no IN($reference_no)") AS $col){
         $amount='';
-        foreach($this->super_model->custom_query("SELECT $type FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON sth.sales_adjustment_id=std.sales_adjustment_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 ORDER BY $type ASC") AS $col){
+        foreach($this->super_model->custom_query("SELECT $type FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON sth.sales_adjustment_id=std.sales_adjustment_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 AND deleted=0 ORDER BY $type ASC") AS $col){
             $amount.=number_format($col->$type,2)."<br>";
         }
         return $amount;
     }
 
-    public function sales_adjustment_display_export($short_name,$reference_no,$type){
+    public function sales_adjustment_display_export($short_name,$reference_no,$type){ 
         $amount='';
-        foreach($this->super_model->custom_query("SELECT $type FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON sth.sales_adjustment_id=std.sales_adjustment_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 ORDER BY $type ASC") AS $col){
+        foreach($this->super_model->custom_query("SELECT $type FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON sth.sales_adjustment_id=std.sales_adjustment_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 AND deleted=0 ORDER BY $type ASC") AS $col){
             $amount.=number_format($col->$type,2)."\n";
         }
         return $amount;
     }
 
     public function sales_adjustment_sum($short_name,$reference_no,$type){
-        $sum=$this->super_model->select_sum_join("$type","sales_adjustment_details","sales_adjustment_head","short_name = '$short_name' AND reference_number='$reference_no' AND saved!=0",'sales_adjustment_id');
+        $sum=$this->super_model->select_sum_join("$type","sales_adjustment_details","sales_adjustment_head","short_name = '$short_name' AND reference_number='$reference_no' AND saved!=0 AND deleted=0",'sales_adjustment_id');
         return $sum;
     }
 
