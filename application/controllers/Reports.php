@@ -282,8 +282,8 @@ class Reports extends CI_Controller {
         $total_p = array_sum($total_pay);
         $data['total_paid'] = $total_p;
         $data['total_balance'] = (abs($total_am - $total_p));
-        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM purchase_transaction_head WHERE saved = '1' AND adjustment = '0' ORDER BY due_date desc");
-        $data['reference']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND adjustment = '0' ORDER BY due_date desc");
+        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM purchase_transaction_head WHERE saved = '1' AND adjustment = '0' AND deleted = '0' ORDER BY due_date desc");
+        $data['reference']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND adjustment = '0' AND deleted = '0' ORDER BY due_date desc");
         $this->load->view('reports/purchases_summary',$data);
         $this->load->view('template/footer');
     }

@@ -825,7 +825,7 @@ class Reserve extends CI_Controller {
                $sql.= " pd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE pd.bulk_print_flag = '1' AND saved = '1' AND ".$query;
+            $qu = " WHERE pd.bulk_print_flag = '1' AND saved = '1' AND deleted = '0' AND ".$query;
 
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -1008,6 +1008,7 @@ class Reserve extends CI_Controller {
 
         $conditions[] = "saved='1'";
         $conditions[] = "adjustment='0'";
+        $conditions[] = "deleted='0'";
         $conditions[] = "bulk_print_flag='0'";
         $conditions[] = "ewt > '0'";
 
@@ -1147,7 +1148,7 @@ class Reserve extends CI_Controller {
         SELECT * 
         FROM reserve_transaction_details ptd 
         INNER JOIN reserve_transaction_head pth ON ptd.reserve_id = pth.reserve_id 
-        WHERE $query AND saved = '1' AND adjustment = '0' AND bulk_print_flag = '0' AND ewt > '0' 
+        WHERE $query AND saved = '1' AND adjustment = '0' AND deleted = '0' AND bulk_print_flag = '0' AND ewt > '0' 
         ORDER BY ptd.reserve_detail_id 
         LIMIT 10
     ");
@@ -1235,7 +1236,7 @@ class Reserve extends CI_Controller {
     }, $filenames);
 
     $queryCondition = !empty($conditions) ? '(' . implode(' OR ', $conditions) . ')' : '1=0';
-    $whereClause = "WHERE saved='1' AND adjustment='0' AND ewt > '0' AND $queryCondition";
+    $whereClause = "WHERE saved='1' AND adjustment='0' AND deleted = '0' AND ewt > '0' AND $queryCondition";
 
     $data['details'] = [];
     $data['timestamp'] = date('Ymd');
@@ -1524,9 +1525,9 @@ class Reserve extends CI_Controller {
         }
         $query=substr($sql,0,-4);
         if($query!=''){
-            $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
+            $qu = " WHERE adjustment='0' AND saved='1' AND deleted = '0' AND ".$query;
         }else{
-            $qu = " WHERE adjustment='0' AND saved='1'";
+            $qu = " WHERE adjustment='0' AND saved='1' AND deleted = '0'";
         }
         $query_filter=substr($sql1,0,-4);
         $qufilt='';
