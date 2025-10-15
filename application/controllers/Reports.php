@@ -2118,7 +2118,7 @@ class Reports extends CI_Controller {
             $sql.= " YEAR(due_date) = '$year' AND ";
         }
         $query=substr($sql,0,-4);
-        $cs_qu = " saved = '1' AND adjustment='1' AND deleted='0' AND".$query;
+        $cs_qu = " saved = '1' AND adjustment='1' AND deleted = '0' AND ".$query;
         echo "<option value=''>--Select Reference Number--</option>";
         foreach($this->super_model->select_inner_join_where('purchase_transaction_details','purchase_transaction_head',"$cs_qu",'purchase_id','reference_number') AS $slct){
             echo "<option value=".$slct->reference_number.">".$slct->reference_number."</option>";
@@ -2194,7 +2194,7 @@ class Reports extends CI_Controller {
     public function purchase_adjustment_display($short_name,$reference_no,$type){
         //foreach($this->super_model->custom_query("SELECT $type FROM collection_details WHERE settlement_id = '$short_name' AND reference_no IN($reference_no)") AS $col){
         $amount='';
-        foreach($this->super_model->custom_query("SELECT $type FROM purchase_transaction_details std INNER JOIN purchase_transaction_head sth ON sth.purchase_id=std.purchase_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 ORDER BY $type ASC") AS $col){
+        foreach($this->super_model->custom_query("SELECT $type FROM purchase_transaction_details std INNER JOIN purchase_transaction_head sth ON sth.purchase_id=std.purchase_id WHERE short_name = '$short_name' AND reference_number='$reference_no' AND $type!=0 AND saved!=0 AND deleted = '0' ORDER BY $type ASC") AS $col){
             $amount.=number_format($col->$type,2)."<br>";
         }
         return $amount;
@@ -2209,7 +2209,7 @@ class Reports extends CI_Controller {
     }
 
     public function purchase_adjustment_sum($short_name,$reference_no,$type){
-        $sum=$this->super_model->select_sum_join("$type","purchase_transaction_details","purchase_transaction_head","short_name = '$short_name' AND reference_number='$reference_no' AND saved!=0",'purchase_id');
+        $sum=$this->super_model->select_sum_join("$type","purchase_transaction_details","purchase_transaction_head","short_name = '$short_name' AND reference_number='$reference_no' AND saved!=0 AND deleted = '0' " ,'purchase_id');
         return $sum;
     }
 
@@ -3163,7 +3163,7 @@ class Reports extends CI_Controller {
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         //$data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND saved='1' AND deleted = '0'");
-        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND saved='1' ORDER BY due_date ASC");
+        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND saved='1' AND deleted = '0' ORDER BY due_date ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name ASC");
         $participant=$this->uri->segment(3);
         $referenceno=$this->uri->segment(4);
@@ -3671,7 +3671,7 @@ class Reports extends CI_Controller {
         $count_vos=0;
         $count_ewt=0;
         $count_array_sales=array();
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON pth.purchase_id=ptd.purchase_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0 AND adjustment='1'") AS $col){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON pth.purchase_id=ptd.purchase_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0 AND adjustment='1' AND deleted = '0'") AS $col){
             if($col->vatables_purchases!=0){
                 $count_vat++;
             }
@@ -3723,7 +3723,7 @@ class Reports extends CI_Controller {
 
     public function get_purchase($short_name, $reference_no,$max){
         $array_sales=array();
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON pth.purchase_id=ptd.purchase_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0 AND adjustment='1' AND (vatables_purchases!=0 OR vat_on_purchases!=0 OR ewt!=0)") AS $col){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON pth.purchase_id=ptd.purchase_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0 AND adjustment='1' AND deleted = '0' AND (vatables_purchases!=0 OR vat_on_purchases!=0 OR ewt!=0)") AS $col){
             $array_sales[] = array(
                 "short_name"=>$short_name,
                 "reference_no"=>$reference_no,
@@ -4209,7 +4209,7 @@ class Reports extends CI_Controller {
         // $month=date("m",strtotime($billing_month));
         $total_sum[]=0;
         //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE due_date='$due_date' AND adjustment='1' AND saved='1' ORDER BY billing_to ASC") AS $ad){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE due_date='$due_date' AND adjustment='1' AND saved='1' AND deleted = '0' ORDER BY billing_to ASC") AS $ad){
             $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
             $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");
