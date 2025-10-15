@@ -699,7 +699,7 @@ class Reserve extends CI_Controller {
         $query=substr($sql,0,-4);
         $qu = " WHERE adjustment='0' AND saved='1' AND deleted = '0' AND ".$query;
         foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_details pd INNER JOIN reserve_transaction_head ph ON pd.reserve_id=ph.reserve_id $qu") AS $d){
-            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.reserve_id='$d->reserve_id' AND saved='1' AND adjustment='0' ORDER BY or_no ASC");
+            $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM reserve_transaction_head pth INNER JOIN reserve_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.reserve_id='$d->reserve_id' AND saved='1' AND adjustment='0' AND deleted = '0' ORDER BY or_no ASC");
             $create_date = $this->super_model->select_column_where("reserve_transaction_head", "create_date", "reserve_id", $d->reserve_id);
             $company_name=$this->super_model->select_column_where("reserve_transaction_details", "company_name", "reserve_detail_id", $d->reserve_detail_id);
             if(!empty($company_name)){
