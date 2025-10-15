@@ -360,7 +360,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " WHERE saved='1' AND ewt!='0' AND ".$query;
+        $qu = " WHERE saved='1' AND deleted='0' AND ewt!='0' AND ".$query;
         $data['total']=0;
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id $qu") AS $s){
             $tin=$this->super_model->select_column_where("participant","tin","settlement_id",$s->short_name);
@@ -560,7 +560,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
         $sheetno=0;
             //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             //$objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -901,7 +901,7 @@ class Reports extends CI_Controller {
             $sql.= " YEAR(billing_to) = '$year' AND ";
         }
         $query=substr($sql,0,-4);
-        $sales_qu = " saved = '1' AND ".$query;
+        $sales_qu = " saved = '1' AND deleted='0' AND".$query;
         echo "<option value=''>--Select Reference Number--</option>";
         foreach($this->super_model->select_custom_where('sales_transaction_head',"$sales_qu") AS $slct){
             echo "<option value=`"."'".$slct->reference_number."'"."`>".$slct->reference_number."</option>";
@@ -1530,9 +1530,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($month !='null' || $year != 'null' || $referenceno != 'null' || $participant != 'null'){
-            $cs_qu = " saved = '1' AND ".$query;
+            $cs_qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $cs_qu = " saved = '1'";
+             $cs_qu = " saved = '1' AND deleted='0' ";
         }
 
         $sheetno=0;
@@ -1868,7 +1868,7 @@ class Reports extends CI_Controller {
         $count_vos=0;
         $count_ewt=0;
         $count_array_sales=array();
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0") AS $col){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0  AND deleted='0'") AS $col){
             if($col->vatable_sales!=0){
                 $count_vat++;
             }
@@ -2034,7 +2034,7 @@ class Reports extends CI_Controller {
             $sql.= " YEAR(billing_to) = '$year' AND ";
         }
         $query=substr($sql,0,-4);
-        $cs_qu = " saved = '1' AND ".$query;
+        $cs_qu = " saved = '1' AND deleted='0' AND".$query;
         echo "<option value=''>--Select Reference Number--</option>";
         foreach($this->super_model->select_custom_where('sales_transaction_head',"$cs_qu") AS $slct){
             echo "<option value=`"."'".$slct->reference_number."'"."`>".$slct->reference_number."</option>";
