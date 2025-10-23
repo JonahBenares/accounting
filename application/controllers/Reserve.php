@@ -457,8 +457,8 @@ class Reserve extends CI_Controller {
         $data['ref_no']=$ref_no;
         $data['reserve_id'] =$this->super_model->select_column_where("reserve_transaction_head","reserve_id","reference_number",$ref_no);
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.reserve_id,pth.due_date FROM reserve_transaction_details ptd INNER JOIN reserve_transaction_head pth ON ptd.reserve_id=pth.reserve_id WHERE reference_number!='' AND balance!='0' AND due_date='$due_date' AND saved='1' AND deleted = '0'");
-        $data['due_date']=$this->super_model->custom_query("SELECT * FROM reserve_transaction_head WHERE reserve_id NOT IN (SELECT reserve_id FROM payment_reserve_head) GROUP BY due_date");
-        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_details pd INNER JOIN reserve_transaction_head ph ON pd.reserve_id=ph.reserve_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
+        $data['due_date']=$this->super_model->custom_query("SELECT * FROM reserve_transaction_head WHERE reserve_id NOT IN (SELECT reserve_id FROM payment_reserve_head) AND deleted = '0' GROUP BY due_date");
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_details pd INNER JOIN reserve_transaction_head ph ON pd.reserve_id=ph.reserve_id WHERE saved='1' AND deleted = '0' AND reference_number LIKE '%$ref_no%'") AS $d){
             $company_name=$this->super_model->select_column_where("reserve_participant","res_participant_name","res_billing_id",$d->billing_id);
             $data['details'][]=array(
                 'reserve_detail_id'=>$d->reserve_detail_id,
