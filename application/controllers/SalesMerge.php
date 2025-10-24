@@ -432,7 +432,7 @@ class SalesMerge extends CI_Controller {
         $data['part_name']=$participants;
         $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_merge_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE due_date!='' AND deleted='0'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE due_date!='' AND saved='1' AND deleted='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("sales_merge_transaction_head", "saved = '0'");
