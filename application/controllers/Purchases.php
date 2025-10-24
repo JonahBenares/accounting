@@ -593,8 +593,8 @@ class Purchases extends CI_Controller {
         /* $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd WHERE reference_number!='' AND balance!='0'");*/
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,pth.purchase_id,pth.due_date FROM purchase_transaction_details ptd INNER JOIN purchase_transaction_head pth ON ptd.purchase_id=pth.purchase_id WHERE reference_number!='' AND balance!='0' AND due_date='$due_date' AND saved='1' AND deleted = '0'");
         //$data['due_date']=$this->super_model->select_all_order_by("purchase_transaction_head","due_date","ASC");
-        $data['due_date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE purchase_id NOT IN (SELECT purchase_id FROM payment_head) GROUP BY due_date");
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%'") AS $d){
+        $data['due_date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE purchase_id NOT IN (SELECT purchase_id FROM payment_head) AND deleted = 0 GROUP BY due_date");
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND deleted = 0 AND reference_number LIKE '%$ref_no%'") AS $d){
             $company_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$d->billing_id);
             $data['details'][]=array(
                 'purchase_detail_id'=>$d->purchase_detail_id,
@@ -695,7 +695,7 @@ class Purchases extends CI_Controller {
         $due_date=$this->uri->segment(5);
         $data['ref_no']=$ref_no;
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!=''");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND deleted = '0'");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY billing_id");
         // $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
