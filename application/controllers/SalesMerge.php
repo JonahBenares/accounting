@@ -432,7 +432,7 @@ class SalesMerge extends CI_Controller {
         $data['part_name']=$participants;
         $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_merge_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE due_date!=''");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE due_date!='' AND deleted='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("sales_merge_transaction_head", "saved = '0'");
@@ -595,7 +595,7 @@ class SalesMerge extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['details']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head WHERE saved = '0'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head WHERE saved = '0' AND deleted='1'") AS $d){
             $data['details'][]=array(
                 'sales_merge_id'=>$d->sales_merge_id,
                 // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -1596,7 +1596,7 @@ class SalesMerge extends CI_Controller {
             $sql.= " sd.short_name IN($imp) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
+        $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND deleted='0' AND  ".$query;
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         
@@ -1708,7 +1708,7 @@ class SalesMerge extends CI_Controller {
                $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
+            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND deleted='0' AND ".$query;
 
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -1748,7 +1748,7 @@ class SalesMerge extends CI_Controller {
         $query=substr($sql,0,-3) . ")";
 
         
-        $qu = "WHERE serial_no != '' AND saved = '1' AND ".$query;
+        $qu = "WHERE serial_no != '' AND saved = '1' AND deleted='0' AND ".$query;
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         $data['timestamp'] = date('Ymd');
@@ -1850,8 +1850,8 @@ class SalesMerge extends CI_Controller {
 
         $data['saved']=$this->super_model->select_column_where("sales_merge_transaction_details","saved_bulk_invoicing","bulk_invoicing_identifier",$identifier);
         $data['years'] = $this->super_model->custom_query("SELECT DISTINCT YEAR(billing_to) AS year FROM sales_merge_transaction_head WHERE saved='1' ORDER BY year DESC");
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_merge_transaction_head WHERE reference_number!='' AND saved='1' ORDER BY due_date ASC");
-        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE saved='1' ORDER BY due_date ASC");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_merge_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0' ORDER BY due_date ASC");
+        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE saved='1'AND deleted='0' ORDER BY due_date ASC");
         foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details std INNER JOIN sales_merge_transaction_head sth ON std.sales_merge_id=sth.sales_merge_id WHERE $qu") AS $d){
             $data['details'][]=array(
                 'sales_detail_id'=>$d->sales_merge_detail_id,

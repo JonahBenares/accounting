@@ -2466,7 +2466,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $cssa_qu = " saved = '1' AND ".$query;
+        $cssa_qu = " saved = '1' AND deleted='0' AND  ".$query;
         $sheetno=0;
         $styleArray = array(
             'borders' => array(
@@ -2788,7 +2788,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $cssa_qu = " saved = '1' AND ".$query;
+        $cssa_qu = " saved = '1'  AND deleted='0' AND ".$query;
         $sheetno=0;
         $styleArray = array(
             'borders' => array(
@@ -2873,6 +2873,7 @@ class Reports extends CI_Controller {
 
                 $o=$num;
                 $p=$num;
+                $r=$num;
                 $r=$num;
                 $r1=$num;
                 $r2=$num;
@@ -3092,7 +3093,7 @@ class Reports extends CI_Controller {
         $count_vos=0;
         $count_ewt=0;
         $count_array_sales=array();
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sah.sales_adjustment_id=sad.sales_adjustment_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0") AS $col){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sah.sales_adjustment_id=sad.sales_adjustment_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0 AND deleted=0" ) AS $col){
             if($col->vatable_sales!=0){
                 $count_vat++;
             }
@@ -3127,7 +3128,7 @@ class Reports extends CI_Controller {
         $array_sales=array();
 
        
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sah.sales_adjustment_id=sad.sales_adjustment_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0 AND (vatable_sales!=0 OR zero_rated_sales!=0 OR zero_rated_ecozones!=0  OR vat_on_sales!=0 OR ewt!=0)") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sah.sales_adjustment_id=sad.sales_adjustment_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0  AND deleted=0 AND  (vatable_sales!=0 OR zero_rated_sales!=0 OR zero_rated_ecozones!=0  OR vat_on_sales!=0 OR ewt!=0)") AS $col){
                 $array_sales[] = array(
                     "short_name"=>$short_name,
                     "reference_no"=>$reference_no,
