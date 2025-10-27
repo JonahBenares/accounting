@@ -165,7 +165,7 @@ class Reports extends CI_Controller {
        // $data['total_collection'] = $total_c;
         $data['total_balance'] = $total_am - $total_c;
 
-        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM sales_transaction_head WHERE saved = '1' ORDER BY due_date desc");
+        $data['due_dates'] = $this->super_model->custom_query("SELECT distinct due_date FROM sales_transaction_head WHERE saved = '1' AND deleted='0' ORDER BY due_date desc");
         $this->load->view('reports/sales_summary',$data);
         $this->load->view('template/footer');
     }
@@ -439,7 +439,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " saved = '1' AND ".$query;
+        $qu = " saved = '1' AND deleted='0' AND ".$query;
         $data['bill']=array();
         $data['total_vatable_balance']=0;
         $total_vatable_balance=array();
@@ -1941,7 +1941,7 @@ class Reports extends CI_Controller {
         $array_sales=array();
 
        
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0 AND (vatable_sales!=0 OR zero_rated_sales!=0 OR zero_rated_ecozones!=0  OR vat_on_sales!=0 OR ewt!=0)") AS $col){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON sth.sales_id=std.sales_id WHERE short_name = '$short_name' AND reference_number='$reference_no'  AND saved!=0 AND deleted='0' (vatable_sales!=0 OR zero_rated_sales!=0 OR zero_rated_ecozones!=0  OR vat_on_sales!=0 OR ewt!=0)") AS $col){
                 $array_sales[] = array(
                     "short_name"=>$short_name,
                     "reference_no"=>$reference_no,
@@ -1975,7 +1975,7 @@ class Reports extends CI_Controller {
         $array_collection=array();
 
        
-            foreach($this->super_model->custom_query("SELECT cd.* FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE settlement_id = '$short_name' AND reference_no='$reference_no' AND saved!=0 AND (amount != 0)") AS $col){
+            foreach($this->super_model->custom_query("SELECT cd.* FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE settlement_id = '$short_name' AND reference_no='$reference_no' AND saved!=0 AND deleted='0' (amount != 0)") AS $col){
                 $array_collection[] = array(
                     "short_name"=>$short_name,
                     "reference_no"=>$reference_no,
@@ -3996,13 +3996,13 @@ class Reports extends CI_Controller {
 
         //echo $query;
         $data['or_summary']=array();
-        $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND ".$query."");
+        $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND deleted='0' AND ".$query."");
 
-        $data['max']= $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND ".$query."");
+        $data['max']= $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND deleted='0' AND ".$query."");
 
        
 
-        foreach($this->super_model->custom_query("SELECT DISTINCT series_number FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND saved='1' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
+        foreach($this->super_model->custom_query("SELECT DISTINCT series_number FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND saved='1' AND deleted='0' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
 
             $series_number[] = $or->series_number;
         }
@@ -4169,7 +4169,7 @@ class Reports extends CI_Controller {
         //$data['date']=$this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE adjustment='1' AND saved='1' GROUP BY MONTH(billing_to), YEAR(billing_to)");
         //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year' AND adjustment='1'") AS $ad){
         //foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE YEAR(billing_to) = '$year' AND MONTH(billing_to) = '$month' AND adjustment='1' AND saved='1'") AS $ad){
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE due_date='$due_date' AND adjustment='1' AND saved='1' ORDER BY billing_to ASC") AS $ad){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE due_date='$due_date' AND adjustment='1' AND saved='1'  ORDER BY billing_to ASC") AS $ad){
             $zero_rated_purchases=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_purchases","purchase_id='$ad->purchase_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("purchase_transaction_details","zero_rated_ecozones","purchase_id='$ad->purchase_id'");
             $vatables_purchases=$this->super_model->select_sum_where("purchase_transaction_details","vatables_purchases","purchase_id='$ad->purchase_id'");
@@ -4697,9 +4697,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant != 'null' || $from != 'null' || $to != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
         $sheetno=0;
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -4978,9 +4978,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant != 'null' || $from != 'null' || $to != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1'  AND deleted='0'";
         }
         $sheetno=0;
             $styleArray = array(
@@ -5028,7 +5028,7 @@ class Reports extends CI_Controller {
             $imp=implode(',',$par);
 
             $imp_partloop="'".implode("','",$participant_loop)."'";
-            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head sth INNER JOIN sales_merge_transaction_details std ON sth.sales_merge_id = std.sales_merge_id  WHERE ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND short_name IN($imp) AND saved='1' ORDER BY billing_from ASC, reference_number ASC, billing_id ASC") AS $sth){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head sth INNER JOIN sales_merge_transaction_details std ON sth.sales_merge_id = std.sales_merge_id  WHERE ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND short_name IN($imp) AND saved='1' AND deleted='0' ORDER BY billing_from ASC, reference_number ASC, billing_id ASC") AS $sth){
                 $or_no=$this->super_model->select_column_custom_where("merge_collection_details","series_number","reference_no='$sth->reference_number' AND settlement_id='$sth->short_name'");
                 if(!empty($sth->company_name) && date('Y',strtotime($sth->create_date))==date('Y')){
                         $comp_name=$sth->company_name;
@@ -5963,9 +5963,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant !='null' || $from != 'null' || $to != 'null' || $year != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
         $sheetno=0;
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -6192,9 +6192,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant !='null' || $from != 'null' || $to != 'null' || $year != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
         $sheetno=0;
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -6339,9 +6339,9 @@ class Reports extends CI_Controller {
         $data['date'] = $date;
         $data['ref_no'] = $ref_no;
         $data['stl_id'] = $stl_id;
-        $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'");
-        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
-        $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
+        $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'  AND deleted='0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' AND deleted='0'");
+        $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'  GROUP BY buyer_fullname");
 
          $sql="";
 
@@ -6354,7 +6354,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND ".$query;
 
         foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
             $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND collection_details_id = '$col->collection_details_id'");
@@ -6425,9 +6425,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1'  AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1'  AND deleted='0'";
         }
 
         if($date != 'null'){
@@ -6608,9 +6608,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
 
         if($date != 'null'){
@@ -6874,7 +6874,7 @@ class Reports extends CI_Controller {
         $data['ref_no'] = $ref_no;
         $data['stl_id'] = $stl_id;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_reserve_head WHERE saved != '0'");
-        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0'  AND deleted='0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
 
          $sql="";
@@ -6888,7 +6888,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1'  AND deleted='0' AND ".$query;
 
         foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu") AS $col){
             $count_series=$this->super_model->count_custom_where("collection_reserve_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND res_collection_id = '$col->res_collection_id' AND res_collection_details_id = '$col->res_collection_details_id'");
@@ -6950,9 +6950,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
 
         if($date != 'null'){
@@ -7109,9 +7109,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
 
         if($date != 'null'){
@@ -7448,9 +7448,9 @@ class Reports extends CI_Controller {
             $query=substr($sql,0,-4);
 
             if(!empty($year) && !empty($due_date)){
-                 $qu = " saved = '1' AND ".$query;
+                 $qu = " saved = '1'  AND deleted='0' AND ".$query;
             }else{
-                 $qu = "saved = '1' ";
+                 $qu = "saved = '1'  AND deleted='0' ";
             }
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -7622,9 +7622,9 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
 
         if(!empty($year) && !empty($due_date)){
-             $qu = " saved = '1' AND ".$query;
+             $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = "saved = '1' ";
+             $qu = "saved = '1' AND deleted='0' ";
         }
         $data['bill']=array();
         $data['total_vatable_balance']=0;
@@ -7683,9 +7683,9 @@ class Reports extends CI_Controller {
             $query=substr($sql,0,-4);
 
             if(!empty($year) && !empty($due_date)){
-                 $qu = " saved = '1' AND ".$query;
+                 $qu = " saved = '1' AND deleted='0' AND ".$query;
             }else{
-                 $qu = "saved = '1' ";
+                 $qu = "saved = '1' AND deleted='0' ";
             }
             $styleArray = array(
                 'borders' => array(
@@ -7906,9 +7906,9 @@ class Reports extends CI_Controller {
             $query=substr($sql,0,-4);
 
             if(!empty($year) && !empty($due_date)){
-                 $qu = " saved = '1' AND ".$query;
+                 $qu = " saved = '1' AND deleted='0' AND ".$query;
             }else{
-                 $qu = "saved = '1' ";
+                 $qu = "saved = '1' AND deleted='0'";
             }
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -8081,9 +8081,9 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
 
         if(!empty($year) && !empty($due_date)){
-             $qu = " res_saved = '1' AND deleted='0' AND ".$query;
+             $qu = " res_saved = '1' AND res_deleted='0' AND ".$query;
         }else{
-             $qu = "res_saved = '1' AND deleted='0' ";
+             $qu = "res_saved = '1' AND res_deleted='0' ";
         }
         $data['bill']=array();
         $data['total_vatable_balance']=0;
@@ -8142,9 +8142,9 @@ class Reports extends CI_Controller {
             $query=substr($sql,0,-4);
 
             if(!empty($year) && !empty($due_date)){
-                 $qu = " res_saved = '1' AND ".$query;
+                 $qu = " res_saved = '1' AND res_deleted='0' AND ".$query;
             }else{
-                 $qu = "res_saved = '1' ";
+                 $qu = "res_saved = '1' AND res_deleted='0'";
             }
             $styleArray = array(
                 'borders' => array(
@@ -8354,7 +8354,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " saved = '1' AND ".$query;
+        $qu = " saved = '1' AND deleted='0' AND ".$query;
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
             $styleArray = array(
@@ -8537,7 +8537,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " saved = '1' AND ".$query;
+        $qu = " saved = '1' AND deleted='0' AND ".$query;
             $styleArray = array(
                 'borders' => array(
                     'allBorders' => array(
@@ -8692,7 +8692,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " saved = '1' AND ".$query;
+        $qu = " saved = '1' AND deleted='0' AND ".$query;
 
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -8888,7 +8888,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = " res_saved = '1' AND ".$query;
+        $qu = " res_saved = '1' AND res_deleted='0' AND ".$query;
             $styleArray = array(
                 'borders' => array(
                     'allBorders' => array(
@@ -10052,9 +10052,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($due !='null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
 
         if($due != 'null'){
@@ -10874,7 +10874,7 @@ class Reports extends CI_Controller {
         $data['ref_no'] = $ref_no;
         $data['stl_id'] = $stl_id;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM merge_collection_head WHERE saved != '0'");
-        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0' AND deleted='0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
 
          $sql="";
@@ -10888,7 +10888,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted='0' AND  ".$query;
 
         foreach($this->super_model->custom_query("SELECT * FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE $qu") AS $col){
             $count_series=$this->super_model->count_custom_where("merge_collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND merge_collection_id = '$col->merge_collection_id' AND merge_collection_details_id = '$col->merge_collection_details_id'");
@@ -10949,9 +10949,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
 
         if($date != 'null'){
@@ -11103,9 +11103,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' AND deleted='0'";
         }
 
         if($date != 'null'){
