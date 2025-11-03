@@ -1081,7 +1081,7 @@ public function save_payment_all(){
         $data['billto']=$billto;
         $data['participants']=$participants;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0' AND deleted = '0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("purchase_transaction_head", "saved = '0' AND adjustment = '0'");
@@ -1307,7 +1307,7 @@ public function save_payment_all(){
         $data['in_ex_sub']=$in_ex_sub;
         $data['participants']=$participants;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND deleted = '0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("purchase_transaction_head", "saved = '0' AND adjustment = '1'");

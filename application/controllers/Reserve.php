@@ -524,7 +524,7 @@ class Reserve extends CI_Controller {
         $due_date=$this->uri->segment(5);
         $data['ref_no']=$ref_no;
         $data['head'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM reserve_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!=''");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!='' AND deleted = '0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_billing_id");
         // $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant GROUP BY res_settlement_id");
         $sql="";
@@ -654,7 +654,7 @@ class Reserve extends CI_Controller {
         $data['billto']=$billto;
         $data['participants']=$participants;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM reserve_transaction_head WHERE reference_number!='' AND adjustment='0' AND saved = '1' AND deleted = '0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!='' AND adjustment='0'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM reserve_transaction_head WHERE due_date!='' AND adjustment='0' AND deleted = '0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant WHERE res_participant_name != '' GROUP BY res_tin ORDER BY res_participant_name");
         $data['participant_name']=$this->super_model->select_column_where('reserve_participant','res_participant_name','res_tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("reserve_transaction_head", "saved = '0' AND adjustment = '0'");
