@@ -485,6 +485,7 @@
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/sales_adj_ewt_variance">Summary of Sales Total EWT Variance</a></li>
                     <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance">Summary of Purchases Total Amount Variance</a></li>
                     <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_adj_total_variance_merge">Summary of Purchases Total Amount Variance Merge</a></li> -->
+                    <!-- <li><a class="nav-link" href="<?php echo base_url(); ?>reports/purchases_ledger">Purchases Ledger</a></li> -->
                 </ul>
             </li>
             <br><br>

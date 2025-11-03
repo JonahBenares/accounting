@@ -3524,7 +3524,7 @@ public function print_BS_new(){
         $data['ref_no'] = $ref_no;
         $data['buyer_fullname'] = $buyer_fullname;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'");
-        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' AND deleted = '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
         $data['employees']=$this->super_model->select_all_order_by("users","fullname",'ASC');
         $sql="";
@@ -3543,7 +3543,7 @@ public function print_BS_new(){
         // }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND ".$query;
+        $qu = "saved = '1' AND deleted = '1' AND".$query;
         $data['collection']=array();
 
             foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
@@ -3600,7 +3600,7 @@ public function print_BS_new(){
         $participant=$this->uri->segment(4);
         $data['ref_no'] = $ref_no;
         $data['participant'] = $participant;
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!=''");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved != '0' AND deleted = '0'");
         $data['participant_list']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY participant_name");
         $sql="";
         if($ref_no!='null' && $participant=='null'){
@@ -3903,7 +3903,7 @@ public function print_BS_new(){
         $data['part_name']=$participants;
         $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE due_date!=''");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE due_date!='' AND deleted='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("sales_transaction_head", "saved = '0'");
@@ -4079,7 +4079,7 @@ public function print_BS_new(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['details']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head WHERE saved = '0'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head WHERE saved = '0' AND deleted='1'") AS $d){
             $data['details'][]=array(
                 'sales_id'=>$d->sales_id,
                 // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -4269,7 +4269,7 @@ public function print_BS_new(){
             $sql.= " sd.short_name IN($imp) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
+        $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND deleted='0' AND ".$query;
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         
@@ -4383,7 +4383,7 @@ public function print_BS_new(){
             $sql.= " sd.short_name IN($imp) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
+        $qu = "WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND deleted='0' AND ".$query;
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         
@@ -4522,7 +4522,7 @@ public function print_BS_new(){
                $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
+            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND deleted='0' AND ".$query;
 
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -4563,7 +4563,7 @@ public function print_BS_new(){
         $query=substr($sql,0,-3) . ")";
 
         
-        $qu = "WHERE serial_no != '' AND saved = '1' AND ".$query;
+        $qu = "WHERE serial_no != '' AND saved = '1' AND deleted='0' AND  ".$query;
 
         
         $data['details']=array();
@@ -4648,8 +4648,8 @@ public function print_BS_new(){
         $data['billingto']=$billto;
         $data['part_name']=$participants;
         $data['identifier_code']=$this->generateRandomString();
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT res_reference_number FROM reserve_sales_transaction_head WHERE res_reference_number!=''");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT res_due_date FROM reserve_sales_transaction_head WHERE res_due_date!=''");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT res_reference_number FROM reserve_sales_transaction_head WHERE res_reference_number!='' AND res_saved='1' AND res_deleted='0' ");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT res_due_date FROM reserve_sales_transaction_head WHERE res_due_date!='' AND res_deleted='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM reserve_participant WHERE res_participant_name != '' GROUP BY res_tin ORDER BY res_participant_name");
         $data['participant_name']=$this->super_model->select_column_where('reserve_participant','res_participant_name','res_tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("reserve_sales_transaction_head", "res_saved = '0'");
@@ -4679,7 +4679,7 @@ public function print_BS_new(){
             }
 
             $query=substr($sql,0,-4);
-            $qu = " WHERE res_saved='1' AND ".$query;
+            $qu = " WHERE res_saved='1' AND res_deleted='0' AND ".$query;
             $total_bs = 0;
             $processed_counts = [];
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details sd INNER JOIN reserve_sales_transaction_head sh ON sd.reserve_sales_id=sh.reserve_sales_id $qu") AS $d){
@@ -4815,7 +4815,7 @@ public function print_BS_new(){
             $this->load->view('template/header');
             $this->load->view('template/navbar');
             $data['details']=array();
-            foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head WHERE res_saved = '0'") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head WHERE res_saved = '0' AND  res_deleted = '1'") AS $d){
                 $data['details'][]=array(
                     'reserve_sales_id'=>$d->reserve_sales_id,
                     // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -4889,7 +4889,7 @@ public function print_BS_new(){
             $sql.= " sd.res_short_name IN($imp) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = " WHERE sd.res_bulk_pdf_flag = '0' AND res_serial_no != '' AND res_saved = '1' AND ".$query;
+        $qu = " WHERE sd.res_bulk_pdf_flag = '0' AND res_serial_no != '' AND res_saved = '1' AND res_deleted='0' AND ".$query;
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         
@@ -5072,7 +5072,7 @@ public function print_BS_new(){
             $sql.= " sd.res_short_name IN($imp) AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = "WHERE sd.res_bulk_pdf_flag = '0' AND res_serial_no != '' AND res_saved = '1' AND ".$query;
+        $qu = "WHERE sd.res_bulk_pdf_flag = '0' AND res_serial_no != '' AND res_saved = '1' AND res_deleted='0' AND ".$query;
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         
@@ -5226,7 +5226,7 @@ public function print_BS_new(){
                $sql.= " sd.res_short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE sd.res_bulk_pdf_flag = '0' AND res_serial_no != '' AND res_saved = '1' AND ".$query;
+            $qu = " WHERE sd.res_bulk_pdf_flag = '0' AND res_serial_no != '' AND res_saved = '1' AND res_deleted='0' AND ".$query;
 
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -5267,7 +5267,7 @@ public function print_BS_new(){
         $query=substr($sql,0,-3) . ")";
 
         
-        $qu = "WHERE res_serial_no != '' AND res_saved = '1' AND ".$query;
+        $qu = "WHERE res_serial_no != '' AND res_saved = '1' AND res_deleted='0' AND ".$query;
         
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
@@ -6110,7 +6110,7 @@ public function print_BS_new(){
         $data['in_ex_sub']=$in_ex_sub;
         $data['identifier_code']=$this->generateRandomString();
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!=''");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE due_date!='' AND deleted='0' ");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("sales_adjustment_head", "saved = '0'");
@@ -6274,7 +6274,7 @@ public function print_BS_new(){
             $this->load->view('template/header');
             $this->load->view('template/navbar');
             $data['details']=array();
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved = '0'") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved = '0' AND deleted = '1'") AS $d){
                 $data['details'][]=array(
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
                     // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -6329,7 +6329,7 @@ public function print_BS_new(){
 
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         
-                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sd INNER JOIN sales_adjustment_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id WHERE adjustment_detail_id='$id' AND sh.saved != '0' AND serial_no != '0' GROUP BY serial_no") AS $d){
+                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sd INNER JOIN sales_adjustment_head sh ON sd.sales_adjustment_id=sh.sales_adjustment_id WHERE adjustment_detail_id='$id' AND sh.saved != '0' AND sh.deleted != '1' AND serial_no != '0' GROUP BY serial_no") AS $d){
                 $data['stl_id']=$d->short_name;
                 $data['address']=$this->super_model->select_column_where("participant","registered_address","billing_id",$d->billing_id);
                 $data['tin']=$this->super_model->select_column_where("participant","tin","billing_id",$d->billing_id);
@@ -6402,7 +6402,7 @@ public function print_BS_new(){
                $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
+            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND deleted='0' AND ".$query;
 
             $data['details']=array();
             $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
@@ -6538,7 +6538,7 @@ public function print_BS_new(){
                $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND ".$query;
+            $qu = " WHERE sd.bulk_pdf_flag = '0' AND serial_no != '' AND saved = '1' AND deleted='0' AND ".$query;
 
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -7448,7 +7448,7 @@ public function upload_sales_adjustment_test(){
         // }
 
         $query=substr($sql,0,-4);
-        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
+        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND deleted = '0' AND ".$query;
 
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$signatory);
@@ -7522,7 +7522,7 @@ public function upload_sales_adjustment_test(){
         $query=substr($sql,0,-3) . ")";
 
         
-        $qu = "series_number != '0' AND saved = '1' AND ".$query;
+        $qu = "series_number != '0' AND saved = '1' AND deleted = '0' AND".$query;
 
         
         $data['details']=array();
@@ -7619,7 +7619,7 @@ public function upload_sales_adjustment_test(){
         }
      
         $query=substr($sql,0,-4);
-        $qu = "saved='1' AND bulk_invoicing_identifier ='$identifier' AND ".$query;
+        $qu = "saved='1' AND deleted = '0' AND bulk_invoicing_identifier ='$identifier' AND ".$query;
 
         $data['saved']=$this->super_model->select_column_where("sales_transaction_details","saved_bulk_invoicing","bulk_invoicing_identifier",$identifier);
         $data['years'] = $this->super_model->custom_query("SELECT DISTINCT YEAR(billing_to) AS year FROM sales_transaction_head WHERE saved='1' ORDER BY year DESC");
@@ -9544,7 +9544,7 @@ public function upload_sales_adjustment_test(){
         //     $sql.= "cd.settlement_id = '$stl_id' AND "; 
         // }
         $query=substr($sql,0,-4);
-        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
+        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND  deleted = '0' AND ".$query;
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id", $signatory);
         $data['timestamp'] = date('Ymd');
@@ -9624,7 +9624,7 @@ public function upload_sales_adjustment_test(){
         //      $sql.= "cd.settlement_id = '$stl_id' AND "; 
         // }
         $query=substr($sql,0,-4);
-        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND ".$query;
+        $qu = "bulk_pdf_flag = '0' AND series_number != '0' AND saved = '1' AND deleted = '0' AND".$query;
         // $dir    = "C:\Users\steph\Downloads\/";
         $dir=realpath(APPPATH . '../uploads/excel/');
         $files = scandir($dir,1);
@@ -9656,7 +9656,7 @@ public function upload_sales_adjustment_test(){
             $sql .= " filename =  '$f'  OR ";
         }
         $query=substr($sql,0,-3) . ")";
-        $qu = "series_number != '0' AND saved = '1' AND ".$query;
+        $qu = "series_number != '0' AND saved = '1' AND deleted = '0' AND".$query;
         $data['details']=array();
         $data['user_signature']=$this->super_model->select_column_where("users","user_signature","user_id",$_SESSION['user_id']);
         $data['timestamp'] = date('Ymd');
