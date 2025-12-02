@@ -7262,7 +7262,7 @@ public function upload_sales_adjustment_test(){
         // $data['refno']=$ref_no;
         $data['saved']=$this->super_model->select_column_where("sales_adjustment_details","saved_bulk_update","bulk_update_identifier",$identifier);
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_adjustment_id FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' AND deleted='0' ");
-        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE saved='1' ORDER BY due_date ASC");
+        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE saved='1'  AND deleted='0' ORDER BY due_date ASC");
         foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE due_date='$due_date' AND saved='1' AND deleted='0' AND bulk_update_identifier ='$identifier'") AS $d){
             $data['details'][]=array(
                 'adjustment_detail_id'=>$d->adjustment_detail_id,
