@@ -1081,7 +1081,7 @@ public function save_payment_all(){
         $data['billto']=$billto;
         $data['participants']=$participants;
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0' AND deleted = '0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0' AND deleted = '0'");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0' AND deleted = '0' AND saved = '1'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("purchase_transaction_head", "saved = '0' AND adjustment = '0'");
@@ -1093,11 +1093,11 @@ public function save_payment_all(){
         }
 
         if($due_date!='null'){
-            $sql.= "ph.due_date = '$due_date' AND deleted = '0' AND ";
+            $sql.= "ph.due_date = '$due_date' AND ";
         }
 
         if($billfrom!='null' && $billto!='null'){ 
-            $sql.= " ((ph.billing_from BETWEEN '$billfrom' AND '$billto') OR (ph.billing_to BETWEEN '$billfrom' AND '$billto'))  AND deleted = '0' AND ";
+            $sql.= " ((ph.billing_from BETWEEN '$billfrom' AND '$billto') OR (ph.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
         }
 
         if(!empty($participants) && $participants!='null'){
@@ -1124,7 +1124,7 @@ public function save_payment_all(){
             $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
         }
         $query=substr($sql,0,-4);
-        $qu = " WHERE adjustment='0' AND saved='1' AND ".$query;
+        $qu = " WHERE adjustment='0' AND saved='1' AND deleted = '0' AND ".$query;
         foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
             $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.purchase_id='$d->purchase_id' AND saved='1' AND adjustment='0' ORDER BY or_no ASC");
             //$data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND saved='1' AND adjustment='0' ORDER BY or_no ASC");
@@ -1306,8 +1306,8 @@ public function save_payment_all(){
         $data['due_date_to']=$due_date_to;
         $data['in_ex_sub']=$in_ex_sub;
         $data['participants']=$participants;
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND deleted = '0'");
-        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND deleted = '0'");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND deleted = '0' AND saved = '1' ");
+        $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND deleted = '0' AND saved = '1'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
         $data['count_unsaved'] = $this->super_model->count_custom_where("purchase_transaction_head", "saved = '0' AND adjustment = '1'");
@@ -1351,7 +1351,7 @@ public function save_payment_all(){
                 $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            $qu = " WHERE adjustment='1' AND saved='1' AND deleted = '0' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
                 $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$d->reference_number' AND ptd.purchase_id='$d->purchase_id' AND saved='1' AND adjustment='1' ORDER BY or_no ASC");
                 //$data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
@@ -1427,7 +1427,7 @@ public function save_payment_all(){
                 $sql.= "pd.scanned_copy = '$scanned_copy' AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE adjustment='1' AND saved='1' AND ".$query;
+            $qu = " WHERE adjustment='1' AND saved='1' AND deleted = '0' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id $qu") AS $d){
                 $data['or_no'] = $this->super_model->custom_query("SELECT DISTINCT ptd.or_no FROM purchase_transaction_head pth INNER JOIN purchase_transaction_details ptd  WHERE pth.reference_number='$ref_no' AND ptd.purchase_id='$d->purchase_id' AND adjustment='1' ORDER BY or_no ASC");
                 // foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_details pd INNER JOIN purchase_transaction_head ph ON pd.purchase_id=ph.purchase_id WHERE saved='1' AND reference_number LIKE '%$ref_no%' AND due_date = '$due_date'") AS $d){
