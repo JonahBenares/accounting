@@ -3524,7 +3524,7 @@ public function print_BS_new(){
         $data['ref_no'] = $ref_no;
         $data['buyer_fullname'] = $buyer_fullname;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'");
-        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' AND deleted = '0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
         $data['employees']=$this->super_model->select_all_order_by("users","fullname",'ASC');
         $sql="";
@@ -3543,7 +3543,7 @@ public function print_BS_new(){
         // }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND deleted = '1' AND".$query;
+        $qu = "saved = '1' AND ".$query;
         $data['collection']=array();
 
             foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
@@ -7057,8 +7057,8 @@ public function upload_sales_adjustment_test(){
         $ref_no=$this->super_model->select_column_where("sales_transaction_head","reference_number","sales_id",$salesid);
         $data['refno']=$ref_no;
         $data['saved']=$this->super_model->select_column_where("sales_transaction_details","saved_bulk_update","bulk_update_identifier",$identifier);
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_id FROM sales_transaction_head WHERE reference_number!='' AND saved='1' ");
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE reference_number='$ref_no' AND saved='1' AND bulk_update_identifier ='$identifier'") AS $d){
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_id FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0' ");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE reference_number='$ref_no' AND saved='1' AND deleted='0' AND bulk_update_identifier ='$identifier'") AS $d){
             $data['details'][]=array(
                 'sales_detail_id'=>$d->sales_detail_id,
                 'sales_id'=>$d->sales_id,
@@ -7222,8 +7222,8 @@ public function upload_sales_adjustment_test(){
         $ref_no=$this->super_model->select_column_where("reserve_sales_transaction_head","res_reference_number","reserve_sales_id",$ressalesid);
         $data['refno']=$ref_no;
         $data['saved']=$this->super_model->select_column_where("reserve_sales_transaction_details","res_saved_bulk_update","res_bulk_update_identifier",$identifier);
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT res_reference_number,reserve_sales_id FROM reserve_sales_transaction_head WHERE res_reference_number!='' AND res_saved='1' ");
-        foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details std INNER JOIN reserve_sales_transaction_head sth ON std.reserve_sales_id=sth.reserve_sales_id WHERE res_reference_number='$ref_no' AND res_saved='1' AND res_bulk_update_identifier ='$identifier'") AS $d){
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT res_reference_number,reserve_sales_id FROM reserve_sales_transaction_head WHERE res_reference_number!='' AND res_saved='1' AND res_deleted='0' ");
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details std INNER JOIN reserve_sales_transaction_head sth ON std.reserve_sales_id=sth.reserve_sales_id WHERE res_reference_number='$ref_no' AND res_saved='1' AND res_deleted='0' AND res_bulk_update_identifier ='$identifier'") AS $d){
             $data['details'][]=array(
                 'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
                 'reserve_sales_id'=>$d->reserve_sales_id,
@@ -7261,9 +7261,9 @@ public function upload_sales_adjustment_test(){
         // $ref_no=$this->super_model->select_column_where("sales_adjustment_head","reference_number","sales_adjustment_id",$salesadjustmentid);
         // $data['refno']=$ref_no;
         $data['saved']=$this->super_model->select_column_where("sales_adjustment_details","saved_bulk_update","bulk_update_identifier",$identifier);
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_adjustment_id FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' ");
-        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE saved='1' ORDER BY due_date ASC");
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE due_date='$due_date' AND saved='1' AND bulk_update_identifier ='$identifier'") AS $d){
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_adjustment_id FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' AND deleted='0' ");
+        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE saved='1'  AND deleted='0' ORDER BY due_date ASC");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE due_date='$due_date' AND saved='1' AND deleted='0' AND bulk_update_identifier ='$identifier'") AS $d){
             $data['details'][]=array(
                 'adjustment_detail_id'=>$d->adjustment_detail_id,
                 'sales_adjustment_id'=>$d->sales_adjustment_id,
@@ -7622,9 +7622,9 @@ public function upload_sales_adjustment_test(){
         $qu = "saved='1' AND deleted = '0' AND bulk_invoicing_identifier ='$identifier' AND ".$query;
 
         $data['saved']=$this->super_model->select_column_where("sales_transaction_details","saved_bulk_invoicing","bulk_invoicing_identifier",$identifier);
-        $data['years'] = $this->super_model->custom_query("SELECT DISTINCT YEAR(billing_to) AS year FROM sales_transaction_head WHERE saved='1' ORDER BY year DESC");
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' ORDER BY due_date ASC");
-        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' ORDER BY due_date ASC");
+        $data['years'] = $this->super_model->custom_query("SELECT DISTINCT YEAR(billing_to) AS year FROM sales_transaction_head WHERE saved='1'AND deleted='0' ORDER BY year DESC");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0' ORDER BY due_date ASC");
+        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE saved='1' AND deleted='0' ORDER BY due_date ASC");
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details std INNER JOIN sales_transaction_head sth ON std.sales_id=sth.sales_id WHERE $qu") AS $d){
             $data['details'][]=array(
                 'sales_detail_id'=>$d->sales_detail_id,
@@ -7737,9 +7737,9 @@ public function upload_sales_adjustment_test(){
         $identifier=$this->uri->segment(4);
         $data['identifier']=$this->uri->segment(4);
         $data['saved']=$this->super_model->select_column_where("sales_adjustment_details","saved_bulk_invoicing","bulk_invoicing_identifier",$identifier);
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_adjustment_id FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' ");
-        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE saved='1' ORDER BY due_date ASC");
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE due_date='$due_date' AND saved='1' AND bulk_invoicing_identifier ='$identifier'") AS $d){
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number,sales_adjustment_id FROM sales_adjustment_head WHERE reference_number!='' AND saved='1' AND deleted='0' ");
+        $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_adjustment_head WHERE saved='1' AND deleted='0' ORDER BY due_date ASC");
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details std INNER JOIN sales_adjustment_head sth ON std.sales_adjustment_id=sth.sales_adjustment_id WHERE due_date='$due_date' AND saved='1' AND deleted='0' AND bulk_invoicing_identifier ='$identifier'") AS $d){
             $data['details'][]=array(
                 'adjustment_detail_id'=>$d->adjustment_detail_id,
                 'sales_adjustment_id'=>$d->sales_adjustment_id,

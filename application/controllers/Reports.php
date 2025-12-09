@@ -11363,6 +11363,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+
     public function purchases_adj_total_variance_merge(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
