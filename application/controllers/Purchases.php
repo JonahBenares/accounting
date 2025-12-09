@@ -1080,7 +1080,7 @@ public function save_payment_all(){
         $data['billfrom']=$billfrom;
         $data['billto']=$billto;
         $data['participants']=$participants;
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0'");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='0' AND deleted = '0'");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='0' AND deleted = '0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
@@ -1093,11 +1093,11 @@ public function save_payment_all(){
         }
 
         if($due_date!='null'){
-            $sql.= "ph.due_date = '$due_date' AND ";
+            $sql.= "ph.due_date = '$due_date' AND deleted = '0' AND ";
         }
 
         if($billfrom!='null' && $billto!='null'){ 
-            $sql.= " ((ph.billing_from BETWEEN '$billfrom' AND '$billto') OR (ph.billing_to BETWEEN '$billfrom' AND '$billto'))  AND ";
+            $sql.= " ((ph.billing_from BETWEEN '$billfrom' AND '$billto') OR (ph.billing_to BETWEEN '$billfrom' AND '$billto'))  AND deleted = '0' AND ";
         }
 
         if(!empty($participants) && $participants!='null'){
@@ -1306,7 +1306,7 @@ public function save_payment_all(){
         $data['due_date_to']=$due_date_to;
         $data['in_ex_sub']=$in_ex_sub;
         $data['participants']=$participants;
-        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1'");
+        $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND adjustment='1' AND deleted = '0'");
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM purchase_transaction_head WHERE due_date!='' AND adjustment='1' AND deleted = '0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
