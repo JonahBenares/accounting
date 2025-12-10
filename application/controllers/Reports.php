@@ -184,7 +184,7 @@ class Reports extends CI_Controller {
         $part=$this->super_model->select_column_where("participant","participant_name","settlement_id",$participant);
         $data['part'] = $part;
         $this->load->view('template/header');
-        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0'");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM purchase_transaction_head WHERE reference_number!='' AND saved = '1' AND deleted = '0' AND adjustment = '0'");
         //$data['participant']=$this->super_model->select_all_order_by("participant","participant_name","ASC");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant GROUP BY settlement_id");
         $sql="";
@@ -197,8 +197,8 @@ class Reports extends CI_Controller {
             $sql.= "reference_number = '$ref_no' AND ";
         }
 
-        $query=substr($sql,0,-4);
-        $pur = "saved = '1' AND deleted = '0' AND ".$query;
+        $query=substr($sql,0,-4);   
+        $pur = "saved = '1' AND deleted = '0' AND adjustment = '0' AND ".$query;
         $total_am = $this->super_model->select_sum_join("total_amount","purchase_transaction_details","purchase_transaction_head", $pur,"purchase_id");
         $data['total_amount'] = $total_am;
         $data['total_paid']=0;
