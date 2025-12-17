@@ -18,6 +18,7 @@
         <a href='<?php echo base_url(); ?>sales/print_invoice_multiple_small/<?php echo $sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button" target="_blank">Invoice (small)</a> 
         <a href='<?php echo base_url(); ?>sales/print_invoice_multiple_half/<?php echo $sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button" target="_blank">Invoice (half) </a> 
         <a href='<?php echo base_url(); ?>sales/print_invoice_multiple_main/<?php echo $sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button " style="margin-left:3px" target="_blank">Invoice New </a> 
+        <a href='<?php echo base_url(); ?>sales/print_invoice_multiple_2026/<?php echo $sales_detail_id; ?>/<?php echo $print_identifier; ?>/<?php echo $count; ?>' class="btn btn-primary button " style="margin-left:3px" target="_blank">Invoice 2026 </a> 
         <!-- <button class="btn btn-info btn-fill" data-toggle="modal" data-target="#basicModal"></span> Update Serial No.</button><br> -->
         <br>
         <br>
