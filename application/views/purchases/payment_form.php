@@ -581,7 +581,7 @@
 
         ws.columns = [
             { width: 15 }, // Date of Payment
-            { width: 22 }, // Invoice No.
+            { width: 25 }, // Invoice No.
             { width: 16 }, // Energy
             { width: 16 }, // VAT on Energy
             { width: 16 }, // Market Fees
@@ -594,7 +594,7 @@
         const headerRow = ws.getRow(startRow);
         headerRow.values = headers;
 
-        headerRow.font = { size: 12 };
+        headerRow.font = { size: 12, bold: true};
         headerRow.alignment = { wrapText:true, horizontal: "center", vertical: "middle" };
         headerRow.height = 80;
 
@@ -666,6 +666,8 @@
         totalRow.getCell(4).value = `(${totalVatEnergy.toLocaleString(undefined, { minimumFractionDigits: 2 })})`;
         totalRow.getCell(5).value = `(${totalMarketFees.toLocaleString(undefined, { minimumFractionDigits: 2 })})`;
         totalRow.getCell(6).value = totalEWT.toLocaleString(undefined, { minimumFractionDigits: 2 });
+        totalRow.getCell(7).value = "-";
+        totalRow.getCell(8).value = "-";
         totalRow.getCell(9).value = `(${totalTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })})`;
 
         for (let c = 1; c <= 9; c++) {
@@ -745,6 +747,7 @@
         ws.mergeCells(`D${rowPointer}:H${rowPointer}`);
         ws.getCell(`D${rowPointer}`).value = "Independent Electricity Market Operator of the Philippines, Inc.";
         ws.getCell(`D${rowPointer}`).alignment = { horizontal: "left" };
+        ws.getCell(`D${rowPointer}`).font = { bold: true };
 
         rowPointer += 1;
 
@@ -755,6 +758,7 @@
         ws.mergeCells(`D${rowPointer}:H${rowPointer}`);
         ws.getCell(`D${rowPointer}`).value = "675006 xxxxxxxxxx";
         ws.getCell(`D${rowPointer}`).alignment = { horizontal: "left" };
+        ws.getCell(`D${rowPointer}`).font = { bold: true };
 
         rowPointer += 1;
 
@@ -765,6 +769,7 @@
         ws.mergeCells(`D${rowPointer}:H${rowPointer}`);
         ws.getCell(`D${rowPointer}`).value = "01-99492385786";
         ws.getCell(`D${rowPointer}`).alignment = { horizontal: "left" };
+        ws.getCell(`D${rowPointer}`).font = { bold: true };
 
         rowPointer += 1;
 
@@ -775,6 +780,7 @@
         ws.mergeCells(`D${rowPointer}:H${rowPointer}`);
         ws.getCell(`D${rowPointer}`).value = "SCBLPHMM";
         ws.getCell(`D${rowPointer}`).alignment = { horizontal: "left" };
+        ws.getCell(`D${rowPointer}`).font = { bold: true };
 
         rowPointer += 2;
 
@@ -793,6 +799,7 @@
         ws.mergeCells(`D${rowPointer}:H${rowPointer}`);
         ws.getCell(`D${rowPointer}`).value = "SCB FAO IEMOP";
         ws.getCell(`D${rowPointer}`).alignment = { horizontal: "left" };
+        ws.getCell(`D${rowPointer}`).font = { bold: true };
 
         rowPointer += 1;
 
@@ -803,6 +810,7 @@
         ws.mergeCells(`D${rowPointer}:H${rowPointer}`);
         ws.getCell(`D${rowPointer}`).value = "Your Company Name";
         ws.getCell(`D${rowPointer}`).alignment = { horizontal: "left" };
+        ws.getCell(`D${rowPointer}`).font = { bold: true };
 
         rowPointer += 1;
 
@@ -813,6 +821,7 @@
         ws.mergeCells(`D${rowPointer}:H${rowPointer}`);
         ws.getCell(`D${rowPointer}`).value = "675006 xxxxxxxxxx";
         ws.getCell(`D${rowPointer}`).alignment = { horizontal: "left" };
+        ws.getCell(`D${rowPointer}`).font = { bold: true };
 
         rowPointer += 1;
 
