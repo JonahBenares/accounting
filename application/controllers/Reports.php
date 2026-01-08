@@ -4274,7 +4274,8 @@ class Reports extends CI_Controller {
     public function payment_form(){
             $payment_identifier = $this->uri->segment(3);
             $this->load->view('template/print_head');
-            foreach($this->super_model->custom_query("SELECT * FROM payment_head WHERE payment_identifier='$payment_identifier' GROUP BY purchase_id") AS $p){
+            // foreach($this->super_model->custom_query("SELECT * FROM payment_head WHERE payment_identifier='$payment_identifier' GROUP BY purchase_id") AS $p){
+                foreach($this->super_model->custom_query("SELECT * FROM (SELECT ph.* FROM payment_head ph INNER JOIN (SELECT MIN(payment_id) AS payment_id FROM payment_head WHERE payment_identifier = '$payment_identifier' AND purchase_id != 0 GROUP BY purchase_id) t ON ph.payment_id = t.payment_id UNION ALL SELECT ph2.* FROM payment_head ph2 WHERE ph2.payment_identifier = '$payment_identifier' AND ph2.purchase_id = 0) AS combined ORDER BY combined.payment_id ASC") as $p) {
                 $vatable_purchase= $this->super_model->select_sum("payment_head", "total_purchase", "purchase_id", $p->purchase_id);
                 $energy=$vatable_purchase;
                 $energy_total= $this->super_model->select_sum("payment_head", "total_purchase", "payment_identifier", $p->payment_identifier);
@@ -4282,18 +4283,34 @@ class Reports extends CI_Controller {
                 $vat_on_purchases_total= $this->super_model->select_sum("payment_head", "total_vat", "payment_identifier", $p->payment_identifier);
                 $ewt= $this->super_model->select_sum("payment_head", "total_ewt", "purchase_id", $p->purchase_id);
                 $ewt_total= $this->super_model->select_sum("payment_head", "total_ewt", "payment_identifier", $p->payment_identifier);
-                $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
-                $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
+                $marketfee_total= $this->super_model->select_sum("payment_head", "total_market_fee", "payment_identifier", $p->payment_identifier);
+                if($p->purchase_id!=0){
+                    $ewt= $this->super_model->select_sum("payment_head", "total_ewt", "purchase_id", $p->purchase_id);
+                    $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
+                    $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
+                }else{
+                    // $ewt= $this->super_model->select_sum_where("payment_head", "total_ewt", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                    // $reference_number= $this->super_model->select_column_custom_where("payment_head", "reference_number", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                    // $total_amount= $this->super_model->select_sum_where("payment_head", "total_amount", "payment_identifier='$p->payment_identifier' AND purchase_id='0'");
+                    $ewt= $this->super_model->select_column_where("payment_details", "ewt", "payment_id", $p->payment_id);
+                    $reference_number= $this->super_model->select_column_custom_where("payment_head", "reference_number", "payment_identifier='$p->payment_identifier' AND payment_id=$p->payment_id");
+                    $total_amount= $this->super_model->select_column_where("payment_details", "total_amount", "payment_id", $p->payment_id);
+                }
+                // $reference_number=$this->super_model->select_column_where("purchase_transaction_head","reference_number","purchase_id",$p->purchase_id);
+                // $total_amount= $this->super_model->select_sum("payment_head", "total_amount", "purchase_id", $p->purchase_id);
                 $total_amount_disp= $this->super_model->select_sum("payment_head", "total_amount", "payment_identifier", $p->payment_identifier);
+                $market_fee= $this->super_model->select_column_where("payment_details", "market_fee", "payment_id", $p->payment_id);
                 $data['total']=$total_amount_disp;
                 $data['energy']=$energy_total;
                 $data['vat_on_purchases']=$vat_on_purchases_total;
                 $data['ewt']=$ewt_total;
+                $data['total_market_fee']=$marketfee_total;
                 $data['payment'][]=array(
                     "transaction_date"=>$p->payment_date,
                     "reference_number"=>$reference_number,
                     "energy"=>$energy,
                     "vat_on_purchases"=>$vat_on_purchases,
+                    "market_fee"=> ($market_fee!=0) ? $market_fee : 0,
                     "ewt"=>$ewt,
                     "total_amount"=>$total_amount,
                 );
