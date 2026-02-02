@@ -4222,7 +4222,7 @@ public function print_BS_new(){
                $sql.= " sd.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE saved='1' AND deleted='1' AND ".$query;
+            $qu = " WHERE saved='1' AND deleted='0' AND ".$query;
             foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_details sd 
                 INNER JOIN sales_transaction_head sh ON sd.sales_id=sh.sales_id $qu") AS $d){
                 
@@ -4835,7 +4835,7 @@ public function print_BS_new(){
         $this->load->view('sales/sales_wesm_pdf_scan_directory',$data);
     }
 
-        public function reserve_sales_wesm(){
+    public function reserve_sales_wesm(){
         $ref_no=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
         $in_ex_sub=$this->uri->segment(5);
@@ -4964,7 +4964,7 @@ public function print_BS_new(){
                } 
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE res_saved='1' AND ".$query;
+            $qu = " WHERE res_saved='1' AND res_deleted='0' AND".$query;
             foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_details sd INNER JOIN reserve_sales_transaction_head sh ON sd.reserve_sales_id=sh.reserve_sales_id $qu") AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("reserve_participant","res_participant_id","res_billing_id='$d->res_billing_id'");
                 $sub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$participant_id'");
@@ -6420,7 +6420,7 @@ public function print_BS_new(){
                $sql.= " sad.short_name IN($imp) AND ";
             }
             $query=substr($sql,0,-4);
-            $qu = " WHERE saved='1' AND deleted='1' AND ".$query;
+            $qu = " WHERE saved='1' AND deleted='0' AND ".$query;
             /*foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id INNER JOIN participant p ON sad.billing_id=p.billing_id INNER JOIN subparticipant sp ON p.participant_id=sp.participant_id $qu GROUP BY p.participant_id") AS $d){*/
             foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id $qu ORDER BY serial_no ASC, item_no ASC") AS $d){
                 $participant_id = $this->super_model->select_column_custom_where("participant","participant_id","billing_id='$d->billing_id'");

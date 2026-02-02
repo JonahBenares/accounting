@@ -3996,13 +3996,13 @@ class Reports extends CI_Controller {
 
         //echo $query;
         $data['or_summary']=array();
-        $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND deleted='0' AND ".$query."");
+        $data['min'] = $this->super_model->custom_query_single("series_number","SELECT MIN(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND ".$query."");
 
-        $data['max']= $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND deleted='0' AND ".$query."");
+        $data['max']= $this->super_model->custom_query_single("series_number","SELECT MAX(series_number) AS series_number FROM collection_details cd INNER JOIN collection_head ch ON ch.collection_id=cd.collection_id WHERE cd.series_number != '' AND saved='1' AND ".$query."");
 
        
 
-        foreach($this->super_model->custom_query("SELECT DISTINCT series_number FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND saved='1' AND deleted='0' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
+        foreach($this->super_model->custom_query("SELECT DISTINCT series_number FROM collection_details cd INNER JOIN collection_head ch ON cd.collection_id = ch.collection_id WHERE cd.series_number!='' AND saved='1' AND ".$query." ORDER BY cd.series_number ASC") AS $or){
 
             $series_number[] = $or->series_number;
         }
@@ -4110,7 +4110,7 @@ class Reports extends CI_Controller {
         $total_sum[]=0;
         //$data['date']=$this->super_model->custom_query("SELECT * FROM sales_adjustment_head GROUP BY transaction_date");
         //foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE transaction_date = '$transaction_date' AND YEAR(transaction_date)='$year'") AS $ads){
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE due_date='$due_date' AND saved='1'  ORDER BY billing_to ASC") AS $ads){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE due_date='$due_date' AND saved='1' AND deleted='0' ORDER BY billing_to ASC") AS $ads){
             $vatable_sales=$this->super_model->select_sum_where("sales_adjustment_details","vatable_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_sales=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_sales","sales_adjustment_id='$ads->sales_adjustment_id'");
             $zero_rated_ecozones=$this->super_model->select_sum_where("sales_adjustment_details","zero_rated_ecozones","sales_adjustment_id='$ads->sales_adjustment_id'");
@@ -5185,7 +5185,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "res_saved = '1' AND deleted='0' AND ".$query;
+        $qu = "res_saved = '1' AND res_deleted='0' AND ".$query;
         $total_sum[]=0;
         if(!empty($query)){
         foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head sth INNER JOIN reserve_sales_transaction_details std ON sth.reserve_sales_id = std.reserve_sales_id WHERE $qu ORDER BY res_billing_from ASC, res_reference_number ASC") AS $sth){
@@ -5242,9 +5242,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($participant != 'null' || $from != 'null' || $to != 'null'){
-            $qu = " res_saved = '1' AND deleted='0' AND  ".$query;
+            $qu = " res_saved = '1' AND res_deleted='0' AND  ".$query;
         }else{
-             $qu = " res_saved = '1' AND deleted='0'";
+             $qu = " res_saved = '1' AND res_deleted='0'";
         }
         $sheetno=0;
             $styleArray = array(
@@ -6356,8 +6356,8 @@ class Reports extends CI_Controller {
         $data['date'] = $date;
         $data['ref_no'] = $ref_no;
         $data['stl_id'] = $stl_id;
-        $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0'  AND deleted='0'");
-        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' AND deleted='0'");
+        $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_head WHERE saved != '0' ");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0' ");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE reference_no!='' AND saved != '0'  GROUP BY buyer_fullname");
 
          $sql="";
@@ -6371,7 +6371,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND deleted='0' AND ".$query;
+        $qu = "saved = '1' AND ".$query;
 
         foreach($this->super_model->custom_query("SELECT * FROM collection_head ch INNER JOIN collection_details cd ON ch.collection_id = cd.collection_id WHERE $qu") AS $col){
             $count_series=$this->super_model->count_custom_where("collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND collection_id = '$col->collection_id' AND collection_details_id = '$col->collection_details_id'");
@@ -6442,9 +6442,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1'  AND deleted='0' AND ".$query;
+            $qu = " saved = '1' AND ".$query;
         }else{
-             $qu = " saved = '1'  AND deleted='0'";
+             $qu = " saved = '1' AND ";
         }
 
         if($date != 'null'){
@@ -8079,7 +8079,7 @@ class Reports extends CI_Controller {
         public function unpaid_invoices_reserve_sales(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
-        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT res_due_date FROM reserve_sales_transaction_head WHERE res_saved='1' AND deleted='0' ORDER BY res_due_date ASC");
+        $data['due_date']=$this->super_model->custom_query("SELECT DISTINCT res_due_date FROM reserve_sales_transaction_head WHERE res_saved='1' AND res_deleted='0' ORDER BY res_due_date ASC");
         $year=$this->uri->segment(3);
         $due_date=$this->uri->segment(4);
         $data['year'] = $year;
@@ -8847,7 +8847,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "res_saved = '1' AND deleted='0' AND ".$query;
+        $qu = "res_saved = '1' AND res_deleted='0' AND ".$query;
 
         $total_ewt=array();
         $total_ewt_amount=array();
@@ -9784,9 +9784,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($due !='null'){
-            $qu = " saved = '1' AND ".$query;
+            $qu = " saved = '1' AND deleted = '0' ".$query;
         }else{
-             $qu = " saved = '1'";
+             $qu = " saved = '1' " ;
         }
 
         if($due != 'null'){
