@@ -9786,7 +9786,7 @@ class Reports extends CI_Controller {
         if($due !='null'){
             $qu = " saved = '1' AND deleted = '0' ".$query;
         }else{
-             $qu = " saved = '1' AND deleted='0'" ;
+             $qu = " saved = '1' AND deleted = '0' ";
         }
 
         if($due != 'null'){
@@ -10071,7 +10071,7 @@ class Reports extends CI_Controller {
         if($due !='null'){
             $qu = " saved = '1' AND deleted='0' AND ".$query;
         }else{
-             $qu = " saved = '1' AND deleted='0'";
+             $qu = " saved = '1' AND deleted='0' ";
         }
 
         if($due != 'null'){
@@ -10627,9 +10627,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($due !='null'){
-            $qu = " saved = '1' AND adjustment = '1' AND deleted = '0' AND".$query;
+            $qu = " saved = '1' AND adjustment = '1' AND deleted = '0' AND ".$query;
         }else{
-             $qu = " saved = '1' AND adjustment = '1' AND deleted = '0'";
+             $qu = " saved = '1' AND adjustment = '1' AND deleted = '0' ";
         }
 
         if($due != 'null'){
@@ -10905,7 +10905,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND  ".$query;
+        $qu = "saved = '1' AND ".$query;
 
         foreach($this->super_model->custom_query("SELECT * FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE $qu") AS $col){
             $count_series=$this->super_model->count_custom_where("merge_collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND merge_collection_id = '$col->merge_collection_id' AND merge_collection_details_id = '$col->merge_collection_details_id'");
