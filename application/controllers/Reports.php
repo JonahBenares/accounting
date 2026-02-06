@@ -6891,7 +6891,7 @@ class Reports extends CI_Controller {
         $data['ref_no'] = $ref_no;
         $data['stl_id'] = $stl_id;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM collection_reserve_head WHERE saved != '0'");
-        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0'  AND deleted='0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
 
          $sql="";
@@ -6905,7 +6905,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1'  AND deleted='0' AND ".$query;
+        $qu = "saved = '1'  AND ".$query;
 
         foreach($this->super_model->custom_query("SELECT * FROM collection_reserve_head ch INNER JOIN collection_reserve_details cd ON ch.res_collection_id = cd.res_collection_id WHERE $qu") AS $col){
             $count_series=$this->super_model->count_custom_where("collection_reserve_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND res_collection_id = '$col->res_collection_id' AND res_collection_details_id = '$col->res_collection_details_id'");
@@ -6967,9 +6967,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND deleted='0' AND ".$query;
+            $qu = " saved = '1' AND ".$query;
         }else{
-             $qu = " saved = '1' AND deleted='0'";
+             $qu = " saved = '1' ";
         }
 
         if($date != 'null'){
@@ -7126,9 +7126,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND deleted='0' AND ".$query;
+            $qu = " saved = '1' AND ".$query;
         }else{
-             $qu = " saved = '1' AND deleted='0'";
+             $qu = " saved = '1' ";
         }
 
         if($date != 'null'){
@@ -9786,7 +9786,7 @@ class Reports extends CI_Controller {
         if($due !='null'){
             $qu = " saved = '1' AND deleted = '0' ".$query;
         }else{
-             $qu = " saved = '1' " ;
+             $qu = " saved = '1' AND deleted='0'" ;
         }
 
         if($due != 'null'){
@@ -10891,7 +10891,7 @@ class Reports extends CI_Controller {
         $data['ref_no'] = $ref_no;
         $data['stl_id'] = $stl_id;
         $data['collection_date'] = $this->super_model->custom_query("SELECT DISTINCT collection_date FROM merge_collection_head WHERE saved != '0'");
-        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0' AND deleted='0'");
+        $data['reference_no'] = $this->super_model->custom_query("SELECT DISTINCT reference_no FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0'");
         $data['buyer'] = $this->super_model->custom_query("SELECT DISTINCT settlement_id,buyer_fullname FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE reference_no!='' AND saved != '0' GROUP BY buyer_fullname");
 
          $sql="";
@@ -10905,7 +10905,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-4);
-        $qu = "saved = '1' AND deleted='0' AND  ".$query;
+        $qu = "saved = '1' AND  ".$query;
 
         foreach($this->super_model->custom_query("SELECT * FROM merge_collection_head ch INNER JOIN merge_collection_details cd ON ch.merge_collection_id = cd.merge_collection_id WHERE $qu") AS $col){
             $count_series=$this->super_model->count_custom_where("merge_collection_details","series_number='$col->series_number' AND series_number!='' AND settlement_id='$col->settlement_id' AND merge_collection_id = '$col->merge_collection_id' AND merge_collection_details_id = '$col->merge_collection_details_id'");
@@ -10966,9 +10966,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND deleted='0' AND ".$query;
+            $qu = " saved = '1' AND ".$query;
         }else{
-             $qu = " saved = '1' AND deleted='0'";
+             $qu = " saved = '1' ";
         }
 
         if($date != 'null'){
@@ -11120,9 +11120,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($date !='null' || $ref_no != 'null' || $stl_id != 'null'){
-            $qu = " saved = '1' AND deleted='0' AND ".$query;
+            $qu = " saved = '1' AND  ".$query;
         }else{
-             $qu = " saved = '1' AND deleted='0'";
+             $qu = " saved = '1' ";
         }
 
         if($date != 'null'){
