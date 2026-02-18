@@ -86,10 +86,10 @@ if(!empty($sales_id)){
                                 </div>
                             </form>
                             <?php if(!empty($identifier) && !empty($details)){ ?>      
-                            <div class="table-responsive" >
+                            <div class="table-responsive">
                                 <hr>
-                                <?php $x=1; foreach($head AS $h){ ?>
-                               <table width="100%">
+                                <?php $x = 1; foreach($head as $h){ ?>
+                                <table width="100%">
                                     <tr>
                                         <td><label class="m-0"><b>Reference Number</b>: <?php echo $h->reference_number;?></label></td>
                                         <td><label class="m-0"><b>Billing Period</b>: <?php echo date("F d,Y",strtotime($h->billing_from)); ?> - <?php echo date("F d,Y",strtotime($h->billing_to)); ?> </label></td>
@@ -104,7 +104,8 @@ if(!empty($sales_id)){
                                     </tr>
                                 </table>
                                 <br>
-                                <?php if($count_empty_actual!=0){ ?>
+
+                                <?php if($count_empty_actual != 0){ ?>
                                 <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
                                     <center>
                                         <strong><?php echo $count_empty_actual; ?> </strong> 
@@ -112,117 +113,56 @@ if(!empty($sales_id)){
                                     </center>
                                 </div> 
                                 <?php } ?>
-                                <table class="table-bordered table table-hover " id="adjust-<?php echo $x; ?>" style="width:190%;">
+
+                                <table class="table-bordered table table-hover" id="adjust-<?php echo $x; ?>" style="width:190%;">
                                     <thead>
                                         <tr>    
-                                            <!-- <th width="5%" align="center" style="background:rgb(245 245 245)">
-                                                <center><span class="fas fa-bars"></span></center>
-                                            </th>  -->   
-                                            <th >Item #</th>                                        
-                                            <!-- <th >Series No.</th> -->
-                                            <th >STL ID / TPShort Name</th>
+                                            <th>Item #</th>                                        
+                                            <th>STL ID / TPShort Name</th>
                                             <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
                                             <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Unique Billing ID</th>
                                             <th style="position: sticky;left:125px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
-                                            <th >Facility Type </th>
-                                            <th >WHT Agent Tag</th>
-                                            <th >ITH Tag</th>
-                                            <th >Non Vatable Tag</th>
-                                            <th >Zero-rated Tag</th>
-                                            <th >Vatable Sales</th>
-                                            <th >Zero Rated Sales</th>
-                                            <th >Zero Rated EcoZones Sales</th>
-                                            <th >Vat On Sales</th>
-                                            <th >EWT</th>
-                                            <th >Total Amount</th>
-                                            <!-- <th width="20%">Original Copy</th>
-                                            <th width="20%">Scanned Copy</th> -->
+                                            <th>Facility Type</th>
+                                            <th>WHT Agent Tag</th>
+                                            <th>ITH Tag</th>
+                                            <th>Non Vatable Tag</th>
+                                            <th>Zero-rated Tag</th>
+                                            <th>Vatable Sales</th>
+                                            <th>Zero Rated Sales</th>
+                                            <th>Zero Rated EcoZones Sales</th>
+                                            <th>Vat On Sales</th>
+                                            <th>EWT</th>
+                                            <th>Total Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach($details AS $d){ 
-                                            if($d['reference_number'] == $h->reference_number) {?>
-                                        <tr <?php echo ($d['billing_id']=='') ? 'class="bg-red"' : ''; ?>>
-                                            <!-- <td class="p-2" align="center" style="background: #fff;">
-                                                <?php 
-                                                    if($saved==1){ 
-                                                        if($d['serial_no']=='' && $d['print_counter']==0){
-                                                ?>
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff" onclick="add_adjust_details_BS('<?php echo base_url(); ?>','<?php echo $d['adjustment_detail_id']; ?>')"  class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
-                                                        </a>
-                                                    </div>
-                                                <?php 
-                                                    }else{
-                                                ?>
-                                                    <div class="btn-group mb-0">
-                                                        <a style="color:#fff" href="<?php echo base_url(); ?>sales/print_BS/<?php echo $d['adjustment_detail_id']; ?>" target="_blank" onclick = "countPrint('<?php echo base_url(); ?>','<?php echo $d['adjustment_detail_id']; ?>')" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Details">
-                                                            <span class="m-0 fas fa-indent"></span><span id="clicksBS" class="badge badge-transparent"><?php echo $d['print_counter']; ?></span>
-                                                        </a>
-                                                    </div>
-                                                <?php       
-                                                        } 
-                                                    }
-                                                ?>
-                                            </td> -->
-                                            <!-- <span hidden><?php echo $d['billing_id'];?></span> -->
-                                            <td class="p-2">
-                                                <center><?php echo $d['item_no'];?></center>
-                                            </td>
-                                            <!-- <td class="p-2"><?php echo $d['serial_no'];?></td> -->
-                                            <td class="p-2"><?php echo $d['short_name'];?></td>
-                                            <td class="p-2" <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:0;z-index: 999;"' : 'style="position: sticky;left:0;background:#fff;z-index: 999;"'?>><?php echo $d['actual_billing_id'];?></td>
-                                            <td class="p-2" <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:0;z-index: 999;"' : 'style="position: sticky;left:0;background:#fff;z-index: 999;"'?>><?php echo $d['billing_id'];?></td>
-                                            <td class="p-2" <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:125;z-index: 999;"' : 'style="position: sticky;left:125;background:#fff;z-index: 999;"'?>><?php echo $d['company_name'];?></td>
-                                            <td class="p-2" align="center"><?php echo $d['facility_type'];?></td>
-                                            <td class="p-2" align="center"><?php echo $d['wht_agent'];?></td>
-                                            <td class="p-2" align="center"><?php echo $d['ith_tag'];?></td>
-                                            <td class="p-2" align="center"><?php echo $d['non_vatable'];?></td>
-                                            <td class="p-2" align="center"><?php echo $d['zero_rated'];?></td>
-                                            <td class="p-2" align="right"><?php echo $d['vatable_sales'];?></td>
-                                            <td class="p-2" align="right"><?php echo $d['zero_rated_sales'];?></td>
-                                            <td class="p-2" align="right"><?php echo $d['zero_rated_ecozones'];?></td>
-                                            <td class="p-2" align="right"><?php echo $d['vat_on_sales'];?></td>
-                                            <td class="p-2" align="right">(<?php echo $d['ewt'];?>)</td>
-                                            <td class="p-2" align="right"><?php echo $d['total_amount'];?></td>
-                                            <!-- <td align="right" style="padding:0px">
-                                                <input type="text" class="form-control"  name="total_update" id="total_update" value="<?php echo $d['total_amount'];?>" readonly>
-                                            </td>
-                                            <td align="right" >
-                                                <div>
-                                                    <span class="m-b-10">Yes</span>
-                                                    <label style="width:20px;margin: 0px 6px;">
-                                                        <input type="radio" class="" name="orig_copy" id="orig_yes" value='1' checked>
-                                                    </label>
-                                                </div>  
-                                                <div>
-                                                    <span class="m-b-10">No</span>
-                                                    <label style="width:20px;margin: 0px 6px;">
-                                                        <input type="radio" name="orig_copy" id="orig_no" value='2'>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td align="right">
-                                                <div>   
-                                                    <span class="m-b-10">Yes</span>
-                                                    <label style="width:20px;margin: 0px 6px;">
-                                                        <input type="radio" class="" name="scanned_copy" id="scanned_yes" value='1'>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <span class="m-b-10">No</span>
-                                                    <label style="width:20px;margin: 0px 6px;">
-                                                        <input type="radio"  name="scanned_copy" id="scanned_no" value='2' checked>
-                                                    </label>
-                                                </div>
-                                            </td> -->
+                                        <?php 
+                                        $item_counter = 1;
+                                        foreach($details as $d){ 
+                                            if($d['reference_number'] == $h->reference_number){ ?>
+                                        <tr <?php echo ($d['billing_id'] == '') ? 'class="bg-red"' : ''; ?>>
+                                            <td class="p-2"><center><?php echo $item_counter++; ?></center></td>
+                                            <td class="p-2"><?php echo $d['short_name']; ?></td>
+                                            <td class="p-2" style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['actual_billing_id']; ?></td>
+                                            <td class="p-2" style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['billing_id']; ?></td>
+                                            <td class="p-2" style="position: sticky;left:125px;background:#fff;z-index: 999;"><?php echo $d['company_name']; ?></td>
+                                            <td class="p-2" align="center"><?php echo $d['facility_type']; ?></td>
+                                            <td class="p-2" align="center"><?php echo $d['wht_agent']; ?></td>
+                                            <td class="p-2" align="center"><?php echo $d['ith_tag']; ?></td>
+                                            <td class="p-2" align="center"><?php echo $d['non_vatable']; ?></td>
+                                            <td class="p-2" align="center"><?php echo $d['zero_rated']; ?></td>
+                                            <td class="p-2" align="right"><?php echo $d['vatable_sales']; ?></td>
+                                            <td class="p-2" align="right"><?php echo $d['zero_rated_sales']; ?></td>
+                                            <td class="p-2" align="right"><?php echo $d['zero_rated_ecozones']; ?></td>
+                                            <td class="p-2" align="right"><?php echo $d['vat_on_sales']; ?></td>
+                                            <td class="p-2" align="right">(<?php echo $d['ewt']; ?>)</td>
+                                            <td class="p-2" align="right"><?php echo $d['total_amount']; ?></td>
                                         </tr>
-                                        <?php } }?>
+                                        <?php } } ?>
                                     </tbody>
                                 </table>
                                 <hr>
-                                <?php  $x++; } ?>
+                                <?php $x++; } ?>
                             </div>
                             <input type="hidden" id="counter" value="<?php echo $x; ?>">
                             <?php } ?>

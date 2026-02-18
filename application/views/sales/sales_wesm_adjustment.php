@@ -201,11 +201,20 @@
                                             </thead>
                                             <tbody>
                                                 <?php 
-                                                    $x=1;
+                                                    $x = 1; // overall counter for form fields
+                                                    $serialItemCount = []; // track item_no per serial_no
                                                     $previousBS = '';
+
                                                     if(!empty($details)){
-                                                    foreach($details AS $s){ 
-                                                ?>
+                                                        foreach($details as $s){
+                                                            // Increment item_no per serial_no
+                                                            if(!isset($serialItemCount[$s['serial_no']])){
+                                                                $serialItemCount[$s['serial_no']] = 1;
+                                                            } else {
+                                                                $serialItemCount[$s['serial_no']]++;
+                                                            }
+                                                            $currentItemNo = $serialItemCount[$s['serial_no']];
+                                                    ?>
                                                 <tr>
                                                     <td align="center">
                                                         <?php if($previousBS=='' || $previousBS!=$s['serial_no']){ ?>
@@ -221,7 +230,8 @@
                                                      <?php }else{ ?>  
                                                     <td></td>
                                                     <?php } ?>
-                                                    <td><center><?php echo $s['item_no'];?></center></td>
+                                                    <!-- <td><center><?php echo $s['item_no'];?></center></td> -->
+                                                    <td><center><?php echo $currentItemNo;?></center></td>
                                                     <?php if(!empty($s['old_series_no'])) {?>
                                                     <td width="3%"><a href="" data-toggle="modal" id="BSNo" data-target="#olSeries" data-bs="<?php echo $s['serial_no']; ?>" data-old-bs="<?php echo $s['old_series_no'];?>" class="btn-link" style="font-size:13px;text-align: left;" title="View Old OR"><?php echo $s['serial_no'];?></a></td>
                                                     <?php }else{ ?>  
