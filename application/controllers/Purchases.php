@@ -2782,6 +2782,7 @@ public function purchases_adjustment_pdf_scan_directory() {
         $count = $this->input->post('count');
         $adjust_identifier = $this->input->post('adjust_identifier');
         $x=0;
+        $error = array();
         foreach ($_FILES['file']['name'] as $keys => $values) {
             $dest= realpath(APPPATH . '../uploads/excel/');
             $error_ext=0;
@@ -2834,11 +2835,11 @@ public function purchases_adjustment_pdf_scan_directory() {
                             $highestRow = $highestRow;
                             // $highestRow = $highestRow-1;
                             $y=1;
-                            for($z=4;$z<$highestRow;$z++){
+                            for($z=4;$z<=$highestRow;$z++){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
                                 $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 $company_name = $this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
-                                if($shortname!="" || !empty($shortname)){
+                                if(!empty(trim($shortname))){
                                     $actual_billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());   
                                     $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname'");
                                     
@@ -2950,7 +2951,7 @@ public function purchases_adjustment_pdf_scan_directory() {
                 }
             }
         }
-        if(count($error)==0){
+        if(empty($error)){
             echo $adjust_identifier;
         }else{
             echo 'error';
