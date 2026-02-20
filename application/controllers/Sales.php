@@ -9911,14 +9911,33 @@ public function upload_sales_adjustment_test(){
 
     public function check_reference_sales(){
         $reference_number = $this->input->post('reference_number');
+        $sales_id = $this->input->post('sales_id');
 
-        $count = $this->super_model->count_custom_where(
-            "sales_transaction_head",
-            "reference_number = '".$reference_number."'"
-        );
+        if(empty($reference_number)){
+            echo "available";
+            return;
+        }
 
-        if($count > 0){
-            echo "exists";
+        $this->db->where('reference_number', $reference_number);
+        $this->db->where('deleted', 0); // ignore deleted records
+
+        // Exclude current record if editing
+        if(!empty($sales_id)){
+            $this->db->where('sales_id !=', $sales_id);
+        }
+
+        $query = $this->db->get('sales_transaction_head');
+
+        if($query->num_rows() > 0){
+
+            $row = $query->row();
+
+            if($row->saved == 1){
+                echo "exists_saved";
+            } else {
+                echo "exists_unsaved";
+            }
+
         } else {
             echo "available";
         }
@@ -9926,17 +9945,39 @@ public function upload_sales_adjustment_test(){
 
     public function check_reference_sales_reserve(){
         $res_reference_number = $this->input->post('res_reference_number');
+        $reserve_sales_id = $this->input->post('reserve_sales_id');
 
-        $count = $this->super_model->count_custom_where(
-            "reserve_sales_transaction_head",
-            "res_reference_number = '".$res_reference_number."'"
-        );
+        if(empty($res_reference_number)){
+            echo "available";
+            return;
+        }
 
-        if($count > 0){
-            echo "exists";
+        $this->db->where('res_reference_number', $res_reference_number);
+        $this->db->where('deleted', 0); // ignore deleted records
+
+        // Exclude current record if editing
+        if(!empty($reserve_sales_id)){
+            $this->db->where('reserve_sales_id !=', $reserve_sales_id);
+        }
+
+        $query = $this->db->get('reserve_sales_transaction_head');
+
+        if($query->num_rows() > 0){
+
+            $row = $query->row();
+
+            if($row->saved == 1){
+                echo "exists_saved";
+            } else {
+                echo "exists_unsaved";
+            }
+
         } else {
             echo "available";
         }
     }
+
+
+    
     
 }
