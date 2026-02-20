@@ -2550,5 +2550,19 @@ class SalesMerge extends CI_Controller {
         }
         $this->load->view('sales_merge/merge_pdf_scan_directory',$data);
     }
+    public function check_reference_sales_merge(){
+        $reference_number = $this->input->post('reference_number');
+
+        $count = $this->super_model->count_custom_where(
+            "sales_merge_transaction_head",
+            "reference_number = '".$reference_number."'"
+        );
+
+        if($count > 0){
+            echo "exists";
+        } else {
+            echo "available";
+        }
+    }
 
 }

@@ -296,7 +296,7 @@ $(document).ready(function(){
         if(reference_number != ''){
 
             $.ajax({
-                url: "<?php echo base_url('sales/check_reference'); ?>",
+                url: "<?php echo base_url('sales/check_reference_sales'); ?>",
                 type: "POST",
                 data: { 
                     reference_number: reference_number,
@@ -326,6 +326,8 @@ $(document).ready(function(){
 
 });
 </script>
+
+
 
 
 

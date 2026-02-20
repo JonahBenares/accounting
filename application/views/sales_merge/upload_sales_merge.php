@@ -45,6 +45,7 @@ if(!empty($sales_id)){
                                         <div class="form-group">
                                             <label>Reference Number</label>
                                             <input type="text" class="form-control" name="reference_number" id="reference_number"  value="<?php echo (!empty($sales_id) ? $reference_number : ''); ?>" required <?php echo $readonly; ?>>
+                                            <span id="ref_error" style="color:red;"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
@@ -225,6 +226,50 @@ if(!empty($sales_id)){
         this.checked = checked;
     });
     })
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function(){
+
+    $('#reference_number').on('blur', function(){
+
+        var reference_number = $(this).val();
+        var sales_id = "<?php echo isset($sales_id) ? $sales_id : ''; ?>";
+
+        if(reference_number != ''){
+
+            $.ajax({
+                url: "<?php echo base_url('salesmerge/check_reference_sales_merge'); ?>",
+                type: "POST",
+                data: { 
+                    reference_number: reference_number,
+                    sales_id: sales_id
+                },
+                success: function(response){
+
+                    if(response == 'exists'){
+                        $('#ref_error').text('Reference number already exists!');
+                        $('#reference_number').css('border','2px solid red');
+                        $('#save_head_button').prop('disabled', true);
+                    } else {
+                        $('#ref_error').text('');
+                        $('#reference_number').css('border','');
+                        $('#save_head_button').prop('disabled', false);
+                    }
+
+                }
+            });
+
+        } else {
+            $('#ref_error').text('');
+            $('#save_head_button').prop('disabled', true);
+        }
+
+    });
+
 });
 </script>
 
