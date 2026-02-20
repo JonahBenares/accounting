@@ -9908,4 +9908,19 @@ public function upload_sales_adjustment_test(){
         );
         $this->super_model->update_custom_where("collection_reserve_details", $data_update, "series_number='$series_number' AND settlement_id='$settlement_id' AND reference_no='$reference_no' AND res_collection_id='$res_collection_id'");
     }
+
+    public function check_reference(){
+        $reference_number = $this->input->post('reference_number');
+
+        $count = $this->super_model->count_custom_where(
+            "sales_transaction_head",
+            "reference_number = '".$reference_number."'"
+        );
+
+        if($count > 0){
+            echo "exists";
+        } else {
+            echo "available";
+        }
+    }
 }
