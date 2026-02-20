@@ -3556,5 +3556,20 @@ public function purchases_adjustment_pdf_scan_directory() {
         $this->load->view('purchases/purchases_wesm_adjustment_merge');
         $this->load->view('template/footer');
     }
+
+    public function check_reference_purchases(){
+        $reference_number = $this->input->post('reference_number');
+
+        $count = $this->super_model->count_custom_where(
+            "purchases_transaction_head",
+            "reference_number = '".$reference_number."'"
+        );
+
+        if($count > 0){
+            echo "exists";
+        } else {
+            echo "available";
+        }
+    }
 }
 

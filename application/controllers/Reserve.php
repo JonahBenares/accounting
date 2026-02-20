@@ -1630,4 +1630,19 @@ class Reserve extends CI_Controller {
         $objWriter = io_factory::createWriter($objPHPExcel, 'Xlsx');
         $objWriter->save('php://output');
     }
+
+    public function check_reference_purchases_reserve(){
+        $reference_number = $this->input->post('reference_number');
+
+        $count = $this->super_model->count_custom_where(
+            "reserve_transaction_head",
+            "reference_number = '".$reference_number."'"
+        );
+
+        if($count > 0){
+            echo "exists";
+        } else {
+            echo "available";
+        }
+    }
 }
