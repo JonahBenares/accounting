@@ -1632,15 +1632,34 @@ class Reserve extends CI_Controller {
     }
 
     public function check_reference_purchases_reserve(){
-        $reference_number = $this->input->post('reference_number');
+        $reference_number = trim($this->input->post('reference_number'));
+        $reserve_id     = $this->input->post('reserve_id');
 
-        $count = $this->super_model->count_custom_where(
-            "reserve_transaction_head",
-            "reference_number = '".$reference_number."'"
-        );
+        if(empty($reference_number)){
+            echo "available";
+            return;
+        }
 
-        if($count > 0){
-            echo "exists";
+        $this->db->where('reference_number', $reference_number);
+        $this->db->where('deleted', 0); // ✅ correct column
+
+        // Exclude current record when editing
+        if(!empty($reserve_id)){
+            $this->db->where('reserve_id !=', $reserve_id);
+        }
+
+        $query = $this->db->get('reserve_transaction_head');
+
+        if($query->num_rows() > 0){
+
+            $row = $query->row();
+
+            if($row->saved == 1){  // ✅ correct column
+                echo "exists_saved";
+            } else {
+                echo "exists_unsaved";
+            }
+
         } else {
             echo "available";
         }
