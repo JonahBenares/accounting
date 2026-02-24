@@ -207,37 +207,44 @@ $(document).ready(function(){
 
     $('#res_reference_number').on('blur', function(){
 
-        var res_reference_number = $(this).val();
-        var res_sales_id = "<?php echo isset($res_sales_id) ? $res_sales_id : ''; ?>";
+        var res_reference_number = $.trim($(this).val());
+        var reserve_sales_id = "<?php echo isset($res_sales_id) ? $res_sales_id : ''; ?>";
 
-        if(res_reference_number != ''){
-
-            $.ajax({
-                url: "<?php echo base_url('sales/check_reference_sales_reserve'); ?>",
-                type: "POST",
-                data: { 
-                    res_reference_number: res_reference_number,
-                    res_sales_id: res_sales_id
-                },
-                success: function(response){
-
-                    if(response == 'exists'){
-                        $('#ref_error').text('Reference number already exists!');
-                        $('#res_reference_number').css('border','2px solid red');
-                        $('#save_head_button').prop('disabled', true);
-                    } else {
-                        $('#ref_error').text('');
-                        $('#res_reference_number').css('border','');
-                        $('#save_head_button').prop('disabled', false);
-                    }
-
-                }
-            });
-
-        } else {
+        if(res_reference_number === ''){
             $('#ref_error').text('');
+            $('#res_reference_number').css('border','1px solid #ced4da');
             $('#save_head_button').prop('disabled', true);
+            return;
         }
+
+        $.ajax({
+            url: "<?php echo base_url('sales/check_reference_sales_reserve'); ?>",
+            type: "POST",
+            data: { 
+                res_reference_number: res_reference_number,
+                reserve_sales_id: reserve_sales_id
+            },
+            success: function(response){
+
+                response = response.trim();
+
+                if(response === 'exists_saved'){
+                    $('#ref_error').text('Reference number already exists!');
+                    $('#res_reference_number').css('border','2px solid red');
+                    $('#save_head_button').prop('disabled', true);
+
+                } else if(response === 'exists_unsaved'){
+                    $('#ref_error').text('You have existing unsaved transaction.');
+                    $('#res_reference_number').css('border','2px solid red');
+                    $('#save_head_button').prop('disabled', true);
+
+                } else {
+                    $('#ref_error').text('');
+                    $('#res_reference_number').css('border','1px solid #ced4da');
+                    $('#save_head_button').prop('disabled', false);
+                }
+            }
+        });
 
     });
 
