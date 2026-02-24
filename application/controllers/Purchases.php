@@ -3559,14 +3559,33 @@ public function purchases_adjustment_pdf_scan_directory() {
 
     public function check_reference_purchases(){
         $reference_number = $this->input->post('reference_number');
+        $purchase_id = $this->input->post('purchase_id');
 
-        $count = $this->super_model->count_custom_where(
-            "purchases_transaction_head",
-            "reference_number = '".$reference_number."'"
-        );
+        if(empty($reference_number)){
+            echo "available";
+            return;
+        }
 
-        if($count > 0){
-            echo "exists";
+        $this->db->where('reference_number', $reference_number);
+        $this->db->where('deleted', 0); // ignore deleted records
+
+        // Exclude current record if editing
+        if(!empty($purchase_id)){
+            $this->db->where('purchase_id !=', $purchase_id);
+        }
+
+        $query = $this->db->get('purchase_transaction_head');
+
+        if($query->num_rows() > 0){
+
+            $row = $query->row();
+
+            if($row->saved == 1){
+                echo "exists_saved";
+            } else {
+                echo "exists_unsaved";
+            }
+
         } else {
             echo "available";
         }

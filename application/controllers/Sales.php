@@ -9955,8 +9955,8 @@ public function upload_sales_adjustment_test(){
     }
 
     public function check_reference_sales_reserve(){
-        $res_reference_number = $this->input->post('res_reference_number');
-        $reserve_sales_id = $this->input->post('reserve_sales_id');
+        $res_reference_number = trim($this->input->post('res_reference_number'));
+        $reserve_sales_id     = $this->input->post('reserve_sales_id');
 
         if(empty($res_reference_number)){
             echo "available";
@@ -9964,9 +9964,9 @@ public function upload_sales_adjustment_test(){
         }
 
         $this->db->where('res_reference_number', $res_reference_number);
-        $this->db->where('deleted', 0); // ignore deleted records
+        $this->db->where('res_deleted', 0); // ✅ correct column
 
-        // Exclude current record if editing
+        // Exclude current record when editing
         if(!empty($reserve_sales_id)){
             $this->db->where('reserve_sales_id !=', $reserve_sales_id);
         }
@@ -9977,7 +9977,7 @@ public function upload_sales_adjustment_test(){
 
             $row = $query->row();
 
-            if($row->saved == 1){
+            if($row->res_saved == 1){  // ✅ correct column
                 echo "exists_saved";
             } else {
                 echo "exists_unsaved";

@@ -2559,16 +2559,37 @@ class SalesMerge extends CI_Controller {
         }
         $this->load->view('sales_merge/merge_pdf_scan_directory',$data);
     }
+
+
     public function check_reference_sales_merge(){
-        $reference_number = $this->input->post('reference_number');
+        $reference_number = trim($this->input->post('reference_number'));
+        $sales_id     = $this->input->post('sales_id');
 
-        $count = $this->super_model->count_custom_where(
-            "sales_merge_transaction_head",
-            "reference_number = '".$reference_number."'"
-        );
+        if(empty($reference_number)){
+            echo "available";
+            return;
+        }
 
-        if($count > 0){
-            echo "exists";
+        $this->db->where('reference_number', $reference_number);
+        $this->db->where('deleted', 0); // ✅ correct column
+
+        // Exclude current record when editing
+        if(!empty($sales_id)){
+            $this->db->where('sales_id !=', $sales_id);
+        }
+
+        $query = $this->db->get('sales_merge_transaction_head');
+
+        if($query->num_rows() > 0){
+
+            $row = $query->row();
+
+            if($row->saved == 1){  // ✅ correct column
+                echo "exists_saved";
+            } else {
+                echo "exists_unsaved";
+            }
+
         } else {
             echo "available";
         }
