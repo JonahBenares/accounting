@@ -1182,7 +1182,7 @@ public function save_payment_all(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['details']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE saved = '0' AND adjustment = '0'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE saved = '0' AND adjustment = '0' AND deleted = '0'") AS $d){
             $data['details'][]=array(
                 'purchase_id'=>$d->purchase_id,
                 // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -1487,7 +1487,7 @@ public function save_payment_all(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['details']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE saved = '0' AND adjustment = '1'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM purchase_transaction_head WHERE saved = '0' AND adjustment = '1' AND deleted = '0'") AS $d){
             $data['details'][]=array(
                 'purchase_id'=>$d->purchase_id,
                 // 'date' => date("Y-m-d", strtotime($d->create_date)),

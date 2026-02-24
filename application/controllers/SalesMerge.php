@@ -595,7 +595,7 @@ class SalesMerge extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['details']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head WHERE saved = '0' AND deleted='1'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_head WHERE saved = '0' AND deleted='0'") AS $d){
             $data['details'][]=array(
                 'sales_merge_id'=>$d->sales_merge_id,
                 // 'date' => date("Y-m-d", strtotime($d->create_date)),

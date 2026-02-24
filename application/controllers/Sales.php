@@ -4280,7 +4280,7 @@ public function print_BS_new(){
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['details']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head WHERE saved = '0' AND deleted='1'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head WHERE saved = '0' AND deleted='0'") AS $d){
             $data['details'][]=array(
                 'sales_id'=>$d->sales_id,
                 // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -5016,7 +5016,7 @@ public function print_BS_new(){
             $this->load->view('template/header');
             $this->load->view('template/navbar');
             $data['details']=array();
-            foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head WHERE res_saved = '0' AND  res_deleted = '1'") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM reserve_sales_transaction_head WHERE res_saved = '0' AND  res_deleted = '0'") AS $d){
                 $data['details'][]=array(
                     'reserve_sales_id'=>$d->reserve_sales_id,
                     // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -6475,7 +6475,7 @@ public function print_BS_new(){
             $this->load->view('template/header');
             $this->load->view('template/navbar');
             $data['details']=array();
-            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved = '0' AND deleted = '1'") AS $d){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head WHERE saved = '0' AND deleted = '0'") AS $d){
                 $data['details'][]=array(
                     'sales_adjustment_id'=>$d->sales_adjustment_id,
                     // 'date' => date("Y-m-d", strtotime($d->create_date)),
