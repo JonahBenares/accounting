@@ -216,15 +216,15 @@
 <script>
 $(document).ready(function(){
 
-    $('#reference_number').on('blur', function(){
+   $('#reference_number').on('blur', function(){
 
-        var reference_number = $(this).val();
+        var reference_number = $.trim($(this).val());
         var purchase_id = "<?php echo isset($purchase_id) ? $purchase_id : ''; ?>";
 
-        if(reference_number != ''){
+        if(reference_number !== ''){
 
             $.ajax({
-                url: "<?php echo base_url('sales/check_reference_sales'); ?>",
+                url: "<?php echo base_url('purchases/check_reference_purchases'); ?>",
                 type: "POST",
                 data: { 
                     reference_number: reference_number,
@@ -232,13 +232,21 @@ $(document).ready(function(){
                 },
                 success: function(response){
 
-                    if(response == 'exists'){
+                    response = response.trim();
+
+                    if(response === 'exists_saved'){
                         $('#ref_error').text('Reference number already exists!');
                         $('#reference_number').css('border','2px solid red');
                         $('#save_head_button').prop('disabled', true);
+
+                    } else if(response === 'exists_unsaved'){
+                        $('#ref_error').text('You have existing unsaved transaction.');
+                        $('#reference_number').css('border','2px solid red');
+                        $('#save_head_button').prop('disabled', true);
+
                     } else {
                         $('#ref_error').text('');
-                        $('#reference_number').css('border','');
+                        $('#reference_number').css('border','1px solid #ced4da');
                         $('#save_head_button').prop('disabled', false);
                     }
 
@@ -247,6 +255,7 @@ $(document).ready(function(){
 
         } else {
             $('#ref_error').text('');
+            $('#reference_number').css('border','1px solid #ced4da');
             $('#save_head_button').prop('disabled', true);
         }
 
