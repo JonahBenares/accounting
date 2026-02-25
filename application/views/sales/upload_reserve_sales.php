@@ -199,13 +199,10 @@ if(!empty($res_sales_id)){
     });
     })
 });
-</script>
 
-
-<script>
 $(document).ready(function(){
 
-    $('#res_reference_number').on('blur', function(){
+    $('#res_reference_number').on('input', function(){
 
         var res_reference_number = $.trim($(this).val());
         var reserve_sales_id = "<?php echo isset($res_sales_id) ? $res_sales_id : ''; ?>";
@@ -250,6 +247,7 @@ $(document).ready(function(){
 
 });
 </script>
+
 
 
                 

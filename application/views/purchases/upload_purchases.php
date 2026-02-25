@@ -216,7 +216,7 @@
 <script>
 $(document).ready(function(){
 
-   $('#reference_number').on('blur', function(){
+   $('#reference_number').on('input', function(){
 
         var reference_number = $.trim($(this).val());
         var purchase_id = "<?php echo isset($purchase_id) ? $purchase_id : ''; ?>";

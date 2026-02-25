@@ -173,7 +173,7 @@
 <script>
     $(document).ready(function(){
 
-        $('#reference_number').on('blur', function(){
+        $('#reference_number').on('input', function(){
 
             var reference_number = $.trim($(this).val());
             var reserve_id = "<?php echo isset($reserve_id) ? $reserve_id : ''; ?>";

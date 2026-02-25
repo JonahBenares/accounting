@@ -273,22 +273,21 @@ if(!empty($sales_id)){
         </div>
     </section>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-    $('#select-all').click(function() {
-        var checked = this.checked;
-        $('input[type="checkbox"]').each(function() {
-        this.checked = checked;
-    });
-    })
-});
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+        $('#select-all').click(function() {
+            var checked = this.checked;
+            $('input[type="checkbox"]').each(function() {
+            this.checked = checked;
+        });
+        })
+    });
+
 $(document).ready(function(){
 
-   $('#reference_number').on('blur', function(){
+   $('#reference_number').on('input', function(){
 
         var reference_number = $.trim($(this).val());
         var sales_id = "<?php echo isset($sales_id) ? $sales_id : ''; ?>";
@@ -335,6 +334,7 @@ $(document).ready(function(){
 
 });
 </script>
+
 
 
 
