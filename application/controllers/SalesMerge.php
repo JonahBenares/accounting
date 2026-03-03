@@ -1201,30 +1201,39 @@ class SalesMerge extends CI_Controller {
             $data['total_cents'][$x]=$total_exp[1];
 
         }else{
-            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details sad INNER JOIN sales_merge_transaction_head sah ON sad.sales_merge_id = sah.sales_merge_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sah.saved != '0' GROUP by serial_no") AS $p){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details sad INNER JOIN sales_merge_transaction_head sah ON sad.sales_merge_id = sah.sales_merge_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sah.saved != '0' AND sah.deleted = '0' GROUP by serial_no") AS $p){
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
-                $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
-                if($mother_participant_id != ''){
-                        $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
-                        $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
-                        $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
-                        if(!empty($mother_company_name)){
-                            $company_name= $mother_company_name;
-                        }else{
-                            $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
-                        }
-                        $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
-                        $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                // $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
+                // if($mother_participant_id != ''){
+                //         $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
+                //         $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
+                //         $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                //         if(!empty($mother_company_name)){
+                //             $company_name= $mother_company_name;
+                //         }else{
+                //             $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                //         }
+                //         $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
+                //         $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                // }else{
+                //         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                //         if(!empty($p->company_name)){
+                //             $company_name=$p->company_name;
+                //         }else{
+                //             $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
+                //         }
+                //         $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                //         $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                // }
+
+                $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                if(!empty($p->company_name)){
+                    $company_name=$p->company_name;
                 }else{
-                        $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                        if(!empty($p->company_name)){
-                            $company_name=$p->company_name;
-                        }else{
-                            $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
-                        }
-                        $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
-                        $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                    $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
                 }
+                $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
 
                 $data['address'][$x]=$address;
                 $data['tin'][$x]=$tin_no;
@@ -1234,11 +1243,11 @@ class SalesMerge extends CI_Controller {
                 $data['billing_from'][$x]=$this->super_model->select_column_where("sales_merge_transaction_head","billing_from","sales_merge_id",$p->sales_merge_id);
                 $data['billing_to'][$x]=$this->super_model->select_column_where("sales_merge_transaction_head","billing_to","sales_merge_id",$p->sales_merge_id);
 
-                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
             }
 
             $total_vs=$vatable_sales;
@@ -1370,30 +1379,38 @@ class SalesMerge extends CI_Controller {
             $data['total_cents_sub'][$x]=$total_exp_sub[1];
 
         }else{
-            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details std INNER JOIN sales_merge_transaction_head sth ON std.sales_merge_id = sth.sales_merge_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sth.saved != '0' GROUP by serial_no") AS $p){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details std INNER JOIN sales_merge_transaction_head sth ON std.sales_merge_id = sth.sales_merge_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sth.saved != '0' AND sth.deleted = '0' GROUP by serial_no") AS $p){
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
-                $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
-                if($mother_participant_id != ''){
-                        $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
-                        $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
-                        $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
-                        if(!empty($mother_company_name)){
-                            $company_name= $mother_company_name;
-                        }else{
-                            $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
-                        }
-                        $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
-                        $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                // $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
+                // if($mother_participant_id != ''){
+                //         $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
+                //         $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
+                //         $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                //         if(!empty($mother_company_name)){
+                //             $company_name= $mother_company_name;
+                //         }else{
+                //             $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                //         }
+                //         $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
+                //         $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                // }else{
+                //         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                //         if(!empty($p->company_name)){
+                //             $company_name=$p->company_name;
+                //         }else{
+                //             $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
+                //         }
+                //         $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                //         $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                // }
+                $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                if(!empty($p->company_name)){
+                    $company_name=$p->company_name;
                 }else{
-                        $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                        if(!empty($p->company_name)){
-                            $company_name=$p->company_name;
-                        }else{
-                            $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
-                        }
-                        $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
-                        $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                    $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
                 }
+                $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
 
                 $data['address'][$x]=$address;
                 $data['tin'][$x]=$tin_no;
@@ -1402,11 +1419,11 @@ class SalesMerge extends CI_Controller {
                 $data['billing_from'][$x]=$this->super_model->select_column_where("sales_merge_transaction_head","billing_from","sales_merge_id",$p->sales_merge_id);
                 $data['billing_to'][$x]=$this->super_model->select_column_where("sales_merge_transaction_head","billing_to","sales_merge_id",$p->sales_merge_id);
                 $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_merge_transaction_head","transaction_date","sales_merge_id",$p->sales_merge_id);
-                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
             }
 
             $total_vs=$vatable_sales;
@@ -1480,30 +1497,39 @@ class SalesMerge extends CI_Controller {
             $data['total_ewt'][$x] = $p->total_vat;
 
         }else{
-                foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details std INNER JOIN sales_merge_transaction_head sth ON std.sales_merge_id = sth.sales_merge_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sth.saved != '0' GROUP by serial_no") AS $p){
+                foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details std INNER JOIN sales_merge_transaction_head sth ON std.sales_merge_id = sth.sales_merge_id WHERE print_identifier='$print_identifier' AND serial_no='".$invoice_no_exp[$x]."' AND sth.saved != '0' AND sth.deleted = '0' GROUP by serial_no") AS $p){
                 $participant_id = $this->super_model->select_column_where("participant","participant_id","billing_id",$p->billing_id);
-                $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
-                if($mother_participant_id != ''){
-                            $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
-                        $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
-                        $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
-                        if(!empty($mother_company_name)){
-                            $company_name= $mother_company_name;
-                        }else{
-                            $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
-                        }
-                        $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
-                        $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                // $mother_participant_id = $this->super_model->select_column_where("subparticipant","participant_id","sub_participant",$participant_id);
+                // if($mother_participant_id != ''){
+                //             $address = $this->super_model->select_column_where("participant","registered_address","participant_id",$mother_participant_id);
+                //         $mother_billing_id = $this->super_model->select_column_where("participant","actual_billing_id","participant_id",$mother_participant_id);
+                //         $mother_company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                //         if(!empty($mother_company_name)){
+                //             $company_name= $mother_company_name;
+                //         }else{
+                //             $company_name = $this->super_model->select_column_where("participant","participant_name","participant_id",$mother_participant_id);
+                //         }
+                //         $tin_no = $this->super_model->select_column_where("participant","tin","participant_id",$mother_participant_id);
+                //         $settlement = $this->super_model->select_column_where("participant","settlement_id","participant_id",$mother_participant_id);
+                // }else{
+                //         $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                //         if(!empty($p->company_name)){
+                //             $company_name=$p->company_name;
+                //         }else{
+                //             $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
+                //         }
+                //         $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                //         $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                // }
+
+                $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
+                if(!empty($p->company_name)){
+                    $company_name=$p->company_name;
                 }else{
-                        $address = $this->super_model->select_column_where("participant","registered_address","billing_id",$p->billing_id);
-                        if(!empty($p->company_name)){
-                            $company_name=$p->company_name;
-                        }else{
-                            $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
-                        }
-                        $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
-                        $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
+                    $company_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $p->billing_id);
                 }
+                $tin_no = $this->super_model->select_column_where("participant","tin","billing_id",$p->billing_id);
+                $settlement = $this->super_model->select_column_where("participant","settlement_id","billing_id",$p->billing_id);
                 $data['address'][$x]=$address;
                 $data['tin'][$x]=$tin_no;
                 $data['company_name'][$x]=$company_name;
@@ -1512,11 +1538,11 @@ class SalesMerge extends CI_Controller {
                 $data['transaction_date'][$x]=$this->super_model->select_column_where("sales_merge_transaction_head","transaction_date","sales_merge_id",$p->sales_merge_id);
                 $data['reference_number'][$x]=$this->super_model->select_column_where("sales_merge_transaction_head","reference_number","sales_merge_id",$p->sales_merge_id);
                 $data['or_no'][$x]=$p->serial_no;
-                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
-                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1'","sales_merge_id");
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$p->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
             }
 
             $data['total_vs'][$x]= $vatable_sales;
@@ -1642,11 +1668,11 @@ class SalesMerge extends CI_Controller {
                 $billing_month = date('my',strtotime($d->transaction_date));
                 $date_uploaded = date('Ymd',strtotime($d->create_date));
                 $refno = preg_replace("/[^0-9]/", "",$reference_number);
-                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
 
                 $data['details'][]=array(
                     'sales_id'=>$d->sales_merge_id,
@@ -1789,11 +1815,11 @@ class SalesMerge extends CI_Controller {
                 $billing_month = date('my',strtotime($d->transaction_date));
                 $date_uploaded = date('Ymd',strtotime($d->create_date));
                 $refno = preg_replace("/[^0-9]/", "",$reference_number);
-                $vatable_sales_bs = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $vat_on_sales_bs = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $ewt_bs = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_ecozone_bs = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_bs = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $vatable_sales_bs = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $vat_on_sales_bs = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $ewt_bs = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_ecozone_bs = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_bs = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
 
                 $total_vs=$vatable_sales_bs;
                 $total_zr=$zero_rated_bs;
