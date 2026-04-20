@@ -99,11 +99,11 @@
                                     <?php } } ?>
                                     <br>
                                 </div>
-                                <input type='hidden' name='year_disp' id='year_disp'  value="<?php echo (!empty($year_disp) ? $year_disp : ''); ?>">
-                                <input type='hidden' name='reference_number' id='reference_number'  value="<?php echo (!empty($reference_number) ? $reference_number : ''); ?>">
-                                <input type='hidden' name='due' id='due'  value="<?php echo (!empty($due_date) ? $due_date : ''); ?>">
-                                <input type="hidden" name="identifier" id="identifier" value="<?php echo $identifier_code;?>">
-                                <input type="hidden" name="main_identifier" id="main_identifier" value="<?php echo $identifier;?>">
+                                <input type='hidden' name='year_disp' id='hidden_year_disp' value="<?php echo isset($year_disp) ? $year_disp : ''; ?>">
+                                <input type='hidden' name='hidden_reference_number' id='hidden_reference_number' value="<?php echo isset($reference_number) ? $reference_number : ''; ?>">
+                                <input type='hidden' name='hidden_due' id='hidden_due' value="<?php echo isset($due_date) ? $due_date : ''; ?>">
+                                <input type='hidden' name='identifier' id='identifier' value="<?php echo $identifier_code; ?>">
+                                <input type='hidden' name='main_identifier' id='main_identifier' value="<?php echo $identifier; ?>">
                             </form>
                             <center><span id="alt"></span></center>
                             <?php } ?>
@@ -115,6 +115,7 @@
                                     <thead>
                                         <tr>
                                             <th width="10%">Reference Number</th>
+                                            <th width="10%">Reference No</th>
                                             <th width="10%">Settlement ID</th>
                                             <th width="10%">Billing ID</th>
                                             <th width="10%">Invoice No</th>
@@ -126,6 +127,7 @@
                                                 if(!empty($d['sales_id'])){ 
                                         ?>
                                         <tr>
+                                            <td><?php echo $d['reference_number']; ?></td>
                                             <td><?php echo $d['reference_no']; ?></td>
                                             <td><?php echo $d['settlement_id']; ?></td>
                                             <td><?php echo $d['billing_id']; ?>

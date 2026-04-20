@@ -1948,10 +1948,15 @@ class SalesMerge extends CI_Controller {
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow();
         for($x=2;$x<=$highestRow;$x++){
             $identifier = $this->input->post('identifier');
-            $reference_no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
-            $settlement_id = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
-            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
-            $invoice_no = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
+            $reference_number = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getFormattedValue() ?? '');
+            $reference_no = trim($objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue() ?? '');
+            $settlement_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
+            $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
+            $invoice_no = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
+
+            if($reference != 'null' && $reference_number != $reference){
+                continue;
+            }
 
             $sql="";
             if($year!='null'){
@@ -2010,7 +2015,7 @@ class SalesMerge extends CI_Controller {
                         "count_series"=>$count_series,
                         "collection_details_id"=>$col->merge_collection_details_id,
                         "collection_id"=>$col->merge_collection_id,
-                        "settlement_id"=>$col->settlement_id,
+                        "settlement_id"=>$col->settlement_id,3
                         "series_number"=>$col->series_number,
                         "or_date"=>$col->or_date,
                         "billing_remarks"=>$col->billing_remarks,

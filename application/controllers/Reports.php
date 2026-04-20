@@ -9784,9 +9784,9 @@ class Reports extends CI_Controller {
 
         $query=substr($sql,0,-4);
         if($due !='null'){
-            $qu = " saved = '1' AND deleted = '0' ".$query;
+            $qu = " saved = '1' AND deleted = '0' AND ".$query;
         }else{
-             $qu = " saved = '1' AND deleted = '0' ";
+             $qu = " saved = '1' AND deleted = '0' AND ";
         }
 
         if($due != 'null'){
