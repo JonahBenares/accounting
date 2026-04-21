@@ -2015,7 +2015,7 @@ class SalesMerge extends CI_Controller {
                         "count_series"=>$count_series,
                         "collection_details_id"=>$col->merge_collection_details_id,
                         "collection_id"=>$col->merge_collection_id,
-                        "settlement_id"=>$col->settlement_id,3
+                        "settlement_id"=>$col->settlement_id,
                         "series_number"=>$col->series_number,
                         "or_date"=>$col->or_date,
                         "billing_remarks"=>$col->billing_remarks,
