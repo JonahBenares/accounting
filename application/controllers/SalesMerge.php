@@ -1862,28 +1862,29 @@ class SalesMerge extends CI_Controller {
         $this->load->view('template/navbar');
         $identifier_code=$this->generateRandomString();
         $data['identifier_code']=$identifier_code;
-        $yeardisp=$this->uri->segment(3);
-        $reference=$this->uri->segment(4);
-        $due_date=$this->uri->segment(5);
-        $identifier=$this->uri->segment(6);
-        $data['year_disp'] = $yeardisp;
+        // $yeardisp=$this->uri->segment(3);
+        $reference=$this->uri->segment(3);
+        // $due_date=$this->uri->segment(5);
+        $identifier=$this->uri->segment(4);
+        // $data['year_disp'] = $yeardisp;
         $data['reference_number'] = $reference;
-        $data['due_date'] = $due_date;
-        $data['identifier']=$this->uri->segment(6);
-        $sql="";
+        // $data['due_date'] = $due_date;
+        $data['identifier']=$this->uri->segment(4);
+        // $sql="";
 
-        if($yeardisp!='null'){
-            $sql.= "YEAR(billing_to) = '$yeardisp'  AND ";
-        } if($reference!='null'){
-             $sql.= "reference_number = '$reference' AND "; 
-        } if($due_date!='null'){
-            $sql.= "due_date = '$due_date' AND ";
-        }
+        // if($yeardisp!='null'){
+        //     $sql.= "YEAR(billing_to) = '$yeardisp'  AND ";
+        // } if($reference!='null'){
+        //      $sql.= "reference_number = '$reference' AND "; 
+        // } if($due_date!='null'){
+        //     $sql.= "due_date = '$due_date' AND ";
+        // }
      
-        $query=substr($sql,0,-4);
-        $qu = "saved='1' AND bulk_invoicing_identifier ='$identifier' AND ".$query;
+        // $query=substr($sql,0,-4);
+        // $qu = "saved='1' AND bulk_invoicing_identifier ='$identifier' AND ".$query;
+        $qu = "saved='1' AND reference_number ='$reference' AND bulk_invoicing_identifier ='$identifier' ";
 
-        $data['saved']=$this->super_model->select_column_where("sales_merge_transaction_details","saved_bulk_invoicing","bulk_invoicing_identifier",$identifier);
+        $data['saved'] = $this->super_model->count_custom_where("sales_merge_transaction_details", "bulk_invoicing_identifier = '$identifier' AND saved_bulk_invoicing = '1'" );
         $data['years'] = $this->super_model->custom_query("SELECT DISTINCT YEAR(billing_to) AS year FROM sales_merge_transaction_head WHERE saved='1' ORDER BY year DESC");
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_merge_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0' ORDER BY due_date ASC");
         $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE saved='1'AND deleted='0' ORDER BY due_date ASC");
@@ -1907,14 +1908,15 @@ class SalesMerge extends CI_Controller {
         $data_main = array(
             'serial_no'=>Null,
             'bulk_invoicing_identifier'=>Null,
+            'saved_bulk_invoicing'=>0,
         );
         $this->super_model->update_custom_where("sales_merge_transaction_details", $data_main, "bulk_invoicing_identifier='$main_identifier'");
     }
 
     public function upload_bulk_invoicing_merge(){
-        $year = $this->input->post('year');
+        // $year = $this->input->post('year');
         $reference = $this->input->post('reference');
-        $due = $this->input->post('due');
+        // $due = $this->input->post('due');
         $dest= realpath(APPPATH . '../uploads/excel/');
         $error_ext=0;
         if(!empty($_FILES['doc']['name'])){
@@ -1926,13 +1928,14 @@ class SalesMerge extends CI_Controller {
             }else{
                 $filename1='bulk_upload_sales_merge.'.$ext1;
                 if(move_uploaded_file($_FILES["doc"]['tmp_name'], $dest.'/'.$filename1)){
-                     $this->readExcel_bulkinvoicing_merge($year,$reference,$due);
+                     // $this->readExcel_bulkinvoicing_merge($year,$reference,$due);
+                     $this->readExcel_bulkinvoicing_merge($reference);
                 }
             }
         }
     }
 
-    public function readExcel_bulkinvoicing_merge($year,$reference,$due){
+    public function readExcel_bulkinvoicing_merge($reference){
         $objPHPExcel = new Spreadsheet();
         $inputFileName =realpath(APPPATH.'../uploads/excel/bulk_upload_sales_merge.xlsx');
            try {
@@ -1953,32 +1956,34 @@ class SalesMerge extends CI_Controller {
             $billing_id = trim($objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue() ?? '');
             $invoice_no = trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue() ?? '');
 
-            $sql="";
-            if($year!='null'){
-                $sql.= "YEAR(billing_to) = '$year'  AND ";
-            } if($reference!='null'){
-                 $sql.= "reference_number = '$reference' AND "; 
-            } if($due!='null'){
-                $sql.= "due_date = '$due' AND ";
-            }
+            // $sql="";
+            // if($year!='null'){
+            //     $sql.= "YEAR(billing_to) = '$year'  AND ";
+            // } if($reference!='null'){
+            //      $sql.= "reference_number = '$reference' AND "; 
+            // } if($due!='null'){
+            //     $sql.= "due_date = '$due' AND ";
+            // }
          
-            $query=substr($sql,0,-4);
+            // $query=substr($sql,0,-4);
 
-           $sales_id = array();
-            foreach ($this->super_model->select_custom_where('sales_merge_transaction_head', "$query") as $dues) {
-                $sales_id[] = $dues->sales_merge_id;
-            }
+           // $sales_id = array();
+           //  foreach ($this->super_model->select_custom_where('sales_merge_transaction_head', "$query") as $dues) {
+           //      $sales_id[] = $dues->sales_merge_id;
+           //  }
 
-            if (!empty($sales_id)) {
-                $salesid_str = "'" . implode("','", $sales_id) . "'";
+            // if (!empty($sales_id)) {
+                // $salesid_str = "'" . implode("','", $sales_id) . "'";
+            $salesid = $this->super_model->select_column_where("sales_merge_transaction_head","sales_merge_id","reference_number",$reference);
 
                 $data_main = array(
                     'serial_no' => $invoice_no,
                     'bulk_invoicing_identifier' => $identifier,
                 );
 
-                $this->super_model->update_custom_where("sales_merge_transaction_details",$data_main,"sales_merge_id IN ($salesid_str) AND reference_no='$reference_no' AND short_name='$settlement_id' AND billing_id='$billing_id'");
-            }
+                // $this->super_model->update_custom_where("sales_merge_transaction_details",$data_main,"sales_merge_id IN ($salesid_str) AND reference_no='$reference_no' AND short_name='$settlement_id' AND billing_id='$billing_id'");
+                $this->super_model->update_custom_where("sales_merge_transaction_details",$data_main,"sales_merge_id = '$salesid' AND reference_no='$reference_no' AND short_name='$settlement_id' AND billing_id='$billing_id'");
+            // }
         }
     }
 

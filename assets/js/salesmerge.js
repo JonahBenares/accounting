@@ -254,15 +254,15 @@ function proceed_sales_merge_invoicing() {
     var data = $("#bulkinvoicing").serialize();
     
     var loc= document.getElementById("baseurl").value;
-    var year_filt= document.getElementById("year").value;
+    // var year_filt= document.getElementById("year").value;
     var reference_filt= document.getElementById("reference_number").value;
-    var due_date_filt= document.getElementById("due_date").value;
+    // var due_date_filt= document.getElementById("due_date").value;
 
-       if(year_filt!=''){
-           var year=year_filt;
-       }else{
-           var year='null';
-       }
+       // if(year_filt!=''){
+       //     var year=year_filt;
+       // }else{
+       //     var year='null';
+       // }
 
        if(reference_filt!=''){
            var reference=reference_filt;
@@ -270,14 +270,15 @@ function proceed_sales_merge_invoicing() {
            var reference='null';
        }
 
-       if(due_date_filt!=''){
-           var due_date=due_date_filt;
-       }else{
-           var due_date='null';
-       }
+       // if(due_date_filt!=''){
+       //     var due_date=due_date_filt;
+       // }else{
+       //     var due_date='null';
+       // }
 
 
-    if(year=="" && reference=="" && due_date==""){
+    // if(year=="" && reference=="" && due_date==""){
+    if(reference==""){
         alert('You must select data to proceed!');
     }  else {
     var redirect=loc+"salesmerge/bulk_invoicing_merge/";
@@ -286,7 +287,8 @@ function proceed_sales_merge_invoicing() {
             url: redirect,
             data: data,
             success: function(output){
-                window.location=loc+'salesmerge/bulk_invoicing_merge/'+year+'/'+reference+'/'+due_date;
+                // window.location=loc+'salesmerge/bulk_invoicing_merge/'+year+'/'+reference+'/'+due_date;
+                window.location=loc+'salesmerge/bulk_invoicing_merge/'+reference;
                 var redirect = redirect+output;
                 var save = document.getElementById("save_bulk_invoicing");
                 var cancel = document.getElementById("cancel_bulk_invoicing");
@@ -325,9 +327,9 @@ function cancelSalesMergeInvoicing(){
 }
 
 async function upload_bulkinvoicing_merge() {
-    var year= document.getElementById("year_disp").value;
+    // var year= document.getElementById("year_disp").value;
     var reference= document.getElementById("reference_number").value;
-    var due = document.getElementById("due").value;
+    // var due = document.getElementById("due").value;
     var identifier = document.getElementById("identifier").value;
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"salesmerge/upload_bulk_invoicing_merge";
@@ -335,9 +337,9 @@ async function upload_bulkinvoicing_merge() {
     let formData = new FormData();
          
     formData.append("doc", doc);
-    formData.append("year", year);
+    // formData.append("year", year);
     formData.append("reference", reference);
-    formData.append("due", due);
+    // formData.append("due", due);
     formData.append("identifier", identifier);
     var conf = confirm('Are you sure you want to upload this file?');
     if(conf){
@@ -355,7 +357,8 @@ async function upload_bulkinvoicing_merge() {
             },
             success: function(output){
                 $("#alt").hide();
-                window.location=loc+'salesmerge/bulk_invoicing_merge/'+year+'/'+reference+'/'+due+'/'+identifier;
+                // window.location=loc+'salesmerge/bulk_invoicing_merge/'+year+'/'+reference+'/'+due+'/'+identifier;
+                window.location=loc+'salesmerge/bulk_invoicing_merge/'+reference+'/'+identifier;
             }
         });
     }
@@ -363,9 +366,9 @@ async function upload_bulkinvoicing_merge() {
 
 function saveBulkInvoicingMerge(){
     var data = $("#upload_bulk_invoicing_merge").serialize();
-    var year= document.getElementById("year_disp").value;
+    // var year= document.getElementById("year_disp").value;
     var reference= document.getElementById("reference_number").value;
-    var due = document.getElementById("due").value;
+    // var due = document.getElementById("due").value;
     var main_identifier = document.getElementById("main_identifier").value;
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+"salesmerge/save_bulkinvoicing_merge";
@@ -380,7 +383,8 @@ function saveBulkInvoicingMerge(){
                 $("#submitbulkmerge").hide(); 
             },
             success: function(output){
-                window.location=loc+'salesmerge/bulk_invoicing_merge/'+year+'/'+reference+'/'+due+'/'+main_identifier;
+                // window.location=loc+'salesmerge/bulk_invoicing_merge/'+year+'/'+reference+'/'+due+'/'+main_identifier;
+                window.location=loc+'salesmerge/bulk_invoicing_merge/'+reference+'/'+main_identifier;
             }
         });
     }
