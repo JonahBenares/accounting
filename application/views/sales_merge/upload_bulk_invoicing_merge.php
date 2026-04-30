@@ -141,8 +141,8 @@
                             </div>
                         </div>
                          <?php if(!empty($details)){ if($saved==0){ ?>
-                        <div id='alt' style="font-weight:bold"></div>
-                        <input type="button" id="submitbulkmerge" class="btn btn-success btn-md btn-block" onclick="saveBulkInvoicingMerge();" value="Save">
+                            <div id='alt' style="font-weight:bold"></div>
+                            <input type="button" id="submitbulkmerge" class="btn btn-success btn-md btn-block" onclick="saveBulkInvoicingMerge();" value="Save">
                         <?php } } } ?>
                     </div>
                 </div>
