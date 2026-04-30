@@ -119,7 +119,6 @@
                                     <thead>
                                         <tr>
                                             <th width="10%">Reference Number</th>
-                                            <th width="10%">Reference No</th>
                                             <th width="10%">Settlement ID</th>
                                             <th width="10%">Billing ID</th>
                                             <th width="10%">Invoice No</th>
@@ -131,7 +130,6 @@
                                                 if(!empty($d['sales_id'])){ 
                                         ?>
                                         <tr>
-                                            <td><?php echo $d['reference_number']; ?></td>
                                             <td><?php echo $d['reference_no']; ?></td>
                                             <td><?php echo $d['settlement_id']; ?></td>
                                             <td><?php echo $d['billing_id']; ?>
