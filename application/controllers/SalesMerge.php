@@ -1097,8 +1097,8 @@ class SalesMerge extends CI_Controller {
             $sales_detail_id=$this->input->post('sales_detail_id');
             $new_series=$this->input->post('series_number');
             $old_series=$this->input->post('serial_no');
-            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details WHERE sales_merge_detail_id='$sales_merge_detail_id'") AS $check){
-                $count=$this->super_model->count_custom_where("sales_merge_transaction_details","sales_merge_detail_id = '$check->sales_merge_detail_id' AND old_series_no!=''");
+            foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details WHERE sales_merge_detail_id='$sales_detail_id'") AS $check){
+                $count=$this->super_model->count_custom_where("sales_merge_transaction_details","sales_merge_detail_id = '$check->sales_merge_detail_id' AND old_series_no!= ''");
                 if($count==0){
                     $old_series_insert = $old_series;
                 }else{
@@ -1111,8 +1111,8 @@ class SalesMerge extends CI_Controller {
                 'old_series_no'=>$old_series_insert,
             );
 
-            if($this->super_model->update_custom_where("sales_merge_transaction_details", $data_update, "sales_merge_detail_id='$sales_merge_detail_id'")){
-                foreach($this->super_model->select_custom_where("sales_merge_transaction_details","sales_merge_detail_id='$sales_merge_detail_id'") AS $latest_data){
+            if($this->super_model->update_custom_where("sales_merge_transaction_details", $data_update, "sales_merge_detail_id='$sales_detail_id'")){
+                foreach($this->super_model->select_custom_where("sales_merge_transaction_details","sales_merge_detail_id='$sales_detail_id'") AS $latest_data){
                     $return = array('series_number'=>$latest_data->serial_no);
                 }
                 echo json_encode($return);
