@@ -1870,25 +1870,24 @@ class SalesMerge extends CI_Controller {
         $data['reference_number'] = $reference;
         // $data['due_date'] = $due_date;
         $data['identifier']=$this->uri->segment(4);
-        // $sql="";
+        $conditions = [];
 
-        // if($yeardisp!='null'){
-        //     $sql.= "YEAR(billing_to) = '$yeardisp'  AND ";
-        // } if($reference!='null'){
-        //      $sql.= "reference_number = '$reference' AND "; 
-        // } if($due_date!='null'){
-        //     $sql.= "due_date = '$due_date' AND ";
-        // }
-     
-        // $query=substr($sql,0,-4);
-        // $qu = "saved='1' AND bulk_invoicing_identifier ='$identifier' AND ".$query;
-        $qu = "saved='1' AND reference_number ='$reference' AND bulk_invoicing_identifier ='$identifier' ";
+        $conditions[] = "saved='1'";
+        $conditions[] = "bulk_invoicing_identifier ='$identifier'";
 
+        if ($reference != 'null') {
+            $conditions[] = "reference_number = '$reference'";
+        }
+
+        $qu = implode(" AND ", $conditions);
+
+        $data['details'] = array();
         $data['saved'] = $this->super_model->count_custom_where("sales_merge_transaction_details", "bulk_invoicing_identifier = '$identifier' AND saved_bulk_invoicing = '1'" );
         $data['years'] = $this->super_model->custom_query("SELECT DISTINCT YEAR(billing_to) AS year FROM sales_merge_transaction_head WHERE saved='1' ORDER BY year DESC");
         $data['reference'] = $this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_merge_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0' ORDER BY due_date ASC");
         $data['due'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_merge_transaction_head WHERE saved='1'AND deleted='0' ORDER BY due_date ASC");
         foreach($this->super_model->custom_query("SELECT * FROM sales_merge_transaction_details std INNER JOIN sales_merge_transaction_head sth ON std.sales_merge_id=sth.sales_merge_id WHERE $qu") AS $d){
+
             $data['details'][]=array(
                 'sales_detail_id'=>$d->sales_merge_detail_id,
                 'sales_id'=>$d->sales_merge_id,
