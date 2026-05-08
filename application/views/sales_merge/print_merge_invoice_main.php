@@ -301,7 +301,11 @@
         <img class="esig" src="<?php echo base_url()."assets/img/sign_DeLosSantos.png" ?>" style="width: 180px;">
         <div class="cusname"><?php echo $company_name[$x]; ?></div>
         <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
-        <div class="tin"><?php echo $tin[$x]; ?></div>
+        <div class="tin">
+            <?php 
+                echo (stripos(trim($tin[$x]), 'NA') !== false) ? '&nbsp;' : $tin[$x]; 
+            ?>
+        </div>
         <div class="address"><?php echo $address[$x];?></div>
 
         <div class="ref px-5"><?php echo "Energy Sales for the month of ".date("F Y",strtotime($billing_to[$x])) ?></div>

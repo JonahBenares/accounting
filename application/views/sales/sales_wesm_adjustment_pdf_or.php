@@ -35,7 +35,9 @@
             <label class="ornumber_1"><?php echo $or_no; ?></label>
             <label class="cusname_1"><?php echo $company_name; ?> </label>
             <label class="address_1"><?php echo $address; ?> </label>
-            <label class="tin_1"><?php echo $tin; ?> </label>
+            <label class="tin_1">
+                <?php echo (stripos(trim($tin), 'NA') !== false) ? '&nbsp;' : $tin; ?>
+            </label>
             <label class="desc_1"><?php echo $reference_number; ?></label>
             <div style="position: absolute; top:35px">
                 <label class="defint_1">Vatable Sales</label>

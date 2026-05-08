@@ -50,7 +50,9 @@
                 <label class="ornumber_1"><?php echo $d['or_no']; ?></label>
                 <label class="cusname_1"><?php echo $d['company_name']; ?> </label>
                 <label class="address_1"><?php echo $d['address']; ?> </label>
-                <label class="tin_1"><?php echo $d['tin']; ?> </label>
+                <label class="tin_1">
+                    <?php echo (stripos(trim($d['tin']), 'NA') !== false) ? '&nbsp;' : $d['tin']; ?>
+                </label>
                 <label class="desc_1"><?php echo "Energy Sales for the month of ".date("F Y",strtotime($d['billing_to'])) ?></label>
                 <label class="defint_1">Vatable Sales</label>
                 <label class="defint_value_1"><?php echo number_format($d['total_vs'],2); ?></label>

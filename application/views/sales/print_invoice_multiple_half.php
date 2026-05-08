@@ -1131,7 +1131,11 @@
             <img class="esig" src="<?php echo base_url()."uploads/".$user_signature; ?>" style="width: 100px;">
             <div class="company"><?php echo $company_name[$x]; ?></div>
             <div class="date"><?php echo date("M d,Y",strtotime($transaction_date[$x])); ?></div>
-            <div class="tin"><?php echo $tin[$x]; ?></div>
+            <div class="tin">
+                <?php 
+                    echo (stripos(trim($tin[$x]), 'NA') !== false) ? '&nbsp;' : $tin[$x]; 
+                ?>
+            </div>
             <div class="address"><?php echo $address[$x];?></div>
             <div class="charges"><?php echo "Billing Charges for ".date("M d,Y",strtotime($billing_from[$x]))." to ".date("M d,Y",strtotime($billing_to[$x]))?></div>
 

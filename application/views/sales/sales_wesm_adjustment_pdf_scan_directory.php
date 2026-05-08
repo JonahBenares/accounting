@@ -53,7 +53,9 @@
                 <label class="ornumber_1"><?php echo $d['or_no']; ?></label>
                 <label class="cusname_1"><?php echo $d['buyer']; ?> </label>
                 <label class="address_1"><?php echo $d['address']; ?> </label>
-                <label class="tin_1"><?php echo $d['tin']; ?> </label>
+                <label class="tin_1">
+                    <?php echo (stripos(trim($d['tin']), 'NA') !== false) ? '&nbsp;' : $d['tin']; ?>
+                </label>
                 <label class="desc_1"><?php echo $d['all_ref_no']; ?></label>
                 <div style="position: absolute; top:35px">
                     <label class="defint_1">Vatable Sales</label>
