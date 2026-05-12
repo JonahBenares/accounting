@@ -4638,7 +4638,7 @@ class Reports extends CI_Controller {
             }
             $imp=implode(',',$par);
             $sql.= " short_name IN($imp) AND ";
-        } if(!empty($from) && !empty($from) && $from!='null' && $to != 'null'){
+        } if(!empty($from) && !empty($to) && $from!='null' && $to != 'null'){
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         } if($original!='null' && isset($original)){
              $sql.= "original_copy = '$original' AND "; 
@@ -4708,7 +4708,7 @@ class Reports extends CI_Controller {
             $imp=implode(',',$par);
             $sql.= " short_name IN($imp) AND ";*/
         }
-        if($from!='null' && $to != 'null'){
+        if(!empty($from) && !empty($to) && $from!='null' && $to != 'null'){
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         }
 
@@ -4718,6 +4718,9 @@ class Reports extends CI_Controller {
         }else{
              $qu = " saved = '1' AND deleted='0'";
         }
+
+
+        echo $qu."<br>";
         $sheetno=0;
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
@@ -4774,7 +4777,7 @@ class Reports extends CI_Controller {
 
             // foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  INNER JOIN participant p ON p.billing_id = std.billing_id WHERE tin='$head->tin' AND participant_name != '' AND $qu ORDER BY billing_from ASC, reference_number ASC, p.billing_id ASC") AS $sth){
             $imp_partloop="'".implode("','",$participant_loop)."'";
-            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  WHERE ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND short_name IN($imp) AND saved='1' ORDER BY billing_from ASC, reference_number ASC, billing_id ASC") AS $sth){
+            foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id  WHERE ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND short_name IN($imp) AND saved='1' AND deleted='0' ORDER BY billing_from ASC, reference_number ASC, billing_id ASC") AS $sth){
                 //$participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
                 // $create_date = $this->super_model->select_column_where("sales_transaction_head", "create_date", "sales_id", $sth->sales_id);
                 $or_no=$this->super_model->select_column_custom_where("collection_details","series_number","reference_no='$sth->reference_number' AND settlement_id='$sth->short_name'");
