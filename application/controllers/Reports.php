@@ -4719,8 +4719,6 @@ class Reports extends CI_Controller {
              $qu = " saved = '1' AND deleted='0'";
         }
 
-
-        echo $qu."<br>";
         $sheetno=0;
             // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
