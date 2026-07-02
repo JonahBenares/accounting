@@ -1586,11 +1586,11 @@ class SalesMerge extends CI_Controller {
                 $data['billing_month'] = date('my',strtotime($d->transaction_date));
                 $data['date_uploaded'] = date('Ymd',strtotime($d->create_date));
                 $data['refno'] = preg_replace("/[^0-9]/", "",$reference_number);
-                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
-                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1'","sales_merge_id");
+                $vatable_sales = $this->super_model->select_sum_join("vatable_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_sales = $this->super_model->select_sum_join("zero_rated_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $zero_rated_ecozones = $this->super_model->select_sum_join("zero_rated_ecozones","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $vat_on_sales = $this->super_model->select_sum_join("vat_on_sales","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
+                $ewt = $this->super_model->select_sum_join("ewt","sales_merge_transaction_details","sales_merge_transaction_head", "serial_no='$d->serial_no' AND saved = '1' AND deleted = '0'","sales_merge_id");
 
                     $data['total_vs']=$vatable_sales;
                     $data['total_zr']=$zero_rated_sales;
