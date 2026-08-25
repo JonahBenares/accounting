@@ -9845,7 +9845,7 @@ class Reports extends CI_Controller {
 
             $row=7;
             
-                foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+                foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no,company_name ASC") AS $col){
 
                     $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
                     $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
@@ -9929,7 +9929,7 @@ class Reports extends CI_Controller {
            
 
                     $row=7;
-                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no,company_name ASC") AS $col){
 
                         $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
                         $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);
@@ -10010,7 +10010,7 @@ class Reports extends CI_Controller {
               
 
                     $row=7;
-                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no ASC") AS $col){
+                    foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sh INNER JOIN sales_transaction_details sd ON sh.sales_id = sd.sales_id WHERE $qu ORDER BY serial_no,company_name ASC") AS $col){
 
                         $tin = $this->super_model->select_column_where("participant","tin","settlement_id",$col->short_name);
                         $address = $this->super_model->select_column_where("participant","registered_address","settlement_id",$col->short_name);

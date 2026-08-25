@@ -3430,7 +3430,7 @@ public function print_BS_new(){
             $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
            
 
-            $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue());
+            $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
             $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
             $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
 
@@ -6978,7 +6978,7 @@ public function print_BS_new(){
                                 if($shortname!="" || !empty($shortname)){
                                     $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());
 
-                                    $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue());
+                                    $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
                                     $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
 
                                     $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin'");
