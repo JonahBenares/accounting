@@ -5417,14 +5417,22 @@ class Reports extends CI_Controller {
             $sql.= " due_date BETWEEN '$from' AND '$to' AND";
         }if($due_date!='null'){
             $sql.= " due_date = '$due_date' AND ";
-        } if($participant!='null'){
-             //$sql.= " tin = '$participant' AND ";
-            $par=array();
-            foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
-                $par[]="'".$p->settlement_id."'";
+        }if($participant!='null'){
+        $par=array();
+
+        foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
+            if(!empty($p->settlement_id)){
+                $par[] = "'" . $p->settlement_id . "'";
             }
-            $imp=implode(',',$par);
-            $sql.= " short_name IN($imp) AND ";
+        }
+
+        if(!empty($par)){
+            $imp = implode(',', $par);
+            $sql .= " short_name IN($imp) AND ";
+        } else {
+            // No participant found for the selected TIN
+            $sql .= " 1=0 AND ";
+        }
         } if($original!='null' && isset($original)){
              $sql.= " original_copy = '$original' AND "; 
         } if($scanned!='null'  && isset($scanned)){
@@ -5895,14 +5903,22 @@ class Reports extends CI_Controller {
             $sql.= "due_date BETWEEN '$from' AND '$to' AND ";
         }if($year!='null'){
             $sql.= "YEAR(due_date) = '$year' AND ";
-        } if($participant!='null'){
-             //$sql.= "tin = '$participant' AND ";
+        }if($participant!='null'){
             $par=array();
+
             foreach($this->super_model->select_custom_where('participant',"tin='$participant'") AS $p){
-                $par[]="'".$p->settlement_id."'";
+                if(!empty($p->settlement_id)){
+                    $par[] = "'" . $p->settlement_id . "'";
+                }
             }
-            $imp=implode(',',$par);
-            $sql.= " short_name IN($imp) AND ";
+
+            if(!empty($par)){
+                $imp = implode(',', $par);
+                $sql .= " short_name IN($imp) AND ";
+            } else {
+                // No participant found for the selected TIN
+                $sql .= " 1=0 AND ";
+            }
         } if($original!='null' && isset($original)){
              $sql.= "original_copy = '$original' AND "; 
         } if($scanned!='null'  && isset($scanned)){
@@ -5913,7 +5929,7 @@ class Reports extends CI_Controller {
         $qu = "saved = '1' AND deleted='0' AND ".$query;
 
         $total_sum[]=0;
-                foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE $qu ORDER BY billing_from ASC, due_date ASC, sad.short_name ASC") AS $sah){
+        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_head sah INNER JOIN sales_adjustment_details sad ON sah.sales_adjustment_id = sad.sales_adjustment_id WHERE $qu ORDER BY billing_from ASC, due_date ASC, sad.short_name ASC") AS $sah){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sah->billing_id);
             // $create_date = $this->super_model->select_column_where("sales_adjustment_head", "create_date", "sales_adjustment_id ", $sah->sales_adjustment_id);
             // $participant_name=$this->super_model->select_column_where("sales_adjustment_details", "company_name", "adjustment_detail_id ", $sah->adjustment_detail_id);
