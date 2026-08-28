@@ -9016,8 +9016,13 @@ class Reports extends CI_Controller {
             }
             $imp=implode(',',$par);
 
-            $overall_total_amount = $this->super_model->select_sum_join("total_amount","purchase_transaction_details","purchase_transaction_head", "billing_id IN($imp) AND $qu ","purchase_id");
-            $overall_total_amount_collected = $this->super_model->select_sum_join("total_update","purchase_transaction_details","purchase_transaction_head", "billing_id IN($imp) AND $qu","purchase_id");
+            $overall_total_amount = 0;
+            $overall_total_amount_collected = 0;
+
+            if (!empty($imp)) {
+                $overall_total_amount = $this->super_model->select_sum_join("total_amount", "purchase_transaction_details", "purchase_transaction_head", "billing_id IN($imp) AND $qu", "purchase_id" );
+                $overall_total_amount_collected = $this->super_model->select_sum_join("total_update", "purchase_transaction_details", "purchase_transaction_head", "billing_id IN($imp) AND $qu", "purchase_id" );
+            }
 
             $variance  = $pah->total_amount - $pah->total_update;
             $total_variance  = $overall_total_amount - $overall_total_amount_collected;
