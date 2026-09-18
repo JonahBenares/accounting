@@ -6877,7 +6877,7 @@ public function print_BS_new(){
         $sales_adjustment_id=$this->super_model->select_column_where("sales_adjustment_head","sales_adjustment_id","adjust_identifier",$identifier);
         $data['count_name'] = $this->super_model->count_custom_where("sales_adjustment_details", "company_name ='' AND sales_adjustment_id ='$sales_adjustment_id'");
         $data['count_empty_actual']=0;
-        foreach($this->super_model->custom_query("SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id=sah.sales_adjustment_id WHERE adjust_identifier='$identifier'") AS $d){
+        foreach($this->super_model->custom_query(" SELECT * FROM sales_adjustment_details sad INNER JOIN sales_adjustment_head sah ON sad.sales_adjustment_id = sah.sales_adjustment_id WHERE adjust_identifier = '$identifier' ORDER BY sah.reference_number ASC") AS $d){
             $data['count_empty_actual']=$this->super_model->count_custom_where('sales_adjustment_details',"sales_adjustment_id='$sales_adjustment_id' AND billing_id IS NULL");
             //$unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$d->billing_id' AND settlement_id = '$d->short_name'");   
             $data['details'][]=array(
