@@ -303,12 +303,14 @@
         }
         page[size="Long"] {
             background: white;
+            position: relative;
             width: 8.5in;
-            height: 13in; 
+            height: 1700px;
             display: block;
             margin: 0 auto;
             margin-bottom: 0.5cm;
             box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+            overflow: visible !important;
         }
         /*table td{ border:1px solid #fff!important; }*/
         .bor-btm{border-bottom:1px solid #000!important;}
@@ -550,12 +552,12 @@
         .hey{
             display: none;
         }
-        .sign_lacambra{
-            width:220px;
-            position:relative;
-            display:inline-block;
-            bottom:400;
-            left:420;
+        .sign_lacambra {
+            width: 220px;
+            position: absolute;
+            display: block;
+            top: 1220px;
+            left: 420px;
         }
        
     }

@@ -146,11 +146,12 @@
 
             for(let a=1;a<counter;a++){
               
-                var HTML_Width = $(".canvas_div_pdf"+a).width();
+                // var HTML_Width = $(".canvas_div_pdf"+a).width();
+                // var HTML_Height =1900;
+               var element = $(".canvas_div_pdf" + a)[0];
 
-                
-                var HTML_Height =1900;
-               
+                var HTML_Width = Math.ceil(element.scrollWidth);
+                var HTML_Height = Math.ceil(element.scrollHeight);
 
                 var top_left_margin = 10;
                 var PDF_Width = HTML_Width+(top_left_margin*2);
@@ -160,12 +161,18 @@
                 
                 var totalPDFPages = 1;
               
-                html2canvas($(".canvas_div_pdf"+a)[0],{
-                    allowTaint:true, 
-                    useCORS: true,
-                    logging: false,
-                    height: window.outerHeight + window.innerHeight,
-                    windowHeight: window.outerHeight + window.innerHeight,
+                html2canvas(element, {allowTaint: true, useCORS: true, logging: false,
+
+                    width: HTML_Width,
+                    height: HTML_Height,
+
+                    scrollX: 0,
+                    scrollY: 0,
+
+                    scale: 2,
+
+                    windowWidth: document.documentElement.scrollWidth,
+                    windowHeight: document.documentElement.scrollHeight
 
                 }).then(function(canvas) {
                     var purchase_detail_id= document.getElementById("purchasedetailid"+a).value;
