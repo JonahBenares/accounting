@@ -222,7 +222,7 @@
                         <tr>
                             <td width="%" align="center" class="bor-btm font-10 "><?php echo strtoupper($_SESSION['fullname']);?></td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">CHARMAINE REI ORTALIZ</td>
+                            <td width="%" align="center" class="bor-btm font-10 "><?php echo ($_SESSION['user_id'] == 2) ? '' : 'CHARMAINE REI ORTALIZ'; ?></td>
                             <td width="1%"></td>
                             <td width="%" align="center" class="bor-btm font-10 ">JOEMAR DELOS SANTOS</td>
                             <td width="1%"></td>
@@ -414,7 +414,7 @@
                         <tr>
                             <td width="%" align="center" class="bor-btm font-10 "><?php echo strtoupper($_SESSION['fullname']);?></td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">CHARMAINE REI ORTALIZ</td>
+                            <td width="%" align="center" class="bor-btm font-10 "><?php echo ($_SESSION['user_id'] == 2) ? '' : 'CHARMAINE REI ORTALIZ'; ?></td>
                             <td width="1%"></td>
                             <td width="%" align="center" class="bor-btm font-10 ">JOEMAR DELOS SANTOS</td>
                             <td width="1%"></td>

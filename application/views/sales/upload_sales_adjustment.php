@@ -8,6 +8,69 @@ if(!empty($sales_id)){
     $readonly='';
 }
 ?> -->
+<style>
+#adjust-<?php echo $x; ?> th,
+#adjust-<?php echo $x; ?> td {
+    padding: 4px 6px !important;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+/* Keep frozen columns compact */
+#adjust-<?php echo $x; ?> th:nth-child(2),
+#adjust-<?php echo $x; ?> td:nth-child(2) {
+    min-width: 105px;
+    width: 105px;
+}
+
+#adjust-<?php echo $x; ?> th:nth-child(3),
+#adjust-<?php echo $x; ?> td:nth-child(3) {
+    min-width: 85px;
+    width: 85px;
+}
+
+#adjust-<?php echo $x; ?> th:nth-child(4),
+#adjust-<?php echo $x; ?> td:nth-child(4) {
+    min-width: 105px;
+    width: 105px;
+}
+
+/* Make the remaining columns compact */
+#adjust-<?php echo $x; ?> th:nth-child(1),
+#adjust-<?php echo $x; ?> td:nth-child(1) {
+    width: 45px;
+    min-width: 45px;
+}
+
+#adjust-<?php echo $x; ?> th:nth-child(5),
+#adjust-<?php echo $x; ?> td:nth-child(5) {
+    min-width: 150px;
+}
+
+#adjust-<?php echo $x; ?> th:nth-child(6),
+#adjust-<?php echo $x; ?> td:nth-child(6) {
+    min-width: 90px;
+}
+
+#adjust-<?php echo $x; ?> th:nth-child(7),
+#adjust-<?php echo $x; ?> td:nth-child(7),
+#adjust-<?php echo $x; ?> th:nth-child(8),
+#adjust-<?php echo $x; ?> td:nth-child(8),
+#adjust-<?php echo $x; ?> th:nth-child(9),
+#adjust-<?php echo $x; ?> td:nth-child(9),
+#adjust-<?php echo $x; ?> th:nth-child(10),
+#adjust-<?php echo $x; ?> td:nth-child(10) {
+    width: 65px;
+    min-width: 65px;
+    text-align: center;
+}
+
+#adjust-<?php echo $x; ?> th:nth-child(n+11),
+#adjust-<?php echo $x; ?> td:nth-child(n+11) {
+    min-width: 100px;
+}
+</style>
+
 <div class="main-content">
     <section class="section">
         <div class="section-body">
@@ -113,54 +176,55 @@ if(!empty($sales_id)){
                                     </center>
                                 </div> 
                                 <?php } ?>
+                            <table class="table-bordered table table-hover" id="adjust-<?php echo $x; ?>" style="width:100%; table-layout:auto;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding:4px 5px; width:45px;">Item #</th>
+                                        <th style=" position:sticky; left:0; background:#f3f3f3; z-index:1000; min-width:105px; width:105px; padding:4px 5px; "> STL ID / TPShort Name</th>
+                                        <th style=" position:sticky; left:105px; background:#f3f3f3; z-index:1000; min-width:85px; width:85px; padding:4px 5px; "> Billing ID</th>
+                                        <th style=" position:sticky; left:190px; background:#f3f3f3; z-index:1000; min-width:105px; width:105px; padding:4px 5px; "> Unique Billing ID</th>
+                                        <th style="padding:4px 5px; min-width:145px;"> Trading Participant Name</th>
+                                        <th style="padding:4px 5px; min-width:75px;"> Facility Type</th>
+                                        <th style="padding:4px 5px; min-width:65px;"> WHT Agent Tag</th>
+                                        <th style="padding:4px 5px; min-width:55px;"> ITH Tag</th>
+                                        <th style="padding:4px 5px; min-width:75px;"> Non Vatable Tag</th>
+                                        <th style="padding:4px 5px; min-width:70px;"> Zero-rated Tag</th>
+                                        <th style="padding:4px 5px; min-width:90px;"> Vatable Sales</th>
+                                        <th style="padding:4px 5px; min-width:90px;"> Zero Rated Sales</th>
+                                        <th style="padding:4px 5px; min-width:110px;"> Zero Rated EcoZones Sales</th>
+                                        <th style="padding:4px 5px; min-width:85px;"> Vat On Sales</th>
+                                        <th style="padding:4px 5px; min-width:70px;"> EWT</th>
+                                        <th style="padding:4px 5px; min-width:90px;"> Total Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    $item_counter = 1;
+                                    foreach($details as $d){ 
+                                        if($d['reference_number'] == $h->reference_number){ 
+                                    ?>
 
-                                <table class="table-bordered table table-hover" id="adjust-<?php echo $x; ?>" style="width:190%;">
-                                    <thead>
-                                        <tr>    
-                                            <th>Item #</th>                                        
-                                            <th>STL ID / TPShort Name</th>
-                                            <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Billing ID</th>
-                                            <th style="position: sticky;left:0;background:#f3f3f3;z-index: 999;">Unique Billing ID</th>
-                                            <th style="position: sticky;left:125px;background:#f3f3f3;z-index: 999;">Trading Participant Name</th>
-                                            <th>Facility Type</th>
-                                            <th>WHT Agent Tag</th>
-                                            <th>ITH Tag</th>
-                                            <th>Non Vatable Tag</th>
-                                            <th>Zero-rated Tag</th>
-                                            <th>Vatable Sales</th>
-                                            <th>Zero Rated Sales</th>
-                                            <th>Zero Rated EcoZones Sales</th>
-                                            <th>Vat On Sales</th>
-                                            <th>EWT</th>
-                                            <th>Total Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                        $item_counter = 1;
-                                        foreach($details as $d){ 
-                                            if($d['reference_number'] == $h->reference_number){ ?>
-                                        <tr <?php echo ($d['billing_id'] == '') ? 'class="bg-red"' : ''; ?>>
-                                            <td class="p-2"><center><?php echo $item_counter++; ?></center></td>
-                                            <td class="p-2"><?php echo $d['short_name']; ?></td>
-                                            <td class="p-2" style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['actual_billing_id']; ?></td>
-                                            <td class="p-2" style="position: sticky;left:0;background:#fff;z-index: 999;"><?php echo $d['billing_id']; ?></td>
-                                            <td class="p-2" style="position: sticky;left:125px;background:#fff;z-index: 999;"><?php echo $d['company_name']; ?></td>
-                                            <td class="p-2" align="center"><?php echo $d['facility_type']; ?></td>
-                                            <td class="p-2" align="center"><?php echo $d['wht_agent']; ?></td>
-                                            <td class="p-2" align="center"><?php echo $d['ith_tag']; ?></td>
-                                            <td class="p-2" align="center"><?php echo $d['non_vatable']; ?></td>
-                                            <td class="p-2" align="center"><?php echo $d['zero_rated']; ?></td>
-                                            <td class="p-2" align="right"><?php echo $d['vatable_sales']; ?></td>
-                                            <td class="p-2" align="right"><?php echo $d['zero_rated_sales']; ?></td>
-                                            <td class="p-2" align="right"><?php echo $d['zero_rated_ecozones']; ?></td>
-                                            <td class="p-2" align="right"><?php echo $d['vat_on_sales']; ?></td>
-                                            <td class="p-2" align="right">(<?php echo $d['ewt']; ?>)</td>
-                                            <td class="p-2" align="right"><?php echo $d['total_amount']; ?></td>
-                                        </tr>
-                                        <?php } } ?>
-                                    </tbody>
-                                </table>
+                                    <tr <?php echo ($d['billing_id'] == '') ? 'class="bg-red"' : ''; ?>>
+                                        <td style="padding:4px 5px;"> <center><?php echo $item_counter++; ?></center></td>
+                                        <td style=" position:sticky; left:0; background:#fff; z-index:100; min-width:105px; width:105px; padding:4px 5px; "> <?php echo $d['short_name']; ?></td>
+                                        <td style=" position:sticky; left:105px; background:#fff; z-index:100; min-width:85px; width:85px; padding:4px 5px; "> <?php echo $d['actual_billing_id']; ?></td>
+                                        <td style=" position:sticky; left:190px; background:#fff; z-index:100; min-width:105px; width:105px; padding:4px 5px; "> <?php echo $d['billing_id']; ?></td>
+                                        <td style="padding:4px 5px;"> <?php echo $d['company_name']; ?></td>
+                                        <td style="padding:4px 5px;" align="center"> <?php echo $d['facility_type']; ?></td>
+                                        <td style="padding:4px 5px;" align="center"> <?php echo $d['wht_agent']; ?></td>
+                                        <td style="padding:4px 5px;" align="center"> <?php echo $d['ith_tag']; ?></td>
+                                        <td style="padding:4px 5px;" align="center"> <?php echo $d['non_vatable']; ?></td>
+                                        <td style="padding:4px 5px;" align="center"> <?php echo $d['zero_rated']; ?></td>
+                                        <td style="padding:4px 5px;" align="right"> <?php echo $d['vatable_sales']; ?></td>
+                                        <td style="padding:4px 5px;" align="right"> <?php echo $d['zero_rated_sales']; ?></td>
+                                        <td style="padding:4px 5px;" align="right"> <?php echo $d['zero_rated_ecozones']; ?></td>
+                                        <td style="padding:4px 5px;" align="right"> <?php echo $d['vat_on_sales']; ?></td>
+                                        <td style="padding:4px 5px;" align="right"> (<?php echo $d['ewt']; ?>)</td>
+                                        <td style="padding:4px 5px;" align="right"> <?php echo $d['total_amount']; ?></td>
+                                    </tr>
+                                    <?php } } ?>
+                                </tbody>
+                            </table>
                                 <hr>
                                 <?php $x++; } ?>
                             </div>
