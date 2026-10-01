@@ -147,7 +147,16 @@ if(!empty($sales_id)){
                             </form> 
                             <?php if(!empty($identifier) && !empty($details)){ ?>  
                             <div class="table-responssive" >
-                                <?php $x=1; foreach($head AS $h){ ?>
+                                <?php $x=1; 
+                                    usort($head, function($a, $b) {
+                                        preg_match('/F(\d+)-/', $a->reference_number, $matchA);
+                                        preg_match('/F(\d+)-/', $b->reference_number, $matchB);
+
+                                        return (int)$matchA[1] - (int)$matchB[1];
+                                    });
+
+                                    foreach($head AS $h){
+                                    ?>
                                 <hr>
                                 <table width="100%">
                                     <tr>
@@ -350,7 +359,7 @@ $(document).ready(function() {
             var counter = parseInt(counterElement.value);
             for (var a = 1; a < counter; a++) {
                 $("#adjust-" + a).DataTable({
-                    order: [[2, 'asc']],
+                    order: [],
                     scrollX: true
                 });
             }
