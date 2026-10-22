@@ -214,7 +214,7 @@ class Purchases extends CI_Controller {
                 $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('M'.$x)->getFormattedValue());
                 // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$x)->getOldCalculatedValue());
                 $total_amount = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases)-(double)$ewt;
-                $balance = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases;
+                $balance = (double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases;
             //$total_amount = ($vatables_purchases + $zero_rated + $zero_rated_purchases + $vat_on_purhcases) - $ewt;
                 if ($vatables_purchases === '') {
                     $vatable_checker=0;
@@ -2711,7 +2711,7 @@ public function purchases_adjustment_pdf_scan_directory() {
                                     $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                     // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getOldCalculatedValue());
                                     $total_amount = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases)-(double)$ewt;
-                                    $balance = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases;
+                                    $balance = (double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases;
                                     //$zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                     //$zero_rated_purchases = trim($zero_rated_purchases,"-");
                                     //$zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
@@ -2857,6 +2857,7 @@ public function purchases_adjustment_pdf_scan_directory() {
                                     $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('M'.$z)->getFormattedValue());
                                     // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('N'.$z)->getOldCalculatedValue());
                                     $total_amount = ((double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases)-(double)$ewt;
+                                    $balance = (double)$vatables_purchases+(double)$zero_rated_purchases+(double)$zero_rated_ecozone+(double)$vat_on_purchases;
                                     //$zero_rated_purchases = trim($objPHPExcel->getActiveSheet()->getCell('J'.$z)->getFormattedValue(),'()');
                                     //$zero_rated_purchases = trim($zero_rated_purchases,"-");
                                     //$zero_rated_ecozone = trim($objPHPExcel->getActiveSheet()->getCell('K'.$z)->getFormattedValue(),'()');
@@ -2938,7 +2939,7 @@ public function purchases_adjustment_pdf_scan_directory() {
                                             'zero_rated_ecozones'=>$zero_rated_ecozone,
                                             'ewt'=>$ewt,
                                             'total_amount'=>$total_amount,
-                                            'balance'=>$total_amount
+                                            'balance'=>$balance
                                             //'balance'=>$total_amount
                                         );
                                         $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
