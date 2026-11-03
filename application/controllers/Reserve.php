@@ -61,8 +61,8 @@ class Reserve extends CI_Controller {
                         'reserve_id'=>$d->reserve_id,
                         'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
-                        'actual_billing_id'=>$d->billing_id,
-                        'billing_id'=>$unique_bill_id,
+                        'actual_billing_id'=>$d->actual_billing_id,
+                        'billing_id'=>$billing_id,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
                         'ith_tag'=>$d->ith_tag,
@@ -182,7 +182,7 @@ class Reserve extends CI_Controller {
                 $company_name = $objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue();
                 // $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "res_actual_billing_id = '$actual_billing_id' AND res_settlement_id = '$shortname'");
                 $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
-                $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue()));
+                $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue()));
                 $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "res_actual_billing_id = '$actual_billing_id' AND res_settlement_id = '$shortname' AND res_tin = '$tin' AND res_participant_name = '$companyname'");
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
                 $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue() ?? '');
