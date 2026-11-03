@@ -183,7 +183,7 @@ class Reserve extends CI_Controller {
                 // $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "res_actual_billing_id = '$actual_billing_id' AND res_settlement_id = '$shortname'");
                 $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
                 $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue()));
-                $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "actual_billing_id = '$actual_billing_id' AND res_settlement_id = '$shortname' AND res_tin = '$tin' AND res_participant_name = '$companyname'");
+                $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "res_actual_billing_id = '$actual_billing_id' AND res_settlement_id = '$shortname' AND res_tin = '$tin' AND res_participant_name = '$companyname'");
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
                 $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue() ?? '');
                 $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue() ?? '');
@@ -196,6 +196,7 @@ class Reserve extends CI_Controller {
                 $ewt = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('O'.$x)->getFormattedValue());
                 // $total_amount = str_replace(array( '(', ')',',','-'), '',$objPHPExcel->getActiveSheet()->getCell('P'.$x)->getOldCalculatedValue());
                 $total_amount = ($vatables_purchases+$zero_rated_purchases+$zero_rated_ecozone+$vat_on_purchases)-$ewt;
+                $balance = $vatables_purchases+$zero_rated_purchases+$zero_rated_ecozone+$vat_on_purchases;
                 $data_reserve = array(
                     'reserve_id'=>$reserve_id,
                     'item_no'=>$y,
@@ -213,7 +214,7 @@ class Reserve extends CI_Controller {
                     'zero_rated_ecozones'=>$zero_rated_ecozone,
                     'ewt'=>$ewt,
                     'total_amount'=>$total_amount,
-                    'balance'=>$total_amount,
+                    'balance'=>$balance,
                     'company_name'=>$company_name,
                     'tin'=>$tin,
                 );
