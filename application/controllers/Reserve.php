@@ -62,7 +62,7 @@ class Reserve extends CI_Controller {
                         'item_no'=>$d->item_no,
                         'short_name'=>$d->short_name,
                         'actual_billing_id'=>$d->actual_billing_id,
-                        'billing_id'=>$billing_id,
+                        'billing_id'=>$d->billing_id,
                         'facility_type'=>$d->facility_type,
                         'wht_agent'=>$d->wht_agent,
                         'ith_tag'=>$d->ith_tag,
