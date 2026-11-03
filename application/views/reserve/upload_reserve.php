@@ -93,7 +93,15 @@
                             </style>
                             <?php if(!empty($details)){ ?>
                             <div class="table-responsive" id="table-wesm" >
-                                <hr>
+                                 <hr>
+                                <?php if($count_empty_actual!=0){ ?>
+                                <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                                    <center>
+                                        <strong><?php echo $count_empty_actual; ?> </strong> 
+                                        <span>non-existing participant/s in masterfile.</span>
+                                    </center>
+                                </div> 
+                                <?php } ?>
                                 <table class="table-bordered table table-hover" id="table-8" style="width:300%;">
                                     <thead>
                                         <tr>
@@ -159,7 +167,7 @@
                         </div>
                         <?php if(!empty($details)){ if($saved==0){ ?>
                         <div id='alt' style="font-weight:bold"></div>
-                        <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save">
+                         <input type="button" id="submitdata" class="btn btn-success btn-md btn-block" onclick="saveAll();" value="Save" <?php echo ($count_empty_actual==0) ? '' : 'disabled';?>>
                         <?php } } ?>
                     </div>
                 </div>

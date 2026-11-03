@@ -45,6 +45,7 @@ class Reserve extends CI_Controller {
         $data['reserve_id'] = $reserve_id;
         $this->load->view('template/header');
         $this->load->view('template/navbar');
+        $data['count_empty_actual']=0;
         if(!empty($reserve_id)){
             foreach($this->super_model->select_row_where("reserve_transaction_head", "reserve_id",$reserve_id) AS $h){
                 $data['transaction_date']=$h->transaction_date;
@@ -55,6 +56,7 @@ class Reserve extends CI_Controller {
                 $data['saved']=$h->saved;
                 $data['adjustment']=$h->adjustment;
                 foreach($this->super_model->select_row_where("reserve_transaction_details","reserve_id",$h->reserve_id) AS $d){
+                    $data['count_empty_actual']=$this->super_model->count_custom_where('reserve_transaction_details',"reserve_id='$d->reserve_id' AND billing_id IS NULL");
                     $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "res_actual_billing_id = '$d->billing_id' AND res_settlement_id = '$d->short_name'");
                     $data['details'][]=array(
                         'reserve_detail_id'=>$d->reserve_detail_id,
