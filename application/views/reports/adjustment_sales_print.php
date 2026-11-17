@@ -126,63 +126,49 @@
                                 <b>RECEIVABLES</b>
                             </td>
                         </tr>
-                            <?php 
-                                        if(!empty($adjustment)){
-                                        $data2 = array();
-                                        $x=1;
-                                        foreach($adjustment as $ads) {
-                                            if($x<=35){
-                                                $key = date("Y",strtotime($ads['billing_to']));
-                                                if(!isset($data2[$key])) {
-                                                    $data2[$key] = array(
-                                                        'particular'=>array(),
-                                                        'reference_number'=>array(),
-                                                        'billing_from'=>array(),
-                                                        'billing_from_single'=>$ads['billing_from'],
-                                                        'billing_to'=>array(),
-                                                        'billing_to_single'=>$ads['billing_to'],
-                                                        'vatable_sales'=>array(),
-                                                        'vat_on_sales'=>array(),
-                                                        'ewt'=>array(),
-                                                        'zero_rated'=>array(),
-                                                        'net'=>array(),
-                                                        'total'=>array(),
-                                                        'total_single'=>$ads['total'],
-                                                    );
-                                                }
-                                                $data2[$key]['particular'][] = $ads['particular'];
-                                                $data2[$key]['reference_number'][] = $ads['reference_number'];
-                                                $data2[$key]['billing_from'][] = date("F d",strtotime($ads['billing_from']));
-                                                $data2[$key]['billing_to'][] = date("F d",strtotime($ads['billing_to']));
-                                                $data2[$key]['billing_fromto'][] = date("M. d,Y",strtotime($ads['billing_from']))." - ".date("M. d,Y",strtotime($ads['billing_to']));
-                                                $data2[$key]['vatable_sales'][] = number_format($ads['vatable_sales'],2);
-                                                $data2[$key]['vat_on_sales'][] = number_format($ads['vat_on_sales'],2);
-                                                $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
-                                                $data2[$key]['zero_rated'][] = number_format($ads['zero_rated'],2);
-                                                $data2[$key]['net'][] = number_format($ads['net'],2);
-                                                $data2[$key]['total'][] = number_format($ads['total'],2);
-                                                $x++;
-                                            }
-                                        }
-                                        foreach($data2 AS $ad){ 
-                                            if($x>=1 || $x<=35){
-                                ?>
+                        <?php 
+                        if(!empty($adjustment)){
+                            $data2 = array();
+                            $x = 1;
+                            foreach($adjustment as $ads) {
+                                if($x <= 35){
+                                    $key = date("Y", strtotime($ads['billing_to']));
+                                    if(!isset($data2[$key])) {
+                                        $data2[$key] = array('year' => $key, 'rows' => array());
+                                    }
+                                    $data2[$key]['rows'][] = array(
+                                        'particular'       => $ads['particular'],
+                                        'reference_number' => $ads['reference_number'],
+                                        'billing_fromto'   => date("M. d,Y", strtotime($ads['billing_from']))." - ".date("M. d,Y", strtotime($ads['billing_to'])),
+                                        'vatable_sales'    => number_format($ads['vatable_sales'], 2),
+                                        'zero_rated'       => number_format($ads['zero_rated'], 2),
+                                        'net'              => number_format($ads['net'], 2),
+                                        'vat_on_sales'     => number_format($ads['vat_on_sales'], 2),
+                                        'ewt'              => "(".number_format($ads['ewt'], 2).")",
+                                        'total'            => number_format($ads['total'], 2),
+                                    );
+                                    $x++;
+                                }
+                            }
+                            foreach($data2 as $ad){ 
+                        ?>
                         <tr>
                             <td class="font-12 p-l-5 p-r-5" colspan="9">
                                 <br>
-                                <u>Year <?php echo date("Y",strtotime($ad['billing_to_single'])); ?></u>
+                                <u>Year <?php echo $ad['year']; ?></u>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="font-10 p-l-0 p-r-0"><?php echo implode("<hr class='hr'>",$ad['particular'])."<br>"; ?></td>
-                            <td class="font-10 p-l-0 p-r-0 bor-btm" align="center"><?php echo implode("<hr class='hr'>",$ad['reference_number']);?></td>
-                            <td class="font-9 p-l-0 p-r-0" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['vatable_sales']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['zero_rated']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['net']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['vat_on_sales']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['ewt']); ?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['total']);?></td>
+                        <?php foreach($ad['rows'] as $row){ ?>
+                        <tr style="vertical-align:middle;">
+                            <td class="font-10 p-l-0 p-r-0" align="left"><?php echo $row['particular']; ?></td>
+                            <td class="font-10 p-l-0 p-r-0" align="center"><?php echo $row['reference_number']; ?></td>
+                            <td class="font-9 p-l-0 p-r-0" align="center"><?php echo $row['billing_fromto']; ?></td>
+                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['vatable_sales']; ?></td>
+                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['zero_rated']; ?></td>
+                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['net']; ?></td>
+                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['vat_on_sales']; ?></td>
+                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['ewt']; ?></td>
+                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['total']; ?></td>
                         </tr>
                         <?php } } ?>
                         <?php if($x<=35){ ?>
@@ -472,64 +458,50 @@
                             </td>
                         </tr>
                             <?php 
-                                        if(!empty($adjustment)){
-                                        $data2 = array();
-                                        $y=1;
-                                        foreach($adjustment as $ads) {
-                                            if($y>=36){
-                                                $key = date("Y",strtotime($ads['billing_to']));
-                                                if(!isset($data2[$key])) {
-                                                    $data2[$key] = array(
-                                                        'particular'=>array(),
-                                                        'reference_number'=>array(),
-                                                        'billing_from'=>array(),
-                                                        'billing_from_single'=>$ads['billing_from'],
-                                                        'billing_to'=>array(),
-                                                        'billing_to_single'=>$ads['billing_to'],
-                                                        'vatable_sales'=>array(),
-                                                        'vat_on_sales'=>array(),
-                                                        'ewt'=>array(),
-                                                        'zero_rated'=>array(),
-                                                        'net'=>array(),
-                                                        'total'=>array(),
-                                                        'total_single'=>$ads['total'],
-                                                    );
-                                                }
-                                                $data2[$key]['particular'][] = $ads['particular'];
-                                                $data2[$key]['reference_number'][] = $ads['reference_number'];
-                                                $data2[$key]['billing_from'][] = date("F d",strtotime($ads['billing_from']));
-                                                $data2[$key]['billing_to'][] = date("F d",strtotime($ads['billing_to']));
-                                                $data2[$key]['billing_fromto'][] = date("M. d,Y",strtotime($ads['billing_from']))." - ".date("M. d,Y",strtotime($ads['billing_to']));
-                                                $data2[$key]['vatable_sales'][] = number_format($ads['vatable_sales'],2);
-                                                $data2[$key]['vat_on_sales'][] = number_format($ads['vat_on_sales'],2);
-                                                $data2[$key]['ewt'][] = "(".number_format($ads['ewt'],2).")";
-                                                $data2[$key]['zero_rated'][] = number_format($ads['zero_rated'],2);
-                                                $data2[$key]['net'][] = number_format($ads['net'],2);
-                                                $data2[$key]['total'][] = number_format($ads['total'],2);
-                                                $y++;
-                                            }
+                            if(!empty($adjustment)){
+                                $data2 = array();
+                                $y = 1;
+                                foreach($adjustment as $ads) {
+                                    if($y >= 36){
+                                        $key = date("Y", strtotime($ads['billing_to']));
+                                        if(!isset($data2[$key])) {
+                                            $data2[$key] = array('year' => $key, 'rows' => array());
                                         }
-                                        foreach($data2 AS $ad){ 
-                                            if($y>=36){
-                                ?>
-                        <tr>
-                            <td class="font-12 p-l-5 p-r-5" colspan="9">
-                                <br>
-                                <u>Year <?php echo date("Y",strtotime($ad['billing_to_single'])); ?></u>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="font-10 p-l-0 p-r-0"><?php echo implode("<hr class='hr'>",$ad['particular'])."<br>"; ?></td>
-                            <td class="font-10 p-l-0 p-r-0 bor-btm" align="center"><?php echo implode("<hr class='hr'>",$ad['reference_number']);?></td>
-                            <td class="font-9 p-l-0 p-r-0" align="center"><?php echo implode("<hr class='hr'>",$ad['billing_fromto']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['vatable_sales']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['zero_rated']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['net']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['vat_on_sales']);?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['ewt']); ?></td>
-                            <td class="font-10 p-l-0 p-r-0" align="right"><?php echo implode("<hr class='hr'>",$ad['total']);?></td>
-                        </tr>
-                        <?php } } ?>
+                                        $data2[$key]['rows'][] = array(
+                                            'particular'       => $ads['particular'],
+                                            'reference_number' => $ads['reference_number'],
+                                            'billing_fromto'   => date("M. d,Y", strtotime($ads['billing_from']))." - ".date("M. d,Y", strtotime($ads['billing_to'])),
+                                            'vatable_sales'    => number_format($ads['vatable_sales'], 2),
+                                            'zero_rated'       => number_format($ads['zero_rated'], 2),
+                                            'net'              => number_format($ads['net'], 2),
+                                            'vat_on_sales'     => number_format($ads['vat_on_sales'], 2),
+                                            'ewt'              => "(".number_format($ads['ewt'], 2).")",
+                                            'total'            => number_format($ads['total'], 2),
+                                        );
+                                    }
+                                    $y++; // count every record, so records 1-35 are skipped and 36+ are shown
+                                }
+                                foreach($data2 as $ad){ 
+                            ?>
+                            <tr>
+                                <td class="font-12 p-l-5 p-r-5" colspan="9">
+                                    <br>
+                                    <u>Year <?php echo $ad['year']; ?></u>
+                                </td>
+                            </tr>
+                            <?php foreach($ad['rows'] as $row){ ?>
+                            <tr style="vertical-align:middle;">
+                                <td class="font-10 p-l-0 p-r-0" align="left"><?php echo $row['particular']; ?></td>
+                                <td class="font-10 p-l-0 p-r-0" align="center"><?php echo $row['reference_number']; ?></td>
+                                <td class="font-9 p-l-0 p-r-0" align="center"><?php echo $row['billing_fromto']; ?></td>
+                                <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['vatable_sales']; ?></td>
+                                <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['zero_rated']; ?></td>
+                                <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['net']; ?></td>
+                                <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['vat_on_sales']; ?></td>
+                                <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['ewt']; ?></td>
+                                <td class="font-10 p-l-0 p-r-0" align="right"><?php echo $row['total']; ?></td>
+                            </tr>
+                            <?php } } ?>
                         <?php if($y>=36){ ?>
                         <tr>
                             <td colspan="9"><br></td>
