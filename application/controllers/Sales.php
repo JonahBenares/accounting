@@ -5037,6 +5037,8 @@ public function print_BS_new(){
             $reserve_sales_id = $this->input->post('reserve_sales_id');
             $data_update = array(
                     "res_saved"=>1,
+                    "res_resaved_by"=>$_SESSION['user_id'],
+                    "res_resaved_date"=>date("Y-m-d H:i:s"),
                 );
                 $this->super_model->update_custom_where("reserve_sales_transaction_head", $data_update, "reserve_sales_id='$reserve_sales_id'");
         }
@@ -6496,6 +6498,8 @@ public function print_BS_new(){
             $sales_adjustment_id = $this->input->post('sales_adjustment_id');
             $data_update = array(
                     "saved"=>1,
+                    "resaved_by"=>$_SESSION['user_id'],
+                    "resaved_date"=>date("Y-m-d H:i:s"),
                 );
                 $this->super_model->update_custom_where("sales_adjustment_head", $data_update, "sales_adjustment_id='$sales_adjustment_id'");
         }

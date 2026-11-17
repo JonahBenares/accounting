@@ -616,6 +616,8 @@ class SalesMerge extends CI_Controller {
         $sales_merge_id = $this->input->post('sales_merge_id');
         $data_update = array(
                 "saved"=>1,
+                "resaved_by"=>$_SESSION['user_id'],
+                "resaved_date"=>date("Y-m-d H:i:s"),
             );
             $this->super_model->update_custom_where("sales_merge_transaction_head", $data_update, "sales_merge_id='$sales_merge_id'");
     }

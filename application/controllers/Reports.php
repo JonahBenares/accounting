@@ -110,7 +110,7 @@ class Reports extends CI_Controller {
             $company_name=$this->super_model->select_column_where("sales_transaction_details", "company_name", "sales_detail_id", $sales->sales_detail_id);
             // if(!empty($company_name) && date('Y',strtotime($create_date))==date('Y')){
             if(!empty($company_name)){
-                $comp_name=$company_name;
+                $   =$company_name;
             }else{
                 $comp_name=$this->super_model->select_column_where("participant", "participant_name", "billing_id", $sales->billing_id);
             }

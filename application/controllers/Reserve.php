@@ -756,7 +756,7 @@ class Reserve extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $data['details']=array();
-        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head WHERE saved = '1' AND adjustment = '0' AND deleted = '0'") AS $d){
+        foreach($this->super_model->custom_query("SELECT * FROM reserve_transaction_head WHERE saved = '0' AND adjustment = '0' AND deleted = '0'") AS $d){
             $data['details'][]=array(
                 'reserve_id'=>$d->reserve_id,
                 // 'date' => date("Y-m-d", strtotime($d->create_date)),
@@ -776,6 +776,8 @@ class Reserve extends CI_Controller {
         $reserve_id = $this->input->post('reserve_id');
         $data_update = array(
                 "saved"=>1,
+                "resaved_by"=>$_SESSION['user_id'],
+                "resaved_date"=>date("Y-m-d H:i:s"),
             );
             $this->super_model->update_custom_where("reserve_transaction_head", $data_update, "reserve_id='$reserve_id'");
     }

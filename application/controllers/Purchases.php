@@ -1203,6 +1203,8 @@ public function save_payment_all(){
         $purchase_id = $this->input->post('purchase_id');
         $data_update = array(
                 "saved"=>1,
+                "resaved_by"=>$_SESSION['user_id'],
+                "resaved_date"=>date("Y-m-d H:i:s"),
             );
             $this->super_model->update_custom_where("purchase_transaction_head", $data_update, "purchase_id='$purchase_id'");
     }
@@ -1508,6 +1510,8 @@ public function save_payment_all(){
         $purchase_id = $this->input->post('purchase_id');
         $data_update = array(
                 "saved"=>1,
+                "resaved_by"=>$_SESSION['user_id'],
+                "resaved_date"=>date("Y-m-d H:i:s"),
             );
             $this->super_model->update_custom_where("purchase_transaction_head", $data_update, "purchase_id='$purchase_id'");
     }
