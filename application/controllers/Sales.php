@@ -3420,9 +3420,6 @@ public function print_BS_new(){
         $y=1;
         for($x=3;$x<$highestRow;$x++){
           
-
-          
-          
             $shortname = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
 
             if($shortname!="" || !empty($shortname)){
@@ -4302,6 +4299,8 @@ public function print_BS_new(){
         $sales_id = $this->input->post('sales_id');
         $data_update = array(
                 "saved"=>1,
+                "resaved_by"=>$_SESSION['user_id'],
+                "resaved_date"=>date("Y-m-d H:i:s"),
             );
             $this->super_model->update_custom_where("sales_transaction_head", $data_update, "sales_id='$sales_id'");
     }
