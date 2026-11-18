@@ -208,48 +208,146 @@
                 <!-- <td colspan="20"><br><br></td> -->
                 <td colspan="20"><br></td>
             </tr>
-            <tr>
-                <td colspan="20">
-                    <table width="100%" class="table-borsdered">
-                        <tr>
-                            <td colspan="2" style="background:#e5e5e5; border-right:5px solid #fff"><b>Prepared by:</b></td>
-                            <td colspan="8" style="background:#e5e5e5; border-right:5px solid #fff"><b>Checked by:</b></td>
-                            <td colspan="2" style="background:#e5e5e5;"><b>Noted by:</b></td>
-                        </tr>
+            <?php
+            $hide_charmaine = isset($_SESSION['user_id']) && (int)$_SESSION['user_id'] === 2;
+            ?>
+            <td colspan="20">
+                <table width="100%" class="table-borsdered"
+                    <?php if ($hide_charmaine) { ?>
+                        style="width:100%; table-layout:fixed;"
+                    <?php } ?>>
+
+                    <tr>
+                        <td colspan="2" style="background:#e5e5e5; border-right:5px solid #fff">
+                            <b>Prepared by:</b>
+                        </td>
+
+                        <td colspan="<?php echo $hide_charmaine ? 6 : 8; ?>"
+                            style="background:#e5e5e5; border-right:5px solid #fff">
+                            <b>Checked by:</b>
+                        </td>
+
+                        <td colspan="2" style="background:#e5e5e5;">
+                            <b>Noted by:</b>
+                        </td>
+                    </tr>
+
+                    <?php if (!$hide_charmaine) { ?>
+
+                        <!-- ORIGINAL LAYOUT: KEEP EXACTLY AS IS -->
                         <tr>
                             <td colspan="20"><br></td>
                         </tr>
+
                         <tr>
-                            <td width="%" align="center" class="bor-btm font-10 "><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <td align="center" class="bor-btm font-10">
+                                <?php echo strtoupper($_SESSION['fullname']); ?>
+                            </td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 "><?php echo ($_SESSION['user_id'] == 2) ? '' : 'CHARMAINE REI ORTALIZ'; ?></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                CHARMAINE REI ORTALIZ
+                            </td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">JOEMAR DELOS SANTOS</td>
+
+                            <td align="center" class="bor-btm font-10">JOEMAR DELOS SANTOS</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">CRISTY CESAR</td>
+
+                            <td align="center" class="bor-btm font-10">CRISTY CESAR</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">ZYNDYRYN PASTERA</td>
+
+                            <td align="center" class="bor-btm font-10">ZYNDYRYN PASTERA</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">MILA ARANA</td>
+
+                            <td width="10%" align="center" class="bor-btm font-10">MILA ARANA</td>
                             <td width="1%"></td>
                         </tr>
+
                         <tr>
-                            <td width="%" align="center" class="font-11">Billing</td>
+                            <td align="center" class="font-11">Billing</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">Billing & Compliance Officer</td>
+
+                            <td align="center" class="font-11">
+                                Billing & Compliance Officer
+                            </td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">EMG Head</td>
+
+                            <td align="center" class="font-11">EMG Head</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">Accounting Head</td>
+
+                            <td align="center" class="font-11">Accounting Head</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">Senior Finance Officer</td>
+
+                            <td align="center" class="font-11">Senior Finance Officer</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">President</td>
+
+                            <td width="10%" align="center" class="font-11">President</td>
                             <td width="1%"></td>
                         </tr>
-                    </table>
-                </td>
-            </tr>
+                    <?php } else { ?>
+
+                            <!-- HIDDEN CHARMAINE: PRESERVE ORIGINAL SPACING STRUCTURE -->
+                            <colgroup>
+                                <col style="width:19%">
+                                <col style="width:1%">
+                                <col style="width:19%">
+                                <col style="width:1%">
+                                <col style="width:19%">
+                                <col style="width:1%">
+                                <col style="width:19%">
+                                <col style="width:1%">
+                                <col style="width:19%">
+                                <col style="width:1%">
+                            </colgroup>
+
+                        <tr>
+                            <td colspan="10"><br></td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" class="bor-btm font-10">
+                                <?php echo strtoupper($_SESSION['fullname']); ?>
+                            </td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                JOEMAR DELOS SANTOS
+                            </td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                CRISTY CESAR
+                            </td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                ZYNDYRYN PASTERA
+                            </td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                MILA ARANA
+                            </td>
+                            <td width="1%"></td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" class="font-11">Billing</td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="font-11">EMG Head</td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="font-11">Accounting Head</td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="font-11">Senior Finance Officer</td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="font-11">President</td>
+                            <td width="1%"></td>
+                        </tr>
+                    <?php } ?>
             <tr>
                 <td colspan="20"><br><br><br></td>
             </tr>
@@ -401,44 +499,146 @@
                 <td colspan="20"><br><br></td>
             </tr>
             <tr>
-                <td colspan="20">
-                    <table width="100%" class="table-borsdered">
-                        <tr>
-                            <td colspan="2" style="background:#e5e5e5; border-right:5px solid #fff"><b>Prepared by:</b></td>
-                            <td colspan="8" style="background:#e5e5e5; border-right:5px solid #fff"><b>Checked by:</b></td>
-                            <td colspan="2" style="background:#e5e5e5;"><b>Noted by:</b></td>
-                        </tr>
+            <?php
+            $hide_charmaine = isset($_SESSION['user_id']) && (int)$_SESSION['user_id'] === 2;
+            ?>
+            <td colspan="20">
+                <table width="100%" class="table-borsdered"
+                    <?php if ($hide_charmaine) { ?>
+                        style="width:100%; table-layout:fixed;"
+                    <?php } ?>>
+
+                    <tr>
+                        <td colspan="2" style="background:#e5e5e5; border-right:5px solid #fff">
+                            <b>Prepared by:</b>
+                        </td>
+
+                        <td colspan="<?php echo $hide_charmaine ? 6 : 8; ?>"
+                            style="background:#e5e5e5; border-right:5px solid #fff">
+                            <b>Checked by:</b>
+                        </td>
+
+                        <td colspan="2" style="background:#e5e5e5;">
+                            <b>Noted by:</b>
+                        </td>
+                    </tr>
+
+                    <?php if (!$hide_charmaine) { ?>
+
+                        <!-- ORIGINAL LAYOUT: KEEP EXACTLY AS IS -->
                         <tr>
                             <td colspan="20"><br></td>
                         </tr>
+
                         <tr>
-                            <td width="%" align="center" class="bor-btm font-10 "><?php echo strtoupper($_SESSION['fullname']);?></td>
+                            <td align="center" class="bor-btm font-10">
+                                <?php echo strtoupper($_SESSION['fullname']); ?>
+                            </td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 "><?php echo ($_SESSION['user_id'] == 2) ? '' : 'CHARMAINE REI ORTALIZ'; ?></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                CHARMAINE REI ORTALIZ
+                            </td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">JOEMAR DELOS SANTOS</td>
+
+                            <td align="center" class="bor-btm font-10">JOEMAR DELOS SANTOS</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">CRISTY CESAR</td>
+
+                            <td align="center" class="bor-btm font-10">CRISTY CESAR</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">ZYNDYRYN PASTERA</td>
+
+                            <td align="center" class="bor-btm font-10">ZYNDYRYN PASTERA</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="bor-btm font-10 ">MILA ARANA</td>
+
+                            <td width="10%" align="center" class="bor-btm font-10">MILA ARANA</td>
                             <td width="1%"></td>
                         </tr>
+
                         <tr>
-                            <td width="%" align="center" class="font-11">Billing</td>
+                            <td align="center" class="font-11">Billing</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">Billing & Compliance Officer</td>
+
+                            <td align="center" class="font-11">
+                                Billing & Compliance Officer
+                            </td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">EMG Head</td>
+
+                            <td align="center" class="font-11">EMG Head</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">Accounting Head</td>
+
+                            <td align="center" class="font-11">Accounting Head</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">Senior Finance Officer</td>
+
+                            <td align="center" class="font-11">Senior Finance Officer</td>
                             <td width="1%"></td>
-                            <td width="%" align="center" class="font-11">President</td>
+
+                            <td width="10%" align="center" class="font-11">President</td>
                             <td width="1%"></td>
                         </tr>
+                    <?php } else { ?>
+
+                            <!-- HIDDEN CHARMAINE: PRESERVE ORIGINAL SPACING STRUCTURE -->
+                            <colgroup>
+                                <col style="width:19%">
+                                <col style="width:1%">
+                                <col style="width:19%">
+                                <col style="width:1%">
+                                <col style="width:19%">
+                                <col style="width:1%">
+                                <col style="width:19%">
+                                <col style="width:1%">
+                                <col style="width:19%">
+                                <col style="width:1%">
+                            </colgroup>
+
+                        <tr>
+                            <td colspan="10"><br></td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" class="bor-btm font-10">
+                                <?php echo strtoupper($_SESSION['fullname']); ?>
+                            </td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                JOEMAR DELOS SANTOS
+                            </td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                CRISTY CESAR
+                            </td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                ZYNDYRYN PASTERA
+                            </td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="bor-btm font-10">
+                                MILA ARANA
+                            </td>
+                            <td width="1%"></td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" class="font-11">Billing</td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="font-11">EMG Head</td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="font-11">Accounting Head</td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="font-11">Senior Finance Officer</td>
+                            <td width="1%"></td>
+
+                            <td align="center" class="font-11">President</td>
+                            <td width="1%"></td>
+                        </tr>
+                    <?php } ?>
                     </table>
                 </td>
             </tr>
