@@ -4616,17 +4616,20 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         $participant=$this->uri->segment(3);
-        $from=$this->uri->segment(4);
-        $to=$this->uri->segment(5);
-        $original=$this->uri->segment(6);
-        $scanned=$this->uri->segment(7);
+        $reference_number=$this->uri->segment(4);
+        $from=$this->uri->segment(5);
+        $to=$this->uri->segment(6);
+        $original=$this->uri->segment(7);
+        $scanned=$this->uri->segment(8);
         $data['from'] = $from;
         $data['to'] = $to;
+        $ref_no=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
         $part=$this->super_model->select_column_where("participant","participant_name","tin",$participant);
         $data['part'] = $part;
         $data['original'] = $original;
         $data['scanned'] = $scanned;
-
+        $data['reference_no']= $ref_no;
+        $data['reference_number'] = $reference_number;
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $sql="";
 
@@ -4638,6 +4641,9 @@ class Reports extends CI_Controller {
             }
             $imp=implode(',',$par);
             $sql.= " short_name IN($imp) AND ";
+
+        } if (!empty($reference_number) && $reference_number!='null'){
+            $sql.= " sth.reference_number = '$reference_number' AND ";
         } if(!empty($from) && !empty($to) && $from!='null' && $to != 'null'){
             $sql.= " ((billing_from BETWEEN '$from' AND '$to') OR (billing_to BETWEEN '$from' AND '$to')) AND ";
         } if($original!='null' && isset($original)){

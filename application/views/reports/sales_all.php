@@ -41,6 +41,17 @@
                                                     <?php } ?>
                                                 </select>
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <select class="form-control select2" name="reference_number" id="reference_number">
+                                                        <option value="">-- Select Reference No. --</option>
+                                                        <?php foreach($reference_no AS $r){ ?>
+                                                            <option value="<?php echo $r->reference_number; ?>"><?php echo $r->reference_number; ?>
+                                                            </option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </td>
                                                 <td width="15%">
                                                 <select class="form-control" name="og_copy" id="og_copy">
                                                     <option value="">Original Copy</option>
@@ -72,7 +83,12 @@
                                 <tr>
                                     <td></td>
                                     <td><b>Participant Name:</b></td>
-                                    <td colspan="4"><?php echo $part ?></td>
+                                    <td width="25%"><?php echo $part ?></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>Reference No.:</b></td>
+                                    <td><?php echo $reference_number ?></td>
                                 </tr>
                                 <tr>
                                     <td width="3%"></td>

@@ -526,6 +526,7 @@ function filter_sales_all() {
      var from = document.getElementById("from").value; 
      var to = document.getElementById("to").value;
      var participant = document.getElementById("participant").value;
+     var reference_number = document.getElementById("reference_number").value;
      var original = document.getElementById("og_copy").value;
      var scanned = document.getElementById("s_copy").value;
 
@@ -547,6 +548,12 @@ function filter_sales_all() {
         part='null';
     }
 
+    if (reference_number!='') {
+        ref_no=reference_number;
+    }else{
+        ref_no='null';
+    }
+
     if(original!=''){
         original=original;
     }else{
@@ -560,7 +567,7 @@ function filter_sales_all() {
     }
 
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/sales_all/'+part+'/'+from+'/'+to+'/'+original+'/'+scanned;
+      window.location=loc+'reports/sales_all/'+part+'/'+ref_no+'/'+from+'/'+to+'/'+original+'/'+scanned;
 
 }
 
