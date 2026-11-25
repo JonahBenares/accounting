@@ -177,7 +177,12 @@ class Purchases extends CI_Controller {
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
         $highestRow = $highestRow;
         //$highestRow = $highestRow-1;
+
+        // Array and Batch number Initialize
+        $insert_data = array(); 
+        $batch_number = 100;
         $y=1;
+        $this->db->trans_begin(); //DB Transaction Starts
         //for($x=3;$x<$highestRow;$x++){
         for($x=3;$x<=$highestRow;$x++){
             //$itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$x)->getOldCalculatedValue());
@@ -187,9 +192,9 @@ class Purchases extends CI_Controller {
             //echo $shortname."-".$x."<br>";
             if($shortname!="" || !empty($shortname)){
                 $actual_billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());  
-                $company_name = $objPHPExcel->getActiveSheet()->getCell('D'.$x)->getOldCalculatedValue();
+                $company_name = $objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue();
                 $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue() ?? '');
-                $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue()));
+                $companyname = str_replace("'", "\\'", trim((string)$company_name));
                 $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin' AND participant_name = '$companyname'");
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue() ?? '');
                 $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue() ?? '');
@@ -259,9 +264,9 @@ class Purchases extends CI_Controller {
                 }
 
                 if(in_array('error',$error)){
+                    $this->db->trans_rollback();
                     echo 'error';
-                    $this->super_model->delete_where('purchase_transaction_details', 'purchase_id', $purchase_id);
-                    break;
+                    return;
                 }else{
                     $data_purchase = array(
                         'purchase_id'=>$purchase_id,
@@ -284,13 +289,52 @@ class Purchases extends CI_Controller {
                         'company_name'=>$company_name,
                         //'balance'=>$total_amount
                     );
-                    $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
+                    $insert_data[] = $data_purchase;
                     $y++;
+
+                    // If inserted data array are same as batch limit, proceed to insertion
+                    if (count($insert_data) >= $batch_number) {
+                        $result = $this->super_model->insert_batch_data(
+                        'purchase_transaction_details', 
+                        $insert_data
+                        );
+
+                        if ($result === FALSE) {    //If failed roll back
+                            $this->db->trans_rollback();
+                            echo 'error';
+                            return;
+                        }
+
+                        $insert_data = array(); 
+                    }
+
+                    
                 }
             }
         }
-           
-      
+        // Inserts the leftover data
+        if (!empty($insert_data)) {
+          $result = $this->super_model->insert_batch_data(
+            'purchase_transaction_details',
+            $insert_data
+            );
+
+            if ($result === FALSE) {          //If failed roll back
+                $this->db->trans_rollback();
+                echo 'error';
+                return;
+            }
+        }
+
+        // Check transaction
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                echo 'error';
+                return;
+            } else {
+                // Commit everything
+                $this->db->trans_commit();
+            }   
     }
 
     public function convertNumber(float $amount)
@@ -2786,7 +2830,7 @@ public function purchases_adjustment_pdf_scan_directory() {
         }
     }
 
-    public function display_upload_purchase_adjust(){
+public function display_upload_purchase_adjust(){
         //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new Spreadsheet();
         $count = $this->input->post('count');
@@ -2844,16 +2888,20 @@ public function purchases_adjustment_pdf_scan_directory() {
                             $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
                             $highestRow = $highestRow;
                             // $highestRow = $highestRow-1;
+                            // Array and Batch number Initialize
+                            $insert_data = array(); 
+                            $batch_number = 100;
                             $y=1;
+                            $this->db->trans_begin(); //DB Transaction Starts
                             for($z=4;$z<=$highestRow;$z++){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
                                 $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
                                 // $company_name = $this->super_model->select_column_where('participant','participant_name','settlement_id',$shortname);
                                 if(!empty(trim($shortname))){
                                     $actual_billing_id = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('C'.$z)->getFormattedValue());  
-                                    $company_name = $objPHPExcel->getActiveSheet()->getCell('D'.$z)->getOldCalculatedValue();
+                                    $company_name = $objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue();
                                     $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue() ?? '');
-                                    $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue() ?? ''));
+                                    $companyname = str_replace("'", "\\'", trim((string)$company_name ?? ''));
                                     $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin' AND participant_name = '$companyname'");   
                                     $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$z)->getFormattedValue() ?? '');
                                     $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$z)->getFormattedValue() ?? '');
@@ -2952,14 +3000,53 @@ public function purchases_adjustment_pdf_scan_directory() {
                                             'balance'=>$balance
                                             //'balance'=>$total_amount
                                         );
-                                        $this->super_model->insert_into("purchase_transaction_details", $data_purchase);
+                                        $insert_data[] = $data_purchase;
                                         $y++;
+
+                                        // If inserted data array are same as batch limit, proceed to insertion
+                                        if (count($insert_data) >= $batch_number) {
+                                            $result = $this->super_model->insert_batch_data(
+                                            'purchase_transaction_details', 
+                                            $insert_data
+                                            );
+
+                                            if ($result === FALSE) {    //If failed roll back
+                                                $this->db->trans_rollback();
+                                                echo 'error';
+                                                return;
+                                            }
+
+                                            $insert_data = array(); 
+                                        }
                                     }
                                 }
                             }
                             $x++;
                         //}
                         //$this->readExcel_adjust($adjust_identifier,$x,$remarks);
+                                                        // Inserts the leftover data
+                            if (!empty($insert_data)) {
+                              $result = $this->super_model->insert_batch_data(
+                                'purchase_transaction_details',
+                                $insert_data
+                                );
+
+                                if ($result === FALSE) {          //If failed roll back
+                                    $this->db->trans_rollback();
+                                    echo 'error';
+                                    return;
+                                }
+                            }
+
+                            // Check transaction
+                            if ($this->db->trans_status() === FALSE) {
+                                $this->db->trans_rollback();
+                                echo 'error';
+                                return;
+                            } else {
+                                // Commit everything
+                                $this->db->trans_commit();
+                            }
                     } 
                 }
             }

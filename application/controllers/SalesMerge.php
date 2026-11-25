@@ -312,7 +312,11 @@ class SalesMerge extends CI_Controller {
         }
         $objPHPExcel->setActiveSheetIndex(2);
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+        // Array and Batch number Initialize
+        $insert_data = array(); 
+        $batch_number = 100;
         $y=1;
+        $this->db->trans_begin(); //DB Transaction Starts
         for($x=3;$x<$highestRow;$x++){
             $shortname = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
         if($shortname!="" || !empty($shortname)){
@@ -321,7 +325,7 @@ class SalesMerge extends CI_Controller {
             $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
             $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
             $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-            $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue()));
+            $companyname = str_replace("'", "\\'", trim((string)$company_name));
             $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin' AND participant_name = '$companyname'");
             $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
             $ith = trim($objPHPExcel->getActiveSheet()->getCell('H'.$x)->getFormattedValue());
@@ -396,10 +400,49 @@ class SalesMerge extends CI_Controller {
                     'total_amount'=>$total_amount,
                     'balance'=>$total_amount
                 );
-                $this->super_model->insert_into("sales_merge_transaction_details", $data_sales);
+                $insert_data[] = $data_sales;
                 $y++;
+
+                // If inserted data array are same as batch limit, proceed to insertion
+                if (count($insert_data) >= $batch_number) {
+                    $result = $this->super_model->insert_batch_data(
+                    'sales_merge_transaction_details', 
+                    $insert_data);
+                    
+                    if ($result === FALSE) {    //If failed roll back
+                        $this->db->trans_rollback();
+                        echo 'error';
+                        return;
+                    }
+
+                    $insert_data = array(); 
                 }
             }
+        }
+        }
+
+        // Inserts the leftover data
+        if (!empty($insert_data)) {
+            $result = $this->super_model->insert_batch_data(
+            'sales_merge_transaction_details',
+            $insert_data
+            );
+
+            if ($result === FALSE) {          //If failed roll back
+                $this->db->trans_rollback();
+                echo 'error';
+                return;
+            }
+        }
+
+        // Check transaction
+        if ($this->db->trans_status() === FALSE) {
+             $this->db->trans_rollback();
+            echo 'error';
+            return;
+        } else {
+            // Commit everything
+             $this->db->trans_commit();
         }
     }
 

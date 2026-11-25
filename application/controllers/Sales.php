@@ -3408,7 +3408,6 @@ public function print_BS_new(){
        try {
             $inputFileType = io_factory::identify($inputFileName);
             $objReader = io_factory::createReader($inputFileType);
-        
    
             $objPHPExcel = $objReader->load($inputFileName);
         } 
@@ -3417,7 +3416,12 @@ public function print_BS_new(){
         }
         $objPHPExcel->setActiveSheetIndex(2);
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+        
+        // Array and Batch number Initialize
+        $insert_data = array();
+        $batch_number = 100;
         $y=1;
+        $this->db->trans_begin();
         for($x=3;$x<$highestRow;$x++){
           
             $shortname = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
@@ -3426,11 +3430,10 @@ public function print_BS_new(){
          
             $actual_billing_id = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('C'.$x)->getFormattedValue());
            
-
             $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
             $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
             $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-            $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue()));
+            $companyname = str_replace("'", "\\'", trim((string)$company_name));
             $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin' AND participant_name = '$companyname'");
             // $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin'");
              
@@ -3500,8 +3503,8 @@ public function print_BS_new(){
             }
 
             if(in_array('error',$error)){
+                $this->db->trans_rollback();
                 echo 'error';
-                $this->super_model->delete_where('sales_transaction_details', 'sales_id', $sales_id);
                 break;
             }else{
                 $data_sales = array(
@@ -3524,8 +3527,23 @@ public function print_BS_new(){
                     'total_amount'=>$total_amount,
                     'balance'=>$total_amount
                 );
-                $this->super_model->insert_into("sales_transaction_details", $data_sales);
+                $insert_data[] = $data_sales;
                 $y++;
+
+                if (count($insert_data) >= $batch_number) {
+                    $result = $this->super_model->insert_batch_data(
+                    'sales_transaction_details',
+                    $insert_data
+                    );
+
+                    if ($result === FALSE) {
+                        $this->db->trans_rollback();
+                        echo 'error';
+                        return;
+                    }
+
+                    $insert_data = array();
+                }
             }
    /*
           if($vatable_sales!=''){
@@ -3587,17 +3605,37 @@ public function print_BS_new(){
                 
             }
         }
-            //echo $sales_id;
-      
-    }
+            if (!empty($insert_data)) {
+                $result = $this->super_model->insert_batch_data(
+                    'sales_transaction_details',
+                    $insert_data
+                    );
 
+                 if ($result === FALSE) {
+                        $this->db->trans_rollback();
+                        echo 'error';
+                        return;
+                    }
+                }
+
+            // Check transaction
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                echo 'error';
+                return;
+            } else {
+                // Commit everything
+                $this->db->trans_commit();
+            }
+    }
+            
     public function cancel_sales(){
         $sales_id = $this->input->post('sales_id');
         $this->super_model->delete_where("sales_transaction_details", "sales_id", $sales_id);
         $this->super_model->delete_where("sales_transaction_head", "sales_id", $sales_id);
     }
 
-        public function upload_reserve_sales_process(){
+    public function upload_reserve_sales_process(){
         $res_sales_id = $this->input->post('reserve_sales_id');
         $dest= realpath(APPPATH . '../uploads/excel/');
         $error_ext=0;
@@ -3636,7 +3674,11 @@ public function print_BS_new(){
         }
         $objPHPExcel->setActiveSheetIndex(2);
         $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
+        // Array and Batch number Initialize
+        $insert_data = array(); 
+        $batch_number = 100;
         $y=1;
+        $this->db->trans_begin(); //DB Transaction Starts
         for($x=3;$x<$highestRow;$x++){
                 $shortname = str_replace(array(' '), '',$objPHPExcel->getActiveSheet()->getCell('B'.$x)->getFormattedValue());
 
@@ -3646,8 +3688,8 @@ public function print_BS_new(){
                 $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue());
                 $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$x)->getFormattedValue());
                 $fac_type = trim($objPHPExcel->getActiveSheet()->getCell('F'.$x)->getFormattedValue());
-                $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue()));
-                $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "actual_billing_id = '$actual_billing_id' AND res_settlement_id = '$shortname' AND res_tin = '$tin' AND res_participant_name = '$companyname'");
+                $companyname = str_replace("'", "\\'", trim((string)$company_name));
+                $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "res_actual_billing_id = '$actual_billing_id' AND res_settlement_id = '$shortname' AND res_tin = '$tin' AND res_participant_name = '$companyname'");
                 // $unique_bill_id = $this->super_model->select_column_custom_where("reserve_participant", "res_billing_id", "res_actual_billing_id = '$actual_billing_id' AND res_settlement_id = '$shortname' AND res_tin = '$tin'");
             
                 $wht_agent = trim($objPHPExcel->getActiveSheet()->getCell('G'.$x)->getFormattedValue());
@@ -3683,12 +3725,48 @@ public function print_BS_new(){
                     'res_total_amount'=>$total_amount,
                     'res_balance'=>$total_amount
                 );
-                $this->super_model->insert_into("reserve_sales_transaction_details", $data_sales);
+                $insert_data[] = $data_sales;
                 $y++;
                 
+                // If inserted data array are same as batch limit, proceed to insertion
+                if (count($insert_data) >= $batch_number) {
+                    $result = $this->super_model->insert_batch_data(
+                    'reserve_sales_transaction_details', 
+                    $insert_data);
+                    
+                    if ($result === FALSE) {    //If failed roll back
+                        $this->db->trans_rollback();
+                        echo 'error';
+                        return;
+                    }
+
+                    $insert_data = array(); 
+                }
             }
         }
-      
+      // Inserts the leftover data
+        if (!empty($insert_data)) {
+            $result = $this->super_model->insert_batch_data(
+            'reserve_sales_transaction_details',
+            $insert_data
+            );
+
+            if ($result === FALSE) {          //If failed roll back
+                $this->db->trans_rollback();
+                echo 'error';
+                return;
+            }
+        }
+
+        // Check transaction
+        if ($this->db->trans_status() === FALSE) {
+             $this->db->trans_rollback();
+            echo 'error';
+            return;
+        } else {
+            // Commit everything
+             $this->db->trans_commit();
+        }
     }
 
         public function cancel_reserve_sales(){
@@ -4106,7 +4184,7 @@ public function print_BS_new(){
         $data['date'] = $this->super_model->custom_query("SELECT DISTINCT due_date FROM sales_transaction_head WHERE due_date!='' AND deleted='0'");
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $data['participant_name']=$this->super_model->select_column_where('participant','participant_name','tin',$participants);
-        $data['count_unsaved'] = $this->super_model->count_custom_where("sales_transaction_head", "saved = '0'");
+        $data['count_unsaved'] = $this->super_model->count_custom_where("sales_transaction_head", "saved = '0' AND deleted != 1");
         $this->load->view('template/header');
         $this->load->view('template/navbar');
         if($in_ex_sub==0 ||  $in_ex_sub=='null'){
@@ -6921,7 +6999,7 @@ public function print_BS_new(){
         $this->load->view('template/footer');
     }
 
-        public function upload_sales_adjust(){
+    public function upload_sales_adjust(){
         //require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $count = $this->input->post('count');
@@ -6936,7 +7014,7 @@ public function print_BS_new(){
                 $ext1=$exc[1];
                 if($ext1=='php' || $ext1!='xlsx'){
                     $error_ext++;
-                }else {
+                } else {
                     $filename1='wesm_sales_adjust'.$x.".".$ext1;
                     if(move_uploaded_file($_FILES["fileupload"]['tmp_name'][$x], $dest.'/'.$filename1)){
                         //for($a=0;$a<$count;$a++){
@@ -6975,7 +7053,12 @@ public function print_BS_new(){
 
                             $highestRow = $objPHPExcel->getActiveSheet()->getHighestRow(); 
                             $highestRow = $highestRow-1;
+
+                            // Array and Batch number Initialize
+                            $insert_data = array();
+                            $batch_number = 100;
                             $y=1;
+                            $this->db->trans_begin();
                             for($z=4;$z<$highestRow;$z++){
                                 
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue());
@@ -6985,7 +7068,7 @@ public function print_BS_new(){
 
                                     $company_name =trim($objPHPExcel->getActiveSheet()->getCell('D'.$z)->getFormattedValue());
                                     $tin = trim($objPHPExcel->getActiveSheet()->getCell('E'.$z)->getFormattedValue());
-                                    $companyname = str_replace("'", "\\'", trim($objPHPExcel->getActiveSheet()->getCell('D'.$x)->getFormattedValue()));
+                                    $companyname = str_replace("'", "\\'", trim((string)$company_name));
                                     $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin' AND participant_name = '$companyname'");
                                     // $unique_bill_id = $this->super_model->select_column_custom_where("participant", "billing_id", "actual_billing_id = '$actual_billing_id' AND settlement_id = '$shortname' AND tin = '$tin'");
 
@@ -7030,16 +7113,53 @@ public function print_BS_new(){
                                         'balance'=>$total_amount,
                                         //'serial_no'=>$series_no,
                                     );
-                                    $this->super_model->insert_into("sales_adjustment_details", $data_sales);
+                                    $insert_data[] = $data_sales;
                                     $y++;
+
+                                    if (count($insert_data) >= $batch_number) {
+                                        $result = $this->super_model->insert_batch_data(
+                                        'sales_transaction_details',
+                                        $insert_data
+                                        );
+
+                                        if ($result === FALSE) {
+                                            $this->db->trans_rollback();
+                                            echo 'error';
+                                            return;
+                                        }
+
+                                        $insert_data = array();
+                                    }
                                 }
-                        }
-                    } 
+                            }
+                            if (!empty($insert_data)) {
+                                $result = $this->super_model->insert_batch_data(
+                                    'sales_transaction_details',
+                                    $insert_data
+                                    );
+
+                                if ($result === FALSE) {
+                                    $this->db->trans_rollback();
+                                    echo 'error';
+                                    return;
+                                }
+                            }
+
+                            // Check transaction
+                            if ($this->db->trans_status() === FALSE) {
+                                $this->db->trans_rollback();
+                                echo 'error';
+                                return;
+                            } else {
+                                // Commit everything
+                                $this->db->trans_commit();
+                            }
+                        } 
+                    }
                 }
             }
-        }
-    echo $adjust_identifier;
-}
+        echo $adjust_identifier;
+    }
 
 public function cancel_multiple_sales(){
     $adjust_identifier = $this->input->post('save_sales_adjustment');

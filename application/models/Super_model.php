@@ -202,7 +202,21 @@ class super_model extends CI_Model
         }
     }
 
-  
+    public function insert_batch_data($table, $data)
+    {
+        if (empty($data)) {
+            return TRUE;
+        }
+
+        $result = $this->db->insert_batch($table, $data);
+
+        if ($result === FALSE || $this->db->trans_status() === FALSE) {
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+ 
     public function insert_return_id($table, $data){
        $this->db->insert($table, $data);
        $insert_id = $this->db->insert_id();
