@@ -28,14 +28,14 @@
                                                     <b>Date From:</b>
                                                 </td> -->
                                                 <td width="15%">
-                                                    <input placeholder="Billing Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Due Date From" class="form-control" id="from" name="from" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <!-- <td width="5%"></td> -->
                                                 <!-- <td width="3%">
                                                     <b>Date To:</b>
                                                 </td> -->
                                                 <td width="15%">
-                                                    <input placeholder="Billing Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
+                                                    <input placeholder="Due Date To" class="form-control" id="to" name="to" type="text" onfocus="(this.type='date')" id="date">
                                                 </td>
                                                 <td width="10%">
                                                     <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
@@ -168,11 +168,11 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-lg-6">
-                            <label>Billing Date From</label>
+                            <label>Due Date From</label>
                             <input placeholder="Date From" class="form-control" id="export_from" name="export_from" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                         <div class="form-group col-lg-6">
-                            <label>Billing Date to</label>
+                            <label>Due Date to</label>
                             <input placeholder="Date To" class="form-control" id="export_to" name="export_to" type="text" onfocus="(this.type='date')" id="date">
                         </div>
                     </div>
