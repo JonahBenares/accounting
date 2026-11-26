@@ -4669,7 +4669,12 @@ class Reports extends CI_Controller {
                 }
             $zero_rated=$sth->zero_rated_sales+$sth->zero_rated_ecozones;
             $total=($sth->vatable_sales+$zero_rated+$sth->vat_on_sales)-$sth->ewt;
-            //$total_sum[]=$total;
+            $total_sum[]=$total;
+            $total_vatable_sales[]=$sth->vatable_sales;
+            $total_zero_rated[]=$zero_rated;
+            $total_vat_on_sales[]=$sth->vat_on_sales;
+            $total_ewt_sales[]=$sth->ewt;
+            $total_ewt_amount[]=$sth->ewt_amount;
 
             $data['salesall'][]=array(
                 'participant_name'=>$comp_name,
@@ -4692,6 +4697,11 @@ class Reports extends CI_Controller {
             }
         }
         $data['total_sum']=array_sum($total_sum);
+        $data['total_vatable_sales']=array_sum($total_vatable_sales);
+        $data['total_zero_rated']=array_sum($total_zero_rated);
+        $data['total_vat_on_sales']=array_sum($total_vat_on_sales);
+        $data['total_ewt_sales']=array_sum($total_ewt_sales);
+        $data['total_ewt_amount']=array_sum($total_ewt_amount);
         $this->load->view('reports/sales_all',$data);
         $this->load->view('template/footer');
     }

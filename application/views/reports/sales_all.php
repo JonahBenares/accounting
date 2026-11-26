@@ -84,9 +84,6 @@
                                     <td></td>
                                     <td><b>Participant Name:</b></td>
                                     <td width="25%"><?php echo $part ?></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
                                     <td><b>Reference No.:</b></td>
                                     <td><?php echo $reference_number ?></td>
                                 </tr>
@@ -121,17 +118,17 @@
                                     <thead>
                                         <tr>
                                             <th class="table_td" style="font-size: 12px;" width="10%">Billing ID</th>
-                                            <th class="table_td" style="font-size: 12px;" width="10%">Transaction Reference Number</th>
+                                            <th class="table_td" style="font-size: 12px;" width="12%">Transaction Reference Number</th>
                                             <th class="table_td" style="font-size: 12px;" width="30%">Company Name</th>  
-                                            <th class="table_td" style="font-size: 12px;" width="5%">Vatable Sales</th> 
-                                            <th class="table_td" style="font-size: 12px;" width="5%">Zero-Rated Ecozones</th>     
-                                            <th class="table_td" style="font-size: 12px;" width="5%">VAT on Sales</th>   
-                                            <th class="table_td" style="font-size: 12px;" width="5%">EWT Sales</th>    
-                                            <th class="table_td" style="font-size: 12px;" width="5%">Total</th>
-                                            <th class="table_td" style="font-size: 12px;" width="5%">EWT Amount</th>
-                                            <th class="table_td" style="font-size: 12px;" width="5%">Original Copy</th>
-                                            <th class="table_td" style="font-size: 12px;" width="5%">Scanned Copy</th>
-                                            <th class="table_td" style="font-size: 12px;" width="5%">OR Number</th>
+                                            <th class="table_td text-center" style="font-size: 12px;" width="6%">Vatable Sales <br><b><?php echo $total_vatable_sales; ?></b></th> 
+                                            <th class="table_td text-center" style="font-size: 12px;" width="8%">Zero-Rated Ecozones <b><?php echo $total_zero_rated; ?></b></th>     
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">VAT on Sales <b><?php echo $total_vat_on_sales; ?></b></th>   
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">EWT Sales <b><?php echo $total_ewt_sales; ?></b></th>    
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">Total <br><b><?php echo $total_sum; ?></b></th>
+                                            <th class="table_td text-center" style="font-size: 12px;" width="6%">EWT Amount <br><b><?php echo $total_ewt_amount; ?></b></th>
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">Original Copy</th>
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">Scanned Copy</th>
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">OR Number</th>
                                         </tr>
                                     </thead>
                                     <tbody>
