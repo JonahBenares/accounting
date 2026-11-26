@@ -4623,12 +4623,11 @@ class Reports extends CI_Controller {
         $scanned=$this->uri->segment(8);
         $data['from'] = $from;
         $data['to'] = $to;
-        $ref_no=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
+        $data['reference_no']=$this->super_model->custom_query("SELECT DISTINCT reference_number FROM sales_transaction_head WHERE reference_number!='' AND saved='1' AND deleted='0'");
         $part=$this->super_model->select_column_where("participant","participant_name","tin",$participant);
         $data['part'] = $part;
         $data['original'] = $original;
         $data['scanned'] = $scanned;
-        $data['reference_no']= $ref_no;
         $data['reference_number'] = $reference_number;
         $data['participant']=$this->super_model->custom_query("SELECT * FROM participant WHERE participant_name != '' GROUP BY tin ORDER BY participant_name");
         $sql="";

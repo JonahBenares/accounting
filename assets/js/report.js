@@ -548,10 +548,10 @@ function filter_sales_all() {
         part='null';
     }
 
-    if (reference_number!='') {
+    if(reference_number!=''){
         reference_number=reference_number;
     }else{
-        ref_no='null';
+        reference_number='null';
     }
 
     if(original!=''){

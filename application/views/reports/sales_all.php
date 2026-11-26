@@ -120,12 +120,18 @@
                                             <th class="table_td" style="font-size: 12px;" width="10%">Billing ID</th>
                                             <th class="table_td" style="font-size: 12px;" width="12%">Transaction Reference Number</th>
                                             <th class="table_td" style="font-size: 12px;" width="30%">Company Name</th>  
-                                            <th class="table_td text-center" style="font-size: 12px;" width="6%">Vatable Sales <br><b><?php echo $total_vatable_sales; ?></b></th> 
-                                            <th class="table_td text-center" style="font-size: 12px;" width="8%">Zero-Rated Ecozones <b><?php echo $total_zero_rated; ?></b></th>     
-                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">VAT on Sales <b><?php echo $total_vat_on_sales; ?></b></th>   
-                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">EWT Sales <b><?php echo $total_ewt_sales; ?></b></th>    
-                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">Total <br><b><?php echo $total_sum; ?></b></th>
-                                            <th class="table_td text-center" style="font-size: 12px;" width="6%">EWT Amount <br><b><?php echo $total_ewt_amount; ?></b></th>
+                                            <th class="table_td text-center" style="font-size: 12px;" width="6%">Vatable Sales 
+                                                <br><b><?php echo number_format($total_vatable_sales, 2); ?></b></th> 
+                                            <th class="table_td text-center" style="font-size: 12px;" width="8%">Zero-Rated Ecozones 
+                                                <br><b><?php echo number_format($total_zero_rated, 2); ?></b></th>     
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">VAT on Sales 
+                                                <b><?php echo number_format($total_vat_on_sales, 2); ?></b></th>   
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">EWT Sales 
+                                                <b><?php echo number_format($total_ewt_sales, 2); ?></b></th>    
+                                            <th class="table_td text-center" style="font-size: 12px;" width="5%">Total 
+                                                <br><b><?php echo $total_sum; ?></b></th>
+                                            <th class="table_td text-center" style="font-size: 12px;" width="6%">EWT Amount 
+                                                <br><b><?php echo number_format($total_ewt_amount, 2); ?></b></th>
                                             <th class="table_td text-center" style="font-size: 12px;" width="5%">Original Copy</th>
                                             <th class="table_td text-center" style="font-size: 12px;" width="5%">Scanned Copy</th>
                                             <th class="table_td text-center" style="font-size: 12px;" width="5%">OR Number</th>
