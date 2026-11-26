@@ -2837,6 +2837,7 @@ public function display_upload_purchase_adjust(){
         $adjust_identifier = $this->input->post('adjust_identifier');
         $x=0;
         $error = array();
+        $this->db->trans_begin(); //DB Transaction Starts
         foreach ($_FILES['file']['name'] as $keys => $values) {
             $dest= realpath(APPPATH . '../uploads/excel/');
             $error_ext=0;
@@ -2892,7 +2893,6 @@ public function display_upload_purchase_adjust(){
                             $insert_data = array(); 
                             $batch_number = 100;
                             $y=1;
-                            $this->db->trans_begin(); //DB Transaction Starts
                             for($z=4;$z<=$highestRow;$z++){
                                 $itemno = trim($objPHPExcel->getActiveSheet()->getCell('A'.$z)->getFormattedValue() ?? '');
                                 $shortname = str_replace(' ','',$objPHPExcel->getActiveSheet()->getCell('B'.$z)->getFormattedValue());
@@ -3021,7 +3021,6 @@ public function display_upload_purchase_adjust(){
                                     }
                                 }
                             }
-                            $x++;
                         //}
                         //$this->readExcel_adjust($adjust_identifier,$x,$remarks);
                                                         // Inserts the leftover data
@@ -3047,6 +3046,8 @@ public function display_upload_purchase_adjust(){
                                 // Commit everything
                                 $this->db->trans_commit();
                             }
+
+                            $x++;
                     } 
                 }
             }
