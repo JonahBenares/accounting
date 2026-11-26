@@ -549,7 +549,7 @@ function filter_sales_all() {
     }
 
     if (reference_number!='') {
-        ref_no=reference_number;
+        reference_number=reference_number;
     }else{
         ref_no='null';
     }
@@ -567,7 +567,7 @@ function filter_sales_all() {
     }
 
       var loc= document.getElementById("baseurl").value;
-      window.location=loc+'reports/sales_all/'+part+'/'+ref_no+'/'+from+'/'+to+'/'+original+'/'+scanned;
+      window.location=loc+'reports/sales_all/'+part+'/'+reference_number+'/'+from+'/'+to+'/'+original+'/'+scanned;
 
 }
 
