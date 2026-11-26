@@ -4655,6 +4655,11 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-4);
         $qu = "saved = '1' AND deleted='0' AND ".$query;
         $total_sum[]=0;
+        $total_vatable_sales[]=0;
+        $total_zero_rated[]=0;
+        $total_vat_on_sales[]=0;
+        $total_ewt_sales[]=0;
+        $total_ewt_amount[]=0;
         if(!empty($query)){
         foreach($this->super_model->custom_query("SELECT * FROM sales_transaction_head sth INNER JOIN sales_transaction_details std ON sth.sales_id = std.sales_id WHERE $qu ORDER BY billing_from ASC, reference_number ASC") AS $sth){
             $participant_name=$this->super_model->select_column_where("participant","participant_name","billing_id",$sth->billing_id);
