@@ -129,7 +129,7 @@
                                             <th class="table_td text-center" style="font-size: 12px;" width="5%">EWT Sales 
                                                 <b><?php echo number_format($total_ewt_sales, 2); ?></b></th>    
                                             <th class="table_td text-center" style="font-size: 12px;" width="5%">Total 
-                                                <br><b><?php echo $total_sum; ?></b></th>
+                                                <br><b><?php echo number_format($total_sum, 2); ?></b></th>
                                             <th class="table_td text-center" style="font-size: 12px;" width="6%">EWT Amount 
                                                 <br><b><?php echo number_format($total_ewt_amount, 2); ?></b></th>
                                             <th class="table_td text-center" style="font-size: 12px;" width="5%">Original Copy</th>
