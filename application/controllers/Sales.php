@@ -466,6 +466,7 @@ class Sales extends CI_Controller {
         $data['res_sub'] = $res_sub;
         $data['identifier_code']=$this->generateRandomString();
         $data['count_name'] = $this->super_model->count_custom_where("reserve_sales_transaction_details", "res_company_name = '' AND reserve_sales_id ='$id'"); 
+        $data['count_empty_actual']=0;
         if(!empty($id)){
             foreach($this->super_model->select_row_where("reserve_sales_transaction_head", "reserve_sales_id",$id) AS $h){
                 $data['res_transaction_date']=$h->res_transaction_date;
@@ -476,6 +477,7 @@ class Sales extends CI_Controller {
                 $data['res_saved']=$h->res_saved;
             if($res_sub==0 ||  $res_sub=='null'){
                 foreach($this->super_model->select_row_where("reserve_sales_transaction_details","reserve_sales_id",$h->reserve_sales_id) AS $d){
+                    $data['count_empty_actual']=$this->super_model->count_custom_where('reserve_sales_transaction_details',"reserve_sales_id='$d->reserve_sales_id' AND res_billing_id IS NULL");
                     $data['details'][]=array(
                         'reserve_sales_detail_id'=>$d->reserve_sales_detail_id,
                         'reserve_sales_id'=>$d->reserve_sales_id,
@@ -505,8 +507,7 @@ class Sales extends CI_Controller {
                     // $ressub_part_id = $this->super_model->select_column_custom_where("reserve_subparticipant","res_sub_participant","res_sub_participant='$res_participant_id'");
                     // $sub_billing_id = $this->super_model->select_column_custom_where("reserve_participant","res_billing_id","res_participant_id='$ressub_part_id'");
                     $ressub_participant = $this->super_model->count_custom_where("reserve_subparticipant","res_sub_participant='$res_participant_id'");
-
-
+                    
                         if($ressub_participant==0){
                         // if($d->res_billing_id != $sub_billing_id){
                             $data['details'][]=array(

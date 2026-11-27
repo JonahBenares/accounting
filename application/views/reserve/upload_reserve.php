@@ -133,7 +133,7 @@
                                             foreach($details AS $d){ 
                                                 if(!empty($d['reserve_id'])){ 
                                         ?>
-                                        <tr>
+                                        <tr <?php echo ($d['billing_id']=='') ? 'class="bg-red"' : ''; ?>>
                                             <td align="center" style="background: #fff;">
                                                 <?php if($saved==1){ ?>
                                                <div class="btn-group mb-0">
@@ -144,8 +144,10 @@
                                             <?php } ?>
                                             </td>
                                             <td><?php echo $d['item_no'];?></td>
-                                            <td style="position:sticky; left:0; z-index: 10;background: #fff"><?php echo $d['short_name'];?></td>
-                                            <td style="position:sticky; left:166px; z-index: 10;background: #fff;"><?php echo $d['actual_billing_id']; ?></td>
+                                            <td <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:0;z-index:10; background:inherit;"' : 
+                                                'style="position: sticky;left:0;background:#fff;z-index: 10;"'?>><?php echo $d['short_name'];?></td>
+                                            <td <?php echo ($d['billing_id']=='') ? 'style="position: sticky;left:166px;z-index:10;background:inherit;"' : 
+                                                'style="position: sticky;left:166px;background:#fff;z-index: 10;"'?>><?php echo $d['actual_billing_id']; ?></td>
                                             <td align="center"><?php echo $d['billing_id']; ?></td>
                                             <td align="center"><?php echo $d['facility_type']; ?></td>
                                             <td align="center"><?php echo $d['wht_agent']; ?></td>
